@@ -20,6 +20,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         /// 列属性
         /// </summary>
-        public ExporterHeaderAttribute[] Attribute { get; set; }
+        public ExporterHeaderAttribute ExporterHeader { get; set; }
     }
 }

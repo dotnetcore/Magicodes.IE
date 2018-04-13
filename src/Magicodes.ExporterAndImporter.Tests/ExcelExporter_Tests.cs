@@ -18,8 +18,17 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task Export_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
             var result = await Exporter.Export(filePath, new List<ExportTestData>()
             {
+                new ExportTestData()
+                {
+                    Name1 = "1",
+                    Name2 = "test",
+                    Name3 = "12",
+                    Name4 = "11",
+                },
                 new ExportTestData()
                 {
                     Name1 = "1",
@@ -29,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
             });
             result.ShouldNotBeNull();
-
+            File.Exists(filePath).ShouldBeTrue();
         }
     }
 }

@@ -14,6 +14,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         /// 表格样式风格
         /// </summary>
-        public TableStyles? TableStyle { get; set; } = TableStyles.Medium10;
+        public string TableStyle { get; set; } = "Medium10";
     }
 }
