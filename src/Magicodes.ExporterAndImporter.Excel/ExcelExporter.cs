@@ -84,22 +84,31 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             foreach (var exporterHeaderDto in exporterHeaderDtoList)
             {
-                if (exporterHeaderDto != null && exporterHeaderDto.ExporterHeader != null)
+                if (exporterHeaderDto != null)
                 {
-                    var exporterHeaderAttribute = exporterHeaderDto.ExporterHeader;
-                    if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
+                    if (exporterHeaderDto.ExporterHeader != null)
                     {
-                        var name = exporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace() ? exporterHeaderDto.PropertyName
-                                    : exporterHeaderAttribute.DisplayName;
+                        var exporterHeaderAttribute = exporterHeaderDto.ExporterHeader;
+                        if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
+                        {
+                            var name = exporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace() ? exporterHeaderDto.PropertyName
+                                        : exporterHeaderAttribute.DisplayName;
 
-                        sheet.Cells[1, exporterHeaderDto.Index].Value = LocalStringFunc(name);
-                        sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
+                            sheet.Cells[1, exporterHeaderDto.Index].Value = LocalStringFunc(name);
+                            sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
 
-                        var size = exporter?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
-                        if (size.HasValue)
-                            sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
+                            var size = exporter?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
+                            if (size.HasValue)
+                                sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
+                        }
                     }
+                    else
+                    {
+                        sheet.Cells[1, exporterHeaderDto.Index].Value = LocalStringFunc(exporterHeaderDto.PropertyName);
+                    }
+
                 }
+
             }
         }
 
