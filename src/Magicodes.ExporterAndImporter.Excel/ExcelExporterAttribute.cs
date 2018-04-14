@@ -15,5 +15,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// 表格样式风格
         /// </summary>
         public string TableStyle { get; set; } = "Medium10";
+
+        /// <summary>
+        /// 自适应所有列
+        /// </summary>
+        public bool AutoFitAllColumn { get; set; }
     }
 }

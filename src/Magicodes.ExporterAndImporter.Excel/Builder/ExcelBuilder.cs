@@ -6,6 +6,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
 {
     public class ExcelBuilder
     {
+        Func<string, string> LocalStringFunc { get; set; }
+
         private ExcelBuilder() { }
 
         /// <summary>
@@ -18,13 +20,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         }
 
         /// <summary>
-        ///     设置日志记录处理
+        /// 多语言处理
         /// </summary>
-        /// <param name="logger"></param>
+        /// <param name="localStringFunc"></param>
         /// <returns></returns>
-        public ExcelBuilder WithLoggerAction(Action<string, string> loggerAction)
+        public ExcelBuilder WithLocalStringFunc(Func<string, string> localStringFunc)
         {
-            //LoggerAction = loggerAction;
+            LocalStringFunc = localStringFunc;
             return this;
         }
 
@@ -33,7 +35,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         /// </summary>
         public void Build()
         {
-            
+            if (LocalStringFunc != null)
+                ExcelExporter.LocalStringFunc = LocalStringFunc;
         }
 
     }

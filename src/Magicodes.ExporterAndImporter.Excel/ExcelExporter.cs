@@ -49,10 +49,10 @@ namespace Magicodes.ExporterAndImporter.Excel
 
                  var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
                  sheet.OutLineApplyStyle = true;
-                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderDtoList)) return;
-                 AddHeader(exporterHeaderDtoList, sheet, exporter);
-                 AddDataItems(sheet, exporterHeaderDtoList, dataItems, exporter);
-                 AddStyle(exporterHeaderDtoList, sheet);
+                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderList)) return;
+                 AddHeader(exporterHeaderList, sheet, exporter);
+                 AddDataItems(sheet, exporterHeaderList, dataItems, exporter);
+                 AddStyle(exporter, exporterHeaderList, sheet);
              });
             return Task.FromResult(fileInfo);
         }
@@ -117,32 +117,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var tbStyle = TableStyles.Medium10;
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
                 tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
-
-            //var rowIndex = 1;
-            //foreach (var row in items)
-            //{
-            //    foreach (var colHeader in exporterHeaders)
-            //    {
-            //        var colIndex = 1;
-            //        if (colHeader.ExporterHeader != null)
-            //        {
-            //            if (colHeader.ExporterHeader.IsIgnore)
-            //            {
-            //                continue;
-            //            }
-            //            sheet.Cells[rowIndex, colIndex].Value = colHeader.ExporterHeader.Format.IsNullOrWhiteSpace();
-            //            var col = sheet.Column(colHeader.Index);
-            //            col.Style.Numberformat.Format = colHeader.ExporterHeader.Format;
-
-            //            if (colHeader.ExporterHeader.IsAutoFit)
-            //                col.AutoFit();
-            //        }
-            //    }
-            //}
-
-
-
-            sheet.Cells["A1"].LoadFromCollection(items, true, tbStyle);
+            sheet.Cells["A2"].LoadFromCollection(items, false, tbStyle);
         }
 
 
@@ -151,7 +126,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="exporterHeaders"></param>
         /// <param name="sheet"></param>
-        protected void AddStyle(List<ExporterHeaderInfo> exporterHeaders, ExcelWorksheet sheet)
+        protected void AddStyle(ExcelExporterAttribute exporter, List<ExporterHeaderInfo> exporterHeaders, ExcelWorksheet sheet)
         {
             foreach (var exporterHeader in exporterHeaders)
             {
@@ -159,6 +134,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 {
                     if (exporterHeader.ExporterHeader.IsIgnore)
                     {
+                        //TODO:后续直接修改数据导出逻辑（不写忽略列数据）
                         sheet.DeleteColumn(exporterHeader.Index);
                         //删除之后，序号依次-1
                         foreach (var item in exporterHeaders.Where(p => p.Index > exporterHeader.Index))
@@ -171,7 +147,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     var col = sheet.Column(exporterHeader.Index);
                     col.Style.Numberformat.Format = exporterHeader.ExporterHeader.Format;
 
-                    if (exporterHeader.ExporterHeader.IsAutoFit)
+                    if (exporter.AutoFitAllColumn || exporterHeader.ExporterHeader.IsAutoFit)
                         col.AutoFit();
                 }
             }

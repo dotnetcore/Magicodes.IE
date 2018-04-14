@@ -7,7 +7,7 @@ using Magicodes.ExporterAndImporter.Excel;
 namespace Magicodes.ExporterAndImporter.Tests.Models
 {
     [ExcelExporter(Name = "测试", TableStyle = "Light10")]
-    public class ExportTestDataWithAttrs
+    public class AttrsLocalizationTestData
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
