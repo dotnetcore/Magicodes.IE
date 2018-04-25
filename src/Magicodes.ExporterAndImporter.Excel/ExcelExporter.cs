@@ -44,8 +44,12 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
             var fileInfo = CreateExcelPackage(fileName, excelPackage =>
              {
+
                  //导出定义
                  var exporter = GetExporterAttribute<T>();
+
+                 if (exporter?.Author != null)
+                     excelPackage.Workbook.Properties.Author = exporter?.Author;
 
                  var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
                  sheet.OutLineApplyStyle = true;

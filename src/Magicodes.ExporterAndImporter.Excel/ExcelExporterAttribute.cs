@@ -20,5 +20,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// 自适应所有列
         /// </summary>
         public bool AutoFitAllColumn { get; set; }
+
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public string Author { get; set; }
     }
 }
