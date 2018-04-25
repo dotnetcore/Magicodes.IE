@@ -17,9 +17,9 @@ namespace Magicodes.ExporterAndImporter.Excel
     public class ExcelExporter : IExporter
     {
         /// <summary>
-        /// 语言处理函数
+        /// 表头处理函数
         /// </summary>
-        public static Func<string, string> LocalStringFunc { get; set; } = (str) => str;
+        public static Func<string, string> ColumnHeaderStringFunc { get; set; } = (str) => str;
 
         public ExcelExporter()
         {
@@ -98,7 +98,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                             var name = exporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace() ? exporterHeaderDto.PropertyName
                                         : exporterHeaderAttribute.DisplayName;
 
-                            sheet.Cells[1, exporterHeaderDto.Index].Value = LocalStringFunc(name);
+                            sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(name);
                             sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
 
                             var size = exporter?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
@@ -108,7 +108,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
                     else
                     {
-                        sheet.Cells[1, exporterHeaderDto.Index].Value = LocalStringFunc(exporterHeaderDto.PropertyName);
+                        sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(exporterHeaderDto.PropertyName);
                     }
 
                 }

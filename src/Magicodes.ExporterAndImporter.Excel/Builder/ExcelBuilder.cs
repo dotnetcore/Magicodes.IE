@@ -6,7 +6,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
 {
     public class ExcelBuilder
     {
-        Func<string, string> LocalStringFunc { get; set; }
+        Func<string, string> ColumnHeaderStringFunc { get; set; }
 
         private ExcelBuilder() { }
 
@@ -22,11 +22,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         /// <summary>
         /// 多语言处理
         /// </summary>
-        /// <param name="localStringFunc"></param>
+        /// <param name="columnHeaderStringFunc"></param>
         /// <returns></returns>
-        public ExcelBuilder WithLocalStringFunc(Func<string, string> localStringFunc)
+        public ExcelBuilder WithLocalStringFunc(Func<string, string>
+            columnHeaderStringFunc)
         {
-            LocalStringFunc = localStringFunc;
+            ColumnHeaderStringFunc = columnHeaderStringFunc;
             return this;
         }
 
@@ -35,8 +36,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         /// </summary>
         public void Build()
         {
-            if (LocalStringFunc != null)
-                ExcelExporter.LocalStringFunc = LocalStringFunc;
+            if (ColumnHeaderStringFunc != null)
+                ExcelExporter.ColumnHeaderStringFunc = ColumnHeaderStringFunc;
         }
 
     }
