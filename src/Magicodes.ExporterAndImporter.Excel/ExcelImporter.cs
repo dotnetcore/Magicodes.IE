@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -82,9 +83,17 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
         }
 
+        /// <summary>
+        /// 导入数据，转为List
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public Task<IList<T>> Import<T>(string filePath) where T : class, new()
         {
             CheckImportFile(filePath);
+
+            IList<T> list = new List<T>();
             CreateExcelPackage(filePath, excelPackage =>
             {
                 //导入定义
@@ -102,32 +111,72 @@ namespace Magicodes.ExporterAndImporter.Excel
                     worksheet = excelPackage.Workbook.Worksheets[1];
 
                 var propertyInfoList = new List<PropertyInfo>(typeof(T).GetProperties());
+
+                var dicCols = new Dictionary<string, int>();
+                for (var colIndex = worksheet.Dimension.Start.Column; colIndex <= worksheet.Dimension.End.Column; colIndex++)
+                {
+                    var colName = worksheet.Cells[1, colIndex].GetValue<string>();
+                    dicCols.Add(colName, colIndex);
+                }
+
                 //跳过第一行（列名）
                 var startRowIndx = worksheet.Dimension.Start.Row + 1;
+               
                 for (var rowIndex = startRowIndx; rowIndex <= worksheet.Dimension.End.Row; rowIndex++)
                 {
                     var dataItem = new T();
                     foreach (var propertyInfo in propertyInfoList)
                     {
-                        var ColName = propertyInfo.Name;
-                    }
+                        var colName = propertyInfo.Name;
 
-                    for (var colIndex = worksheet.Dimension.Start.Column; colIndex <= worksheet.Dimension.End.Column; colIndex++)
-                    {
-
-                        if (worksheet.Cells[rowIndex, colIndex].Style.Numberformat.Format.IndexOf("yyyy") > -1
-                            && worksheet.Cells[rowIndex, colIndex].Value != null)//处理日期时间格式
+                        var importerHeader = propertyInfo.GetCustomAttribute<ImporterHeaderAttribute>();
+                        if (importerHeader != null && !string.IsNullOrWhiteSpace(importerHeader.Name))
                         {
-
-                            dr[colIndex - 1] = worksheet.Cells[rowIndex, colIndex].GetValue<DateTime>();
+                            colName = importerHeader.Name;
                         }
-                        else
-                            dr[colIndex - 1] = (worksheet.Cells[rowIndex, colIndex].Value ?? DBNull.Value);
-                    }
+                        //获取对应的单元格
+                        var cell = worksheet.Cells[rowIndex, dicCols[colName]];
+                        switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
+                        {
+                            case "enum":
+                                var enumDisplayNames = GetEnumItems(propertyInfo.PropertyType);
+                                propertyInfo.SetValue(dataItem, enumDisplayNames[cell.Value?.ToString()]);
+                                continue;
+                        }
 
+                        switch (propertyInfo.PropertyType.Name.ToLower())
+                        {
+                            case "boolean":
+                                var value = false;
+                                switch ((cell.Value ?? "false").ToString().ToLower())
+                                {
+                                    case "true":
+                                        value = true;
+                                        break;
+                                    case "是":
+                                        value = true;
+                                        break;
+                                    case "1":
+                                        value = true;
+                                        break;
+                                    case "对":
+                                        value = true;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                propertyInfo.SetValue(dataItem, value);
+                                break;
+                            default:
+                                propertyInfo.SetValue(dataItem, cell.Value);
+                                break;
+                        }
+                    }
+                    list.Add(dataItem);
                 }
 
             });
+            return Task.FromResult(list);
         }
 
         /// <summary>
@@ -167,6 +216,20 @@ namespace Magicodes.ExporterAndImporter.Excel
                 };
             }
             return null;
+        }
+
+        private Dictionary<string, int> GetEnumItems(Type type)
+        {
+            var descriptionDictionarys = new Dictionary<string, int>();
+            var fields = type.GetFields();
+            for (int i = 1, count = fields.Length; i < count; i++)
+            {
+                var value = (int)Enum.Parse(type, fields[i].Name);
+                var desAttribute = (DescriptionAttribute[])fields[i].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (desAttribute.Length > 0)
+                    descriptionDictionarys.Add(desAttribute[0].Description, value);
+            }
+            return descriptionDictionarys;
         }
 
     }
