@@ -23,6 +23,6 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        Task<IList<T>> Import<T>(string filePath) where T : class;
+        Task<IList<T>> Import<T>(string filePath) where T : class, new();
     }
 }

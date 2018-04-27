@@ -82,7 +82,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "多语言特性导出")]
         public async Task AttrsLocalizationExport_Test()
         {
-            ExcelBuilder.Create().WithLocalStringFunc((key) =>
+            ExcelBuilder.Create().WithColumnHeaderStringFunc((key) =>
             {
                 if (key.Contains("文本"))
                 {

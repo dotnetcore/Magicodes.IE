@@ -24,7 +24,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         /// </summary>
         /// <param name="columnHeaderStringFunc"></param>
         /// <returns></returns>
-        public ExcelBuilder WithLocalStringFunc(Func<string, string>
+        public ExcelBuilder WithColumnHeaderStringFunc(Func<string, string>
             columnHeaderStringFunc)
         {
             ColumnHeaderStringFunc = columnHeaderStringFunc;
