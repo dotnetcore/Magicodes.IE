@@ -37,11 +37,12 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 throw new ArgumentException("文件名必须填写!", nameof(fileName));
             }
-            var extension = Path.GetExtension(fileName);
-            if (string.IsNullOrWhiteSpace(extension))
-            {
-                fileName = fileName + ".xlsx";
-            }
+            //允许不存在扩展名
+            //var extension = Path.GetExtension(fileName);
+            //if (string.IsNullOrWhiteSpace(extension))
+            //{
+            //    fileName = fileName + ".xlsx";
+            //}
             var fileInfo = CreateExcelPackage(fileName, excelPackage =>
              {
 
