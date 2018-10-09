@@ -63,6 +63,31 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件二进制数组</returns>
+        public Task<byte[]> ExportAsByteArray<T>(IList<T> dataItems) where T : class
+        {
+            using (var excelPackage = new ExcelPackage())
+            {
+                //导出定义
+                var exporter = GetExporterAttribute<T>();
+
+                if (exporter?.Author != null)
+                    excelPackage.Workbook.Properties.Author = exporter?.Author;
+
+                var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
+                sheet.OutLineApplyStyle = true;
+                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList)) return null;
+                AddHeader(exporterHeaderList, sheet, exporter);
+                AddDataItems(sheet, exporterHeaderList, dataItems, exporter);
+                AddStyle(exporter, exporterHeaderList, sheet);
+                return Task.FromResult(excelPackage.GetAsByteArray());
+            }
+        }
+
+        /// <summary>
         ///     创建Excel
         /// </summary>
         /// <param name="fileName">文件名</param>
