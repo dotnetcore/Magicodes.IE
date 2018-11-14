@@ -2,11 +2,12 @@
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <!--注意不能使用1.5.4的版本，在Docker环境下存在Gdip异常-->
+    <PackageReference Include="EPPlus.Core" Version="1.5.2" />
   </ItemGroup>
 
   <ItemGroup>
