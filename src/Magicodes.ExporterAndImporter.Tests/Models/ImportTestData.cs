@@ -6,7 +6,7 @@ using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models
 {
-    [ExcelImporter(SheetName = "Sheet1")]
+    //[ExcelImporter(SheetName = "Sheet1")]
     public class ImportTestData
     {
         public string Name1 { get; set; }

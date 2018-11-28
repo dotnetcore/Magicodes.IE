@@ -93,25 +93,28 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             CheckImportFile(filePath);
 
-            
-
             IList<T> list = new List<T>();
             CreateExcelPackage(filePath, excelPackage =>
             {
                 //导入定义
                 var importer = GetImporterAttribute<T>();
                 ExcelWorksheet worksheet = null;
-                if (!string.IsNullOrWhiteSpace(importer.SheetName))
+                if (importer != null)
                 {
-                    worksheet = excelPackage.Workbook.Worksheets.FirstOrDefault(p => p.Name == importer.SheetName);
-                    if (worksheet == null)
+                    if (!string.IsNullOrWhiteSpace(importer.SheetName))
                     {
-                        throw new ImportException("没有找到Sheet名称为 " + importer.SheetName + " 的Sheet!");
+                        worksheet = excelPackage.Workbook.Worksheets.FirstOrDefault(p => p.Name == importer.SheetName);
+                        if (worksheet == null)
+                        {
+                            throw new ImportException("没有找到Sheet名称为 " + importer.SheetName + " 的Sheet!");
+                        }
                     }
+                    else
+                        worksheet = excelPackage.Workbook.Worksheets[1];
                 }
                 else
                     worksheet = excelPackage.Workbook.Worksheets[1];
-
+                
                 var propertyInfoList = new List<PropertyInfo>(typeof(T).GetProperties());
 
                 var dicCols = new Dictionary<string, int>();
