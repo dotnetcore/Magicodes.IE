@@ -99,17 +99,22 @@ namespace Magicodes.ExporterAndImporter.Excel
                 //导入定义
                 var importer = GetImporterAttribute<T>();
                 ExcelWorksheet worksheet = null;
-                if (!string.IsNullOrWhiteSpace(importer.SheetName))
+                if (importer != null)
                 {
-                    worksheet = excelPackage.Workbook.Worksheets.FirstOrDefault(p => p.Name == importer.SheetName);
-                    if (worksheet == null)
+                    if (!string.IsNullOrWhiteSpace(importer.SheetName))
                     {
-                        throw new ImportException("没有找到Sheet名称为 " + importer.SheetName + " 的Sheet!");
+                        worksheet = excelPackage.Workbook.Worksheets.FirstOrDefault(p => p.Name == importer.SheetName);
+                        if (worksheet == null)
+                        {
+                            throw new ImportException("没有找到Sheet名称为 " + importer.SheetName + " 的Sheet!");
+                        }
                     }
+                    else
+                        worksheet = excelPackage.Workbook.Worksheets[1];
                 }
                 else
                     worksheet = excelPackage.Workbook.Worksheets[1];
-
+                
                 var propertyInfoList = new List<PropertyInfo>(typeof(T).GetProperties());
 
                 var dicCols = new Dictionary<string, int>();
@@ -167,8 +172,23 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 }
                                 propertyInfo.SetValue(dataItem, value);
                                 break;
+                            case "string":
+                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
+                                break;
+                            case "long":
+                                propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
+                                break;
+                            case "int":
+                                propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
+                                break;
+                            case "decimal":
+                                propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
+                                break;
+                            case "double":
+                                propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
+                                break;
                             default:
-                                propertyInfo.SetValue(dataItem, cell.Value);
+                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
                                 break;
                         }
                     }
@@ -187,10 +207,14 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         protected void CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
         {
-            using (var excelPackage = new ExcelPackage())
+            using (Stream stream = new FileStream(fileName, FileMode.Open))
             {
-                creator(excelPackage);
+                using (var excelPackage = new ExcelPackage(stream))
+                {
+                    creator(excelPackage);
+                }
             }
+            
         }
 
 
