@@ -93,6 +93,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             CheckImportFile(filePath);
 
+            
+
             IList<T> list = new List<T>();
             CreateExcelPackage(filePath, excelPackage =>
             {
@@ -167,8 +169,23 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 }
                                 propertyInfo.SetValue(dataItem, value);
                                 break;
+                            case "string":
+                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
+                                break;
+                            case "long":
+                                propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
+                                break;
+                            case "int":
+                                propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
+                                break;
+                            case "decimal":
+                                propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
+                                break;
+                            case "double":
+                                propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
+                                break;
                             default:
-                                propertyInfo.SetValue(dataItem, cell.Value);
+                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
                                 break;
                         }
                     }
@@ -187,10 +204,14 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         protected void CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
         {
-            using (var excelPackage = new ExcelPackage())
+            using (Stream stream = new FileStream(fileName, FileMode.Open))
             {
-                creator(excelPackage);
+                using (var excelPackage = new ExcelPackage(stream))
+                {
+                    creator(excelPackage);
+                }
             }
+            
         }
 
 
