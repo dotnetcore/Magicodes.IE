@@ -173,7 +173,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 propertyInfo.SetValue(dataItem, value);
                                 break;
                             case "string":
-                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
+                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
                                 break;
                             case "long":
                             case "int64":
@@ -190,7 +190,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
                                 break;
                             default:
-                                propertyInfo.SetValue(dataItem, cell.Value.ToString());
+                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
                                 break;
                         }
                     }
