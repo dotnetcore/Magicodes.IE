@@ -18,8 +18,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "导入")]
         public async Task Importer_Test()
         {
-            var import = await Importer.Import<ImportTestData>(
-                @"D:\Coding\xin-lai.github\src\Magicodes.ExporterAndImporter.Tests\Models\Importer_test.xlsx");
+            var import = await Importer.Import<ImportProductDto>(
+                @"D:\Coding\xin-lai.github\src\Magicodes.ExporterAndImporter.Tests\Models\产品导入模板.xlsx");
             import.ShouldNotBeNull();
         }
     }
