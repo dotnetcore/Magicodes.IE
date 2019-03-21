@@ -2,7 +2,7 @@
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.9</Version>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
