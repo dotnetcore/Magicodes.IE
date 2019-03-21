@@ -1,0 +1,1 @@
+call ./pack.bat "Magicodes.ExporterAndImporter.Core*.nupkg" "./src/Magicodes.ExporterAndImporter.Core/Magicodes.ExporterAndImporter.Core.csproj"
