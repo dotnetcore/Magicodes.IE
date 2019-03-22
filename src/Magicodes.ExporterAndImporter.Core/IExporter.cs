@@ -32,13 +32,13 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="globalStyle">全局样式</param>
         /// <param name="styles">样式</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeadAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null);
+        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null);
 
         /// <summary>
         ///     导出Excel表头
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeadAsByteArray<T>(T type) where T : class;
+        Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class;
     }
 }

@@ -95,7 +95,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="globalStyle">全局样式</param>
         /// <param name="styles">样式</param>
         /// <returns></returns>
-        public Task<byte[]> ExportHeadAsByteArray(string[] items,string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null)
+        public Task<byte[]> ExportHeaderAsByteArray(string[] items,string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null)
         {
             using (var excelPackage = new ExcelPackage())
             {
@@ -112,7 +112,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportHeadAsByteArray<T>(T type) where T : class
+        public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class
         {
             using (var excelPackage = new ExcelPackage())
             {
