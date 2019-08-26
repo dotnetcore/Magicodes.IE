@@ -77,10 +77,11 @@ namespace Magicodes.ExporterAndImporter.Excel
                 throw new ArgumentException("文件路径不能为空!", nameof(filePath));
             }
 
-            if (!File.Exists(filePath))
-            {
-                throw new ImportException("导入文件不存在!");
-            }
+            //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
+            //if (!File.Exists(filePath))
+            //{
+            //    throw new ImportException("导入文件不存在!");
+            //}
         }
 
         /// <summary>
