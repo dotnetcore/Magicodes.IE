@@ -82,8 +82,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 if (!validationResultModel.Errors.ContainsKey(keyName))
                                     validationResultModel.Errors.Add(keyName, "导入数据无效");
                                 foreach (var validationResult in validationResults)
-                                {
+                                { 
                                     var key = validationResult.MemberNames.First();
+                                    var column = columnHeaders.FirstOrDefault(a => a.PropertyName == key);
+                                    if (column != null)
+                                    {
+                                        key = column.ExporterHeader.Name;
+                                    }
                                     var value = validationResult.ErrorMessage;
                                     if (validationResultModel.FieldErrors.ContainsKey(key))
                                         validationResultModel.FieldErrors[key] =
@@ -171,7 +176,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             if (!ParseImporterHeader<T>(out var columnHeaders, out var enumColumns, out var boolColumns)) return;
 
             for (var i = 0; i < columnHeaders.Count; i++)
-                worksheet.Cells[1, i + 1].Value = columnHeaders[i + 1].ExporterHeader.Name;
+                worksheet.Cells[1, i + 1].Value = columnHeaders[i].ExporterHeader.Name;
 
             worksheet.Cells.AutoFitColumns();
             worksheet.Cells.Style.WrapText = true;
