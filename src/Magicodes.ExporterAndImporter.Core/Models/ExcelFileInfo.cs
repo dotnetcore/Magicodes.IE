@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
-    public class ExportFileInfo
+    public class ExcelFileInfo
     {
         public string FileName
         {
@@ -18,12 +18,12 @@ namespace Magicodes.ExporterAndImporter.Core.Models
             set;
         }
 
-        public ExportFileInfo()
+        public ExcelFileInfo()
         {
 
         }
 
-        public ExportFileInfo(string fileName, string fileType)
+        public ExcelFileInfo(string fileName, string fileType)
         {
             this.FileName = fileName;
             this.FileType = fileType;

@@ -11,18 +11,25 @@ namespace Magicodes.ExporterAndImporter.Core
     public interface IImporter
     {
         /// <summary>
-        ///     导入为DataTable
+        /// 生成Excel导入模板
         /// </summary>
-        /// <param name="filePath">文件路径</param>
-        /// <returns>DataTable</returns>
-        Task<DataTable> Import(string filePath);
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Task<ExcelFileInfo> GenerateTemplate<T>(string fileName) where T : class;
 
         /// <summary>
-        /// 导入为集合
+        /// 生成Excel导入模板
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>二进制字节</returns>
+        Task<byte[]> GenerateTemplateByte<T>() where T : class;
+
+        /// <summary>
+        /// 导入模型验证数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        Task<IList<T>> Import<T>(string filePath) where T : class, new();
+        Task<ImportModel<T>> Import<T>(string filePath) where T : class, new();
     }
 }

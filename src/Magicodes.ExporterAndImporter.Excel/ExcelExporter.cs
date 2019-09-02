@@ -11,6 +11,7 @@ using OfficeOpenXml.Table;
 using System.Linq;
 using System.Reflection;
 using System.ComponentModel;
+using Magicodes.ExporterAndImporter.Excel.Utility;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -31,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public Task<ExportFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class
+        public Task<ExcelFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
@@ -43,7 +44,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             //{
             //    fileName = fileName + ".xlsx";
             //}
-            var fileInfo = CreateExcelPackage(fileName, excelPackage =>
+            var fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
              {
 
                  //导出定义
@@ -130,24 +131,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///     创建Excel
-        /// </summary>
-        /// <param name="fileName">文件名</param>
-        /// <param name="creator"></param>
-        /// <returns></returns>
-        protected ExportFileInfo CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
-        {
-            var file = new ExportFileInfo(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-
-            using (var excelPackage = new ExcelPackage())
-            {
-                creator(excelPackage);
-                Save(excelPackage, file);
-            }
-            return file;
         }
 
         /// <summary>
@@ -320,16 +303,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
                 }
             }
-        }
-
-        /// <summary>
-        ///     保存
-        /// </summary>
-        /// <param name="excelPackage"></param>
-        /// <param name="file"></param>
-        protected void Save(ExcelPackage excelPackage, ExportFileInfo file)
-        {
-            excelPackage.SaveAs(new FileInfo(file.FileName));
         }
 
         /// <summary>

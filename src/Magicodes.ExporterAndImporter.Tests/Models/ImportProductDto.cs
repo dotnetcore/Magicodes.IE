@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Magicodes.ExporterAndImporter.Core;
 
@@ -11,16 +12,20 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// 产品名称
         /// </summary>
         [ImporterHeader(Name = "产品名称")]
+        [Required(ErrorMessage = "产品名称是必填的")]
         public string Name { get; set; }
         /// <summary>
         /// 产品代码
         /// </summary>
         [ImporterHeader(Name = "产品代码")]
+        [MaxLength(8,ErrorMessage = "产品代码最大长度为8")]
         public string Code { get; set; }
         /// <summary>
         /// 产品条码
         /// </summary>
         [ImporterHeader(Name = "产品条码")]
+        [MaxLength(10, ErrorMessage = "产品条码最大长度为10")]
+        [RegularExpression(@"^\d*$", ErrorMessage = "产品条码只能是数字")]
         public string BarCode { get; set; }
         /// <summary>
         /// 客户Id
@@ -57,5 +62,17 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// </summary>
         [ImporterHeader(Name = "重量(KG)")]
         public double Weight { get; set; }
+
+        /// <summary>
+        /// 类型
+        /// </summary>
+        [ImporterHeader(Name = "类型")]
+        public ImporterProductType Type { get; set; }
+
+        /// <summary>
+        /// 是否行
+        /// </summary>
+        [ImporterHeader(Name = "是否行")]
+        public bool IsOk { get; set; }
     }
 }

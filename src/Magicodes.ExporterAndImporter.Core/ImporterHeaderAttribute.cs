@@ -11,7 +11,7 @@ namespace Magicodes.ExporterAndImporter.Core
         }
 
         /// <summary>
-        /// 列名
+        /// 显示名称
         /// </summary>
         public string Name { set; get; }
     }

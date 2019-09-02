@@ -7,7 +7,6 @@ using Magicodes.ExporterAndImporter.Tests.Models;
 using Xunit;
 using System.IO;
 using Shouldly;
-using Magicodes.ExporterAndImporter.Excel.Builder;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -19,8 +18,19 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task Importer_Test()
         {
             var import = await Importer.Import<ImportProductDto>(
-                @"D:\Coding\xin-lai.github\src\Magicodes.ExporterAndImporter.Tests\Models\产品导入模板.xlsx");
+                @"G:\GitCodes\Magicodes.ExporterAndImporter\src\Magicodes.ExporterAndImporter.Tests\Models\testTemplate.xlsx");
             import.ShouldNotBeNull();
+        }
+
+        [Fact(DisplayName = "生成模板")]
+        public async Task GenerateTemplate()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
         }
     }
 }
