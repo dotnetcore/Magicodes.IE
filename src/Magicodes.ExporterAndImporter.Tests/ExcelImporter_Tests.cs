@@ -23,7 +23,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         [Fact(DisplayName = "Éú³ÉÄ£°å")]
-        public async Task GenerateTemplate()
+        public async Task GenerateTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);

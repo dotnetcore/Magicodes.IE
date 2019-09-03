@@ -10,10 +10,10 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// </summary>
     public class ImporterHeaderInfo
     {
-        ///// <summary>
-        ///// 列索引
-        ///// </summary>
-        //public int Index { get; set; }
+        /// <summary>
+        /// 是否必填
+        /// </summary>
+        public bool IsRequired { get; set; }
 
         /// <summary>
         /// 列名称

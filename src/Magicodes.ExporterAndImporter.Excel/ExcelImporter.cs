@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -150,9 +151,11 @@ namespace Magicodes.ExporterAndImporter.Excel
                         ImporterHeaderAttribute[])?.FirstOrDefault();
                 if (importerHeaderAttribute == null || string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                     throw new ArgumentException("导入实体没有定义ImporterHeader属性");
-
+                var requiredAttribute = (objProperties[i].GetCustomAttributes(typeof(RequiredAttribute), true) as
+                    RequiredAttribute[])?.FirstOrDefault();
                 importerHeaderList.Add(new ImporterHeaderInfo
                 {
+                    IsRequired = requiredAttribute != null,
                     PropertyName = objProperties[i].Name,
                     ExporterHeader =
                         (objProperties[i].GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
@@ -176,7 +179,14 @@ namespace Magicodes.ExporterAndImporter.Excel
             if (!ParseImporterHeader<T>(out var columnHeaders, out var enumColumns, out var boolColumns)) return;
 
             for (var i = 0; i < columnHeaders.Count; i++)
+            {
                 worksheet.Cells[1, i + 1].Value = columnHeaders[i].ExporterHeader.Name;
+                if (columnHeaders[i].IsRequired)
+                {
+                    worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.Red);
+                }
+            }
+                
 
             worksheet.Cells.AutoFitColumns();
             worksheet.Cells.Style.WrapText = true;
