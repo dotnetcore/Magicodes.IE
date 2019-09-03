@@ -25,54 +25,5 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             return displayNames;
         }
-
-
-        public static T? GetNullableValue<T>(string displayName) where T : struct
-        {
-            if (string.IsNullOrEmpty(displayName))
-            {
-                return null;
-            }
-            return GetValue<T>(displayName);
-        }
-
-        public static T GetValue<T>(string displayName) where T : struct
-        {
-            var type = typeof(T);
-            if (!type.IsEnum) throw new InvalidOperationException();
-            foreach (var field in type.GetFields())
-            {
-                var displayAttribute = field.GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .SingleOrDefault() as DisplayAttribute;
-                if (displayAttribute != null && displayAttribute.Name == displayName)
-                {
-                    return (T)field.GetValue(null);
-                }
-            }
-            return default;
-        }
-
-        public static bool IsValid<T>(string displayName)
-        {
-            T value = default;
-            return TryGetValue(displayName, ref value);
-        }
-
-        public static bool TryGetValue<T>(string displayName, ref T value)
-        {
-            var type = typeof(T);
-            if (!type.IsEnum) throw new InvalidOperationException();
-            foreach (var field in type.GetFields())
-            {
-                var displayAttribute = field.GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .SingleOrDefault() as DisplayAttribute;
-                if (displayAttribute != null && displayAttribute.Name == displayName)
-                {
-                    value = (T)field.GetValue(null);
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
