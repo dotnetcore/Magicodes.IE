@@ -14,6 +14,13 @@
 - 导入支持数据下拉选择
 - 导入支持注释添加
 
+### 相关官方Nuget包
+
+| 名称     |      Nuget      |
+|----------|:-------------:|
+| Magicodes.IE.Core  |  [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core) |
+| Magicodes.IE.Excel |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)   |
+
 ### 导出 Demo
 
 
@@ -396,3 +403,41 @@
 ##### 导入模板
 ![](./res/2-8.png "Demo2-8")
 ![](./res/2-9.png "Demo2-9")
+
+#### Docker中使用
+
+>
+    # 安装libgdiplus库，用于Excel导出
+    RUN apt-get update && apt-get install -y libgdiplus libc6-dev
+    RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+
+Dockerfile Demo 
+>
+    FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+    # 安装libgdiplus库，用于Excel导出
+    RUN apt-get update && apt-get install -y libgdiplus libc6-dev
+    RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+    WORKDIR /app
+    EXPOSE 80
+
+    FROM microsoft/dotnet:2.2-sdk AS build
+    WORKDIR /src
+    COPY ["src/web/Admin.Host/Admin.Host.csproj", "src/web/Admin.Host/"]
+    COPY ["src/web/Admin.Web.Core/Admin.Web.Core.csproj", "src/web/Admin.Web.Core/"]
+    COPY ["src/application/Admin.Application/Admin.Application.csproj", "src/application/Admin.Application/"]
+    COPY ["src/core/Magicodes.Admin.Core/Magicodes.Admin.Core.csproj", "src/core/Magicodes.Admin.Core/"]
+    COPY ["src/data/Magicodes.Admin.EntityFrameworkCore/Magicodes.Admin.EntityFrameworkCore.csproj", "src/data/Magicodes.Admin.EntityFrameworkCore/"]
+    COPY ["src/core/Magicodes.Admin.Core.Custom/Magicodes.Admin.Core.Custom.csproj", "src/core/Magicodes.Admin.Core.Custom/"]
+    COPY ["src/application/Admin.Application.Custom/Admin.Application.Custom.csproj", "src/application/Admin.Application.Custom/"]
+    RUN dotnet restore "src/web/Admin.Host/Admin.Host.csproj"
+    COPY . .
+    WORKDIR "/src/src/web/Admin.Host"
+    RUN dotnet build "Admin.Host.csproj" -c Release -o /app
+
+    FROM build AS publish
+    RUN dotnet publish "Admin.Host.csproj" -c Release -o /app
+
+    FROM base AS final
+    WORKDIR /app
+    COPY --from=publish /app .
+    ENTRYPOINT ["dotnet", "Magicodes.Admin.Web.Host.dll"]
