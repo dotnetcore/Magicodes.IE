@@ -16,6 +16,8 @@
 
 ### 导出 Demo
 
+
+---
 #### Demo1-1
 
 普通导出
@@ -49,6 +51,8 @@
         }
     });
 
+
+---
 #### Demo1-2
 
 特性导出
@@ -168,36 +172,36 @@
             });
 
 ### 导入 Demo
-导入特性（**ImporterHeader**）：
+>导入特性（**ImporterHeader**）：
 
-**Name**：表头显示名称(不可为空)。
++ **Name**：表头显示名称(不可为空)。
 
-**Description**：表头添加注释。
++ **Description**：表头添加注释。
 
-**Author**：注释作者，默认值为X.M。
++ **Author**：注释作者，默认值为X.M。
 
-导入结果（**ImportModel\<T>**）：
+>导入结果（**ImportModel\<T>**）：
 
-**Data**：***IList\<T>***  导入的数据集合。
++ **Data**：***IList\<T>***  导入的数据集合。
 
-**ValidationResults**：***IList\<ValidationResultModel>*** 数据验证结果。
++ **ValidationResults**：***IList\<ValidationResultModel>*** 数据验证结果。
 
-**HasValidTemplate**：***bool*** 模板验证是否通过。
++ **HasValidTemplate**：***bool*** 模板验证是否通过。
 
-数据验证结果（**ValidationResultModel**）：
+>数据验证结果（**ValidationResultModel**）：
 
-**Index**：***int***  错误数据所在行。
++ **Index**：***int***  错误数据所在行。
 
-**Errors**：***IDictionary<string, string>*** 整个Excel错误集合。目前仅支持数据验证错误。
++ **Errors**：***IDictionary<string, string>*** 整个Excel错误集合。目前仅支持数据验证错误。
 
-**FieldErrors**：***IDictionary<string, string>*** 数据验证错误。
++ **FieldErrors**：***IDictionary<string, string>*** 数据验证错误。
 
+---
 #### Demo2-1 普通模板
 ##### 生成模板
 ![](./res/2-1.png "Demo2-1")
 
 >
-
     public class ImportProductDto
     {
         /// <summary>
@@ -216,9 +220,12 @@
         [ImporterHeader(Name = "产品条码")]
         public string BarCode { get; set; }
     }
+
 ##### 导入模板
 ![](./res/2-3.png "Demo2-3")
 ![](./res/2-4.png "Demo2-4")
+
+---
 #### Demo2-2 多数据类型
 ##### 生成模板
 ![](./res/2-2.png "Demo2-2")
@@ -300,6 +307,8 @@
 ##### 导入模板
 ![](./res/2-5.png "Demo2-5")
 ![](./res/2-6.png "Demo2-6")
+
+---
 #### Demo2-3 数据验证
 ##### 生成模板
 ***必填项表头文本为红色***
