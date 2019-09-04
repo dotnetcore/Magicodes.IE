@@ -11,13 +11,13 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// <summary>
         /// 产品名称
         /// </summary>
-        [ImporterHeader(Name = "产品名称")]
+        [ImporterHeader(Name = "产品名称",Description ="必填")]
         [Required(ErrorMessage = "产品名称是必填的")]
         public string Name { get; set; }
         /// <summary>
         /// 产品代码
         /// </summary>
-        [ImporterHeader(Name = "产品代码")]
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为8")]
         [MaxLength(8,ErrorMessage = "产品代码最大长度为8")]
         public string Code { get; set; }
         /// <summary>

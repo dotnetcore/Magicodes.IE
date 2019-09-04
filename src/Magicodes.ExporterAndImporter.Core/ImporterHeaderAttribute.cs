@@ -14,5 +14,15 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 显示名称
         /// </summary>
         public string Name { set; get; }
+
+        /// <summary>
+        /// 批注
+        /// </summary>
+        public string Description { set; get; }
+
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public string Author { set; get; } = "X.M";
     }
 }

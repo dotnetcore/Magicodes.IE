@@ -181,13 +181,15 @@ namespace Magicodes.ExporterAndImporter.Excel
             for (var i = 0; i < columnHeaders.Count; i++)
             {
                 worksheet.Cells[1, i + 1].Value = columnHeaders[i].ExporterHeader.Name;
+                if (!string.IsNullOrWhiteSpace(columnHeaders[i].ExporterHeader.Description))
+                {
+                    worksheet.Cells[1, i + 1].AddComment(columnHeaders[i].ExporterHeader.Description, columnHeaders[i].ExporterHeader.Author);
+                }
                 if (columnHeaders[i].IsRequired)
                 {
                     worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.Red);
                 }
             }
-                
-
             worksheet.Cells.AutoFitColumns();
             worksheet.Cells.Style.WrapText = true;
             worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
