@@ -269,58 +269,70 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             for (var index = 2; index <= worksheet.Dimension.End.Row; index++)
             {
-                var dataItem = new T();
-                foreach (var propertyInfo in propertyInfos)
+                int isNullNumber = 1;
+                for (int column = 1; column < worksheet.Dimension.End.Column; column++)
                 {
-                    var cell = worksheet.Cells[index,
-                        columnHeaders.FindIndex(a => a.PropertyName == propertyInfo.Name) + 1];
-                    switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
+                    if (worksheet.Cells[index, column].Text == "")
                     {
-                        case "enum":
-                            var enumDisplayNames = EnumHelper.GetDisplayNames(propertyInfo.PropertyType);
-                            if (enumDisplayNames.ContainsKey(cell.Value?.ToString() ?? throw new ArgumentException()))
-                            {
-                                propertyInfo.SetValue(dataItem,
-                                    enumDisplayNames[cell.Value?.ToString()]);
-                            }
-                            else
-                            {
-                                throw new ArgumentException($"值 {cell.Value} 不存在模板下拉选项中");
-                            }
-                            continue;
+                        isNullNumber++;
                     }
 
-                    switch (propertyInfo.PropertyType.Name.ToLower())
-                    {
-                        case "boolean":
-                            var value = false;
-                            if (cell.Value != null) value = cell.Value.ToString() == "是";
-                            propertyInfo.SetValue(dataItem, value);
-                            break;
-                        case "string":
-                            propertyInfo.SetValue(dataItem, cell.Value?.ToString());
-                            break;
-                        case "long":
-                        case "int64":
-                            propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
-                            break;
-                        case "int":
-                        case "int32":
-                            propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
-                            break;
-                        case "decimal":
-                            propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
-                            break;
-                        case "double":
-                            propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
-                            break;
-                        default:
-                            propertyInfo.SetValue(dataItem, cell.Value?.ToString());
-                            break;
-                    }
                 }
+                if (isNullNumber < worksheet.Dimension.End.Column)
+                {
+                    var dataItem = new T();
+                    foreach (var propertyInfo in propertyInfos)
+                    {
+                        var cell = worksheet.Cells[index,
+                            columnHeaders.FindIndex(a => a.PropertyName == propertyInfo.Name) + 1];
+                        switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
+                        {
+                            case "enum":
+                                var enumDisplayNames = EnumHelper.GetDisplayNames(propertyInfo.PropertyType);
+                                if (enumDisplayNames.ContainsKey(cell.Value?.ToString() ?? throw new ArgumentException()))
+                                {
+                                    propertyInfo.SetValue(dataItem,
+                                        enumDisplayNames[cell.Value?.ToString()]);
+                                }
+                                else
+                                {
+                                    throw new ArgumentException($"值 {cell.Value} 不存在模板下拉选项中");
+                                }
+                                continue;
+                        }
 
-                importDataModels.Add(dataItem);
+                        switch (propertyInfo.PropertyType.Name.ToLower())
+                        {
+                            case "boolean":
+                                var value = false;
+                                if (cell.Value != null) value = cell.Value.ToString() == "是";
+                                propertyInfo.SetValue(dataItem, value);
+                                break;
+                            case "string":
+                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                                break;
+                            case "long":
+                            case "int64":
+                                propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
+                                break;
+                            case "int":
+                            case "int32":
+                                propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
+                                break;
+                            case "decimal":
+                                propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
+                                break;
+                            case "double":
+                                propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
+                                break;
+                            default:
+                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                                break;
+                        }
+                    }
+
+                    importDataModels.Add(dataItem);
+                }
             }
 
             return importDataModels;
