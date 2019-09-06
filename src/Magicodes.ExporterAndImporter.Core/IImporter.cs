@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core.Models;
 
@@ -31,5 +32,13 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="filePath"></param>
         /// <returns></returns>
         Task<ImportModel<T>> Import<T>(string filePath) where T : class, new();
+
+        /// <summary>
+        /// 导入模型验证数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        Task<ImportModel<T>> Import<T>(Stream stream) where T : class, new();
     }
 }

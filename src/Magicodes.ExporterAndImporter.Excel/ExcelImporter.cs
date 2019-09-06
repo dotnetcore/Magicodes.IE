@@ -63,47 +63,26 @@ namespace Magicodes.ExporterAndImporter.Excel
                 new List<ValidationResultModel>();
             using (Stream stream = new FileStream(filePath, FileMode.Open))
             {
-                using (var excelPackage = new ExcelPackage(stream))
+                return Import<T>(stream);
+            }
+        }
+
+        /// <summary>
+        /// 导入模型验证数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        public Task<ImportModel<T>> Import<T>(Stream stream) where T : class, new()
+        {
+            IList<ValidationResultModel> validationResultModels =
+               new List<ValidationResultModel>();
+            using (var excelPackage = new ExcelPackage(stream))
+            {
+                var hasValidTemplate = ParseTemplate<T>(excelPackage, out var columnHeaders);
+                IList<T> importDataModels = new List<T>();
+                if (!hasValidTemplate)
                 {
-                    var hasValidTemplate = ParseTemplate<T>(excelPackage, out var columnHeaders);
-                    IList<T> importDataModels = new List<T>();
-                    if (hasValidTemplate)
-                    {
-                        importDataModels = ParseData<T>(excelPackage, columnHeaders);
-                        for (var i = 0; i < importDataModels.Count; i++)
-                        {
-                            var validationResultModel = new ValidationResultModel
-                            {
-                                Index = i + 1
-                            };
-                            var keyName = "Invalid";
-                            var isValid = ValidatorHelper.TryValidate(importDataModels[i], out var validationResults);
-                            if (!isValid)
-                            {
-                                if (!validationResultModel.Errors.ContainsKey(keyName))
-                                    validationResultModel.Errors.Add(keyName, "导入数据无效");
-                                foreach (var validationResult in validationResults)
-                                { 
-                                    var key = validationResult.MemberNames.First();
-                                    var column = columnHeaders.FirstOrDefault(a => a.PropertyName == key);
-                                    if (column != null)
-                                    {
-                                        key = column.ExporterHeader.Name;
-                                    }
-                                    var value = validationResult.ErrorMessage;
-                                    if (validationResultModel.FieldErrors.ContainsKey(key))
-                                        validationResultModel.FieldErrors[key] =
-                                            validationResultModel.FieldErrors[key] + "," + value;
-                                    else
-                                        validationResultModel.FieldErrors.Add(key, value);
-                                }
-                            }
-
-                            if (validationResultModel.Errors.Count > 0)
-                                validationResultModels.Add(validationResultModel);
-                        }
-                    }
-
                     return Task.FromResult(new ImportModel<T>
                     {
                         HasValidTemplate = hasValidTemplate,
@@ -111,6 +90,48 @@ namespace Magicodes.ExporterAndImporter.Excel
                         ValidationResults = validationResultModels
                     });
                 }
+
+                importDataModels = ParseData<T>(excelPackage, columnHeaders);
+                string keyName = "Invalid";
+                for (var i = 0; i < importDataModels.Count; i++)
+                {
+                    var validationResultModel = new ValidationResultModel
+                    {
+                        Index = i + 1
+                    };
+                    var isValid = ValidatorHelper.TryValidate(importDataModels[i], out var validationResults);
+                    if (isValid)
+                    {
+                        continue;
+                    }
+                    if (!validationResultModel.Errors.ContainsKey(keyName))
+                        validationResultModel.Errors.Add(keyName, "导入数据无效");
+                    foreach (var validationResult in validationResults)
+                    {
+                        var key = validationResult.MemberNames.First();
+                        var column = columnHeaders.FirstOrDefault(a => a.PropertyName == key);
+                        if (column != null)
+                        {
+                            key = column.ExporterHeader.Name;
+                        }
+                        var value = validationResult.ErrorMessage;
+                        if (validationResultModel.FieldErrors.ContainsKey(key))
+                            validationResultModel.FieldErrors[key] =
+                                validationResultModel.FieldErrors[key] + "," + value;
+                        else
+                            validationResultModel.FieldErrors.Add(key, value);
+                    }
+
+                    if (validationResultModel.Errors.Count > 0)
+                        validationResultModels.Add(validationResultModel);
+                }
+
+                return Task.FromResult(new ImportModel<T>
+                {
+                    HasValidTemplate = hasValidTemplate,
+                    Data = importDataModels,
+                    ValidationResults = validationResultModels
+                });
             }
         }
 
@@ -313,17 +334,21 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 break;
                             case "long":
                             case "int64":
-                                propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
+                                long.TryParse(cell.Value?.ToString(), out long longValue);
+                                propertyInfo.SetValue(dataItem, longValue);
                                 break;
                             case "int":
                             case "int32":
-                                propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
+                                int.TryParse(cell.Value?.ToString(), out int intValue);
+                                propertyInfo.SetValue(dataItem, intValue);
                                 break;
                             case "decimal":
-                                propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
+                                decimal.TryParse(cell.Value?.ToString(), out decimal decimalValue);
+                                propertyInfo.SetValue(dataItem, decimalValue);
                                 break;
                             case "double":
-                                propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
+                                double.TryParse(cell.Value?.ToString(), out double doubleValue);
+                                propertyInfo.SetValue(dataItem, doubleValue);
                                 break;
                             default:
                                 propertyInfo.SetValue(dataItem, cell.Value?.ToString());

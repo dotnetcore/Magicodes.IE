@@ -32,5 +32,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
+
+        [Fact(DisplayName = "根据文件流导入")]
+        public async Task ImporterStream_Test()
+        {
+            string filePath = @"D:\NewDeskTop\test.xls";
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var import = await Importer.Import<ImportProductDto>(fs);
+            import.ShouldNotBeNull();
+        }
     }
 }
