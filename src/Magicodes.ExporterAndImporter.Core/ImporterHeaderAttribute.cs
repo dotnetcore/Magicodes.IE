@@ -24,5 +24,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 作者
         /// </summary>
         public string Author { set; get; } = "X.M";
+
+        /// <summary>
+        /// 自动过滤空格，默认启用
+        /// </summary>
+        public bool AutoTrim { get; set; } = true;
     }
 }

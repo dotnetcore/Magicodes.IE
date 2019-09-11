@@ -10,5 +10,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         {
             return string.IsNullOrWhiteSpace(str);
         }
+
+
     }
 }

@@ -83,7 +83,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 if (!validationResultModel.Errors.ContainsKey(keyName))
                                     validationResultModel.Errors.Add(keyName, "导入数据无效");
                                 foreach (var validationResult in validationResults)
-                                { 
+                                {
                                     var key = validationResult.MemberNames.First();
                                     var column = columnHeaders.FirstOrDefault(a => a.PropertyName == key);
                                     if (column != null)
@@ -146,20 +146,28 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return false;
             for (var i = 0; i < objProperties.Length; i++)
             {
+                //TODO:简化并重构
+                //如果不设置，则自动使用默认定义
                 var importerHeaderAttribute =
                     (objProperties[i].GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
-                        ImporterHeaderAttribute[])?.FirstOrDefault();
-                if (importerHeaderAttribute == null || string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
-                    throw new ArgumentException("导入实体没有定义ImporterHeader属性");
+                        ImporterHeaderAttribute[])?.FirstOrDefault() ?? new ImporterHeaderAttribute()
+                        {
+                            Name = (objProperties[i].GetCustomAttribute(typeof(DisplayAttribute), true) as DisplayAttribute)?.Name ?? objProperties[i].Name
+                        };
+
+                if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
+                {
+                    importerHeaderAttribute.Name = (objProperties[i].GetCustomAttribute(typeof(DisplayAttribute), true) as DisplayAttribute)?.Name ?? objProperties[i].Name;
+                }
+
+
                 var requiredAttribute = (objProperties[i].GetCustomAttributes(typeof(RequiredAttribute), true) as
                     RequiredAttribute[])?.FirstOrDefault();
                 importerHeaderList.Add(new ImporterHeaderInfo
                 {
                     IsRequired = requiredAttribute != null,
                     PropertyName = objProperties[i].Name,
-                    ExporterHeader =
-                        (objProperties[i].GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
-                            ImporterHeaderAttribute[])?.FirstOrDefault()
+                    ExporterHeader = importerHeaderAttribute
                 });
                 if (objProperties[i].PropertyType.BaseType?.Name.ToLower() == "enum")
                     enumColumns.Add(i + 1, EnumHelper.GetDisplayNames(objProperties[i].PropertyType));
@@ -229,25 +237,33 @@ namespace Magicodes.ExporterAndImporter.Excel
             ParseImporterHeader<T>(out columnHeaders, out var enumColumns, out var boolColumns);
             try
             {
-                var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name];
-                if (worksheet == null) return false;
+                //根据名称获取Sheet，如果不存在则取第一个
+                var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name] ?? excelPackage.Workbook.Worksheets[1];
                 for (var i = 0; i < columnHeaders.Count; i++)
                 {
                     var header = worksheet.Cells[1, i + 1].Text;
+
                     if (columnHeaders[i].ExporterHeader != null &&
                         !string.IsNullOrWhiteSpace(columnHeaders[i].ExporterHeader.Name))
                     {
-                        if (header != columnHeaders[i].ExporterHeader.Name) return false;
+                        if (string.IsNullOrWhiteSpace(header))
+                        {
+                            //TODO:仅约束必填字段
+                            throw new Exception($"模板中必须包含此字段：{columnHeaders[i].ExporterHeader.Name}！");
+                        }
+                        if (header != columnHeaders[i].ExporterHeader.Name)
+                            throw new Exception($"列头不一致：【{header}】与【{columnHeaders[i].ExporterHeader.Name}】不一致，请修正模板！");
                     }
                     else
                     {
-                        if (header != columnHeaders[i].PropertyName) return false;
+                        if (header != columnHeaders[i].PropertyName)
+                            throw new Exception($"列头不一致：【{header}】与【{columnHeaders[i].PropertyName}】不一致，请修正模板！");
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
 
             return true;
@@ -262,7 +278,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         private IList<T> ParseData<T>(ExcelPackage excelPackage, List<ImporterHeaderInfo> columnHeaders)
             where T : class, new()
         {
-            var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name];
+            var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name] ?? excelPackage.Workbook.Worksheets[1];
             if (worksheet.Dimension.End.Row > 5000) throw new ArgumentException("最大允许导入条数不能超过5000条");
             IList<T> importDataModels = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
@@ -272,7 +288,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 int isNullNumber = 1;
                 for (int column = 1; column < worksheet.Dimension.End.Column; column++)
                 {
-                    if (worksheet.Cells[index, column].Text == "")
+                    if (worksheet.Cells[index, column].Text == string.Empty)
                     {
                         isNullNumber++;
                     }
@@ -309,7 +325,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 propertyInfo.SetValue(dataItem, value);
                                 break;
                             case "string":
-                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                                //TODO:进一步优化
+                                if (columnHeaders.First(p => p.PropertyName == propertyInfo.Name).ExporterHeader.AutoTrim)
+                                {
+                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString().Trim());
+                                }
+                                else
+                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString());
                                 break;
                             case "long":
                             case "int64":

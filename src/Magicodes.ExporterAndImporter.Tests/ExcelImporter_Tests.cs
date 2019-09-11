@@ -17,9 +17,21 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "导入")]
         public async Task Importer_Test()
         {
-            var import = await Importer.Import<ImportProductDto>(
-                @"G:\GitCodes\Magicodes.ExporterAndImporter\src\Magicodes.ExporterAndImporter.Tests\Models\testTemplate.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Models", "产品导入模板.xlsx");
+            var import = await Importer.Import<ImportProductDto>(filePath);
             import.ShouldNotBeNull();
+            import.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
+            foreach (var item in import.Data)
+            {
+                if (item.Name.Contains("空格测试"))
+                {
+                    item.Name.ShouldBe(item.Name.Trim());
+                }
+                if (item.Code.Contains("不去除空格测试"))
+                {
+                    item.Code.ShouldContain(" ");
+                }
+            }
         }
 
         [Fact(DisplayName = "生成模板")]

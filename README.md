@@ -21,6 +21,16 @@
 | Magicodes.IE.Core  |  [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core) |
 | Magicodes.IE.Excel |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)   |
 
+
+### 更新历史
+
+#### 2019.9.11
+
+- 导入支持自动去除前后空格，默认启用，可以针对列进行关闭，具体见AutoTrim设置
+- 导入Dto的字段允许不设置ImporterHeader，支持通过DisplayAttribute特性获取列名
+- 导入的Excel移除对Sheet名称的约束，默认获取第一个Sheet
+- 完善导入的单元测试
+
 ### 导出 Demo
 
 
