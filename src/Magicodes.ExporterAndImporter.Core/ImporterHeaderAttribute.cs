@@ -29,5 +29,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 自动过滤空格，默认启用
         /// </summary>
         public bool AutoTrim { get; set; } = true;
+
+        /// <summary>
+        /// 处理掉所有的空格，包括中间空格
+        /// </summary>
+        public bool FixAllSpace { get; set; }
     }
 }

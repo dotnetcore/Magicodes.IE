@@ -23,7 +23,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// <summary>
         /// 产品条码
         /// </summary>
-        [ImporterHeader(Name = "产品条码")]
+        [ImporterHeader(Name = "产品条码", FixAllSpace = true)]
         [MaxLength(10, ErrorMessage = "产品条码最大长度为10")]
         [RegularExpression(@"^\d*$", ErrorMessage = "产品条码只能是数字")]
         public string BarCode { get; set; }
@@ -61,7 +61,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// 重量（支持不设置ImporterHeader）
         /// </summary>
         //[ImporterHeader(Name = "重量(KG)")]
-        [Display(Name= "重量(KG)")]
+        [Display(Name = "重量(KG)")]
         public double Weight { get; set; }
 
         /// <summary>
@@ -75,5 +75,14 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// </summary>
         [ImporterHeader(Name = "是否行")]
         public bool IsOk { get; set; }
+
+        [ImporterHeader(Name = "公式测试")]
+        public DateTime FormulaTest { get; set; }
+
+        [ImporterHeader(Name = "身份证")]
+        public string IdNo { get; set; }
+
+        [Display(Name = "性别")]
+        public string Sex { get; set; }
     }
 }

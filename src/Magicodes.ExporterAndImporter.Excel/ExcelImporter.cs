@@ -301,6 +301,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         var cell = worksheet.Cells[index,
                             columnHeaders.FindIndex(a => a.PropertyName == propertyInfo.Name) + 1];
+
                         switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
                         {
                             case "enum":
@@ -321,12 +322,18 @@ namespace Magicodes.ExporterAndImporter.Excel
                         {
                             case "boolean":
                                 var value = false;
-                                if (cell.Value != null) value = cell.Value.ToString() == "是";
+                                if (cell.Value != null) value = cell.Value?.ToString() == "是";
                                 propertyInfo.SetValue(dataItem, value);
                                 break;
                             case "string":
                                 //TODO:进一步优化
-                                if (columnHeaders.First(p => p.PropertyName == propertyInfo.Name).ExporterHeader.AutoTrim)
+                                var cHeader = columnHeaders.First(p => p.PropertyName == propertyInfo.Name).ExporterHeader;
+                                //移除所有的空格，包括中间的空格
+                                if (cHeader.FixAllSpace)
+                                {
+                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString().Replace(" ", string.Empty));
+                                }
+                                else if (cHeader.AutoTrim)
                                 {
                                     propertyInfo.SetValue(dataItem, cell.Value?.ToString().Trim());
                                 }
@@ -348,7 +355,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                                 propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
                                 break;
                             default:
-                                propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                                propertyInfo.SetValue(dataItem, cell.Value);
                                 break;
                         }
                     }

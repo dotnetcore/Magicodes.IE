@@ -31,7 +31,17 @@ namespace Magicodes.ExporterAndImporter.Tests
                 {
                     item.Code.ShouldContain(" ");
                 }
+                //去除中间空格测试
+                item.BarCode.ShouldBe("123123");
             }
+            //提取性别公式测试
+            import.Data[0].Sex.ShouldBe("女");
+            //获取当前日期以及日期类型测试
+            import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
+            //数值测试
+            import.Data[0].DeclareValue.ShouldBe(123123);
+
+
         }
 
         [Fact(DisplayName = "生成模板")]

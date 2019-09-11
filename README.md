@@ -29,6 +29,8 @@
 - 导入支持自动去除前后空格，默认启用，可以针对列进行关闭，具体见AutoTrim设置
 - 导入Dto的字段允许不设置ImporterHeader，支持通过DisplayAttribute特性获取列名
 - 导入的Excel移除对Sheet名称的约束，默认获取第一个Sheet
+- 导入增加对中间空格的处理支持，需设置FixAllSpace
+- 导入完善对日期类型的支持
 - 完善导入的单元测试
 
 ### 导出 Demo
