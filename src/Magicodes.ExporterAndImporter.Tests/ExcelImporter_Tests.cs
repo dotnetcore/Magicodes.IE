@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
             //提取性别公式测试
             import.Data[0].Sex.ShouldBe("女");
-            //获取当前日期以及日期类型测试
+            //获取当前日期以及日期类型测试  如果时间不对，请打开对应的Excel即可更新为当前时间，然后再运行此单元测试
             import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
             //数值测试
             import.Data[0].DeclareValue.ShouldBe(123123);

@@ -9,10 +9,10 @@
 - 推荐配合 DTO 使用
 - 导出支持列头自定义处理以便支持多语言等场景
 - 导出支持文本自定义过滤或处理
-- 导入支持自动根据 DTO 生成导入模板及模板验证
+- 导入支持自动根据 DTO 生成导入模板及进行模板验证
 - 导入支持数据验证逻辑
 - 导入支持数据下拉选择
-- 导入支持注释添加
+- 导入数据支持前后空格以及中间空格处理，允许指定列进行设置
 
 ### 相关官方Nuget包
 
@@ -21,6 +21,9 @@
 | Magicodes.IE.Core  |  [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core) |
 | Magicodes.IE.Excel |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)   |
 
+### VNext
+
+- 统一导入错误信息，支持统一返回模板校验错误信息和数据校验错误信息
 
 ### 更新历史
 

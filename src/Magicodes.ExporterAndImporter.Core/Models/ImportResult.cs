@@ -3,17 +3,17 @@
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
-    /// 导入模型
+    /// 导入结果
     /// </summary>
-    public class ImportModel<T>
+    public class ImportResult<T>
     {
         /// <summary>
-        ///     Gets or sets the data.
+        ///     导入数据
         /// </summary>
         public IList<T> Data { get; set; }
 
         /// <summary>
-        ///     Gets or sets the validation results.
+        ///     验证结果
         /// </summary>
         public IList<ValidationResultModel> ValidationResults { get; set; }
 

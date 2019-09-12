@@ -56,7 +56,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public Task<ImportModel<T>> Import<T>(string filePath) where T : class, new()
+        public Task<ImportResult<T>> Import<T>(string filePath) where T : class, new()
         {
             CheckImportFile(filePath);
             IList<ValidationResultModel> validationResultModels =
@@ -104,7 +104,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         }
                     }
 
-                    return Task.FromResult(new ImportModel<T>
+                    return Task.FromResult(new ImportResult<T>
                     {
                         HasValidTemplate = hasValidTemplate,
                         Data = importDataModels,
