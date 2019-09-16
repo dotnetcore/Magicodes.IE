@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Magicodes.ExporterAndImporter.Tests.Models
+﻿namespace Magicodes.ExporterAndImporter.Tests.Models
 {
     public class ExportTestData
     {

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Excel.Builder
 {
+    /// <summary>
+    /// Excel表头多语言处理
+    /// </summary>
     public class ExcelBuilder
     {
-        Func<string, string> ColumnHeaderStringFunc { get; set; }
-
-        private ExcelBuilder() { }
+        private Func<string, string> ColumnHeaderStringFunc { get; set; }
 
         /// <summary>
         ///     创建实例
@@ -28,6 +27,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
             columnHeaderStringFunc)
         {
             ColumnHeaderStringFunc = columnHeaderStringFunc;
+
             return this;
         }
 
@@ -37,8 +37,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         public void Build()
         {
             if (ColumnHeaderStringFunc != null)
+            {
                 ExcelExporter.ColumnHeaderStringFunc = ColumnHeaderStringFunc;
+            }
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
@@ -13,6 +12,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             var context = new ValidationContext(obj, null, null);
             validationResults = new List<ValidationResult>();
+
             return Validator.TryValidateObject(obj, context, validationResults, true);
         }
     }

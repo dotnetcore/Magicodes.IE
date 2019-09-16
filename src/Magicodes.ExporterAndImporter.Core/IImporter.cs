@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using Magicodes.ExporterAndImporter.Core.Models;
 using System.IO;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Core
 {

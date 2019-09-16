@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Magicodes.ExporterAndImporter.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="globalStyle">全局样式</param>
         /// <param name="styles">样式</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null);
+        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null, IList<ExcelHeadStyle> styles = null);
 
         /// <summary>
         ///     导出Excel表头

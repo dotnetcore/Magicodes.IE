@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Magicodes.ExporterAndImporter.Core.Extension
+﻿namespace Magicodes.ExporterAndImporter.Core.Extension
 {
     public static class Extension
     {

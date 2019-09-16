@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Magicodes.ExporterAndImporter.Core.Models
+﻿namespace Magicodes.ExporterAndImporter.Core.Models
 {
     public class ExcelFileInfo
     {
@@ -20,7 +16,6 @@ namespace Magicodes.ExporterAndImporter.Core.Models
 
         public ExcelFileInfo()
         {
-
         }
 
         public ExcelFileInfo(string fileName, string fileType)

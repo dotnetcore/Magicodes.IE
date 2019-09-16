@@ -2,12 +2,12 @@
 
 namespace Magicodes.ExporterAndImporter.Core
 {
+    /// <summary>
+    /// Excel导出属性配置
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ExporterAttribute : Attribute
     {
-        public ExporterAttribute()
-        {
-        }
 
         /// <summary>
         /// 名称(比如当前Sheet 名称)

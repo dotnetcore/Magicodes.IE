@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models;
-using Xunit;
-using System.IO;
 using Shouldly;
+using System.IO;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -22,23 +20,26 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.ShouldNotBeNull();
         }
 
-        [Fact(DisplayName = "生成模板")]
+        [Fact(DisplayName = "根据文件路径导入")]
         public async Task GenerateTemplate_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
+            //var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
+            //if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            //var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            //result.ShouldNotBeNull();
+            //File.Exists(filePath).ShouldBeTrue();
+            string filePath = @"D:\NewDeskTop\t2.xls";
+            var result = Importer.Import<ProductDto>(filePath);
             result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
         }
 
         [Fact(DisplayName = "根据文件流导入")]
         public async Task ImporterStream_Test()
         {
-            string filePath = @"D:\NewDeskTop\test.xls";
+            string filePath = @"D:\NewDeskTop\t2.xlsx";
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var import = await Importer.Import<ImportProductDto>(fs);
+            var import = Importer.Import<ProductDto>(fs);
             import.ShouldNotBeNull();
         }
     }

@@ -2,14 +2,12 @@
 
 namespace Magicodes.ExporterAndImporter.Core
 {
+    /// <summary>
+    /// Excel导入表头属性配置
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class ImporterHeaderAttribute : Attribute
     {
-        public ImporterHeaderAttribute()
-        {
-            
-        }
-
         /// <summary>
         /// 显示名称
         /// </summary>
