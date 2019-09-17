@@ -20,6 +20,11 @@ namespace Magicodes.ExporterAndImporter.Excel
     public class ExcelImporter : IImporter
     {
         /// <summary>
+        /// 单个sheet页限制最大导入行数
+        /// </summary>
+        private const int _maxRowNumber = 65000;
+
+        /// <summary>
         ///     生成Excel导入模板
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -28,10 +33,16 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExcelFileInfo> GenerateTemplate<T>(string fileName) where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            }
 
-            var fileInfo =
-                ExcelHelper.CreateExcelPackage(fileName, excelPackage => { StructureExcel<T>(excelPackage); });
+            ExcelFileInfo fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
+             {
+                 StructureExcel<T>(excelPackage);
+             });
+
             return Task.FromResult(fileInfo);
         }
 
@@ -45,6 +56,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             using (var excelPackage = new ExcelPackage())
             {
                 StructureExcel<T>(excelPackage);
+
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
         }
@@ -73,11 +85,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public Task<ImportModel<T>> Import<T>(Stream stream) where T : class, new()
         {
-            IList<ValidationResultModel> validationResultModels =
-               new List<ValidationResultModel>();
+            IList<ValidationResultModel> validationResultModels = new List<ValidationResultModel>();
             using (var excelPackage = new ExcelPackage(stream))
             {
-                var hasValidTemplate = ParseTemplate<T>(excelPackage, out var columnHeaders);
+                bool hasValidTemplate = ParseTemplate<T>(excelPackage, out var columnHeaders);
                 IList<T> importDataModels = new List<T>();
                 if (!hasValidTemplate)
                 {
@@ -97,6 +108,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         Index = i + 1
                     };
+
                     var isValid = ValidatorHelper.TryValidate(importDataModels[i], out var validationResults);
                     if (isValid)
                     {
@@ -111,16 +123,16 @@ namespace Magicodes.ExporterAndImporter.Excel
                     foreach (var validationResult in validationResults)
                     {
                         var key = validationResult.MemberNames.First();
-                        var column = columnHeaders.FirstOrDefault(a => a.PropertyName == key);
+                        var column = columnHeaders.FirstOrDefault(a => a.PropertyName.Equals(key));
                         if (column != null)
                         {
                             key = column.ExporterHeader.Name;
                         }
+
                         var value = validationResult.ErrorMessage;
                         if (validationResultModel.FieldErrors.ContainsKey(key))
                         {
-                            validationResultModel.FieldErrors[key] =
-                               validationResultModel.FieldErrors[key] + "," + value;
+                            validationResultModel.FieldErrors[key] = validationResultModel.FieldErrors[key] + "," + value;
                         }
                         else
                         {
@@ -187,7 +199,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         ImporterHeaderAttribute[])?.FirstOrDefault();
                 if (importerHeaderAttribute == null || string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                 {
-                    throw new ArgumentException("导入实体没有定义ImporterHeader属性");
+                    throw new ArgumentException($"导入实体{typeof(T)}未定义ImporterHeaderAttribute属性");
                 }
 
                 var requiredAttribute = (objProperties[i].GetCustomAttributes(typeof(RequiredAttribute), true) as
@@ -199,7 +211,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     ExporterHeader = importerHeaderAttribute
                 });
 
-                if (objProperties[i].PropertyType.BaseType?.Name.ToLower() == "enum")
+                if ("enum".Equals(objProperties[i].PropertyType.BaseType?.Name.ToLower()))
                 {
                     enumColumns.Add(i + 1, EnumHelper.GetDisplayNames(objProperties[i].PropertyType));
                 }
@@ -318,10 +330,21 @@ namespace Magicodes.ExporterAndImporter.Excel
         private IList<T> ParseData<T>(ExcelPackage excelPackage, List<ImporterHeaderInfo> columnHeaders)
             where T : class, new()
         {
-            var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name];
-            if (worksheet.Dimension.End.Row > 5000)
+            ExcelImporterAttribute excelImporterAttribute = GetImporterAttribute<T>();
+            if (null == excelImporterAttribute)
             {
-                throw new ArgumentException("最大允许导入条数不能超过5000条");
+                throw new ArgumentException($"导入实体{typeof(T)}未定义ExcelImporterAttribute属性");
+            }
+
+            if (excelImporterAttribute.MaxRowNumber > _maxRowNumber)
+            {
+                excelImporterAttribute.MaxRowNumber = _maxRowNumber;
+            }
+
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[excelImporterAttribute.SheetName];
+            if (worksheet.Dimension.End.Row > _maxRowNumber)
+            {
+                throw new ArgumentException($"最大允许导入条数不能超过{_maxRowNumber}条");
             }
 
             IList<T> importDataModels = new List<T>();
@@ -329,25 +352,18 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             for (var index = 2; index <= worksheet.Dimension.End.Row; index++)
             {
-                int isNullNumber = 0;
-                for (int column = 1; column <= worksheet.Dimension.End.Column; column++)
-                {
-                    if (worksheet.Cells[index, column].Text == "")
-                    {
-                        isNullNumber++;
-                    }
-                }
-
-                if (isNullNumber >= worksheet.Dimension.End.Column)
+                bool allRowIsEmpty = AllRowIsEmpty(worksheet, index);
+                if (allRowIsEmpty)
                 {
                     // 整行为空，则跳过
                     continue;
                 }
+
                 var dataItem = new T();
                 foreach (var propertyInfo in propertyInfos)
                 {
                     var cell = worksheet.Cells[index,
-                        columnHeaders.FindIndex(a => a.PropertyName == propertyInfo.Name) + 1];
+                        columnHeaders.FindIndex(a => a.PropertyName.Equals(propertyInfo.Name)) + 1];
                     switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
                     {
                         case "enum":
@@ -365,55 +381,117 @@ namespace Magicodes.ExporterAndImporter.Excel
                             continue;
                     }
 
-                    switch (propertyInfo.PropertyType.Name.ToLower())
-                    {
-                        case "boolean":
-                            var value = false;
-                            if (cell.Value != null) value = cell.Value.ToString() == "是";
-                            propertyInfo.SetValue(dataItem, value);
-                            break;
+                    SetCellValue(propertyInfo, cell, dataItem);
 
-                        case "string":
-                            propertyInfo.SetValue(dataItem, cell.Value?.ToString());
-                            break;
-
-                        case "long":
-                        case "int64":
-                            long.TryParse(cell.Value?.ToString(), out long longValue);
-                            propertyInfo.SetValue(dataItem, longValue);
-                            break;
-
-                        case "int":
-                        case "int32":
-                            int.TryParse(cell.Value?.ToString(), out int intValue);
-                            propertyInfo.SetValue(dataItem, intValue);
-                            break;
-
-                        case "decimal":
-                            decimal.TryParse(cell.Value?.ToString(), out decimal decimalValue);
-                            propertyInfo.SetValue(dataItem, decimalValue);
-                            break;
-
-                        case "double":
-                            double.TryParse(cell.Value?.ToString(), out double doubleValue);
-                            propertyInfo.SetValue(dataItem, doubleValue);
-                            break;
-
-                        case "datetime":
-                            DateTime.TryParse(cell.Value?.ToString(), out DateTime dateTimeValue);
-                            propertyInfo.SetValue(dataItem, dateTimeValue);
-                            break;
-
-                        default:
-                            propertyInfo.SetValue(dataItem, cell.Value?.ToString());
-                            break;
-                    }
+                    importDataModels.Add(dataItem);
                 }
-
-                importDataModels.Add(dataItem);
             }
 
             return importDataModels;
+        }
+
+        /// <summary>
+        /// 获取导入全局定义
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static ExcelImporterAttribute GetImporterAttribute<T>() where T : class
+        {
+            var importerTableAttributes = (typeof(T).GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[]);
+            if (importerTableAttributes != null && importerTableAttributes.Length > 0)
+                return importerTableAttributes[0];
+
+            var importerAttributes = (typeof(T).GetCustomAttributes(typeof(ImporterAttribute), true) as ImporterAttribute[]);
+
+            if (importerAttributes != null && importerAttributes.Length > 0)
+            {
+                var export = importerAttributes[0];
+                return new ExcelImporterAttribute()
+                {
+                    SheetName = typeof(T).Name
+                };
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 判断Excel是否整行都为空
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        private static bool AllRowIsEmpty(ExcelWorksheet worksheet, int rowIndex)
+        {
+            bool allRowIsEmpty = true;
+            int columnNum = worksheet.Dimension.End.Column;
+            for (int columnIndex = 1; columnIndex <= columnNum; columnIndex++)
+            {
+                if (!"".Equals(worksheet.Cells[rowIndex, columnIndex].Text))
+                {
+                    allRowIsEmpty = false;
+                    break;
+                }
+            }
+
+            return allRowIsEmpty;
+        }
+
+        /// <summary>
+        /// 填充属性值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="propertyInfo"></param>
+        /// <param name="cell"></param>
+        /// <param name="dataItem"></param>
+        private static void SetCellValue<T>(PropertyInfo propertyInfo, ExcelRange cell, T dataItem) where T : class
+        {
+            switch (propertyInfo.PropertyType.Name.ToLower())
+            {
+                case "boolean":
+                    var value = false;
+                    if (cell.Value != null)
+                    {
+                        value = "是".Equals(cell.Value.ToString());
+                    }
+                    propertyInfo.SetValue(dataItem, value);
+                    break;
+
+                case "string":
+                    propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                    break;
+
+                case "long":
+                case "int64":
+                    long.TryParse(cell.Value?.ToString(), out long longValue);
+                    propertyInfo.SetValue(dataItem, longValue);
+                    break;
+
+                case "int":
+                case "int32":
+                    int.TryParse(cell.Value?.ToString(), out int intValue);
+                    propertyInfo.SetValue(dataItem, intValue);
+                    break;
+
+                case "decimal":
+                    decimal.TryParse(cell.Value?.ToString(), out decimal decimalValue);
+                    propertyInfo.SetValue(dataItem, decimalValue);
+                    break;
+
+                case "double":
+                    double.TryParse(cell.Value?.ToString(), out double doubleValue);
+                    propertyInfo.SetValue(dataItem, doubleValue);
+                    break;
+
+                case "datetime":
+                    DateTime.TryParse(cell.Value?.ToString(), out DateTime dateTimeValue);
+                    propertyInfo.SetValue(dataItem, dateTimeValue);
+                    break;
+
+                default:
+                    propertyInfo.SetValue(dataItem, cell.Value?.ToString());
+                    break;
+            }
         }
     }
 }
