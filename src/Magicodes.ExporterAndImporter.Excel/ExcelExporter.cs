@@ -130,16 +130,22 @@ namespace Magicodes.ExporterAndImporter.Excel
                 var exporter = GetExporterAttribute<T>();
 
                 if (exporter?.Author != null)
+                {
                     excelPackage.Workbook.Properties.Author = exporter?.Author;
+                }
 
                 var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
                 sheet.OutLineApplyStyle = true;
-                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList)) return null;
+                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList))
+                {
+                    return null;
+                }
+
                 AddHeader(exporterHeaderList, sheet, exporter);
                 AddStyle(exporter, exporterHeaderList, sheet);
+
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -147,32 +153,37 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="exporterHeaderDtoList"></param>
         /// <param name="sheet"></param>
+        /// <param name="exporter"></param>
         protected void AddHeader(List<ExporterHeaderInfo> exporterHeaderDtoList, ExcelWorksheet sheet, ExcelExporterAttribute exporter)
         {
             foreach (var exporterHeaderDto in exporterHeaderDtoList)
             {
-                if (exporterHeaderDto != null)
+                if (null == exporterHeaderDto)
                 {
-                    if (exporterHeaderDto.ExporterHeader != null)
+                    continue;
+                }
+
+                if (exporterHeaderDto.ExporterHeader != null)
+                {
+                    var exporterHeaderAttribute = exporterHeaderDto.ExporterHeader;
+                    if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
                     {
-                        var exporterHeaderAttribute = exporterHeaderDto.ExporterHeader;
-                        if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
+                        var name = exporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace() ? exporterHeaderDto.PropertyName
+                                    : exporterHeaderAttribute.DisplayName;
+
+                        sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(name);
+                        sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
+
+                        var size = exporter?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
+                        if (size.HasValue)
                         {
-                            var name = exporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace() ? exporterHeaderDto.PropertyName
-                                        : exporterHeaderAttribute.DisplayName;
-
-                            sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(name);
-                            sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
-
-                            var size = exporter?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
-                            if (size.HasValue)
-                                sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
+                            sheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
                         }
                     }
-                    else
-                    {
-                        sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(exporterHeaderDto.PropertyName);
-                    }
+                }
+                else
+                {
+                    sheet.Cells[1, exporterHeaderDto.Index].Value = ColumnHeaderStringFunc(exporterHeaderDto.PropertyName);
                 }
             }
         }
@@ -206,10 +217,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         protected void AddDataItems<T>(ExcelWorksheet sheet, List<ExporterHeaderInfo> exporterHeaders, IList<T> items, ExcelExporterAttribute exporter)
         {
             if (items == null || items.Count == 0)
+            {
                 return;
+            }
+
             var tbStyle = TableStyles.Medium10;
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
+            {
                 tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
+            }
             sheet.Cells["A2"].LoadFromCollection(items, false, tbStyle);
         }
 
@@ -223,27 +239,29 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             foreach (var exporterHeader in exporterHeaders)
             {
-                if (exporterHeader.ExporterHeader != null)
+                if (null != exporterHeader.ExporterHeader)
                 {
-                    if (exporterHeader.ExporterHeader.IsIgnore)
-                    {
-                        //TODO:后续直接修改数据导出逻辑（不写忽略列数据）
-                        sheet.DeleteColumn(exporterHeader.Index);
-                        //删除之后，序号依次-1
-                        foreach (var item in exporterHeaders.Where(p => p.Index > exporterHeader.Index))
-                        {
-                            item.Index--;
-                        }
-                        continue;
-                    }
+                    continue;
+                }
 
-                    var col = sheet.Column(exporterHeader.Index);
-                    col.Style.Numberformat.Format = exporterHeader.ExporterHeader.Format;
-
-                    if (exporter.AutoFitAllColumn || exporterHeader.ExporterHeader.IsAutoFit)
+                if (exporterHeader.ExporterHeader.IsIgnore)
+                {
+                    //TODO:后续直接修改数据导出逻辑（不写忽略列数据）
+                    sheet.DeleteColumn(exporterHeader.Index);
+                    //删除之后，序号依次-1
+                    foreach (var item in exporterHeaders.Where(p => p.Index > exporterHeader.Index))
                     {
-                        col.AutoFit();
+                        item.Index--;
                     }
+                    continue;
+                }
+
+                var col = sheet.Column(exporterHeader.Index);
+                col.Style.Numberformat.Format = exporterHeader.ExporterHeader.Format;
+
+                if (exporter.AutoFitAllColumn || exporterHeader.ExporterHeader.IsAutoFit)
+                {
+                    col.AutoFit();
                 }
             }
         }
@@ -257,45 +275,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="styles">样式</param>
         protected void AddStyle(ExcelWorksheet sheet, int columns, ExcelHeadStyle globalStyle = null, IList<ExcelHeadStyle> styles = null)
         {
-            int col = 0;
-            if (styles != null)
+            if (null == styles && null != globalStyle)
             {
-                foreach (var style in styles)
-                {
-                    col++;
-                    if (col > columns)
-                    {
-                        continue;
-                    }
-
-                    if (style.IsIgnore)
-                    {
-                        sheet.DeleteColumn(col);
-                        continue;
-                    }
-
-                    var excelCol = sheet.Column(col);
-                    if (!style.Format.IsNullOrWhiteSpace())
-                    {
-                        excelCol.Style.Numberformat.Format = style.Format;
-                    }
-
-                    excelCol.Style.Font.Bold = style.IsBold;
-                    excelCol.Style.Font.Size = style.FontSize;
-
-                    if (style.IsAutoFit)
-                    {
-                        excelCol.AutoFit();
-                    }
-                }
-            }
-            else
-            {
-                if (null == globalStyle)
-                {
-                    return;
-                }
-
                 for (int i = 1; i <= columns; i++)
                 {
                     if (globalStyle.IsIgnore)
@@ -317,6 +298,38 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         excelCol.AutoFit();
                     }
+                }
+
+                return;
+            }
+
+            int col = 0;
+            foreach (var style in styles)
+            {
+                col++;
+                if (col > columns)
+                {
+                    continue;
+                }
+
+                if (style.IsIgnore)
+                {
+                    sheet.DeleteColumn(col);
+                    continue;
+                }
+
+                var excelCol = sheet.Column(col);
+                if (!style.Format.IsNullOrWhiteSpace())
+                {
+                    excelCol.Style.Numberformat.Format = style.Format;
+                }
+
+                excelCol.Style.Font.Bold = style.IsBold;
+                excelCol.Style.Font.Size = style.FontSize;
+
+                if (style.IsAutoFit)
+                {
+                    excelCol.AutoFit();
                 }
             }
         }

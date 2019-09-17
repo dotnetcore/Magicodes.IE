@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
     <Version>1.0.3</Version>
     <PackageId>Magicodes.IE.Core</PackageId>
     <Authors>湖南心莱信息科技有限公司</Authors>
     <PackageProjectUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</PackageProjectUrl>
   </PropertyGroup>
+  <!--<PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>-->
 </Project>

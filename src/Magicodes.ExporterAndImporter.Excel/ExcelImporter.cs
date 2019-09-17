@@ -35,7 +35,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new ArgumentException("文件名必须填写!", nameof(fileName));
+                throw new ImportException("文件名必须填写!");
             }
 
             ExcelFileInfo fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
@@ -163,7 +163,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
-                throw new ArgumentException("文件路径不能为空!", nameof(filePath));
+                throw new ImportException("文件路径不能为空!");
             }
 
             //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
@@ -199,7 +199,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         ImporterHeaderAttribute[])?.FirstOrDefault();
                 if (importerHeaderAttribute == null || string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                 {
-                    throw new ArgumentException($"导入实体{typeof(T)}未定义ImporterHeaderAttribute属性");
+                    throw new ImportException($"导入实体{typeof(T)}的字段{objProperties[i].ToString()}未定义ImporterHeaderAttribute属性");
                 }
 
                 var requiredAttribute = (objProperties[i].GetCustomAttributes(typeof(RequiredAttribute), true) as
@@ -241,6 +241,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 {
                     worksheet.Cells[1, i + 1].AddComment(columnHeaders[i].ExporterHeader.Description, columnHeaders[i].ExporterHeader.Author);
                 }
+
                 if (columnHeaders[i].IsRequired)
                 {
                     worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.Red);
@@ -282,40 +283,37 @@ namespace Magicodes.ExporterAndImporter.Excel
         private bool ParseTemplate<T>(ExcelPackage excelPackage, out List<ImporterHeaderInfo> columnHeaders)
             where T : class
         {
-            try
+            ExcelImporterAttribute excelImporterAttribute = GetImporterAttribute<T>();
+            if (null == excelImporterAttribute || string.IsNullOrWhiteSpace(excelImporterAttribute.SheetName))
             {
-                var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name];
-                if (null == worksheet)
-                {
-                    columnHeaders = new List<ImporterHeaderInfo>(capacity: 0);
-                    return false;
-                }
-
-                ParseImporterHeader<T>(out columnHeaders, out var enumColumns, out var boolColumns);
-                for (var i = 0; i < columnHeaders.Count; i++)
-                {
-                    var header = worksheet.Cells[1, i + 1].Text;
-                    if (columnHeaders[i].ExporterHeader != null &&
-                        !string.IsNullOrWhiteSpace(columnHeaders[i].ExporterHeader.Name))
-                    {
-                        if (!header.Equals(columnHeaders[i].ExporterHeader.Name))
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        if (!header.Equals(columnHeaders[i].PropertyName))
-                        {
-                            return false;
-                        }
-                    }
-                }
+                throw new ImportException($"导入实体{typeof(T)}未定义ExcelImporterAttribute属性");
             }
-            catch (Exception)
+
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[excelImporterAttribute.SheetName];
+            if (null == worksheet)
             {
-                columnHeaders = new List<ImporterHeaderInfo>(capacity: 0);
-                return false;
+                throw new ImportException($"读取名称为{excelImporterAttribute.SheetName}的sheet页异常，检查sheet页是否存在");
+            }
+
+            ParseImporterHeader<T>(out columnHeaders, out var enumColumns, out var boolColumns);
+            for (var i = 0; i < columnHeaders.Count; i++)
+            {
+                var header = worksheet.Cells[1, i + 1].Text;
+                if (columnHeaders[i].ExporterHeader != null &&
+                    !string.IsNullOrWhiteSpace(columnHeaders[i].ExporterHeader.Name))
+                {
+                    if (!header.Equals(columnHeaders[i].ExporterHeader.Name))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (!header.Equals(columnHeaders[i].PropertyName))
+                    {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -331,9 +329,15 @@ namespace Magicodes.ExporterAndImporter.Excel
             where T : class, new()
         {
             ExcelImporterAttribute excelImporterAttribute = GetImporterAttribute<T>();
-            if (null == excelImporterAttribute)
+            if (null == excelImporterAttribute || string.IsNullOrWhiteSpace(excelImporterAttribute.SheetName))
             {
-                throw new ArgumentException($"导入实体{typeof(T)}未定义ExcelImporterAttribute属性");
+                throw new ImportException($"导入实体{typeof(T)}未定义ExcelImporterAttribute属性");
+            }
+
+            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[excelImporterAttribute.SheetName];
+            if (null == worksheet)
+            {
+                throw new ImportException($"读取名称为{excelImporterAttribute.SheetName}的sheet页异常，检查sheet页是否存在");
             }
 
             if (excelImporterAttribute.MaxRowNumber > _maxRowNumber)
@@ -341,10 +345,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                 excelImporterAttribute.MaxRowNumber = _maxRowNumber;
             }
 
-            ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[excelImporterAttribute.SheetName];
-            if (worksheet.Dimension.End.Row > _maxRowNumber)
+            if (worksheet.Dimension.End.Row > excelImporterAttribute.MaxRowNumber)
             {
-                throw new ArgumentException($"最大允许导入条数不能超过{_maxRowNumber}条");
+                throw new ImportException($"最大允许导入行数不能超过{excelImporterAttribute.MaxRowNumber}行");
             }
 
             IList<T> importDataModels = new List<T>();
@@ -375,7 +378,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                             }
                             else
                             {
-                                throw new ArgumentException($"值 {cell.Value} 不存在模板下拉选项中");
+                                throw new ImportException($"值 {cell.Value} 不存在模板下拉选项中");
                             }
 
                             continue;

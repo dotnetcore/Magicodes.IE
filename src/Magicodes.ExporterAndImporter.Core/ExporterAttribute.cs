@@ -8,7 +8,6 @@ namespace Magicodes.ExporterAndImporter.Core
     [AttributeUsage(AttributeTargets.Class)]
     public class ExporterAttribute : Attribute
     {
-
         /// <summary>
         /// 名称(比如当前Sheet 名称)
         /// </summary>

@@ -8,6 +8,14 @@ namespace Magicodes.ExporterAndImporter.Core
     [AttributeUsage(AttributeTargets.Property)]
     public class ExporterHeaderAttribute : Attribute
     {
+        /// <summary>
+        /// 表头配置有参构造函数
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="fontSize"></param>
+        /// <param name="format"></param>
+        /// <param name="isBold"></param>
+        /// <param name="isAutoFit"></param>
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
             bool isBold = true, bool isAutoFit = true)
         {

@@ -2,6 +2,9 @@
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
+    /// <summary>
+    /// Excel导出表头信息
+    /// </summary>
     public class ExporterHeaderInfo
     {
         /// <summary>

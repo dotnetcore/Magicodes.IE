@@ -9,7 +9,7 @@ namespace Magicodes.ExporterAndImporter.Core
     public class ImporterHeaderAttribute : Attribute
     {
         /// <summary>
-        /// 显示名称
+        /// 列名
         /// </summary>
         public string Name { set; get; }
 

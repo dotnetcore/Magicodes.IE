@@ -1,21 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net451</TargetFrameworks>
     <Version>1.0.7</Version>
     <PackageId>Magicodes.IE.Excel</PackageId>
     <Authors>湖南心莱信息科技有限公司</Authors>
     <PackageProjectUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</PackageProjectUrl>
   </PropertyGroup>
-
   <ItemGroup>
-    <!--注意不能使用1.5.4的版本，在Docker环境下存在Gdip异常-->
-    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="EPPlus" Version="4.5.3.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
   </ItemGroup>
-
+  <!--<PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>-->
 </Project>
