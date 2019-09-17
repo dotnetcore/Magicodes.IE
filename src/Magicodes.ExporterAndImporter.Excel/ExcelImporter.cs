@@ -382,9 +382,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
 
                     SetCellValue(propertyInfo, cell, dataItem);
-
-                    importDataModels.Add(dataItem);
                 }
+
+                importDataModels.Add(dataItem);
             }
 
             return importDataModels;
