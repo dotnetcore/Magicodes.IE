@@ -79,8 +79,13 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         [ImporterHeader(Name = "公式测试")]
         public DateTime FormulaTest { get; set; }
 
+        /// <summary>
+        /// 身份证
+        /// 多个错误测试
+        /// </summary>
         [ImporterHeader(Name = "身份证")]
         [RegularExpression(@"(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)", ErrorMessage = "身份证号码无效！")]
+        [StringLength(18, ErrorMessage = "身份证长度不得大于18！")]
         public string IdNo { get; set; }
 
         [Display(Name = "性别")]

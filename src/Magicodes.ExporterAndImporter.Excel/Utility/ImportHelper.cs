@@ -98,7 +98,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     var value = validationResult.ErrorMessage;
                                     if (dataRowError.FieldErrors.ContainsKey(key))
-                                        dataRowError.FieldErrors[key] += ("," + value);
+                                        dataRowError.FieldErrors[key] += (Environment.NewLine + value);
                                     else
                                         dataRowError.FieldErrors.Add(key, value);
                                 }
@@ -137,12 +137,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
                         cell.Style.Font.Color.SetColor(Color.Red);
                         cell.Style.Font.Bold = true;
-                        cell.AddComment(string.Join(",", item.FieldErrors.Values), col.ExporterHeader.Author);
+                        cell.AddComment(string.Join(",", field.Value), col.ExporterHeader.Author);
                     }
-                    
+
                 }
                 var ext = Path.GetExtension(FilePath);
-                excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + Guid.NewGuid().ToString("N") + ext)));
+                excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
             }
         }
 
@@ -418,7 +418,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值，范围为{long.MinValue}~{long.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -433,7 +433,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值，范围为{long.MinValue}~{long.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -443,7 +443,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值，范围为{int.MinValue}~{int.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -458,7 +458,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值，范围为{int.MinValue}~{int.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
+                                    break;
+                                case "Int16":
+                                    {
+                                        if (!short.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
+                                    break;
+                                case "Nullable<Int16>":
+                                    {
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
+                                        if (!short.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -468,7 +493,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{decimal.MinValue}~{decimal.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -483,7 +508,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{decimal.MinValue}~{decimal.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -493,7 +518,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{double.MinValue}~{double.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -508,7 +533,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{double.MinValue}~{double.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -519,7 +544,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{float.MinValue}~{float.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -534,7 +559,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数，范围为{float.MinValue}~{float.MaxValue}！");
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
                                             break;
                                         }
                                         propertyInfo.SetValue(dataItem, number);
@@ -657,6 +682,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
         public void Dispose()
         {
+            this.ExcelImporterAttribute = null;
+            this.FilePath = null;
+            this.ImporterHeaderInfos = null;
+            this.ImportResult = null;
+            GC.Collect();
         }
     }
 }

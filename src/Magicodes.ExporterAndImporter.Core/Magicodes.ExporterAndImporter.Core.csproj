@@ -2,7 +2,7 @@
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.1</Version>
+    <Version>1.2.0</Version>
     <PackageId>Magicodes.IE.Core</PackageId>
     <Authors>湖南心莱信息科技有限公司</Authors>
     <PackageProjectUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</PackageProjectUrl>
