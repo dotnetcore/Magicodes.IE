@@ -17,8 +17,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// <summary>
         /// 产品代码
         /// </summary>
-        [ImporterHeader(Name = "产品代码", Description = "最大长度为8", AutoTrim = false)]
-        [MaxLength(8, ErrorMessage = "产品代码最大长度为8")]
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为10", AutoTrim = false)]
+        [MaxLength(10, ErrorMessage = "产品代码最大长度为10")]
         public string Code { get; set; }
         /// <summary>
         /// 产品条码
@@ -62,7 +62,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// </summary>
         //[ImporterHeader(Name = "重量(KG)")]
         [Display(Name = "重量(KG)")]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
         /// <summary>
         /// 类型

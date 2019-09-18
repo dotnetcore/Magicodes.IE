@@ -1,28 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
     /// 导入结果
     /// </summary>
-    public class ImportResult<T>
+    public class ImportResult<T> where T : class
     {
         /// <summary>
         ///     导入数据
         /// </summary>
-        public IList<T> Data { get; set; }
+        public virtual IList<T> Data { get; set; }
 
         /// <summary>
-        ///     验证结果
+        ///     验证错误
         /// </summary>
-        public IList<ValidationResultModel> ValidationResults { get; set; }
+        public virtual IList<DataRowErrorInfo> RowErrors { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance has valid template.
+        ///     模板错误
         /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance has valid template; otherwise, <c>false</c>.
-        /// </value>
-        public bool HasValidTemplate { get; set; }
+        public virtual IList<TemplateErrorInfo> TemplateErrors { get; set; }
+
+        /// <summary>
+        ///     导入异常信息
+        /// </summary>
+        public virtual Exception Exception { get; set; }
+
+        /// <summary>
+        /// 是否存在导入错误
+        /// </summary>
+        public virtual bool HasError => Exception != null || (TemplateErrors?.Count(p => p.ErrorLevel == ErrorLevels.Error) ?? 0) > 0 || (RowErrors?.Count ?? 0) > 0;
     }
 }

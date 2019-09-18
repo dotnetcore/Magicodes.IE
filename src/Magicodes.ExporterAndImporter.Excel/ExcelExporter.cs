@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public Task<ExcelFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class
+        public Task<TemplateFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {

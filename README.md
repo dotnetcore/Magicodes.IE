@@ -1,6 +1,6 @@
 # Magicodes.ExporterAndImporter
 
-导入导出通用库
+导入导出通用库，目前仅支持导入导出Excel。
 
 ### 特点
 
@@ -13,6 +13,10 @@
 - 导入支持数据验证逻辑
 - 导入支持数据下拉选择
 - 导入数据支持前后空格以及中间空格处理，允许指定列进行设置
+- 导入提供统一错误封装，包含异常、模板错误和行数据错误
+- 支持导入表头位置设置，默认为1
+- 支持导入列乱序，无需按顺序一一对应
+- 支持导入指定列索引，默认自动识别
 
 ### 相关官方Nuget包
 
@@ -23,21 +27,33 @@
 
 ### VNext
 
-- 统一导入错误信息，支持统一返回模板校验错误信息和数据校验错误信息
+- 导入模板必填项支持自定义配置
+- 对错误数据进行标注
 
 ### 更新历史
 
+#### 2019.9.18
+
+- 【导入】重构导入模块，统一导入错误消息
+	- Exception ：导入异常信息
+	- RowErrors ： 数据错误信息
+	- TemplateErrors ：模板错误信息，支持错误分级
+- 【导入】基础类型必填自动识别，比如int、double等不可为空类型自动识别，无需额外设置Required
+- 【导入】修改Excel模板的Sheet名称
+- 【导入】支持导入表头位置设置，默认为1
+- 【导入】支持列乱序
+- 【导入】支持列索引设置
+
 #### 2019.9.11
 
-- 导入支持自动去除前后空格，默认启用，可以针对列进行关闭，具体见AutoTrim设置
-- 导入Dto的字段允许不设置ImporterHeader，支持通过DisplayAttribute特性获取列名
-- 导入的Excel移除对Sheet名称的约束，默认获取第一个Sheet
-- 导入增加对中间空格的处理支持，需设置FixAllSpace
-- 导入完善对日期类型的支持
-- 完善导入的单元测试
+- 【导入】导入支持自动去除前后空格，默认启用，可以针对列进行关闭，具体见AutoTrim设置
+- 【导入】导入Dto的字段允许不设置ImporterHeader，支持通过DisplayAttribute特性获取列名
+- 【导入】导入的Excel移除对Sheet名称的约束，默认获取第一个Sheet
+- 【导入】导入增加对中间空格的处理支持，需设置FixAllSpace
+- 【导入】导入完善对日期类型的支持
+- 【导入】完善导入的单元测试
 
 ### 导出 Demo
-
 
 ---
 #### Demo1-1
@@ -54,7 +70,7 @@
         public string Name3 { get; set; }
         public string Name4 { get; set; }
     }
-
+    
     var result = await Exporter.Export(filePath, new List<ExportTestData>()
     {
         new ExportTestData()
@@ -73,7 +89,6 @@
         }
     });
 
-
 ---
 #### Demo1-2
 
@@ -87,16 +102,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -140,16 +155,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -161,10 +176,10 @@
                 }
                 return "未知语言";
             }).Build();
-
+    
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-
+    
             var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
             {
                 new AttrsLocalizationTestData()
@@ -194,29 +209,29 @@
             });
 
 ### 导入 Demo
->导入特性（**ImporterHeader**）：
+
+#### 导入特性（**ImporterAttribute**）：
+
+- **HeaderRowIndex**：表头位置
+
+#### 导入列头特性（**ImporterHeader**）：
 
 + **Name**：表头显示名称(不可为空)。
-
 + **Description**：表头添加注释。
++ **Author**：注释作者，默认值为“麦扣”。
++ **AutoTrim**：自动过滤空格，默认启用。
++ **FixAllSpace**：处理掉所有的空格，包括中间空格。默认false。
++ **ColumnIndex**：列索引，一般不建议设置。
 
-+ **Author**：注释作者，默认值为X.M。
-
->导入结果（**ImportModel\<T>**）：
+#### 导入结果（ImportResult）：
 
 + **Data**：***IList\<T>***  导入的数据集合。
++ **RowErrors**：***IList<DataRowErrorInfo>*** 数据行错误。
++ **HasError**：***bool*** 是否存在导入错误。
++ **Exception**：异常信息
++ **TemplateErrors**：模板错误信息
 
-+ **ValidationResults**：***IList\<ValidationResultModel>*** 数据验证结果。
 
-+ **HasValidTemplate**：***bool*** 模板验证是否通过。
-
->数据验证结果（**ValidationResultModel**）：
-
-+ **Index**：***int***  错误数据所在行。
-
-+ **Errors**：***IDictionary<string, string>*** 整个Excel错误集合。目前仅支持数据验证错误。
-
-+ **FieldErrors**：***IDictionary<string, string>*** 数据验证错误。
 
 ---
 #### Demo2-1 普通模板
@@ -310,7 +325,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -399,7 +414,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -448,10 +463,10 @@ Dockerfile Demo
     COPY . .
     WORKDIR "/src/src/web/Admin.Host"
     RUN dotnet build "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM build AS publish
     RUN dotnet publish "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM base AS final
     WORKDIR /app
     COPY --from=publish /app .

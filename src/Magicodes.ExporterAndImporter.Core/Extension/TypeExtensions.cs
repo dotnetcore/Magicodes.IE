@@ -16,7 +16,7 @@
     /// </summary>
     public static class TypeExtensions
     {
-        
+
         /// <summary>
         /// 获取显示名
         /// </summary>
@@ -94,6 +94,32 @@
             return assembly.GetCustomAttributes(typeof(T), inherit).Any(m => (m as T) != null);
         }
 
+        /// <summary>
+        /// 是否必填
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <returns></returns>
+        public static bool IsRequired(this PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.GetAttribute<RequiredAttribute>(true) != null)
+            {
+                return true;
+            }
+            //Boolean、Byte、SByte、Int16、UInt16、Int32、UInt32、Int64、UInt64、Char、Double、Single
+            if (propertyInfo.PropertyType.IsPrimitive)
+            {
+                return true;
+            }
+            switch (propertyInfo.PropertyType.Name)
+            {
+                case "DateTime":
+                case "Decimal":
+                    return true;
+                default:
+                    break;
+            }
+            return false;
+        }
 
         /// <summary>
         /// 获取当前程序集中应用此特性的类
@@ -146,6 +172,30 @@
         }
 
         /// <summary>
+        /// 获取枚举显示名称
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static IDictionary<string, int> GetEnumDisplayNames(this Type type)
+        {
+            if (!type.IsEnum) throw new InvalidOperationException();
+            var names = Enum.GetNames(type);
+            IDictionary<string, int> displayNames = new Dictionary<string, int>();
+            foreach (var name in names)
+            {
+                var displayAttribute = type.GetField(name)
+                    .GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .SingleOrDefault() as DisplayAttribute;
+                if (displayAttribute != null)
+                {
+                    var value = (int)Enum.Parse(type, name);
+                    displayNames.Add(displayAttribute.Name, value);
+                }
+            }
+            return displayNames;
+        }
+
+        /// <summary>
         /// 获取类的所有枚举
         /// </summary>
         /// <param name="type"></param>
@@ -159,6 +209,20 @@
                 dic.Add(item.Name, item.PropertyType.GetEnumDefinitionList());
             }
             return dic;
+        }
+
+        
+        public static string GetCSharpTypeName(this Type type)
+        {
+            var sb = new StringBuilder();
+            var name = type.Name;
+            if (!type.IsGenericType) return name;
+            sb.Append(name.Substring(0, name.IndexOf('`')));
+            sb.Append("<");
+            sb.Append(string.Join(", ", type.GetGenericArguments()
+                                            .Select(t => t.GetCSharpTypeName())));
+            sb.Append(">");
+            return sb.ToString();
         }
     }
 }

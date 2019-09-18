@@ -12,6 +12,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -27,7 +28,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
-        public Task<ExcelFileInfo> GenerateTemplate<T>(string fileName) where T : class
+        public Task<TemplateFileInfo> GenerateTemplate<T>(string fileName) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
 
@@ -58,30 +59,36 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public Task<ImportResult<T>> Import<T>(string filePath) where T : class, new()
         {
-            CheckImportFile(filePath);
-            IList<ValidationResultModel> validationResultModels =
-                new List<ValidationResultModel>();
-            using (Stream stream = new FileStream(filePath, FileMode.Open))
+            var result = new ImportResult<T>();
+            try
             {
-                using (var excelPackage = new ExcelPackage(stream))
+                var importerAttribute = typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
+
+                CheckImportFile(filePath);
+                result.RowErrors = new List<DataRowErrorInfo>();
+                using (Stream stream = new FileStream(filePath, FileMode.Open))
                 {
-                    var hasValidTemplate = ParseTemplate<T>(excelPackage, out var columnHeaders);
-                    IList<T> importDataModels = new List<T>();
-                    if (hasValidTemplate)
+                    using (var excelPackage = new ExcelPackage(stream))
                     {
-                        importDataModels = ParseData<T>(excelPackage, columnHeaders);
-                        for (var i = 0; i < importDataModels.Count; i++)
+                        #region 检查模板
+                        var tplErrors = ParseTemplate<T>(excelPackage, importerAttribute, out var columnHeaders);
+                        result.TemplateErrors = tplErrors;
+                        if (result.HasError)
                         {
-                            var validationResultModel = new ValidationResultModel
-                            {
-                                Index = i + 1
-                            };
-                            var keyName = "Invalid";
-                            var isValid = ValidatorHelper.TryValidate(importDataModels[i], out var validationResults);
+                            return Task.FromResult(result);
+                        }
+                        #endregion
+
+                        result.Data = ParseData<T>(importerAttribute, excelPackage, columnHeaders, result.RowErrors);
+                        for (var i = 0; i < result.Data.Count; i++)
+                        {
+                            var isValid = ValidatorHelper.TryValidate(result.Data[i], out var validationResults);
                             if (!isValid)
                             {
-                                if (!validationResultModel.Errors.ContainsKey(keyName))
-                                    validationResultModel.Errors.Add(keyName, "导入数据无效");
+                                var dataRowError = new DataRowErrorInfo
+                                {
+                                    RowIndex = i + 1
+                                };
                                 foreach (var validationResult in validationResults)
                                 {
                                     var key = validationResult.MemberNames.First();
@@ -91,27 +98,23 @@ namespace Magicodes.ExporterAndImporter.Excel
                                         key = column.ExporterHeader.Name;
                                     }
                                     var value = validationResult.ErrorMessage;
-                                    if (validationResultModel.FieldErrors.ContainsKey(key))
-                                        validationResultModel.FieldErrors[key] =
-                                            validationResultModel.FieldErrors[key] + "," + value;
+                                    if (dataRowError.FieldErrors.ContainsKey(key))
+                                        dataRowError.FieldErrors[key] += ("," + value);
                                     else
-                                        validationResultModel.FieldErrors.Add(key, value);
+                                        dataRowError.FieldErrors.Add(key, value);
                                 }
+                                result.RowErrors.Add(dataRowError);
                             }
-
-                            if (validationResultModel.Errors.Count > 0)
-                                validationResultModels.Add(validationResultModel);
                         }
+                        return Task.FromResult(result);
                     }
-
-                    return Task.FromResult(new ImportResult<T>
-                    {
-                        HasValidTemplate = hasValidTemplate,
-                        Data = importDataModels,
-                        ValidationResults = validationResultModels
-                    });
                 }
             }
+            catch (Exception ex)
+            {
+                result.Exception = ex;
+            }
+            return Task.FromResult(result);
         }
 
         /// <summary>
@@ -152,25 +155,22 @@ namespace Magicodes.ExporterAndImporter.Excel
                     (objProperties[i].GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
                         ImporterHeaderAttribute[])?.FirstOrDefault() ?? new ImporterHeaderAttribute()
                         {
-                            Name = (objProperties[i].GetCustomAttribute(typeof(DisplayAttribute), true) as DisplayAttribute)?.Name ?? objProperties[i].Name
+                            Name = objProperties[i].GetDisplayName() ?? objProperties[i].Name
                         };
 
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                 {
-                    importerHeaderAttribute.Name = (objProperties[i].GetCustomAttribute(typeof(DisplayAttribute), true) as DisplayAttribute)?.Name ?? objProperties[i].Name;
+                    importerHeaderAttribute.Name = objProperties[i].GetDisplayName() ?? objProperties[i].Name;
                 }
 
-
-                var requiredAttribute = (objProperties[i].GetCustomAttributes(typeof(RequiredAttribute), true) as
-                    RequiredAttribute[])?.FirstOrDefault();
                 importerHeaderList.Add(new ImporterHeaderInfo
                 {
-                    IsRequired = requiredAttribute != null,
+                    IsRequired = objProperties[i].IsRequired(),
                     PropertyName = objProperties[i].Name,
                     ExporterHeader = importerHeaderAttribute
                 });
                 if (objProperties[i].PropertyType.BaseType?.Name.ToLower() == "enum")
-                    enumColumns.Add(i + 1, EnumHelper.GetDisplayNames(objProperties[i].PropertyType));
+                    enumColumns.Add(i + 1, objProperties[i].PropertyType.GetEnumDisplayNames());
                 if (objProperties[i].PropertyType == typeof(bool)) boolColumns.Add(i + 1);
             }
 
@@ -178,14 +178,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
-        ///     构建Excel
+        ///     构建Excel模板
         /// </summary>
         /// <typeparam name="T"></typeparam>
         private static void StructureExcel<T>(ExcelPackage excelPackage) where T : class
         {
-            var worksheet = excelPackage.Workbook.Worksheets.Add(typeof(T).Name);
+            var worksheet = excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ?? "导入数据");
             if (!ParseImporterHeader<T>(out var columnHeaders, out var enumColumns, out var boolColumns)) return;
 
+            //设置列头
             for (var i = 0; i < columnHeaders.Count; i++)
             {
                 worksheet.Cells[1, i + 1].Value = columnHeaders[i].ExporterHeader.Name;
@@ -193,6 +194,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 {
                     worksheet.Cells[1, i + 1].AddComment(columnHeaders[i].ExporterHeader.Description, columnHeaders[i].ExporterHeader.Author);
                 }
+                //如果必填，则列头标红
                 if (columnHeaders[i].IsRequired)
                 {
                     worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.Red);
@@ -210,6 +212,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
 
+            //枚举处理
             foreach (var enumColumn in enumColumns)
             {
                 var range = ExcelCellBase.GetAddress(1, enumColumn.Key, ExcelPackage.MaxRows, enumColumn.Key);
@@ -217,6 +220,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 foreach (var displayName in enumColumn.Value) dataValidations.Formula.Values.Add(displayName.Key);
             }
 
+            //Bool类型处理
             foreach (var boolColumn in boolColumns)
             {
                 var range = ExcelCellBase.GetAddress(1, boolColumn, ExcelPackage.MaxRows, boolColumn);
@@ -231,140 +235,78 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        private bool ParseTemplate<T>(ExcelPackage excelPackage, out List<ImporterHeaderInfo> columnHeaders)
+        private IList<TemplateErrorInfo> ParseTemplate<T>(ExcelPackage excelPackage, ImporterAttribute importerAttribute, out List<ImporterHeaderInfo> columnHeaders)
             where T : class
         {
+            var tplError = new List<TemplateErrorInfo>();
+            //获取导入实体列定义
             ParseImporterHeader<T>(out columnHeaders, out var enumColumns, out var boolColumns);
             try
             {
                 //根据名称获取Sheet，如果不存在则取第一个
-                var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name] ?? excelPackage.Workbook.Worksheets[1];
+                var worksheet = excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ?? excelPackage.Workbook.Worksheets[1];
+                var excelHeaders = new Dictionary<string, int>();
                 for (var i = 0; i < columnHeaders.Count; i++)
                 {
-                    var header = worksheet.Cells[1, i + 1].Text;
+                    var header = worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].Text;
+                    //如果出现空格，则截止
+                    if (string.IsNullOrWhiteSpace(header))
+                        break;
 
-                    if (columnHeaders[i].ExporterHeader != null &&
-                        !string.IsNullOrWhiteSpace(columnHeaders[i].ExporterHeader.Name))
+                    if (excelHeaders.ContainsKey(header))
                     {
-                        if (string.IsNullOrWhiteSpace(header))
+                        tplError.Add(new TemplateErrorInfo()
                         {
-                            //TODO:仅约束必填字段
-                            throw new Exception($"模板中必须包含此字段：{columnHeaders[i].ExporterHeader.Name}！");
+                            ErrorLevel = ErrorLevels.Error,
+                            ColumnName = header,
+                            RequireColumnName = null,
+                            Message = $"列头重复！"
+                        });
+                    }
+                    excelHeaders.Add(header, i + 1);
+                }
+
+                foreach (var item in columnHeaders)
+                {
+                    if (!excelHeaders.ContainsKey(item.ExporterHeader.Name))
+                    {
+                        //仅验证必填字段
+                        if (item.IsRequired)
+                        {
+                            tplError.Add(new TemplateErrorInfo()
+                            {
+                                ErrorLevel = ErrorLevels.Error,
+                                ColumnName = null,
+                                RequireColumnName = item.ExporterHeader.Name,
+                                Message = $"当前导入模板中未找到此字段！"
+                            });
+                            continue;
                         }
-                        if (header != columnHeaders[i].ExporterHeader.Name)
-                            throw new Exception($"列头不一致：【{header}】与【{columnHeaders[i].ExporterHeader.Name}】不一致，请修正模板！");
+                        tplError.Add(new TemplateErrorInfo()
+                        {
+                            ErrorLevel = ErrorLevels.Warning,
+                            ColumnName = null,
+                            RequireColumnName = item.ExporterHeader.Name,
+                            Message = $"当前导入模板中未找到此字段！"
+                        });
+
                     }
                     else
                     {
-                        if (header != columnHeaders[i].PropertyName)
-                            throw new Exception($"列头不一致：【{header}】与【{columnHeaders[i].PropertyName}】不一致，请修正模板！");
+                        item.IsExist = true;
+                        //设置列索引
+                        if (item.ExporterHeader.ColumnIndex == 0)
+                            item.ExporterHeader.ColumnIndex = excelHeaders[item.ExporterHeader.Name];
                     }
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception($"模板出现未知错误：{ex.ToString()}");
             }
-
-            return true;
+            return tplError;
         }
 
-        /// <summary>
-        ///     解析数据
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">最大允许导入条数不能超过5000条</exception>
-        private IList<T> ParseData<T>(ExcelPackage excelPackage, List<ImporterHeaderInfo> columnHeaders)
-            where T : class, new()
-        {
-            var worksheet = excelPackage.Workbook.Worksheets[typeof(T).Name] ?? excelPackage.Workbook.Worksheets[1];
-            if (worksheet.Dimension.End.Row > 5000) throw new ArgumentException("最大允许导入条数不能超过5000条");
-            IList<T> importDataModels = new List<T>();
-            var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
-
-            for (var index = 2; index <= worksheet.Dimension.End.Row; index++)
-            {
-                int isNullNumber = 1;
-                for (int column = 1; column < worksheet.Dimension.End.Column; column++)
-                {
-                    if (worksheet.Cells[index, column].Text == string.Empty)
-                    {
-                        isNullNumber++;
-                    }
-
-                }
-                if (isNullNumber < worksheet.Dimension.End.Column)
-                {
-                    var dataItem = new T();
-                    foreach (var propertyInfo in propertyInfos)
-                    {
-                        var cell = worksheet.Cells[index,
-                            columnHeaders.FindIndex(a => a.PropertyName == propertyInfo.Name) + 1];
-
-                        switch (propertyInfo.PropertyType.BaseType?.Name.ToLower())
-                        {
-                            case "enum":
-                                var enumDisplayNames = EnumHelper.GetDisplayNames(propertyInfo.PropertyType);
-                                if (enumDisplayNames.ContainsKey(cell.Value?.ToString() ?? throw new ArgumentException()))
-                                {
-                                    propertyInfo.SetValue(dataItem,
-                                        enumDisplayNames[cell.Value?.ToString()]);
-                                }
-                                else
-                                {
-                                    throw new ArgumentException($"值 {cell.Value} 不存在模板下拉选项中");
-                                }
-                                continue;
-                        }
-
-                        switch (propertyInfo.PropertyType.Name.ToLower())
-                        {
-                            case "boolean":
-                                var value = false;
-                                if (cell.Value != null) value = cell.Value?.ToString() == "是";
-                                propertyInfo.SetValue(dataItem, value);
-                                break;
-                            case "string":
-                                //TODO:进一步优化
-                                var cHeader = columnHeaders.First(p => p.PropertyName == propertyInfo.Name).ExporterHeader;
-                                //移除所有的空格，包括中间的空格
-                                if (cHeader.FixAllSpace)
-                                {
-                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString().Replace(" ", string.Empty));
-                                }
-                                else if (cHeader.AutoTrim)
-                                {
-                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString().Trim());
-                                }
-                                else
-                                    propertyInfo.SetValue(dataItem, cell.Value?.ToString());
-                                break;
-                            case "long":
-                            case "int64":
-                                propertyInfo.SetValue(dataItem, long.Parse(cell.Value.ToString()));
-                                break;
-                            case "int":
-                            case "int32":
-                                propertyInfo.SetValue(dataItem, int.Parse(cell.Value.ToString()));
-                                break;
-                            case "decimal":
-                                propertyInfo.SetValue(dataItem, decimal.Parse(cell.Value.ToString()));
-                                break;
-                            case "double":
-                                propertyInfo.SetValue(dataItem, double.Parse(cell.Value.ToString()));
-                                break;
-                            default:
-                                propertyInfo.SetValue(dataItem, cell.Value);
-                                break;
-                        }
-                    }
-
-                    importDataModels.Add(dataItem);
-                }
-            }
-
-            return importDataModels;
-        }
+       
     }
 }

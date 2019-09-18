@@ -23,7 +23,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { set; get; } = "X.M";
+        public string Author { set; get; } = "麦扣";
 
         /// <summary>
         /// 自动过滤空格，默认启用
@@ -34,5 +34,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 处理掉所有的空格，包括中间空格
         /// </summary>
         public bool FixAllSpace { get; set; }
+
+        /// <summary>
+        /// 列索引，如果为0则自动计算
+        /// </summary>
+        public int ColumnIndex { get; set; }
     }
 }

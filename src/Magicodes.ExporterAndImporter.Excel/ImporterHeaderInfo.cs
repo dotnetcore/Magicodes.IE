@@ -24,5 +24,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// 列属性
         /// </summary>
         public ImporterHeaderAttribute ExporterHeader { get; set; }
+
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        internal bool IsExist { get; set; }
     }
 }

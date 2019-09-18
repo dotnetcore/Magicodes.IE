@@ -15,9 +15,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="fileName">文件名</param>
         /// <param name="creator"></param>
         /// <returns></returns>
-        public static ExcelFileInfo CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
+        public static TemplateFileInfo CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
         {
-            var file = new ExcelFileInfo(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            var file = new TemplateFileInfo(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             using (var excelPackage = new ExcelPackage())
             {
@@ -27,7 +27,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             return file;
         }
 
-        private static void Save(ExcelPackage excelPackage, ExcelFileInfo file)
+        private static void Save(ExcelPackage excelPackage, TemplateFileInfo file)
         {
             excelPackage.SaveAs(new FileInfo(file.FileName));
         }
