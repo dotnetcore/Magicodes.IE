@@ -38,13 +38,18 @@
 
 > ##### QQ群
 
-编程交流群<85318032>
+- 编程交流群<85318032>
 
-产品交流群<897857351>
+- 产品交流群<897857351>
 
 > ##### 官方博客
 
 <http://www.cnblogs.com/codelove/>
+
+> ##### 其他开源库
+
+- <https://github.com/xin-lai>
+- <https://gitee.com/magicodes>
 
 ### VNext
 
