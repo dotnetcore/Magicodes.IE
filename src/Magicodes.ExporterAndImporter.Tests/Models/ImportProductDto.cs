@@ -80,6 +80,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         public DateTime FormulaTest { get; set; }
 
         [ImporterHeader(Name = "身份证")]
+        [RegularExpression(@"(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)", ErrorMessage = "身份证号码无效！")]
         public string IdNo { get; set; }
 
         [Display(Name = "性别")]

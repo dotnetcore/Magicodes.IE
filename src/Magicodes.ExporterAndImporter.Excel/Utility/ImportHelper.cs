@@ -131,11 +131,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //标注数据错误
                 foreach (var item in ImportResult.RowErrors)
                 {
-                    var col = ImporterHeaderInfos.First(p => p.ExporterHeader.Name == item.FieldErrors.First().Key);
-                    var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
-                    cell.Style.Font.Color.SetColor(Color.Red);
-                    cell.Style.Font.Bold = true;
-                    cell.AddComment(string.Join(",", item.FieldErrors.Values), col.ExporterHeader.Author);
+                    foreach (var field in item.FieldErrors)
+                    {
+                        var col = ImporterHeaderInfos.First(p => p.ExporterHeader.Name == field.Key);
+                        var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
+                        cell.Style.Font.Color.SetColor(Color.Red);
+                        cell.Style.Font.Bold = true;
+                        cell.AddComment(string.Join(",", item.FieldErrors.Values), col.ExporterHeader.Author);
+                    }
+                    
                 }
                 var ext = Path.GetExtension(FilePath);
                 excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + Guid.NewGuid().ToString("N") + ext)));
