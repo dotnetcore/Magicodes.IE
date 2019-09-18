@@ -15,14 +15,14 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<TemplateFileInfo> GenerateTemplate<T>(string fileName) where T : class;
+        Task<TemplateFileInfo> GenerateTemplate<T>(string fileName) where T : class, new();
 
         /// <summary>
         /// 生成Excel导入模板
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>二进制字节</returns>
-        Task<byte[]> GenerateTemplateByte<T>() where T : class;
+        Task<byte[]> GenerateTemplateByte<T>() where T : class, new();
 
         /// <summary>
         /// 导入模型验证数据

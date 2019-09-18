@@ -16,5 +16,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// 为空则自动获取第一个
         /// </summary>
         public string SheetName { get; set; }
+
+        /// <summary>
+        /// 是否标注错误（默认为true）
+        /// </summary>
+        public bool IsLabelingError { get; set; } = true;
     }
 }

@@ -17,8 +17,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// <summary>
         /// 产品代码
         /// </summary>
-        [ImporterHeader(Name = "产品代码", Description = "最大长度为10", AutoTrim = false)]
-        [MaxLength(10, ErrorMessage = "产品代码最大长度为10")]
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为20", AutoTrim = false)]
+        [MaxLength(20, ErrorMessage = "产品代码最大长度为20（中文算两个字符）")]
         public string Code { get; set; }
         /// <summary>
         /// 产品条码
