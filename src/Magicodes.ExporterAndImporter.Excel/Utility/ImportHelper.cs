@@ -86,7 +86,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             {
                                 var dataRowError = new DataRowErrorInfo
                                 {
-                                    RowIndex = i + 1
+                                    RowIndex = ExcelImporterAttribute.HeaderRowIndex + i + 1
                                 };
                                 foreach (var validationResult in validationResults)
                                 {
@@ -127,8 +127,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (ExcelImporterAttribute.IsLabelingError && ImportResult.HasError)
             {
                 var worksheet = GetImportSheet(excelPackage);
-                //worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //worksheet.Cells[5, 7].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
                 //TODO:标注模板错误
                 //标注数据错误
                 foreach (var item in ImportResult.RowErrors)
@@ -138,7 +136,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     cell.Style.Font.Color.SetColor(Color.Red);
                     cell.Style.Font.Bold = true;
                     cell.AddComment(string.Join(",", item.FieldErrors.Values), col.ExporterHeader.Author);
-                    //cell.Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
                 }
                 var ext = Path.GetExtension(FilePath);
                 excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + Guid.NewGuid().ToString("N") + ext)));
