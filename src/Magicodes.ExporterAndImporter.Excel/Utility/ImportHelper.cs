@@ -606,7 +606,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
         }
 
-        private static ExcelWorksheet GetImportSheet(ExcelPackage excelPackage) => excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ?? excelPackage.Workbook.Worksheets[1];
+        /// <summary>
+        /// 获取导入的Sheet
+        /// </summary>
+        /// <param name="excelPackage"></param>
+        /// <returns></returns>
+        protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage) => excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ?? excelPackage.Workbook.Worksheets[0];
         /// <summary>
         /// 添加数据行错误
         /// </summary>
