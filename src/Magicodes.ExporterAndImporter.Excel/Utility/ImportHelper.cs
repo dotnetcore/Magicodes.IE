@@ -175,12 +175,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //根据名称获取Sheet，如果不存在则取第一个
                 var worksheet = GetImportSheet(excelPackage);
                 var excelHeaders = new Dictionary<string, int>();
-                for (var i = 0; i < ImporterHeaderInfos.Count; i++)
+                var endColumnCount = ExcelImporterAttribute.EndColumnCount ?? worksheet.Dimension.End.Column;
+                for (var columnIndex = 1; columnIndex <= endColumnCount; columnIndex++)
                 {
-                    var header = worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].Text;
-                    //如果出现空格，则截止
-                    if (string.IsNullOrWhiteSpace(header))
+                    var header = worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, columnIndex].Text;
+
+                    //如果未设置读取的截止列，则默认指定为出现空格，则读取截止
+                    if ((ExcelImporterAttribute.EndColumnCount.HasValue && columnIndex > ExcelImporterAttribute.EndColumnCount.Value) || string.IsNullOrWhiteSpace(header))
+                    {
                         break;
+                    }
 
                     if (excelHeaders.ContainsKey(header))
                     {
@@ -192,7 +196,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             Message = $"列头重复！"
                         });
                     }
-                    excelHeaders.Add(header, i + 1);
+                    excelHeaders.Add(header, columnIndex);
                 }
 
                 foreach (var item in ImporterHeaderInfos)
@@ -290,7 +294,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected virtual void StructureExcel(ExcelPackage excelPackage)
         {
-            var worksheet = excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ?? "导入数据");
+            var worksheet = excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ?? ExcelImporterAttribute.SheetName ?? "导入数据");
             if (!ParseImporterHeader(out var enumColumns, out var boolColumns)) return;
 
             //设置列头
@@ -611,7 +615,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         /// <param name="excelPackage"></param>
         /// <returns></returns>
-        protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage) => excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ?? excelPackage.Workbook.Worksheets[0];
+        protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage) => excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ?? excelPackage.Workbook.Worksheets[ExcelImporterAttribute.SheetName] ?? excelPackage.Workbook.Worksheets[0];
         /// <summary>
         /// 添加数据行错误
         /// </summary>

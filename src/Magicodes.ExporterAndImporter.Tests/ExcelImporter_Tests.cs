@@ -56,6 +56,22 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data[2].Name.ShouldBe("左侧空格测试");
         }
 
+        [Fact(DisplayName = "题库导入测试")]
+        public async Task QuestionBankImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "题库导入模板.xlsx");
+            var import = await Importer.Import<ImportQuestionBankDto>(filePath);
+            import.ShouldNotBeNull();
+
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(404);
+            
+            import.RowErrors.Count.ShouldBe(0);
+            import.TemplateErrors.Count.ShouldBe(0);
+
+        }
+
         [Fact(DisplayName = "生成模板")]
         public async Task GenerateTemplate_Test()
         {
