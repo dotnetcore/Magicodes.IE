@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+            table tr:nth-child(odd) {
+                background-color: #f1f1f1;
+            }
+
+            table tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center">{{Title}}</h1>
+
+    <table width="90%">
+        <thead>
+        <tr>
+            <th>{{Name}}</th>
+            <th>{{Value}}</th>
+        </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>{{Name}}</td>
+                <td>@item.Name1</td>
+
+            </tr>
+        }
+    </table>
+</body>
+</html>

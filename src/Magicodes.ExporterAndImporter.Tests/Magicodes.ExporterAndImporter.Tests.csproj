@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
   </ItemGroup>
 
   <ItemGroup>

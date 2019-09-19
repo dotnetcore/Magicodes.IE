@@ -8,20 +8,48 @@ using Xunit;
 using System.IO;
 using Shouldly;
 using Magicodes.ExporterAndImporter.Excel.Builder;
+using Magicodes.ExporterAndImporter.Html;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
     public class ExcelExporter_Tests
     {
-        public IExporter Exporter = new ExcelExporter();
-
-        [Fact(DisplayName = "导出")]
+        [Fact(DisplayName = "导出Excel")]
         public async Task Export_Test()
         {
+            IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Exporter.Export(filePath, new List<ExportTestData>()
+            var result = await exporter.Export(filePath, new List<ExportTestData>()
+            {
+                new ExportTestData()
+                {
+                    Name1 = "1",
+                    Name2 = "test",
+                    Name3 = "12",
+                    Name4 = "11",
+                },
+                new ExportTestData()
+                {
+                    Name1 = "1",
+                    Name2 = "test",
+                    Name3 = "12",
+                    Name4 = "11",
+                }
+            });
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "导出Html测试")]
+        public async Task ExportHtml_Test()
+        {
+            var exporter = new HtmlExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.html");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await exporter.ExportByTemplate(filePath, new List<ExportTestData>()
             {
                 new ExportTestData()
                 {
@@ -45,10 +73,11 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "特性导出")]
         public async Task AttrsExport_Test()
         {
+            IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrs.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Exporter.Export(filePath, new List<ExportTestDataWithAttrs>()
+            var result = await exporter.Export(filePath, new List<ExportTestDataWithAttrs>()
             {
                 new ExportTestDataWithAttrs()
                 {
@@ -82,6 +111,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "多语言特性导出")]
         public async Task AttrsLocalizationExport_Test()
         {
+            IExporter exporter = new ExcelExporter();
             ExcelBuilder.Create().WithColumnHeaderStringFunc((key) =>
             {
                 if (key.Contains("文本"))
@@ -94,7 +124,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
+            var result = await exporter.Export(filePath, new List<AttrsLocalizationTestData>()
             {
                 new AttrsLocalizationTestData()
                 {

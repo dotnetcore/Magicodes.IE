@@ -1,7 +1,5 @@
 ﻿using Magicodes.ExporterAndImporter.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Core
@@ -16,6 +14,6 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate) where T : class;
+        Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class;
     }
 }

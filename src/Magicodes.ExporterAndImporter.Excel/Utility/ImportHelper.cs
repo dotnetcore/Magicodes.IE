@@ -667,6 +667,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns>二进制字节</returns>
         public Task<byte[]> GenerateTemplateByte()
         {
+            ExcelImporterAttribute = typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
             using (var excelPackage = new ExcelPackage())
             {
                 StructureExcel(excelPackage);
@@ -682,6 +683,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<TemplateFileInfo> GenerateTemplate(string fileName = null)
         {
+            ExcelImporterAttribute = typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", fileName);
 
             var fileInfo =

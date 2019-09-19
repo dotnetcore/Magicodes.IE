@@ -13,9 +13,18 @@ namespace Magicodes.ExporterAndImporter.Word
     {
         public Task<TemplateFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class => throw new NotImplementedException();
         public Task<byte[]> ExportAsByteArray<T>(IList<T> dataItems) where T : class => throw new NotImplementedException();
-        public Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate) where T : class
-        {
 
+        /// <summary>
+        /// 根据HTML模板导出Work
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="dataItems"></param>
+        /// <param name="htmlTemplate">如未设置，则使用默认模板</param>
+        /// <returns></returns>
+        public Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class
+        {
+            throw new NotImplementedException();
         }
         public Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null, List<ExcelHeadStyle> styles = null) => throw new NotImplementedException();
         public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class => throw new NotImplementedException();
