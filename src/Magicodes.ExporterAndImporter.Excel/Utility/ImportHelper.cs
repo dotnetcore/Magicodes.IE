@@ -186,6 +186,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         break;
                     }
 
+                    //不处理空表头
+                    if (string.IsNullOrWhiteSpace(header))
+                    {
+                        continue;
+                    }
+
                     if (excelHeaders.ContainsKey(header))
                     {
                         ImportResult.TemplateErrors.Add(new TemplateErrorInfo()
@@ -257,7 +263,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             enumColumns = new Dictionary<int, IDictionary<string, int>>();
             boolColumns = new List<int>();
             var objProperties = typeof(T).GetProperties();
-            if (objProperties == null || objProperties.Length == 0)
+            if (objProperties.Length == 0)
                 return false;
             for (var i = 0; i < objProperties.Length; i++)
             {

@@ -5,17 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Tpls\default.cshtml" />
+    <None Remove="Tpls\default.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Tpls\default.cshtml" />
+    <EmbeddedResource Include="Tpls\default.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="RazorEngine" Version="3.10.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.2.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
   </ItemGroup>
