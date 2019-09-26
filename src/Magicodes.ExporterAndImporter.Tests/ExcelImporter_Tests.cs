@@ -14,15 +14,15 @@
 // 
 // ======================================================================
 
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models;
 using Shouldly;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -35,7 +35,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task GenerateTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
 
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
@@ -56,8 +59,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
             foreach (var item in import.Data)
             {
-                if (item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
-                if (item.Code.Contains("不去除空格测试")) item.Code.ShouldContain(" ");
+                if (item.Name.Contains("空格测试"))
+                {
+                    item.Name.ShouldBe(item.Name.Trim());
+                }
+
+                if (item.Code.Contains("不去除空格测试"))
+                {
+                    item.Code.ShouldContain(" ");
+                }
                 //去除中间空格测试
                 item.BarCode.ShouldBe("123123");
             }
@@ -82,6 +92,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             var pros = typeof(ImportProductDto).GetProperties();
             foreach (var item in pros)
+            {
                 switch (item.Name)
                 {
                     //DateTime
@@ -99,6 +110,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                         item.IsRequired().ShouldBe(false);
                         break;
                 }
+            }
         }
 
         [Fact(DisplayName = "题库导入测试")]
@@ -125,6 +137,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.HasError.ShouldBeTrue();
 
             result.TemplateErrors.Count.ShouldBe(0);
+
             result.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("产品名称"));
             result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("产品名称"));
 
@@ -142,6 +155,24 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("身份证"));
             result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("身份证"));
+
+            #region 重复错误
+
+            var errorRows = "5,6".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
+
+            errorRows = "8,9,11,13".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
+
+            errorRows = "4，6，8，10，11，13".Split('，').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+            #endregion
 
             result.RowErrors.Count.ShouldBeGreaterThan(0);
         }

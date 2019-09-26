@@ -18,6 +18,9 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
+    /// <summary>
+    /// 导入头部特性
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class ImporterHeaderAttribute : Attribute
     {
@@ -50,5 +53,10 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     列索引，如果为0则自动计算
         /// </summary>
         public int ColumnIndex { get; set; }
+
+        /// <summary>
+        /// 是否允许重复
+        /// </summary>
+        public bool IsAllowRepeat { get; set; } = true;
     }
 }
