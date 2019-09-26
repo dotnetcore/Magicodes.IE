@@ -14,15 +14,13 @@
 // 
 // ======================================================================
 
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Excel.Builder;
-using Magicodes.ExporterAndImporter.Pdf;
 using Magicodes.ExporterAndImporter.Tests.Models;
 using Shouldly;
+using System.IO;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -34,35 +32,13 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrs.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-
-            var result = await exporter.Export(filePath, new List<ExportTestDataWithAttrs>
+            if (File.Exists(filePath))
             {
-                new ExportTestDataWithAttrs
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name = "aa",
-                    Number = 5000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-                new ExportTestDataWithAttrs
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name = "啊实打实大苏打撒",
-                    Number = 6000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-                new ExportTestDataWithAttrs
-                {
-                    Text = "啊实打实速度大苏打撒",
-                    Name = "萨达萨达",
-                    Number = 6000,
-                    Text2 = "突然他也让他人",
-                    Text3 = "sadsad打发打发士大夫的"
-                }
-            });
+                File.Delete(filePath);
+            }
+
+            var result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -73,40 +49,22 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExporter exporter = new ExcelExporter();
             ExcelBuilder.Create().WithColumnHeaderStringFunc(key =>
             {
-                if (key.Contains("文本")) return "Text";
+                if (key.Contains("文本"))
+                {
+                    return "Text";
+                }
+
                 return "未知语言";
             }).Build();
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-
-            var result = await exporter.Export(filePath, new List<AttrsLocalizationTestData>
+            if (File.Exists(filePath))
             {
-                new AttrsLocalizationTestData
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name = "aa",
-                    Number = 5000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-                new AttrsLocalizationTestData
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name = "啊实打实大苏打撒",
-                    Number = 6000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-                new AttrsLocalizationTestData
-                {
-                    Text = "啊实打实速度大苏打撒",
-                    Name = "萨达萨达",
-                    Number = 6000,
-                    Text2 = "突然他也让他人",
-                    Text3 = "sadsad打发打发士大夫的"
-                }
-            });
+                File.Delete(filePath);
+            }
+
+            var data = GenFu.GenFu.ListOf<AttrsLocalizationTestData>();
+            var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -116,53 +74,12 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-
-            var result = await exporter.Export(filePath, new List<ExportTestData>
+            if (File.Exists(filePath))
             {
-                new ExportTestData
-                {
-                    Name1 = "1",
-                    Name2 = "test",
-                    Name3 = "12",
-                    Name4 = "11"
-                },
-                new ExportTestData
-                {
-                    Name1 = "1",
-                    Name2 = "test",
-                    Name3 = "12",
-                    Name4 = "11"
-                }
-            });
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-        }
+                File.Delete(filePath);
+            }
 
-
-        [Fact(DisplayName = "导出PDF测试")]
-        public async Task ExportPDF_Test()
-        {
-            var exporter = new PdfExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.pdf");
-            if (File.Exists(filePath)) File.Delete(filePath);
-            var result = await exporter.ExportByTemplate(filePath, new List<ExportTestData>
-            {
-                new ExportTestData
-                {
-                    Name1 = "1",
-                    Name2 = "test",
-                    Name3 = "12",
-                    Name4 = "11"
-                },
-                new ExportTestData
-                {
-                    Name1 = "1",
-                    Name2 = "test",
-                    Name3 = "12",
-                    Name4 = "11"
-                }
-            });
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }

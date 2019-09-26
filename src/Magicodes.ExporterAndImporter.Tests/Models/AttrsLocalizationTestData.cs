@@ -31,7 +31,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         public string Text3 { get; set; }
 
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
-        public double Number { get; set; }
+        public decimal Number { get; set; }
 
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
