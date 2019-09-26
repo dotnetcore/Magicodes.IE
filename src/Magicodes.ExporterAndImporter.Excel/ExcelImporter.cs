@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿// ======================================================================
+// 
+//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
+//           All rights reserved
+// 
+//           filename : ExcelImporter.cs
+//           description :
+// 
+//           created by 雪雁 at  2019-09-11 13:51
+//           文档官网：https://docs.xin-lai.com
+//           公众号教程：麦扣聊技术
+//           QQ群：85318032（编程交流）
+//           Blog：http://www.cnblogs.com/codelove/
+// 
+// ======================================================================
+
+using System;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -50,7 +56,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
-        /// 导入
+        ///     导入
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>

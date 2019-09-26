@@ -1,14 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// ======================================================================
+// 
+//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
+//           All rights reserved
+// 
+//           filename : ExcelBuilder.cs
+//           description :
+// 
+//           created by 雪雁 at  2019-09-11 13:51
+//           文档官网：https://docs.xin-lai.com
+//           公众号教程：麦扣聊技术
+//           QQ群：85318032（编程交流）
+//           Blog：http://www.cnblogs.com/codelove/
+// 
+// ======================================================================
+
+using System;
 
 namespace Magicodes.ExporterAndImporter.Excel.Builder
 {
     public class ExcelBuilder
     {
-        Func<string, string> ColumnHeaderStringFunc { get; set; }
+        private ExcelBuilder()
+        {
+        }
 
-        private ExcelBuilder() { }
+        private Func<string, string> ColumnHeaderStringFunc { get; set; }
 
         /// <summary>
         ///     创建实例
@@ -20,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
         }
 
         /// <summary>
-        /// 多语言处理
+        ///     多语言处理
         /// </summary>
         /// <param name="columnHeaderStringFunc"></param>
         /// <returns></returns>
@@ -39,6 +55,5 @@ namespace Magicodes.ExporterAndImporter.Excel.Builder
             if (ColumnHeaderStringFunc != null)
                 ExcelExporter.ColumnHeaderStringFunc = ColumnHeaderStringFunc;
         }
-
     }
 }
