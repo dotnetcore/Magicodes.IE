@@ -9,6 +9,8 @@ using System.IO;
 using Shouldly;
 using Magicodes.ExporterAndImporter.Excel.Builder;
 using Magicodes.ExporterAndImporter.Html;
+using Magicodes.ExporterAndImporter.Word;
+using Magicodes.ExporterAndImporter.Pdf;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -42,13 +44,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "导出Html测试")]
-        public async Task ExportHtml_Test()
-        {
-            var exporter = new HtmlExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.html");
-            if (File.Exists(filePath)) File.Delete(filePath);
+        
 
+        
+        [Fact(DisplayName = "导出PDF测试")]
+        public async Task ExportPDF_Test()
+        {
+            var exporter = new PdfExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.pdf");
+            if (File.Exists(filePath)) File.Delete(filePath);
             var result = await exporter.ExportByTemplate(filePath, new List<ExportTestData>()
             {
                 new ExportTestData()

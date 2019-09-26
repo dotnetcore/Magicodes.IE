@@ -1,12 +1,12 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
+using RazorEngine;
+using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Encoding = System.Text.Encoding;
 
@@ -21,65 +21,34 @@ namespace Magicodes.ExporterAndImporter.Html
         /// 根据模板导出
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class
+        public async Task<string> ExportByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
         {
-            if (string.IsNullOrWhiteSpace(htmlTemplate))
-            {
-                var defaultHtmlTpl = ReadManifestData<HtmlExporter>("default.html");
+            var htmlTpl = string.IsNullOrWhiteSpace(htmlTemplate) ? ReadManifestData<HtmlExporter>("default.cshtml") : htmlTemplate;
+            
+            var exportDocumentInfo = new ExportDocumentInfo<T>(dataItems);
+            var result =
+                Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, exportDocumentInfo);
+            return result;
+        }
 
-                var script = CSharpScript.Create<string>("string htmlStr=\"\";");
-                var matches = Regex.Matches(defaultHtmlTpl, @"@foreach[\w\s{}.<>()/\[\]\+\-?|\\*`$]+}", RegexOptions.Multiline);
-                foreach (Match match in matches)
-                {
-                    if (match.Success)
-                    {
-                        //var sb = new StringBuilder();
-                        var list = Regex.Split(match.Value, Environment.NewLine).Where(p => p.Trim() != "{" && p.Trim() != "}")
-                            .ToList();
-                        foreach (var dataItem in dataItems)
-                        {
-                            foreach (var line in list)
-                            {
-                                script.ContinueWith("htmlStr +=\"\\n\";");
-                                if (line.Contains("{"))
-                                {
-                                    var codeStr = await CSharpScript.RunAsync<string>("var res=$\"" + line + "\";", globals: dataItem);
-                                    var codeRes = await codeStr.ContinueWithAsync("res");
-                                    script.ContinueWith("htmlStr +=$\"" + codeRes.ReturnValue + "\";");
-                                }
-                                else
-                                {
-                                    script.ContinueWith("htmlStr +=$\"" + line + "\";");
-                                }
-
-                                //var res = Regex.Matches(line, @"{{[\w\s.()/\[\]\+\-?|\\*`$]+}}", RegexOptions.None);
-                                //if (res.Count == 0)
-                                //{
-                                //    script.ContinueWith("htmlStr +=\"" + line + "\"");
-                                //}
-                                //else
-                                //{
-                                //    script.ContinueWith("htmlStr +=$\"" + line + "\"");
-                                //}
-                            }
-                        }
-
-
-
-                    }
-                }
-                var result = await script.RunAsync();
-                var a = await result.ContinueWithAsync("res");
-                var test = a.ReturnValue;
-                //var result = script.;
-                //var script = CSharpScript.Create<int>("X*Y", globalsType: typeof(IList<T>));
-                //script.Compile();
-            }
-            throw new NotImplementedException();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="dataItems"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems,
+            string htmlTemplate = null) where T : class
+        {
+            var file = new TemplateFileInfo(fileName, "text/html");
+            var result = await ExportByTemplate(dataItems, htmlTemplate);
+            File.WriteAllText(fileName, result, Encoding.UTF8);
+            return file;
         }
 
         public static string ReadManifestData<TSource>(string embeddedFileName) where TSource : class

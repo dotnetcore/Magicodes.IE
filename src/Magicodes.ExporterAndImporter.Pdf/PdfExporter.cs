@@ -1,24 +1,19 @@
-﻿using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
-using HtmlToOpenXml;
+﻿using DinkToPdf;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Html;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Html;
 
-namespace Magicodes.ExporterAndImporter.Word
+namespace Magicodes.ExporterAndImporter.Pdf
 {
-    /// <summary>
-    /// Word导出
-    /// </summary>
-    public class WordExporter : IExporterByTemplate
+    public class PdfExporter : IExporterByTemplate
     {
+
         /// <summary>
-        /// 根据HTML模板导出Word
+        /// 根据HTML模板导出PDF
         /// </summary>
         /// <param name="dataItems"></param>
         /// <param name="fileName"></param>
@@ -32,27 +27,27 @@ namespace Magicodes.ExporterAndImporter.Word
             }
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(dataItems, htmlTemplate);
-
-            using (var generatedDocument = new MemoryStream())
+            var converter = new BasicConverter(new PdfTools());
+            var doc = new HtmlToPdfDocument()
             {
-                using (var package = WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
-                {
-                    var mainPart = package.MainDocumentPart;
-                    if (mainPart == null)
-                    {
-                        mainPart = package.AddMainDocumentPart();
-                        new Document(new Body()).Save(mainPart);
+                GlobalSettings = {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Landscape,
+                    PaperSize = PaperKind.A4Plus,
+                    Out = fileName
+                },
+                Objects = {
+                    new ObjectSettings() {
+                        PagesCount = true,
+                        HtmlContent = htmlString,
+                        WebSettings = { DefaultEncoding = "utf-8" },
+                        HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                     }
-
-                    var converter = new HtmlConverter(mainPart);
-                    converter.ParseHtml(htmlString);
-
-                    mainPart.Document.Save();
                 }
-                File.WriteAllBytes(fileName, generatedDocument.ToArray());
-                var fileInfo = new TemplateFileInfo(fileName, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-                return fileInfo;
-            }
+            };
+            converter.Convert(doc);
+            var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
+            return fileInfo;
         }
 
         /// <summary>

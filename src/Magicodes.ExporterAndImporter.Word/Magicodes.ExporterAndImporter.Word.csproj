@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Magicodes.IE.Word</PackageId>
+    <Authors>雪雁</Authors>
+    <Company>湖南心莱信息科技有限公司</Company>
+    <Product>麦扣</Product>
+    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

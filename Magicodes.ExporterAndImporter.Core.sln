@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImport
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Html", "src\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj", "{46A0C3B6-0B1A-4D3E-9DC0-D60C4C57899E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magicodes.ExporterAndImporter.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{400E37A1-6C65-44DF-8D1B-E1BA55BD330F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}

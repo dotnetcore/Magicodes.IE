@@ -2,10 +2,13 @@
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.2.1</Version>
+    <Version>1.3.0</Version>
     <PackageId>Magicodes.IE.Excel</PackageId>
-    <Authors>湖南心莱信息科技有限公司</Authors>
-    <PackageProjectUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</PackageProjectUrl>
+    <Authors>雪雁</Authors>
+    <Company>湖南心莱信息科技有限公司</Company>
+    <Product>麦扣</Product>
+    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>C:\Users\Lys_Desktop\.nuget\packages\documentformat.openxml\2.7.2\lib\netstandard1.3\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

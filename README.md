@@ -1,6 +1,6 @@
-# Magicodes.ExporterAndImporter
+\# Magicodes.IE
 
-导入导出通用库，目前仅支持导入导出Excel。
+导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
 
 ### 特点
 
@@ -22,6 +22,13 @@
 ![](./res/数据错误.png "数据错误标注")
 ![](./res/多个错误.png "多个错误")
 - 导入支持截止列设置，如未设置则默认遇到空格截止
+- 支持导出HTML、Word、Pdf，支持自定义导出模板
+  - 导出HTML
+![](./res/导出html.png "导出HTML")
+  - 导出Word
+![](./res/导出Word.png "导出Word")
+  - 导出Pdf
+![](./res/导出Pdf.png "导出Pdf")
 
 ### 相关官方Nuget包
 
@@ -29,6 +36,9 @@
 |----------|:-------------:|
 | Magicodes.IE.Core  |  [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core) |
 | Magicodes.IE.Excel |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)   |
+| Magicodes.IE.Pdf |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)   |
+| Magicodes.IE.Word |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)   |
+| Magicodes.IE.Html |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)   |
 
 ### 联系我们
 
@@ -43,9 +53,11 @@
 
 - 产品交流群<897857351>
 
-> ##### 官方博客
+> ##### 文档官网&官方博客
 
-<http://www.cnblogs.com/codelove/>
+- 文档官网：<https://docs.xin-lai.com/>
+- 博客：<http://www.cnblogs.com/codelove/>
+
 
 > ##### 其他开源库
 
@@ -55,15 +67,15 @@
 ### VNext
 
 - 生成导入模板时必填项支持自定义配置
-- 对模板错误进行标注
 - CSV支持
-- Word支持
-- Pdf支持
-- HTML
 - 导入结果支持生成HTML输出
 - 导入重复验证
 
 ### 更新历史
+
+#### 2019.9.26
+- 【导出】支持导出Word、Pdf、HTML，支持自定义导出模板
+- 【导出】添加相关导出的单元测试
 
 #### 2019.9.19
 - 【导入】支持截止列设置，如未设置则默认遇到空格截止

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Data
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,20 +22,27 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align:center">{{Title}}</h1>
-
+    <h1 style="text-align:center">@Model.Title</h1>
+    <h5>自定义模板</h5>
     <table width="90%">
         <thead>
-        <tr>
-            <th>{{Name}}</th>
-            <th>{{Value}}</th>
-        </tr>
+            <tr>
+                @foreach (var header in Model.Headers)
+                {
+                    <th>@header.DisplayName</th>
+                }
+            </tr>
         </thead>
-        @foreach
+        @{
+            DataTable dt = Model.ToDataTable();
+        }
+        @foreach (DataRow dr in dt.Rows)
         {
             <tr>
-                <td>{Name1}</td>
-                <td>{Name2}</td>
+                @for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    <td>@dr[i]</td>
+                }
             </tr>
         }
 
