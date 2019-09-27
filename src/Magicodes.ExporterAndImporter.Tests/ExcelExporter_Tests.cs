@@ -69,17 +69,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "导出Excel")]
+        [Fact(DisplayName = "大量数据导出Excel")]
         public async Task Export_Test()
         {
             IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "test.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export_Test) + ".xlsx");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
 
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>());
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
