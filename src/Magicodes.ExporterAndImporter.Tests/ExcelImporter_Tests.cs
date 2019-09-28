@@ -132,7 +132,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task RowDataError_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
-            var result = await Importer.Import<ImportProductDto>(filePath);
+            var result = await Importer.Import<ImportRowDataErrorDto>(filePath);
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
 
@@ -187,6 +187,16 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.TemplateErrors.Count.ShouldBeGreaterThan(0);
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Error).ShouldBe(1);
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
+        }
+
+        [Fact(DisplayName = "截断数据测试")]
+        public async Task ImporterDataEnd_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "截断数据测试.xlsx");
+            var import = await Importer.Import<ImportProductDto>(filePath);
+            import.ShouldNotBeNull();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(6);
         }
     }
 }
