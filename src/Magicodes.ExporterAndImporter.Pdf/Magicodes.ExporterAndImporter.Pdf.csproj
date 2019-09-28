@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Magicodes.IE.Pdf</PackageId>
+    <Version>1.0.1</Version>
     <Authors>雪雁</Authors>
     <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>
