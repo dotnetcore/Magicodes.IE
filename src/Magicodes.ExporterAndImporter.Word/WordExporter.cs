@@ -40,24 +40,36 @@ namespace Magicodes.ExporterAndImporter.Word
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        ///     根据HTML模板导出Word
+        ///     根据模板导出
         /// </summary>
-        /// <param name="dataItems"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate">Html模板内容</param>
+        /// <returns></returns>
+        public Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///    根据模板导出列表
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
+        /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems,
-            string htmlTemplate = null) where T : class
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
             var exporter = new HtmlExporter();
-            var htmlString = await exporter.ExportByTemplate(dataItems, htmlTemplate);
+            var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
 
             using (var generatedDocument = new MemoryStream())
             {
@@ -83,5 +95,45 @@ namespace Magicodes.ExporterAndImporter.Word
                 return fileInfo;
             }
         }
+
+        /// <summary>
+        ///     根据模板导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
+
+            using (var generatedDocument = new MemoryStream())
+            {
+                using (var package =
+                    WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
+                {
+                    var mainPart = package.MainDocumentPart;
+                    if (mainPart == null)
+                    {
+                        mainPart = package.AddMainDocumentPart();
+                        new Document(new Body()).Save(mainPart);
+                    }
+
+                    var converter = new HtmlConverter(mainPart);
+                    converter.ParseHtml(htmlString);
+
+                    mainPart.Document.Save();
+                }
+
+                File.WriteAllBytes(fileName, generatedDocument.ToArray());
+                var fileInfo = new TemplateFileInfo(fileName,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+                return fileInfo;
+            }
+        }
+        
     }
 }

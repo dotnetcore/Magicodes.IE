@@ -14,16 +14,14 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using RazorEngine;
 using RazorEngine.Templating;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Encoding = System.Text.Encoding;
 
 namespace Magicodes.ExporterAndImporter.Html
@@ -40,16 +38,44 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public async Task<string> ExportByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
         {
-            var htmlTpl = string.IsNullOrWhiteSpace(htmlTemplate)
-                ? ReadManifestData<HtmlExporter>("default.cshtml")
+            var result = RunCompileTpl(new ExportDocumentInfoOfListData<T>(dataItems), htmlTemplate);
+            return Task.FromResult(result);
+        }
+
+        /// <summary>
+        ///     根据模板导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate">Html模板内容</param>
+        /// <returns></returns>
+        public Task<string> ExportByTemplate<T>(T data, string htmlTemplate) where T : class
+        {
+            var result = RunCompileTpl(new ExportDocumentInfo<T>(data), htmlTemplate);
+            return Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// 获取HTML模板
+        /// </summary>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        protected string GetHtmlTemplate(string htmlTemplate = null) => string.IsNullOrWhiteSpace(htmlTemplate)
+                ? typeof(HtmlExporter).Assembly.ReadManifestString("default.cshtml")
                 : htmlTemplate;
 
-            var exportDocumentInfo = new ExportDocumentInfo<T>(dataItems);
-            var result =
-                Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, exportDocumentInfo);
-            return result;
+        /// <summary>
+        /// 编译和运行模板
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        protected string RunCompileTpl(object model, string htmlTemplate = null)
+        {
+            var htmlTpl = GetHtmlTemplate(htmlTemplate);
+            return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
         }
 
         /// <summary>
@@ -59,29 +85,24 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems,
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems,
             string htmlTemplate = null) where T : class
         {
             var file = new TemplateFileInfo(fileName, "text/html");
-            var result = await ExportByTemplate(dataItems, htmlTemplate);
+
+            var result = await ExportListByTemplate(dataItems, htmlTemplate);
             File.WriteAllText(fileName, result, Encoding.UTF8);
             return file;
         }
 
-        public static string ReadManifestData<TSource>(string embeddedFileName) where TSource : class
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data,
+            string htmlTemplate) where T : class
         {
-            var assembly = typeof(TSource).GetTypeInfo().Assembly;
-            var resourceName = assembly.GetManifestResourceNames().First(s =>
-                s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
+            var file = new TemplateFileInfo(fileName, "text/html");
+            var result = await ExportByTemplate(data, htmlTemplate);
 
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                if (stream == null) throw new InvalidOperationException("Could not load manifest resource stream.");
-                using (var reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
+            File.WriteAllText(fileName, result, Encoding.UTF8);
+            return file;
         }
     }
 }

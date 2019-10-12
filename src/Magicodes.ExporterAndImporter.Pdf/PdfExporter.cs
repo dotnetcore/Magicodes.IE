@@ -14,13 +14,13 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DinkToPdf;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
@@ -33,24 +33,37 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class => throw new NotImplementedException();
+
+        /// <summary>
+        ///     根据模板导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate">Html模板内容</param>
+        /// <returns></returns>
+        public Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        ///     根据HTML模板导出PDF
+        ///    根据模板导出列表
         /// </summary>
-        /// <param name="dataItems"></param>
+        /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
+        /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, IList<T> dataItems,
-            string htmlTemplate = null) where T : class
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            }
+
             var exporter = new HtmlExporter();
-            var htmlString = await exporter.ExportByTemplate(dataItems, htmlTemplate);
+            var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
             var converter = new BasicConverter(new PdfTools());
             var doc = new HtmlToPdfDocument
             {
@@ -59,7 +72,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Landscape,
                     PaperSize = PaperKind.A4Plus,
-                    Out = fileName
+                    Out = fileName,
                 },
                 Objects =
                 {
@@ -68,7 +81,52 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         PagesCount = true,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
-                        HeaderSettings = {FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812}
+                        HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
+
+                    }
+                }
+            };
+            converter.Convert(doc);
+            var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
+            return fileInfo;
+        }
+
+        /// <summary>
+        ///     根据模板导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            }
+
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
+            var converter = new BasicConverter(new PdfTools());
+            var doc = new HtmlToPdfDocument
+            {
+                GlobalSettings =
+                {
+                    ColorMode = ColorMode.Color,
+                    Orientation = Orientation.Landscape,
+                    PaperSize = PaperKind.A4Plus,
+                    Out = fileName,
+                },
+                Objects =
+                {
+                    new ObjectSettings
+                    {
+                        PagesCount = true,
+                        HtmlContent = htmlString,
+                        WebSettings = {DefaultEncoding = "utf-8"},
+                        HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
+
                     }
                 }
             };

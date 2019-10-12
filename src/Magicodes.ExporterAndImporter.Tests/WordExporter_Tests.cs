@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWord_Test) + ".docx");
             if (File.Exists(filePath)) File.Delete(filePath);
             //此处使用默认模板导出
-            var result = await exporter.ExportByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
+            var result = await exporter.ExportListByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -47,7 +47,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordByTemplate_Test) + ".docx");
             if (File.Exists(filePath)) File.Delete(filePath);
             //此处使用默认模板导出
-            var result = await exporter.ExportByTemplate(filePath,
+            var result = await exporter.ExportListByTemplate(filePath,
                 GenFu.GenFu.ListOf<ExportTestData>(), tpl);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();

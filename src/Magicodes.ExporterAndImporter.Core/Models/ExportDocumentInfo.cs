@@ -25,11 +25,11 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     /// <summary>
     /// </summary>
     /// <typeparam name="TData"></typeparam>
-    public class ExportDocumentInfo<TData> where TData : class
+    public class ExportDocumentInfoOfListData<TData> where TData : class
     {
         /// <summary>
         /// </summary>
-        public ExportDocumentInfo(IList<TData> datas)
+        public ExportDocumentInfoOfListData(IList<TData> datas)
         {
             Headers = new List<ExporterHeaderAttribute>();
             Datas = datas;
@@ -70,4 +70,46 @@ namespace Magicodes.ExporterAndImporter.Core.Models
             return Datas.ToDataTable();
         }
     }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="TData"></typeparam>
+    public class ExportDocumentInfo<TData> where TData : class
+    {
+        /// <summary>
+        /// </summary>
+        public ExportDocumentInfo(TData data)
+        {
+            Headers = new List<ExporterHeaderAttribute>();
+            Data = data;
+            Title = typeof(TData).GetAttribute<ExporterAttribute>()?.Name ?? typeof(TData).Name;
+
+            foreach (var propertyInfo in typeof(TData).GetProperties())
+            {
+                var exporterHeader = propertyInfo.PropertyType.GetAttribute<ExporterHeaderAttribute>() ??
+                                     new ExporterHeaderAttribute
+                                     {
+                                         DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name
+                                     };
+                Headers.Add(exporterHeader);
+            }
+        }
+
+
+        /// <summary>
+        ///     文档标题
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        ///     头部信息
+        /// </summary>
+        public IList<ExporterHeaderAttribute> Headers { get; set; }
+
+        /// <summary>
+        ///     数据
+        /// </summary>
+        public TData Data { get; set; }
+    }
+
 }

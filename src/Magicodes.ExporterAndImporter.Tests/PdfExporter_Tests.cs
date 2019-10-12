@@ -14,6 +14,7 @@
 // 
 // ======================================================================
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Pdf;
@@ -32,7 +33,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportPdf_Test) + ".pdf");
             if (File.Exists(filePath)) File.Delete(filePath);
             //此处使用默认模板导出
-            var result = await exporter.ExportByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
+            var result = await exporter.ExportListByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -47,8 +48,37 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportPdfByTemplate_Test) + ".pdf");
             if (File.Exists(filePath)) File.Delete(filePath);
             //此处使用默认模板导出
-            var result = await exporter.ExportByTemplate(filePath,
+            var result = await exporter.ExportListByTemplate(filePath,
                 GenFu.GenFu.ListOf<ExportTestData>(), tpl);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "导出收据")]
+        public async Task ExportReceipt_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
+            var tpl = File.ReadAllText(tplPath);
+            var exporter = new PdfExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportReceipt_Test) + ".pdf");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportByTemplate(filePath,
+                new ReceiptInfo()
+                {
+                    Amount = 22939.43M,
+                    Grade = "2019秋",
+                    IdNo = "43062619890622xxxx",
+                    Name = "张三",
+                    Payee = "湖南心莱信息科技有限公司",
+                    PaymentMethod = "微信支付",
+                    Profession = "运动训练",
+                    Remark = "学费",
+                    TradeStatus = "已完成",
+                    TradeTime = DateTime.Now,
+                    UppercaseAmount = "贰万贰仟玖佰叁拾玖圆肆角叁分",
+                    Code = "19071800001"
+                }, tpl);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }

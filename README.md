@@ -31,6 +31,7 @@
 ![](./res/导出Pdf.png "导出Pdf")
 - 导入支持重复验证；
 ![](./res/重复错误.png "重复错误.png")
+- 支持单个数据模板导出，常用于导出收据、凭据等业务
 
 ### 相关官方Nuget包
 
@@ -74,6 +75,14 @@
 - 导入结果支持生成HTML输出
 
 ### 更新历史
+
+#### 2019.10.12
+- 【重构】重构HTML、PDF导出等逻辑，并修改IExporterByTemplate为：
+  - Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;
+  - Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;
+- 【示例】添加收据导出的单元测试示例
+    
+
 
 #### 2019.9.28
 - 【导出】修改默认的导出HTML、Word、Pdf模板

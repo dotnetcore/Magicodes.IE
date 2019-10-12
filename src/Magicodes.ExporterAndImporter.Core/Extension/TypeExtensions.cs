@@ -142,15 +142,13 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             where TAttribute : Attribute
         {
             var attrType = typeof(TAttribute);
-            foreach (var type in assembly.GetTypes())
-                if (type.GetCustomAttributes(attrType, true).Length > 0)
-                    yield return type;
+            foreach (var type in assembly.GetTypes().Where(type => type.GetCustomAttributes(attrType, true).Length > 0))
+                yield return type;
         }
 
         /// <summary>
         ///     获取枚举定义列表
         /// </summary>
-        /// <typeparam name="TAttribute">枚举类型</typeparam>
         /// <returns>返回枚举列表元组（名称、值、描述）</returns>
         public static List<Tuple<string, int, string>> GetEnumDefinitionList(this Type type)
         {
@@ -193,10 +191,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             IDictionary<string, int> displayNames = new Dictionary<string, int>();
             foreach (var name in names)
             {
-                var displayAttribute = type.GetField(name)
+                if (type.GetField(name)
                     .GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .SingleOrDefault() as DisplayAttribute;
-                if (displayAttribute != null)
+                    .SingleOrDefault() is DisplayAttribute displayAttribute)
                 {
                     var value = (int) Enum.Parse(type, name);
                     displayNames.Add(displayAttribute.Name, value);
@@ -220,6 +217,11 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static string GetCSharpTypeName(this Type type)
         {
             var sb = new StringBuilder();
