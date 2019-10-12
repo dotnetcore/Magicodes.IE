@@ -71,7 +71,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 {
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Landscape,
-                    PaperSize = PaperKind.A4Plus,
+                    PaperSize = PaperKind.A4,
                     Out = fileName,
                 },
                 Objects =
@@ -115,18 +115,17 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 {
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Landscape,
-                    PaperSize = PaperKind.A4Plus,
+                    PaperSize = PaperKind.A4,
                     Out = fileName,
                 },
                 Objects =
                 {
                     new ObjectSettings
                     {
-                        PagesCount = true,
+                        //PagesCount = true,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
-                        HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
-
+                        //HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
                     }
                 }
             };
