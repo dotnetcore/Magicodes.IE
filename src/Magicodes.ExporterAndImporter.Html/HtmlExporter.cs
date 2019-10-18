@@ -38,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class
         {
             var result = RunCompileTpl(new ExportDocumentInfoOfListData<T>(dataItems), htmlTemplate);
             return Task.FromResult(result);
@@ -85,7 +85,7 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems,
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
             string htmlTemplate = null) where T : class
         {
             var file = new TemplateFileInfo(fileName, "text/html");

@@ -47,7 +47,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>二进制字节</returns>
-        public Task<byte[]> GenerateTemplateByte<T>() where T : class, new()
+        public Task<byte[]> GenerateTemplateBytes<T>() where T : class, new()
         {
             using (var importer = new ImportHelper<T>())
             {

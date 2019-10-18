@@ -1,14 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>Magicodes.IE.Word</PackageId>
-    <Version>1.0.2</Version>
-    <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
-    <Product>麦扣</Product>
-    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

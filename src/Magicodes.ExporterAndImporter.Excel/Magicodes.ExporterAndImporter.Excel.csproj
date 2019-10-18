@@ -1,16 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.3.1</Version>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>Magicodes.IE.Excel</PackageId>
-    <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
-    <Product>麦扣</Product>
-    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xin-lai/Magicodes.ExporterAndImporter</RepositoryUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.3.2" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.0" />

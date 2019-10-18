@@ -28,7 +28,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     导入数据
         /// </summary>
-        public virtual IList<T> Data { get; set; }
+        public virtual ICollection<T> Data { get; set; }
 
         /// <summary>
         ///     验证错误

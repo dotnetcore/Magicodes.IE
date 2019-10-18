@@ -106,7 +106,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         #region 数据验证
                         for (var i = 0; i < ImportResult.Data.Count; i++)
                         {
-                            var isValid = ValidatorHelper.TryValidate(ImportResult.Data[i], out var validationResults);
+                            var isValid = ValidatorHelper.TryValidate(ImportResult.Data.ElementAt(i), out var validationResults);
                             if (!isValid)
                             {
                                 var dataRowError = new DataRowErrorInfo

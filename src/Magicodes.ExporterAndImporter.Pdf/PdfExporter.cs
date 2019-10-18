@@ -24,6 +24,9 @@ using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
+    /// <summary>
+    /// Pdf导出逻辑
+    /// </summary>
     public class PdfExporter : IExporterByTemplate
     {
         /// <summary>
@@ -33,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class => throw new NotImplementedException();
+        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class => throw new NotImplementedException();
 
         /// <summary>
         ///     根据模板导出
@@ -55,7 +58,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems, string htmlTemplate = null) where T : class
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems, string htmlTemplate = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {

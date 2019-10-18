@@ -29,7 +29,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     {
         /// <summary>
         /// </summary>
-        public ExportDocumentInfoOfListData(IList<TData> datas)
+        public ExportDocumentInfoOfListData(ICollection<TData> datas)
         {
             Headers = new List<ExporterHeaderAttribute>();
             Datas = datas;
@@ -60,7 +60,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     数据
         /// </summary>
-        public IList<TData> Datas { get; set; }
+        public ICollection<TData> Datas { get; set; }
 
         /// <summary>
         /// </summary>

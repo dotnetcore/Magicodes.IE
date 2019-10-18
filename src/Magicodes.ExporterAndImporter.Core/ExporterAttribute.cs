@@ -18,6 +18,9 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
+    /// <summary>
+    /// 导出特性
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ExporterAttribute : Attribute
     {

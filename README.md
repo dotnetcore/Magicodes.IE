@@ -78,6 +78,11 @@
 
 ### 更新历史
 
+#### 2019.10.18
+- 【优化】优化.NET标准库2.1下集合转DataTable的性能
+- 【重构】多处IList<T>修改为ICollection<T>
+- 【完善】补充部分单元测试
+
 #### 2019.10.12
 - 【重构】重构HTML、PDF导出等逻辑，并修改IExporterByTemplate为：
   - Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;

@@ -31,7 +31,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;
+        Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class;
 
         /// <summary>
         ///     根据模板导出
@@ -50,7 +50,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, IList<T> dataItems,
+        Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
             string htmlTemplate = null) where T : class;
 
         /// <summary>

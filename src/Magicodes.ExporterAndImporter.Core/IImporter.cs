@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>二进制字节</returns>
-        Task<byte[]> GenerateTemplateByte<T>() where T : class, new();
+        Task<byte[]> GenerateTemplateBytes<T>() where T : class, new();
 
         /// <summary>
         ///     导入模型验证数据

@@ -34,7 +34,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "生成模板")]
         public async Task GenerateTemplate_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testTemplate.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplate_Test) + ".xlsx");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
@@ -42,6 +42,22 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "生成模板字节")]
+        public async Task GenerateTemplateBytes_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) +".xlsx");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
         }
 
@@ -73,18 +89,18 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
             //可为空类型测试
-            import.Data[4].Weight.HasValue.ShouldBe(true);
-            import.Data[5].Weight.HasValue.ShouldBe(false);
+            import.Data.ElementAt(4).Weight.HasValue.ShouldBe(true);
+            import.Data.ElementAt(5).Weight.HasValue.ShouldBe(false);
             //提取性别公式测试
-            import.Data[0].Sex.ShouldBe("女");
+            import.Data.ElementAt(0).Sex.ShouldBe("女");
             //获取当前日期以及日期类型测试  如果时间不对，请打开对应的Excel即可更新为当前时间，然后再运行此单元测试
             //import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
             //数值测试
-            import.Data[0].DeclareValue.ShouldBe(123123);
-            import.Data[0].Name.ShouldBe("1212");
-            import.Data[0].BarCode.ShouldBe("123123");
-            import.Data[1].Name.ShouldBe("12312312");
-            import.Data[2].Name.ShouldBe("左侧空格测试");
+            import.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
+            import.Data.ElementAt(0).Name.ShouldBe("1212");
+            import.Data.ElementAt(0).BarCode.ShouldBe("123123");
+            import.Data.ElementAt(1).Name.ShouldBe("12312312");
+            import.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
         }
 
         [Fact(DisplayName = "必填项检测")]

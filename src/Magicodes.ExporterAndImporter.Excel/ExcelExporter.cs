@@ -27,6 +27,9 @@ using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
+    /// <summary>
+    /// Excel导出程序
+    /// </summary>
     public class ExcelExporter : IExporter
     {
         /// <summary>
@@ -40,15 +43,9 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public Task<TemplateFileInfo> Export<T>(string fileName, IList<T> dataItems) where T : class
+        public Task<TemplateFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
-            //允许不存在扩展名
-            //var extension = Path.GetExtension(fileName);
-            //if (string.IsNullOrWhiteSpace(extension))
-            //{
-            //    fileName = fileName + ".xlsx";
-            //}
             var fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
             {
                 //导出定义
@@ -72,7 +69,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArray<T>(IList<T> dataItems) where T : class
+        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class
         {
             using (var excelPackage = new ExcelPackage())
             {
@@ -144,6 +141,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="exporterHeaderDtoList"></param>
         /// <param name="sheet"></param>
+        /// <param name="exporter"></param>
         protected void AddHeader(List<ExporterHeaderInfo> exporterHeaderDtoList, ExcelWorksheet sheet,
             ExcelExporterAttribute exporter)
         {
@@ -196,9 +194,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="sheet"></param>
-        /// <param name="startRowIndex"></param>
+        /// <param name="exporterHeaders"></param>
         /// <param name="items"></param>
-        protected void AddDataItems<T>(ExcelWorksheet sheet, List<ExporterHeaderInfo> exporterHeaders, IList<T> items,
+        /// <param name="exporter"></param>
+        protected void AddDataItems<T>(ExcelWorksheet sheet, List<ExporterHeaderInfo> exporterHeaders, ICollection<T> items,
             ExcelExporterAttribute exporter)
         {
             if (items == null || items.Count == 0)
