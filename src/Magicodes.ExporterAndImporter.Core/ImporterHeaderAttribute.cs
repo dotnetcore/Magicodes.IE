@@ -58,5 +58,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 是否允许重复
         /// </summary>
         public bool IsAllowRepeat { get; set; } = true;
+
+        /// <summary>
+        ///     是否忽略
+        /// </summary>
+        public bool IsIgnore { get; set; }
     }
 }

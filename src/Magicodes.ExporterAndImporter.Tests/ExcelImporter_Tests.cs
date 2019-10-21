@@ -43,6 +43,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+
+            //TODO:列头隐藏测试
         }
 
         [Fact(DisplayName = "生成模板字节")]

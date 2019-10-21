@@ -451,6 +451,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             //设置列头
             for (var i = 0; i < ImporterHeaderInfos.Count; i++)
             {
+                //忽略
+                if (ImporterHeaderInfos[i].ExporterHeader.IsIgnore)
+                {
+                    continue;
+                }
+
                 worksheet.Cells[1, i + 1].Value = ImporterHeaderInfos[i].ExporterHeader.Name;
                 if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].ExporterHeader.Description))
                 {
@@ -863,7 +869,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     生成Excel导入模板
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns>二进制字节</returns>
         public Task<byte[]> GenerateTemplateByte()
         {
