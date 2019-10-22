@@ -77,10 +77,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 FilePath = filePath;
             }
 
-            ImportResult = new ImportResult<T>
-            {
-                RowErrors = new List<DataRowErrorInfo>()
-            };
+            ImportResult = new ImportResult<T>();
             ExcelImporterAttribute =
                 typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
 
@@ -109,10 +106,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             var isValid = ValidatorHelper.TryValidate(ImportResult.Data.ElementAt(i), out var validationResults);
                             if (!isValid)
                             {
-                                var dataRowError = new DataRowErrorInfo
-                                {
-                                    RowIndex = ExcelImporterAttribute.HeaderRowIndex + i + 1
-                                };
+                                var rowIndex = ExcelImporterAttribute.HeaderRowIndex + i + 1;
+                                var dataRowError = GetDataRowErrorInfo(rowIndex);
                                 foreach (var validationResult in validationResults)
                                 {
                                     var key = validationResult.MemberNames.First();
@@ -132,8 +127,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         dataRowError.FieldErrors.Add(key, value);
                                     }
                                 }
-
-                                ImportResult.RowErrors.Add(dataRowError);
                             }
                         }
 
@@ -151,6 +144,31 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
 
             return Task.FromResult(ImportResult);
+        }
+
+        /// <summary>
+        /// 获取当前行
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
+        private DataRowErrorInfo GetDataRowErrorInfo(int rowIndex)
+        {
+            if (ImportResult.RowErrors == null)
+            {
+                ImportResult.RowErrors = new List<DataRowErrorInfo>();
+            }
+
+            var dataRowError = ImportResult.RowErrors.FirstOrDefault(p => p.RowIndex == rowIndex);
+            if (dataRowError == null)
+            {
+                dataRowError = new DataRowErrorInfo
+                {
+                    RowIndex = rowIndex
+                };
+                ImportResult.RowErrors.Add(dataRowError);
+            }
+            return dataRowError;
+
         }
 
         /// <summary>
@@ -211,15 +229,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     var errorIndexsStr = string.Join("，", listRepeatRows.Distinct());
                     foreach (var repeatRow in listRepeatRows.Distinct())
                     {
-                        var dataRowError = ImportResult.RowErrors.FirstOrDefault(p => p.RowIndex == repeatRow);
-                        if (dataRowError == null)
-                        {
-                            dataRowError = new DataRowErrorInfo
-                            {
-                                RowIndex = repeatRow
-                            };
-                            ImportResult.RowErrors.Add(dataRowError);
-                        }
+                        var dataRowError = GetDataRowErrorInfo(repeatRow);
 
                         var key = notAllowRepeatCol.ExporterHeader?.Name ??
                                   notAllowRepeatCol.PropertyName;
@@ -415,6 +425,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     importerHeaderAttribute.Name = objProperties[i].GetDisplayName() ?? objProperties[i].Name;
                 }
 
+                //忽略字段处理
+                if (importerHeaderAttribute.IsIgnore == true)
+                {
+                    continue;
+                }
+
                 ImporterHeaderInfos.Add(new ImporterHeaderInfo
                 {
                     IsRequired = objProperties[i].IsRequired(),
@@ -535,14 +551,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 if (isNullNumber < worksheet.Dimension.End.Column)
                 {
                     var dataItem = new T();
-                    foreach (var propertyInfo in propertyInfos)
+                    foreach (var propertyInfo in propertyInfos.Where(p => ImporterHeaderInfos.Any(p1 => p1.PropertyName == p.Name && p1.IsExist)))
                     {
-                        var col = ImporterHeaderInfos.Find(a => a.PropertyName == propertyInfo.Name);
-                        //检查Excel中是否存在
-                        if (!col.IsExist)
-                        {
-                            continue;
-                        }
+                        var col = ImporterHeaderInfos.First(a => a.PropertyName == propertyInfo.Name);
 
                         var cell = worksheet.Cells[rowIndex, col.ExporterHeader.ColumnIndex];
                         try
@@ -826,16 +837,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void AddRowDataError(int rowIndex, ImporterHeaderInfo importerHeaderInfo,
             string errorMessage = "数据格式无效！")
         {
-            var rowError = ImportResult.RowErrors.FirstOrDefault(p => p.RowIndex == rowIndex);
-            if (rowError == null)
-            {
-                rowError = new DataRowErrorInfo
-                {
-                    RowIndex = rowIndex
-                };
-                ImportResult.RowErrors.Add(rowError);
-            }
-
+            var rowError = GetDataRowErrorInfo(rowIndex);
             rowError.FieldErrors.Add(importerHeaderInfo.ExporterHeader.Name, errorMessage);
         }
 

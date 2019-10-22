@@ -146,6 +146,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.TemplateErrors.Count.ShouldBe(0);
         }
 
+        [Fact(DisplayName = "缴费流水导入测试")]
+        public async Task ImportPaymentLogs_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "缴费流水导入模板.xlsx");
+            var import = await Importer.Import<ImportPaymentLogDto>(filePath);
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeTrue();
+            import.Exception.ShouldBeNull();
+            import.Data.Count.ShouldBe(20);
+        }
+
         [Fact(DisplayName = "数据错误检测")]
         public async Task RowDataError_Test()
         {
@@ -169,7 +180,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证"));
             result.RowErrors.First(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证")).FieldErrors.Count
-                .ShouldBe(2);
+                .ShouldBe(3);
 
             result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("身份证"));
             result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("身份证"));
@@ -193,6 +204,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             #endregion
 
             result.RowErrors.Count.ShouldBeGreaterThan(0);
+
+            //一行仅允许存在一条数据
+            foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
+            {
+                item.Count.ShouldBe(1);
+            }
         }
 
         [Fact(DisplayName = "模板错误检测")]

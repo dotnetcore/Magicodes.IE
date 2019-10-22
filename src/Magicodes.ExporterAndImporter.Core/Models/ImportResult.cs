@@ -26,6 +26,14 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     public class ImportResult<T> where T : class
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public ImportResult()
+        {
+            RowErrors = new List<DataRowErrorInfo>();
+        }
+
+        /// <summary>
         ///     导入数据
         /// </summary>
         public virtual ICollection<T> Data { get; set; }
