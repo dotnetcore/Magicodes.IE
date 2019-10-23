@@ -1,0 +1,74 @@
+﻿@using System.Data
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        footer {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            border-top: 1px solid #e4e4e4;
+            text-align: center;
+            padding-top: 1rem;
+            color: #999;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #cccccc;
+            border-collapse: collapse;
+            padding: 5px;
+            height: 2rem;
+            padding-left: 1%;
+        }
+
+            table tr:nth-child(odd) {
+                background-color: #ffffff;
+            }
+
+            table tr:nth-child(even) {
+                background-color: #f5f6ff;
+            }
+
+        table,
+        thead {
+            background-color: #617af8 !important;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;margin-top: 2rem;">@Model.Title</h1>
+
+    <table width="90%" style="margin-left:5%;">
+        <thead>
+            <tr style=" height: 3.5rem;background-color: #617af8!important; color: #010c13; text-align: left; font-weight: bold;">
+                @foreach (var header in Model.Headers)
+                {
+                    <th>@header.DisplayName</th>
+                }
+            </tr>
+        </thead>
+        @{
+            DataTable dt = Model.ToDataTable();
+        }
+        @foreach (DataRow dr in dt.Rows)
+        {
+            <tr>
+                @for (var i = 0; i < dt.Columns.Count; i++)
+                {
+                    <td>@dr[i]</td>
+                }
+            </tr>
+        }
+
+    </table>
+    <footer>
+        by Magicodes.IE
+    </footer>
+</body>
+</html>

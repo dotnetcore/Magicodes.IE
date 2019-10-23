@@ -10,7 +10,7 @@ set nupkg=""
 dotnet msbuild %2 /p:Configuration=Release
 
 :: 打包
-dotnet pack %2 -c Release --output ../../nupkgs
+dotnet pack %2 -c Release --output nupkgs
 
 :: 更新包名称
 for %%a in (dir /s /a /b "./nupkgs/%1") do (set nupkg=%%a)

@@ -1,7 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ======================================================================
+// 
+//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
+//           All rights reserved
+// 
+//           filename : ExcelHelper.cs
+//           description :
+// 
+//           created by 雪雁 at  2019-09-11 13:51
+//           文档官网：https://docs.xin-lai.com
+//           公众号教程：麦扣聊技术
+//           QQ群：85318032（编程交流）
+//           Blog：http://www.cnblogs.com/codelove/
+// 
+// ======================================================================
+
+using System;
 using System.IO;
-using System.Text;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
 
@@ -15,19 +29,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="fileName">文件名</param>
         /// <param name="creator"></param>
         /// <returns></returns>
-        public static ExcelFileInfo CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
+        public static TemplateFileInfo CreateExcelPackage(string fileName, Action<ExcelPackage> creator)
         {
-            var file = new ExcelFileInfo(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            var file = new TemplateFileInfo(fileName,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             using (var excelPackage = new ExcelPackage())
             {
                 creator(excelPackage);
                 Save(excelPackage, file);
             }
+
             return file;
         }
 
-        private static void Save(ExcelPackage excelPackage, ExcelFileInfo file)
+        private static void Save(ExcelPackage excelPackage, TemplateFileInfo file)
         {
             excelPackage.SaveAs(new FileInfo(file.FileName));
         }

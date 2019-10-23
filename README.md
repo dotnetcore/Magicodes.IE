@@ -1,18 +1,39 @@
-# Magicodes.ExporterAndImporter
+# Magicodes.IE
 
-导入导出通用库
+导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
 
 ### 特点
 
-- 封装导入导出业务,目前仅支持 Excel,后续将支持 CSV 以及其他业务
-- 配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码
-- 推荐配合 DTO 使用
-- 导出支持列头自定义处理以便支持多语言等场景
-- 导出支持文本自定义过滤或处理
-- 导入支持自动根据 DTO 生成导入模板及模板验证
-- 导入支持数据验证逻辑
-- 导入支持数据下拉选择
-- 导入支持注释添加
+- 需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；
+![](./res/导入Dto.png "导入Dto")
+- 导出支持列头自定义处理以便支持多语言等场景；
+- 导出支持文本自定义过滤或处理；
+- 导入支持中间空行自动跳过；
+- 导入支持自动根据 DTO 生成导入模板,针对必填项将自动标注；
+![](./res/自动生成的导入模板.png "自动生成的导入模板")
+- 导入支持数据下拉选择，目前仅支持枚举类型；
+- 导入数据支持前后空格以及中间空格处理，允许指定列进行设置；
+- 导入支持模板自动检查，数据自动校验，异常统一处理，并提供统一的错误封装，包含异常、模板错误和行数据错误；
+![](./res/数据错误统一返回.png "数据错误")
+- 支持导入表头位置设置，默认为1；
+- 支持导入列乱序，无需按顺序一一对应；
+- 支持导入指定列索引，默认自动识别；
+- 支持将导入Excel进行错误标注；
+![](./res/数据错误.png "数据错误标注")
+![](./res/多个错误.png "多个错误")
+- 导入支持截止列设置，如未设置则默认遇到空格截止；
+- 支持导出HTML、Word、Pdf，支持自定义导出模板；
+  - 导出HTML
+![](./res/导出html.png "导出HTML")
+  - 导出Word
+![](./res/导出Word.png "导出Word")
+  - 导出Pdf
+![](./res/导出Pdf.png "导出Pdf")
+  - 导出收据
+![](./res/导出收据.png "导出收据.png")
+- 导入支持重复验证；
+![](./res/重复错误.png "重复错误.png")
+- 支持单个数据模板导出，常用于导出收据、凭据等业务
 
 ### 相关官方Nuget包
 
@@ -20,9 +41,109 @@
 |----------|:-------------:|
 | Magicodes.IE.Core  |  [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core) |
 | Magicodes.IE.Excel |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)   |
+| Magicodes.IE.Pdf |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)   |
+| Magicodes.IE.Word |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)   |
+| Magicodes.IE.Html |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)   |
+
+### 联系我们
+
+> ##### 订阅号
+
+关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档：
+
+![](./res/wechat.jpg "麦扣聊技术")
+
+> ##### QQ群
+
+- 编程交流群<85318032>
+
+- 产品交流群<897857351>
+
+> ##### 文档官网&官方博客
+
+- 文档官网：<https://docs.xin-lai.com/>
+- 博客：<http://www.cnblogs.com/codelove/>
+
+
+> ##### 其他开源库
+
+- <https://github.com/xin-lai>
+- <https://gitee.com/magicodes>
+
+### VNext
+
+- 生成导入模板时必填项支持自定义样式配置
+- CSV支持
+- 导入结果支持生成HTML输出
+
+### 更新历史
+
+#### 2019.10.22
+- 【Nuget】版本更新到1.3.7
+- 【导入】修复忽略列的验证问题
+- 【导入】修正验证错误信息，一行仅允许存在一条数据
+- 【导入】修复忽略列在某些情况下可能引发的异常
+- 【导入】添加存在忽略列的导入情形下的单元测试
+
+#### 2019.10.21
+- 【Nuget】版本更新到1.3.4
+- 【导入】支持设置忽略列，以便于在Dto定义数据列做处理或映射
+
+#### 2019.10.18
+- 【优化】优化.NET标准库2.1下集合转DataTable的性能
+- 【重构】多处IList<T>修改为ICollection<T>
+- 【完善】补充部分单元测试
+
+#### 2019.10.12
+- 【重构】重构HTML、PDF导出等逻辑，并修改IExporterByTemplate为：
+  - Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;
+  - Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;
+- 【示例】添加收据导出的单元测试示例
+    
+
+
+#### 2019.9.28
+- 【导出】修改默认的导出HTML、Word、Pdf模板
+- 【导入】添加截断行的单元测试，以测试中间空格和结尾空格
+- 【导入】将【数据错误检测】和【导入】单元测试的Dto分开，确保全部单元测试通过
+- 【文档】更新文档
+
+#### 2019.9.26
+- 【导出】支持导出Word、Pdf、HTML，支持自定义导出模板
+- 【导出】添加相关导出的单元测试
+- 【导入】支持重复验证，需设置ImporterHeader特性的IsAllowRepeat为false
+
+#### 2019.9.19
+- 【导入】支持截止列设置，如未设置则默认遇到空格截止
+- 【导入】导入支持通过特性设置Sheet名称
+
+#### 2019.9.18
+
+- 【导入】重构导入模块
+- 【导入】统一导入错误消息
+	- Exception ：导入异常信息
+	- RowErrors ： 数据错误信息
+	- TemplateErrors ：模板错误信息，支持错误分级
+	- HasError : 是否存在错误（仅当出现异常并且错误等级为Error时返回true）
+- 【导入】基础类型必填自动识别，比如int、double等不可为空类型自动识别，无需额外设置Required
+- 【导入】修改Excel模板的Sheet名称
+- 【导入】支持导入表头位置设置，默认为1
+- 【导入】支持列乱序（导入模板的列序号不再需要固定）
+- 【导入】支持列索引设置
+- 【导入】支持将导入的Excel进行错误标注，支持多个错误
+- 【导入】加强对基础类型和可为空类型的支持
+- 【EPPlus】由于EPPlus.Core已经不维护，将EPPlus的包从EPPlus.Core改为EPPlus，
+
+#### 2019.9.11
+
+- 【导入】导入支持自动去除前后空格，默认启用，可以针对列进行关闭，具体见AutoTrim设置
+- 【导入】导入Dto的字段允许不设置ImporterHeader，支持通过DisplayAttribute特性获取列名
+- 【导入】导入的Excel移除对Sheet名称的约束，默认获取第一个Sheet
+- 【导入】导入增加对中间空格的处理支持，需设置FixAllSpace
+- 【导入】导入完善对日期类型的支持
+- 【导入】完善导入的单元测试
 
 ### 导出 Demo
-
 
 ---
 #### Demo1-1
@@ -39,7 +160,7 @@
         public string Name3 { get; set; }
         public string Name4 { get; set; }
     }
-
+    
     var result = await Exporter.Export(filePath, new List<ExportTestData>()
     {
         new ExportTestData()
@@ -58,7 +179,6 @@
         }
     });
 
-
 ---
 #### Demo1-2
 
@@ -72,16 +192,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -125,16 +245,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -146,10 +266,10 @@
                 }
                 return "未知语言";
             }).Build();
-
+    
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-
+    
             var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
             {
                 new AttrsLocalizationTestData()
@@ -179,29 +299,29 @@
             });
 
 ### 导入 Demo
->导入特性（**ImporterHeader**）：
+
+#### 导入特性（**ImporterAttribute**）：
+
+- **HeaderRowIndex**：表头位置
+
+#### 导入列头特性（**ImporterHeader**）：
 
 + **Name**：表头显示名称(不可为空)。
-
 + **Description**：表头添加注释。
++ **Author**：注释作者，默认值为“麦扣”。
++ **AutoTrim**：自动过滤空格，默认启用。
++ **FixAllSpace**：处理掉所有的空格，包括中间空格。默认false。
++ **ColumnIndex**：列索引，一般不建议设置。
 
-+ **Author**：注释作者，默认值为X.M。
-
->导入结果（**ImportModel\<T>**）：
+#### 导入结果（ImportResult）：
 
 + **Data**：***IList\<T>***  导入的数据集合。
++ **RowErrors**：***IList<DataRowErrorInfo>*** 数据行错误。
++ **HasError**：***bool*** 是否存在导入错误。
++ **Exception**：异常信息
++ **TemplateErrors**：模板错误信息
 
-+ **ValidationResults**：***IList\<ValidationResultModel>*** 数据验证结果。
 
-+ **HasValidTemplate**：***bool*** 模板验证是否通过。
-
->数据验证结果（**ValidationResultModel**）：
-
-+ **Index**：***int***  错误数据所在行。
-
-+ **Errors**：***IDictionary<string, string>*** 整个Excel错误集合。目前仅支持数据验证错误。
-
-+ **FieldErrors**：***IDictionary<string, string>*** 数据验证错误。
 
 ---
 #### Demo2-1 普通模板
@@ -295,7 +415,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -384,7 +504,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -433,10 +553,10 @@ Dockerfile Demo
     COPY . .
     WORKDIR "/src/src/web/Admin.Host"
     RUN dotnet build "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM build AS publish
     RUN dotnet publish "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM base AS final
     WORKDIR /app
     COPY --from=publish /app .
