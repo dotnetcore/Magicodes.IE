@@ -85,7 +85,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
                         HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
-
+                        Encoding = System.Text.Encoding.UTF8
                     }
                 }
             };
@@ -120,6 +120,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     Orientation = Orientation.Landscape,
                     PaperSize = PaperKind.A4,
                     Out = fileName,
+                    
                 },
                 Objects =
                 {
@@ -128,6 +129,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         //PagesCount = true,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
+                        Encoding = System.Text.Encoding.UTF8
                         //HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
                     }
                 }
