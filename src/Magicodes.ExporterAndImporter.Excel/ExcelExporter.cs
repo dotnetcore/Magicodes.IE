@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
@@ -84,6 +85,50 @@ namespace Magicodes.ExporterAndImporter.Excel
                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderList)) return null;
                 AddHeader(exporterHeaderList, sheet, exporter);
                 AddDataItems(sheet, exporterHeaderList, dataItems, exporter);
+                AddStyle(exporter, exporterHeaderList, sheet);
+                return Task.FromResult(excelPackage.GetAsByteArray());
+            }
+        }
+
+        public Task<TemplateFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            var fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
+            {
+                //导出定义
+                var exporter = GetExporterAttribute<T>();
+
+                if (exporter?.Author != null)
+                    excelPackage.Workbook.Properties.Author = exporter?.Author;
+
+                var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
+                sheet.OutLineApplyStyle = true;
+                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns)) 
+                    return;
+                AddHeader(exporterHeaderList, sheet, exporter);
+                AddDataItems<T>(sheet, dataItems, exporter);
+                AddStyle(exporter, exporterHeaderList, sheet);
+            });
+            return Task.FromResult(fileInfo);
+        }
+
+        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class
+        {
+            using (var excelPackage = new ExcelPackage())
+            {
+                //导出定义
+                var exporter = GetExporterAttribute<T>();
+
+                if (exporter?.Author != null)
+                    excelPackage.Workbook.Properties.Author = exporter?.Author;
+
+                var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
+                sheet.OutLineApplyStyle = true;
+                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns))
+                    return null;
+                AddHeader(exporterHeaderList, sheet, exporter);
+                AddDataItems<T>(sheet, dataItems, exporter);
                 AddStyle(exporter, exporterHeaderList, sheet);
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
@@ -172,6 +217,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
                 }
         }
+    
 
         /// <summary>
         ///     创建表头
@@ -206,6 +252,23 @@ namespace Magicodes.ExporterAndImporter.Excel
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
                 tbStyle = (TableStyles) Enum.Parse(typeof(TableStyles), exporter.TableStyle);
             sheet.Cells["A2"].LoadFromCollection(items, false, tbStyle);
+        }
+
+        /// <summary>
+        ///     添加导出数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sheet"></param>
+        /// <param name="items"></param>
+        /// <param name="exporter"></param>
+        protected void AddDataItems<T>(ExcelWorksheet sheet, DataTable items,ExcelExporterAttribute exporter)
+        {
+            if (items == null || items.Rows.Count == 0)
+                return;
+            var tbStyle = TableStyles.Medium10;
+            if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
+                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
+            sheet.Cells["A2"].LoadFromDataTable(items, false, tbStyle);
         }
 
 
@@ -317,6 +380,39 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
+        ///     获取头部定义
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="exporterHeaderList"></param>
+        /// <returns></returns>
+        private static bool GetExporterHeaderInfoList<T>(out List<ExporterHeaderInfo> exporterHeaderList,DataColumnCollection dataColumns)
+        {
+            exporterHeaderList = new List<ExporterHeaderInfo>();
+            var objProperties = typeof(T).GetProperties();
+            if (objProperties == null || objProperties.Length == 0)
+                return true;
+
+            int index = 0;
+            for (var i = 0; i < objProperties.Length; i++)
+            {
+                if (dataColumns.Contains(objProperties[i].Name))
+                {
+                    index += 1;
+                    exporterHeaderList.Add(new ExporterHeaderInfo
+                    {
+                        Index = index,
+                        PropertyName = objProperties[i].Name,
+                        ExporterHeader =
+                            (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
+                                ExporterHeaderAttribute[])?.FirstOrDefault()
+                    });
+                   
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         ///     获取表全局定义
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -343,5 +439,6 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             return null;
         }
+            
     }
 }
