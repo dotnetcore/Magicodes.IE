@@ -25,7 +25,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
 
-        [ExporterHeader(DisplayName = "普通文本")] public string Text2 { get; set; }
+        [ExporterHeader(DisplayName = "普通文本")] 
+        public string Text2 { get; set; }
 
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
