@@ -34,6 +34,7 @@
 - 导入支持重复验证；
 ![](./res/重复错误.png "重复错误.png")
 - 支持单个数据模板导出，常用于导出收据、凭据等业务
+- 支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
 
 ### 相关官方Nuget包
 
@@ -77,6 +78,10 @@
 - 导入结果支持生成HTML输出
 
 ### 更新历史
+
+#### 2019.10.30
+- 【Nuget】版本更新到1.4.0
+- 【导出】Excel导出支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
 
 #### 2019.10.22
 - 【Nuget】版本更新到1.3.7
