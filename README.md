@@ -531,6 +531,8 @@
 
 #### Docker中使用
 
+- 如果是使用Excel导出，则需安装libgdiplus库
+
 >
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
@@ -566,3 +568,10 @@ Dockerfile Demo
     WORKDIR /app
     COPY --from=publish /app .
     ENTRYPOINT ["dotnet", "Magicodes.Admin.Web.Host.dll"]
+
+- 如果是使用Pdf导出，则需安装相关字体，如：
+
+>
+	# 安装fontconfig库，用于Pdf导出
+	RUN apt-get update && apt-get install -y fontconfig
+	COPY /simsun.ttc /usr/share/fonts/simsun.ttc
