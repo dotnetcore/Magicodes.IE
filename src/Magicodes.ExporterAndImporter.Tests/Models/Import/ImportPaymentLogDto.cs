@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models
+namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
     /// <summary>
     /// 缴费日志导入Dto

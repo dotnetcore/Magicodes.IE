@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models
+namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     [ExporterAndImporter.Core.Exporter(Name = "湖南心莱信息科技有限公司电子收款凭证")]
     public class ReceiptInfo

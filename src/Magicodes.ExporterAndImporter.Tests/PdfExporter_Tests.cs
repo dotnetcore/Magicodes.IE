@@ -19,6 +19,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Pdf;
 using Magicodes.ExporterAndImporter.Tests.Models;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Shouldly;
 using Xunit;
 

@@ -17,7 +17,7 @@
 using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models
+namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     /// <summary>
     ///     在Excel导出中，Name将为Sheet名称

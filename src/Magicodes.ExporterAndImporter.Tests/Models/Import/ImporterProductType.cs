@@ -16,7 +16,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models
+namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
     public enum ImporterProductType
     {

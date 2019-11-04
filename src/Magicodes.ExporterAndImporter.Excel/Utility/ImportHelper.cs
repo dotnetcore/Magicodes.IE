@@ -30,6 +30,10 @@ using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
+    /// <summary>
+    /// 导入辅助类
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ImportHelper<T> : IDisposable where T : class, new()
     {
         /// <summary>
@@ -41,6 +45,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入全局设置
         /// </summary>
         protected ExcelImporterAttribute ExcelImporterAttribute { get; set; }
+
+
 
         /// <summary>
         ///     导入文件路径
@@ -57,6 +63,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected List<ImporterHeaderInfo> ImporterHeaderInfos { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             ExcelImporterAttribute = null;
@@ -304,7 +313,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             ImportResult.TemplateErrors = new List<TemplateErrorInfo>();
             //获取导入实体列定义
-            ParseImporterHeader(out var enumColumns, out var boolColumns);
+            ParseImporterHeader();
             try
             {
                 //根据名称获取Sheet，如果不存在则取第一个
@@ -397,32 +406,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentException">导入实体没有定义ImporterHeader属性</exception>
-        protected virtual bool ParseImporterHeader(out Dictionary<int, IDictionary<string, int>> enumColumns,
-            out List<int> boolColumns)
+        protected virtual bool ParseImporterHeader()
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
-            enumColumns = new Dictionary<int, IDictionary<string, int>>();
-            boolColumns = new List<int>();
             var objProperties = typeof(T).GetProperties();
             if (objProperties.Length == 0)
             {
                 return false;
             }
 
-            for (var i = 0; i < objProperties.Length; i++)
+            foreach (var propertyInfo in objProperties)
             {
                 //TODO:简化并重构
                 //如果不设置，则自动使用默认定义
                 var importerHeaderAttribute =
-                    (objProperties[i].GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
+                    (propertyInfo.GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
                         ImporterHeaderAttribute[])?.FirstOrDefault() ?? new ImporterHeaderAttribute
                         {
-                            Name = objProperties[i].GetDisplayName() ?? objProperties[i].Name
+                            Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name
                         };
 
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                 {
-                    importerHeaderAttribute.Name = objProperties[i].GetDisplayName() ?? objProperties[i].Name;
+                    importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
                 }
 
                 //忽略字段处理
@@ -431,21 +437,48 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     continue;
                 }
 
-                ImporterHeaderInfos.Add(new ImporterHeaderInfo
+                var colHeader = new ImporterHeaderInfo
                 {
-                    IsRequired = objProperties[i].IsRequired(),
-                    PropertyName = objProperties[i].Name,
+                    IsRequired = propertyInfo.IsRequired(),
+                    PropertyName = propertyInfo.Name,
                     ExporterHeader = importerHeaderAttribute
-                });
-                if (objProperties[i].PropertyType.BaseType?.Name.ToLower() == "enum")
+                };
+                ImporterHeaderInfos.Add(colHeader);
+
+                #region 处理值映射
+                var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>();
+                foreach (var mappingAttribute in mappings.Where(mappingAttribute => !colHeader.MappingValues.ContainsKey(mappingAttribute.Text)))
                 {
-                    enumColumns.Add(i + 1, objProperties[i].PropertyType.GetEnumDisplayNames());
+                    colHeader.MappingValues.Add(mappingAttribute.Text, mappingAttribute.Value);
+                }
+                #endregion
+
+                switch (propertyInfo.PropertyType.GetCSharpTypeName())
+                {
+                    case "Boolean":
+                    case "Nullable<Boolean>":
+                        {
+                            if (!colHeader.MappingValues.ContainsKey("是"))
+                            {
+                                colHeader.MappingValues.Add("是", true);
+                            }
+                            if (!colHeader.MappingValues.ContainsKey("否"))
+                            {
+                                colHeader.MappingValues.Add("否", false);
+                            }
+                            break;
+                        }
                 }
 
-                if (objProperties[i].PropertyType == typeof(bool))
+                if (propertyInfo.PropertyType.BaseType?.Name.ToLower() == "enum")
                 {
-                    boolColumns.Add(i + 1);
+                    var values = propertyInfo.PropertyType.GetEnumTextAndValues();
+                    foreach (var value in values.Where(value => !colHeader.MappingValues.ContainsKey(value.Key)))
+                    {
+                        colHeader.MappingValues.Add(value.Key, value.Value);
+                    }
                 }
+               
             }
 
             return true;
@@ -459,7 +492,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             var worksheet =
                 excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ??
                                                      ExcelImporterAttribute.SheetName ?? "导入数据");
-            if (!ParseImporterHeader(out var enumColumns, out var boolColumns))
+            if (!ParseImporterHeader())
             {
                 return;
             }
@@ -473,16 +506,27 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     continue;
                 }
 
-                worksheet.Cells[1, i + 1].Value = ImporterHeaderInfos[i].ExporterHeader.Name;
+                worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].Value = ImporterHeaderInfos[i].ExporterHeader.Name;
                 if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].ExporterHeader.Description))
                 {
-                    worksheet.Cells[1, i + 1].AddComment(ImporterHeaderInfos[i].ExporterHeader.Description,
+                    worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].AddComment(ImporterHeaderInfos[i].ExporterHeader.Description,
                         ImporterHeaderInfos[i].ExporterHeader.Author);
                 }
                 //如果必填，则列头标红
                 if (ImporterHeaderInfos[i].IsRequired)
                 {
-                    worksheet.Cells[1, i + 1].Style.Font.Color.SetColor(Color.Red);
+                    worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
+                }
+
+                if (ImporterHeaderInfos[i].MappingValues.Count > 0)
+                {
+                    //针对枚举类型和Bool类型添加数据约束
+                    var range = ExcelCellBase.GetAddress(this.ExcelImporterAttribute.HeaderRowIndex + 1, i + 1, ExcelPackage.MaxRows, i + 1);
+                    var dataValidations = worksheet.DataValidations.AddListValidation(range);
+                    foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
+                    {
+                        dataValidations.Formula.Values.Add(mappingValue.Key);
+                    }
                 }
             }
 
@@ -497,26 +541,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
-
-            //枚举处理
-            foreach (var enumColumn in enumColumns)
-            {
-                var range = ExcelCellBase.GetAddress(1, enumColumn.Key, ExcelPackage.MaxRows, enumColumn.Key);
-                var dataValidations = worksheet.DataValidations.AddListValidation(range);
-                foreach (var displayName in enumColumn.Value)
-                {
-                    dataValidations.Formula.Values.Add(displayName.Key);
-                }
-            }
-
-            //Bool类型处理
-            foreach (var boolColumn in boolColumns)
-            {
-                var range = ExcelCellBase.GetAddress(1, boolColumn, ExcelPackage.MaxRows, boolColumn);
-                var dataValidations = worksheet.DataValidations.AddListValidation(range);
-                dataValidations.Formula.Values.Add("是");
-                dataValidations.Formula.Values.Add("否");
-            }
         }
 
         /// <summary>
@@ -558,35 +582,35 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         var cell = worksheet.Cells[rowIndex, col.ExporterHeader.ColumnIndex];
                         try
                         {
-                            switch (propertyInfo.PropertyType.BaseType?.Name)
+                            var cellValue = cell.Value?.ToString();
+                            if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
                             {
-                                case "Enum":
-                                    var enumDisplayNames = propertyInfo.PropertyType.GetEnumDisplayNames();
-                                    if (enumDisplayNames.ContainsKey(
-                                        cell.Value?.ToString() ?? throw new ArgumentException()))
-                                    {
-                                        propertyInfo.SetValue(dataItem,
-                                            enumDisplayNames[cell.Value?.ToString()]);
-                                    }
-                                    else
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cell.Value} 不存在模板下拉选项中");
-                                    }
-
-                                    continue;
+                                propertyInfo.SetValue(dataItem,
+                                    col.MappingValues[cellValue]);
+                                continue;
                             }
 
-                            var cellValue = cell.Value?.ToString();
+                            if (propertyInfo.PropertyType.BaseType?.Name == "Enum")
+                            {
+                                AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
+                                continue;
+                            }
+
+
                             switch (propertyInfo.PropertyType.GetCSharpTypeName())
                             {
                                 case "Boolean":
-                                    propertyInfo.SetValue(dataItem, GetBooleanValue(cellValue));
+                                    AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
                                     break;
                                 case "Nullable<Boolean>":
-                                    propertyInfo.SetValue(dataItem,
-                                        string.IsNullOrWhiteSpace(cellValue)
-                                            ? (bool?)null
-                                            : GetBooleanValue(cellValue));
+                                    if (string.IsNullOrWhiteSpace(cellValue))
+                                    {
+                                        propertyInfo.SetValue(dataItem, (bool?)null);
+                                    }
+                                    else
+                                    {
+                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 不合法！");
+                                    }
                                     break;
                                 case "String":
                                     //TODO:进一步优化

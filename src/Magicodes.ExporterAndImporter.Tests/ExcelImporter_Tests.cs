@@ -23,6 +23,7 @@ using Shouldly;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -41,6 +42,22 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            //TODO:列头隐藏测试
+        }
+
+        [Fact(DisplayName = "生成学生数据导入模板（测试枚举生成模板）")]
+        public async Task GenerateStudentImportTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            var result = await Importer.GenerateTemplate<ImportStudentDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 

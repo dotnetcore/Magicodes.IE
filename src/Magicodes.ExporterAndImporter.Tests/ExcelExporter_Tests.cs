@@ -24,6 +24,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
