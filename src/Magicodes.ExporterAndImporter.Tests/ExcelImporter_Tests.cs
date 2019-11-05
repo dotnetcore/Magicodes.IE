@@ -162,7 +162,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "题库导入模板.xlsx");
             var import = await Importer.Import<ImportQuestionBankDto>(filePath);
             import.ShouldNotBeNull();
-
+            _testOutputHelper.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(404);

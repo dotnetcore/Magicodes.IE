@@ -617,8 +617,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
 
                                     var value = col.MappingValues[cellValue];
-                                    if (isEnum && isNullable && (value is int || value is short))
+
+                                    if (isEnum && isNullable && (value is int || value is short) && Enum.IsDefined(type, value))
                                     {
+
                                         propertyInfo.SetValue(dataItem,
                                             value == null ? null : Enum.ToObject(type, value));
                                         //propertyInfo.SetValue(dataItem,
