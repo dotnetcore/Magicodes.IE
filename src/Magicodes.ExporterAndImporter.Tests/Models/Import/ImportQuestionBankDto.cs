@@ -16,6 +16,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -111,6 +112,10 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(Name = "选项是否支持乱序")]
         [Required(ErrorMessage = "选项是否支持乱序不能为空")]
+        [ValueMapping(text: "对", value: true)]
+        [ValueMapping(text: "错", value: false)]
+        [ValueMapping(text: "是", value: true)]
+        [ValueMapping(text: "否", value: false)]
         public bool IsDisorderly { get; set; }
 
         /// <summary>

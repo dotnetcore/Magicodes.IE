@@ -175,13 +175,35 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             {
                 var name = names[index];
                 var field = value.GetType().GetField(value.ToString());
-                var item = new Tuple<string, int, string, string>(name, Convert.ToInt32(value), field.GetDisplayName(), field.GetDescription());
+                var displayName = field.GetDisplayName();
+                var des = field.GetDescription();
+                var item = new Tuple<string, int, string, string>(
+                    name,
+                    Convert.ToInt32(value),
+                    displayName.IsNullOrWhiteSpace() ? null : displayName,
+                    des.IsNullOrWhiteSpace() ? null : des
+                    );
                 list.Add(item);
                 index++;
             }
 
             return list;
         }
+
+        /// <summary>
+        /// 是否为可为空类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsNullable(this Type type) => Nullable.GetUnderlyingType(type) != null;
+
+        /// <summary>
+        /// 获取可为空类型的底层类型
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Type GetNullableUnderlyingType(this Type type) => Nullable.GetUnderlyingType(type);
+
 
         /// <summary>
         ///     获取枚举列表
@@ -199,8 +221,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             //枚举名 值 显示名称 描述
             foreach (var (item1, item2, item3, item4) in items)
             {
-                //如果显示名不存在，则返回枚举名称
-                dic.Add(item3.IsNullOrWhiteSpace() ? item1 : item3, item2);
+                //如果描述、显示名不存在，则返回枚举名称
+                dic.Add(item4 ?? item3 ?? item1, item2);
             }
             return dic;
         }

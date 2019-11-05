@@ -432,7 +432,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 //忽略字段处理
-                if (importerHeaderAttribute.IsIgnore == true)
+                if (importerHeaderAttribute.IsIgnore)
                 {
                     continue;
                 }
@@ -446,13 +446,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 ImporterHeaderInfos.Add(colHeader);
 
                 #region 处理值映射
-                var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>();
+                var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
                 foreach (var mappingAttribute in mappings.Where(mappingAttribute => !colHeader.MappingValues.ContainsKey(mappingAttribute.Text)))
                 {
                     colHeader.MappingValues.Add(mappingAttribute.Text, mappingAttribute.Value);
                 }
-                #endregion
 
+                //如果存在自定义映射，则不会生成默认映射
+                if (mappings.Any())
+                {
+                    continue;
+                }
+
+                //为bool类型生成默认映射
                 switch (propertyInfo.PropertyType.GetCSharpTypeName())
                 {
                     case "Boolean":
@@ -470,15 +476,28 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         }
                 }
 
-                if (propertyInfo.PropertyType.BaseType?.Name.ToLower() == "enum")
+                var type = propertyInfo.PropertyType;
+                var isNullable = type.IsNullable();
+                if (isNullable)
                 {
-                    var values = propertyInfo.PropertyType.GetEnumTextAndValues();
+                    type = type.GetNullableUnderlyingType();
+                }
+                //为枚举类型生成默认映射
+                if (type.IsEnum)
+                {
+                    var values = type.GetEnumTextAndValues();
                     foreach (var value in values.Where(value => !colHeader.MappingValues.ContainsKey(value.Key)))
                     {
                         colHeader.MappingValues.Add(value.Key, value.Value);
                     }
+
+                    if (isNullable)
+                    {
+                        if (!colHeader.MappingValues.ContainsKey(string.Empty))
+                            colHeader.MappingValues.Add(string.Empty, null);
+                    }
                 }
-               
+                #endregion
             }
 
             return true;
@@ -583,14 +602,38 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         try
                         {
                             var cellValue = cell.Value?.ToString();
-                            if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
+                            if (!cellValue.IsNullOrWhiteSpace())
                             {
-                                propertyInfo.SetValue(dataItem,
-                                    col.MappingValues[cellValue]);
-                                continue;
+                                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
+                                {
+                                    //TODO:进一步缓存并优化
+                                    var isEnum = propertyInfo.PropertyType.IsEnum;
+                                    var isNullable = propertyInfo.PropertyType.IsNullable();
+                                    var type = propertyInfo.PropertyType;
+                                    if (isNullable)
+                                    {
+                                        type = propertyInfo.PropertyType.GetNullableUnderlyingType();
+                                        isEnum = type.IsEnum;
+                                    }
+
+                                    var value = col.MappingValues[cellValue];
+                                    if (isEnum && isNullable && (value is int || value is short))
+                                    {
+                                        propertyInfo.SetValue(dataItem,
+                                            value == null ? null : Enum.ToObject(type, value));
+                                        //propertyInfo.SetValue(dataItem,
+                                        //    value == null ? null : Convert.ChangeType(value, type));
+                                    }
+                                    else
+                                        propertyInfo.SetValue(dataItem,
+                                            value);
+                                    continue;
+                                }
+
                             }
 
-                            if (propertyInfo.PropertyType.BaseType?.Name == "Enum")
+                            //
+                            if (propertyInfo.PropertyType.IsEnum)
                             {
                                 AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
                                 continue;
@@ -600,7 +643,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             switch (propertyInfo.PropertyType.GetCSharpTypeName())
                             {
                                 case "Boolean":
-                                    AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
+                                    propertyInfo.SetValue(dataItem, false);
+                                    //AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
                                     break;
                                 case "Nullable<Boolean>":
                                     if (string.IsNullOrWhiteSpace(cellValue))

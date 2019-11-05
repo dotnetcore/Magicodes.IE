@@ -15,6 +15,7 @@
 // ======================================================================
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
@@ -58,6 +59,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(Name = "性别")]
         [Required(ErrorMessage = "性别不能为空")]
+        [ValueMapping(text: "男", 0)]
+        [ValueMapping(text: "女", 1)]
         public Genders Gender { get; set; }
 
         /// <summary>
@@ -127,10 +130,10 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 
         /// <summary>
         ///     状态
+        ///     测试可为空的枚举类型
         /// </summary>
         [ImporterHeader(Name = "状态")]
-        [Required(ErrorMessage = "状态不能为空")]
-        public StudentStatus Status { get; set; }
+        public StudentStatus? Status { get; set; }
 
         /// <summary>
         ///     备注
@@ -174,5 +177,69 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(IsIgnore = true)]
         public Guid? GradeId { get; set; }
+    }
+
+    /// <summary>
+    /// 性别
+    /// </summary>
+    public enum Genders
+    {
+        /// <summary>
+        /// 男
+        /// </summary>
+        Man = 0,
+
+        /// <summary>
+        /// 女
+        /// </summary>
+        Female = 1,
+    }
+
+    /// <summary>
+    /// 学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
+    /// </summary>
+    public enum StudentStatus
+    {
+        /// <summary>
+        /// 正常
+        /// </summary>
+        [Display(Name = "正常")]
+        Normal = 0,
+
+        /// <summary>
+        /// 流失
+        /// </summary>
+        [Description("流水")]
+        PupilsAway = 1,
+
+        /// <summary>
+        /// 休学
+        /// </summary>
+        [Display(Name = "休学")]
+        Suspension = 2,
+
+        /// <summary>
+        /// 勤工俭学
+        /// </summary>
+        [Display(Name = "勤工俭学")]
+        WorkStudy = 3,
+
+        /// <summary>
+        /// 顶岗实习
+        /// </summary>
+        [Display(Name = "顶岗实习")]
+        PostPractice = 4,
+
+        /// <summary>
+        /// 毕业
+        /// </summary>
+        [Display(Name = "毕业")]
+        Graduation = 5,
+
+        /// <summary>
+        /// 参军
+        /// </summary>
+        [Display(Name = "参军")]
+        JoinTheArmy = 6,
     }
 }

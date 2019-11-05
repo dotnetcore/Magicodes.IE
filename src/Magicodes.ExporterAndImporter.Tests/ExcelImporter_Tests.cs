@@ -14,6 +14,7 @@
 // 
 // ======================================================================
 
+using System;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -25,12 +26,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
     public class ExcelImporter_Tests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         public IImporter Importer = new ExcelImporter();
+
+        public ExcelImporter_Tests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
 
         [Fact(DisplayName = "生成模板")]
         public async Task GenerateTemplate_Test()
@@ -45,7 +53,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
-            //TODO:列头隐藏测试
+            //TODO:读取Excel检查表头和格式
         }
 
         [Fact(DisplayName = "生成学生数据导入模板（测试枚举生成模板）")]
@@ -61,13 +69,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
-            //TODO:列头隐藏测试
+            //TODO:读取Excel检查表头和格式
         }
 
         [Fact(DisplayName = "生成模板字节")]
         public async Task GenerateTemplateBytes_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) +".xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) + ".xlsx");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
@@ -159,8 +167,39 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(404);
 
+            #region 检查Bool值映射
+            //是
+            import.Data.ElementAt(0).IsDisorderly.ShouldBeTrue();
+            //否
+            import.Data.ElementAt(1).IsDisorderly.ShouldBeFalse();
+            //对
+            import.Data.ElementAt(2).IsDisorderly.ShouldBeTrue();
+            //错
+            import.Data.ElementAt(3).IsDisorderly.ShouldBeFalse();
+            #endregion
+
             import.RowErrors.Count.ShouldBe(0);
             import.TemplateErrors.Count.ShouldBe(0);
+        }
+
+        [Fact(DisplayName = "学生基础数据导入")]
+        public async Task StudentInfoImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null)
+            {
+                _testOutputHelper.WriteLine(import.Exception.ToString());
+            }
+
+            if (import.RowErrors.Count > 0)
+            {
+                _testOutputHelper.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(import.RowErrors));
+            }
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
         }
 
         [Fact(DisplayName = "缴费流水导入测试")]

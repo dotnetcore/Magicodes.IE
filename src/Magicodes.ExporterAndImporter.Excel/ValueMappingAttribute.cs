@@ -18,14 +18,14 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         /// 值
         /// </summary>
-        public dynamic Value { get; }
+        public object Value { get; }
 
         /// <summary>
         /// 设置文本和值映射
         /// </summary>
         /// <param name="text">文本</param>
         /// <param name="value">值</param>
-        public ValueMappingAttribute(string text, dynamic value)
+        public ValueMappingAttribute(string text, object value)
         {
             Text = text;
             Value = value;
