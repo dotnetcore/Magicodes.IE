@@ -20,6 +20,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Pdf
@@ -29,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public class PdfExporter : IExporterByTemplate
     {
-        static readonly BasicConverter PdfConverter = new BasicConverter(new PdfTools());
+        static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
 
         /// <summary>
         ///     根据模板导出
@@ -69,7 +70,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-
+            //File.WriteAllText(fileName + ".html", htmlString);
             var doc = new HtmlToPdfDocument
             {
                 GlobalSettings =
@@ -91,7 +92,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     }
                 }
             };
-            
+
             PdfConverter.Convert(doc);
             var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
             return fileInfo;
@@ -114,6 +115,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
+            //File.WriteAllText(fileName + ".html", htmlString);
             var doc = new HtmlToPdfDocument
             {
                 GlobalSettings =
@@ -122,7 +124,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     Orientation = Orientation.Landscape,
                     PaperSize = PaperKind.A4,
                     Out = fileName,
-
+                    
                 },
                 Objects =
                 {
