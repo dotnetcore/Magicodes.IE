@@ -20,6 +20,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Pdf
@@ -29,6 +30,8 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public class PdfExporter : IExporterByTemplate
     {
+        static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
+
         /// <summary>
         ///     根据模板导出
         /// </summary>
@@ -67,7 +70,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-            var converter = new BasicConverter(new PdfTools());
+            //File.WriteAllText(fileName + ".html", htmlString);
             var doc = new HtmlToPdfDocument
             {
                 GlobalSettings =
@@ -85,11 +88,12 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
                         HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
-
+                        Encoding = System.Text.Encoding.UTF8
                     }
                 }
             };
-            converter.Convert(doc);
+
+            PdfConverter.Convert(doc);
             var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
             return fileInfo;
         }
@@ -111,7 +115,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
-            var converter = new BasicConverter(new PdfTools());
+            //File.WriteAllText(fileName + ".html", htmlString);
             var doc = new HtmlToPdfDocument
             {
                 GlobalSettings =
@@ -120,6 +124,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     Orientation = Orientation.Landscape,
                     PaperSize = PaperKind.A4,
                     Out = fileName,
+                    
                 },
                 Objects =
                 {
@@ -128,11 +133,12 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         //PagesCount = true,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = "utf-8"},
+                        Encoding = System.Text.Encoding.UTF8
                         //HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
                     }
                 }
             };
-            converter.Convert(doc);
+            PdfConverter.Convert(doc);
             var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
             return fileInfo;
         }

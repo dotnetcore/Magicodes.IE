@@ -1,15 +1,19 @@
 ﻿using System;
+using Magicodes.ExporterAndImporter.Core;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models
+namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExporterAndImporter.Core.Exporter(Name = "湖南心莱信息科技有限公司电子收款凭证")]
-    public class ReceiptInfo
+    /// <summary>
+    /// 批量导出Dto
+    /// </summary>
+    [Exporter()]
+    public class BatchReceiptInfoDto
     {
         /// <summary>
         /// 交易时间
         /// </summary>
         public DateTime TradeTime { get; set; }
-        
+
         /// <summary>
         /// 姓名
         /// </summary>
@@ -49,11 +53,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models
         /// 专业
         /// </summary>
         public string Profession { get; set; }
-
-        /// <summary>
-        /// 收款人
-        /// </summary>
-        public string Payee { get; set; }
 
         /// <summary>
         /// 大写金额

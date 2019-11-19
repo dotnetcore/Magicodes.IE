@@ -14,6 +14,7 @@
 // 
 // ======================================================================
 
+using System.Collections.Generic;
 using Magicodes.ExporterAndImporter.Core;
 
 namespace Magicodes.ExporterAndImporter.Excel
@@ -37,6 +38,11 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     列属性
         /// </summary>
         public ImporterHeaderAttribute ExporterHeader { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
 
         /// <summary>
         ///     是否存在

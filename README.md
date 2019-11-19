@@ -2,6 +2,13 @@
 
 导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
 
+### 注意
+
+- Excel导入不支持“.xls”文件，即不支持Excel97-2003。
+- 如需在Docker中使用，请参阅文档中的《Docker中使用》一节。
+- 相关功能均已编写单元测试，在使用的过程中可以参考单元测试。
+- 此库会长期支持，但是由于精力有限，希望大家能够多多参与。
+
 ### 特点
 
 - 需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；
@@ -34,6 +41,76 @@
 - 导入支持重复验证；
 ![](./res/重复错误.png "重复错误.png")
 - 支持单个数据模板导出，常用于导出收据、凭据等业务
+- 支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
+- 支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。
+````C#
+        /// <summary>
+        ///     性别
+        /// </summary>
+        [ImporterHeader(Name = "性别")]
+        [Required(ErrorMessage = "性别不能为空")]
+        [ValueMapping(text: "男", 0)]
+        [ValueMapping(text: "女", 1)]
+        public Genders Gender { get; set; }
+````
+
+- 支持枚举和Bool类型的导入数据验证项的生成，以及相关数据转换
+	- 枚举默认情况下会自动获取枚举的描述、显示名、名称和值生成数据项
+
+		````C#
+			/// <summary>
+			/// 学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
+			/// </summary>
+			public enum StudentStatus
+			{
+				/// <summary>
+				/// 正常
+				/// </summary>
+				[Display(Name = "正常")]
+				Normal = 0,
+
+				/// <summary>
+				/// 流失
+				/// </summary>
+				[Description("流水")]
+				PupilsAway = 1,
+
+				/// <summary>
+				/// 休学
+				/// </summary>
+				[Display(Name = "休学")]
+				Suspension = 2,
+
+				/// <summary>
+				/// 勤工俭学
+				/// </summary>
+				[Display(Name = "勤工俭学")]
+				WorkStudy = 3,
+
+				/// <summary>
+				/// 顶岗实习
+				/// </summary>
+				[Display(Name = "顶岗实习")]
+				PostPractice = 4,
+
+				/// <summary>
+				/// 毕业
+				/// </summary>
+				[Display(Name = "毕业")]
+				Graduation = 5,
+
+				/// <summary>
+				/// 参军
+				/// </summary>
+				[Display(Name = "参军")]
+				JoinTheArmy = 6,
+			}
+		````
+
+		![](./res/enum.png "枚举转数据映射序列")
+
+	- bool类型默认会生成“是”和“否”的数据项
+	- 如果已设置自定义值映射，则不会生成默认选项
 
 ### 相关官方Nuget包
 
@@ -72,11 +149,38 @@
 
 ### VNext
 
+> 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
+
+- Excel自定义模板导入导出
+- 加强值映射序列，比如支持方法、Dto接口的方式来获取
 - 生成导入模板时必填项支持自定义样式配置
 - CSV支持
 - 导入结果支持生成HTML输出
 
 ### 更新历史
+
+#### 2019.11.16
+- 【Nuget】版本更新到1.4.10
+- 【导出】修复Pdf导出在多线程下的问题
+
+#### 2019.11.13
+- 【Nuget】版本更新到1.4.5
+- 【导出】修复导出Pdf在某些情况下可能会导致内存报错的问题
+- 【导出】添加批量导出收据单元测试示例，并添加大量数据样本进行测试
+
+#### 2019.11.5
+- 【Nuget】版本更新到1.4.4
+- 【导入】修复枚举类型的问题，并编写单元测试
+- 【导入】增加值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。
+- 【导入】优化枚举和Bool类型的导入数据验证项的生成，以便于模板生成和数据转换
+	- 枚举默认情况下会自动获取枚举的描述、显示名、名称和值生成数据项
+	- bool类型默认会生成“是”和“否”的数据项
+	- 如果已设置自定义值映射，则不会生成默认选项
+- 【导入】支持枚举可为空类型
+
+#### 2019.10.30
+- 【Nuget】版本更新到1.4.0
+- 【导出】Excel导出支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
 
 #### 2019.10.22
 - 【Nuget】版本更新到1.3.7
@@ -526,6 +630,8 @@
 
 #### Docker中使用
 
+- 如果是使用Excel导出，则需安装libgdiplus库
+
 >
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
@@ -561,3 +667,10 @@ Dockerfile Demo
     WORKDIR /app
     COPY --from=publish /app .
     ENTRYPOINT ["dotnet", "Magicodes.Admin.Web.Host.dll"]
+
+- 如果是使用Pdf导出，则需安装相关字体，如：
+
+>
+	# 安装fontconfig库，用于Pdf导出
+	RUN apt-get update && apt-get install -y fontconfig
+	COPY /simsun.ttc /usr/share/fonts/simsun.ttc
