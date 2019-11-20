@@ -384,8 +384,9 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="exporterHeaderList"></param>
+        /// <param name="dataColumns"></param>
         /// <returns></returns>
-        private static bool GetExporterHeaderInfoList<T>(out List<ExporterHeaderInfo> exporterHeaderList,DataColumnCollection dataColumns)
+        private static bool GetExporterHeaderInfoList<T>(out List<ExporterHeaderInfo> exporterHeaderList, DataColumnCollection dataColumns)
         {
             exporterHeaderList = new List<ExporterHeaderInfo>();
             var objProperties = typeof(T).GetProperties();
@@ -393,20 +394,22 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return true;
 
             int index = 0;
-            for (var i = 0; i < objProperties.Length; i++)
+            for (var k = 0; k < dataColumns.Count; k++)
             {
-                if (dataColumns.Contains(objProperties[i].Name))
+                for (var i = 0; i < objProperties.Length; i++)
                 {
-                    index += 1;
-                    exporterHeaderList.Add(new ExporterHeaderInfo
+                    if (dataColumns[k].ColumnName.Equals(objProperties[i].Name))
                     {
-                        Index = index,
-                        PropertyName = objProperties[i].Name,
-                        ExporterHeader =
-                            (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                                ExporterHeaderAttribute[])?.FirstOrDefault()
-                    });
-                   
+                        index += 1;
+                        exporterHeaderList.Add(new ExporterHeaderInfo
+                        {
+                            Index = index,
+                            PropertyName = objProperties[i].Name,
+                            ExporterHeader =
+                                (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
+                                    ExporterHeaderAttribute[])?.FirstOrDefault()
+                        });
+                    }
                 }
             }
             return false;
