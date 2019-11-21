@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             DataSet ds = new DataSet();
 
             //如果只需要创建1个表，直接将原始表存入DataSet
-            if (tableNum == 0)
+            if (tableNum == 1)
             {
                 ds.Tables.Add(originalTab);
             }
