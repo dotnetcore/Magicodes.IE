@@ -102,13 +102,19 @@ namespace Magicodes.ExporterAndImporter.Excel
                 if (exporter?.Author != null)
                     excelPackage.Workbook.Properties.Author = exporter?.Author;
 
-                var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
-                sheet.OutLineApplyStyle = true;
-                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns)) 
+                if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns))
                     return;
-                AddHeader(exporterHeaderList, sheet, exporter);
-                AddDataItems<T>(sheet, dataItems, exporter);
-                AddStyle(exporter, exporterHeaderList, sheet);
+
+                DataSet data = dataItems.SplitDataTable();
+
+                int count = 0;
+                foreach (DataTable table in data.Tables)
+                {                    
+                    ExcelWorksheet sheet = GetWorksheet(excelPackage, exporter, count);
+                    AddWorksheet<T>(table, exporter, exporterHeaderList, sheet);
+                    count++ ;
+                }
+
             });
             return Task.FromResult(fileInfo);
         }
@@ -123,15 +129,35 @@ namespace Magicodes.ExporterAndImporter.Excel
                 if (exporter?.Author != null)
                     excelPackage.Workbook.Properties.Author = exporter?.Author;
 
-                var sheet = excelPackage.Workbook.Worksheets.Add(exporter?.Name ?? "导出结果");
-                sheet.OutLineApplyStyle = true;
                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns))
                     return null;
-                AddHeader(exporterHeaderList, sheet, exporter);
-                AddDataItems<T>(sheet, dataItems, exporter);
-                AddStyle(exporter, exporterHeaderList, sheet);
+
+                DataSet data = dataItems.SplitDataTable();
+                int count = 0;
+                foreach (DataTable table in data.Tables)
+                {
+                    ExcelWorksheet sheet = GetWorksheet(excelPackage, exporter, count);
+                    AddWorksheet<T>(table, exporter, exporterHeaderList, sheet);
+                    count++;
+                }
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
+        }
+
+        private void AddWorksheet<T>(DataTable dataItems, ExcelExporterAttribute exporter, List<ExporterHeaderInfo> exporterHeaderList, ExcelWorksheet sheet) where T : class
+        {
+            AddHeader(exporterHeaderList, sheet, exporter);
+            AddDataItems<T>(sheet, dataItems, exporter);
+            AddStyle(exporter, exporterHeaderList, sheet);
+        }
+
+
+        private static ExcelWorksheet GetWorksheet(ExcelPackage excelPackage, ExcelExporterAttribute exporter, int count =0)
+        {
+            var name = exporter?.Name ?? "导出结果";
+            var sheet = excelPackage.Workbook.Worksheets.Add($"{ name}-{count}");
+            sheet.OutLineApplyStyle = true;
+            return sheet;
         }
 
         /// <summary>
@@ -261,7 +287,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="sheet"></param>
         /// <param name="items"></param>
         /// <param name="exporter"></param>
-        protected void AddDataItems<T>(ExcelWorksheet sheet, DataTable items,ExcelExporterAttribute exporter)
+        protected void AddDataItems<T>(ExcelWorksheet sheet, DataTable items, ExcelExporterAttribute exporter)
         {
             if (items == null || items.Rows.Count == 0)
                 return;

@@ -158,7 +158,31 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export<ExportTestDataWithAttrs>(filePath,dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-        }   
+        }
+
+        [Fact(DisplayName = "大数据动态列导出Excel")]
+        public async Task LargeDataDynamicExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(LargeDataDynamicExport_Test) + ".xlsx");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            List<ExportTestDataWithAttrs> exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1200000);
+
+            DataTable dt = new DataTable();
+            //创建带列名和类型名的列
+            dt.Columns.Add("Text", System.Type.GetType("System.String"));
+            dt.Columns.Add("Name", System.Type.GetType("System.String"));
+            dt.Columns.Add("Number", System.Type.GetType("System.Decimal"));
+            dt = EntityToDataTable<ExportTestDataWithAttrs>(dt, exportDatas);
+
+            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
         /// <summary>
         /// 将entities直接转成DataTable
