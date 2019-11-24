@@ -159,6 +159,10 @@
 
 ### 更新历史
 
+#### 2019.11.24
+- 【Nuget】版本更新到1.4.12
+- 【导出】导出动态类支持超过100W数据时自动拆分Sheet（具体见PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+
 #### 2019.11.20
 - 【Nuget】版本更新到1.4.11
 - 【导出】修复Datatable列的顺序和DTO的顺序不一致，导致数据放错列（具体见PR：https://github.com/xin-lai/Magicodes.IE/pull/13）
