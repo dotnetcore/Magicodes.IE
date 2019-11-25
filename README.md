@@ -34,14 +34,14 @@
 ![](./res/导出html.png "导出HTML")
   - 导出Word
 ![](./res/导出Word.png "导出Word")
-  - 导出Pdf
+  - 导出Pdf，支持设置，具体见更新日志
 ![](./res/导出Pdf.png "导出Pdf")
   - 导出收据
 ![](./res/导出收据.png "导出收据.png")
 - 导入支持重复验证；
 ![](./res/重复错误.png "重复错误.png")
 - 支持单个数据模板导出，常用于导出收据、凭据等业务
-- 支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
+- 支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（https://github.com/xin-lai/Magicodes.IE/pull/8））
 - 支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。
 ````C#
         /// <summary>
