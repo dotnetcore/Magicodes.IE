@@ -68,30 +68,14 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 throw new ArgumentException("文件名必须填写!", nameof(fileName));
             }
 
+            var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-            //File.WriteAllText(fileName + ".html", htmlString);
-            var doc = new HtmlToPdfDocument
-            {
-                GlobalSettings =
-                {
-                    ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Landscape,
-                    PaperSize = PaperKind.A4,
-                    Out = fileName,
-                },
-                Objects =
-                {
-                    new ObjectSettings
-                    {
-                        PagesCount = true,
-                        HtmlContent = htmlString,
-                        WebSettings = {DefaultEncoding = "utf-8"},
-                        HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
-                        Encoding = System.Text.Encoding.UTF8
-                    }
-                }
-            };
+            
+            if (exporterAttribute.IsWriteHtml)
+                File.WriteAllText(fileName + ".html", htmlString);
+
+            var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
 
             PdfConverter.Convert(doc);
             var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
@@ -113,34 +97,80 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 throw new ArgumentException("文件名必须填写!", nameof(fileName));
             }
 
+            var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
-            //File.WriteAllText(fileName + ".html", htmlString);
-            var doc = new HtmlToPdfDocument
+
+            if (exporterAttribute.IsWriteHtml)
+                File.WriteAllText(fileName + ".html", htmlString);
+
+            var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
+            PdfConverter.Convert(doc);
+            var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
+            return fileInfo;
+        }
+
+        /// <summary>
+        /// 获取文档转换配置
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="pdfExporterAttribute"></param>
+        /// <param name="htmlString"></param>
+        /// <returns></returns>
+        private HtmlToPdfDocument GetHtmlToPdfDocumentByExporterAttribute(string fileName, PdfExporterAttribute pdfExporterAttribute,
+              string htmlString)
+        {
+            var htmlToPdfDocument = new HtmlToPdfDocument
             {
                 GlobalSettings =
                 {
                     ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Landscape,
-                    PaperSize = PaperKind.A4,
+                    Orientation = pdfExporterAttribute.Orientation,
+                    PaperSize = pdfExporterAttribute.PaperKind,
                     Out = fileName,
-                    
+                    DocumentTitle = pdfExporterAttribute.Name
                 },
                 Objects =
                 {
                     new ObjectSettings
                     {
-                        //PagesCount = true,
+                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
                         HtmlContent = htmlString,
-                        WebSettings = {DefaultEncoding = "utf-8"},
-                        Encoding = System.Text.Encoding.UTF8
-                        //HeaderSettings = {FontSize = 9, Right = "[page]/[toPage]", Line = true, Spacing = 2.812},
+                        WebSettings = {DefaultEncoding = pdfExporterAttribute.Encoding.BodyName},
+                        Encoding = pdfExporterAttribute.Encoding,
+                        HeaderSettings = pdfExporterAttribute.HeaderSettings,
+                        FooterSettings = pdfExporterAttribute.FooterSettings,
                     }
                 }
             };
-            PdfConverter.Convert(doc);
-            var fileInfo = new TemplateFileInfo(fileName, "application/pdf");
-            return fileInfo;
+            return htmlToPdfDocument;
+        }
+
+
+        /// <summary>
+        ///     获取全局导出定义
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static PdfExporterAttribute GetExporterAttribute<T>() where T : class
+        {
+            var exporterTableAttributes =
+                typeof(T).GetCustomAttributes(typeof(PdfExporterAttribute), true) as PdfExporterAttribute[];
+            if (exporterTableAttributes != null && exporterTableAttributes.Length > 0)
+                return exporterTableAttributes[0];
+
+            var exporterAttributes =
+                typeof(T).GetCustomAttributes(typeof(ExporterAttribute), true) as ExporterAttribute[];
+
+            if (exporterAttributes == null || exporterAttributes.Length <= 0) return null;
+
+            var export = exporterAttributes[0];
+            return new PdfExporterAttribute
+            {
+                FontSize = export.FontSize,
+                HeaderFontSize = export.HeaderFontSize
+            };
+
         }
     }
 }

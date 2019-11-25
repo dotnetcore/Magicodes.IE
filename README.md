@@ -159,6 +159,17 @@
 
 ### 更新历史
 
+#### 2019.11.25
+- 【Nuget】版本更新到1.4.13
+- 【导出】Pdf导出支持特性配置，详解单元测试【导出竖向排版收据】。目前主要支持以下设置：
+	- Orientation：排版方向（横排、竖排）
+	- PaperKind：纸张类型，默认A4
+	- IsEnablePagesCount：是否启用分页数
+	- Encoding：编码设置，默认UTF8
+	- IsWriteHtml：是否输出HTML模板，如果启用，则会输出.html后缀的对应的HTML文件，方便调错
+	- HeaderSettings：头部设置，通常可以设置头部的分页内容和信息
+	- FooterSettings：底部设置
+
 #### 2019.11.24
 - 【Nuget】版本更新到1.4.12
 - 【导出】导出动态类支持超过100W数据时自动拆分Sheet（具体见PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
