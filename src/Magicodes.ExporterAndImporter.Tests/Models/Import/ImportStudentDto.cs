@@ -19,6 +19,10 @@ using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
+    /// <summary>
+    /// 导入学生数据Dto
+    /// IsLabelingError：是否标注数据错误
+    /// </summary>
     [ExcelImporter(IsLabelingError = true)]
     public class ImportStudentDto
     {
@@ -31,7 +35,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     学籍号
         /// </summary>
-        [ImporterHeader(Name = "学籍号")]
+        [ImporterHeader(Name = "学籍号", IsAllowRepeat = false)]
         [MaxLength(30, ErrorMessage = "学籍号字数超出最大限制,请修改!")]
         public string StudentCode { get; set; }
 
@@ -46,7 +50,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     身份证号码
         /// </summary>
-        [ImporterHeader(Name = "身份证号")]
+        [ImporterHeader(Name = "身份证号", IsAllowRepeat = false)]
         [Required(ErrorMessage = "身份证号不能为空")]
         [MaxLength(18, ErrorMessage = "身份证字数超出最大限制,请修改!")]
         public string IdCard { get; set; }
