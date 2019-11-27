@@ -8,6 +8,10 @@
 - 如需在Docker中使用，请参阅文档中的《Docker中使用》一节。
 - 相关功能均已编写单元测试，在使用的过程中可以参考单元测试。
 - 此库会长期支持，但是由于精力有限，希望大家能够多多参与。
+### 示例教程
+
+[1.基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")
+
 
 ### 特点
 
@@ -225,7 +229,7 @@
   - Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;
   - Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;
 - 【示例】添加收据导出的单元测试示例
-    
+
 
 
 #### 2019.9.28
@@ -286,7 +290,7 @@
         public string Name3 { get; set; }
         public string Name4 { get; set; }
     }
-    
+
     var result = await Exporter.Export(filePath, new List<ExportTestData>()
     {
         new ExportTestData()
@@ -318,16 +322,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-    
+
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-    
+
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-    
+
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-    
+
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -371,16 +375,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-    
+
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-    
+
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-    
+
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-    
+
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -392,10 +396,10 @@
                 }
                 return "未知语言";
             }).Build();
-    
+
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-    
+
             var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
             {
                 new AttrsLocalizationTestData()
@@ -541,7 +545,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-    
+
         /// <summary>
         /// 是否行
         /// </summary>
@@ -630,7 +634,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-    
+
         /// <summary>
         /// 是否行
         /// </summary>
@@ -659,7 +663,7 @@
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
     RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
 
-Dockerfile Demo 
+Dockerfile Demo
 >
     FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
     # 安装libgdiplus库，用于Excel导出
@@ -681,10 +685,10 @@ Dockerfile Demo
     COPY . .
     WORKDIR "/src/src/web/Admin.Host"
     RUN dotnet build "Admin.Host.csproj" -c Release -o /app
-    
+
     FROM build AS publish
     RUN dotnet publish "Admin.Host.csproj" -c Release -o /app
-    
+
     FROM base AS final
     WORKDIR /app
     COPY --from=publish /app .

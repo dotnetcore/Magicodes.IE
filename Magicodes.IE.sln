@@ -23,6 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImport
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{400E37A1-6C65-44DF-8D1B-E1BA55BD330F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9045-459D-B1C4-4A155C858681}"
+	ProjectSection(SolutionItems) = preProject
+		docs\1.基础教程之导入学生数据.md = docs\1.基础教程之导入学生数据.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
