@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : HtmlExporter_Tests.cs
 //           description :
 // 
@@ -18,7 +15,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Html;
-using Magicodes.ExporterAndImporter.Tests.Models;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Shouldly;
 using Xunit;
@@ -58,14 +54,15 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "导出收据")]
         public async Task ExportReceipt_Test()
         {
-            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "receipt.cshtml");
             var tpl = File.ReadAllText(tplPath);
             var exporter = new HtmlExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportReceipt_Test) + ".html");
             if (File.Exists(filePath)) File.Delete(filePath);
             //此处使用默认模板导出
             var result = await exporter.ExportByTemplate(filePath,
-                new ReceiptInfo()
+                new ReceiptInfo
                 {
                     Amount = 22939.43M,
                     Grade = "2019秋",

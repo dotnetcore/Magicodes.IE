@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : IExporter.cs
 //           description :
 // 
@@ -50,14 +47,14 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<TemplateFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class;
 
         /// <summary>
-        /// 导出Excel
+        ///     导出Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class;
 
         /// <summary>
-        /// 导出Excel表头
+        ///     导出Excel表头
         /// </summary>
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>

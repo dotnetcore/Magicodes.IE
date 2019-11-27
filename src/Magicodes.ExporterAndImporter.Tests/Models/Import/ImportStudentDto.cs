@@ -1,12 +1,9 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ImportStudentDto.cs
 //           description :
 // 
-//           created by 雪雁 at  2019-11-04 17:43
+//           created by 雪雁 at  2019-11-05 20:02
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
@@ -59,8 +56,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(Name = "性别")]
         [Required(ErrorMessage = "性别不能为空")]
-        [ValueMapping(text: "男", 0)]
-        [ValueMapping(text: "女", 1)]
+        [ValueMapping("男", 0)]
+        [ValueMapping("女", 1)]
         public Genders Gender { get; set; }
 
         /// <summary>
@@ -180,66 +177,59 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     }
 
     /// <summary>
-    /// 性别
+    ///     性别
     /// </summary>
     public enum Genders
     {
         /// <summary>
-        /// 男
+        ///     男
         /// </summary>
         Man = 0,
 
         /// <summary>
-        /// 女
+        ///     女
         /// </summary>
-        Female = 1,
+        Female = 1
     }
 
     /// <summary>
-    /// 学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
+    ///     学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
     /// </summary>
     public enum StudentStatus
     {
         /// <summary>
-        /// 正常
+        ///     正常
         /// </summary>
-        [Display(Name = "正常")]
-        Normal = 0,
+        [Display(Name = "正常")] Normal = 0,
 
         /// <summary>
-        /// 流失
+        ///     流失
         /// </summary>
-        [Description("流水")]
-        PupilsAway = 1,
+        [Description("流水")] PupilsAway = 1,
 
         /// <summary>
-        /// 休学
+        ///     休学
         /// </summary>
-        [Display(Name = "休学")]
-        Suspension = 2,
+        [Display(Name = "休学")] Suspension = 2,
 
         /// <summary>
-        /// 勤工俭学
+        ///     勤工俭学
         /// </summary>
-        [Display(Name = "勤工俭学")]
-        WorkStudy = 3,
+        [Display(Name = "勤工俭学")] WorkStudy = 3,
 
         /// <summary>
-        /// 顶岗实习
+        ///     顶岗实习
         /// </summary>
-        [Display(Name = "顶岗实习")]
-        PostPractice = 4,
+        [Display(Name = "顶岗实习")] PostPractice = 4,
 
         /// <summary>
-        /// 毕业
+        ///     毕业
         /// </summary>
-        [Display(Name = "毕业")]
-        Graduation = 5,
+        [Display(Name = "毕业")] Graduation = 5,
 
         /// <summary>
-        /// 参军
+        ///     参军
         /// </summary>
-        [Display(Name = "参军")]
-        JoinTheArmy = 6,
+        [Display(Name = "参军")] JoinTheArmy = 6
     }
 }

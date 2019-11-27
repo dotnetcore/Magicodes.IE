@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : HtmlExporter.cs
 //           description :
 // 
@@ -14,14 +11,14 @@
 // 
 // ======================================================================
 
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using RazorEngine;
 using RazorEngine.Templating;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Encoding = System.Text.Encoding;
 
 namespace Magicodes.ExporterAndImporter.Html
@@ -38,7 +35,8 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null)
+            where T : class
         {
             var result = RunCompileTpl(new ExportDocumentInfoOfListData<T>(dataItems), htmlTemplate);
             return Task.FromResult(result);
@@ -55,27 +53,6 @@ namespace Magicodes.ExporterAndImporter.Html
         {
             var result = RunCompileTpl(new ExportDocumentInfo<T>(data), htmlTemplate);
             return Task.FromResult(result);
-        }
-
-        /// <summary>
-        /// 获取HTML模板
-        /// </summary>
-        /// <param name="htmlTemplate"></param>
-        /// <returns></returns>
-        protected string GetHtmlTemplate(string htmlTemplate = null) => string.IsNullOrWhiteSpace(htmlTemplate)
-                ? typeof(HtmlExporter).Assembly.ReadManifestString("default.cshtml")
-                : htmlTemplate;
-
-        /// <summary>
-        /// 编译和运行模板
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="htmlTemplate"></param>
-        /// <returns></returns>
-        protected string RunCompileTpl(object model, string htmlTemplate = null)
-        {
-            var htmlTpl = GetHtmlTemplate(htmlTemplate);
-            return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
         }
 
         /// <summary>
@@ -103,6 +80,30 @@ namespace Magicodes.ExporterAndImporter.Html
 
             File.WriteAllText(fileName, result, Encoding.UTF8);
             return file;
+        }
+
+        /// <summary>
+        ///     获取HTML模板
+        /// </summary>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        protected string GetHtmlTemplate(string htmlTemplate = null)
+        {
+            return string.IsNullOrWhiteSpace(htmlTemplate)
+                ? typeof(HtmlExporter).Assembly.ReadManifestString("default.cshtml")
+                : htmlTemplate;
+        }
+
+        /// <summary>
+        ///     编译和运行模板
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        protected string RunCompileTpl(object model, string htmlTemplate = null)
+        {
+            var htmlTpl = GetHtmlTemplate(htmlTemplate);
+            return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
         }
     }
 }

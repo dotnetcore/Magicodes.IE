@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ExcelExporter.cs
 //           description :
 // 
@@ -29,7 +26,7 @@ using OfficeOpenXml.Table;
 namespace Magicodes.ExporterAndImporter.Excel
 {
     /// <summary>
-    /// Excel导出程序
+    ///     Excel导出程序
     /// </summary>
     public class ExcelExporter : IExporter
     {
@@ -105,16 +102,15 @@ namespace Magicodes.ExporterAndImporter.Excel
                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns))
                     return;
 
-                DataSet data = dataItems.SplitDataTable();
+                var data = dataItems.SplitDataTable();
 
-                int count = 0;
+                var count = 0;
                 foreach (DataTable table in data.Tables)
-                {                    
-                    ExcelWorksheet sheet = GetWorksheet(excelPackage, exporter, count);
+                {
+                    var sheet = GetWorksheet(excelPackage, exporter, count);
                     AddWorksheet<T>(table, exporter, exporterHeaderList, sheet);
-                    count++ ;
+                    count++;
                 }
-
             });
             return Task.FromResult(fileInfo);
         }
@@ -132,32 +128,17 @@ namespace Magicodes.ExporterAndImporter.Excel
                 if (GetExporterHeaderInfoList<T>(out var exporterHeaderList, dataItems.Columns))
                     return null;
 
-                DataSet data = dataItems.SplitDataTable();
-                int count = 0;
+                var data = dataItems.SplitDataTable();
+                var count = 0;
                 foreach (DataTable table in data.Tables)
                 {
-                    ExcelWorksheet sheet = GetWorksheet(excelPackage, exporter, count);
+                    var sheet = GetWorksheet(excelPackage, exporter, count);
                     AddWorksheet<T>(table, exporter, exporterHeaderList, sheet);
                     count++;
                 }
+
                 return Task.FromResult(excelPackage.GetAsByteArray());
             }
-        }
-
-        private void AddWorksheet<T>(DataTable dataItems, ExcelExporterAttribute exporter, List<ExporterHeaderInfo> exporterHeaderList, ExcelWorksheet sheet) where T : class
-        {
-            AddHeader(exporterHeaderList, sheet, exporter);
-            AddDataItems<T>(sheet, dataItems, exporter);
-            AddStyle(exporter, exporterHeaderList, sheet);
-        }
-
-
-        private static ExcelWorksheet GetWorksheet(ExcelPackage excelPackage, ExcelExporterAttribute exporter, int count =0)
-        {
-            var name = exporter?.Name ?? "导出结果";
-            var sheet = excelPackage.Workbook.Worksheets.Add($"{ name}-{count}");
-            sheet.OutLineApplyStyle = true;
-            return sheet;
         }
 
         /// <summary>
@@ -207,6 +188,24 @@ namespace Magicodes.ExporterAndImporter.Excel
             throw new NotImplementedException();
         }
 
+        private void AddWorksheet<T>(DataTable dataItems, ExcelExporterAttribute exporter,
+            List<ExporterHeaderInfo> exporterHeaderList, ExcelWorksheet sheet) where T : class
+        {
+            AddHeader(exporterHeaderList, sheet, exporter);
+            AddDataItems<T>(sheet, dataItems, exporter);
+            AddStyle(exporter, exporterHeaderList, sheet);
+        }
+
+
+        private static ExcelWorksheet GetWorksheet(ExcelPackage excelPackage, ExcelExporterAttribute exporter,
+            int count = 0)
+        {
+            var name = exporter?.Name ?? "导出结果";
+            var sheet = excelPackage.Workbook.Worksheets.Add($"{name}-{count}");
+            sheet.OutLineApplyStyle = true;
+            return sheet;
+        }
+
         /// <summary>
         ///     创建表头
         /// </summary>
@@ -243,7 +242,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
                 }
         }
-    
+
 
         /// <summary>
         ///     创建表头
@@ -269,7 +268,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaders"></param>
         /// <param name="items"></param>
         /// <param name="exporter"></param>
-        protected void AddDataItems<T>(ExcelWorksheet sheet, List<ExporterHeaderInfo> exporterHeaders, ICollection<T> items,
+        protected void AddDataItems<T>(ExcelWorksheet sheet, List<ExporterHeaderInfo> exporterHeaders,
+            ICollection<T> items,
             ExcelExporterAttribute exporter)
         {
             if (items == null || items.Count == 0)
@@ -293,7 +293,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return;
             var tbStyle = TableStyles.Medium10;
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
-                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
+                tbStyle = (TableStyles) Enum.Parse(typeof(TableStyles), exporter.TableStyle);
             sheet.Cells["A2"].LoadFromDataTable(items, false, tbStyle);
         }
 
@@ -412,32 +412,30 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaderList"></param>
         /// <param name="dataColumns"></param>
         /// <returns></returns>
-        private static bool GetExporterHeaderInfoList<T>(out List<ExporterHeaderInfo> exporterHeaderList, DataColumnCollection dataColumns)
+        private static bool GetExporterHeaderInfoList<T>(out List<ExporterHeaderInfo> exporterHeaderList,
+            DataColumnCollection dataColumns)
         {
             exporterHeaderList = new List<ExporterHeaderInfo>();
             var objProperties = typeof(T).GetProperties();
             if (objProperties == null || objProperties.Length == 0)
                 return true;
 
-            int index = 0;
+            var index = 0;
             for (var k = 0; k < dataColumns.Count; k++)
-            {
-                for (var i = 0; i < objProperties.Length; i++)
+            for (var i = 0; i < objProperties.Length; i++)
+                if (dataColumns[k].ColumnName.Equals(objProperties[i].Name))
                 {
-                    if (dataColumns[k].ColumnName.Equals(objProperties[i].Name))
+                    index += 1;
+                    exporterHeaderList.Add(new ExporterHeaderInfo
                     {
-                        index += 1;
-                        exporterHeaderList.Add(new ExporterHeaderInfo
-                        {
-                            Index = index,
-                            PropertyName = objProperties[i].Name,
-                            ExporterHeader =
-                                (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                                    ExporterHeaderAttribute[])?.FirstOrDefault()
-                        });
-                    }
+                        Index = index,
+                        PropertyName = objProperties[i].Name,
+                        ExporterHeader =
+                            (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
+                                ExporterHeaderAttribute[])?.FirstOrDefault()
+                    });
                 }
-            }
+
             return false;
         }
 
@@ -468,6 +466,5 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             return null;
         }
-            
     }
 }

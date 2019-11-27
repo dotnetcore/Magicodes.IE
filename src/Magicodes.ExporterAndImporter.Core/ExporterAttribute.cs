@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ExporterAttribute.cs
 //           description :
 // 
@@ -19,7 +16,7 @@ using System;
 namespace Magicodes.ExporterAndImporter.Core
 {
     /// <summary>
-    /// 导出特性
+    ///     导出特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ExporterAttribute : Attribute

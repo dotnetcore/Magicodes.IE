@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : WordExporter_Tests.cs
 //           description :
 // 
@@ -16,7 +13,6 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Tests.Models;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
 using Shouldly;

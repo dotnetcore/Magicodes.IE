@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : IExporterByTemplate.cs
 //           description :
 // 
@@ -43,7 +40,7 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;
 
         /// <summary>
-        ///    根据模板导出列表
+        ///     根据模板导出列表
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>

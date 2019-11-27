@@ -1,12 +1,9 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ImportQuestionBankDto.cs
 //           description :
 // 
-//           created by 雪雁 at  2019-09-26 14:59
+//           created by 雪雁 at  2019-11-05 20:02
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
@@ -112,10 +109,10 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(Name = "选项是否支持乱序")]
         [Required(ErrorMessage = "选项是否支持乱序不能为空")]
-        [ValueMapping(text: "对", value: true)]
-        [ValueMapping(text: "错", value: false)]
-        [ValueMapping(text: "是", value: true)]
-        [ValueMapping(text: "否", value: false)]
+        [ValueMapping("对", true)]
+        [ValueMapping("错", false)]
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
         public bool IsDisorderly { get; set; }
 
         /// <summary>

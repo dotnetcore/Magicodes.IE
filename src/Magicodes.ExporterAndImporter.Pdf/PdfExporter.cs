@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : PdfExporter.cs
 //           description :
 // 
@@ -14,23 +11,23 @@
 // 
 // ======================================================================
 
-using DinkToPdf;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Models;
-using Magicodes.ExporterAndImporter.Html;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using DinkToPdf;
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Html;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
     /// <summary>
-    /// Pdf导出逻辑
+    ///     Pdf导出逻辑
     /// </summary>
     public class PdfExporter : IExporterByTemplate
     {
-        static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
+        private static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
 
         /// <summary>
         ///     根据模板导出
@@ -39,7 +36,11 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class => throw new NotImplementedException();
+        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null)
+            where T : class
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         ///     根据模板导出
@@ -54,24 +55,22 @@ namespace Magicodes.ExporterAndImporter.Pdf
         }
 
         /// <summary>
-        ///    根据模板导出列表
+        ///     根据模板导出列表
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems, string htmlTemplate = null) where T : class
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
+            string htmlTemplate = null) where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName))
-            {
-                throw new ArgumentException("文件名必须填写!", nameof(fileName));
-            }
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
 
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-            
+
             if (exporterAttribute.IsWriteHtml)
                 File.WriteAllText(fileName + ".html", htmlString);
 
@@ -90,12 +89,10 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="data"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate) where T : class
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate)
+            where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName))
-            {
-                throw new ArgumentException("文件名必须填写!", nameof(fileName));
-            }
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
 
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
@@ -111,14 +108,15 @@ namespace Magicodes.ExporterAndImporter.Pdf
         }
 
         /// <summary>
-        /// 获取文档转换配置
+        ///     获取文档转换配置
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="pdfExporterAttribute"></param>
         /// <param name="htmlString"></param>
         /// <returns></returns>
-        private HtmlToPdfDocument GetHtmlToPdfDocumentByExporterAttribute(string fileName, PdfExporterAttribute pdfExporterAttribute,
-              string htmlString)
+        private HtmlToPdfDocument GetHtmlToPdfDocumentByExporterAttribute(string fileName,
+            PdfExporterAttribute pdfExporterAttribute,
+            string htmlString)
         {
             var htmlToPdfDocument = new HtmlToPdfDocument
             {
@@ -139,7 +137,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                         WebSettings = {DefaultEncoding = pdfExporterAttribute.Encoding.BodyName},
                         Encoding = pdfExporterAttribute.Encoding,
                         HeaderSettings = pdfExporterAttribute.HeaderSettings,
-                        FooterSettings = pdfExporterAttribute.FooterSettings,
+                        FooterSettings = pdfExporterAttribute.FooterSettings
                     }
                 }
             };
@@ -170,7 +168,6 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 FontSize = export.FontSize,
                 HeaderFontSize = export.HeaderFontSize
             };
-
         }
     }
 }

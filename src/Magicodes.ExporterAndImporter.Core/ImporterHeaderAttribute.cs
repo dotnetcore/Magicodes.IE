@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ImporterHeaderAttribute.cs
 //           description :
 // 
@@ -19,7 +16,7 @@ using System;
 namespace Magicodes.ExporterAndImporter.Core
 {
     /// <summary>
-    /// 导入头部特性
+    ///     导入头部特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class ImporterHeaderAttribute : Attribute
@@ -55,7 +52,7 @@ namespace Magicodes.ExporterAndImporter.Core
         public int ColumnIndex { get; set; }
 
         /// <summary>
-        /// 是否允许重复
+        ///     是否允许重复
         /// </summary>
         public bool IsAllowRepeat { get; set; } = true;
 

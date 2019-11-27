@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ImporterHeaderInfo.cs
 //           description :
 // 
@@ -40,7 +37,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         public ImporterHeaderAttribute ExporterHeader { get; set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
 

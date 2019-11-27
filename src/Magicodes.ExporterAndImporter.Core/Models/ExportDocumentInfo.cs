@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ExportDocumentInfo.cs
 //           description :
 // 
@@ -14,10 +11,8 @@
 // 
 // ======================================================================
 
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
@@ -111,5 +106,4 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// </summary>
         public TData Data { get; set; }
     }
-
 }

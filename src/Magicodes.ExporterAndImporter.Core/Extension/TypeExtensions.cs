@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : TypeExtensions.cs
 //           description :
 // 
@@ -106,10 +103,12 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="inherit"></param>
         /// <returns></returns>
         public static IEnumerable<T> GetAttributes<T>(this ICustomAttributeProvider assembly, bool inherit = false)
-            where T : Attribute =>
-            assembly
+            where T : Attribute
+        {
+            return assembly
                 .GetCustomAttributes(typeof(T), inherit)
                 .OfType<T>();
+        }
 
         /// <summary>
         ///     检查指定指定类型成员中是否存在指定的Attribute特性
@@ -182,7 +181,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                     Convert.ToInt32(value),
                     displayName.IsNullOrWhiteSpace() ? null : displayName,
                     des.IsNullOrWhiteSpace() ? null : des
-                    );
+                );
                 list.Add(item);
                 index++;
             }
@@ -191,18 +190,24 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         }
 
         /// <summary>
-        /// 是否为可为空类型
+        ///     是否为可为空类型
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static bool IsNullable(this Type type) => Nullable.GetUnderlyingType(type) != null;
+        public static bool IsNullable(this Type type)
+        {
+            return Nullable.GetUnderlyingType(type) != null;
+        }
 
         /// <summary>
-        /// 获取可为空类型的底层类型
+        ///     获取可为空类型的底层类型
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Type GetNullableUnderlyingType(this Type type) => Nullable.GetUnderlyingType(type);
+        public static Type GetNullableUnderlyingType(this Type type)
+        {
+            return Nullable.GetUnderlyingType(type);
+        }
 
 
         /// <summary>
@@ -210,8 +215,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// </summary>
         /// <param name="type"></param>
         /// <returns>
-        /// key :返回显示名称或者描述
-        /// value：值
+        ///     key :返回显示名称或者描述
+        ///     value：值
         /// </returns>
         public static IDictionary<string, int> GetEnumTextAndValues(this Type type)
         {
@@ -220,10 +225,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var dic = new Dictionary<string, int>();
             //枚举名 值 显示名称 描述
             foreach (var (item1, item2, item3, item4) in items)
-            {
                 //如果描述、显示名不存在，则返回枚举名称
                 dic.Add(item4 ?? item3 ?? item1, item2);
-            }
             return dic;
         }
 
@@ -232,7 +235,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Dictionary<string, List<Tuple<string, int, string, string>>> GetClassEnumDefinitionList(this Type type)
+        public static Dictionary<string, List<Tuple<string, int, string, string>>> GetClassEnumDefinitionList(
+            this Type type)
         {
             var enumPros = type.GetProperties().Where(p => p.PropertyType.IsEnum);
             var dic = new Dictionary<string, List<Tuple<string, int, string, string>>>();
@@ -242,7 +246,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

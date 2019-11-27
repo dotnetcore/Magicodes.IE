@@ -158,6 +158,7 @@
 - CSV支持
 - 导入结果支持生成HTML输出
 - Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+- Excel导出支持图片
 
 ### 更新历史
 

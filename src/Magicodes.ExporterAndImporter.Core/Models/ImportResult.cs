@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : ImportResult.cs
 //           description :
 // 
@@ -26,7 +23,6 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     public class ImportResult<T> where T : class
     {
         /// <summary>
-        /// 
         /// </summary>
         public ImportResult()
         {

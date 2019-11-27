@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : WordExporter.cs
 //           description :
 // 
@@ -40,7 +37,8 @@ namespace Magicodes.ExporterAndImporter.Word
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate">Html模板内容</param>
         /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null) where T : class
+        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null)
+            where T : class
         {
             throw new NotImplementedException();
         }
@@ -58,14 +56,15 @@ namespace Magicodes.ExporterAndImporter.Word
         }
 
         /// <summary>
-        ///    根据模板导出列表
+        ///     根据模板导出列表
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems, string htmlTemplate = null) where T : class
+        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
+            string htmlTemplate = null) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
             var exporter = new HtmlExporter();
@@ -104,7 +103,8 @@ namespace Magicodes.ExporterAndImporter.Word
         /// <param name="data"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate) where T : class
+        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate)
+            where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
             var exporter = new HtmlExporter();
@@ -134,6 +134,5 @@ namespace Magicodes.ExporterAndImporter.Word
                 return fileInfo;
             }
         }
-        
     }
 }

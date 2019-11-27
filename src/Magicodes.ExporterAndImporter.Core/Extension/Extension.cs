@@ -1,8 +1,5 @@
 ﻿// ======================================================================
 // 
-//           Copyright (C) 2019-2030 湖南心莱信息科技有限公司
-//           All rights reserved
-// 
 //           filename : Extension.cs
 //           description :
 // 
@@ -14,11 +11,11 @@
 // 
 // ======================================================================
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+
 #if NETSTANDARD2_1
 using System.Reflection;
 using System.Reflection.Emit;
@@ -183,7 +180,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
 #if NETSTANDARD2_0
         /// <summary>
-        /// 将集合转成DataTable
+        ///     将集合转成DataTable
         /// </summary>
         /// <returns></returns>
         public static DataTable ToDataTable<T>(this ICollection<T> source)
