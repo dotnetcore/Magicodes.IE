@@ -23,17 +23,9 @@ steps:
     packageType: 'sdk'
     version: '3.x'
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      dotnet tool install --global coverlet.console
-      dotnet add package coverlet.msbuild
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    arguments: '/p:CollectCoverage=true'
 
 
 
