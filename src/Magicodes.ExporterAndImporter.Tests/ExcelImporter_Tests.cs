@@ -67,18 +67,18 @@ namespace Magicodes.ExporterAndImporter.Tests
             //TODO:读取Excel检查表头和格式
         }
 
-        //[Fact(DisplayName = "生成模板字节")]
-        //public async Task GenerateTemplateBytes_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) + ".xlsx");
-        //    if (File.Exists(filePath)) File.Delete(filePath);
+        [Fact(DisplayName = "生成模板字节")]
+        public async Task GenerateTemplateBytes_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
 
-        //    var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
-        //    result.ShouldNotBeNull();
-        //    result.Length.ShouldBeGreaterThan(0);
-        //    File.WriteAllBytes(filePath, result);
-        //    File.Exists(filePath).ShouldBeTrue();
-        //}
+            var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
         //[Fact(DisplayName = "导入")]
         //public async Task Importer_Test()
