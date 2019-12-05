@@ -13,11 +13,16 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
     public class TestBase
     {
+        public TestBase()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
         /// <summary>
         ///     获取根目录
         /// </summary>
