@@ -6,8 +6,11 @@
 trigger:
 - master
 
+pr:
+- master
+
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2019'
 
 variables:
   solution: '**/*.sln'
@@ -16,6 +19,11 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.x'
 
 - task: NuGetCommand@2
   inputs:
