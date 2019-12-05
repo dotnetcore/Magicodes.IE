@@ -18,33 +18,24 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@1
-
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '3.x'
 
-- task: NuGetCommand@2
+- task: PowerShell@2
   inputs:
-    restoreSolution: '$(solution)'
+    targetType: 'inline'
+    script: |
+      dotnet tool install --global coverlet.console
+      dotnet add package coverlet.msbuild
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'test'
+    arguments: '/p:CollectCoverage=true'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    codeCoverageEnabled: true
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-          **\*test*.dll
-          !**\*TestAdapter.dll
-          !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+
+
+
     
