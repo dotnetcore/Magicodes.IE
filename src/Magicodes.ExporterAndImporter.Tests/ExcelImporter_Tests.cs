@@ -217,24 +217,24 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("身份证"));
             result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("身份证"));
 
-            //#region 重复错误
+            #region 重复错误
 
-            //var errorRows = "5,6".Split(',').ToList();
-            //result.RowErrors.ShouldContain(p =>
-            //    errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
-            //    p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
+            var errorRows = "5,6".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
 
-            //errorRows = "8,9,11,13".Split(',').ToList();
-            //result.RowErrors.ShouldContain(p =>
-            //    errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
-            //    p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
+            errorRows = "8,9,11,13".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
 
-            //errorRows = "4，6，8，10，11，13".Split('，').ToList();
-            //result.RowErrors.ShouldContain(p =>
-            //    errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
-            //    p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+            errorRows = "4，6，8，10，11，13".Split('，').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
 
-            //#endregion
+            #endregion
 
             //result.RowErrors.Count.ShouldBeGreaterThan(0);
 
