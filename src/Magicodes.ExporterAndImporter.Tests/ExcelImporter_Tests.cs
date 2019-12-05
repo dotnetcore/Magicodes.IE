@@ -35,8 +35,12 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         private readonly ITestOutputHelper _testOutputHelper;
         public IImporter Importer = new ExcelImporter();
-
-        [Fact(DisplayName = "生成学生数据导入模板（测试枚举生成模板）")]
+        
+        /// <summary>
+        /// 测试枚举
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "生成学生数据导入模板")]
         public async Task GenerateStudentImportTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
