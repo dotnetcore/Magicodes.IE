@@ -11,6 +11,7 @@
 // 
 // ======================================================================
 
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         private readonly ITestOutputHelper _testOutputHelper;
         public IImporter Importer = new ExcelImporter();
-        
+
         /// <summary>
         /// 测试枚举
         /// </summary>
@@ -219,28 +220,37 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             #region 重复错误
 
-            var errorRows = "5,6".Split(',').ToList();
+            var errorRows = new List<int>()
+            {
+                5,6
+            };
             result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
                 p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
 
-            errorRows = "8,9,11,13".Split(',').ToList();
+            errorRows = new List<int>()
+            {
+                8,9,11,13
+            };
             result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
                 p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
 
-            //errorRows = "4，6，8，10，11，13".Split('，').ToList();
-            //result.RowErrors.ShouldContain(p =>
-            //    errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
-            //    p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+            errorRows = new List<int>()
+            {
+                4,6,8,10,11,13
+            };
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品型号") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
 
             #endregion
 
-            //result.RowErrors.Count.ShouldBeGreaterThan(0);
+            result.RowErrors.Count.ShouldBeGreaterThan(0);
 
-            ////一行仅允许存在一条数据
-            //foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
-            //    item.Count.ShouldBe(1);
+            //一行仅允许存在一条数据
+            foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
+                item.Count.ShouldBe(1);
         }
 
         //[Fact(DisplayName = "学生基础数据导入")]
