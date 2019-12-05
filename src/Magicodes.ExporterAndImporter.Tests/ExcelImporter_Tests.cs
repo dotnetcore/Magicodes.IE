@@ -116,50 +116,50 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
         }
 
-        //[Fact(DisplayName = "截断数据测试")]
-        //public async Task ImporterDataEnd_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "截断数据测试.xlsx");
-        //    var import = await Importer.Import<ImportProductDto>(filePath);
-        //    import.ShouldNotBeNull();
-        //    import.Data.ShouldNotBeNull();
-        //    import.Data.Count.ShouldBe(6);
-        //}
+        [Fact(DisplayName = "截断数据测试")]
+        public async Task ImporterDataEnd_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "截断数据测试.xlsx");
+            var import = await Importer.Import<ImportProductDto>(filePath);
+            import.ShouldNotBeNull();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(6);
+        }
 
-        //[Fact(DisplayName = "缴费流水导入测试")]
-        //public async Task ImportPaymentLogs_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "缴费流水导入模板.xlsx");
-        //    var import = await Importer.Import<ImportPaymentLogDto>(filePath);
-        //    import.ShouldNotBeNull();
-        //    import.HasError.ShouldBeTrue();
-        //    import.Exception.ShouldBeNull();
-        //    import.Data.Count.ShouldBe(20);
-        //}
+        [Fact(DisplayName = "缴费流水导入测试")]
+        public async Task ImportPaymentLogs_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "缴费流水导入模板.xlsx");
+            var import = await Importer.Import<ImportPaymentLogDto>(filePath);
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeTrue();
+            import.Exception.ShouldBeNull();
+            import.Data.Count.ShouldBe(20);
+        }
 
-        //[Fact(DisplayName = "必填项检测")]
-        //public async Task IsRequired_Test()
-        //{
-        //    var pros = typeof(ImportProductDto).GetProperties();
-        //    foreach (var item in pros)
-        //        switch (item.Name)
-        //        {
-        //            //DateTime
-        //            case "FormulaTest":
-        //            //int
-        //            case "DeclareValue":
-        //            //Required
-        //            case "Name":
-        //                item.IsRequired().ShouldBe(true);
-        //                break;
-        //            //可为空类型
-        //            case "Weight":
-        //            //string
-        //            case "IdNo":
-        //                item.IsRequired().ShouldBe(false);
-        //                break;
-        //        }
-        //}
+        [Fact(DisplayName = "必填项检测")]
+        public async Task IsRequired_Test()
+        {
+            var pros = typeof(ImportProductDto).GetProperties();
+            foreach (var item in pros)
+                switch (item.Name)
+                {
+                    //DateTime
+                    case "FormulaTest":
+                    //int
+                    case "DeclareValue":
+                    //Required
+                    case "Name":
+                        item.IsRequired().ShouldBe(true);
+                        break;
+                    //可为空类型
+                    case "Weight":
+                    //string
+                    case "IdNo":
+                        item.IsRequired().ShouldBe(false);
+                        break;
+                }
+        }
 
         //[Fact(DisplayName = "题库导入测试")]
         //public async Task QuestionBankImporter_Test()
