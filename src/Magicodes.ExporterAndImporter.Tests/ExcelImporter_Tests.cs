@@ -189,59 +189,59 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.TemplateErrors.Count.ShouldBe(0);
         }
 
-        //[Fact(DisplayName = "数据错误检测")]
-        //public async Task RowDataError_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
-        //    var result = await Importer.Import<ImportRowDataErrorDto>(filePath);
-        //    result.ShouldNotBeNull();
-        //    result.HasError.ShouldBeTrue();
+        [Fact(DisplayName = "数据错误检测")]
+        public async Task RowDataError_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
+            var result = await Importer.Import<ImportRowDataErrorDto>(filePath);
+            result.ShouldNotBeNull();
+            result.HasError.ShouldBeTrue();
 
-        //    result.TemplateErrors.Count.ShouldBe(0);
+            result.TemplateErrors.Count.ShouldBe(0);
 
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("产品名称"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("产品名称"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("产品名称"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("产品名称"));
 
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("产品代码"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("产品代码"));
 
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("重量(KG)"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("公式测试"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("公式测试"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 6 && p.FieldErrors.ContainsKey("公式测试"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("公式测试"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("重量(KG)"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("公式测试"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("公式测试"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 6 && p.FieldErrors.ContainsKey("公式测试"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("公式测试"));
 
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证"));
-        //    result.RowErrors.First(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证")).FieldErrors.Count
-        //        .ShouldBe(3);
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证"));
+            result.RowErrors.First(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证")).FieldErrors.Count
+                .ShouldBe(3);
 
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("身份证"));
-        //    result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("身份证"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("身份证"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("身份证"));
 
-        //    #region 重复错误
+            #region 重复错误
 
-        //    var errorRows = "5,6".Split(',').ToList();
-        //    result.RowErrors.ShouldContain(p =>
-        //        errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
-        //        p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
+            var errorRows = "5,6".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
 
-        //    errorRows = "8,9,11,13".Split(',').ToList();
-        //    result.RowErrors.ShouldContain(p =>
-        //        errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
-        //        p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
+            errorRows = "8,9,11,13".Split(',').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品代码") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
 
-        //    errorRows = "4，6，8，10，11，13".Split('，').ToList();
-        //    result.RowErrors.ShouldContain(p =>
-        //        errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
-        //        p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+            errorRows = "4，6，8，10，11，13".Split('，').ToList();
+            result.RowErrors.ShouldContain(p =>
+                errorRows.Contains(p.RowIndex.ToString()) && p.FieldErrors.ContainsKey("产品型号") &&
+                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
 
-        //    #endregion
+            #endregion
 
-        //    result.RowErrors.Count.ShouldBeGreaterThan(0);
+            result.RowErrors.Count.ShouldBeGreaterThan(0);
 
-        //    //一行仅允许存在一条数据
-        //    foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new {p.Key, Count = p.Count()}))
-        //        item.Count.ShouldBe(1);
-        //}
+            //一行仅允许存在一条数据
+            foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
+                item.Count.ShouldBe(1);
+        }
 
         //[Fact(DisplayName = "学生基础数据导入")]
         //public async Task StudentInfoImporter_Test()
