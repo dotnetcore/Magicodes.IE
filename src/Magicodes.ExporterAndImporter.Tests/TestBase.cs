@@ -22,6 +22,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public TestBase()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("utf-8");
         }
         /// <summary>
         ///     获取根目录
