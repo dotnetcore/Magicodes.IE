@@ -3,11 +3,11 @@
 //           filename : ExcelImporter_Tests.cs
 //           description :
 // 
-//           created by Ñ©Ñã at  2019-09-11 13:51
-//           ÎÄµµ¹ÙÍø£ºhttps://docs.xin-lai.com
-//           ¹«ÖÚºÅ½Ì³Ì£ºÂó¿ÛÁÄ¼¼Êõ
-//           QQÈº£º85318032£¨±à³Ì½»Á÷£©
-//           Blog£ºhttp://www.cnblogs.com/codelove/
+//           created by é›ªé› at  2019-09-11 13:51
+//           æ–‡æ¡£å®˜ç½‘ï¼šhttps://docs.xin-lai.com
+//           å…¬ä¼—å·æ•™ç¨‹ï¼šéº¦æ‰£èŠæŠ€æœ¯
+//           QQç¾¤ï¼š85318032ï¼ˆç¼–ç¨‹äº¤æµï¼‰
+//           Blogï¼šhttp://www.cnblogs.com/codelove/
 // 
 // ======================================================================
 
@@ -38,10 +38,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         public IImporter Importer = new ExcelImporter();
 
         /// <summary>
-        /// ²âÊÔÃ¶¾Ù
+        /// æµ‹è¯•æšä¸¾
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "Éú³ÉÑ§ÉúÊı¾İµ¼ÈëÄ£°å")]
+        [Fact(DisplayName = "ç”Ÿæˆå­¦ç”Ÿæ•°æ®å¯¼å…¥æ¨¡æ¿")]
         public async Task GenerateStudentImportTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -52,10 +52,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
-            //TODO:¶ÁÈ¡Excel¼ì²é±íÍ·ºÍ¸ñÊ½
+            //TODO:è¯»å–Excelæ£€æŸ¥è¡¨å¤´å’Œæ ¼å¼
         }
 
-        [Fact(DisplayName = "Éú³ÉÄ£°å")]
+        [Fact(DisplayName = "ç”Ÿæˆæ¨¡æ¿")]
         public async Task GenerateTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplate_Test) + ".xlsx");
@@ -65,10 +65,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
-            //TODO:¶ÁÈ¡Excel¼ì²é±íÍ·ºÍ¸ñÊ½
+            //TODO:è¯»å–Excelæ£€æŸ¥è¡¨å¤´å’Œæ ¼å¼
         }
 
-        [Fact(DisplayName = "Éú³ÉÄ£°å×Ö½Ú")]
+        [Fact(DisplayName = "ç”Ÿæˆæ¨¡æ¿å­—èŠ‚")]
         public async Task GenerateTemplateBytes_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) + ".xlsx");
@@ -81,12 +81,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "µ¼Èë")]
+        [Fact(DisplayName = "å¯¼å…¥")]
         public async Task Importer_Test()
         {
-            //µÚÒ»ÁĞÂÒĞò
+            //ç¬¬ä¸€åˆ—ä¹±åº
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "²úÆ·µ¼ÈëÄ£°å.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "äº§å“å¯¼å…¥æ¨¡æ¿.xlsx");
             var import = await Importer.Import<ImportProductDto>(filePath);
             import.ShouldNotBeNull();
 
@@ -95,42 +95,42 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
             foreach (var item in import.Data)
             {
-                if (item.Name.Contains("¿Õ¸ñ²âÊÔ")) item.Name.ShouldBe(item.Name.Trim());
+                if (item.Name.Contains("ç©ºæ ¼æµ‹è¯•")) item.Name.ShouldBe(item.Name.Trim());
 
-                if (item.Code.Contains("²»È¥³ı¿Õ¸ñ²âÊÔ")) item.Code.ShouldContain(" ");
-                //È¥³ıÖĞ¼ä¿Õ¸ñ²âÊÔ
+                if (item.Code.Contains("ä¸å»é™¤ç©ºæ ¼æµ‹è¯•")) item.Code.ShouldContain(" ");
+                //å»é™¤ä¸­é—´ç©ºæ ¼æµ‹è¯•
                 item.BarCode.ShouldBe("123123");
             }
 
-            //¿ÉÎª¿ÕÀàĞÍ²âÊÔ
+            //å¯ä¸ºç©ºç±»å‹æµ‹è¯•
             import.Data.ElementAt(4).Weight.HasValue.ShouldBe(true);
             import.Data.ElementAt(5).Weight.HasValue.ShouldBe(false);
-            //ÌáÈ¡ĞÔ±ğ¹«Ê½²âÊÔ
-            import.Data.ElementAt(0).Sex.ShouldBe("Å®");
-            //»ñÈ¡µ±Ç°ÈÕÆÚÒÔ¼°ÈÕÆÚÀàĞÍ²âÊÔ  Èç¹ûÊ±¼ä²»¶Ô£¬Çë´ò¿ª¶ÔÓ¦µÄExcel¼´¿É¸üĞÂÎªµ±Ç°Ê±¼ä£¬È»ºóÔÙÔËĞĞ´Ëµ¥Ôª²âÊÔ
+            //æå–æ€§åˆ«å…¬å¼æµ‹è¯•
+            import.Data.ElementAt(0).Sex.ShouldBe("å¥³");
+            //è·å–å½“å‰æ—¥æœŸä»¥åŠæ—¥æœŸç±»å‹æµ‹è¯•  å¦‚æœæ—¶é—´ä¸å¯¹ï¼Œè¯·æ‰“å¼€å¯¹åº”çš„Excelå³å¯æ›´æ–°ä¸ºå½“å‰æ—¶é—´ï¼Œç„¶åå†è¿è¡Œæ­¤å•å…ƒæµ‹è¯•
             //import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
-            //ÊıÖµ²âÊÔ
+            //æ•°å€¼æµ‹è¯•
             import.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
             import.Data.ElementAt(0).Name.ShouldBe("1212");
             import.Data.ElementAt(0).BarCode.ShouldBe("123123");
             import.Data.ElementAt(1).Name.ShouldBe("12312312");
-            import.Data.ElementAt(2).Name.ShouldBe("×ó²à¿Õ¸ñ²âÊÔ");
+            import.Data.ElementAt(2).Name.ShouldBe("å·¦ä¾§ç©ºæ ¼æµ‹è¯•");
         }
 
-        [Fact(DisplayName = "½Ø¶ÏÊı¾İ²âÊÔ")]
+        [Fact(DisplayName = "æˆªæ–­æ•°æ®æµ‹è¯•")]
         public async Task ImporterDataEnd_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "½Ø¶ÏÊı¾İ²âÊÔ.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "æˆªæ–­æ•°æ®æµ‹è¯•.xlsx");
             var import = await Importer.Import<ImportProductDto>(filePath);
             import.ShouldNotBeNull();
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(6);
         }
 
-        [Fact(DisplayName = "½É·ÑÁ÷Ë®µ¼Èë²âÊÔ")]
+        [Fact(DisplayName = "ç¼´è´¹æµæ°´å¯¼å…¥æµ‹è¯•")]
         public async Task ImportPaymentLogs_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "½É·ÑÁ÷Ë®µ¼ÈëÄ£°å.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "ç¼´è´¹æµæ°´å¯¼å…¥æ¨¡æ¿.xlsx");
             var import = await Importer.Import<ImportPaymentLogDto>(filePath);
             import.ShouldNotBeNull();
             import.HasError.ShouldBeTrue();
@@ -138,7 +138,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Count.ShouldBe(20);
         }
 
-        [Fact(DisplayName = "±ØÌîÏî¼ì²â")]
+        [Fact(DisplayName = "å¿…å¡«é¡¹æ£€æµ‹")]
         public async Task IsRequired_Test()
         {
             var pros = typeof(ImportProductDto).GetProperties();
@@ -153,7 +153,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     case "Name":
                         item.IsRequired().ShouldBe(true);
                         break;
-                    //¿ÉÎª¿ÕÀàĞÍ
+                    //å¯ä¸ºç©ºç±»å‹
                     case "Weight":
                     //string
                     case "IdNo":
@@ -162,10 +162,10 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
         }
 
-        [Fact(DisplayName = "Ìâ¿âµ¼Èë²âÊÔ")]
+        [Fact(DisplayName = "é¢˜åº“å¯¼å…¥æµ‹è¯•")]
         public async Task QuestionBankImporter_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Ìâ¿âµ¼ÈëÄ£°å.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "é¢˜åº“å¯¼å…¥æ¨¡æ¿.xlsx");
             var import = await Importer.Import<ImportQuestionBankDto>(filePath);
             import.ShouldNotBeNull();
             _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
@@ -173,15 +173,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(404);
 
-            #region ¼ì²éBoolÖµÓ³Éä
+            #region æ£€æŸ¥Boolå€¼æ˜ å°„
 
-            //ÊÇ
+            //æ˜¯
             import.Data.ElementAt(0).IsDisorderly.ShouldBeTrue();
-            //·ñ
+            //å¦
             import.Data.ElementAt(1).IsDisorderly.ShouldBeFalse();
-            //¶Ô
+            //å¯¹
             import.Data.ElementAt(2).IsDisorderly.ShouldBeTrue();
-            //´í
+            //é”™
             import.Data.ElementAt(3).IsDisorderly.ShouldBeFalse();
 
             #endregion
@@ -190,76 +190,76 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.TemplateErrors.Count.ShouldBe(0);
         }
 
-        [Fact(DisplayName = "Êı¾İ´íÎó¼ì²â")]
+        [Fact(DisplayName = "æ•°æ®é”™è¯¯æ£€æµ‹")]
         public async Task RowDataError_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "Êı¾İ´íÎó.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "æ•°æ®é”™è¯¯.xlsx");
             var result = await Importer.Import<ImportRowDataErrorDto>(filePath);
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
 
             result.TemplateErrors.Count.ShouldBe(0);
 
-            result.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("²úÆ·Ãû³Æ"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("²úÆ·Ãû³Æ"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("äº§å“åç§°"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("äº§å“åç§°"));
 
-            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("²úÆ·´úÂë"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("äº§å“ä»£ç "));
 
-            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("ÖØÁ¿(KG)"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("¹«Ê½²âÊÔ"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("¹«Ê½²âÊÔ"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 6 && p.FieldErrors.ContainsKey("¹«Ê½²âÊÔ"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("¹«Ê½²âÊÔ"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("é‡é‡(KG)"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("å…¬å¼æµ‹è¯•"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("å…¬å¼æµ‹è¯•"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 6 && p.FieldErrors.ContainsKey("å…¬å¼æµ‹è¯•"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 7 && p.FieldErrors.ContainsKey("å…¬å¼æµ‹è¯•"));
 
-            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("Éí·İÖ¤"));
-            result.RowErrors.First(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("Éí·İÖ¤")).FieldErrors.Count
+            result.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("èº«ä»½è¯"));
+            result.RowErrors.First(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("èº«ä»½è¯")).FieldErrors.Count
                 .ShouldBe(3);
 
-            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("Éí·İÖ¤"));
-            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("Éí·İÖ¤"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 4 && p.FieldErrors.ContainsKey("èº«ä»½è¯"));
+            result.RowErrors.ShouldContain(p => p.RowIndex == 5 && p.FieldErrors.ContainsKey("èº«ä»½è¯"));
 
-            #region ÖØ¸´´íÎó
+            #region é‡å¤é”™è¯¯
 
             var errorRows = new List<int>()
             {
                 5,6
             };
             result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("²úÆ·´úÂë") &&
-                p.FieldErrors.Values.Contains("´æÔÚÊı¾İÖØ¸´£¬Çë¼ì²é£¡ËùÔÚĞĞ£º5£¬6¡£"));
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("äº§å“ä»£ç ") &&
+                p.FieldErrors.Values.Contains("å­˜åœ¨æ•°æ®é‡å¤ï¼Œè¯·æ£€æŸ¥ï¼æ‰€åœ¨è¡Œï¼š5ï¼Œ6ã€‚"));
 
             errorRows = new List<int>()
             {
                 8,9,11,13
             };
             result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("²úÆ·´úÂë") &&
-                p.FieldErrors.Values.Contains("´æÔÚÊı¾İÖØ¸´£¬Çë¼ì²é£¡ËùÔÚĞĞ£º8£¬9£¬11£¬13¡£"));
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("äº§å“ä»£ç ") &&
+                p.FieldErrors.Values.Contains("å­˜åœ¨æ•°æ®é‡å¤ï¼Œè¯·æ£€æŸ¥ï¼æ‰€åœ¨è¡Œï¼š8ï¼Œ9ï¼Œ11ï¼Œ13ã€‚"));
 
             errorRows = new List<int>()
             {
                 4,6,8,10,11,13
             };
             result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("²úÆ·ĞÍºÅ") &&
-                p.FieldErrors.Values.Contains("´æÔÚÊı¾İÖØ¸´£¬Çë¼ì²é£¡ËùÔÚĞĞ£º4£¬6£¬8£¬10£¬11£¬13¡£"));
+                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("äº§å“å‹å·") &&
+                p.FieldErrors.Values.Contains("å­˜åœ¨æ•°æ®é‡å¤ï¼Œè¯·æ£€æŸ¥ï¼æ‰€åœ¨è¡Œï¼š4ï¼Œ6ï¼Œ8ï¼Œ10ï¼Œ11ï¼Œ13ã€‚"));
 
             #endregion
 
             result.RowErrors.Count.ShouldBeGreaterThan(0);
 
-            //Ò»ĞĞ½öÔÊĞí´æÔÚÒ»ÌõÊı¾İ
+            //ä¸€è¡Œä»…å…è®¸å­˜åœ¨ä¸€æ¡æ•°æ®
             foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
                 item.Count.ShouldBe(1);
 
             char.Parse(",");
-            char.Parse("£¬");
+            char.Parse("ï¼Œ");
         }
 
-        [Fact(DisplayName = "Ñ§Éú»ù´¡Êı¾İµ¼Èë")]
+        [Fact(DisplayName = "å­¦ç”ŸåŸºç¡€æ•°æ®å¯¼å…¥")]
         public async Task StudentInfoImporter_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Ñ§Éú»ù´¡Êı¾İµ¼Èë.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "å­¦ç”ŸåŸºç¡€æ•°æ®å¯¼å…¥.xlsx");
             var import = await Importer.Import<ImportStudentDto>(filePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
@@ -270,10 +270,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Count.ShouldBe(16);
         }
 
-        [Fact(DisplayName = "Ä£°å´íÎó¼ì²â")]
+        [Fact(DisplayName = "æ¨¡æ¿é”™è¯¯æ£€æµ‹")]
         public async Task TplError_Test()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "Ä£°å×Ö¶Î´íÎó.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "æ¨¡æ¿å­—æ®µé”™è¯¯.xlsx");
             var result = await Importer.Import<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
