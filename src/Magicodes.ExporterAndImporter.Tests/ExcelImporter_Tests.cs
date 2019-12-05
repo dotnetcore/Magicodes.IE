@@ -161,33 +161,33 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
         }
 
-        //[Fact(DisplayName = "题库导入测试")]
-        //public async Task QuestionBankImporter_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "题库导入模板.xlsx");
-        //    var import = await Importer.Import<ImportQuestionBankDto>(filePath);
-        //    import.ShouldNotBeNull();
-        //    _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-        //    import.HasError.ShouldBeFalse();
-        //    import.Data.ShouldNotBeNull();
-        //    import.Data.Count.ShouldBe(404);
+        [Fact(DisplayName = "题库导入测试")]
+        public async Task QuestionBankImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "题库导入模板.xlsx");
+            var import = await Importer.Import<ImportQuestionBankDto>(filePath);
+            import.ShouldNotBeNull();
+            _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(404);
 
-        //    #region 检查Bool值映射
+            #region 检查Bool值映射
 
-        //    //是
-        //    import.Data.ElementAt(0).IsDisorderly.ShouldBeTrue();
-        //    //否
-        //    import.Data.ElementAt(1).IsDisorderly.ShouldBeFalse();
-        //    //对
-        //    import.Data.ElementAt(2).IsDisorderly.ShouldBeTrue();
-        //    //错
-        //    import.Data.ElementAt(3).IsDisorderly.ShouldBeFalse();
+            //是
+            import.Data.ElementAt(0).IsDisorderly.ShouldBeTrue();
+            //否
+            import.Data.ElementAt(1).IsDisorderly.ShouldBeFalse();
+            //对
+            import.Data.ElementAt(2).IsDisorderly.ShouldBeTrue();
+            //错
+            import.Data.ElementAt(3).IsDisorderly.ShouldBeFalse();
 
-        //    #endregion
+            #endregion
 
-        //    import.RowErrors.Count.ShouldBe(0);
-        //    import.TemplateErrors.Count.ShouldBe(0);
-        //}
+            import.RowErrors.Count.ShouldBe(0);
+            import.TemplateErrors.Count.ShouldBe(0);
+        }
 
         //[Fact(DisplayName = "数据错误检测")]
         //public async Task RowDataError_Test()
