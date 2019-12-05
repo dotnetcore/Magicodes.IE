@@ -251,32 +251,35 @@ namespace Magicodes.ExporterAndImporter.Tests
             //一行仅允许存在一条数据
             foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
                 item.Count.ShouldBe(1);
+
+            char.Parse(",");
+            char.Parse("，");
         }
 
-        //[Fact(DisplayName = "学生基础数据导入")]
-        //public async Task StudentInfoImporter_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
-        //    var import = await Importer.Import<ImportStudentDto>(filePath);
-        //    import.ShouldNotBeNull();
-        //    if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+        [Fact(DisplayName = "学生基础数据导入")]
+        public async Task StudentInfoImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
-        //    if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-        //    import.HasError.ShouldBeFalse();
-        //    import.Data.ShouldNotBeNull();
-        //    import.Data.Count.ShouldBe(16);
-        //}
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+        }
 
-        //[Fact(DisplayName = "模板错误检测")]
-        //public async Task TplError_Test()
-        //{
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "模板字段错误.xlsx");
-        //    var result = await Importer.Import<ImportProductDto>(filePath);
-        //    result.ShouldNotBeNull();
-        //    result.HasError.ShouldBeTrue();
-        //    result.TemplateErrors.Count.ShouldBeGreaterThan(0);
-        //    result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Error).ShouldBe(1);
-        //    result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
-        //}
+        [Fact(DisplayName = "模板错误检测")]
+        public async Task TplError_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "模板字段错误.xlsx");
+            var result = await Importer.Import<ImportProductDto>(filePath);
+            result.ShouldNotBeNull();
+            result.HasError.ShouldBeTrue();
+            result.TemplateErrors.Count.ShouldBeGreaterThan(0);
+            result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Error).ShouldBe(1);
+            result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
+        }
     }
 }
