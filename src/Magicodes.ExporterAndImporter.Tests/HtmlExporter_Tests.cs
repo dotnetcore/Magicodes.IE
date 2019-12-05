@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class HtmlExporter_Tests
+    public class HtmlExporter_Tests: TestBase
     {
         [Fact(DisplayName = "导出Html测试")]
         public async Task ExportHtml_Test()

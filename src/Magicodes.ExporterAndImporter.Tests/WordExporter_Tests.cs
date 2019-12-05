@@ -20,7 +20,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class WordExporter_Tests
+    public class WordExporter_Tests : TestBase
     {
         [Fact(DisplayName = "导出Word测试")]
         public async Task ExportWord_Test()

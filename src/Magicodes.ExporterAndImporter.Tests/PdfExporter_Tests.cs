@@ -22,7 +22,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class PdfExporter_Tests
+    public class PdfExporter_Tests : TestBase
     {
         [Fact(DisplayName = "导出竖向排版收据")]
         public async Task BathExportPortraitReceipt_Test()

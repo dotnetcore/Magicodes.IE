@@ -27,7 +27,7 @@ using Xunit.Abstractions;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class ExcelImporter_Tests
+    public class ExcelImporter_Tests : TestBase
     {
         public ExcelImporter_Tests(ITestOutputHelper testOutputHelper)
         {
