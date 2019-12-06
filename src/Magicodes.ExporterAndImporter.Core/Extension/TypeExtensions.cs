@@ -231,21 +231,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         }
 
         /// <summary>
-        ///     获取类的所有枚举
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static Dictionary<string, List<Tuple<string, int, string, string>>> GetClassEnumDefinitionList(
-            this Type type)
-        {
-            var enumPros = type.GetProperties().Where(p => p.PropertyType.IsEnum);
-            var dic = new Dictionary<string, List<Tuple<string, int, string, string>>>();
-            foreach (var item in enumPros) dic.Add(item.Name, item.PropertyType.GetEnumDefinitionList());
-            return dic;
-        }
-
-
-        /// <summary>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>

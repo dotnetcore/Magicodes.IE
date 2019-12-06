@@ -81,7 +81,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "导入")]
+        /// <summary>
+        /// 测试：
+        /// 表头行位置设置
+        /// 导入逻辑测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "产品信息导入")]
         public async Task Importer_Test()
         {
             //第一列乱序
@@ -121,7 +127,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ImporterDataEnd_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "截断数据测试.xlsx");
-            var import = await Importer.Import<ImportProductDto>(filePath);
+            var import = await Importer.Import<ImportProductDto2>(filePath);
             import.ShouldNotBeNull();
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(6);
@@ -274,7 +280,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task TplError_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "模板字段错误.xlsx");
-            var result = await Importer.Import<ImportProductDto>(filePath);
+            var result = await Importer.Import<ImportProductDto2>(filePath);
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
             result.TemplateErrors.Count.ShouldBeGreaterThan(0);

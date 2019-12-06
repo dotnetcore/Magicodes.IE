@@ -41,7 +41,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public Task<TemplateFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class
+        public Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
             var fileInfo = ExcelHelper.CreateExcelPackage(fileName, excelPackage =>
@@ -87,7 +87,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
         }
 
-        public Task<TemplateFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class
+        public Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentException("文件名必须填写!", nameof(fileName));
@@ -115,6 +115,12 @@ namespace Magicodes.ExporterAndImporter.Excel
             return Task.FromResult(fileInfo);
         }
 
+        /// <summary>
+        /// 导出字节
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
         public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class
         {
             using (var excelPackage = new ExcelPackage())

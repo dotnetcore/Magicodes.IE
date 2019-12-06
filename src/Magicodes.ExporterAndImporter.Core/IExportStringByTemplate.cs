@@ -1,9 +1,9 @@
 ﻿// ======================================================================
 // 
-//           filename : ImporterAttribute.cs
+//           filename : IExportStringByTemplate.cs
 //           description :
 // 
-//           created by 雪雁 at  2019-09-11 13:51
+//           created by 雪雁 at  -- 
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
@@ -11,19 +11,22 @@
 // 
 // ======================================================================
 
-using System;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
     /// <summary>
-    /// 导入
+    /// 根据模板导出字符串
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ImporterAttribute : Attribute
+    public interface IExportStringByTemplate
     {
         /// <summary>
-        ///     表头位置
+        ///     根据模板导出
         /// </summary>
-        public int HeaderRowIndex { get; set; } = 1;
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate">Html模板内容</param>
+        /// <returns></returns>
+        Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;
     }
 }

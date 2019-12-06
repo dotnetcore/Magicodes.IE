@@ -62,20 +62,28 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <param name="dataItems"></param>
         /// <param name="htmlTemplate"></param>
         /// <returns></returns>
-        public async Task<TemplateFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
+        public async Task<ExportFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
             string htmlTemplate = null) where T : class
         {
-            var file = new TemplateFileInfo(fileName, "text/html");
+            var file = new ExportFileInfo(fileName, "text/html");
 
             var result = await ExportListByTemplate(dataItems, htmlTemplate);
             File.WriteAllText(fileName, result, Encoding.UTF8);
             return file;
         }
 
-        public async Task<TemplateFileInfo> ExportByTemplate<T>(string fileName, T data,
+        /// <summary>
+        /// 导出HTML文件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="data"></param>
+        /// <param name="htmlTemplate"></param>
+        /// <returns></returns>
+        public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data,
             string htmlTemplate) where T : class
         {
-            var file = new TemplateFileInfo(fileName, "text/html");
+            var file = new ExportFileInfo(fileName, "text/html");
             var result = await ExportByTemplate(data, htmlTemplate);
 
             File.WriteAllText(fileName, result, Encoding.UTF8);

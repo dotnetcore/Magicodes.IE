@@ -108,6 +108,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+
+            var dt2 = dt.Copy();
+            var arrResult = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(dt2);
+            arrResult.ShouldNotBeNull();
+            arrResult.Length.ShouldBeGreaterThan(0);
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + "_ByteArray.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            await File.WriteAllBytesAsync(filePath, arrResult);
+            File.Exists(filePath).ShouldBeTrue();
         }
 
         [Fact(DisplayName = "大量数据导出Excel")]
@@ -164,7 +173,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
 
             var result =
-                await exporter.ExportHeaderAsByteArray(new[] {"Name1", "Name2", "Name3", "Name4", "Name5", "Name6"},
+                await exporter.ExportHeaderAsByteArray(new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" },
                     "Test");
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
@@ -173,7 +182,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             //TODO:Excel读取并验证
         }
 
-        [Fact(DisplayName = "大数据动态列导出Excel")]
+        [Fact(DisplayName = "大数据动态列导出Excel", Skip = "太慢，默认跳过")]
         public async Task LargeDataDynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();

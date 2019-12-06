@@ -26,7 +26,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<TemplateFileInfo> GenerateTemplate<T>(string fileName) where T : class, new();
+        Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new();
 
         /// <summary>
         ///     生成Excel导入模板

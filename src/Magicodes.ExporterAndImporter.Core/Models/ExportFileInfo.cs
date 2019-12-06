@@ -13,20 +13,37 @@
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
-    public class TemplateFileInfo
+    /// <summary>
+    /// 导出文件信息
+    /// </summary>
+    public class ExportFileInfo
     {
-        public TemplateFileInfo()
+        /// <summary>
+        /// 
+        /// </summary>
+        public ExportFileInfo()
         {
         }
 
-        public TemplateFileInfo(string fileName, string fileType)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="fileType"></param>
+        public ExportFileInfo(string fileName, string fileType)
         {
             FileName = fileName;
             FileType = fileType;
         }
 
+        /// <summary>
+        /// 文件名（路径）
+        /// </summary>
         public string FileName { get; set; }
 
+        /// <summary>
+        /// 文件Mine类型
+        /// </summary>
         public string FileType { get; set; }
     }
 }

@@ -33,6 +33,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
     /// <typeparam name="T"></typeparam>
     public class ImportHelper<T> : IDisposable where T : class, new()
     {
+        private ExcelImporterAttribute _excelImporterAttribute;
+
         /// <summary>
         /// </summary>
         /// <param name="filePath"></param>
@@ -44,7 +46,34 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     导入全局设置
         /// </summary>
-        protected ExcelImporterAttribute ExcelImporterAttribute { get; set; }
+        protected ExcelImporterAttribute ExcelImporterSettings
+        {
+            get
+            {
+                if (_excelImporterAttribute == null)
+                {
+                    var type = typeof(T);
+                    _excelImporterAttribute = type.GetAttribute<ExcelImporterAttribute>(true);
+                    if (_excelImporterAttribute != null) return _excelImporterAttribute;
+
+                    var importerAttribute = type.GetAttribute<ImporterAttribute>(true);
+                    if (importerAttribute != null)
+                    {
+                        _excelImporterAttribute = new ExcelImporterAttribute()
+                        {
+                            HeaderRowIndex = importerAttribute.HeaderRowIndex
+                        };
+                    }
+                    else
+                        _excelImporterAttribute = new ExcelImporterAttribute();
+
+                    return _excelImporterAttribute;
+                }
+
+                return _excelImporterAttribute;
+            }
+            set => _excelImporterAttribute = value;
+        }
 
 
         /// <summary>
@@ -66,7 +95,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         public void Dispose()
         {
-            ExcelImporterAttribute = null;
+            ExcelImporterSettings = null;
             FilePath = null;
             ImporterHeaderInfos = null;
             ImportResult = null;
@@ -82,8 +111,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (!string.IsNullOrWhiteSpace(filePath)) FilePath = filePath;
 
             ImportResult = new ImportResult<T>();
-            ExcelImporterAttribute =
-                typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
 
             try
             {
@@ -110,7 +137,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 out var validationResults);
                             if (!isValid)
                             {
-                                var rowIndex = ExcelImporterAttribute.HeaderRowIndex + i + 1;
+                                var rowIndex = ExcelImporterSettings.HeaderRowIndex + i + 1;
                                 var dataRowError = GetDataRowErrorInfo(rowIndex);
                                 foreach (var validationResult in validationResults)
                                 {
@@ -174,11 +201,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             var notAllowRepeatCols = ImporterHeaderInfos.Where(p => p.ExporterHeader.IsAllowRepeat == false).ToList();
             if (notAllowRepeatCols.Count == 0) return;
 
-            var rowIndex = ExcelImporterAttribute.HeaderRowIndex;
+            var rowIndex = ExcelImporterSettings.HeaderRowIndex;
             var qDataList = ImportResult.Data.Select(p =>
             {
                 rowIndex++;
-                return new {RowIndex = rowIndex, RowData = p};
+                return new { RowIndex = rowIndex, RowData = p };
             }).ToList().AsQueryable();
 
             foreach (var notAllowRepeatCol in notAllowRepeatCols)
@@ -234,20 +261,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void LabelingError(ExcelPackage excelPackage)
         {
             //是否标注错误
-            if (ExcelImporterAttribute.IsLabelingError && ImportResult.HasError)
+            if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             {
                 var worksheet = GetImportSheet(excelPackage);
                 //TODO:标注模板错误
                 //标注数据错误
                 foreach (var item in ImportResult.RowErrors)
-                foreach (var field in item.FieldErrors)
-                {
-                    var col = ImporterHeaderInfos.First(p => p.ExporterHeader.Name == field.Key);
-                    var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
-                    cell.Style.Font.Color.SetColor(Color.Red);
-                    cell.Style.Font.Bold = true;
-                    cell.AddComment(string.Join(",", field.Value), col.ExporterHeader.Author);
-                }
+                    foreach (var field in item.FieldErrors)
+                    {
+                        var col = ImporterHeaderInfos.First(p => p.ExporterHeader.Name == field.Key);
+                        var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
+                        cell.Style.Font.Color.SetColor(Color.Red);
+                        cell.Style.Font.Bold = true;
+                        cell.AddComment(string.Join(",", field.Value), col.ExporterHeader.Author);
+                    }
 
                 var ext = Path.GetExtension(FilePath);
                 excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
@@ -283,14 +310,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //根据名称获取Sheet，如果不存在则取第一个
                 var worksheet = GetImportSheet(excelPackage);
                 var excelHeaders = new Dictionary<string, int>();
-                var endColumnCount = ExcelImporterAttribute.EndColumnCount ?? worksheet.Dimension.End.Column;
+                var endColumnCount = ExcelImporterSettings.EndColumnCount ?? worksheet.Dimension.End.Column;
                 for (var columnIndex = 1; columnIndex <= endColumnCount; columnIndex++)
                 {
-                    var header = worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, columnIndex].Text;
+                    var header = worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, columnIndex].Text;
 
                     //如果未设置读取的截止列，则默认指定为出现空格，则读取截止
-                    if (ExcelImporterAttribute.EndColumnCount.HasValue &&
-                        columnIndex > ExcelImporterAttribute.EndColumnCount.Value ||
+                    if (ExcelImporterSettings.EndColumnCount.HasValue &&
+                        columnIndex > ExcelImporterSettings.EndColumnCount.Value ||
                         string.IsNullOrWhiteSpace(header))
                         break;
 
@@ -372,9 +399,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var importerHeaderAttribute =
                     (propertyInfo.GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
                         ImporterHeaderAttribute[])?.FirstOrDefault() ?? new ImporterHeaderAttribute
-                    {
-                        Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name
-                    };
+                        {
+                            Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name
+                        };
 
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                     importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
@@ -405,11 +432,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     case "Boolean":
                     case "Nullable<Boolean>":
-                    {
-                        if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
-                        if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
-                        break;
-                    }
+                        {
+                            if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
+                            if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
+                            break;
+                        }
                 }
 
                 var type = propertyInfo.PropertyType;
@@ -440,7 +467,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             var worksheet =
                 excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ??
-                                                     ExcelImporterAttribute.SheetName ?? "导入数据");
+                                                     ExcelImporterSettings.SheetName ?? "导入数据");
             if (!ParseImporterHeader()) return;
 
             //设置列头
@@ -449,20 +476,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //忽略
                 if (ImporterHeaderInfos[i].ExporterHeader.IsIgnore) continue;
 
-                worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].Value =
+                worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Value =
                     ImporterHeaderInfos[i].ExporterHeader.Name;
                 if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].ExporterHeader.Description))
-                    worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].AddComment(
+                    worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].AddComment(
                         ImporterHeaderInfos[i].ExporterHeader.Description,
                         ImporterHeaderInfos[i].ExporterHeader.Author);
                 //如果必填，则列头标红
                 if (ImporterHeaderInfos[i].IsRequired)
-                    worksheet.Cells[ExcelImporterAttribute.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
+                    worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
 
                 if (ImporterHeaderInfos[i].MappingValues.Count > 0)
                 {
                     //针对枚举类型和Bool类型添加数据约束
-                    var range = ExcelCellBase.GetAddress(ExcelImporterAttribute.HeaderRowIndex + 1, i + 1,
+                    var range = ExcelCellBase.GetAddress(ExcelImporterSettings.HeaderRowIndex + 1, i + 1,
                         ExcelPackage.MaxRows, i + 1);
                     var dataValidations = worksheet.DataValidations.AddListValidation(range);
                     foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
@@ -496,7 +523,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
 
-            for (var rowIndex = ExcelImporterAttribute.HeaderRowIndex + 1;
+            for (var rowIndex = ExcelImporterSettings.HeaderRowIndex + 1;
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
@@ -577,201 +604,201 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     break;
                                 //long
                                 case "Int64":
-                                {
-                                    if (!long.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!long.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Int64>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!long.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!long.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Int32":
-                                {
-                                    if (!int.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!int.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Int32>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!int.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!int.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Int16":
-                                {
-                                    if (!short.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!short.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Int16>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!short.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
-                                        break;
-                                    }
+                                        if (!short.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Decimal":
-                                {
-                                    if (!decimal.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!decimal.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Decimal>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!decimal.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!decimal.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Double":
-                                {
-                                    if (!double.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!double.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Double>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!double.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!double.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 //case "float":
                                 case "Single":
-                                {
-                                    if (!float.TryParse(cellValue, out var number))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!float.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "Nullable<Single>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!float.TryParse(cellValue, out var number))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
-                                        break;
-                                    }
+                                        if (!float.TryParse(cellValue, out var number))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, number);
-                                }
+                                        propertyInfo.SetValue(dataItem, number);
+                                    }
                                     break;
                                 case "DateTime":
-                                {
-                                    if (!DateTime.TryParse(cellValue, out var date))
                                     {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
-                                        break;
-                                    }
+                                        if (!DateTime.TryParse(cellValue, out var date))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, date);
-                                }
+                                        propertyInfo.SetValue(dataItem, date);
+                                    }
                                     break;
                                 case "Nullable<DateTime>":
-                                {
-                                    if (string.IsNullOrWhiteSpace(cellValue))
                                     {
-                                        propertyInfo.SetValue(dataItem, null);
-                                        break;
-                                    }
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
 
-                                    if (!DateTime.TryParse(cellValue, out var date))
-                                    {
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
-                                        break;
-                                    }
+                                        if (!DateTime.TryParse(cellValue, out var date))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            break;
+                                        }
 
-                                    propertyInfo.SetValue(dataItem, date);
-                                }
+                                        propertyInfo.SetValue(dataItem, date);
+                                    }
                                     break;
                                 default:
                                     propertyInfo.SetValue(dataItem, cell.Value);
@@ -797,7 +824,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage)
         {
             return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterAttribute.SheetName] ??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
                    excelPackage.Workbook.Worksheets[0];
         }
 
@@ -844,8 +871,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns>二进制字节</returns>
         public Task<byte[]> GenerateTemplateByte()
         {
-            ExcelImporterAttribute =
-                typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
             using (var excelPackage = new ExcelPackage())
             {
                 StructureExcel(excelPackage);
@@ -859,10 +884,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="fileName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
-        public Task<TemplateFileInfo> GenerateTemplate(string fileName = null)
+        public Task<ExportFileInfo> GenerateTemplate(string fileName = null)
         {
-            ExcelImporterAttribute =
-                typeof(T).GetAttribute<ExcelImporterAttribute>(true) ?? new ExcelImporterAttribute();
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", fileName);
 
             var fileInfo =

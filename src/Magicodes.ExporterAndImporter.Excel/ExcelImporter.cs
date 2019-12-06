@@ -31,7 +31,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
-        public Task<TemplateFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
+        public Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
         {
             using (var importer = new ImportHelper<T>())
             {

@@ -158,6 +158,9 @@
 
 > 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
 
+- 提高代码单元测试覆盖率（目前为86%）
+- 完成自动构建流程
+- 表头样式设置
 - 自定义模板导出
 	- Excel
 - 加强值映射序列，比如支持方法、Dto接口的方式来获取
@@ -168,6 +171,16 @@
 - Excel导出支持图片
 
 ### 更新历史
+
+#### 2019.12.06
+- 【Nuget】版本更新到1.4.14
+- 【重构】大量重构
+	- 移除部分未使用的代码
+	- 将TemplateFileInfo重命名为ExportFileInfo
+	- 将IExporterByTemplate接口拆分为4个接口：IExportListFileByTemplate, IExportListStringByTemplate, IExportStringByTemplate, IExportFileByTemplate，并修改相关实现
+	- 重构ImportHelper部分代码
+- 【导入】修复导入Excel时表头设置的问题，已对此编写单元测试，见【产品信息导入】
+- 【完善】编写ExportAsByteArray对于DataTable的单元测试，ExportWordFileByTemplate_Test
 
 #### 2019.11.25
 - 【Nuget】版本更新到1.4.13
