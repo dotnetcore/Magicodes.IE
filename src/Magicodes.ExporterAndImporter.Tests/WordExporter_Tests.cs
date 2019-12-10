@@ -44,7 +44,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var exporter = new WordExporter();
             var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
                  GenFu.GenFu.ListOf<ExportTestData>(), tpl));
-            ex.Message.ShouldBe("文件名必须填写! (Parameter 'fileName')");
+            ex.Message.ShouldContain("文件名必须填写");
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordByTemplate_Test) + ".docx");
             if (File.Exists(filePath)) File.Delete(filePath);

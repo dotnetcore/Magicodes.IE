@@ -224,9 +224,11 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var items = type.GetEnumDefinitionList();
             var dic = new Dictionary<string, int>();
             //枚举名 值 显示名称 描述
-            foreach (var (item1, item2, item3, item4) in items)
+            foreach (var tuple in items)
+            {
                 //如果描述、显示名不存在，则返回枚举名称
-                dic.Add(item4 ?? item3 ?? item1, item2);
+                dic.Add(tuple.Item4 ?? tuple.Item3 ?? tuple.Item1, tuple.Item2);
+            }
             return dic;
         }
 

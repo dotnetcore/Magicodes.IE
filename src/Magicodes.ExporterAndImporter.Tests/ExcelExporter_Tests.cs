@@ -115,7 +115,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             arrResult.Length.ShouldBeGreaterThan(0);
             filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + "_ByteArray.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-            await File.WriteAllBytesAsync(filePath, arrResult);
+            File.WriteAllBytes(filePath, arrResult);
             File.Exists(filePath).ShouldBeTrue();
         }
 
@@ -143,7 +143,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-            await File.WriteAllBytesAsync(filePath, result);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
         }
 
@@ -159,7 +159,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.ExportHeaderAsByteArray(GenFu.GenFu.New<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-            await File.WriteAllBytesAsync(filePath, result);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
         }
 
@@ -177,7 +177,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     "Test");
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-            await File.WriteAllBytesAsync(filePath, result);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
             //TODO:Excel读取并验证
         }

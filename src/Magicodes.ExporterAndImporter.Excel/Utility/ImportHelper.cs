@@ -823,9 +823,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns></returns>
         protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage)
         {
+#if NET461
+            return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                   excelPackage.Workbook.Worksheets[1];
+#else
             return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
                    excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
                    excelPackage.Workbook.Worksheets[0];
+#endif
         }
 
         /// <summary>

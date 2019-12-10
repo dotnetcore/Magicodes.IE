@@ -177,9 +177,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
 
         }
-#endif
+#else
 
-#if NETSTANDARD2_0
         /// <summary>
         ///     将集合转成DataTable
         /// </summary>
