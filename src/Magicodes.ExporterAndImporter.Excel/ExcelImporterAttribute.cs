@@ -12,9 +12,12 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
+using System;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
+
+    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property)]
     public class ExcelImporterAttribute : ImporterAttribute
     {
         /// <summary>

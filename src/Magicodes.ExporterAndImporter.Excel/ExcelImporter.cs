@@ -12,6 +12,9 @@
 // ======================================================================
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -64,6 +67,94 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 return importer.Import();
             }
+        }
+
+
+        /// <summary>
+        /// 导入多个Sheet数据
+        /// </summary>
+        /// <typeparam name="T">Excel类</typeparam>
+        /// <param name="filePath"></param>
+        /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
+        public async Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(string filePath) where T : class, new()
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+            var resultList = new Dictionary<string, ImportResult<object>>();
+            var tableType = typeof(T);
+            var sheetProperties = tableType.GetProperties();
+            using (var importer = new ImportMultipleSheetHelper(filePath))
+            {
+                foreach (var sheetProperty in sheetProperties)
+                {
+                    var importerAttribute =
+                        (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                    if (importerAttribute == null)
+                    {
+                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                    }
+                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    {
+                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    }
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType);
+                    resultList.Add(importerAttribute.SheetName, result);
+                }
+            }
+            return resultList;
+        }
+
+
+        /// <summary>
+        /// 导入多个相同类型的Sheet数据
+        /// </summary>
+        /// <typeparam name="T">Excel类</typeparam>
+        /// <typeparam name="TSheet">Sheet类</typeparam>
+        /// <param name="filePath"></param>
+        /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型TSheet</returns>
+        public async Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T,TSheet>(string filePath) 
+            where T : class, new() where TSheet:class,new()
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+            var resultList = new Dictionary<string, ImportResult<TSheet>>();
+            var tableType = typeof(T);
+            var sheetProperties = tableType.GetProperties();
+            using (var importer = new ImportMultipleSheetHelper(filePath))
+            {
+                foreach (var sheetProperty in sheetProperties)
+                {
+                    var importerAttribute =
+                        (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                    if (importerAttribute == null)
+                    {
+                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                    }
+                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    {
+                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    }
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType);
+                    var tResult =new ImportResult<TSheet>();
+                    tResult.Data = new List<TSheet>();
+                    if (result.Data.Count > 0)
+                    {
+                        foreach(var item in result.Data)
+                        {
+                            tResult.Data.Add((TSheet)item);
+                        }
+                    }
+                    tResult.Exception = result.Exception;
+                    tResult.RowErrors = result.RowErrors;
+                    tResult.TemplateErrors = result.TemplateErrors;
+                    resultList.Add(importerAttribute.SheetName, tResult);
+                }
+            }
+            return resultList;
         }
     }
 }
