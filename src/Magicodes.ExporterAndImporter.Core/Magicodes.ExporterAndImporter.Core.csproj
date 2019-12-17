@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
     <PackageId>Magicodes.IE.Core</PackageId>
+    <Version>1.4.16</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />

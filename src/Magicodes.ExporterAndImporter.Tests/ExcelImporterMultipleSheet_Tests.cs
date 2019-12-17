@@ -25,13 +25,13 @@ namespace Magicodes.ExporterAndImporter.Tests
         private readonly ITestOutputHelper _testOutputHelper;
         public IImporter Importer = new ExcelImporter();
 
-        /*
+
         [Fact(DisplayName = "班级学生基础数据导入")]
         public async Task ClassStudentInfoImporter_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "班级学生基础数据导入.xlsx");
-            var importDic = await Importer.ImportSameSheets<ImportClassStudentDto,ImportStudentDto>(filePath);
-            foreach(var item in importDic)
+            var importDic = await Importer.ImportSameSheets<ImportClassStudentDto, ImportStudentDto>(filePath);
+            foreach (var item in importDic)
             {
                 var import = item.Value;
                 import.ShouldNotBeNull();
@@ -42,7 +42,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 import.Data.ShouldNotBeNull();
                 import.Data.Count.ShouldBe(16);
             }
-        }*/
+        }
 
         [Fact(DisplayName = "学生基础数据及缴费流水号导入")]
         public async Task StudentInfoAndPaymentLogImporter_Test()

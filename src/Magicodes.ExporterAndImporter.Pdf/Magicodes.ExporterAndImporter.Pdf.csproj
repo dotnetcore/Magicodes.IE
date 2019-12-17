@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>Magicodes.IE.Pdf</PackageId>
+    <Version>1.4.16</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Haukcode.DinkToPdf" Version="1.1.2" />

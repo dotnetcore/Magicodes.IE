@@ -119,6 +119,8 @@
 
 	- bool类型默认会生成“是”和“否”的数据项
 	- 如果已设置自定义值映射，则不会生成默认选项
+- 支持excel多Sheet导入；
+  ![](./res/multipleSheet.png "枚举转数据映射序列")
 
 ### 相关官方Nuget包
 
@@ -172,6 +174,10 @@
 - Excel导出支持图片
 
 ### 更新历史
+
+#### 2019.12.17
+- 【Nuget】版本更新到1.4.16
+- 【导入】Excel导入支持多sheet导入，感谢tanyongzheng（https://github.com/dotnetcore/Magicodes.IE/pull/18）
 
 #### 2019.12.10
 - 【Nuget】版本更新到1.4.15
