@@ -177,7 +177,7 @@
 
 #### 2019.12.17
 - 【Nuget】版本更新到1.4.16
-- 【导入】Excel导入支持多sheet导入，感谢tanyongzheng（https://github.com/dotnetcore/Magicodes.IE/pull/18）
+- 【导入】Excel导入支持多sheet导入，感谢tanyongzheng（https://github.com/dotnetcore/Magicodes.IE/pull/18 ）
 
 #### 2019.12.10
 - 【Nuget】版本更新到1.4.15
