@@ -14,7 +14,7 @@
 
 ### 示例教程
 
-[1.基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")
+[1.基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）
 
 
 ### 特点
@@ -132,6 +132,24 @@
 | Magicodes.IE.Word |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)   |
 | Magicodes.IE.Html |    [![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)   |
 
+### VNext
+
+> 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
+
+- [ ] 将代码单元测试覆盖率提高到90%（目前为86%）
+- [ ] 完成自动构建流程
+- [ ] 表头样式设置
+- [ ] 自定义模板导出
+  - [ ] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
+- [ ] 加强值映射序列，比如支持方法、Dto接口的方式来获取
+- [ ] 生成导入模板时必填项支持自定义样式配置
+- [ ] CSV支持
+- [ ] 导入结果支持生成HTML输出
+- [ ] Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+- [ ] Excel导出支持图片
+- [ ] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
+- [ ] Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）
+
 ### 联系我们
 
 > ##### 订阅号
@@ -157,21 +175,7 @@
 - <https://github.com/xin-lai>
 - <https://gitee.com/magicodes>
 
-### VNext
 
-> 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
-
-- 提高代码单元测试覆盖率（目前为86%）
-- 完成自动构建流程
-- 表头样式设置
-- 自定义模板导出
-	- Excel
-- 加强值映射序列，比如支持方法、Dto接口的方式来获取
-- 生成导入模板时必填项支持自定义样式配置
-- CSV支持
-- 导入结果支持生成HTML输出
-- Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
-- Excel导出支持图片
 
 ### 更新历史
 
@@ -318,7 +322,7 @@
         public string Name3 { get; set; }
         public string Name4 { get; set; }
     }
-
+    
     var result = await Exporter.Export(filePath, new List<ExportTestData>()
     {
         new ExportTestData()
@@ -350,16 +354,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -403,16 +407,16 @@
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
+    
         [ExporterHeader(DisplayName = "普通文本")]
         public string Text2 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
+    
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public double Number { get; set; }
-
+    
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
     }
@@ -424,10 +428,10 @@
                 }
                 return "未知语言";
             }).Build();
-
+    
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-
+    
             var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
             {
                 new AttrsLocalizationTestData()
@@ -573,7 +577,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -662,7 +666,7 @@
         /// </summary>
         [ImporterHeader(Name = "类型")]
         public ImporterProductType Type { get; set; }
-
+    
         /// <summary>
         /// 是否行
         /// </summary>
@@ -713,10 +717,10 @@ Dockerfile Demo
     COPY . .
     WORKDIR "/src/src/web/Admin.Host"
     RUN dotnet build "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM build AS publish
     RUN dotnet publish "Admin.Host.csproj" -c Release -o /app
-
+    
     FROM base AS final
     WORKDIR /app
     COPY --from=publish /app .
