@@ -15,6 +15,7 @@
 ### 示例教程
 
 [1.基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）
+2.其他教程见下文或单元测试
 
 
 ### 特点
@@ -137,7 +138,7 @@
 > 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
 
 - [ ] 将代码单元测试覆盖率提高到90%（目前为86%）
-- [ ] 完成自动构建流程
+- [ ] 完成自动构建流程，并通过自动构建发版
 - [ ] 表头样式设置
 - [ ] 自定义模板导出
   - [ ] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
@@ -149,6 +150,7 @@
 - [ ] Excel导出支持图片
 - [ ] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
 - [ ] Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）
+- [ ] 导入导出支持指定位置[CellAddress(Row = 2, Column = 2)]（[#19](https://github.com/dotnetcore/Magicodes.IE/issues/19)）
 
 ### 联系我们
 
