@@ -2,7 +2,7 @@
 
 导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
 
-[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/xin-lai.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=1&branchName=master)
+[![Build Status](../docs/docs/assets/dotnetcore.Magicodes.svg)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 
 ### 注意
 
@@ -12,10 +12,23 @@
 - 相关功能均已编写单元测试，在使用的过程中可以参考单元测试。
 - 此库会长期支持，但是由于精力有限，希望大家能够多多参与。
 
-### 示例教程
+### 教程
 
-[1.基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）
-2.其他教程见下文或单元测试
+1. [基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）
+
+2. 基础教程之导出Excel（待补充）
+
+3. 基础教程之导出Pdf收据（待补充）
+
+4. 在Docker中使用（待补充）
+
+5. 动态导出（待补充）
+
+6. 多Sheet导入（待补充）
+
+7. 其他教程见下文或单元测试
+
+   
 
 
 ### 特点
@@ -138,6 +151,7 @@
 > 以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。
 
 - [ ] 将代码单元测试覆盖率提高到90%（目前为86%）
+- [ ] Pdf导出支持.NET Framework 461
 - [ ] 完成自动构建流程，并通过自动构建发版
 - [ ] 表头样式设置
 - [ ] 自定义模板导出
