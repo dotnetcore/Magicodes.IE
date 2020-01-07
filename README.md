@@ -26,7 +26,9 @@
 
 6. 多Sheet导入（待补充）
 
-7. 其他教程见下文或单元测试
+7. Excel模板导出之导出教材订购表（待补充）
+
+8. 其他教程见下文或单元测试
 
    
 
@@ -166,6 +168,8 @@
 - [ ] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
 - [ ] Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）
 - [ ] 导入导出支持指定位置[CellAddress(Row = 2, Column = 2)]（[#19](https://github.com/dotnetcore/Magicodes.IE/issues/19)）
+- [ ] 生成的导入模板支持数据验证
+- [ ] 优化包依赖，拆解项目
 
 ### 联系我们
 
@@ -195,6 +199,14 @@
 
 
 ### 更新历史
+
+#### 2019.01.07
+- 【Nuget】版本更新到1.4.17
+- 【重构】重构IExportFileByTemplate中的ExportByTemplate，将参数htmlTemplate改为template。以便支持Excel模板导出。
+- 【导出】支持Excel模板导出并填写相关单元测试，如何使用见教程《Excel模板导出之导出教材订购表》
+    - 支持单元格单个绑定
+    - 支持列表
+
 
 #### 2019.12.17
 - 【Nuget】版本更新到1.4.16

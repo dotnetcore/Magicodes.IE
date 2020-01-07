@@ -20,6 +20,7 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
+using Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
 
@@ -28,7 +29,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// <summary>
     ///     Excel导出程序
     /// </summary>
-    public class ExcelExporter : IExporter
+    public class ExcelExporter : IExporter, IExportFileByTemplate
     {
         /// <summary>
         ///     表头处理函数
@@ -282,7 +283,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return;
             var tbStyle = TableStyles.Medium10;
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
-                tbStyle = (TableStyles) Enum.Parse(typeof(TableStyles), exporter.TableStyle);
+                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
             sheet.Cells["A2"].LoadFromCollection(items, false, tbStyle);
         }
 
@@ -299,7 +300,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return;
             var tbStyle = TableStyles.Medium10;
             if (exporter != null && !exporter.TableStyle.IsNullOrWhiteSpace())
-                tbStyle = (TableStyles) Enum.Parse(typeof(TableStyles), exporter.TableStyle);
+                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), exporter.TableStyle);
             sheet.Cells["A2"].LoadFromDataTable(items, false, tbStyle);
         }
 
@@ -428,19 +429,19 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             var index = 0;
             for (var k = 0; k < dataColumns.Count; k++)
-            for (var i = 0; i < objProperties.Length; i++)
-                if (dataColumns[k].ColumnName.Equals(objProperties[i].Name))
-                {
-                    index += 1;
-                    exporterHeaderList.Add(new ExporterHeaderInfo
+                for (var i = 0; i < objProperties.Length; i++)
+                    if (dataColumns[k].ColumnName.Equals(objProperties[i].Name))
                     {
-                        Index = index,
-                        PropertyName = objProperties[i].Name,
-                        ExporterHeader =
-                            (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                                ExporterHeaderAttribute[])?.FirstOrDefault()
-                    });
-                }
+                        index += 1;
+                        exporterHeaderList.Add(new ExporterHeaderInfo
+                        {
+                            Index = index,
+                            PropertyName = objProperties[i].Name,
+                            ExporterHeader =
+                                (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
+                                    ExporterHeaderAttribute[])?.FirstOrDefault()
+                        });
+                    }
 
             return false;
         }
@@ -471,6 +472,24 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
 
             return null;
+        }
+
+
+        /// <summary>
+        ///     根据模板导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="data"></param>
+        /// <param name="template">HTML模板或模板路径</param>
+        /// <returns></returns>
+        public Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data, string template) where T : class
+        {
+            using (var helper = new TemplateExportHelper<T>())
+            {
+                helper.Export(fileName, template, data);
+                return Task.FromResult(new ExportFileInfo());
+            }
         }
     }
 }

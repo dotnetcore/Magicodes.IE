@@ -27,9 +27,9 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName"></param>
         /// <param name="data"></param>
-        /// <param name="htmlTemplate"></param>
+        /// <param name="template">HTML模板或模板路径</param>
         /// <returns></returns>
         Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data,
-            string htmlTemplate) where T : class;
+            string template) where T : class;
     }
 }
