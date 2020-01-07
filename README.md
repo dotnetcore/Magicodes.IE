@@ -34,7 +34,7 @@
 
 ### 特点
 
-![总体说明](./res/Magicodes.IE.png)
+![总体说明](./docs/Magicodes.IE.png)
 
 - 需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；
 ![](./res/导入Dto.png "导入Dto")
@@ -138,6 +138,8 @@
 	- 如果已设置自定义值映射，则不会生成默认选项
 - 支持excel多Sheet导入；
   ![](./res/multipleSheet.png "枚举转数据映射序列")
+- 支持Excel模板导出
+  ![](./res/ExcelTplExport.png "Excel模板导出")
 
 ### 相关官方Nuget包
 
@@ -157,8 +159,8 @@
 - [ ] Pdf导出支持.NET Framework 461
 - [ ] 完成自动构建流程，并通过自动构建发包
 - [ ] 表头样式设置
-- [ ] 自定义模板导出
-  - [ ] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
+- [x] 自定义模板导出
+  - [x] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
 - [ ] 加强值映射序列，比如支持方法、Dto接口的方式来获取
 - [ ] 生成导入模板时必填项支持自定义样式配置
 - [ ] CSV支持
