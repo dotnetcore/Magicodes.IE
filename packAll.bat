@@ -1,5 +1,0 @@
-call ./pack.bat "Magicodes.IE.Core*.nupkg" "./src/Magicodes.ExporterAndImporter.Core/Magicodes.ExporterAndImporter.Core.csproj"
-call ./pack.bat "Magicodes.IE.Excel*.nupkg" "./src/Magicodes.ExporterAndImporter.Excel/Magicodes.ExporterAndImporter.Excel.csproj"
-call ./pack.bat "Magicodes.IE.Html*.nupkg" "./src/Magicodes.ExporterAndImporter.Html/Magicodes.ExporterAndImporter.Html.csproj"
-call ./pack.bat "Magicodes.IE.Pdf*.nupkg" "./src/Magicodes.ExporterAndImporter.Pdf/Magicodes.ExporterAndImporter.Pdf.csproj"
-call ./pack.bat "Magicodes.IE.Word*.nupkg" "./src/Magicodes.ExporterAndImporter.Word/Magicodes.ExporterAndImporter.Word.csproj"

@@ -155,7 +155,7 @@
 
 - [ ] 将代码单元测试覆盖率提高到90%（目前为86%）
 - [ ] Pdf导出支持.NET Framework 461
-- [ ] 完成自动构建流程，并通过自动构建发版
+- [ ] 完成自动构建流程，并通过自动构建发包
 - [ ] 表头样式设置
 - [ ] 自定义模板导出
   - [ ] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
