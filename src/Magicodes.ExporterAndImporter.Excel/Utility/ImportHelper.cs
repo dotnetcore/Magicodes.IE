@@ -61,7 +61,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         _excelImporterAttribute = new ExcelImporterAttribute()
                         {
-                            HeaderRowIndex = importerAttribute.HeaderRowIndex
+                            HeaderRowIndex = importerAttribute.HeaderRowIndex,
+                            MaxCount = importerAttribute.MaxCount,
                         };
                     }
                     else
@@ -514,11 +515,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     解析数据
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ArgumentException">最大允许导入条数不能超过5000条</exception>
+        /// <exception cref="ArgumentException">支持最大导入条数限制，默认50000</exception>
         protected virtual void ParseData(ExcelPackage excelPackage)
         {
             var worksheet = GetImportSheet(excelPackage);
-            if (worksheet.Dimension.End.Row > 5000) throw new ArgumentException("最大允许导入条数不能超过5000条");
+            if (worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
 
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());

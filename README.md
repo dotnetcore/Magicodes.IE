@@ -202,6 +202,12 @@
 
 ### 更新历史
 
+#### 2019.01.08
+- 【Nuget】版本更新到1.4.18
+- 【导入】支持导入最大数量限制
+    - ImporterAttribute支持MaxCount设置，默认为50000
+    - 完成相关单元测试
+
 #### 2019.01.07
 - 【Nuget】版本更新到1.4.17
 - 【重构】重构IExportFileByTemplate中的ExportByTemplate，将参数htmlTemplate改为template。以便支持Excel模板导出。

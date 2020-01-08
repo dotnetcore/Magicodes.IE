@@ -220,5 +220,23 @@ namespace Magicodes.ExporterAndImporter.Tests
             }), tplPath);
 
         }
+
+        [Fact(DisplayName = "Excel模板大量导出")]
+        public async Task ExportByTemplate_Large_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "2020年春季教材订购明细样表.xlsx");
+            IExportFileByTemplate exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Large_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var books = new List<BookInfo>();
+            for (int i = 0; i < 5000; i++)
+            {
+                books.Add(new BookInfo(i + 1, "000000000" + i, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100 + i, "备注"));
+            }
+            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", "雪雁", DateTime.Now.ToLongDateString(), books), tplPath);
+
+        }
     }
 }

@@ -11,6 +11,7 @@
 // 
 // ======================================================================
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,7 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using Shouldly;
@@ -286,6 +288,31 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.TemplateErrors.Count.ShouldBeGreaterThan(0);
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Error).ShouldBe(1);
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
+        }
+
+        [Fact(DisplayName = "大量数据导出并导入")]
+        public async Task LargeDataImport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(LargeDataImport_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(50001));
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            var importResult = await Importer.Import<ExportTestData>(filePath);
+            importResult.HasError.ShouldBeTrue();
+            importResult.Exception.ShouldNotBeNull();
+            //默认最大5万
+            importResult.Exception.Message.ShouldContain("最大允许导入条数不能超过");
+            
+            if (File.Exists(filePath)) File.Delete(filePath);
+            result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(50000));
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            importResult = await Importer.Import<ExportTestData>(filePath);
+            importResult.HasError.ShouldBeFalse();
         }
     }
 }

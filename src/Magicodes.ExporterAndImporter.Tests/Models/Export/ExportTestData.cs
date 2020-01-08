@@ -26,9 +26,12 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// <summary>
         /// </summary>
         [Display(Name = "列1")]
+        [ImporterHeader(Name = "列1")]
         public string Name1 { get; set; }
 
-        [ExporterHeader(DisplayName = "列2")] public string Name2 { get; set; }
+        [ExporterHeader(DisplayName = "列2")] 
+        [ImporterHeader(Name = "列2")]
+        public string Name2 { get; set; }
 
         public string Name3 { get; set; }
         public string Name4 { get; set; }

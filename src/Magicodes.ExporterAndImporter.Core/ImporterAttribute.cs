@@ -25,5 +25,10 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     表头位置
         /// </summary>
         public int HeaderRowIndex { get; set; } = 1;
+
+        /// <summary>
+        /// 最大允许导入的函数
+        /// </summary>
+        public int MaxCount = 50000;
     }
 }
