@@ -18,13 +18,44 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     /// </summary>
     public class BookInfo
     {
+        /// <summary>
+        /// 行号
+        /// </summary>
         public int RowNo { get; }
+
+        /// <summary>
+        /// 书号
+        /// </summary>
         public string No { get; }
+
+        /// <summary>
+        /// 书名
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// 主编
+        /// </summary>
         public string EditorInChief { get; }
+
+        /// <summary>
+        /// 出版社
+        /// </summary>
         public string PublishingHouse { get; }
+
+        /// <summary>
+        /// 定价
+        /// </summary>
         public string Price { get; }
+
+        /// <summary>
+        /// 采购数量
+        /// </summary>
         public int PurchaseQuantity { get; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
         public string Remark { get; }
 
         public BookInfo(int rowNo, string no, string name, string editorInChief, string publishingHouse, string price, int purchaseQuantity, string remark)

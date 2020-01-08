@@ -9,13 +9,40 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     /// </summary>
     public class TextbookOrderInfo
     {
+        /// <summary>
+        /// 公司名称
+        /// </summary>
         public string Company { get; }
+
+        /// <summary>
+        /// 地址
+        /// </summary>
         public string Address { get; }
+
+        /// <summary>
+        /// 联系人
+        /// </summary>
         public string Contact { get; }
+
+        /// <summary>
+        /// 电话
+        /// </summary>
         public string Tel { get; }
+
+        /// <summary>
+        /// 制表人
+        /// </summary>
         public string Watchmaker { get; }
+
+        /// <summary>
+        /// 时间
+        /// </summary>
         public string Time { get; }
-        public List<BookInfo> BookInfo { get; }
+
+        /// <summary>
+        /// 教材信息列表
+        /// </summary>
+        public List<BookInfo> BookInfos { get; }
 
         public TextbookOrderInfo(string company, string address, string contact, string tel, string watchmaker, string time, List<BookInfo> bookInfo)
         {
@@ -25,7 +52,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
             Tel = tel;
             Watchmaker = watchmaker;
             Time = time;
-            BookInfo = bookInfo;
+            BookInfos = bookInfo;
         }
     }
 }
