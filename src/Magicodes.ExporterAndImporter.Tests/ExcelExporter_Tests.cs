@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -229,6 +230,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "Excel模板大量导出")]
         public async Task ExportByTemplate_Large_Test()
         {
+            //导出5000条数据不超过1秒
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
                 "2020年春季教材订购明细样表.xlsx");
             IExportFileByTemplate exporter = new ExcelExporter();
@@ -240,7 +242,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 books.Add(new BookInfo(i + 1, "000000000" + i, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100 + i, "备注"));
             }
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", "雪雁", DateTime.Now.ToLongDateString(), books), tplPath);
+            stopwatch.Stop();
+            //执行时间不得超过1秒（受实际执行机器性能影响）,在测试管理器中运行普遍小于400ms
+            stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
 
         }
     }

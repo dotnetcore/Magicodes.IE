@@ -144,14 +144,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="excelPackage"></param>
         private void ParseData(ExcelPackage excelPackage)
         {
-            //TODO:性能优化
             var target = new Interpreter();
+            //单元格渲染参数
+            var cellParameters = new[] {
+                new Parameter("data", typeof(T))
+            };
+            //表格渲染参数
+            var tbParameters = new[] {
+                new Parameter("data", typeof(T)),
+                new Parameter("index", typeof(int))
+            };
+            //TODO:渲染支持自定义处理程序
             foreach (var sheetName in SheetWriters.Keys)
             {
                 var sheet = excelPackage.Workbook.Worksheets[sheetName];
 
                 #region 处理普通单元格模板
-
                 foreach (var writer in SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell))
                 {
                     var expresson = writer.CellString
@@ -166,9 +174,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
                         : expresson + "\"";
 
-                    var result = target.Eval<string>(expresson,
-                        new Parameter("data", typeof(T), Data));
-
+                    var cellWriteFunc = target.Parse(expresson, cellParameters);
+                    var result = cellWriteFunc.Invoke(Data);
                     sheet.Cells[writer.Address].Value = result;
                 }
 
@@ -179,6 +186,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 var tableGroups = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Table)
                     .GroupBy(p => p.TableKey);
 
+                
                 foreach (var tableGroup in tableGroups)
                 {
                     var tableKey = tableGroup.Key;
@@ -220,11 +228,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
                             : expresson + "\"";
 
+                        var cellWriteFunc = target.Parse(expresson, tbParameters);
+
                         for (var i = 0; i < rowCount; i++)
                         {
-                            var result = target.Eval<string>(expresson,
-                                new Parameter("data", typeof(T), Data),
-                                new Parameter("index", typeof(int), i));
+                            var result = cellWriteFunc.Invoke(Data, i);
                             sheet.Cells[address.Start.Row + i, address.Start.Column].Value = result;
                         }
                     }
