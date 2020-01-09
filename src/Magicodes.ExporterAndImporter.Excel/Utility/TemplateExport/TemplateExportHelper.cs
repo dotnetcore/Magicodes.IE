@@ -104,7 +104,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         //}
 
 
-       
+
 
         /// <summary>
         ///     根据模板导出Excel
@@ -145,15 +145,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         private void ParseData(ExcelPackage excelPackage)
         {
             var target = new Interpreter();
-            //单元格渲染参数
-            var cellParameters = new[] {
-                new Parameter("data", typeof(T))
-            };
+            target.SetVariable("data", Data, typeof(T));
+            
             //表格渲染参数
             var tbParameters = new[] {
-                new Parameter("data", typeof(T)),
+                //new Parameter("data", typeof(T)),
                 new Parameter("index", typeof(int))
             };
+
             //TODO:渲染支持自定义处理程序
             foreach (var sheetName in SheetWriters.Keys)
             {
@@ -174,8 +173,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
                         : expresson + "\"";
 
-                    var cellWriteFunc = target.Parse(expresson, cellParameters);
-                    var result = cellWriteFunc.Invoke(Data);
+                    var cellWriteFunc = target.Parse(expresson);
+                    var result = cellWriteFunc.Invoke();
                     sheet.Cells[writer.Address].Value = result;
                 }
 
@@ -186,13 +185,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 var tableGroups = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Table)
                     .GroupBy(p => p.TableKey);
 
-                
+
                 foreach (var tableGroup in tableGroups)
                 {
                     var tableKey = tableGroup.Key;
                     //TODO:处理异常“No property or field”
-                    var rowCount = target.Eval<int>($"data.{tableKey}.Count",
-                        new Parameter("data", typeof(T), Data));
+                    var rowCount = target.Eval<int>($"data.{tableKey}.Count");
                     if (rowCount == 0) return;
 
                     Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
@@ -232,7 +230,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 
                         for (var i = 0; i < rowCount; i++)
                         {
-                            var result = cellWriteFunc.Invoke(Data, i);
+                            var result = cellWriteFunc.Invoke(i);
                             sheet.Cells[address.Start.Row + i, address.Start.Column].Value = result;
                         }
                     }
