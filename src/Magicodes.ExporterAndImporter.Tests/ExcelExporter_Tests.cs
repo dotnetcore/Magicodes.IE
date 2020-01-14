@@ -217,12 +217,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (File.Exists(filePath)) File.Delete(filePath);
             //根据模板导出
             await exporter.ExportByTemplate(filePath,
-                new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", "雪雁", DateTime.Now.ToLongDateString(),
+                new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null, DateTime.Now.ToLongDateString(),
                     new List<BookInfo>()
                     {
-                        new BookInfo(1, "0000000001", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注"),
-                        new BookInfo(2, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注"),
-                        new BookInfo(3, "0000000003", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
+                        new BookInfo(1, "0000000001", "《XX从入门到放弃》", null, "机械工业出版社", "3.14", 100, "备注"),
+                        new BookInfo(2, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, null),
+                        new BookInfo(3, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
                     }),
                 tplPath);
         }

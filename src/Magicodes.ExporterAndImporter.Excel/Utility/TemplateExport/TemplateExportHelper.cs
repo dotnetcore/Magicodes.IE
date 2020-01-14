@@ -163,7 +163,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 {
                     var expresson = writer.CellString
                         .Replace("{{", "\" + data.")
-                        .Replace("}}", ".ToString() + \"");
+                        .Replace("}}", " + \"");
 
                     expresson = expresson.StartsWith("\"")
                         ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
@@ -216,7 +216,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 
                         var expresson = cellString
                             .Replace("{{", "\" + data." + tableKey + "[index].")
-                            .Replace("}}", ".ToString() + \"");
+                            .Replace("}}", " + \"");
 
                         expresson = expresson.StartsWith("\"")
                             ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
