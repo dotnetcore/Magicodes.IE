@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>1.4.21</Version>
+    <Version>1.4.23</Version>
   </PropertyGroup>
   <PropertyGroup>
     <!--<TargetFramework>netstandard2.0</TargetFramework>-->
@@ -8,14 +8,12 @@
     <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/xin-lai/IE</RepositoryUrl>
+    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
     <Description>
-      导入导出通用库。
-      官方网址：http://xin-lai.com
+      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
       交流QQ群：85318032
-      小店地址：https://shop113059108.taobao.com/
     </Description>
   </PropertyGroup>
   <PropertyGroup>
