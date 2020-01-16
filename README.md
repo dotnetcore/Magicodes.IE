@@ -203,6 +203,10 @@
 ### 更新历史
 
 #### 2019.01.14
+- 【Nuget】版本更新到1.4.24
+- 【导出】修复日期格式默认导出数字的Bug，默认输出“yyyy-MM-dd”，可以通过设置“[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]”来修改。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/22>）。
+
+#### 2019.01.14
 - 【Nuget】版本更新到1.4.21
 - 【导出】Excel模板导出修复数据项为Null报错的Bug。
 

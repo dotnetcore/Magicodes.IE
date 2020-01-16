@@ -326,10 +326,27 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
 
                     var col = sheet.Column(exporterHeader.Index);
-                    col.Style.Numberformat.Format = exporterHeader.ExporterHeader.Format;
+
+                    if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeader.Format))
+                        col.Style.Numberformat.Format = exporterHeader.ExporterHeader.Format;
+                    
 
                     if (exporter.AutoFitAllColumn || exporterHeader.ExporterHeader.IsAutoFit)
                         col.AutoFit();
+                }
+                else
+                {
+                    //处理日期格式
+                    switch (exporterHeader.CsTypeName)
+                    {
+                        case "DateTime":
+                        case "DateTime?":
+                            var col = sheet.Column(exporterHeader.Index);
+                            col.Style.Numberformat.Format = "yyyy-MM-dd";
+                            break;
+                        default:
+                            break;
+                    }
                 }
         }
 
@@ -407,7 +424,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                     PropertyName = objProperties[i].Name,
                     ExporterHeader =
                         (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                            ExporterHeaderAttribute[])?.FirstOrDefault()
+                            ExporterHeaderAttribute[])?.FirstOrDefault(),
+                    CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName()
                 });
             return false;
         }

@@ -31,5 +31,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     列属性
         /// </summary>
         public ExporterHeaderAttribute ExporterHeader { get; set; }
+
+        /// <summary>
+        ///     C#数据类型
+        /// </summary>
+        public string CsTypeName { get; internal set; }
     }
 }
