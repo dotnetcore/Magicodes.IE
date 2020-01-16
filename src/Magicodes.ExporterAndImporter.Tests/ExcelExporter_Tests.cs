@@ -251,5 +251,18 @@ namespace Magicodes.ExporterAndImporter.Tests
             stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
 
         }
+
+        [Fact(DisplayName = "无特性定义导出测试")]
+        public async Task ExportTestDataWithoutExcelExporter_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportTestDataWithoutExcelExporter_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataWithoutExcelExporter>());
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
     }
 }

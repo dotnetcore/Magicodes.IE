@@ -489,7 +489,10 @@ namespace Magicodes.ExporterAndImporter.Excel
                 };
             }
 
-            return null;
+            return new ExcelExporterAttribute
+            {
+               
+            }; 
         }
 
 

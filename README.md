@@ -202,7 +202,11 @@
 
 ### 更新历史
 
-#### 2019.01.14
+#### 2019.01.16
+- 【Nuget】版本更新到1.4.25
+- 【导出】修复没有定义导出特性会报错的情形，具体见单元测试“ExportTestDataWithoutExcelExporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/21>）。
+
+#### 2019.01.16
 - 【Nuget】版本更新到1.4.24
 - 【导出】修复日期格式默认导出数字的Bug，默认输出“yyyy-MM-dd”，可以通过设置“[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]”来修改。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/22>）。
 
