@@ -34,5 +34,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     作者
         /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// 一个Sheet最大允许的行数，设置了之后将输出多个Sheet
+        /// </summary>
+        public int MaxRowNumberOnASheet { get; set; } = 0;
     }
 }

@@ -202,6 +202,11 @@
 
 ### 更新历史
 
+#### 2019.01.17
+- 【Nuget】版本更新到1.5.0
+- 重构导出
+- 支持列头筛选器
+
 #### 2019.01.16
 - 【Nuget】版本更新到1.4.25
 - 【导出】修复没有定义导出特性会报错的情形，具体见单元测试“ExportTestDataWithoutExcelExporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/21>）。

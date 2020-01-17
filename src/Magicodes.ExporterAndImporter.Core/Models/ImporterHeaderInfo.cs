@@ -14,7 +14,7 @@
 using System.Collections.Generic;
 using Magicodes.ExporterAndImporter.Core;
 
-namespace Magicodes.ExporterAndImporter.Excel
+namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
     ///     导入列头设置
@@ -43,6 +43,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         ///     是否存在
         /// </summary>
-        internal bool IsExist { get; set; }
+        public bool IsExist { get; set; }
     }
 }
