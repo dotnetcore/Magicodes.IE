@@ -35,5 +35,25 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     正文字体大小
         /// </summary>
         public float? FontSize { set; get; }
+
+        /// <summary>
+        /// 一个Sheet最大允许的行数，设置了之后将输出多个Sheet
+        /// </summary>
+        public int MaxRowNumberOnASheet { get; set; } = 0;
+
+        /// <summary>
+        ///     表格样式风格
+        /// </summary>
+        public string TableStyle { get; set; } = "Medium10";
+
+        /// <summary>
+        ///     自适应所有列
+        /// </summary>
+        public bool AutoFitAllColumn { get; set; }
+
+        /// <summary>
+        ///     作者
+        /// </summary>
+        public string Author { get; set; }
     }
 }

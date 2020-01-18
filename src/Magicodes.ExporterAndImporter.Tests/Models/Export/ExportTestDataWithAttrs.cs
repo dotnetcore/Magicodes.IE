@@ -17,7 +17,7 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
+    [Exporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
     public class ExportTestDataWithAttrs
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
@@ -49,5 +49,11 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         public DateTime Time3 { get; set; }
 
         public DateTime Time4 { get; set; }
+
+        /// <summary>
+        /// 长数值测试
+        /// </summary>
+        [ExporterHeader(DisplayName = "长数值", Format = "#,##0")]
+        public long LongNo { get; set; }
     }
 }

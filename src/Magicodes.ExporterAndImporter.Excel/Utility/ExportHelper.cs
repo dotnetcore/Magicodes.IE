@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -19,7 +20,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
     /// <typeparam name="T"></typeparam>
     public class ExportHelper<T> where T : class
     {
-        private ExcelExporterAttribute _excelExporterAttribute;
+        private ExporterAttribute _excelExporterAttribute;
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
@@ -34,31 +35,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     导出设置
         /// </summary>
-        public ExcelExporterAttribute ExcelExporterSettings
+        public ExporterAttribute ExcelExporterSettings
         {
             get
             {
                 if (_excelExporterAttribute == null)
                 {
                     var type = typeof(T);
-                    _excelExporterAttribute = type.GetAttribute<ExcelExporterAttribute>(true);
-                    if (_excelExporterAttribute != null) return _excelExporterAttribute;
-
-                    var exporterAttribute = type.GetAttribute<ExporterAttribute>(true);
-                    if (exporterAttribute != null)
-                    {
-                        _excelExporterAttribute = new ExcelExporterAttribute()
-                        {
-                            FontSize = exporterAttribute.FontSize,
-                            HeaderFontSize = exporterAttribute.HeaderFontSize
-                        };
-                    }
-                    else
-                        _excelExporterAttribute = new ExcelExporterAttribute();
-
-                    return _excelExporterAttribute;
+                    _excelExporterAttribute = type.GetAttribute<ExporterAttribute>(true) ?? new ExporterAttribute();
                 }
-
                 return _excelExporterAttribute;
             }
             set => _excelExporterAttribute = value;
@@ -83,6 +68,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         protected int SheetIndex = 0;
+        private string _exporterHeadersString;
 
         /// <summary>
         /// 当前工作
@@ -123,6 +109,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
+        /// 列头表达式
+        /// </summary>
+        protected string ExporterHeadersString
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_exporterHeadersString))
+                {
+                    _exporterHeadersString = string.Join(",", ExporterHeaderList.Select(p => p.PropertyName));
+                }
+                return _exporterHeadersString;
+            }
+            set => _exporterHeadersString = value;
+        }
+
+        /// <summary>
         /// Excel数据表
         /// </summary>
         protected ExcelTable CurrentExcelTable { get; set; }
@@ -145,9 +147,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     PropertyName = objProperties[i].Name,
                     ExporterHeaderAttribute =
                         (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                            ExporterHeaderAttribute[])?.FirstOrDefault(),
+                            ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].Name),
                     CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName()
                 };
+                ////过滤忽略列
+                //if (item.ExporterHeaderAttribute.IsIgnore)
+                //{
+                //    continue;
+                //}
                 //设置列显示名
                 item.DisplayName = item.ExporterHeaderAttribute == null || item.ExporterHeaderAttribute.DisplayName == null || item.ExporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace()
                                 ? item.PropertyName
@@ -170,6 +177,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             AddStyle();
 
+            DeleteIgnoreColumns();
             if (ExcelExporterSettings.AutoFitAllColumn)
             {
                 CurrentExcelWorksheet.Cells[CurrentExcelWorksheet.Dimension.Address].AutoFitColumns();
@@ -244,33 +252,40 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
+        /// 删除忽略列
+        /// </summary>
+        protected void DeleteIgnoreColumns()
+        {
+            var deletedCount = 0;
+            foreach (var exporterHeaderDto in ExporterHeaderList.Where(p => p.ExporterHeaderAttribute.IsIgnore))
+            {
+                //TODO:后续重写底层逻辑，直接从数据层面拦截
+                CurrentExcelWorksheet.DeleteColumn(exporterHeaderDto.Index - deletedCount);
+                deletedCount++;
+            }
+        }
+
+        /// <summary>
         ///     创建表头
         /// </summary>
         protected void AddHeader()
         {
             CurrentExcelTable.ShowHeader = true;
             foreach (var exporterHeaderDto in ExporterHeaderList)
-                if (exporterHeaderDto != null)
+            {
+                var exporterHeaderAttribute = exporterHeaderDto.ExporterHeaderAttribute;
+                if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
                 {
-                    if (exporterHeaderDto.ExporterHeaderAttribute != null)
-                    {
-                        var exporterHeaderAttribute = exporterHeaderDto.ExporterHeaderAttribute;
-                        if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
-                        {
-                            CurrentExcelTable.Columns[exporterHeaderDto.Index - 1].Name = exporterHeaderDto.DisplayName;
+                    var col = CurrentExcelTable.Columns[exporterHeaderDto.Index - 1];
+                    col.Name = exporterHeaderDto.DisplayName;
 
-                            CurrentExcelWorksheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
+                    CurrentExcelWorksheet.Cells[1, exporterHeaderDto.Index].Style.Font.Bold = exporterHeaderAttribute.IsBold;
 
-                            var size = ExcelExporterSettings?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
-                            if (size.HasValue)
-                                CurrentExcelWorksheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
-                        }
-                    }
-                    else
-                    {
-                        CurrentExcelTable.Columns[exporterHeaderDto.Index - 1].Name = exporterHeaderDto.DisplayName;
-                    }
+                    var size = ExcelExporterSettings?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
+                    if (size.HasValue)
+                        CurrentExcelWorksheet.Cells[1, exporterHeaderDto.Index].Style.Font.Size = size.Value;
                 }
+            }
         }
 
         /// <summary>
@@ -280,51 +295,25 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             foreach (var exporterHeader in ExporterHeaderList)
             {
-                if (exporterHeader.ExporterHeaderAttribute != null)
+                var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
+
+                if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
+                    col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
+
+                if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
+                    col.AutoFit();
+
+                //处理日期格式
+                switch (exporterHeader.CsTypeName)
                 {
-                    if (exporterHeader.ExporterHeaderAttribute.IsIgnore)
-                    {
-                        //TODO:后续直接修改数据导出逻辑（不写忽略列数据）
-                        CurrentExcelWorksheet.DeleteColumn(exporterHeader.Index);
-                        //删除之后，序号依次-1
-                        foreach (var item in ExporterHeaderList.Where(p => p.Index > exporterHeader.Index)) item.Index--;
-                        continue;
-                    }
-
-                    var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
-
-                    if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
-                        col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
-
-                    if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
-                        col.AutoFit();
-                }
-                else
-                {
-                    //处理日期格式
-                    switch (exporterHeader.CsTypeName)
-                    {
-                        case "DateTime":
-                        case "DateTime?":
-                            var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
-                            col.Style.Numberformat.Format = "yyyy-MM-dd";
-                            if (ExcelExporterSettings.AutoFitAllColumn)
-                                col.AutoFit();
-                            break;
-                        default:
-                            break;
-                    }
-
+                    case "DateTime":
+                    case "DateTime?":
+                        col.Style.Numberformat.Format = "yyyy-MM-dd";
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-
-        //protected void AddWorksheet(DataTable dataItems, ExcelExporterAttribute exporter,
-        //    List<ExporterHeaderInfo> exporterHeaderList, ExcelWorksheet sheet)
-        //{
-        //    AddHeader(exporterHeaderList, sheet, exporter);
-        //    AddDataItems<T>(sheet, dataItems, exporter);
-        //    AddStyle(exporter, exporterHeaderList, sheet);
-        //}
     }
 }

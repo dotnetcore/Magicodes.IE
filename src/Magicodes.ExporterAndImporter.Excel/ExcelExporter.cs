@@ -67,7 +67,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class
         {
             var helper = new ExportHelper<T>();
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet != 0)
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0)
             {
                 //TODO:数据为空判断
                 using (helper.CurrentExcelPackage)

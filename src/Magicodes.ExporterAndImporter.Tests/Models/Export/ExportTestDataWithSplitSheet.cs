@@ -1,6 +1,6 @@
 ﻿// ======================================================================
 // 
-//           filename : AttrsLocalizationTestData.cs
+//           filename : ExportTestDataWithAttrs.cs
 //           description :
 // 
 //           created by 雪雁 at  2019-11-05 20:02
@@ -13,11 +13,12 @@
 
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [Exporter(Name = "测试", TableStyle = "Light10")]
-    public class AttrsLocalizationTestData
+    [Exporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true, MaxRowNumberOnASheet = 100)]
+    public class ExportTestDataWithSplitSheet
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
@@ -32,5 +33,21 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 时间测试
+        /// </summary>
+        [ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
+        public DateTime Time1 { get; set; }
+
+        /// <summary>
+        /// 时间测试
+        /// </summary>
+        [ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]
+        public DateTime? Time2 { get; set; }
+
+        public DateTime Time3 { get; set; }
+
+        public DateTime Time4 { get; set; }
     }
 }

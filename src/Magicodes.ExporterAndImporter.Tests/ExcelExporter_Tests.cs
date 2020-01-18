@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 
@@ -63,10 +64,66 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath,
-                GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
+            foreach (var item in data)
+            {
+                item.LongNo = long.MaxValue;
+            }
+            var result = await exporter.Export(filePath, data);
+
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "数据拆分多Sheet导出")]
+        public async Task SplitData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(SplitData_Test)}-1.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(300));
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //验证Sheet数是否为3
+                pck.Workbook.Worksheets.Count.ShouldBe(3);
+                //检查忽略列
+                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("数值");
+            }
+
+            filePath = GetTestFilePath($"{nameof(SplitData_Test)}-2.xlsx");
+            DeleteFile(filePath);
+
+            result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(299));
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //验证Sheet数是否为3
+                pck.Workbook.Worksheets.Count.ShouldBe(3);
+            }
+
+            filePath = GetTestFilePath($"{nameof(SplitData_Test)}-3.xlsx");
+            DeleteFile(filePath);
+
+            result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(302));
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //验证Sheet数是否为4
+                pck.Workbook.Worksheets.Count.ShouldBe(4);
+            }
         }
 
         //[Fact(DisplayName = "多语言特性导出")]

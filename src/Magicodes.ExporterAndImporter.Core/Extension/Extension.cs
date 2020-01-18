@@ -94,7 +94,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 {
                     generator.Emit(OpCodes.Dup);
                     generator.Emit(OpCodes.Ldstr, propertyInfo.Name);
-                    generator.Emit(OpCodes.Ldtoken, propertyInfo.PropertyType);
+                    generator.Emit(OpCodes.Ldtoken, (propertyInfo.PropertyType.IsGenericType) && (propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)) ? propertyInfo.PropertyType.GetGenericArguments()[0] : propertyInfo.PropertyType);
                     // ReSharper disable AssignNullToNotNullAttribute
                     generator.Emit(OpCodes.Call,
                         typeof(Type).GetMethod("GetTypeFromHandle", new[] { typeof(RuntimeTypeHandle) }));
@@ -189,7 +189,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var dt = new DataTable();
             dt.Columns.AddRange(props.Select(p =>
                 new DataColumn(p.PropertyType.GetAttribute<ExporterAttribute>()?.Name ?? p.GetDisplayName() ?? p.Name,
-                    p.PropertyType)).ToArray());
+                    (p.PropertyType.IsGenericType) && (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)) ? p.PropertyType.GetGenericArguments()[0] : p.PropertyType)).ToArray());
             if (source.Count <= 0) return dt;
 
             for (var i = 0; i < source.Count; i++)

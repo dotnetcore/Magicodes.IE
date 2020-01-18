@@ -34,8 +34,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// </summary>
         private const string VariableRegexString = "(\\{\\{)+([\\w_.>|]*)+(\\}\\})";
 
-        private ExcelExporterAttribute _excelExporterAttribute;
-
         /// <summary>
         ///     变量正则
         /// </summary>
@@ -75,36 +73,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         ///     表值字典
         /// </summary>
         protected Dictionary<string, List<Dictionary<string, string>>> TableValuesDictionary { get; set; }
-
-        ///// <summary>
-        /////     导出全局设置
-        ///// </summary>
-        //protected ExcelExporterAttribute ExcelExporterSettings
-        //{
-        //    get
-        //    {
-        //        if (_excelExporterAttribute == null)
-        //        {
-        //            var type = typeof(T);
-        //            _excelExporterAttribute = type.GetAttribute<ExcelExporterAttribute>(true);
-        //            if (_excelExporterAttribute != null) return _excelExporterAttribute;
-
-        //            var importerAttribute = type.GetAttribute<ExporterAttribute>(true);
-        //            if (importerAttribute != null)
-        //                _excelExporterAttribute = new ExcelExporterAttribute();
-        //            else
-        //                _excelExporterAttribute = new ExcelExporterAttribute();
-
-        //            return _excelExporterAttribute;
-        //        }
-
-        //        return _excelExporterAttribute;
-        //    }
-        //    set => _excelExporterAttribute = value;
-        //}
-
-
-
 
         /// <summary>
         ///     根据模板导出Excel
