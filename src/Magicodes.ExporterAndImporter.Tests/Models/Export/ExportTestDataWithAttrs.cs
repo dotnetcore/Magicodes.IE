@@ -17,7 +17,7 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [Exporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
+    [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
     public class ExportTestDataWithAttrs
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]

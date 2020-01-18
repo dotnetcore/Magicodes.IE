@@ -30,6 +30,8 @@
 
 8. 其他教程见下文或单元测试
 
+更新历史见下文。
+
 
 
 ### 特点
@@ -38,7 +40,7 @@
 
 - 需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；
 ![](./res/导入Dto.png "导入Dto")
-- 导出支持列头自定义处理以便支持多语言等场景；
+- 支持列头筛选器——IExporterHeaderFilter，以便支持多语言、动态控制列展示等场景，具体使用见单元测试；
 - 导出支持文本自定义过滤或处理；
 - 导入支持中间空行自动跳过；
 - 导入支持自动根据 DTO 生成导入模板,针对必填项将自动标注；
@@ -50,6 +52,7 @@
 - 支持导入表头位置设置，默认为1；
 - 支持导入列乱序，无需按顺序一一对应；
 - 支持导入指定列索引，默认自动识别；
+- 导出Excel支持拆分Sheet，仅需设置特性【ExporterAttribute】的【MaxRowNumberOnASheet】的值，为0则不拆分。具体见单元测试；
 - 支持将导入Excel进行错误标注；
 ![](./res/数据错误.png "数据错误标注")
 ![](./res/多个错误.png "多个错误")
@@ -157,7 +160,7 @@
 
 - [ ] 将代码单元测试覆盖率提高到90%（目前为86%）
 - [ ] Pdf导出支持.NET Framework 461
-- [ ] 完成自动构建流程，并通过自动构建发包
+- [x] 完成自动构建流程，并通过自动构建发包
 - [ ] 表头样式设置
 - [x] 自定义模板导出
   - [x] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
@@ -165,9 +168,9 @@
 - [ ] 生成导入模板时必填项支持自定义样式配置
 - [ ] CSV支持
 - [ ] 导入结果支持生成HTML输出
-- [ ] Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+- [x] Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
 - [ ] Excel导出支持图片
-- [ ] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
+- [x] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
 - [ ] Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）
 - [ ] 导入导出支持指定位置[CellAddress(Row = 2, Column = 2)]（[#19](https://github.com/dotnetcore/Magicodes.IE/issues/19)）
 - [ ] 生成的导入模板支持数据验证
@@ -199,16 +202,37 @@
 - <https://gitee.com/magicodes>
 
 
-
 ### 更新历史
 
 #### 2019.01.18
-- 【Nuget】版本更新到1.5.0
-- 重构导出
-- 支持列头筛选器
-- 修复转换DataTable时支持为空类型
-- 完成Sheet自动切割
-- 简化ExporterAttribute
+- 【Nuget】版本更新到2.0.0-beta1
+- 【导出】完全重构整个导出Excel模块并且重写大部分接口
+- 【导出】支持列头筛选器——IExporterHeaderFilter，具体使用见单元测试
+- 【导出】修复转换DataTable时支持为空类型
+- 【导出】导出Excel支持拆分Sheet，仅需设置特性【ExporterAttribute】的【MaxRowNumberOnASheet】的值，为0则不拆分。具体见单元测试
+- 【导出】修复导出结果无法筛选的问题。目前导出即为数据表
+- 【导出】添加扩展方法ToExcelExportFileInfo
+- 【导出】IExporter再添加两个动态DataTable导出方法，无需定义Dto即可动态导出数据，并且支持表头筛选器、Sheet拆分
+````CShape
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaderFilter">表头筛选器</param>
+        /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
+        /// <returns>文件</returns>
+        Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaderFilter">表头筛选器</param>
+        /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+````
 
 #### 2019.01.16
 - 【Nuget】版本更新到1.4.25
