@@ -55,5 +55,10 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     作者
         /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// 头部筛选器
+        /// </summary>
+        public Type ExporterHeaderFilter { get; set; }
     }
 }

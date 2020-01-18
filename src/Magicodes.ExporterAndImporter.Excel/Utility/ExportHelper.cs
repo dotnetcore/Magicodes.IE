@@ -43,6 +43,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     var type = typeof(T);
                     _excelExporterAttribute = type.GetAttribute<ExporterAttribute>(true) ?? new ExporterAttribute();
+
+                    //加载表头筛选器
+                    if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
+                    {
+                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName);
+                    }
                 }
                 return _excelExporterAttribute;
             }
@@ -67,6 +73,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             set => _excelWorksheet = value;
         }
 
+        /// <summary>
+        /// 当前Sheet索引
+        /// </summary>
         protected int SheetIndex = 0;
         private string _exporterHeadersString;
 
@@ -130,6 +139,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected ExcelTable CurrentExcelTable { get; set; }
 
         /// <summary>
+        /// 表头筛选器
+        /// </summary>
+        protected IExporterHeaderFilter ExporterHeaderFilter { get; set; }
+
+        /// <summary>
         ///     获取头部定义
         /// </summary>
         /// <returns></returns>
@@ -150,16 +164,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].Name),
                     CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName()
                 };
-                ////过滤忽略列
-                //if (item.ExporterHeaderAttribute.IsIgnore)
-                //{
-                //    continue;
-                //}
+               
                 //设置列显示名
                 item.DisplayName = item.ExporterHeaderAttribute == null || item.ExporterHeaderAttribute.DisplayName == null || item.ExporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace()
                                 ? item.PropertyName
                                 : item.ExporterHeaderAttribute.DisplayName;
-                //TODO:执行列头筛选器
+                //执行列头筛选器
+                if (ExporterHeaderFilter != null)
+                {
+                    item = ExporterHeaderFilter.Filter(item);
+                }
                 _exporterHeaderList.Add(item);
             }
         }

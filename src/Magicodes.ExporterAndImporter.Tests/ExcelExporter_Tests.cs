@@ -126,25 +126,44 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        //[Fact(DisplayName = "多语言特性导出")]
-        //public async Task AttrsLocalizationExport_Test()
-        //{
-        //    IExporter exporter = new ExcelExporter();
-        //    ExcelBuilder.Create().WithColumnHeaderStringFunc(key =>
-        //    {
-        //        if (key.Contains("文本")) return "Text";
+        [Fact(DisplayName = "头部筛选器测试")]
+        public async Task ExporterHeaderFilter_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
+            #region 通过筛选器修改列名
+            if (File.Exists(filePath)) File.Delete(filePath);
 
-        //        return "未知语言";
-        //    }).Build();
+            var data1 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData1>();
+            var result = await exporter.Export(filePath, data1);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
 
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
-        //    if (File.Exists(filePath)) File.Delete(filePath);
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["D1"].Value.ShouldBe("name");
+                sheet.Dimension.Columns.ShouldBe(4);
+            }
+            #endregion
 
-        //    var data = GenFu.GenFu.ListOf<AttrsLocalizationTestData>();
-        //    var result = await exporter.Export(filePath, data);
-        //    result.ShouldNotBeNull();
-        //    File.Exists(filePath).ShouldBeTrue();
-        //}
+            #region 通过筛选器修改忽略列
+            if (File.Exists(filePath)) File.Delete(filePath);
+            var data2 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData2>();
+            result = await exporter.Export(filePath, data2);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(5);
+            }
+            #endregion
+
+        }
 
         //[Fact(DisplayName = "动态列导出Excel")]
         //public async Task DynamicExport_Test()
