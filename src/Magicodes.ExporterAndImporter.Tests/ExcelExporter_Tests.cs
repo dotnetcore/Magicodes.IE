@@ -68,7 +68,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var data = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             foreach (var item in data)
             {
-                item.LongNo = long.MaxValue;
+                item.LongNo = 45875266524;
             }
             var result = await exporter.Export(filePath, data);
 
@@ -77,7 +77,39 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
-                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(101);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells[sheet.Dimension.Address].Rows.ShouldBe(101);
+
+                //[ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
+                sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
+
+                //[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]
+                sheet.Cells["F2"].Text.Equals(DateTime.Parse(sheet.Cells["F2"].Text).ToString("yyyy-MM-dd HH:mm:ss"));
+
+                //默认DateTime
+                sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
+
+            }
+        }
+
+        [Fact(DisplayName = "空数据导出")]
+        public async Task AttrsExportWithNoData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrsExportWithNoData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var data = new List<ExportTestDataWithAttrs>();
+            var result = await exporter.Export(filePath, data);
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(1);
             }
         }
 
