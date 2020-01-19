@@ -68,7 +68,7 @@
 - 支持单个数据模板导出，常用于导出收据、凭据等业务
 - 支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（[https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8 ) ））
 - 支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。
-````C#
+```csharp
         /// <summary>
         ///     性别
         /// </summary>
@@ -77,12 +77,12 @@
         [ValueMapping(text: "男", 0)]
         [ValueMapping(text: "女", 1)]
         public Genders Gender { get; set; }
-````
+```
 
 - 支持枚举和Bool类型的导入数据验证项的生成，以及相关数据转换
 	- 枚举默认情况下会自动获取枚举的描述、显示名、名称和值生成数据项
 
-		````C#
+		```csharp
 			/// <summary>
 			/// 学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
 			/// </summary>
@@ -130,7 +130,7 @@
 				[Display(Name = "参军")]
 				JoinTheArmy = 6,
 			}
-		````
+		```
 
 		![](./res/enum.png "枚举转数据映射序列")
 
@@ -367,7 +367,7 @@
 ![](./res/1.png "Demo1-1")
 
 >
-
+```csharp
     public class ExportTestData
     {
         public string Name1 { get; set; }
@@ -393,7 +393,7 @@
             Name4 = "11",
         }
     });
-
+```
 ---
 #### Demo1-2
 
@@ -402,6 +402,7 @@
 
 >
 
+```csharp
     [ExcelExporter(Name = "测试", TableStyle = "Light10")]
     public class ExportTestDataWithAttrs
     {
@@ -447,6 +448,7 @@
                     Text3 = "sadsad打发打发士大夫的"
                 },
             });
+```
 
 #### Demo1-3
 
@@ -454,6 +456,8 @@
 ![](./res/3.png "Demo1-3")
 
 >
+
+```csharp
 
     [ExcelExporter(Name = "测试", TableStyle = "Light10")]
     public class AttrsLocalizationTestData
@@ -512,6 +516,7 @@
                     Text3 = "sadsad打发打发士大夫的"
                 },
             });
+```
 
 ### 导入 Demo
 
@@ -544,6 +549,8 @@
 ![](./res/2-1.png "Demo2-1")
 
 >
+
+```csharp
     public class ImportProductDto
     {
         /// <summary>
@@ -562,6 +569,7 @@
         [ImporterHeader(Name = "产品条码")]
         public string BarCode { get; set; }
     }
+```
 
 ##### 导入模板
 ![](./res/2-3.png "Demo2-3")
@@ -572,6 +580,9 @@
 ##### 生成模板
 ![](./res/2-2.png "Demo2-2")
 >
+
+```csharp
+
     public class ImportProductDto
     {
         /// <summary>
@@ -637,8 +648,11 @@
         [ImporterHeader(Name = "是否行")]
         public bool IsOk { get; set; }
     }
+```
 
 >
+
+```csharp
     public enum ImporterProductType
     {
         [Display(Name = "第一")]
@@ -646,6 +660,8 @@
         [Display(Name = "第二")]
         Two
     }
+```
+
 ##### 导入模板
 ![](./res/2-5.png "Demo2-5")
 ![](./res/2-6.png "Demo2-6")
@@ -657,6 +673,9 @@
 ![](./res/2-7.png "Demo2-7")
 
 >
+
+```csharp
+
     public class ImportProductDto
     {
         /// <summary>
@@ -726,8 +745,10 @@
         [ImporterHeader(Name = "是否行")]
         public bool IsOk { get; set; }
     }
+```
 
 >
+```csharp
     public enum ImporterProductType
     {
         [Display(Name = "第一")]
@@ -735,6 +756,7 @@
         [Display(Name = "第二")]
         Two
     }
+```
 ##### 导入模板
 ![](./res/2-8.png "Demo2-8")
 ![](./res/2-9.png "Demo2-9")
@@ -744,12 +766,17 @@
 - 如果是使用Excel导出，则需安装libgdiplus库
 
 >
+```bash
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
     RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+```
 
 Dockerfile Demo
 >
+
+```bash
+
     FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
@@ -778,6 +805,8 @@ Dockerfile Demo
     WORKDIR /app
     COPY --from=publish /app .
     ENTRYPOINT ["dotnet", "Magicodes.Admin.Web.Host.dll"]
+
+```
 
 - 如果是使用Pdf导出，则需安装相关字体，如：
 
