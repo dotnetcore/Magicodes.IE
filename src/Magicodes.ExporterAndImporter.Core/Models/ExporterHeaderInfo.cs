@@ -11,10 +11,11 @@
 // 
 // ======================================================================
 
-using Magicodes.ExporterAndImporter.Core;
-
-namespace Magicodes.ExporterAndImporter.Excel
+namespace Magicodes.ExporterAndImporter.Core.Models
 {
+    /// <summary>
+    /// 导出列头部信息
+    /// </summary>
     public class ExporterHeaderInfo
     {
         /// <summary>
@@ -30,11 +31,16 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         ///     列属性
         /// </summary>
-        public ExporterHeaderAttribute ExporterHeader { get; set; }
+        public ExporterHeaderAttribute ExporterHeaderAttribute { get; set; }
 
         /// <summary>
         ///     C#数据类型
         /// </summary>
-        public string CsTypeName { get; internal set; }
+        public string CsTypeName { get; set; }
+
+        /// <summary>
+        ///     最终显示的列名
+        /// </summary>
+        public string DisplayName { set; get; }
     }
 }

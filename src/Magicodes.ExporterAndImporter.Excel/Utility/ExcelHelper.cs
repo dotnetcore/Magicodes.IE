@@ -18,6 +18,9 @@ using OfficeOpenXml;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
+    /// <summary>
+    /// Excel辅助类
+    /// </summary>
     public static class ExcelHelper
     {
         /// <summary>

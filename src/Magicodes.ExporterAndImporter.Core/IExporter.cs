@@ -54,15 +54,31 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class;
 
         /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaderFilter">表头筛选器</param>
+        /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
+        /// <returns>文件</returns>
+        Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaderFilter">表头筛选器</param>
+        /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+
+        /// <summary>
         ///     导出Excel表头
         /// </summary>
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
-        /// <param name="globalStyle">全局样式</param>
-        /// <param name="styles">样式</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName, ExcelHeadStyle globalStyle = null,
-            List<ExcelHeadStyle> styles = null);
+        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果");
 
         /// <summary>
         ///     导出Excel表头
