@@ -66,7 +66,7 @@
 - 导入支持重复验证；
 ![](./res/重复错误.png "重复错误.png")
 - 支持单个数据模板导出，常用于导出收据、凭据等业务
-- 支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（https://github.com/xin-lai/Magicodes.IE/pull/8））
+- 支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（[https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8 ) ））
 - 支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。
 ````C#
         /// <summary>
@@ -165,7 +165,7 @@
 - [ ] 生成导入模板时必填项支持自定义样式配置
 - [ ] CSV支持
 - [ ] 导入结果支持生成HTML输出
-- [ ] Sheet拆分（有兴趣的朋友可以参考张队的PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+- [ ] Sheet拆分（有兴趣的朋友可以参考张队的PR：[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)）
 - [ ] Excel导出支持图片
 - [ ] 解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）
 - [ ] Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）
@@ -234,7 +234,7 @@
 
 #### 2019.12.17
 - 【Nuget】版本更新到1.4.16
-- 【导入】Excel导入支持多sheet导入，感谢tanyongzheng（https://github.com/dotnetcore/Magicodes.IE/pull/18 ）
+- 【导入】Excel导入支持多sheet导入，感谢tanyongzheng（[https://github.com/dotnetcore/Magicodes.IE/pull/18](https://github.com/dotnetcore/Magicodes.IE/pull/18)）
 
 #### 2019.12.10
 - 【Nuget】版本更新到1.4.15
@@ -264,11 +264,11 @@
 
 #### 2019.11.24
 - 【Nuget】版本更新到1.4.12
-- 【导出】导出动态类支持超过100W数据时自动拆分Sheet（具体见PR：https://github.com/xin-lai/Magicodes.IE/pull/14）
+- 【导出】导出动态类支持超过100W数据时自动拆分Sheet（具体见PR：[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)）
 
 #### 2019.11.20
 - 【Nuget】版本更新到1.4.11
-- 【导出】修复Datatable列的顺序和DTO的顺序不一致，导致数据放错列（具体见PR：https://github.com/xin-lai/Magicodes.IE/pull/13）
+- 【导出】修复Datatable列的顺序和DTO的顺序不一致，导致数据放错列（具体见PR：[https://github.com/xin-lai/Magicodes.IE/pull/13](https://github.com/xin-lai/Magicodes.IE/pull/13)）
 
 #### 2019.11.16
 - 【Nuget】版本更新到1.4.10
@@ -291,7 +291,7 @@
 
 #### 2019.10.30
 - 【Nuget】版本更新到1.4.0
-- 【导出】Excel导出支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8）
+- 【导出】Excel导出支持动态列导出（基于DataTable），感谢张善友（https://github.com/xin-lai/Magicodes.IE/pull/8 ）
 
 #### 2019.10.22
 - 【Nuget】版本更新到1.3.7
