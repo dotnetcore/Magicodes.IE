@@ -811,6 +811,9 @@ Dockerfile Demo
 - 如果是使用Pdf导出，则需安装相关字体，如：
 
 >
+
+```bash
 	# 安装fontconfig库，用于Pdf导出
 	RUN apt-get update && apt-get install -y fontconfig
 	COPY /simsun.ttc /usr/share/fonts/simsun.ttc
+```
