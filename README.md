@@ -16,7 +16,7 @@
 
 1. [基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）
 
-2. 基础教程之导出Excel（待补充）
+2. [基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")
 
 3. 基础教程之导出Pdf收据（待补充）
 
@@ -472,74 +472,6 @@
                     Text3 = "sadsad打发打发士大夫的"
                 },
                new ExportTestDataWithAttrs()
-                {
-                    Text = "啊实打实速度大苏打撒",
-                    Name="萨达萨达",
-                    Number =6000,
-                    Text2 = "突然他也让他人",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-            });
-```
-
-#### Demo1-3
-
-列头处理或者多语言支持
-![](./res/3.png "Demo1-3")
-
->
-
-```csharp
-
-    [ExcelExporter(Name = "测试", TableStyle = "Light10")]
-    public class AttrsLocalizationTestData
-    {
-        [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
-        public string Text { get; set; }
-    
-        [ExporterHeader(DisplayName = "普通文本")]
-        public string Text2 { get; set; }
-    
-        [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
-        public string Text3 { get; set; }
-    
-        [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
-        public double Number { get; set; }
-    
-        [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
-        public string Name { get; set; }
-    }
-            ExcelBuilder.Create().WithLocalStringFunc((key) =>
-            {
-                if (key.Contains("文本"))
-                {
-                    return "Text";
-                }
-                return "未知语言";
-            }).Build();
-    
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-    
-            var result = await Exporter.Export(filePath, new List<AttrsLocalizationTestData>()
-            {
-                new AttrsLocalizationTestData()
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name="aa",
-                    Number =5000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-               new AttrsLocalizationTestData()
-                {
-                    Text = "啊实打实大苏打撒",
-                    Name="啊实打实大苏打撒",
-                    Number =6000,
-                    Text2 = "w萨达萨达萨达撒",
-                    Text3 = "sadsad打发打发士大夫的"
-                },
-               new AttrsLocalizationTestData()
                 {
                     Text = "啊实打实速度大苏打撒",
                     Name="萨达萨达",

@@ -147,7 +147,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         [Fact(DisplayName = "必填项检测")]
-        public async Task IsRequired_Test()
+        public void IsRequired_Test()
         {
             var pros = typeof(ImportProductDto).GetProperties();
             foreach (var item in pros)

@@ -38,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// <returns>将Entity的值转为DataTable</returns>
         private static DataTable EntityToDataTable<T>(DataTable dt, IEnumerable<T> entities)
         {
-            if (entities.Count() == 0) return dt;
+            if (!entities.Any()) return dt;
 
             var properties = typeof(T).GetProperties();
 
