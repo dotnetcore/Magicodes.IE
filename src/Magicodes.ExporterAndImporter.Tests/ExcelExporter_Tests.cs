@@ -20,12 +20,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.ExporterAndImporter.Excel.Builder;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
-using OfficeOpenXml;
 using Shouldly;
 using Xunit;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -39,7 +37,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// <returns>将Entity的值转为DataTable</returns>
         private static DataTable EntityToDataTable<T>(DataTable dt, IEnumerable<T> entities)
         {
-            if (!entities.Any()) return dt;
+            if (entities.Count() == 0) return dt;
 
             var properties = typeof(T).GetProperties();
 
@@ -57,7 +55,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             return dt;
         }
 
-        [Fact(DisplayName = "DTO特性导出（测试格式化）")]
+        [Fact(DisplayName = "特性导出")]
         public async Task AttrsExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -66,152 +64,33 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var data = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
-            foreach (var item in data)
-            {
-                item.LongNo = 45875266524;
-            }
-            var result = await exporter.Export(filePath, data);
-
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                pck.Workbook.Worksheets.Count.ShouldBe(1);
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells[sheet.Dimension.Address].Rows.ShouldBe(101);
-
-                //[ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
-                sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
-
-                //[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]
-                sheet.Cells["F2"].Text.Equals(DateTime.Parse(sheet.Cells["F2"].Text).ToString("yyyy-MM-dd HH:mm:ss"));
-
-                //默认DateTime
-                sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
-
-            }
-        }
-
-        [Fact(DisplayName = "空数据导出")]
-        public async Task AttrsExportWithNoData_Test()
-        {
-            IExporter exporter = new ExcelExporter();
-
-            var filePath = GetTestFilePath($"{nameof(AttrsExportWithNoData_Test)}.xlsx");
-
-            DeleteFile(filePath);
-
-            var data = new List<ExportTestDataWithAttrs>();
-            var result = await exporter.Export(filePath, data);
-
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                pck.Workbook.Worksheets.Count.ShouldBe(1);
-                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(1);
-            }
-        }
-
-        [Fact(DisplayName = "数据拆分多Sheet导出")]
-        public async Task SplitData_Test()
-        {
-            IExporter exporter = new ExcelExporter();
-
-            var filePath = GetTestFilePath($"{nameof(SplitData_Test)}-1.xlsx");
-
-            DeleteFile(filePath);
-
             var result = await exporter.Export(filePath,
-                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(300));
-
+                GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //验证Sheet数是否为3
-                pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //检查忽略列
-                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("数值");
-                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(101);
-            }
-
-            filePath = GetTestFilePath($"{nameof(SplitData_Test)}-2.xlsx");
-            DeleteFile(filePath);
-
-            result = await exporter.Export(filePath,
-                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(299));
-
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //验证Sheet数是否为3
-                pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //请不要使用索引（NET461和.NET Core的Sheet索引值不一致）
-                var lastSheet = pck.Workbook.Worksheets.Last();
-                lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(100);
-            }
-
-            filePath = GetTestFilePath($"{nameof(SplitData_Test)}-3.xlsx");
-            DeleteFile(filePath);
-
-            result = await exporter.Export(filePath,
-                GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(302));
-
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //验证Sheet数是否为4
-                pck.Workbook.Worksheets.Count.ShouldBe(4);
-                //请不要使用索引（NET461和.NET Core的Sheet索引值不一致）
-                var lastSheet = pck.Workbook.Worksheets.Last();
-                lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(3);
-            }
         }
 
-        [Fact(DisplayName = "头部筛选器测试")]
-        public async Task ExporterHeaderFilter_Test()
+        [Fact(DisplayName = "多语言特性导出")]
+        public async Task AttrsLocalizationExport_Test()
         {
             IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
-            #region 通过筛选器修改列名
+            ExcelBuilder.Create().WithColumnHeaderStringFunc(key =>
+            {
+                if (key.Contains("文本")) return "Text";
+
+                return "未知语言";
+            }).Build();
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "testAttrsLocalization.xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var data1 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData1>();
-            var result = await exporter.Export(filePath, data1);
+            var data = GenFu.GenFu.ListOf<AttrsLocalizationTestData>();
+            var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["D1"].Value.ShouldBe("name");
-                sheet.Dimension.Columns.ShouldBe(4);
-            }
-            #endregion
-
-            #region 通过筛选器修改忽略列
-            if (File.Exists(filePath)) File.Delete(filePath);
-            var data2 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData2>();
-            result = await exporter.Export(filePath, data2);
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Dimension.Columns.ShouldBe(5);
-            }
-            #endregion
-
         }
 
-        [Fact(DisplayName = "DataTable结合DTO导出Excel")]
+        [Fact(DisplayName = "动态列导出Excel")]
         public async Task DynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -219,45 +98,26 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
-            var dt = exportDatas.ToDataTable();
-            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
-            result.ShouldNotBeNull();
-            File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Dimension.Columns.ShouldBe(9);
-            }
-        }
 
-        [Fact(DisplayName = "DataTable导出Excel（无需定义类，支持列筛选器和表拆分）")]
-        public async Task DynamicDataTableExport_Test()
-        {
-            IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicDataTableExport_Test) + ".xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-
-            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(50);
             var dt = new DataTable();
-            //创建带列名和类型名的列
+            //2.创建带列名和类型名的列(两种方式任选其一)
             dt.Columns.Add("Text", Type.GetType("System.String"));
             dt.Columns.Add("Name", Type.GetType("System.String"));
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
-            //加个筛选器导出
-            var result = await exporter.Export(filePath, dt, new DataTableTestExporterHeaderFilter(), 10);
+
+            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //判断Sheet拆分
-                pck.Workbook.Worksheets.Count.ShouldBe(5);
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["C1"].Value.ShouldBe("数值");
-                sheet.Dimension.Columns.ShouldBe(3);
-            }
+
+            var dt2 = dt.Copy();
+            var arrResult = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(dt2);
+            arrResult.ShouldNotBeNull();
+            arrResult.Length.ShouldBeGreaterThan(0);
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + "_ByteArray.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            File.WriteAllBytes(filePath, arrResult);
+            File.Exists(filePath).ShouldBeTrue();
         }
 
         [Fact(DisplayName = "大量数据导出Excel")]
@@ -272,7 +132,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "DTO导出")]
+        [Fact(DisplayName = "ExportAsByteArray_Test")]
         public async Task ExportAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -288,7 +148,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "通过Dto导出表头")]
+        [Fact(DisplayName = "ExportHeaderAsByteArray_Test")]
         public async Task ExportHeaderAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -300,19 +160,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.ExportHeaderAsByteArray(GenFu.GenFu.New<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-            result.ToExcelExportFileInfo(filePath);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
-
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Name.ShouldBe("测试");
-                sheet.Dimension.Columns.ShouldBe(9);
-            }
         }
 
-        [Fact(DisplayName = "通过动态传值导出表头")]
+        [Fact(DisplayName = "ExportHeaderAsByteArrayWithItems_Test")]
         public async Task ExportHeaderAsByteArrayWithItems_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -320,23 +172,18 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArrayWithItems_Test)}.xlsx");
 
             DeleteFile(filePath);
-            var arr = new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" };
-            var sheetName = "Test";
-            var result = await exporter.ExportHeaderAsByteArray(arr, sheetName);
+
+            var result =
+                await exporter.ExportHeaderAsByteArray(new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" },
+                    "Test");
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-            result.ToExcelExportFileInfo(filePath);
+            File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //检查转换结果
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Name.ShouldBe(sheetName);
-                sheet.Dimension.Columns.ShouldBe(arr.Length);
-            }
+            //TODO:Excel读取并验证
         }
 
-        [Fact(DisplayName = "大数据动态列导出Excel", Skip = "时间太长，默认跳过")]
+        [Fact(DisplayName = "大数据动态列导出Excel", Skip = "太慢，默认跳过")]
         public async Task LargeDataDynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -352,14 +199,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
 
-            var result = await exporter.Export(filePath, dt, maxRowNumberOnASheet: 100000);
+            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                //判断Sheet拆分
-                pck.Workbook.Worksheets.Count.ShouldBe(12);
-            }
         }
 
         [Fact(DisplayName = "Excel模板导出教材订购明细样表")]
@@ -422,129 +264,27 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
-
-        public class Student
-        {
-            /// <summary>
-            ///     姓名
-            /// </summary>
-            public string Name { get; set; }
-            /// <summary>
-            ///     年龄
-            /// </summary>
-            public int Age { get; set; }
-            /// <summary>
-            ///     备注
-            /// </summary>
-            public string Remarks { get; set; }
-        }
-        [Fact(DisplayName = "测试导出测试")]
+        [Fact(DisplayName = "普通导出测试")]
         public async Task Export()
         {
-            IExporter exporter = new ExcelExporter();
-            var result = await exporter.Export("test.xlsx", new List<Student>()
+            IExporter exporter=new ExcelExporter();
+            var result = await exporter.Export("a.xlsx", new List<ExportTestData>()
             {
-                new Student
+                new ExportTestData()
                 {
-                    Name = "MR.A",
-                    Age = 18,
-                    Remarks = "姓名:MR.A,年龄:18岁"
+                    Name1 = "1",
+                    Name2 = "test",
+                    Name3 = "12",
+                    Name4 = "11",
                 },
-                new Student
+                new ExportTestData()
                 {
-                    Name = "MR.B",
-                    Age = 19,
-                    Remarks = "姓名:MR.B,年龄:19岁"
-                },
-                new Student
-                {
-                    Name = "MR.C",
-                    Age = 20,
-                    Remarks = "姓名:MR.C,姓名:20岁"
+                    Name1 = "1",
+                    Name2 = "test",
+                    Name3 = "12",
+                    Name4 = "11",
                 }
             });
         }
-
-        [Fact(DisplayName = "通过动态传值导出表头")]
-        public async Task ExportHeader()
-        {
-            IExporter exporter = new ExcelExporter();
-
-            var filePath = "h.xlsx";
-            var result = await exporter.ExportHeaderAsByteArray<Student>( new Student());
-            result.ToExcelExportFileInfo(filePath);
-
-        }
-        //[Fact(DisplayName = "测试导出测试")]
-        //public async Task Export()
-        //{
-        //    IExporter exporter = new ExcelExporter();
-        //    var result = await exporter.Export("test.xlsx", new List<Student>()
-        //        {
-        //            new Student
-        //            {
-        //                Name = "MR.A",
-        //                Age = 18,
-        //                Remarks = "我叫MR.A,今年18岁",
-        //                Birthday=DateTime.Now
-        //            },
-        //            new Student
-        //            {
-        //                Name = "MR.B",
-        //                Age = 19,
-        //                Remarks = "我叫MR.B,今年19岁",
-        //                Birthday=DateTime.Now
-        //            },
-        //            new Student
-        //            {
-        //                Name = "MR.C",
-        //                Age = 20,
-        //                Remarks = "我叫MR.C,今年20岁",
-        //                Birthday=DateTime.Now
-        //            }
-        //        });
-        //}
-        ///// <summary>
-        /////     学生信息
-        ///// </summary>
-        //[ExcelExporter(Name = "学生信息", TableStyle = "Light10", AutoFitAllColumn = true, MaxRowNumberOnASheet = 2,ExporterHeaderFilter = typeof(ExporterStudentHeaderFilter))]
-        //public class Student
-        //{
-        //    /// <summary>
-        //    ///     姓名
-        //    /// </summary>
-        //    [ExporterHeader(DisplayName = "姓名")]
-        //    public string Name { get; set; }
-        //    /// <summary>
-        //    ///     年龄
-        //    /// </summary>
-        //    [ExporterHeader(DisplayName = "年龄")]
-        //    public int Age { get; set; }
-        //    /// <summary>
-        //    ///     备注
-        //    /// </summary>
-        //    public string Remarks { get; set; }
-        //    /// <summary>
-        //    ///     出生日期
-        //    /// </summary>
-        //    [ExporterHeader(DisplayName = "出生日期", Format = "yyyy-mm-DD")]
-        //    public DateTime Birthday { get; set; }
-        //}
-        //public class ExporterStudentHeaderFilter : IExporterHeaderFilter
-        //{
-        //    /// <summary>
-        //    /// 表头筛选器（修改名称）
-        //    /// </summary>
-        //    /// <param name="exporterHeaderInfo"></param>
-        //    /// <returns></returns>
-        //    public ExporterHeaderInfo Filter(ExporterHeaderInfo exporterHeaderInfo)
-        //    {
-        //        if (exporterHeaderInfo.DisplayName.Equals("姓名"))
-        //        {
-        //            exporterHeaderInfo.DisplayName = "name";
-        //        }
-        //        return exporterHeaderInfo;
-        //    }
-        //}
     }
 }
