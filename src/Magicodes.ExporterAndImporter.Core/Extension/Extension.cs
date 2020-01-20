@@ -26,8 +26,16 @@ using System.Reflection.Emit;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
 {
+    /// <summary>
+    ///     扩展类
+    /// </summary>
     public static class Extension
     {
+        /// <summary>
+        ///     判断指定的字符串是null、空还是空白字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static bool IsNullOrWhiteSpace(this string str)
         {
             return string.IsNullOrWhiteSpace(str);

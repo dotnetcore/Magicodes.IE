@@ -25,6 +25,7 @@ using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -38,7 +39,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// <returns>将Entity的值转为DataTable</returns>
         private static DataTable EntityToDataTable<T>(DataTable dt, IEnumerable<T> entities)
         {
-            if (entities.Count() == 0) return dt;
+            if (!entities.Any()) return dt;
 
             var properties = typeof(T).GetProperties();
 
@@ -421,5 +422,129 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
+
+        public class Student
+        {
+            /// <summary>
+            ///     姓名
+            /// </summary>
+            public string Name { get; set; }
+            /// <summary>
+            ///     年龄
+            /// </summary>
+            public int Age { get; set; }
+            /// <summary>
+            ///     备注
+            /// </summary>
+            public string Remarks { get; set; }
+        }
+        [Fact(DisplayName = "测试导出测试")]
+        public async Task Export()
+        {
+            IExporter exporter = new ExcelExporter();
+            var result = await exporter.Export("test.xlsx", new List<Student>()
+            {
+                new Student
+                {
+                    Name = "MR.A",
+                    Age = 18,
+                    Remarks = "姓名:MR.A,年龄:18岁"
+                },
+                new Student
+                {
+                    Name = "MR.B",
+                    Age = 19,
+                    Remarks = "姓名:MR.B,年龄:19岁"
+                },
+                new Student
+                {
+                    Name = "MR.C",
+                    Age = 20,
+                    Remarks = "姓名:MR.C,姓名:20岁"
+                }
+            });
+        }
+
+        [Fact(DisplayName = "通过动态传值导出表头")]
+        public async Task ExportHeader()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = "h.xlsx";
+            var result = await exporter.ExportHeaderAsByteArray<Student>( new Student());
+            result.ToExcelExportFileInfo(filePath);
+
+        }
+        //[Fact(DisplayName = "测试导出测试")]
+        //public async Task Export()
+        //{
+        //    IExporter exporter = new ExcelExporter();
+        //    var result = await exporter.Export("test.xlsx", new List<Student>()
+        //        {
+        //            new Student
+        //            {
+        //                Name = "MR.A",
+        //                Age = 18,
+        //                Remarks = "我叫MR.A,今年18岁",
+        //                Birthday=DateTime.Now
+        //            },
+        //            new Student
+        //            {
+        //                Name = "MR.B",
+        //                Age = 19,
+        //                Remarks = "我叫MR.B,今年19岁",
+        //                Birthday=DateTime.Now
+        //            },
+        //            new Student
+        //            {
+        //                Name = "MR.C",
+        //                Age = 20,
+        //                Remarks = "我叫MR.C,今年20岁",
+        //                Birthday=DateTime.Now
+        //            }
+        //        });
+        //}
+        ///// <summary>
+        /////     学生信息
+        ///// </summary>
+        //[ExcelExporter(Name = "学生信息", TableStyle = "Light10", AutoFitAllColumn = true, MaxRowNumberOnASheet = 2,ExporterHeaderFilter = typeof(ExporterStudentHeaderFilter))]
+        //public class Student
+        //{
+        //    /// <summary>
+        //    ///     姓名
+        //    /// </summary>
+        //    [ExporterHeader(DisplayName = "姓名")]
+        //    public string Name { get; set; }
+        //    /// <summary>
+        //    ///     年龄
+        //    /// </summary>
+        //    [ExporterHeader(DisplayName = "年龄")]
+        //    public int Age { get; set; }
+        //    /// <summary>
+        //    ///     备注
+        //    /// </summary>
+        //    public string Remarks { get; set; }
+        //    /// <summary>
+        //    ///     出生日期
+        //    /// </summary>
+        //    [ExporterHeader(DisplayName = "出生日期", Format = "yyyy-mm-DD")]
+        //    public DateTime Birthday { get; set; }
+        //}
+        //public class ExporterStudentHeaderFilter : IExporterHeaderFilter
+        //{
+        //    /// <summary>
+        //    /// 表头筛选器（修改名称）
+        //    /// </summary>
+        //    /// <param name="exporterHeaderInfo"></param>
+        //    /// <returns></returns>
+        //    public ExporterHeaderInfo Filter(ExporterHeaderInfo exporterHeaderInfo)
+        //    {
+        //        if (exporterHeaderInfo.DisplayName.Equals("姓名"))
+        //        {
+        //            exporterHeaderInfo.DisplayName = "name";
+        //        }
+        //        return exporterHeaderInfo;
+        //    }
+        //}
     }
 }
