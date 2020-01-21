@@ -45,9 +45,9 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-
-            if (exporterAttribute.IsWriteHtml)
-                File.WriteAllText(fileName + ".html", htmlString);
+            if (exporterAttribute != null)
+                if (exporterAttribute.IsWriteHtml)
+                    File.WriteAllText(fileName + ".html", htmlString);
 
             var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
 
@@ -98,21 +98,21 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 GlobalSettings =
                 {
                     ColorMode = ColorMode.Color,
-                    Orientation = pdfExporterAttribute.Orientation,
-                    PaperSize = pdfExporterAttribute.PaperKind,
+                    Orientation = pdfExporterAttribute?.Orientation,
+                    PaperSize = pdfExporterAttribute?.PaperKind,
                     Out = fileName,
-                    DocumentTitle = pdfExporterAttribute.Name
+                    DocumentTitle = pdfExporterAttribute?.Name
                 },
                 Objects =
                 {
                     new ObjectSettings
                     {
-                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
+                        PagesCount = pdfExporterAttribute?.IsEnablePagesCount,
                         HtmlContent = htmlString,
-                        WebSettings = {DefaultEncoding = pdfExporterAttribute.Encoding.BodyName},
-                        Encoding = pdfExporterAttribute.Encoding,
-                        HeaderSettings = pdfExporterAttribute.HeaderSettings,
-                        FooterSettings = pdfExporterAttribute.FooterSettings
+                        WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
+                        Encoding = pdfExporterAttribute?.Encoding,
+                        HeaderSettings = pdfExporterAttribute?.HeaderSettings,
+                        FooterSettings = pdfExporterAttribute?.FooterSettings
                     }
                 }
             };
