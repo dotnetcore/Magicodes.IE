@@ -72,9 +72,9 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
-
-            if (exporterAttribute.IsWriteHtml)
-                File.WriteAllText(fileName + ".html", htmlString);
+            if (exporterAttribute != null)
+                if (exporterAttribute.IsWriteHtml)
+                    File.WriteAllText(fileName + ".html", htmlString);
 
             var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
             PdfConverter.Convert(doc);
@@ -107,7 +107,6 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 {
                     new ObjectSettings
                     {
-                        PagesCount = pdfExporterAttribute?.IsEnablePagesCount,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
                         Encoding = pdfExporterAttribute?.Encoding,
