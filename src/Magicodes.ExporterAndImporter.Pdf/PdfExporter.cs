@@ -108,10 +108,10 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     new ObjectSettings
                     {
                         HtmlContent = htmlString,
-                        WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
-                        Encoding = pdfExporterAttribute?.Encoding,
-                        HeaderSettings = pdfExporterAttribute?.HeaderSettings,
-                        FooterSettings = pdfExporterAttribute?.FooterSettings
+                        //WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
+                        //Encoding = pdfExporterAttribute?.Encoding,
+                        //HeaderSettings = pdfExporterAttribute?.HeaderSettings,
+                        //FooterSettings = pdfExporterAttribute?.FooterSettings
                     }
                 }
             };
