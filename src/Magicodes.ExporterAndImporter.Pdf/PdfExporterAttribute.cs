@@ -38,24 +38,24 @@ namespace Magicodes.ExporterAndImporter.Pdf
         ///// </summary>
         //public bool? IsEnablePagesCount { get; set; }
 
-        /// <summary>
-        ///     编码，默认UTF8
-        /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        ///// <summary>
+        /////     编码，默认UTF8
+        ///// </summary>
+        //public Encoding Encoding { get; set; } = Encoding.UTF8;
 
         /// <summary>
         ///     是否输出HTML模板
         /// </summary>
         public bool IsWriteHtml { get; set; }
 
-        /// <summary>
-        ///     头部设置
-        /// </summary>
-        public HeaderSettings HeaderSettings { get; set; }
+        ///// <summary>
+        /////     头部设置
+        ///// </summary>
+        //public HeaderSettings HeaderSettings { get; set; }
 
-        /// <summary>
-        ///     底部设置
-        /// </summary>
-        public FooterSettings FooterSettings { get; set; }
+        ///// <summary>
+        /////     底部设置
+        ///// </summary>
+        //public FooterSettings FooterSettings { get; set; }
     }
 }
