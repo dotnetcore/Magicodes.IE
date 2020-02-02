@@ -29,12 +29,12 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         ///     头部字体大小
         /// </summary>
-        public float HeaderFontSize { set; get; }
+        public float? HeaderFontSize { set; get; }
 
         /// <summary>
         ///     正文字体大小
         /// </summary>
-        public float FontSize { set; get; }
+        public float? FontSize { set; get; }
 
         /// <summary>
         /// 一个Sheet最大允许的行数，设置了之后将输出多个Sheet
