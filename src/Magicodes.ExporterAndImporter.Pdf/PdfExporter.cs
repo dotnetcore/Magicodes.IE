@@ -106,6 +106,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 {
                     new ObjectSettings
                     {
+                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
                         HtmlContent = htmlString,
                         WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
                         Encoding = pdfExporterAttribute?.Encoding,
