@@ -17,6 +17,7 @@ using System.IO;
 using System.Threading.Tasks;
 using DinkToPdf;
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
 
@@ -45,9 +46,8 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
-            if (exporterAttribute != null)
-                if (exporterAttribute.IsWriteHtml)
-                    File.WriteAllText(fileName + ".html", htmlString);
+            if (exporterAttribute.IsWriteHtml)
+                File.WriteAllText(fileName + ".html", htmlString);
 
             var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
 
@@ -72,9 +72,8 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportByTemplate(data, htmlTemplate);
-            if (exporterAttribute != null)
-                if (exporterAttribute.IsWriteHtml)
-                    File.WriteAllText(fileName + ".html", htmlString);
+            if (exporterAttribute.IsWriteHtml)
+                File.WriteAllText(fileName + ".html", htmlString);
 
             var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
             PdfConverter.Convert(doc);
@@ -108,10 +107,10 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     new ObjectSettings
                     {
                         HtmlContent = htmlString,
-                        //WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
-                        //Encoding = pdfExporterAttribute?.Encoding,
-                        //HeaderSettings = pdfExporterAttribute?.HeaderSettings,
-                        //FooterSettings = pdfExporterAttribute?.FooterSettings
+                        WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
+                        Encoding = pdfExporterAttribute?.Encoding,
+                        HeaderSettings = pdfExporterAttribute?.HeaderSettings,
+                        FooterSettings = pdfExporterAttribute?.FooterSettings
                     }
                 }
             };
@@ -126,17 +125,12 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <returns></returns>
         private static PdfExporterAttribute GetExporterAttribute<T>() where T : class
         {
-            var exporterTableAttributes =
-                typeof(T).GetCustomAttributes(typeof(PdfExporterAttribute), true) as PdfExporterAttribute[];
-            if (exporterTableAttributes != null && exporterTableAttributes.Length > 0)
-                return exporterTableAttributes[0];
+            var type = typeof(T);
+            var exporterTableAttribute = type.GetAttribute<PdfExporterAttribute>(true);
+            if (exporterTableAttribute != null)
+                return exporterTableAttribute;
 
-            var exporterAttributes =
-                typeof(T).GetCustomAttributes(typeof(ExporterAttribute), true) as ExporterAttribute[];
-
-            if (exporterAttributes == null || exporterAttributes.Length <= 0) return null;
-
-            var export = exporterAttributes[0];
+            var export = type.GetAttribute<ExporterAttribute>(true) ?? new PdfExporterAttribute();
             return new PdfExporterAttribute
             {
                 FontSize = export.FontSize,
