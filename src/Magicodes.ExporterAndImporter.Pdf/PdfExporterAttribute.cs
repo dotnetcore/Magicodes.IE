@@ -11,6 +11,7 @@
 // 
 // ======================================================================
 
+using System;
 using System.Text;
 using DinkToPdf;
 using Magicodes.ExporterAndImporter.Core;
@@ -32,29 +33,29 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// </summary>
         public PaperKind PaperKind { get; set; } = PaperKind.A4;
 
-        /// <summary>
-        ///     是否启用分页数
-        /// </summary>
-        public bool? IsEnablePagesCount { get; set; }
+        ///// <summary>
+        /////     是否启用分页数
+        ///// </summary>
+        //public bool? IsEnablePagesCount { get; set; }
 
-        /// <summary>
-        ///     编码，默认UTF8
-        /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        ///// <summary>
+        /////     编码，默认UTF8
+        ///// </summary>
+        //public Encoding Encoding { get; set; } = Encoding.UTF8;
 
         /// <summary>
         ///     是否输出HTML模板
         /// </summary>
         public bool IsWriteHtml { get; set; }
 
-        /// <summary>
-        ///     头部设置
-        /// </summary>
-        public HeaderSettings HeaderSettings { get; set; }
+        ///// <summary>
+        /////     头部设置
+        ///// </summary>
+        //public HeaderSettings HeaderSettings { get; set; }
 
-        /// <summary>
-        ///     底部设置
-        /// </summary>
-        public FooterSettings FooterSettings { get; set; }
+        ///// <summary>
+        /////     底部设置
+        ///// </summary>
+        //public FooterSettings FooterSettings { get; set; }
     }
 }

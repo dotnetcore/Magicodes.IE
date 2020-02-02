@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
 
             foreach (var propertyInfo in typeof(TData).GetProperties())
             {
-                var exporterHeader = propertyInfo.PropertyType.GetAttribute<ExporterHeaderAttribute>() ??
+                var exporterHeader = propertyInfo.GetAttribute<ExporterHeaderAttribute>() ??
                                      new ExporterHeaderAttribute
                                      {
                                          DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name
