@@ -30,5 +30,11 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 最大允许导入的函数
         /// </summary>
         public int MaxCount = 50000;
+
+
+        /// <summary>
+        /// 导入结果筛选器
+        /// </summary>
+        public Type ImportResultFilter { get; set; }
     }
 }

@@ -28,7 +28,8 @@
 
 7. [Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）
 
-8. 其他教程见下文或单元测试
+8. Excel导入之结果筛选器（待补充）
+9. 其他教程见下文或单元测试
 
 更新历史见下文。
 
@@ -175,6 +176,8 @@
 - [ ] 导入导出支持指定位置[CellAddress(Row = 2, Column = 2)]（[#19](https://github.com/dotnetcore/Magicodes.IE/issues/19)）
 - [ ] 生成的导入模板支持数据验证
 - [ ] 优化包依赖，拆解项目
+- [x] 导入结果筛选器
+- [ ] 导入列头筛选器
 
 ### 联系我们
 
@@ -203,6 +206,11 @@
 
 
 ### 更新历史
+
+#### 2019.02.04
+- 【Nuget】版本更新到2.0.0-beta2
+- 【导入】支持导入结果筛选器——IImportResultFilter，可用于多语言场景的错误标注，具体使用见单元测试【ImportResultFilter_Test】
+- 【其他】修改IExporterHeaderFilter的命名空间为Magicodes.ExporterAndImporter.Core.Filters
 
 #### 2019.01.18
 - 【Nuget】版本更新到2.0.0-beta1

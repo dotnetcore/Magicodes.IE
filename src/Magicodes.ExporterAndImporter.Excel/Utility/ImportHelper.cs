@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -63,6 +64,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             HeaderRowIndex = importerAttribute.HeaderRowIndex,
                             MaxCount = importerAttribute.MaxCount,
+                            ImportResultFilter = importerAttribute.ImportResultFilter
                         };
                     }
                     else
@@ -85,7 +87,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     导入结果
         /// </summary>
-        protected ImportResult<T> ImportResult { get; set; }
+        internal ImportResult<T> ImportResult { get; set; }
 
         /// <summary>
         ///     列头定义
@@ -159,6 +161,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                         #endregion
 
+                        //执行结果筛选器
+                        if (ExcelImporterSettings.ImportResultFilter != null)
+                        {
+                            var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
+
+                            if (filter == null)
+                            {
+                                throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
+                            }
+                            ImportResult = filter.Filter(ImportResult);
+                        }
+
+                        //生成Excel错误标注
                         LabelingError(excelPackage);
                     }
                 }
@@ -259,7 +274,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     标注错误
         /// </summary>
         /// <param name="excelPackage"></param>
-        protected virtual void LabelingError(ExcelPackage excelPackage)
+        internal virtual void LabelingError(ExcelPackage excelPackage)
         {
             //是否标注错误
             if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)

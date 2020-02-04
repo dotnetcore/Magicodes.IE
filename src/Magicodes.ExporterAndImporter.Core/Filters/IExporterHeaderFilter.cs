@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Magicodes.ExporterAndImporter.Core
+namespace Magicodes.ExporterAndImporter.Core.Filters
 {
     /// <summary>
     /// 列头过滤
