@@ -266,9 +266,12 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ImportResultFilter_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
-            var result = await Importer.Import<ImportResultFilterDataDto1>(filePath);
+            var labelingFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ImportResultFilter_Test)}.xlsx");
+            var result = await Importer.Import<ImportResultFilterDataDto1>(filePath, labelingFilePath);
+            File.Exists(labelingFilePath).ShouldBeTrue();
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
+            result.Exception.ShouldBeNull();
 
             result.TemplateErrors.Count.ShouldBe(0);
 
@@ -279,6 +282,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
                 p.FieldErrors.Values.Contains("Duplicate data exists, please check! Where:5，6。"));
+
+            //TODO:检查标注
 
         }
 

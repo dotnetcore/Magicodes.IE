@@ -39,9 +39,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         /// </summary>
         /// <param name="filePath"></param>
-        public ImportHelper(string filePath = null)
+        /// <param name="labelingFilePath"></param>
+        public ImportHelper(string filePath = null, string labelingFilePath = null)
         {
             FilePath = filePath;
+            LabelingFilePath = labelingFilePath;
         }
 
         /// <summary>
@@ -83,6 +85,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入文件路径
         /// </summary>
         protected string FilePath { get; set; }
+
+        /// <summary>
+        ///     标注文件路径
+        /// </summary>
+        public string LabelingFilePath { get; }
 
         /// <summary>
         ///     导入结果
@@ -293,7 +300,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
 
                 var ext = Path.GetExtension(FilePath);
-                excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
+                var filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
+                excelPackage.SaveAs(new FileInfo(filePath));
             }
         }
 

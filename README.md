@@ -207,6 +207,11 @@
 
 ### 更新历史
 
+#### 2019.02.05
+- 【Nuget】版本更新到2.0.0-beta3
+- 【导入】支持传入标注文件路径，不传参则默认同目录"_"后缀保存
+- 【导入】完善单元测试【ImportResultFilter_Test】
+
 #### 2019.02.04
 - 【Nuget】版本更新到2.0.0-beta2
 - 【导入】支持导入结果筛选器——IImportResultFilter，可用于多语言场景的错误标注，具体使用见单元测试【ImportResultFilter_Test】

@@ -18,6 +18,7 @@ using System.Linq;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -35,19 +36,22 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
             {
                 5,6
             };
-            var items = importResult.RowErrors.Where(p => errorRows.Contains(p.RowIndex));
-            foreach (var (item, fieldError) in from item in items
-                                               from fieldError in item.FieldErrors
-                                               select (item, fieldError))
-            {
-                item.FieldErrors[fieldError.Key] = fieldError.Value.Replace("存在数据重复，请检查！所在行：", "Duplicate data exists, please check! Where:");
-            }
+            var items = importResult.RowErrors.Where(p => errorRows.Contains(p.RowIndex)).ToList();
 
+            for (int i = 0; i < items.Count; i++)
+            {
+                for (int j = 0; j < items[i].FieldErrors.Keys.Count; j++)
+                {
+                    var key = items[i].FieldErrors.Keys.ElementAt(j);
+                    var value = items[i].FieldErrors[key];
+                    items[i].FieldErrors[key] = value?.Replace("存在数据重复，请检查！所在行：", "Duplicate data exists, please check! Where:");
+                }
+            }
             return importResult;
         }
     }
 
-    [Importer(ImportResultFilter = typeof(ImportResultFilterTest))]
+    [ExcelImporter(ImportResultFilter = typeof(ImportResultFilterTest), IsLabelingError = true)]
     public class ImportResultFilterDataDto1
     {
         /// <summary>
