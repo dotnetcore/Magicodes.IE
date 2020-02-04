@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Core

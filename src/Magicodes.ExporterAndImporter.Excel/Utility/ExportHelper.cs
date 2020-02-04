@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using Magicodes.ExporterAndImporter.Core.Filters;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {

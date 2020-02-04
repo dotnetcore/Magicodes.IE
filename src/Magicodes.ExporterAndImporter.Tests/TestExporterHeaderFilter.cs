@@ -1,4 +1,4 @@
-﻿using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using System;
 using System.Collections.Generic;
