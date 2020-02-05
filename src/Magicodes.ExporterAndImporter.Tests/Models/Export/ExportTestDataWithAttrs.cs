@@ -12,11 +12,30 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Filters;
+using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
+    public class DataTableTestExporterHeaderFilter : IExporterHeaderFilter
+    {
+        /// <summary>
+        /// 表头筛选器（修改忽略列）
+        /// </summary>
+        /// <param name="exporterHeaderInfo"></param>
+        /// <returns></returns>
+        public ExporterHeaderInfo Filter(ExporterHeaderInfo exporterHeaderInfo)
+        {
+            if (exporterHeaderInfo.DisplayName.Equals("Number"))
+            {
+                exporterHeaderInfo.DisplayName = "数值";
+            }
+            return exporterHeaderInfo;
+        }
+    }
+
     [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
     public class ExportTestDataWithAttrs
     {
