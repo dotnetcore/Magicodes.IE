@@ -142,7 +142,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 {
                                     var key = validationResult.MemberNames.First();
                                     var column = ImporterHeaderInfos.FirstOrDefault(a => a.PropertyName == key);
-                                    if (column != null) key = column.ExporterHeader.Name;
+                                    if (column != null) key = column.Header.Name;
 
                                     var value = validationResult.ErrorMessage;
                                     if (dataRowError.FieldErrors.ContainsKey(key))
@@ -197,7 +197,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private void RepeatDataCheck()
         {
             //获取需要检查重复数据的列
-            var notAllowRepeatCols = ImporterHeaderInfos.Where(p => p.ExporterHeader.IsAllowRepeat == false).ToList();
+            var notAllowRepeatCols = ImporterHeaderInfos.Where(p => p.Header.IsAllowRepeat == false).ToList();
             if (notAllowRepeatCols.Count == 0) return;
 
             var rowIndex = ExcelImporterSettings.HeaderRowIndex;
@@ -239,7 +239,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         var dataRowError = GetDataRowErrorInfo(repeatRow);
 
-                        var key = notAllowRepeatCol.ExporterHeader?.Name ??
+                        var key = notAllowRepeatCol.Header?.Name ??
                                   notAllowRepeatCol.PropertyName;
                         var error = $"存在数据重复，请检查！所在行：{errorIndexsStr}。";
                         if (dataRowError.FieldErrors.ContainsKey(key))
@@ -268,11 +268,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 foreach (var item in ImportResult.RowErrors)
                     foreach (var field in item.FieldErrors)
                     {
-                        var col = ImporterHeaderInfos.First(p => p.ExporterHeader.Name == field.Key);
-                        var cell = worksheet.Cells[item.RowIndex, col.ExporterHeader.ColumnIndex];
+                        var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
+                        var cell = worksheet.Cells[item.RowIndex, col.Header.ColumnIndex];
                         cell.Style.Font.Color.SetColor(Color.Red);
                         cell.Style.Font.Bold = true;
-                        cell.AddComment(string.Join(",", field.Value), col.ExporterHeader.Author);
+                        cell.AddComment(string.Join(",", field.Value), col.Header.Author);
                     }
 
                 var ext = Path.GetExtension(FilePath);
@@ -336,7 +336,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 foreach (var item in ImporterHeaderInfos)
-                    if (!excelHeaders.ContainsKey(item.ExporterHeader.Name))
+                    if (!excelHeaders.ContainsKey(item.Header.Name))
                     {
                         //仅验证必填字段
                         if (item.IsRequired)
@@ -345,7 +345,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             {
                                 ErrorLevel = ErrorLevels.Error,
                                 ColumnName = null,
-                                RequireColumnName = item.ExporterHeader.Name,
+                                RequireColumnName = item.Header.Name,
                                 Message = "当前导入模板中未找到此字段！"
                             });
                             continue;
@@ -355,7 +355,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             ErrorLevel = ErrorLevels.Warning,
                             ColumnName = null,
-                            RequireColumnName = item.ExporterHeader.Name,
+                            RequireColumnName = item.Header.Name,
                             Message = "当前导入模板中未找到此字段！"
                         });
                     }
@@ -363,8 +363,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         item.IsExist = true;
                         //设置列索引
-                        if (item.ExporterHeader.ColumnIndex == 0)
-                            item.ExporterHeader.ColumnIndex = excelHeaders[item.ExporterHeader.Name];
+                        if (item.Header.ColumnIndex == 0)
+                            item.Header.ColumnIndex = excelHeaders[item.Header.Name];
                     }
             }
             catch (Exception ex)
@@ -412,7 +412,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     IsRequired = propertyInfo.IsRequired(),
                     PropertyName = propertyInfo.Name,
-                    ExporterHeader = importerHeaderAttribute
+                    Header = importerHeaderAttribute
                 };
                 ImporterHeaderInfos.Add(colHeader);
 
@@ -473,14 +473,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             for (var i = 0; i < ImporterHeaderInfos.Count; i++)
             {
                 //忽略
-                if (ImporterHeaderInfos[i].ExporterHeader.IsIgnore) continue;
+                if (ImporterHeaderInfos[i].Header.IsIgnore) continue;
 
                 worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Value =
-                    ImporterHeaderInfos[i].ExporterHeader.Name;
-                if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].ExporterHeader.Description))
+                    ImporterHeaderInfos[i].Header.Name;
+                if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].Header.Description))
                     worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].AddComment(
-                        ImporterHeaderInfos[i].ExporterHeader.Description,
-                        ImporterHeaderInfos[i].ExporterHeader.Author);
+                        ImporterHeaderInfos[i].Header.Description,
+                        ImporterHeaderInfos[i].Header.Author);
                 //如果必填，则列头标红
                 if (ImporterHeaderInfos[i].IsRequired)
                     worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
@@ -539,7 +539,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         var col = ImporterHeaderInfos.First(a => a.PropertyName == propertyInfo.Name);
 
-                        var cell = worksheet.Cells[rowIndex, col.ExporterHeader.ColumnIndex];
+                        var cell = worksheet.Cells[rowIndex, col.Header.ColumnIndex];
                         try
                         {
                             var cellValue = cell.Value?.ToString();
@@ -593,9 +593,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 case "String":
                                     //TODO:进一步优化
                                     //移除所有的空格，包括中间的空格
-                                    if (col.ExporterHeader.FixAllSpace)
+                                    if (col.Header.FixAllSpace)
                                         propertyInfo.SetValue(dataItem, cellValue?.Replace(" ", string.Empty));
-                                    else if (col.ExporterHeader.AutoTrim)
+                                    else if (col.Header.AutoTrim)
                                         propertyInfo.SetValue(dataItem, cellValue?.Trim());
                                     else
                                         propertyInfo.SetValue(dataItem, cellValue);
@@ -843,7 +843,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             string errorMessage = "数据格式无效！")
         {
             var rowError = GetDataRowErrorInfo(rowIndex);
-            rowError.FieldErrors.Add(importerHeaderInfo.ExporterHeader.Name, errorMessage);
+            rowError.FieldErrors.Add(importerHeaderInfo.Header.Name, errorMessage);
         }
 
         /// <summary>

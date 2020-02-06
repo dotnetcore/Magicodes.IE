@@ -13,7 +13,7 @@
 
 using System;
 
-namespace Magicodes.ExporterAndImporter.Excel
+namespace Magicodes.ExporterAndImporter.Core
 {
     /// <summary>
     ///     值映射

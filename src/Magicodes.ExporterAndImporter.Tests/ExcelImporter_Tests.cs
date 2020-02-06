@@ -266,9 +266,12 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ImportResultFilter_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
-            var result = await Importer.Import<ImportResultFilterDataDto1>(filePath);
+            var labelingFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ImportResultFilter_Test)}.xlsx");
+            var result = await Importer.Import<ImportResultFilterDataDto1>(filePath, labelingFilePath);
+            File.Exists(labelingFilePath).ShouldBeTrue();
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
+            result.Exception.ShouldBeNull();
 
             result.TemplateErrors.Count.ShouldBe(0);
 
@@ -279,6 +282,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
                 p.FieldErrors.Values.Contains("Duplicate data exists, please check! Where:5，6。"));
+
+            //TODO:检查标注
 
         }
 
@@ -294,6 +299,20 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+
         }
 
         [Fact(DisplayName = "模板错误检测")]
@@ -324,13 +343,42 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult.Exception.ShouldNotBeNull();
             //默认最大5万
             importResult.Exception.Message.ShouldContain("最大允许导入条数不能超过");
-            
+
             if (File.Exists(filePath)) File.Delete(filePath);
             result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(50000));
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             importResult = await Importer.Import<ExportTestData>(filePath);
             importResult.HasError.ShouldBeFalse();
+        }
+
+
+        [Fact(DisplayName = "导入列头筛选器测试")]
+        public async Task ImportHeaderFilter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "导入列头筛选器测试.xlsx");
+            var import = await Importer.Import<ImportHeaderFilterDataDto1>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+
         }
     }
 }

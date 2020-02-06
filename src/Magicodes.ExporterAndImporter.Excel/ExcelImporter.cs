@@ -60,15 +60,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
+        /// <param name="labelingFilePath"></param>
         /// <returns></returns>
-        public Task<ImportResult<T>> Import<T>(string filePath) where T : class, new()
+        public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new()
         {
-            using (var importer = new ImportHelper<T>(filePath))
+            using (var importer = new ImportHelper<T>(filePath, labelingFilePath))
             {
                 return importer.Import();
             }
         }
-
 
         /// <summary>
         /// 导入多个Sheet数据
@@ -114,8 +114,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="TSheet">Sheet类</typeparam>
         /// <param name="filePath"></param>
         /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型TSheet</returns>
-        public async Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T,TSheet>(string filePath) 
-            where T : class, new() where TSheet:class,new()
+        public async Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T, TSheet>(string filePath)
+            where T : class, new() where TSheet : class, new()
         {
             if (string.IsNullOrEmpty(filePath))
             {
@@ -139,11 +139,11 @@ namespace Magicodes.ExporterAndImporter.Excel
                         throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
                     }
                     var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType);
-                    var tResult =new ImportResult<TSheet>();
+                    var tResult = new ImportResult<TSheet>();
                     tResult.Data = new List<TSheet>();
                     if (result.Data.Count > 0)
                     {
-                        foreach(var item in result.Data)
+                        foreach (var item in result.Data)
                         {
                             tResult.Data.Add((TSheet)item);
                         }

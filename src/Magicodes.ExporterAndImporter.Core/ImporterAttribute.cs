@@ -34,7 +34,14 @@ namespace Magicodes.ExporterAndImporter.Core
 
         /// <summary>
         /// 导入结果筛选器
+        /// 必须实现【IExporterHeaderFilter】
         /// </summary>
         public Type ImportResultFilter { get; set; }
+
+        /// <summary>
+        /// 导入列头筛选器
+        /// 必须实现【IImportHeaderFilter】
+        /// </summary>
+        public Type ImportHeaderFilter { get; set; }
     }
 }

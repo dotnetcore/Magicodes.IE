@@ -41,8 +41,9 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
+        /// <param name="labelingFilePath">标注文件路径</param>
         /// <returns></returns>
-        Task<ImportResult<T>> Import<T>(string filePath) where T : class, new();
+        Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new();
 
         /// <summary>
         /// 导入多个Sheet数据

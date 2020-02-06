@@ -34,7 +34,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     列属性
         /// </summary>
-        public ImporterHeaderAttribute ExporterHeader { get; set; }
+        public ImporterHeaderAttribute Header { get; set; }
 
         /// <summary>
         /// </summary>
