@@ -764,7 +764,7 @@ Dockerfile Demo
 
 ```bash
 
-    FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+    FROM ccr.ccs.tencentyun.com/magicodes/aspnetcore-runtime:2.2 AS base
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
     RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
@@ -804,3 +804,15 @@ Dockerfile Demo
 	RUN apt-get update && apt-get install -y fontconfig
 	COPY /simsun.ttc /usr/share/fonts/simsun.ttc
 ```
+
+
+
+注意，以上基础镜像使用：ccr.ccs.tencentyun.com/magicodes/aspnetcore-runtime:2.2 ,该镜像GitHub地址：<https://github.com/xin-lai/aspnetcore-docker>。
+
+
+推荐理由：
+
+* 加快镜像构建和拉取速度，加速CI\CD构建以及提高开发体验
+* 时区默认设置为东八区，见“ENV TZ=Asia/Shanghai”
+* 默认安装了libgdiplus等库，以便支持Excel导入导出
+* 目前提供了腾讯云的公共镜像和hub.docker的公共镜像，大家可以按需选择
