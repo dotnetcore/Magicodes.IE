@@ -114,7 +114,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         {
             var target = new Interpreter();
             target.SetVariable("data", Data, typeof(T));
-            
+
             //表格渲染参数
             var tbParameters = new[] {
                 //new Parameter("data", typeof(T)),
@@ -152,29 +152,47 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 
                 var tableGroups = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Table)
                     .GroupBy(p => p.TableKey);
-
-
+                
+                var insertRows = 0;
                 foreach (var tableGroup in tableGroups)
                 {
                     var tableKey = tableGroup.Key;
                     //TODO:处理异常“No property or field”
                     var rowCount = target.Eval<int>($"data.{tableKey}.Count");
-                    if (rowCount == 0) return;
 
                     Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
                     var isFirst = true;
-                    foreach (var item in tableGroup)
+                    foreach (var col in tableGroup)
                     {
-                        var address = new ExcelAddressBase(item.Address);
+                        var address = new ExcelAddressBase(col.Address);
+                        if (rowCount == 0)
+                        {
+                            sheet.Cells[address.Start.Row, address.Start.Column].Value = string.Empty;
+                            continue;
+                        }
                         //TODO:支持同一行多个表格
+                        //行数大于1时需要插入行
                         if (isFirst && rowCount > 1)
                         {
                             //插入行
-                            sheet.InsertRow(address.Start.Row + 1, rowCount - 1, address.Start.Row);
-                        }
-                        isFirst = false;
+                            //插入的目标行号
+                            var targetRow = address.Start.Row + 1;
+                            //插入
+                            var numRowsToInsert = rowCount - 1;
+                            var refRow = address.Start.Row + insertRows;
+                            //sheet.InsertRow(targetRow, numRowsToInsert, refRow);
+                            sheet.InsertRow(targetRow, numRowsToInsert);
+                            //EPPlus的问题。修复如果存在合并的单元格，但是在新插入的行无法生效的问题，具体见 https://stackoverflow.com/questions/31853046/epplus-copy-style-to-a-range/34299694#34299694
+                            for (var i = 0; i < numRowsToInsert; i++)
+                            {
+                                sheet.Cells[String.Format("{0}:{0}", refRow)].Copy(sheet.Cells[String.Format("{0}:{0}", targetRow + i)]);
+                                //sheet.Row(refRow).StyleID = sheet.Row(targetRow + i).StyleID;
+                            }
 
-                        var cellString = item.CellString;
+                        }
+
+
+                        var cellString = col.CellString;
                         if (cellString.Contains("{{Table>>"))
                             //{{ Table >> BookInfo | RowNo}}
                             cellString = "{{" + cellString.Split('|')[1].Trim();
@@ -199,9 +217,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         for (var i = 0; i < rowCount; i++)
                         {
                             var result = cellWriteFunc.Invoke(i);
-                            sheet.Cells[address.Start.Row + i, address.Start.Column].Value = result;
+                            sheet.Cells[address.Start.Row + i + insertRows, address.Start.Column].Value = result;
+                        }
+
+                        if (isFirst)
+                        {
+                            isFirst = false;
                         }
                     }
+                    //表格渲染完成后更新插入的行数
+                    insertRows += rowCount - 1;
                 }
 
                 #endregion

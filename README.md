@@ -210,6 +210,11 @@
 
 ### 更新历史
 
+#### 2019.02.11
+- 【Nuget】版本更新到2.0.0
+- 【导出】Excel模板导出修复多个Table渲染以及合并单元格渲染的问题，具体见单元测试“ExportByTemplate_Test1”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/34>）。
+- 【导出】完善模板导出的单元测试，针对导出结果添加渲染检查，确保所有单元格均已渲染。
+
 #### 2019.02.05
 - 【Nuget】版本更新到2.0.0-beta4
 - 【导入】支持列筛选器（需实现接口【IImportHeaderFilter】），可用于兼容多语言导入等场景，具体见单元测试【ImportHeaderFilter_Test】
