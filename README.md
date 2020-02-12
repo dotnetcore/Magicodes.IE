@@ -4,6 +4,8 @@
 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 
+[Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
+
 ### 注意
 
 - Excel导入不支持“.xls”文件，即不支持Excel97-2003。
@@ -168,7 +170,7 @@
 - [ ] 表头样式设置
 - [x] 自定义模板导出
   - [x] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
-- [ ] 加强值映射序列，比如支持方法、Dto接口的方式来获取
+- [x] 加强值映射序列，比如支持方法、Dto接口的方式来获取
 - [ ] 生成导入模板时必填项支持自定义样式配置
 - [ ] CSV支持
 - [ ] 导入结果支持生成HTML输出
@@ -815,4 +817,4 @@ Dockerfile Demo
 * 加快镜像构建和拉取速度，加速CI\CD构建以及提高开发体验
 * 时区默认设置为东八区，见“ENV TZ=Asia/Shanghai”
 * 默认安装了libgdiplus等库，以便支持Excel导入导出
-* 目前提供了腾讯云的公共镜像和hub.docker的公共镜像，大家可以按需选择
+* 目前提供了腾讯云的公共镜像和hub.docker的公共镜像，大家可以按需
