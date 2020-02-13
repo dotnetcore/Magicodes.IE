@@ -25,6 +25,7 @@ using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -382,6 +383,103 @@ namespace Magicodes.ExporterAndImporter.Tests
                         new BookInfo(3, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
                     }),
                 tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //确保所有的转换均已完成
+                sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+            }
+        }
+
+        /// <summary>
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/34
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "Excel模板导出测试（issues#34）")]
+        public async Task ExportByTemplate_Test1()
+        {
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "template.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Test1) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var airCompressors = new List<AirCompressor>
+            {
+                new AirCompressor()
+                {
+                    Name = "1#",
+                    Manufactor = "111",
+                    ExhaustPressure = "0",
+                    ExhaustTemperature = "66.7-95",
+                    RunningTime = "35251",
+                    WarningError = "正常",
+                    Status = "开机"
+                },
+                new AirCompressor()
+                {
+                    Name = "2#",
+                    Manufactor = "222",
+                    ExhaustPressure = "1",
+                    ExhaustTemperature = "90.7-95",
+                    RunningTime = "2222",
+                    WarningError = "正常",
+                    Status = "开机"
+                }
+            };
+
+            var afterProcessings = new List<AfterProcessing>
+            {
+                new AfterProcessing()
+                {
+                    Name = "1#abababa",
+                    Manufactor = "杭州立山",
+                    RunningTime = "NaN",
+                    WarningError = "故障",
+                    Status = "停机"
+                }
+            };
+
+            var suggests = new List<Suggest>
+            {
+                new Suggest()
+                {
+                    Number = 1,
+                    Description = "故障停机",
+                    SuggestMessage = "顾问团队远程协助"
+                }
+            };
+
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath,
+                    new ReportInformation()
+                    {
+                        Contacts = "11112",
+                        ContactsNumber = "13642666666",
+                        CustomerName = "ababace",
+                        Date = DateTime.Now.ToString("yyyy年MM月dd日"),
+                        SystemExhaustPressure = "0.54-0.62",
+                        SystemDewPressure = "-0.63--77.5",
+                        SystemDayFlow = "201864",
+                        AirCompressors = airCompressors,
+                        AfterProcessings = afterProcessings,
+                        Suggests = suggests,
+                        SystemPressureHisotries = new List<SystemPressureHisotry>()
+                    },
+                    tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //确保所有的转换均已完成
+                sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+            }
         }
 
         [Fact(DisplayName = "Excel模板大量导出")]

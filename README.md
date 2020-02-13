@@ -1,8 +1,10 @@
 # Magicodes.IE
 
-导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
+导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf和Html。
 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
+
+[Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
 ### 注意
 
@@ -168,7 +170,7 @@
 - [ ] 表头样式设置
 - [x] 自定义模板导出
   - [x] Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）
-- [ ] 加强值映射序列，比如支持方法、Dto接口的方式来获取
+- [x] 加强值映射序列，比如支持方法、Dto接口的方式来获取
 - [ ] 生成导入模板时必填项支持自定义样式配置
 - [ ] CSV支持
 - [ ] 导入结果支持生成HTML输出
@@ -209,6 +211,11 @@
 
 
 ### 更新历史
+
+#### 2019.02.11
+- 【Nuget】版本更新到2.0.0
+- 【导出】Excel模板导出修复多个Table渲染以及合并单元格渲染的问题，具体见单元测试“ExportByTemplate_Test1”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/34>）。
+- 【导出】完善模板导出的单元测试，针对导出结果添加渲染检查，确保所有单元格均已渲染。
 
 #### 2019.02.05
 - 【Nuget】版本更新到2.0.0-beta4
@@ -759,7 +766,7 @@ Dockerfile Demo
 
 ```bash
 
-    FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+    FROM ccr.ccs.tencentyun.com/magicodes/aspnetcore-runtime:2.2 AS base
     # 安装libgdiplus库，用于Excel导出
     RUN apt-get update && apt-get install -y libgdiplus libc6-dev
     RUN ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
@@ -799,3 +806,15 @@ Dockerfile Demo
 	RUN apt-get update && apt-get install -y fontconfig
 	COPY /simsun.ttc /usr/share/fonts/simsun.ttc
 ```
+
+
+
+注意，以上基础镜像使用：ccr.ccs.tencentyun.com/magicodes/aspnetcore-runtime:2.2 ,该镜像GitHub地址：<https://github.com/xin-lai/aspnetcore-docker>。
+
+
+推荐理由：
+
+* 加快镜像构建和拉取速度，加速CI\CD构建以及提高开发体验
+* 时区默认设置为东八区，见“ENV TZ=Asia/Shanghai”
+* 默认安装了libgdiplus等库，以便支持Excel导入导出
+* 目前提供了腾讯云的公共镜像和hub.docker的公共镜像，大家可以按需
