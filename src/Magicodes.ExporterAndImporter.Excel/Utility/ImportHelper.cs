@@ -564,12 +564,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
-                var isNullNumber = 1;
-                for (var column = 1; column < worksheet.Dimension.End.Column; column++)
-                    if (worksheet.Cells[rowIndex, column].Text == string.Empty)
-                        isNullNumber++;
-
-                if (isNullNumber < worksheet.Dimension.End.Column)
+                //跳过空行
+                if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
+                {
+                    continue;
+                }
                 {
                     var dataItem = new T();
                     foreach (var propertyInfo in propertyInfos.Where(p =>

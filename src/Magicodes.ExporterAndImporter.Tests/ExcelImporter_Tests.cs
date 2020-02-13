@@ -128,6 +128,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "截断数据测试")]
         public async Task ImporterDataEnd_Test()
         {
+            //中间空行
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "截断数据测试.xlsx");
             var import = await Importer.Import<ImportProductDto2>(filePath);
             import.ShouldNotBeNull();
@@ -313,6 +314,25 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
             }
 
+        }
+
+        /// <summary>
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/35
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "单列数据导入测试")]
+        public async Task OneColumnImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "单列导入测试.xlsx");
+            var import = await Importer.Import<Models.Import.OneColumnImporter_Test.OneColumnImporterDto>(filePath);
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
         }
 
         [Fact(DisplayName = "模板错误检测")]

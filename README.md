@@ -212,6 +212,11 @@
 
 ### 更新历史
 
+#### 2019.02.13
+- 【Nuget】版本更新到2.0.1
+- 【导入】修复单列导入的Bug，单元测试“OneColumnImporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/35>）。
+- 【导入】重写空行检查。
+
 #### 2019.02.11
 - 【Nuget】版本更新到2.0.0
 - 【导出】Excel模板导出修复多个Table渲染以及合并单元格渲染的问题，具体见单元测试“ExportByTemplate_Test1”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/34>）。
