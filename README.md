@@ -213,8 +213,9 @@
 ### 更新历史
 
 #### 2019.02.13
-- 【Nuget】版本更新到2.0.1
+- 【Nuget】版本更新到2.0.2
 - 【导入】修复单列导入的Bug，单元测试“OneColumnImporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/35>）。
+- 【导出】修复导出HTML、Pdf、Word时，模板在某些情况下编译报错的问题。
 - 【导入】重写空行检查。
 
 #### 2019.02.11

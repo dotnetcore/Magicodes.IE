@@ -13,11 +13,15 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using RazorEngine;
+using RazorEngine.Compilation;
+using RazorEngine.Compilation.ReferenceResolver;
+using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using Encoding = System.Text.Encoding;
 
@@ -26,8 +30,21 @@ namespace Magicodes.ExporterAndImporter.Html
     /// <summary>
     ///     HTML导出
     /// </summary>
-    public class HtmlExporter : IExporterByTemplate
+    public partial class HtmlExporter : IExporterByTemplate
     {
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public HtmlExporter()
+        {
+            //配置RazorEngine
+            var config = new TemplateServiceConfiguration()
+            {
+                ReferenceResolver = new ExternalAssemblyReferenceResolver(null)
+            };
+            var service = RazorEngineService.Create(config);
+            Engine.Razor = service;
+        }
         /// <summary>
         ///     根据模板导出
         /// </summary>
@@ -111,6 +128,7 @@ namespace Magicodes.ExporterAndImporter.Html
         protected string RunCompileTpl(object model, string htmlTemplate = null)
         {
             var htmlTpl = GetHtmlTemplate(htmlTemplate);
+            
             return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
         }
     }
