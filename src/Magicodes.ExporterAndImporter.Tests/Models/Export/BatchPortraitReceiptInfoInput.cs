@@ -12,7 +12,12 @@
 // ======================================================================
 
 using System.Collections.Generic;
+#if NET461
+using TuesPechkin;
+using System.Drawing.Printing;
+#else
 using DinkToPdf;
+#endif
 using Magicodes.ExporterAndImporter.Pdf;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
@@ -20,7 +25,12 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     /// <summary>
     ///     批量
     /// </summary>
+#if NET461
+    [PdfExporter(Orientation = TuesPechkin.GlobalSettings.PaperOrientation.Portrait, PaperKind = PaperKind.A4)]
+#else
     [PdfExporter(Orientation = Orientation.Portrait, PaperKind = PaperKind.A4)]
+#endif
+
     public class BatchPortraitReceiptInfoInput
     {
         /// <summary>
