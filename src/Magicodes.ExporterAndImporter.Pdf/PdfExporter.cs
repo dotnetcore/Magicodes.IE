@@ -15,11 +15,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+#if NET461
+using System.Drawing.Imaging;
+using TuesPechkin;
+#else
 using DinkToPdf;
+#endif
+
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
+
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
@@ -28,8 +35,15 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public class PdfExporter : IExportListFileByTemplate, IExportFileByTemplate
     {
-        private static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
 
+#if NET461
+        private static readonly IConverter PdfConverter = new ThreadSafeConverter(new PdfToolset(
+            new WinAnyCPUEmbeddedDeployment(
+                new TempFolderDeployment())));
+#else
+        private static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
+        
+#endif
         /// <summary>
         ///     根据模板导出列表
         /// </summary>
@@ -49,11 +63,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
             if (exporterAttribute.IsWriteHtml)
                 File.WriteAllText(fileName + ".html", htmlString);
 
-            var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
-
-            PdfConverter.Convert(doc);
-            var fileInfo = new ExportFileInfo(fileName, "application/pdf");
-            return fileInfo;
+            return await ExportPdf(fileName, exporterAttribute, htmlString);
         }
 
         /// <summary>
@@ -75,10 +85,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
             if (exporterAttribute.IsWriteHtml)
                 File.WriteAllText(fileName + ".html", htmlString);
 
-            var doc = GetHtmlToPdfDocumentByExporterAttribute(fileName, exporterAttribute, htmlString);
-            PdfConverter.Convert(doc);
-            var fileInfo = new ExportFileInfo(fileName, "application/pdf");
-            return fileInfo;
+            return await ExportPdf(fileName, exporterAttribute, htmlString);
         }
 
         /// <summary>
@@ -88,34 +95,61 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <param name="pdfExporterAttribute"></param>
         /// <param name="htmlString"></param>
         /// <returns></returns>
-        private HtmlToPdfDocument GetHtmlToPdfDocumentByExporterAttribute(string fileName,
+        private async Task<ExportFileInfo> ExportPdf(string fileName,
             PdfExporterAttribute pdfExporterAttribute,
             string htmlString)
         {
+            var objSettings = new ObjectSettings
+            {
+#if !NET461
+                        HtmlContent = htmlString,
+                        Encoding = pdfExporterAttribute?.Encoding,
+                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
+#else
+                HtmlText = htmlString,
+                CountPages = pdfExporterAttribute.IsEnablePagesCount,
+#endif
+
+                WebSettings = { DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName },
+
+                //HeaderSettings = pdfExporterAttribute?.HeaderSettings,
+                //FooterSettings = pdfExporterAttribute?.FooterSettings
+            };
+            if (pdfExporterAttribute?.HeaderSettings != null)
+                objSettings.HeaderSettings = pdfExporterAttribute?.HeaderSettings;
+
+            if (pdfExporterAttribute?.FooterSettings != null)
+                objSettings.FooterSettings = pdfExporterAttribute?.FooterSettings;
+
             var htmlToPdfDocument = new HtmlToPdfDocument
             {
                 GlobalSettings =
                 {
-                    ColorMode = ColorMode.Color,
-                    Orientation = pdfExporterAttribute?.Orientation,
                     PaperSize = pdfExporterAttribute?.PaperKind,
-                    Out = fileName,
+                    Orientation = pdfExporterAttribute?.Orientation,
+                    
+#if !NET461
+                    //Out = fileName,
+                    ColorMode = ColorMode.Color,
+#else
+                    ProduceOutline = true,
+#endif
                     DocumentTitle = pdfExporterAttribute?.Name
                 },
                 Objects =
                 {
-                    new ObjectSettings
-                    {
-                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
-                        HtmlContent = htmlString,
-                        WebSettings = {DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName},
-                        Encoding = pdfExporterAttribute?.Encoding,
-                        HeaderSettings = pdfExporterAttribute?.HeaderSettings,
-                        FooterSettings = pdfExporterAttribute?.FooterSettings
-                    }
+                    objSettings
                 }
             };
-            return htmlToPdfDocument;
+            var result = PdfConverter.Convert(htmlToPdfDocument);
+#if NETSTANDARD2_1
+            await File.WriteAllBytesAsync(fileName, result);
+#else
+            File.WriteAllBytes(fileName, result);
+#endif
+
+            var fileInfo = new ExportFileInfo(fileName, "application/pdf");
+            return await Task.FromResult(fileInfo);
         }
 
 
