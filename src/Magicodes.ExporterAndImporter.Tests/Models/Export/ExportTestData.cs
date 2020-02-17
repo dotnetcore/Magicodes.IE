@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ImporterHeader(Name = "列1")]
         public string Name1 { get; set; }
 
-        [ExporterHeader(DisplayName = "列2")] 
+        [ExporterHeader(DisplayName = "列2")]
         [ImporterHeader(Name = "列2")]
         public string Name2 { get; set; }
 
