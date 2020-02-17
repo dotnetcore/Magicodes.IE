@@ -20,9 +20,9 @@
 
 2. [基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")
 
-2. [基础教程之导出Pdf收据](docs/3.基础教程之导出Pdf收据.md "3.基础教程之导出Pdf收据")
+3. [基础教程之导出Pdf收据](docs/3.基础教程之导出Pdf收据.md "3.基础教程之导出Pdf收据")
 
-4. 在Docker中使用（待补充）
+4. [在Docker中使用](docs/4.在Docker中使用.md "4.在Docker中使用")
 
 5. 动态导出（待补充）
 
