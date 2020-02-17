@@ -203,14 +203,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         PropertyName = objProperties[i].Name,
                         ExporterHeaderAttribute =
                             (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                                ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].Name),
+                                ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].GetDisplayName() ?? objProperties[i].Name),
                         CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName()
                     };
 
                     //设置列显示名
-                    item.DisplayName = item.ExporterHeaderAttribute == null || item.ExporterHeaderAttribute.DisplayName == null || item.ExporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace()
-                                    ? item.PropertyName
-                                    : item.ExporterHeaderAttribute.DisplayName;
+                    item.DisplayName = item.ExporterHeaderAttribute == null ||
+                                       item.ExporterHeaderAttribute.DisplayName == null ||
+                                       item.ExporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace()
+                        ? item.PropertyName
+                        : item.ExporterHeaderAttribute.DisplayName;
                     AddExportHeaderInfo(item);
                 }
             }
