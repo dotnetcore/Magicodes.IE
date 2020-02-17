@@ -108,20 +108,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms,Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.Configuration.HasHeaderRecord = false;
+            { 
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 // Write the headers
-                foreach (var header in _exporterHeaderList)
-                {
-                    csv.WriteField(header.DisplayName);
-                    //TODO add Format
-                    if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
-                        csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
-                        
-
-                }
-                
-                csv.NextRecord();
+                //foreach (var header in _exporterHeaderList)
+                //{
+                //    csv.WriteField(header.DisplayName);
+                //    //TODO add Format
+                //    // if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
+                //    //   csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
+                //}
+                //csv.NextRecord();
                 csv.WriteRecords(dataItems);
                 writer.Flush();
                 ms.Position = 0;

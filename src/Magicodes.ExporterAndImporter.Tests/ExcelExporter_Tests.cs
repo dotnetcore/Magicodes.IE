@@ -282,7 +282,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(20));
+            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);

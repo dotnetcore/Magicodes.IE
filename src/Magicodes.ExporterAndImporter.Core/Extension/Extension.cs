@@ -290,7 +290,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 case "guid":
                     return Type.GetType("System.Guid", true, true);
                 default:
-                    return Type.GetType("System.Nullable`1[System.DateTime]", true, true);
+                    return Type.GetType(type, true, true);
+                   
             }
         }
 
