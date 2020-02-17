@@ -106,7 +106,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public byte[] GetCsvExportAsByteArray(ICollection<T> dataItems)
         {
             using (var ms = new MemoryStream())
-            using (var writer = new StreamWriter(ms))
+            using (var writer = new StreamWriter(ms,Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.HasHeaderRecord = false;
@@ -114,9 +114,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 foreach (var header in _exporterHeaderList)
                 {
                     csv.WriteField(header.DisplayName);
-                    //TODO add styles
-                    // if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
-                      //  csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
+                    //TODO add Format
+                    if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
+                        csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
 
 
                 }
