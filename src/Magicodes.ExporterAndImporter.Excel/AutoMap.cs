@@ -13,6 +13,9 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// <typeparam name="T"></typeparam>
     public class AutoMap<T>:ClassMap<T>
     {
+        /// <summary>
+        ///     构造方法
+        /// </summary>
         public AutoMap()
         {
             var properties = typeof(T).GetProperties();
@@ -23,8 +26,16 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 var result = MapProperty(prop);
                 var tcOption = result.Item1.TypeConverterOption;
-                if (!string.IsNullOrEmpty(result.Item2?.Format)) tcOption.Format(result.Item2.Format);
+                var format= tcOption.Format();
+                if (!string.IsNullOrEmpty(result.Item2?.Format))
+                {
+                    tcOption.Format(result.Item2?.Format);
+                }
                 tcOption.NumberStyles(NumberStyles.Any);
+                if (result.Item2?.IsIgnore != null && result.Item2?.IsIgnore==true)
+                {
+                    format.Ignore();
+                }
                 
             }
         }
