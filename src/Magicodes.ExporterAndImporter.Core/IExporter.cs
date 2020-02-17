@@ -29,15 +29,17 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <param name="fileName">文件名称</param>
         /// <param name="dataItems">数据</param>
+        /// <param name="exportType">导出类型</param>
         /// <returns>文件</returns>
-        Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class;
+        Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems, EnumExportType exportType = EnumExportType.Xls) where T : class;
 
         /// <summary>
         ///     导出Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
+        /// <param name="exportType">导出类型</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class;
+        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, EnumExportType exportType= EnumExportType.Xls) where T : class;
 
         /// <summary>
         ///     导出Excel

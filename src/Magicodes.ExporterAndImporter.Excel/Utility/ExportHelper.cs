@@ -6,11 +6,15 @@ using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Magicodes.ExporterAndImporter.Core.Filters;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
@@ -93,6 +97,38 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// 当前工作
         /// </summary>
         protected List<ExcelWorksheet> ExcelWorksheets { get; set; } = new List<ExcelWorksheet>();
+
+        /// <summary>
+        ///     导出CSV
+        /// </summary>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        public byte[] GetCsvExportAsByteArray(ICollection<T> dataItems)
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new StreamWriter(ms))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.HasHeaderRecord = false;
+                // Write the headers
+                foreach (var header in _exporterHeaderList)
+                {
+                    csv.WriteField(header.DisplayName);
+                    //TODO add styles
+                    // if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
+                      //  csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
+
+
+                }
+                
+                csv.NextRecord();
+                csv.WriteRecords(dataItems);
+                writer.Flush();
+                ms.Position = 0;
+                return ms.ToArray();
+            }
+        }
+
 
         /// <summary>
         /// 当前Excel包

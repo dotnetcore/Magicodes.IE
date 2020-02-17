@@ -41,22 +41,25 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
+        /// <param name="exportType">导出类型</param>
         /// <returns>文件</returns>
-        public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class
+        public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems, EnumExportType exportType = EnumExportType.Xls) where T : class
         {
             fileName.CheckExcelFileName();
-            var bytes = await ExportAsByteArray(dataItems);
+            var
+            bytes=
+                 await ExportAsByteArray(dataItems,exportType);
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
-        
 
         /// <summary>
         ///     导出Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
+        /// <param name="exportType">导出类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class
+        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, EnumExportType exportType = EnumExportType.Xls) where T : class
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
@@ -70,6 +73,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
+                    //TODO Csv多sheet
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -77,7 +81,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return Task.FromResult(exportType == EnumExportType.Csv ? helper.GetCsvExportAsByteArray(dataItems) : ep.GetAsByteArray());
                 }
             }
 
