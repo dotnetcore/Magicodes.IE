@@ -21,6 +21,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
@@ -135,7 +136,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     using (var reader = new StreamReader(FilePath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        csv.Configuration.RegisterClassMap<AutoMap<T>>();
                         var result = csv.GetRecords<T>();
+                        //csv.Configuration.TypeConverterCache.AddConverter<Genders>();
                         ImportResult.Data = result.ToList();
                         return Task.FromResult(ImportResult);
                     }

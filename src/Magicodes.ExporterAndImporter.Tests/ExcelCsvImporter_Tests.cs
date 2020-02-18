@@ -1,11 +1,19 @@
-﻿using Magicodes.ExporterAndImporter.Core;
+﻿using System;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Newtonsoft.Json;
 using Shouldly;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 using Xunit.Abstractions;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -34,6 +42,42 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(10);
         }
+
+        [Fact(DisplayName = "学生基础数据导入")]
+        public async Task StudentInfoImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.csv");
+            // var import = await Importer.Import<ImportStudentDto>(filePath);
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.RegisterClassMap<AutoMap<ImportStudentDto>>();
+                // csv.Configuration.TypeConverterCache.AddConverter<Genders>(new CalendarExceptionEnumConverter());
+                var result = csv.GetRecords<ImportStudentDto>().ToList();
+            }
+
+            //import.ShouldNotBeNull();
+            //if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            //if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            //import.HasError.ShouldBeFalse();
+            //import.Data.ShouldNotBeNull();
+            //import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            //for (int i = 0; i < import.Data.Count; i++)
+            //{
+            //    if (i < 5)
+            //    {
+            //        import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+            //    }
+            //    else
+            //    {
+            //        import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+            //    }
+            //}
+        }
+
 
 
 

@@ -20,28 +20,47 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             var properties = typeof(T).GetProperties();
             var nameProperty = properties.FirstOrDefault(p => p.Name == "Name");
-            //if (nameProperty != null)
-            //    MapProperty(nameProperty).Item1.Index(0);
+            if (nameProperty != null)
+                MapProperty(nameProperty).Item1.Index(0);
             foreach (var prop in properties.Where(p => p != nameProperty))
             {
                 var result = MapProperty(prop);
                 var tcOption = result.Item1.TypeConverterOption;
-                var format = tcOption.Format();
-                if (!string.IsNullOrEmpty(result.Item2?.Format))
-                {
-                    tcOption.Format(result.Item2.Format);
-                }
                 tcOption.NumberStyles(NumberStyles.Any);
                 tcOption.DateTimeStyles(DateTimeStyles.None);
-                if (result.Item2?.IsIgnore != null && result.Item2.IsIgnore == true)
+                var format = tcOption.Format();
+                if (result.Item2!=null)
                 {
-                    format.Ignore();
+                    if (!string.IsNullOrEmpty(result.Item2?.Format))
+                    {
+                        tcOption.Format(result.Item2.Format);
+                    }
+                    if (result.Item2.IsIgnore)
+                    {
+                        format.Ignore();
+                    }
                 }
+                else if(result.Item3 != null)
+                {
+                    if (result.Item3.IsIgnore)
+                    {
+                        format.Ignore();
+                    }
+                }
+
+                if (result.Item1.GetType().IsEnum)
+                {
+                   
+                }
+               // result.Item1.TypeConverter<CsvHelperEnumConverter<>>()
+                //Map(m => m.Gender).TypeConverter<CalendarExceptionEnumConverter<Genders>>().Name("性别");
+                //result.Item1.Configuration.TypeConverterCache.AddConverter<TestEnum>(new Converters.EnumConverter());
+
 
             }
         }
 
-        private (MemberMap, ExporterHeaderAttribute) MapProperty(PropertyInfo property)
+        private (MemberMap, ExporterHeaderAttribute, ImporterHeaderAttribute) MapProperty(PropertyInfo property)
         {
             var map = Map(typeof(T), property);
             string name = property.Name;
@@ -50,8 +69,13 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 name = headerAttribute.DisplayName ?? property.GetDisplayName() ?? property.Name;
             }
+            var importAttribute = property.GetCustomAttribute<ImporterHeaderAttribute>();
+            if (importAttribute != null)
+            {
+                name = importAttribute.Name ?? property.GetDisplayName() ?? property.Name;
+            }
             map.Name(name);
-            return (map, headerAttribute);
+            return (map, headerAttribute,importAttribute);
 
         }
     }
