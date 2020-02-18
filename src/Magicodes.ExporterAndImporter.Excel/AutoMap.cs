@@ -48,11 +48,16 @@ namespace Magicodes.ExporterAndImporter.Excel
                     }
                 }
 
-                if (result.Item1.GetType().IsEnum)
+                if (prop.PropertyType.IsEnum)
                 {
-                   
+                    result.Item1.TypeConverter<CsvHelperEnumConverter>();
                 }
-               // result.Item1.TypeConverter<CsvHelperEnumConverter<>>()
+
+                if (prop.PropertyType.GenericTypeArguments[0].IsEnum)
+                {
+                    result.Item1.TypeConverter<CsvHelperEnumConverter>();
+                }
+                //result.Item1.TypeConverter<CsvHelperEnumConverter<>>()
                 //Map(m => m.Gender).TypeConverter<CalendarExceptionEnumConverter<Genders>>().Name("性别");
                 //result.Item1.Configuration.TypeConverterCache.AddConverter<TestEnum>(new Converters.EnumConverter());
 

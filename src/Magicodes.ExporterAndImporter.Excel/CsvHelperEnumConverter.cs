@@ -1,17 +1,19 @@
-﻿using CsvHelper;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Magicodes.ExporterAndImporter.Core;
 using System.Linq;
 using System.Reflection;
+using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
     /// <summary>
     ///     EnumConverter
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class CsvHelperEnumConverter<T> : DefaultTypeConverter where T : struct
+    public class CsvHelperEnumConverter: DefaultTypeConverter
     {
         /// <summary>
         ///     
@@ -34,11 +36,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
             var type = memberMapData.Member;
+           
+            var value = type.GetCustomAttributes<ValueMappingAttribute>().FirstOrDefault(f => f.Text == text)?.Value;
+           //var t= Type.GetType(type.Name);
+            //var values = type.MemberType.GetType().GetEnumTextAndValues();
 
-            var mappings = type.GetCustomAttributes<ValueMappingAttribute>().ToList();
+            //value= value??
+            //  type.GetCustomAttribute<DisplayAttribute>()??type.GetDescription();
 
-            return mappings.FirstOrDefault(f => f.Text == text)?.Value;
-
+            return value??text;
         }
     }
 }

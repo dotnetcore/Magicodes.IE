@@ -244,7 +244,31 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
             }
         }
-
+        /// <summary>
+        ///     获取枚举值
+        /// </summary>
+        /// <param name="enumType"></param>
+        /// <param name="enumName"></param>
+        /// <returns></returns>
+        public static int GetEnumValue(this Type enumType, string enumName)
+        {
+            try
+            {
+                if (!enumType.IsEnum)
+                    throw new ArgumentException("enumType必须是枚举类型");
+                var values = Enum.GetValues(enumType);
+                var ht = new Hashtable();
+                foreach (var val in values)
+                {
+                    ht.Add(Enum.GetName(enumType, val) ?? throw new InvalidOperationException(), val);
+                }
+                return (int)ht[enumName];
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
     }
 }

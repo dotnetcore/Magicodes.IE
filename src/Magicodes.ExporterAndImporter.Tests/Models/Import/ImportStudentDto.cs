@@ -55,14 +55,14 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         //[MaxLength(18, ErrorMessage = "身份证字数超出最大限制,请修改!")]
         //public string IdCard { get; set; }
 
-        /// <summary>
-        ///     性别
-        /// </summary>
-        [ImporterHeader(Name = "性别")]
-        [Required(ErrorMessage = "性别不能为空")]
-        [ValueMapping("男", 0)]
-        [ValueMapping("女", 1)]
-        public Genders Gender { get; set; }
+        ///// <summary>
+        /////     性别
+        ///// </summary>
+        //[ImporterHeader(Name = "性别")]
+        //[Required(ErrorMessage = "性别不能为空")]
+        //[ValueMapping("男", 0)]
+        //[ValueMapping("女", 1)]
+        //public Genders Gender { get; set; }
 
         ///// <summary>
         /////     家庭地址
@@ -129,12 +129,12 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         //[MaxLength(20, ErrorMessage = "手机号码字数超出最大限制,请修改!")]
         //public string Phone { get; set; }
 
-        ///// <summary>
-        /////     状态
-        /////     测试可为空的枚举类型
-        ///// </summary>
-        //[ImporterHeader(Name = "状态")]
-        //public StudentStatus? Status { get; set; }
+        /// <summary>
+        ///     状态
+        ///     测试可为空的枚举类型
+        /// </summary>
+        [ImporterHeader(Name = "状态")]
+        public StudentStatus? Status { get; set; }
 
         ///// <summary>
         /////     备注
@@ -209,6 +209,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     流失
         /// </summary>
+        [Display(Name = "流水")]
         [Description("流水")] PupilsAway = 1,
 
         /// <summary>
