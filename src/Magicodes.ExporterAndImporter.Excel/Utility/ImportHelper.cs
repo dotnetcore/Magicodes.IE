@@ -14,11 +14,13 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
+using CsvHelper;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
@@ -126,6 +128,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             try
             {
                 CheckImportFile(FilePath);
+
+                #region Csv
+                if (Path.GetExtension(FilePath).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+                {
+                    using (var reader = new StreamReader(FilePath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var result = csv.GetRecords<T>();
+                        ImportResult.Data = result.ToList();
+                        return Task.FromResult(ImportResult);
+                    }
+                }
+                #endregion
 
                 using (Stream stream = new FileStream(FilePath, FileMode.Open))
                 {
