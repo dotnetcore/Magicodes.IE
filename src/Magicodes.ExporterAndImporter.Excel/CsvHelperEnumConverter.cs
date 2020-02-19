@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -13,7 +14,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// <summary>
     ///     EnumConverter
     /// </summary>
-    public class CsvHelperEnumConverter: DefaultTypeConverter
+    public class CsvHelperEnumConverter : DefaultTypeConverter
     {
         /// <summary>
         ///     
@@ -28,23 +29,25 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
         /// <summary>
         ///     从字符串反转
-        /// </summary>
+        /// </summary>  
         /// <param name="text"></param>
         /// <param name="row"></param>
         /// <param name="memberMapData"></param>
         /// <returns></returns>
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            var type = memberMapData.Member;
-           
-            var value = type.GetCustomAttributes<ValueMappingAttribute>().FirstOrDefault(f => f.Text == text)?.Value;
-           //var t= Type.GetType(type.Name);
-            //var values = type.MemberType.GetType().GetEnumTextAndValues();
+            var type = memberMapData.Member.MemberType();
+            var value = memberMapData.Member.GetCustomAttributes<ValueMappingAttribute>().FirstOrDefault(f => f.Text == text)?.Value;
+            var isNullable = type.IsNullable();
+            if (isNullable) type = type.GetNullableUnderlyingType();
+            var values = type.GetEnumTextAndValues();
 
-            //value= value??
-            //  type.GetCustomAttribute<DisplayAttribute>()??type.GetDescription();
-
-            return value??text;
+            if (value == null)
+            {
+                value = Enum.ToObject(type, values.FirstOrDefault(f => f.Key == text).Value);
+            }
+            return value ?? text;
         }
+
     }
 }
