@@ -138,7 +138,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         csv.Configuration.RegisterClassMap<AutoMap<T>>();
                         var result = csv.GetRecords<T>();
-                        //csv.Configuration.TypeConverterCache.AddConverter<Genders>();
                         ImportResult.Data = result.ToList();
                         return Task.FromResult(ImportResult);
                     }

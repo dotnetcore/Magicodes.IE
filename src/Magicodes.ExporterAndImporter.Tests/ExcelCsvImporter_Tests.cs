@@ -1,19 +1,14 @@
-﻿using System;
-using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using Shouldly;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 using Xunit.Abstractions;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-using CsvHelper.TypeConversion;
-using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -73,10 +68,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
             }
         }
-
-
-
-
 
 
     }

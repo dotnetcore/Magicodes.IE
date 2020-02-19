@@ -54,7 +54,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 dt.Rows.Add(dr);
             }
-
             return dt;
         }
 
@@ -209,7 +208,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Dimension.Columns.ShouldBe(5);
             }
             #endregion
-
         }
 
         [Fact(DisplayName = "DataTable结合DTO导出Excel")]

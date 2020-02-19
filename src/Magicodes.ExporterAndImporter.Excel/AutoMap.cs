@@ -29,9 +29,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                 tcOption.NumberStyles(NumberStyles.Any);
                 tcOption.DateTimeStyles(DateTimeStyles.None);
                 var format = tcOption.Format();
-                if (result.Item2!=null)
+                if (result.Item2 != null)
                 {
-                    if (!string.IsNullOrEmpty(result.Item2?.Format))
+                    if (!string.IsNullOrEmpty(result.Item2.Format))
                     {
                         tcOption.Format(result.Item2.Format);
                     }
@@ -40,7 +40,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         format.Ignore();
                     }
                 }
-                else if(result.Item3 != null)
+                else if (result.Item3 != null)
                 {
                     if (result.Item3.IsIgnore)
                     {
@@ -80,7 +80,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 name = importAttribute.Name ?? property.GetDisplayName() ?? property.Name;
             }
             map.Name(name);
-            return (map, headerAttribute,importAttribute);
+            return (map, headerAttribute, importAttribute);
 
         }
     }
