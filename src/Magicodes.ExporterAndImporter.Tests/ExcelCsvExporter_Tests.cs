@@ -1,7 +1,9 @@
-﻿using CsvHelper;
+﻿using System;
+using CsvHelper;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Shouldly;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -89,8 +92,8 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-            using (var reader=new StreamReader(filePath))
-            using (var csv=new CsvReader(reader,CultureInfo.InvariantCulture))
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
                 var exportDatas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
@@ -112,6 +115,25 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+        [Fact(DisplayName = "DataTable结合DTO导出Csv",Skip = "还未完善")]
+        public async Task DynamicExport_Test()
+        {
+            IExporter exporter = new CsvExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + ".csv");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
+                var datas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
+                datas.Count.ShouldBe(100);
+            }
+        }
 
 
     }

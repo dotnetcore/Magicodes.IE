@@ -21,7 +21,6 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <typeparam name="T"></typeparam>
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
-        /// <param name="exportType"></param>
         /// <returns>文件</returns>
         public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class
         {
@@ -36,9 +35,11 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class
+        public async Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class
         {
-            throw new NotImplementedException();
+            fileName.CheckCsvFileName();
+            var bytes = await ExportAsByteArray<T>(dataItems);
+            return bytes.ToCsvExportFileInfo(fileName);
         }
 
         public Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
@@ -57,10 +58,16 @@ namespace Magicodes.ExporterAndImporter.Csv
             return Task.FromResult(helper.GetCsvExportAsByteArray(dataItems));
             
         }
-
+        /// <summary>
+        /// 导出DataTable
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
         public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class
         {
-            throw new NotImplementedException();
+            var helper = new ExportHelper<T>();
+            return Task.FromResult(helper.GetCsvExportAsByteArray<T>(dataItems));
         }
 
         public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)

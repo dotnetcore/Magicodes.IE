@@ -19,10 +19,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         public AutoMap()
         {
             var properties = typeof(T).GetProperties();
-            var nameProperty = properties.FirstOrDefault(p => p.Name == "Name");
-            if (nameProperty != null)
-                MapProperty(nameProperty).Item1.Index(0);
-            foreach (var prop in properties.Where(p => p != nameProperty))
+            foreach (var prop in properties)
             {
                 var result = MapProperty(prop);
                 var tcOption = result.Item1.TypeConverterOption;
@@ -64,11 +61,14 @@ namespace Magicodes.ExporterAndImporter.Csv
                 }
             }
         }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         private (MemberMap, ExporterHeaderAttribute, ImporterHeaderAttribute) MapProperty(PropertyInfo property)
         {
             var map = Map(typeof(T), property);
-            string name = property.Name;
+            var name = property.Name;
             var headerAttribute = property.GetCustomAttribute<ExporterHeaderAttribute>();
             if (headerAttribute != null)
             {
@@ -81,7 +81,6 @@ namespace Magicodes.ExporterAndImporter.Csv
             }
             map.Name(name);
             return (map, headerAttribute, importAttribute);
-
         }
     }
 }
