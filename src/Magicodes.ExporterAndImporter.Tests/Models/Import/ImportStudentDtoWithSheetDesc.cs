@@ -183,11 +183,5 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(IsIgnore = true)]
         public Guid? GradeId { get; set; }
 
-
-        /// <summary>
-        ///    错误描述
-        /// </summary>
-        [ImporterHeader(IsIgnore = true)]
-        public string BussinessError { get; set; }
     }
 }

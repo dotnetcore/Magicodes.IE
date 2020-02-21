@@ -473,12 +473,52 @@ namespace Magicodes.ExporterAndImporter.Tests
             //出现五条无法完成业务效验的错误数据
             foreach (var item in import.Data.ToList())
             {
-                item.BussinessError = "出现业务错误,系统不存在该绑定数据";
-
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
                     RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item))+1,
+
+                };
+                errorInfo.FieldErrors.Add("序号", "数据库已重复");
+                errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
+                ErrorList.Add(errorInfo);
+            }
+
+            Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string errorDataFilePath);
+
+            errorDataFilePath.ShouldNotBeNullOrEmpty();
+
+
+        }
+
+        /// <summary>
+        /// 使用错误数据按照导入模板导出  
+        /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入列头筛选器测试")]
+        public async Task ImportFailureDataWithoutDesc()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+
+            //出现五条无法完成业务效验的错误数据
+            foreach (var item in import.Data.ToList())
+            {
+                
+                var errorInfo = new DataRowErrorInfo()
+                {
+                    //由于 Index 从开始
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
 
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
