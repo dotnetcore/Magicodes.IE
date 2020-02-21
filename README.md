@@ -2,26 +2,32 @@
 
 导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf和Html。
 
-
-
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
-- 码云：<https://gitee.com/magicodes/Magicodes.IE>
+- 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
+
+## 疯狂的徽章
+
+### GitHub
+
+![GitHub contributors](https://img.shields.io/github/contributors/dotnetcore/Magicodes.IE?style=social)	![GitHub commit activity](https://img.shields.io/github/commit-activity/m/dotnetcore/Magicodes.IE?style=social)	![GitHub last commit](https://img.shields.io/github/last-commit/dotnetcore/Magicodes.IE?style=social)	![GitHub issues badge](https://img.shields.io/github/issues/dotnetcore/Magicodes.IE?style=social)	![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE?style=social)	![GitHub stars](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE?style=social)	![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE?style=social)	![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE?style=social)	![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE?style=social)	![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE?style=social)
+
+### Azure DevOps 
+- Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
+- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/12/master) 
+- Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/12/master)
 
 
+### Nuget
 
-| GitHub issues: | ![GitHub issues badge](https://img.shields.io/github/issues/dotnetcore/Magicodes.IE) |
-| :----------------- | ------------------------------------------------------------ |
-| GitHub forks:      | ![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE) |
-| GitHub stars:      | ![GitHub stars badge](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE) |
-| Build Status:    | [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master) |
-| GitHub license:    | ![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE) |
-| Azure DevOps coverage (master):    | ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/12/master) |
-| Azure DevOps tests (master):    | ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/12/master) |
-| GitHub repo size |  ![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE)  |
-| GitHub pull requests |  ![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE)  ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE) |
-
+| **名称** |      **Nuget**      |
+|----------|:-------------:|
+| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
+| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
+| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
+| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
+| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 
 ### **注意**
 
@@ -166,15 +172,6 @@
 - **支持Excel模板导出**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 
-### **相关官方Nuget包**
-
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
-| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
-| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
-| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
-| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
-| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 
 ### **VNext**
 
