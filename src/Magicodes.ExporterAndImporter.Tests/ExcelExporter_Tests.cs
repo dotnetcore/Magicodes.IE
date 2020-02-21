@@ -336,7 +336,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "大数据动态列导出Excel", Skip = "时间太长，默认跳过")]
+        [Fact(DisplayName = "大数据动态列导出Excel")]
         public async Task LargeDataDynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();

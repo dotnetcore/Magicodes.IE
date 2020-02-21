@@ -17,6 +17,11 @@
 | GitHub stars:      | ![GitHub stars badge](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE) |
 | Build Status:    | [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master) |
 | GitHub license:    | ![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE) |
+| Azure DevOps coverage (master):    | ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/12/master) |
+| Azure DevOps tests (master):    | ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/12/master) |
+| GitHub repo size |  ![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE)  |
+| GitHub pull requests |  ![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE)  ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE) |
+
 
 ### **注意**
 
