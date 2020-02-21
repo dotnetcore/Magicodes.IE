@@ -7,7 +7,8 @@
           <CodeCoverage>
             <ModulePaths>
               <Include>
-                <ModulePath>*Magicodes.ExporterAndImporter*</ModulePath>
+                <ModulePath>.*\.dll$</ModulePath>
+                <ModulePath>.*\.exe$</ModulePath>
               </Include>
               <Exclude>
                 <ModulePath>*xunit*</ModulePath>
