@@ -6,6 +6,9 @@
         <Configuration>
           <CodeCoverage>
             <ModulePaths>
+              <Include>
+                <ModulePath>*Magicodes.ExporterAndImporter*</ModulePath>
+              </Include>
               <Exclude>
                 <ModulePath>*xunit*</ModulePath>
               </Exclude>
