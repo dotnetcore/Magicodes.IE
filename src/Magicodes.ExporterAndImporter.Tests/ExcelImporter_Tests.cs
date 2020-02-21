@@ -455,7 +455,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "导入列头筛选器测试")]
+        [Fact(DisplayName = "导入列头筛选器测试带头部描述")]
         public async Task ImportFailureData()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
@@ -496,10 +496,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "导入列头筛选器测试")]
+        [Fact(DisplayName = "导入列头筛选器测试 不带头部描述")]
         public async Task ImportFailureDataWithoutDesc()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
             var import = await Importer.Import<ImportStudentDto>(filePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
@@ -518,7 +518,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
-                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) +1,
 
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
@@ -526,7 +526,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 ErrorList.Add(errorInfo);
             }
 
-            Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string errorDataFilePath);
+            Importer.OutputBussinessErrorData<ImportStudentDto>(filePath, ErrorList, out string errorDataFilePath);
 
             errorDataFilePath.ShouldNotBeNullOrEmpty();
 
