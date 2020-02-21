@@ -57,6 +57,25 @@ namespace Magicodes.ExporterAndImporter.Tests
             //TODO:读取Excel检查表头和格式
         }
 
+
+        /// <summary>
+        /// 测试生成导入描述头
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "生成学生数据导入模板加描述")]
+        public async Task GenerateStudentImportSheetDescriptionTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<ImportStudentDtoWithSheetDesc>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            //TODO:读取Excel检查表头和格式
+        }
+
         [Fact(DisplayName = "生成模板")]
         public async Task GenerateTemplate_Test()
         {
@@ -293,6 +312,34 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
             var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+
+        }
+
+        [Fact(DisplayName = "学生基础数据导入带头部描述")]
+        public async Task StudentInfoWithDescImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
+            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 

@@ -118,48 +118,48 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             try
             {
                 if (_excelPackage == null) _excelPackage = new ExcelPackage(_excelStream);
+                {
+                    #region 检查模板
+
+                    ParseTemplate(_excelPackage);
+                    if (ImportResult.HasError) return Task.FromResult(ImportResult);
+
+                    #endregion
+
+                    ParseData(_excelPackage);
+
+                    #region 数据验证
+
+                    for (var i = 0; i < ImportResult.Data.Count; i++)
                     {
-                        #region 检查模板
-
-                        ParseTemplate(_excelPackage);
-                        if (ImportResult.HasError) return Task.FromResult(ImportResult);
-
-                        #endregion
-
-                        ParseData(_excelPackage);
-
-                        #region 数据验证
-
-                        for (var i = 0; i < ImportResult.Data.Count; i++)
+                        var isValid = ValidatorHelper.TryValidate(ImportResult.Data.ElementAt(i),
+                            out var validationResults);
+                        if (!isValid)
                         {
-                            var isValid = ValidatorHelper.TryValidate(ImportResult.Data.ElementAt(i),
-                                out var validationResults);
-                            if (!isValid)
+                            var rowIndex = ExcelImporterSettings.HeaderRowIndex + i + 1;
+                            var dataRowError = GetDataRowErrorInfo(rowIndex);
+                            foreach (var validationResult in validationResults)
                             {
-                                var rowIndex = ExcelImporterSettings.HeaderRowIndex + i + 1;
-                                var dataRowError = GetDataRowErrorInfo(rowIndex);
-                                foreach (var validationResult in validationResults)
-                                {
-                                    var key = validationResult.MemberNames.First();
-                                    var column = ImporterHeaderInfos.FirstOrDefault(a => a.PropertyName == key);
-                                    if (column != null) key = column.Header.Name;
+                                var key = validationResult.MemberNames.First();
+                                var column = ImporterHeaderInfos.FirstOrDefault(a => a.PropertyName == key);
+                                if (column != null) key = column.Header.Name;
 
-                                    var value = validationResult.ErrorMessage;
-                                    if (dataRowError.FieldErrors.ContainsKey(key))
-                                        dataRowError.FieldErrors[key] += Environment.NewLine + value;
-                                    else
-                                        dataRowError.FieldErrors.Add(key, value);
-                                }
+                                var value = validationResult.ErrorMessage;
+                                if (dataRowError.FieldErrors.ContainsKey(key))
+                                    dataRowError.FieldErrors[key] += Environment.NewLine + value;
+                                else
+                                    dataRowError.FieldErrors.Add(key, value);
                             }
                         }
-
-                        RepeatDataCheck();
-
-                        #endregion
-
-                        LabelingError(_excelPackage);
                     }
-                
+
+                    RepeatDataCheck();
+
+                    #endregion
+
+                    LabelingError(_excelPackage);
+                }
+
             }
             catch (Exception ex)
             {
@@ -481,7 +481,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].AddComment(
                         ImporterHeaderInfos[i].Header.Description,
                         ImporterHeaderInfos[i].Header.Author);
-                //如果必填，则列头标红
+                //如果必填，则列头标红sd
                 if (ImporterHeaderInfos[i].IsRequired)
                     worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
 

@@ -336,8 +336,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var worksheet = GetImportSheet(excelPackage);
                 var excelHeaders = new Dictionary<string, int>();
                 var endColumnCount = ExcelImporterSettings.EndColumnCount ?? worksheet.Dimension.End.Column;
+                if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.SheetDescription))
+                {
+                    ExcelImporterSettings.HeaderRowIndex++;
+                }
                 for (var columnIndex = 1; columnIndex <= endColumnCount; columnIndex++)
                 {
+
                     var header = worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, columnIndex].Text;
 
                     //如果未设置读取的截止列，则默认指定为出现空格，则读取截止
@@ -506,8 +511,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ??
                                                      ExcelImporterSettings.SheetName ?? "导入数据");
             if (!ParseHeader()) return;
-
             //设置列头
+            //设置头部描述说明
+            if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.SheetDescription))
+            {
+                ExcelImporterSettings.HeaderRowIndex++;
+                worksheet.Cells[1, 1, 1, ImporterHeaderInfos.Count].Merge = true;
+                worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                worksheet.Cells[1, 1].Value = ExcelImporterSettings.SheetDescription;
+                worksheet.Row(1).Height = ExcelImporterSettings.DescriptionHeight;
+                
+            }
+
             for (var i = 0; i < ImporterHeaderInfos.Count; i++)
             {
                 //忽略
@@ -536,7 +551,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             worksheet.Cells.AutoFitColumns();
             worksheet.Cells.Style.WrapText = true;
-            worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            // worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             worksheet.Cells[worksheet.Dimension.Address].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
             worksheet.Cells[worksheet.Dimension.Address].Style.Border.Left.Style = ExcelBorderStyle.Thin;
@@ -544,7 +559,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Border.Top.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[worksheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
+            //绿色太丑了
+            worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
+
+
         }
 
         /// <summary>
