@@ -307,6 +307,52 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
+        /// 标注业务错误
+        /// </summary>
+        /// <param name="excelPackage"></param>
+        /// <param name="bussinessErrorDataList"></param>
+        /// <param name="filePath">返回错误Excel路径</param>
+        internal virtual void LabelingBussinessError(ExcelPackage excelPackage, List<DataRowErrorInfo> bussinessErrorDataList, out string filePath)
+        {
+            if (bussinessErrorDataList == null)
+            {
+                filePath = "";
+                return;
+            }
+            this.ImportResult = new ImportResult<T>();
+            ParseHeader();
+            ParseTemplate(excelPackage);
+            //执行结果筛选器
+            if (ExcelImporterSettings.ImportResultFilter != null)
+            {
+                var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
+
+                if (filter == null)
+                {
+                    throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
+                }
+                ImportResult = filter.Filter(ImportResult);
+            }
+            //if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
+            //业务错误必须标注
+            var worksheet = GetImportSheet(excelPackage);
+            //标注数据错误
+            foreach (var item in bussinessErrorDataList)
+                foreach (var field in item.FieldErrors)
+                {
+                    var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
+                    var cell = worksheet.Cells[item.RowIndex, col.Header.ColumnIndex];
+                    cell.Style.Font.Color.SetColor(Color.Red);
+                    cell.Style.Font.Bold = true;
+                    cell.AddComment(string.Join(",", field.Value), col.Header.Author);
+                }
+
+            var ext = Path.GetExtension(FilePath);
+            filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
+            excelPackage.SaveAs(new FileInfo(filePath));
+        }
+
+        /// <summary>
         ///     检查导入文件路劲
         /// </summary>
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
@@ -520,7 +566,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 worksheet.Cells[1, 1].Value = ExcelImporterSettings.SheetDescription;
                 worksheet.Row(1).Height = ExcelImporterSettings.DescriptionHeight;
-                
+
             }
 
             for (var i = 0; i < ImporterHeaderInfos.Count; i++)
@@ -951,6 +997,36 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             var fileInfo =
                 ExcelHelper.CreateExcelPackage(fileName, excelPackage => { StructureExcel(excelPackage); });
             return Task.FromResult(fileInfo);
+        }
+
+        /// <summary>
+        /// 将存在的错误数据通过导入模板返回,并且标识业务错误原因
+        /// </summary>
+        /// <param name="bussinessErrorDataList">错误的业务数据</param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public bool OutputBussinessErrorData(List<DataRowErrorInfo> bussinessErrorDataList, out string filePath)
+        {
+            try
+            {
+                using (Stream stream = new FileStream(FilePath, FileMode.Open))
+                {
+                    using (var excelPackage = new ExcelPackage(stream))
+                    {
+                        //生成Excel错误标注
+                        LabelingBussinessError(excelPackage, bussinessErrorDataList, out filePath);
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ImportResult.Exception = ex;
+                filePath = string.Empty;
+                return false;
+            }
+
+
         }
     }
 }

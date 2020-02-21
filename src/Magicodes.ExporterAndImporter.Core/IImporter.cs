@@ -37,13 +37,23 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<byte[]> GenerateTemplateBytes<T>() where T : class, new();
 
         /// <summary>
-        ///     导入模型验证数据
+        /// 导入模型验证数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <param name="labelingFilePath">标注文件路径</param>
         /// <returns></returns>
         Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new();
+
+        /// <summary>
+        /// 导出业务错误数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath">文件路径</param>
+        /// <param name="bussinessErrorDataList">错误数据</param>
+        /// <param name="errorDataFilePath">错误数据返回路径</param>
+        /// <returns></returns>
+        bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string errorDataFilePath) where T : class, new();
 
         /// <summary>
         /// 导入多个Sheet数据
