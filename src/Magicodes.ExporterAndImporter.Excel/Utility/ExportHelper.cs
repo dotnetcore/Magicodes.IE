@@ -98,34 +98,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected List<ExcelWorksheet> ExcelWorksheets { get; set; } = new List<ExcelWorksheet>();
 
-        /// <summary>
-        ///     导出CSV
-        /// </summary>
-        /// <param name="dataItems"></param>
-        /// <returns></returns>
-        public byte[] GetCsvExportAsByteArray(ICollection<T> dataItems)
-        {
-            using (var ms = new MemoryStream())
-            using (var writer = new StreamWriter(ms,Encoding.UTF8))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            { 
-                csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.RegisterClassMap<AutoMap<T>>();
-                // Write the headers
-                //foreach (var header in _exporterHeaderList)
-                //{
-                //    csv.WriteField(header.DisplayName);
-                //    //TODO add Format
-                //    // if (!string.IsNullOrWhiteSpace(header.ExporterHeaderAttribute.Format))
-                //    //   csv.Configuration.TypeConverterOptionsCache.GetOptions(header.CsTypeName.ToType()).Formats = new[] { header.ExporterHeaderAttribute.Format };
-                //}
-                //csv.NextRecord();
-                csv.WriteRecords(dataItems);
-                writer.Flush();
-                ms.Position = 0;
-                return ms.ToArray();
-            }
-        }
 
 
         /// <summary>

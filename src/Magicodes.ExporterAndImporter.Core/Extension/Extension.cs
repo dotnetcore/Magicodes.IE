@@ -231,7 +231,22 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
             return file;
         }
+        /// <summary>
+        /// 将Bytes导出为Csv文件
+        /// </summary>
+        /// <param name="bytes">字节数组</param>
+        /// <param name="fileName">文件路径</param>
+        /// <returns></returns>
+        public static ExportFileInfo ToCsvExportFileInfo(this byte[] bytes, string fileName)
+        {
+            fileName.CheckCsvFileName();
+            File.WriteAllBytes(fileName, bytes);
 
+            var file = new ExportFileInfo(fileName,
+                  "	text/csv");
+
+            return file;
+        }
         /// <summary>
         /// 检查文件名
         /// </summary>
@@ -239,36 +254,22 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static void CheckExcelFileName(this string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
-            if (!Path.GetExtension(fileName).Equals(".xlsx",StringComparison.OrdinalIgnoreCase)&&!Path.GetExtension(fileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+            if (!Path.GetExtension(fileName).Equals(".xlsx",StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
             }
         }
         /// <summary>
-        ///     获取枚举值
+        /// 检查文件名
         /// </summary>
-        /// <param name="enumType"></param>
-        /// <param name="enumName"></param>
-        /// <returns></returns>
-        public static int GetEnumValue(this Type enumType, string enumName)
+        /// <param name="fileName"></param>
+        public static void CheckCsvFileName(this string fileName)
         {
-            try
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (!Path.GetExtension(fileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
             {
-                if (!enumType.IsEnum)
-                    throw new ArgumentException("enumType必须是枚举类型");
-                var values = Enum.GetValues(enumType);
-                var ht = new Hashtable();
-                foreach (var val in values)
-                {
-                    ht.Add(Enum.GetName(enumType, val) ?? throw new InvalidOperationException(), val);
-                }
-                return (int)ht[enumName];
-            }
-            catch (Exception e)
-            {
-                throw e;
+                throw new ArgumentException("仅支持导出“.csv”!", nameof(fileName));
             }
         }
-
     }
 }

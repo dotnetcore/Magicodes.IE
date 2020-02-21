@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace Magicodes.ExporterAndImporter.Excel
+namespace Magicodes.ExporterAndImporter.Csv
 {
     /// <summary>
     ///     动态构建映射

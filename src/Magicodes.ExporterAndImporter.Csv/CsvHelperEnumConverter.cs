@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
+using System;
 using System.Linq;
 using System.Reflection;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
-namespace Magicodes.ExporterAndImporter.Excel
+namespace Magicodes.ExporterAndImporter.Csv
 {
     /// <summary>
     ///     EnumConverter

@@ -1,6 +1,5 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
-using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using Shouldly;
@@ -20,7 +19,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
-        public IImporter Importer = new ExcelImporter();
+        public IImporter Importer = new CsvImporter();
 
        
         [Fact(DisplayName = "单列数据导入测试")]

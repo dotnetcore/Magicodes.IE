@@ -1,7 +1,6 @@
 ﻿using CsvHelper;
 using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Models;
-using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Shouldly;
 using System.Collections.Generic;
@@ -19,12 +18,12 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "大量数据导出Excel")]
         public async Task Export_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExporter exporter = new CsvExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export_Test) + ".csv");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result =
-                await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000), EnumExportType.Csv);
+                await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -33,10 +32,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "Dto导出")]
         public async Task ExportAsByteArray_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExporter exporter = new CsvExporter();
             var filePath = GetTestFilePath($"{nameof(ExportAsByteArray_Test)}.csv");
             DeleteFile(filePath);
-            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestData>(), EnumExportType.Csv);
+            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestData>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);
@@ -46,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "DTO特性导出（测试格式化）")]
         public async Task AttrsExport_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExporter exporter = new CsvExporter();
 
             var filePath = GetTestFilePath($"{nameof(AttrsExport_Test)}.csv");
 
@@ -58,7 +57,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.LongNo = 45875266524;
             }
 
-            var result = await exporter.Export(filePath, data, EnumExportType.Csv);
+            var result = await exporter.Export(filePath, data);
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -79,14 +78,14 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "空数据导出")]
         public async Task AttrsExportWithNoData_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExporter exporter = new CsvExporter();
 
             var filePath = GetTestFilePath($"{nameof(AttrsExportWithNoData_Test)}.csv");
 
             DeleteFile(filePath);
 
             var data = new List<ExportTestDataWithAttrs>();
-            var result = await exporter.Export(filePath, data,EnumExportType.Csv);
+            var result = await exporter.Export(filePath, data);
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -103,8 +102,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "无特性定义导出测试")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
         {
-            IExporter exporter = new ExcelExporter();
-            var filePath = GetTestFilePath($"{nameof(ExportTestDataWithoutExcelExporter_Test)}.xlsx");
+            IExporter exporter = new CsvExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportTestDataWithoutExcelExporter_Test)}.csv");
             DeleteFile(filePath);
 
             var result = await exporter.Export(filePath,

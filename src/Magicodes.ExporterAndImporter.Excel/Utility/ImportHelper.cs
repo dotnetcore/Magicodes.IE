@@ -130,20 +130,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 CheckImportFile(FilePath);
 
-                #region Csv
-                if (Path.GetExtension(FilePath).Equals(".csv", StringComparison.OrdinalIgnoreCase))
-                {
-                    using (var reader = new StreamReader(FilePath))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        csv.Configuration.RegisterClassMap<AutoMap<T>>();
-                        var result = csv.GetRecords<T>();
-                        ImportResult.Data = result.ToList();
-                        return Task.FromResult(ImportResult);
-                    }
-                }
-                #endregion
-
                 using (Stream stream = new FileStream(FilePath, FileMode.Open))
                 {
                     using (var excelPackage = new ExcelPackage(stream))
@@ -324,7 +310,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
-        ///     检查导入文件路劲
+        ///     检查导入文件路径
         /// </summary>
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
         private static void CheckImportFile(string filePath)
