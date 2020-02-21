@@ -6,8 +6,8 @@
 
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
-- Github:https://github.com/dotnetcore/Magicodes.IE
-- 码云：https://gitee.com/magicodes/Magicodes.IE
+- Github：<https://github.com/dotnetcore/Magicodes.IE>
+- 码云：<https://gitee.com/magicodes/Magicodes.IE>
 
 ### 注意
 
