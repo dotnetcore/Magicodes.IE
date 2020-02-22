@@ -3,11 +3,11 @@
 //           filename : ExcelExporter_Tests.cs
 //           description :
 // 
-//           created by Ñ©Ñã at  2019-09-11 13:51
-//           ÎÄµµ¹ÙÍø£ºhttps://docs.xin-lai.com
-//           ¹«ÖÚºÅ½Ì³Ì£ºÂó¿ÛÁÄ¼¼Êõ
-//           QQÈº£º85318032£¨±à³Ì½»Á÷£©
-//           Blog£ºhttp://www.cnblogs.com/codelove/
+//           created by é›ªé› at  2019-09-11 13:51
+//           æ–‡æ¡£å®˜ç½‘ï¼šhttps://docs.xin-lai.com
+//           å…¬ä¼—å·æ•™ç¨‹ï¼šéº¦æ‰£èŠæŠ€æœ¯
+//           QQç¾¤ï¼š85318032ï¼ˆç¼–ç¨‹äº¤æµï¼‰
+//           Blogï¼šhttp://www.cnblogs.com/codelove/
 // 
 // ======================================================================
 
@@ -32,11 +32,11 @@ namespace Magicodes.ExporterAndImporter.Tests
     public class ExcelExporter_Tests : TestBase
     {
         /// <summary>
-        ///     ½«entitiesÖ±½Ó×ª³ÉDataTable
+        ///     å°†entitiesç›´æ¥è½¬æˆDataTable
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
-        /// <param name="entities">entity¼¯ºÏ</param>
-        /// <returns>½«EntityµÄÖµ×ªÎªDataTable</returns>
+        /// <param name="entities">entityé›†åˆ</param>
+        /// <returns>å°†Entityçš„å€¼è½¬ä¸ºDataTable</returns>
         private static DataTable EntityToDataTable<T>(DataTable dt, IEnumerable<T> entities)
         {
             if (!entities.Any()) return dt;
@@ -57,7 +57,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             return dt;
         }
 
-        [Fact(DisplayName = "DTOÌØĞÔµ¼³ö£¨²âÊÔ¸ñÊ½»¯£©")]
+        [Fact(DisplayName = "DTOç‰¹æ€§å¯¼å‡ºï¼ˆæµ‹è¯•æ ¼å¼åŒ–ï¼‰")]
         public async Task AttrsExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -81,19 +81,19 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Cells[sheet.Dimension.Address].Rows.ShouldBe(101);
 
-                //[ExporterHeader(DisplayName = "ÈÕÆÚ1", Format = "yyyy-MM-dd")]
+                //[ExporterHeader(DisplayName = "æ—¥æœŸ1", Format = "yyyy-MM-dd")]
                 sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
 
-                //[ExporterHeader(DisplayName = "ÈÕÆÚ2", Format = "yyyy-MM-dd HH:mm:ss")]
+                //[ExporterHeader(DisplayName = "æ—¥æœŸ2", Format = "yyyy-MM-dd HH:mm:ss")]
                 sheet.Cells["F2"].Text.Equals(DateTime.Parse(sheet.Cells["F2"].Text).ToString("yyyy-MM-dd HH:mm:ss"));
 
-                //Ä¬ÈÏDateTime
+                //é»˜è®¤DateTime
                 sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
 
             }
         }
 
-        [Fact(DisplayName = "¿ÕÊı¾İµ¼³ö")]
+        [Fact(DisplayName = "ç©ºæ•°æ®å¯¼å‡º")]
         public async Task AttrsExportWithNoData_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -114,7 +114,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "Êı¾İ²ğ·Ö¶àSheetµ¼³ö")]
+        [Fact(DisplayName = "æ•°æ®æ‹†åˆ†å¤šSheetå¯¼å‡º")]
         public async Task SplitData_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -130,10 +130,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª3
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º3
                 pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //¼ì²éºöÂÔÁĞ
-                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("ÊıÖµ");
+                //æ£€æŸ¥å¿½ç•¥åˆ—
+                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("æ•°å€¼");
                 pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(101);
             }
 
@@ -147,9 +147,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª3
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º3
                 pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //Çë²»ÒªÊ¹ÓÃË÷Òı£¨NET461ºÍ.NET CoreµÄSheetË÷ÒıÖµ²»Ò»ÖÂ£©
+                //è¯·ä¸è¦ä½¿ç”¨ç´¢å¼•ï¼ˆNET461å’Œ.NET Coreçš„Sheetç´¢å¼•å€¼ä¸ä¸€è‡´ï¼‰
                 var lastSheet = pck.Workbook.Worksheets.Last();
                 lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(100);
             }
@@ -164,20 +164,20 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª4
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º4
                 pck.Workbook.Worksheets.Count.ShouldBe(4);
-                //Çë²»ÒªÊ¹ÓÃË÷Òı£¨NET461ºÍ.NET CoreµÄSheetË÷ÒıÖµ²»Ò»ÖÂ£©
+                //è¯·ä¸è¦ä½¿ç”¨ç´¢å¼•ï¼ˆNET461å’Œ.NET Coreçš„Sheetç´¢å¼•å€¼ä¸ä¸€è‡´ï¼‰
                 var lastSheet = pck.Workbook.Worksheets.Last();
                 lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(3);
             }
         }
 
-        [Fact(DisplayName = "Í·²¿É¸Ñ¡Æ÷²âÊÔ")]
+        [Fact(DisplayName = "å¤´éƒ¨ç­›é€‰å™¨æµ‹è¯•")]
         public async Task ExporterHeaderFilter_Test()
         {
             IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
-            #region Í¨¹ıÉ¸Ñ¡Æ÷ĞŞ¸ÄÁĞÃû
+            #region é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹åˆ—å
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var data1 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData1>();
@@ -187,14 +187,14 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Cells["D1"].Value.ShouldBe("name");
                 sheet.Dimension.Columns.ShouldBe(4);
             }
             #endregion
 
-            #region Í¨¹ıÉ¸Ñ¡Æ÷ĞŞ¸ÄºöÂÔÁĞ
+            #region é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹å¿½ç•¥åˆ—
             if (File.Exists(filePath)) File.Delete(filePath);
             var data2 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData2>();
             result = await exporter.Export(filePath, data2);
@@ -203,7 +203,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Dimension.Columns.ShouldBe(5);
             }
@@ -211,7 +211,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
-        [Fact(DisplayName = "DataTable½áºÏDTOµ¼³öExcel")]
+        [Fact(DisplayName = "DataTableç»“åˆDTOå¯¼å‡ºExcel")]
         public async Task DynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -225,13 +225,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Dimension.Columns.ShouldBe(9);
             }
         }
 
-        [Fact(DisplayName = "DataTableµ¼³öExcel£¨ÎŞĞè¶¨ÒåÀà£¬Ö§³ÖÁĞÉ¸Ñ¡Æ÷ºÍ±í²ğ·Ö£©")]
+        [Fact(DisplayName = "DataTableå¯¼å‡ºExcelï¼ˆæ— éœ€å®šä¹‰ç±»ï¼Œæ”¯æŒåˆ—ç­›é€‰å™¨å’Œè¡¨æ‹†åˆ†ï¼‰")]
         public async Task DynamicDataTableExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -240,27 +240,27 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(50);
             var dt = new DataTable();
-            //´´½¨´øÁĞÃûºÍÀàĞÍÃûµÄÁĞ
+            //åˆ›å»ºå¸¦åˆ—åå’Œç±»å‹åçš„åˆ—
             dt.Columns.Add("Text", Type.GetType("System.String"));
             dt.Columns.Add("Name", Type.GetType("System.String"));
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
-            //¼Ó¸öÉ¸Ñ¡Æ÷µ¼³ö
+            //åŠ ä¸ªç­›é€‰å™¨å¯¼å‡º
             var result = await exporter.Export(filePath, dt, new DataTableTestExporterHeaderFilter(), 10);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÅĞ¶ÏSheet²ğ·Ö
+                //åˆ¤æ–­Sheetæ‹†åˆ†
                 pck.Workbook.Worksheets.Count.ShouldBe(5);
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["C1"].Value.ShouldBe("ÊıÖµ");
+                sheet.Cells["C1"].Value.ShouldBe("æ•°å€¼");
                 sheet.Dimension.Columns.ShouldBe(3);
             }
         }
 
-        [Fact(DisplayName = "´óÁ¿Êı¾İµ¼³öExcel")]
+        [Fact(DisplayName = "å¤§é‡æ•°æ®å¯¼å‡ºExcel")]
         public async Task Export_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -272,7 +272,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "DTOµ¼³ö")]
+        [Fact(DisplayName = "DTOå¯¼å‡º")]
         public async Task ExportAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -288,7 +288,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "Í¨¹ıDtoµ¼³ö±íÍ·")]
+        [Fact(DisplayName = "é€šè¿‡Dtoå¯¼å‡ºè¡¨å¤´")]
         public async Task ExportHeaderAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -305,14 +305,14 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Name.ShouldBe("²âÊÔ");
+                sheet.Name.ShouldBe("æµ‹è¯•");
                 sheet.Dimension.Columns.ShouldBe(9);
             }
         }
 
-        [Fact(DisplayName = "Í¨¹ı¶¯Ì¬´«Öµµ¼³ö±íÍ·")]
+        [Fact(DisplayName = "é€šè¿‡åŠ¨æ€ä¼ å€¼å¯¼å‡ºè¡¨å¤´")]
         public async Task ExportHeaderAsByteArrayWithItems_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -329,14 +329,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Name.ShouldBe(sheetName);
                 sheet.Dimension.Columns.ShouldBe(arr.Length);
             }
         }
 
-        [Fact(DisplayName = "´óÊı¾İ¶¯Ì¬ÁĞµ¼³öExcel", Skip = "Ê±¼äÌ«³¤£¬Ä¬ÈÏÌø¹ı")]
+        [Fact(DisplayName = "å¤§æ•°æ®åŠ¨æ€åˆ—å¯¼å‡ºExcel")]
         public async Task LargeDataDynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -346,7 +346,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1200000);
 
             var dt = new DataTable();
-            //´´½¨´øÁĞÃûºÍÀàĞÍÃûµÄÁĞ
+            //åˆ›å»ºå¸¦åˆ—åå’Œç±»å‹åçš„åˆ—
             dt.Columns.Add("Text", Type.GetType("System.String"));
             dt.Columns.Add("Name", Type.GetType("System.String"));
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
@@ -357,38 +357,38 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÅĞ¶ÏSheet²ğ·Ö
+                //åˆ¤æ–­Sheetæ‹†åˆ†
                 pck.Workbook.Worksheets.Count.ShouldBe(12);
             }
         }
 
-        [Fact(DisplayName = "ExcelÄ£°åµ¼³ö½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í")]
+        [Fact(DisplayName = "Excelæ¨¡æ¿å¯¼å‡ºæ•™æè®¢è´­æ˜ç»†æ ·è¡¨")]
         public async Task ExportByTemplate_Test()
         {
-            //Ä£°åÂ·¾¶
+            //æ¨¡æ¿è·¯å¾„
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "2020Äê´º¼¾½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í.xlsx");
-            //´´½¨Excelµ¼³ö¶ÔÏó
+                "2020å¹´æ˜¥å­£æ•™æè®¢è´­æ˜ç»†æ ·è¡¨.xlsx");
+            //åˆ›å»ºExcelå¯¼å‡ºå¯¹è±¡
             IExportFileByTemplate exporter = new ExcelExporter();
-            //µ¼³öÂ·¾¶
+            //å¯¼å‡ºè·¯å¾„
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-            //¸ù¾İÄ£°åµ¼³ö
+            //æ ¹æ®æ¨¡æ¿å¯¼å‡º
             await exporter.ExportByTemplate(filePath,
-                new TextbookOrderInfo("ºşÄÏĞÄÀ³ĞÅÏ¢¿Æ¼¼ÓĞÏŞ¹«Ë¾", "ºşÄÏ³¤É³ÔÀÂ´Çø", "Ñ©Ñã", "1367197xxxx", null, DateTime.Now.ToLongDateString(),
+                new TextbookOrderInfo("æ¹–å—å¿ƒè±ä¿¡æ¯ç§‘æŠ€æœ‰é™å…¬å¸", "æ¹–å—é•¿æ²™å²³éº“åŒº", "é›ªé›", "1367197xxxx", null, DateTime.Now.ToLongDateString(),
                     new List<BookInfo>()
                     {
-                        new BookInfo(1, "0000000001", "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", null, "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, "±¸×¢"),
-                        new BookInfo(2, "0000000002", "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, null),
-                        new BookInfo(3, null, "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, "±¸×¢")
+                        new BookInfo(1, "0000000001", "ã€ŠXXä»å…¥é—¨åˆ°æ”¾å¼ƒã€‹", null, "æœºæ¢°å·¥ä¸šå‡ºç‰ˆç¤¾", "3.14", 100, "å¤‡æ³¨"),
+                        new BookInfo(2, "0000000002", "ã€ŠXXä»å…¥é—¨åˆ°æ”¾å¼ƒã€‹", "å¼ ä¸‰", "æœºæ¢°å·¥ä¸šå‡ºç‰ˆç¤¾", "3.14", 100, null),
+                        new BookInfo(3, null, "ã€ŠXXä»å…¥é—¨åˆ°æ”¾å¼ƒã€‹", "å¼ ä¸‰", "æœºæ¢°å·¥ä¸šå‡ºç‰ˆç¤¾", "3.14", 100, "å¤‡æ³¨")
                     }),
                 tplPath);
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                //È·±£ËùÓĞµÄ×ª»»¾ùÒÑÍê³É
+                //ç¡®ä¿æ‰€æœ‰çš„è½¬æ¢å‡å·²å®Œæˆ
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
@@ -397,15 +397,15 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// https://github.com/dotnetcore/Magicodes.IE/issues/34
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "ExcelÄ£°åµ¼³ö²âÊÔ£¨issues#34£©")]
+        [Fact(DisplayName = "Excelæ¨¡æ¿å¯¼å‡ºæµ‹è¯•ï¼ˆissues#34ï¼‰")]
         public async Task ExportByTemplate_Test1()
         {
-            //Ä£°åÂ·¾¶
+            //æ¨¡æ¿è·¯å¾„
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
                 "template.xlsx");
-            //´´½¨Excelµ¼³ö¶ÔÏó
+            //åˆ›å»ºExcelå¯¼å‡ºå¯¹è±¡
             IExportFileByTemplate exporter = new ExcelExporter();
-            //µ¼³öÂ·¾¶
+            //å¯¼å‡ºè·¯å¾„
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Test1) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
@@ -418,8 +418,8 @@ namespace Magicodes.ExporterAndImporter.Tests
                     ExhaustPressure = "0",
                     ExhaustTemperature = "66.7-95",
                     RunningTime = "35251",
-                    WarningError = "Õı³£",
-                    Status = "¿ª»ú"
+                    WarningError = "æ­£å¸¸",
+                    Status = "å¼€æœº"
                 },
                 new AirCompressor()
                 {
@@ -428,8 +428,8 @@ namespace Magicodes.ExporterAndImporter.Tests
                     ExhaustPressure = "1",
                     ExhaustTemperature = "90.7-95",
                     RunningTime = "2222",
-                    WarningError = "Õı³£",
-                    Status = "¿ª»ú"
+                    WarningError = "æ­£å¸¸",
+                    Status = "å¼€æœº"
                 }
             };
 
@@ -438,10 +438,10 @@ namespace Magicodes.ExporterAndImporter.Tests
                 new AfterProcessing()
                 {
                     Name = "1#abababa",
-                    Manufactor = "º¼ÖİÁ¢É½",
+                    Manufactor = "æ­å·ç«‹å±±",
                     RunningTime = "NaN",
-                    WarningError = "¹ÊÕÏ",
-                    Status = "Í£»ú"
+                    WarningError = "æ•…éšœ",
+                    Status = "åœæœº"
                 }
             };
 
@@ -450,19 +450,19 @@ namespace Magicodes.ExporterAndImporter.Tests
                 new Suggest()
                 {
                     Number = 1,
-                    Description = "¹ÊÕÏÍ£»ú",
-                    SuggestMessage = "¹ËÎÊÍÅ¶ÓÔ¶³ÌĞ­Öú"
+                    Description = "æ•…éšœåœæœº",
+                    SuggestMessage = "é¡¾é—®å›¢é˜Ÿè¿œç¨‹ååŠ©"
                 }
             };
 
-            //¸ù¾İÄ£°åµ¼³ö
+            //æ ¹æ®æ¨¡æ¿å¯¼å‡º
             await exporter.ExportByTemplate(filePath,
                     new ReportInformation()
                     {
                         Contacts = "11112",
                         ContactsNumber = "13642666666",
                         CustomerName = "ababace",
-                        Date = DateTime.Now.ToString("yyyyÄêMMÔÂddÈÕ"),
+                        Date = DateTime.Now.ToString("yyyyå¹´MMæœˆddæ—¥"),
                         SystemExhaustPressure = "0.54-0.62",
                         SystemDewPressure = "-0.63--77.5",
                         SystemDayFlow = "201864",
@@ -475,19 +475,19 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                //È·±£ËùÓĞµÄ×ª»»¾ùÒÑÍê³É
+                //ç¡®ä¿æ‰€æœ‰çš„è½¬æ¢å‡å·²å®Œæˆ
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
 
-        [Fact(DisplayName = "ExcelÄ£°å´óÁ¿µ¼³ö")]
+        [Fact(DisplayName = "Excelæ¨¡æ¿å¤§é‡å¯¼å‡º")]
         public async Task ExportByTemplate_Large_Test()
         {
-            //µ¼³ö5000ÌõÊı¾İ²»³¬¹ı1Ãë
+            //å¯¼å‡º5000æ¡æ•°æ®ä¸è¶…è¿‡1ç§’
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "2020Äê´º¼¾½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í.xlsx");
+                "2020å¹´æ˜¥å­£æ•™æè®¢è´­æ˜ç»†æ ·è¡¨.xlsx");
             IExportFileByTemplate exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Large_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
@@ -495,19 +495,19 @@ namespace Magicodes.ExporterAndImporter.Tests
             var books = new List<BookInfo>();
             for (int i = 0; i < 5000; i++)
             {
-                books.Add(new BookInfo(i + 1, "000000000" + i, "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100 + i, "±¸×¢"));
+                books.Add(new BookInfo(i + 1, "000000000" + i, "ã€ŠXXä»å…¥é—¨åˆ°æ”¾å¼ƒã€‹", "å¼ ä¸‰", "æœºæ¢°å·¥ä¸šå‡ºç‰ˆç¤¾", "3.14", 100 + i, "å¤‡æ³¨"));
             }
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("ºşÄÏĞÄÀ³ĞÅÏ¢¿Æ¼¼ÓĞÏŞ¹«Ë¾", "ºşÄÏ³¤É³ÔÀÂ´Çø", "Ñ©Ñã", "1367197xxxx", "Ñ©Ñã", DateTime.Now.ToLongDateString(), books), tplPath);
+            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("æ¹–å—å¿ƒè±ä¿¡æ¯ç§‘æŠ€æœ‰é™å…¬å¸", "æ¹–å—é•¿æ²™å²³éº“åŒº", "é›ªé›", "1367197xxxx", "é›ªé›", DateTime.Now.ToLongDateString(), books), tplPath);
             stopwatch.Stop();
-            //Ö´ĞĞÊ±¼ä²»µÃ³¬¹ı1Ãë£¨ÊÜÊµ¼ÊÖ´ĞĞ»úÆ÷ĞÔÄÜÓ°Ïì£©,ÔÚ²âÊÔ¹ÜÀíÆ÷ÖĞÔËĞĞÆÕ±éĞ¡ÓÚ400ms
+            //æ‰§è¡Œæ—¶é—´ä¸å¾—è¶…è¿‡1ç§’ï¼ˆå—å®é™…æ‰§è¡Œæœºå™¨æ€§èƒ½å½±å“ï¼‰,åœ¨æµ‹è¯•ç®¡ç†å™¨ä¸­è¿è¡Œæ™®éå°äº400ms
             //stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
 
         }
 
-        [Fact(DisplayName = "ÎŞÌØĞÔ¶¨Òåµ¼³ö²âÊÔ")]
+        [Fact(DisplayName = "æ— ç‰¹æ€§å®šä¹‰å¯¼å‡ºæµ‹è¯•")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
         {
             IExporter exporter = new ExcelExporter();
