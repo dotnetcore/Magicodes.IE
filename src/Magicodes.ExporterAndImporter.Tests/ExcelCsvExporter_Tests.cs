@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Xunit;
 
 
@@ -115,7 +116,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "DataTable结合DTO导出Csv",Skip = "还未完善")]
+        [Fact(DisplayName = "DataTable结合DTO导出Csv")]
         public async Task DynamicExport_Test()
         {
             IExporter exporter = new CsvExporter();

@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using System;
+using CsvHelper;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using CsvHelper.TypeConversion;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
@@ -49,35 +51,36 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 csv.Configuration.HasHeaderRecord = true;
-
-                #region header 
-                var properties = typeof(T).GetProperties();
-                foreach (var prop in properties)
-                {
-                    var name = prop.Name;
-                    var headerAttribute = prop.GetCustomAttribute<Core.ExporterHeaderAttribute>();
-                    if (headerAttribute != null)
-                    {
-                        name = headerAttribute.DisplayName ?? prop.GetDisplayName() ?? prop.Name;
-                    }
-                    var importAttribute = prop.GetCustomAttribute<Core.ImporterHeaderAttribute>();
-                    if (importAttribute != null)
-                    {
-                        name = importAttribute.Name ?? prop.GetDisplayName() ?? prop.Name;
-                    }
-                    csv.WriteField(name);
-                }
-                csv.NextRecord();
-                #endregion
-
-                foreach (DataRow row in dataItems.Rows)
-                {
-                    for (var i = 0; i < dataItems.Columns.Count; i++)
-                    {
-                        csv.WriteField(row[i]);
-                    }
-                    csv.NextRecord();
-                }
+                //#region header 
+                //var properties = typeof(T).GetProperties();
+                //foreach (var prop in properties)
+                //{
+                //    var name = prop.Name;
+                //    var headerAttribute = prop.GetCustomAttribute<Core.ExporterHeaderAttribute>();
+                //    if (headerAttribute != null)
+                //    {
+                //        name = headerAttribute.DisplayName ?? prop.GetDisplayName() ?? prop.Name;
+                //    }
+                //    var importAttribute = prop.GetCustomAttribute<Core.ImporterHeaderAttribute>();
+                //    if (importAttribute != null)
+                //    {
+                //        name = importAttribute.Name ?? prop.GetDisplayName() ?? prop.Name;
+                //    }
+                //    csv.WriteField(name);
+                //}
+                //csv.NextRecord();
+                //#endregion
+                //foreach (DataRow row in dataItems.Rows)
+                //{
+                //    for (var i = 0; i < dataItems.Columns.Count; i++)
+                //    {
+                //        csv.WriteField(row[i]);
+                //    }
+                //    csv.NextRecord();
+                //}
+                csv.WriteRecords(dataItems.ToList<T>());
+                writer.Flush();
+                ms.Position = 0;
                 return ms.ToArray();
             }
         }
