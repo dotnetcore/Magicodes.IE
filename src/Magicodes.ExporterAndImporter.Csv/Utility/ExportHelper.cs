@@ -31,12 +31,54 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.HasHeaderRecord = true;
                 csv.Configuration.RegisterClassMap<AutoMap<T>>();
-                csv.WriteRecords(dataItems);
+                if (dataItems!=null&&dataItems.Count>0)
+                {
+                    csv.WriteRecords(dataItems);
+                }
                 writer.Flush();
                 ms.Position = 0;
                 return ms.ToArray();
             }
         }
+
+        /// <summary>
+        ///     导出表头
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public byte[] GetCsvExportHeaderAsByteArray<T>() where T : class
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new StreamWriter(ms, Encoding.UTF8))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.HasHeaderRecord = true;
+                #region header 
+                var properties = typeof(T).GetProperties();
+                foreach (var prop in properties)
+                {
+                    var name = prop.Name;
+                    var headerAttribute = prop.GetCustomAttribute<Core.ExporterHeaderAttribute>();
+                    if (headerAttribute != null)
+                    {
+                        name = headerAttribute.DisplayName ?? prop.GetDisplayName() ?? prop.Name;
+                    }
+                    var importAttribute = prop.GetCustomAttribute<Core.ImporterHeaderAttribute>();
+                    if (importAttribute != null)
+                    {
+                        name = importAttribute.Name ?? prop.GetDisplayName() ?? prop.Name;
+                    }
+                    csv.WriteField(name);
+                }
+                csv.NextRecord();
+                #endregion
+
+                writer.Flush();
+                ms.Position = 0;
+                return ms.ToArray();
+            }
+        }
+
         /// <summary>
         ///     导出Csv
         /// </summary>

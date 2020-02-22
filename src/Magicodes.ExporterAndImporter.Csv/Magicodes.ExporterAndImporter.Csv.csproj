@@ -4,9 +4,11 @@
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>Magicodes.IE.Csv</PackageId>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="15.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CsvHelper-master\src\CsvHelper\CsvHelper.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
   </ItemGroup>

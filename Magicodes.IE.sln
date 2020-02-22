@@ -35,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsvHelper", "..\..\CsvHelper-master\src\CsvHelper\CsvHelper.csproj", "{19EA37F8-805C-4331-87C4-9FD780724540}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{7E64798D-31CD-4416-8885-2D3462999B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E64798D-31CD-4416-8885-2D3462999B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E64798D-31CD-4416-8885-2D3462999B1E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19EA37F8-805C-4331-87C4-9FD780724540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19EA37F8-805C-4331-87C4-9FD780724540}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19EA37F8-805C-4331-87C4-9FD780724540}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19EA37F8-805C-4331-87C4-9FD780724540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

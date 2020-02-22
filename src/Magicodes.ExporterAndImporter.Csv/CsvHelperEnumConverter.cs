@@ -15,17 +15,6 @@ namespace Magicodes.ExporterAndImporter.Csv
     public class CsvHelperEnumConverter : DefaultTypeConverter
     {
         /// <summary>
-        ///     
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="row"></param>
-        /// <param name="memberMapData"></param>
-        /// <returns></returns>
-        public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
-        {
-            return base.ConvertToString(value, row, memberMapData);
-        }
-        /// <summary>
         ///     从字符串反转
         /// </summary>  
         /// <param name="text"></param>

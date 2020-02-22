@@ -136,6 +136,34 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "通过Dto导出表头")]
+        public async Task ExportHeaderAsByteArray_Test()
+        {
+            IExporter exporter = new CsvExporter();
 
+            var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArray_Test)}.csv");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.ExportHeaderAsByteArray(GenFu.GenFu.New<ExportTestDataWithAttrs>());
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            result.ToCsvExportFileInfo(filePath);
+            File.Exists(filePath).ShouldBeTrue();
+            //using (var reader = new StreamReader(filePath))
+            //using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            //{
+            //    csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
+            //    var datas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
+            //   // datas.Count.ShouldBe(100);
+            //}
+            //using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            //{
+            //    //检查转换结果
+            //    var sheet = pck.Workbook.Worksheets.First();
+            //    sheet.Name.ShouldBe("测试");
+            //    sheet.Dimension.Columns.ShouldBe(9);
+            //}
+        }
     }
 }

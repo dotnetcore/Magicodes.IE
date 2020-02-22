@@ -88,7 +88,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class
         {
             var helper = new ExportHelper<T>();
-            return Task.FromResult(helper.GetCsvExportAsByteArray());
+            return Task.FromResult(helper.GetCsvExportHeaderAsByteArray<T>());
         }
     }
 }
