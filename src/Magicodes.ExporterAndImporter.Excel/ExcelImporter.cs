@@ -76,13 +76,13 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath">文件路径</param>
         /// <param name="bussinessErrorDataList">错误数据</param>
-        /// <param name="errorDataFilePath">错误数据返回路径</param>
+        /// <param name="msg">成功:错误数据返回路径,失败 返回错误原因</param>
         /// <returns></returns>
-        public bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string errorDataFilePath) where T : class, new()
+        public bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string msg) where T : class, new()
         {
             using (var importer = new ImportHelper<T>(filePath, null))
             {
-                return importer.OutputBussinessErrorData(bussinessErrorDataList, out errorDataFilePath);
+                return importer.OutputBussinessErrorData(bussinessErrorDataList, out msg);
             }
         }
         /// <summary>
