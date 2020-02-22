@@ -23,6 +23,7 @@ using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -66,14 +67,20 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task GenerateStudentImportSheetDescriptionTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
+                nameof(GenerateStudentImportSheetDescriptionTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result = await Importer.GenerateTemplate<ImportStudentDtoWithSheetDesc>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
-            //TODO:读取Excel检查表头和格式
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                var attr = typeof(ImportStudentDtoWithSheetDesc).GetAttribute<ExcelImporterAttribute>();
+                var text = sheet.Cells["A1"].Text.Replace("\n",string.Empty).Replace("\r",string.Empty);
+                text.ShouldBe(attr.SheetDescription.Replace("\n", string.Empty).Replace("\r", string.Empty));
+            }
         }
 
         [Fact(DisplayName = "生成模板")]
@@ -546,7 +553,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
-            
+
 
             List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
 
@@ -557,7 +564,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
-                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) +1,
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
 
                 };
                 errorInfo.FieldErrors.Add("管轴编号", "数据库已重复");
@@ -571,7 +578,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-        
+
 
         /// <summary>
         /// 重复标注测试,,想已有标注的模板再次插入标注会报错

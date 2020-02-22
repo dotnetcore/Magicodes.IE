@@ -336,7 +336,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+
+#if DEBUG
+        [Fact(DisplayName = "大数据动态列导出Excel", Skip = "本地Debug模式下跳过，太费时")]
+#else
         [Fact(DisplayName = "大数据动态列导出Excel")]
+#endif
         public async Task LargeDataDynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
