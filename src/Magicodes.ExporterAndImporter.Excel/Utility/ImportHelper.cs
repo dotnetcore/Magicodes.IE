@@ -391,7 +391,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var worksheet = GetImportSheet(excelPackage);
                 var excelHeaders = new Dictionary<string, int>();
                 var endColumnCount = ExcelImporterSettings.EndColumnCount ?? worksheet.Dimension.End.Column;
-                if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.SheetDescription))
+                if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.ImportDescription))
                 {
                     ExcelImporterSettings.HeaderRowIndex++;
                 }
@@ -568,13 +568,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (!ParseHeader()) return;
             //设置列头
             //设置头部描述说明
-            if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.SheetDescription))
+            if (!string.IsNullOrWhiteSpace(ExcelImporterSettings.ImportDescription))
             {
                 ExcelImporterSettings.HeaderRowIndex++;
                 worksheet.Cells[1, 1, 1, ImporterHeaderInfos.Count].Merge = true;
                 worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                worksheet.Cells[1, 1].Value = ExcelImporterSettings.SheetDescription;
+                worksheet.Cells[1, 1].Value = ExcelImporterSettings.ImportDescription;
+
                 worksheet.Row(1).Height = ExcelImporterSettings.DescriptionHeight;
+
 
             }
 

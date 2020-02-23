@@ -22,7 +22,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true, SheetDescription = @"导入说明：
+    [ExcelImporter(IsLabelingError = true, ImportDescription = @"导入说明：
 1、*代表必填
 2、介质代号严格区分大小写，一般使用大写字母，比如：N7、N7 - a、N7 - b、H2S、PL、BA等，且不得使用除[-]以外的特殊字符，系统不能存在重复的介质代号，否则将会导入失败。
 3、介质名称填写内容为文本格式，示例：0.7MPa氮气、硫化氢、TDI装船线等。

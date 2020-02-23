@@ -33,7 +33,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// <summary>
     ///     Excel导出程序
     /// </summary>
-    public class ExcelExporter : IExporter, IExportFileByTemplate
+    public class ExcelExporter : IExcelExporter
     {
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// <summary>
     /// 导入管轴模型
     /// </summary>
-    [ExcelImporter(IsLabelingError = true, SheetDescription = @"导入说明：
+    [ExcelImporter(IsLabelingError = true, ImportDescription = @"导入说明：
     1、* 代表必填
     2、管轴编号严格区分大小写且具备固定格式，不得使用特殊字符，如果是数字编号轴则10以下的数值必须使用0补位，示例：B-01、B-02、P1-01、P1-15a、P1-30New等
     3、管线编号严格区分大小写，一般使用大写字母，比如：01-150-HW-05A111-A1E-H等，且不得使用除[-]以外的特殊字符，系统不存在该管线编号时将会导入失败。

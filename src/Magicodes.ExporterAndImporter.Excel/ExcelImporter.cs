@@ -25,7 +25,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// <summary>
     ///     Excel导入
     /// </summary>
-    public class ExcelImporter : IImporter
+    public class ExcelImporter : IExcelImporter
     {
         /// <summary>
         ///     生成Excel导入模板

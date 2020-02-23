@@ -11,11 +11,15 @@
 
 ### GitHub
 
-![GitHub contributors](https://img.shields.io/github/contributors/dotnetcore/Magicodes.IE?style=social)	![GitHub commit activity](https://img.shields.io/github/commit-activity/m/dotnetcore/Magicodes.IE?style=social)	![GitHub last commit](https://img.shields.io/github/last-commit/dotnetcore/Magicodes.IE?style=social)	![GitHub issues badge](https://img.shields.io/github/issues/dotnetcore/Magicodes.IE?style=social)	![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE?style=social)	![GitHub stars](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE?style=social)	![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE?style=social)	![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE?style=social)	![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE?style=social)	![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE?style=social)
+- ![GitHub contributors](https://img.shields.io/github/contributors/dotnetcore/Magicodes.IE?style=social) ![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE?style=social)
+- ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/dotnetcore/Magicodes.IE?style=social)  ​![GitHub last commit](https://img.shields.io/github/last-commit/dotnetcore/Magicodes.IE?style=social)
+- ![GitHub issues badge](https://img.shields.io/github/issues/dotnetcore/Magicodes.IE?style=social) ![GitHub issues badge](https://img.shields.io/github/issues-closed/dotnetcore/Magicodes.IE?style=social)
+- ![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE?style=social)	![GitHub stars](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE?style=social)
+- ![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE?style=social)	![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE?style=social)
 
 ### Azure DevOps 
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
-- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/12/master) 
+- Azure DevOps coverage (master)（存在问题）:  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/12/master) 
 - Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/12/master)
 
 
@@ -53,7 +57,8 @@
 7. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
 8. **进阶篇之导入导出筛选器（待补充）**
-9. **其他教程见下文或单元测试**
+9. **主体API说明**
+10. **其他教程见下文或单元测试**
 
 **更新历史见下文。**
 
@@ -225,9 +230,12 @@
 
 ### **更新历史**
 
-#### **2019.02.22**
+#### **2019.02.23**
 - **【Nuget】版本更新到2.1.1-beta**
-- **【导入】Excel导入支持导入标注以及独立的错误标注函数**
+- **【导入】Excel导入支持导入标注，仅需设置ExcelImporterAttribute的ImportDescription属性，即会在顶部生成Excel导入说明**
+- **【重构】添加两个接口**
+  - IExcelExporter：继承自IExporter, IExportFileByTemplate，Excel特有的API将在此补充
+  - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets”
 
 #### **2019.02.14**
 - **【Nuget】版本更新到2.1.0**

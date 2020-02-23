@@ -38,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
-        public IImporter Importer = new ExcelImporter();
+        public IExcelImporter Importer = new ExcelImporter();
 
         /// <summary>
         /// 测试枚举
@@ -79,7 +79,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var sheet = pck.Workbook.Worksheets.First();
                 var attr = typeof(ImportStudentDtoWithSheetDesc).GetAttribute<ExcelImporterAttribute>();
                 var text = sheet.Cells["A1"].Text.Replace("\n",string.Empty).Replace("\r",string.Empty);
-                text.ShouldBe(attr.SheetDescription.Replace("\n", string.Empty).Replace("\r", string.Empty));
+                text.ShouldBe(attr.ImportDescription.Replace("\n", string.Empty).Replace("\r", string.Empty));
             }
         }
 

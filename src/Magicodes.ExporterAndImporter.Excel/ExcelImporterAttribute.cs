@@ -39,7 +39,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         /// Sheet顶部导入描述
         /// </summary>
-        public string SheetDescription { get; set; }
+        public string ImportDescription { get; set; }
 
         /// <summary>
         /// Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)
