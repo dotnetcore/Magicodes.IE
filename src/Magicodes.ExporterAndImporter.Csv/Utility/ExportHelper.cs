@@ -1,5 +1,4 @@
-﻿using System;
-using CsvHelper;
+﻿using CsvHelper;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using CsvHelper.TypeConversion;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
