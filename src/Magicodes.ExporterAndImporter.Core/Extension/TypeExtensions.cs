@@ -11,12 +11,14 @@
 // 
 // ======================================================================
 
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
@@ -248,5 +250,30 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             sb.Append(">");
             return sb.ToString();
         }
+
+        /// <summary>
+        ///     实例化依赖
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object[] CreateType(this Type type)
+        {
+            //Get the first
+            var constructorInfo = type.GetConstructors().FirstOrDefault();
+            var parameterInfos = constructorInfo?.GetParameters();
+            var objects=new List<object>();
+            //GetAssemblies need to add conditional screening
+            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(item => item.GetTypes()).ToList();
+
+            foreach (var item in parameterInfos)
+            {
+                var t = types.FirstOrDefault(x => x.GetInterfaces().Any(a => a.Name == item.ParameterType.Name));
+                var obj = Activator.CreateInstance(t, CreateType(t));
+                objects.Add(obj);
+            }
+            return objects.ToArray();
+        }
+
+
     }
 }
