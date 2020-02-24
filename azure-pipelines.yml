@@ -28,6 +28,7 @@ steps:
   inputs:
     script: |
       dotnet test --logger:trx --collect:"XPlat Code Coverage"
+      dotnet tool install -g dotnet-reportgenerator-globaltool
       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*"
   continueOnError: true
 
