@@ -24,24 +24,23 @@ steps:
     version: '3.x'
 
 - task: CmdLine@2
-      displayName: Run Tests and ReportGenerator
-      inputs:
-        targetType: 'inline'
-        script: |
-          dotnet test --logger:trx --collect:"XPlat Code Coverage"
-          reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*"
-      continueOnError: true
+  displayName: Run Tests and ReportGenerator
+  inputs:
+    script: |
+      dotnet test --logger:trx --collect:"XPlat Code Coverage"
+      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*"
+  continueOnError: true
 
 - task: PublishTestResults@2
-    displayName: 'Publish Test Results'
-    inputs:
+  displayName: 'Publish Test Results'
+  inputs:
     testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
     testResultsFiles: '**/TestResults/*.trx' 
     testRunTitle: API.Tests
 
 - task: PublishCodeCoverageResults@1
-    displayName: 'Publish code coverage report'
-    inputs:
+  displayName: 'Publish code coverage report'
+  inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)\coveragereport\Cobertura.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)\coveragereport'
