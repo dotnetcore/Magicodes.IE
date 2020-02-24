@@ -609,7 +609,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "标注需要手动移除测试")]
-        public async Task ImportComment_Test()
+        public async Task ImportCommentDidntRemove_Test()
         {
 
             //存在四条重复的学籍号码 ,我们手动修改了两条错误数据还剩下两条错误数据
