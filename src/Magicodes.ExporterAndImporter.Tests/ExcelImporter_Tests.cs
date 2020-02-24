@@ -23,6 +23,7 @@ using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -37,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
-        public IImporter Importer = new ExcelImporter();
+        public IExcelImporter Importer = new ExcelImporter();
 
         /// <summary>
         /// 测试枚举
@@ -55,6 +56,31 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
 
             //TODO:读取Excel检查表头和格式
+        }
+
+
+        /// <summary>
+        /// 测试生成导入描述头
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "生成学生数据导入模板加描述")]
+        public async Task GenerateStudentImportSheetDescriptionTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                nameof(GenerateStudentImportSheetDescriptionTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<ImportStudentDtoWithSheetDesc>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                var attr = typeof(ImportStudentDtoWithSheetDesc).GetAttribute<ExcelImporterAttribute>();
+                var text = sheet.Cells["A1"].Text.Replace("\n",string.Empty).Replace("\r",string.Empty);
+                text.ShouldBe(attr.ImportDescription.Replace("\n", string.Empty).Replace("\r", string.Empty));
+            }
         }
 
         [Fact(DisplayName = "生成模板")]
@@ -316,6 +342,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
+
         /// <summary>
         /// https://github.com/dotnetcore/Magicodes.IE/issues/35
         /// </summary>
@@ -400,5 +427,194 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
         }
+
+
+        [Fact(DisplayName = "学生基础数据导入带头部描述")]
+        public async Task StudentInfoWithDescImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
+            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 使用错误数据按照导入模板导出  
+        /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入列头筛选器测试带头部描述")]
+        public async Task ImportFailureData()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
+            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+
+            //出现五条无法完成业务效验的错误数据
+            foreach (var item in import.Data.Skip(5).ToList())
+            {
+                var errorInfo = new DataRowErrorInfo()
+                {
+                    //由于 Index 从开始
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
+
+                };
+                errorInfo.FieldErrors.Add("序号", "数据库已重复");
+                errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
+                ErrorList.Add(errorInfo);
+            }
+
+            bool result = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string msg);
+
+            result.ShouldBeTrue();
+
+
+
+        }
+
+        /// <summary>
+        /// 使用错误数据按照导入模板导出  
+        /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入列头筛选器测试 不带头部描述")]
+        public async Task ImportFailureDataWithoutDesc()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入.xlsx");
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+
+            //出现五条无法完成业务效验的错误数据
+            foreach (var item in import.Data.ToList())
+            {
+
+                var errorInfo = new DataRowErrorInfo()
+                {
+                    //由于 Index 从开始
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
+
+                };
+                errorInfo.FieldErrors.Add("序号", "数据库已重复");
+                errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
+                ErrorList.Add(errorInfo);
+            }
+            var result = Importer.OutputBussinessErrorData<ImportStudentDto>(filePath, ErrorList, out string errorDataFilePath);
+            result.ShouldBeTrue();
+
+        }
+
+        /// <summary>
+        /// 管轴导入测试 测试能否手动新增错误信息
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "管轴导入测试")]
+        public async Task ImportFailureAxisDataWithoutDesc()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "管轴导入数据.xlsx");
+            var import = await Importer.Import<ImportGalleryAxisDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+
+
+            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+
+            //出现五条无法完成业务效验的错误数据
+            foreach (var item in import.Data.ToList())
+            {
+
+                var errorInfo = new DataRowErrorInfo()
+                {
+                    //由于 Index 从开始
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
+
+                };
+                errorInfo.FieldErrors.Add("管轴编号", "数据库已重复");
+                errorInfo.FieldErrors.Add("管廊编号", "责任区域不存在");
+                errorInfo.FieldErrors.Add("责任区域", "责任区域不存在");
+                ErrorList.Add(errorInfo);
+            }
+            var result = Importer.OutputBussinessErrorData<ImportGalleryAxisDto>(filePath, ErrorList, out string errorDataFilePath);
+            result.ShouldBeTrue();
+
+        }
+
+
+
+
+        /// <summary>
+        /// 重复标注测试,,想已有标注的模板再次插入标注会报错
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "重复标注测试")]
+        public async Task StudentInfoWithCommentImporter_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头_.xlsx");
+            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
+            import.ShouldNotBeNull();
+
+
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+
+        }
+
+
+
     }
 }
