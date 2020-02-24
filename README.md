@@ -230,12 +230,13 @@
 
 ### **更新历史**
 
-#### **2019.02.23**
+#### **2019.02.24**
 - **【Nuget】版本更新到2.1.1-beta**
 - **【导入】Excel导入支持导入标注，仅需设置ExcelImporterAttribute的ImportDescription属性，即会在顶部生成Excel导入说明**
 - **【重构】添加两个接口**
   - IExcelExporter：继承自IExporter, IExportFileByTemplate，Excel特有的API将在此补充
-  - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets”
+  - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets” 
+- **【重构】增加实例依赖注入**
 
 #### **2019.02.14**
 - **【Nuget】版本更新到2.1.0**
