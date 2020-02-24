@@ -11,12 +11,14 @@
 // 
 // ======================================================================
 
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
@@ -261,8 +263,23 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var parameterInfos = constructorInfo?.GetParameters();
             var objects=new List<object>();
             //GetAssemblies need to add conditional screening
-            var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(item => item.GetTypes()).ToList();
+            //var getAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            List<Type> types = new List<Type>();
+            foreach (var item in GetAllAssemblies())
+            {
+                try
+                {
+                    foreach (var typeitem in item.GetTypes())
+                    {
+                        types.Add(typeitem);
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
 
+            }
             foreach (var item in parameterInfos)
             {
                 var t = types.FirstOrDefault(x => x.GetInterfaces().Any(a => a.Name == item.ParameterType.Name));
@@ -272,6 +289,29 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             return objects.ToArray();
         }
 
-
+        /// <summary>
+        /// 获取项目程序集,排除所有的系统程序集(Microsoft.***、System.***等)、Nuget包
+        /// </summary>
+        /// <returns></returns>
+        public static IList<Assembly> GetAllAssemblies()
+        {
+            var list = new List<Assembly>();
+            var deps = DependencyContext.Default;
+            var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
+            foreach (var lib in deps.CompileLibraries)
+            {
+                try
+                {
+                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+                    list.Add(assembly);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+            return list;
+         
+        }
     }
 }
