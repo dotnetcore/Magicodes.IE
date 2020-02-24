@@ -18,7 +18,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+#if NETSTANDARD
 using System.Runtime.Loader;
+#endif
 using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
@@ -295,6 +297,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static IList<Assembly> GetAllAssemblies()
         {
+#if NETSTANDARD
             var list = new List<Assembly>();
             var deps = DependencyContext.Default;
             var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
@@ -311,7 +314,10 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 }
             }
             return list;
-         
+#else
+         return AppDomain.CurrentDomain.GetAssemblies();
+#endif
+           
         }
     }
 }
