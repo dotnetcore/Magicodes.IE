@@ -23,6 +23,7 @@ using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -546,7 +547,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
-            
+
 
             List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
 
@@ -557,7 +558,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
-                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) +1,
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
 
                 };
                 errorInfo.FieldErrors.Add("管轴编号", "数据库已重复");
@@ -570,9 +571,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
-
-        
-
         /// <summary>
         /// 重复标注测试,,想已有标注的模板再次插入标注会报错
         /// </summary>
@@ -583,8 +581,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头_.xlsx");
             var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
             import.ShouldNotBeNull();
-
-
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
@@ -608,6 +604,50 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
+        /// <summary>
+        /// 标注未移除 
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "标注需要手动移除测试")]
+        public async Task ImportComment_Test()
+        {
+
+            //存在四条重复的学籍号码 ,我们手动修改了两条错误数据还剩下两条错误数据
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入存在问题.xlsx");
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //此时B2到B5 都存在错误标注
+                pck.Workbook.Worksheets.First().Cells["B2"].Comment.ShouldNotBeNull();
+                pck.Workbook.Worksheets.First().Cells["B3"].Comment.ShouldNotBeNull();
+                pck.Workbook.Worksheets.First().Cells["B4"].Comment.ShouldNotBeNull();
+                pck.Workbook.Worksheets.First().Cells["B5"].Comment.ShouldNotBeNull();
+
+            }
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(2);
+
+            var ext = Path.GetExtension(filePath);
+            filePath = filePath.Replace(ext, "_" + ext);
+
+            //此处断点可以发现Excel依然存在4个标注
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查忽略列
+                pck.Workbook.Worksheets.First().Cells["B2"].Comment.ShouldNotBeNull();
+                pck.Workbook.Worksheets.First().Cells["B3"].Comment.ShouldNotBeNull();
+
+                //这个时候 B4 B5 上面的标注应该去掉
+                pck.Workbook.Worksheets.First().Cells["B4"].Comment.ShouldBeNull();
+                pck.Workbook.Worksheets.First().Cells["B5"].Comment.ShouldBeNull();
+
+            }
+
+        }
 
     }
 }
