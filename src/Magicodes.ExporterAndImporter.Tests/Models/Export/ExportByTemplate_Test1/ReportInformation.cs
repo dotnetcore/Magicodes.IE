@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1
 {

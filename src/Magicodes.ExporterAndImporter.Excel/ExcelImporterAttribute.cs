@@ -17,7 +17,7 @@ using System;
 namespace Magicodes.ExporterAndImporter.Excel
 {
 
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
     public class ExcelImporterAttribute : ImporterAttribute
     {
         /// <summary>
@@ -35,5 +35,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     是否标注错误（默认为true）
         /// </summary>
         public bool IsLabelingError { get; set; } = true;
+
+        /// <summary>
+        /// Sheet顶部导入描述
+        /// </summary>
+        public string ImportDescription { get; set; }
+
+        /// <summary>
+        /// Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)
+        /// </summary>
+        public double DescriptionHeight { get; set; } = 13.5;
     }
 }

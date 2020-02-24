@@ -23,7 +23,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
-        public IImporter Importer = new ExcelImporter();
+        public IExcelImporter Importer = new ExcelImporter();
 
 
         [Fact(DisplayName = "班级学生基础数据导入")]

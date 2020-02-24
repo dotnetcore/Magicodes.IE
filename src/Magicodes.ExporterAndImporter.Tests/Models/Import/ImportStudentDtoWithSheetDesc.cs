@@ -12,20 +12,23 @@
 // ======================================================================
 
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
-
     /// <summary>
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true)]
-    public class ImportStudentDto
+    [ExcelImporter(IsLabelingError = true, ImportDescription = @"导入说明：
+1、*代表必填
+2、介质代号严格区分大小写，一般使用大写字母，比如：N7、N7 - a、N7 - b、H2S、PL、BA等，且不得使用除[-]以外的特殊字符，系统不能存在重复的介质代号，否则将会导入失败。
+3、介质名称填写内容为文本格式，示例：0.7MPa氮气、硫化氢、TDI装船线等。
+4、颜色代码填写内容为文本格式，输入方式有：a.规定颜色值为颜色名称的颜色（比如 red）、b.规定颜色值为十六进制值的颜色（比如 #ff0000）、c.规定颜色值为 rgb 代码的颜色（比如 rgb(255,0,0)），一般使用rgb代码，对应的输入示例为：red、#ff0000、rgb(255,0,0)。
+5、介质状态填写内容为文本格式，示例：气、液、液 / 气等。", DescriptionHeight = 132)]
+    public class ImportStudentDtoWithSheetDesc
     {
         /// <summary>
         ///     序号
@@ -179,63 +182,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(IsIgnore = true)]
         public Guid? GradeId { get; set; }
-    }
 
-
-    /// <summary>
-    ///     性别
-    /// </summary>
-    public enum Genders
-    {
-        /// <summary>
-        ///     男
-        /// </summary>
-        Man = 0,
-
-        /// <summary>
-        ///     女
-        /// </summary>
-        Female = 1
-    }
-
-    /// <summary>
-    ///     学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
-    /// </summary>
-    public enum StudentStatus
-    {
-        /// <summary>
-        ///     正常
-        /// </summary>
-        [Display(Name = "正常")] Normal = 0,
-
-        /// <summary>
-        ///     流失
-        /// </summary>
-        [Description("流水")] PupilsAway = 1,
-
-        /// <summary>
-        ///     休学
-        /// </summary>
-        [Display(Name = "休学")] Suspension = 2,
-
-        /// <summary>
-        ///     勤工俭学
-        /// </summary>
-        [Display(Name = "勤工俭学")] WorkStudy = 3,
-
-        /// <summary>
-        ///     顶岗实习
-        /// </summary>
-        [Display(Name = "顶岗实习")] PostPractice = 4,
-
-        /// <summary>
-        ///     毕业
-        /// </summary>
-        [Display(Name = "毕业")] Graduation = 5,
-
-        /// <summary>
-        ///     参军
-        /// </summary>
-        [Display(Name = "参军")] JoinTheArmy = 6
     }
 }
