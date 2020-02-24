@@ -57,7 +57,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     //加载表头筛选器
                     if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
                     {
-                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName);
+                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName,true,System.Reflection.BindingFlags.Default,null,_excelExporterAttribute.ExporterHeaderFilter.CreateType(),null,null);
                     }
                 }
                 return _excelExporterAttribute;

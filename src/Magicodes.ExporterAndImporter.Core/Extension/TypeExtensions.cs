@@ -11,12 +11,16 @@
 // 
 // ======================================================================
 
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+#if NETSTANDARD
+using System.Runtime.Loader;
+#endif
 using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
@@ -247,6 +251,73 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 .Select(t => t.GetCSharpTypeName())));
             sb.Append(">");
             return sb.ToString();
+        }
+
+        /// <summary>
+        ///     实例化依赖
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object[] CreateType(this Type type)
+        {
+            //Get the first
+            var constructorInfo = type.GetConstructors().FirstOrDefault();
+            var parameterInfos = constructorInfo?.GetParameters();
+            var objects=new List<object>();
+            //GetAssemblies need to add conditional screening
+            //var getAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            List<Type> types = new List<Type>();
+            foreach (var item in GetAllAssemblies())
+            {
+                try
+                {
+                    foreach (var typeitem in item.GetTypes())
+                    {
+                        types.Add(typeitem);
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+
+            }
+            foreach (var item in parameterInfos)
+            {
+                var t = types.FirstOrDefault(x => x.GetInterfaces().Any(a => a.Name == item.ParameterType.Name));
+                var obj = Activator.CreateInstance(t, CreateType(t));
+                objects.Add(obj);
+            }
+            return objects.ToArray();
+        }
+
+        /// <summary>
+        /// 获取项目程序集,排除所有的系统程序集(Microsoft.***、System.***等)、Nuget包
+        /// </summary>
+        /// <returns></returns>
+        public static IList<Assembly> GetAllAssemblies()
+        {
+#if NETSTANDARD
+            var list = new List<Assembly>();
+            var deps = DependencyContext.Default;
+            var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
+            foreach (var lib in deps.CompileLibraries)
+            {
+                try
+                {
+                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+                    list.Add(assembly);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+            return list;
+#else
+         return AppDomain.CurrentDomain.GetAssemblies();
+#endif
+           
         }
     }
 }
