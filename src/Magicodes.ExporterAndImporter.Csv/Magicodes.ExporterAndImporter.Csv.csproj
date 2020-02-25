@@ -7,9 +7,9 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="15.0.0" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
   </ItemGroup>
 
 </Project>
