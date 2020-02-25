@@ -11,23 +11,20 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Reflection;
-using System.Threading.Tasks;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {

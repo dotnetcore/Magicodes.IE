@@ -12,9 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using CsvHelper;
-using CsvHelper.Configuration;
-using CsvHelper.TypeConversion;
 using Magicodes.ExporterAndImporter.Core.Filters;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
