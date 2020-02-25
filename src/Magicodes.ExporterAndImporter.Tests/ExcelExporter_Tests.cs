@@ -25,6 +25,7 @@ using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -53,7 +54,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 dt.Rows.Add(dr);
             }
-
             return dt;
         }
 
@@ -208,7 +208,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Dimension.Columns.ShouldBe(5);
             }
             #endregion
-
         }
 
         [Fact(DisplayName = "DataTable结合DTO导出Excel")]

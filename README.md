@@ -33,6 +33,7 @@
 | **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
 | **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
 | **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
+| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 
 ### **注意**
 
@@ -191,8 +192,7 @@
   - [x] **Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）**
 - [x] **加强值映射序列，比如支持方法、Dto接口的方式来获取**
 - [ ] **生成导入模板时必填项支持自定义样式配置**
-- [ ] **CSV支持**
-- [ ] **导入结果支持生成HTML输出**
+- [x] **CSV支持**
 - [x] **Sheet拆分（有兴趣的朋友可以参考张队的PR：[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)）**
 - [ ] **Excel导出支持图片**
 - [x] **解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）**
@@ -231,6 +231,11 @@
 
 ### **更新历史**
 
+#### **2019.02.25**
+- **【Nuget】版本更新到2.1.2**
+- **【导入导出】已支持CSV**
+- **【文档】完善Pdf导出文档**
+
 #### **2019.02.24**
 - **【Nuget】版本更新到2.1.1-beta**
 - **【导入】Excel导入支持导入标注，仅需设置ExcelImporterAttribute的ImportDescription属性，即会在顶部生成Excel导入说明**
@@ -238,6 +243,7 @@
   - IExcelExporter：继承自IExporter, IExportFileByTemplate，Excel特有的API将在此补充
   - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets” 
 - **【重构】增加实例依赖注入**
+- **【构建】完成代码覆盖率的DevOps的配置**
 
 #### **2019.02.14**
 - **【Nuget】版本更新到2.1.0**

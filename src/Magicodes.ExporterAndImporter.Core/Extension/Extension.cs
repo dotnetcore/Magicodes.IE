@@ -214,6 +214,34 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         }
 
 #endif
+        /// <summary>
+        ///     将DataTable转List
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static IList<T> ToList<T>(this DataTable dt) where T:class
+        {
+            IList<T> list = new List<T>();
+            string tempName = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                T t = Activator.CreateInstance<T>();
+                var props = typeof(T).GetProperties(); 
+                foreach (var pro in props)
+                {
+                    tempName = pro.Name;
+                    if (!dt.Columns.Contains(tempName)) continue;
+                    if (!pro.CanWrite) continue;
+                    var value = dr[tempName];
+                    if (value != DBNull.Value)
+                        pro.SetValue(t, value, null);
+                }
+                list.Add(t);
+            }
+            return list;
+        }
+
 
         /// <summary>
         /// 将Bytes导出为Excel文件
@@ -231,7 +259,22 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
             return file;
         }
+        /// <summary>
+        /// 将Bytes导出为Csv文件
+        /// </summary>
+        /// <param name="bytes">字节数组</param>
+        /// <param name="fileName">文件路径</param>
+        /// <returns></returns>
+        public static ExportFileInfo ToCsvExportFileInfo(this byte[] bytes, string fileName)
+        {
+            fileName.CheckCsvFileName();
+            File.WriteAllBytes(fileName, bytes);
 
+            var file = new ExportFileInfo(fileName,
+                  "text/csv");
+
+            return file;
+        }
         /// <summary>
         /// 检查文件名
         /// </summary>
@@ -242,6 +285,18 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             if (!Path.GetExtension(fileName).Equals(".xlsx",StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
+            }
+        }
+        /// <summary>
+        /// 检查文件名
+        /// </summary>
+        /// <param name="fileName"></param>
+        public static void CheckCsvFileName(this string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (!Path.GetExtension(fileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException("仅支持导出“.csv”!", nameof(fileName));
             }
         }
     }

@@ -134,7 +134,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         ///     状态
         ///     测试可为空的枚举类型
         /// </summary>
-        [ImporterHeader(Name = "状态")]
+        [ImporterHeader(Name = "状态")] 
         public StudentStatus? Status { get; set; }
 
         /// <summary>
@@ -211,6 +211,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     流失
         /// </summary>
+        [Display(Name = "流水")]
         [Description("流水")] PupilsAway = 1,
 
         /// <summary>

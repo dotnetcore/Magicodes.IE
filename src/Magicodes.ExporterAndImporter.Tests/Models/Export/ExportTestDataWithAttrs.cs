@@ -16,6 +16,7 @@ using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
+using CsvHelper.Configuration.Attributes;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -41,15 +42,11 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
         public string Text { get; set; }
-
         [ExporterHeader(DisplayName = "普通文本")] public string Text2 { get; set; }
-
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public decimal Number { get; set; }
-
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
 
