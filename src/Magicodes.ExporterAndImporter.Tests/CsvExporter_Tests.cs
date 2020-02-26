@@ -1,16 +1,14 @@
-﻿using System;
-using CsvHelper;
+﻿using CsvHelper;
 using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
-using Magicodes.ExporterAndImporter.Core.Extension;
 using Shouldly;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Xunit;
 
 
@@ -73,9 +71,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var exportDatas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
                 exportDatas.Count().ShouldBe(100);
                 var exportData = exportDatas.FirstOrDefault();
-                exportData.Time1.ToString().ShouldBeGreaterThanOrEqualTo(exportData.Time1.ToString("yyyy-MM-dd"));
-                exportData.Time2.ToString()
-                    .ShouldBeGreaterThanOrEqualTo(exportData.Time2?.ToString("yyyy-MM-dd HH:mm:ss"));
             }
         }
 
