@@ -67,10 +67,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
-                var exportDatas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
-                exportDatas.Count().ShouldBe(100);
-                var exportData = exportDatas.FirstOrDefault();
+                csv.Read();
+                csv.ReadHeader();
+                var index = 0;
+                while (csv.Read())
+                {
+                    var exportData = data[index];
+                    csv.GetField<string>("日期1").ShouldBeGreaterThanOrEqualTo(exportData.Time1.ToString("yyyy-MM-dd")); 
+                    csv.GetField<string>("日期2").ShouldBeGreaterThanOrEqualTo(exportData.Time2?.ToString("yyyy-MM-dd HH:mm:ss"));
+                    index++;
+                }
+                index.ShouldBe(100);
             }
         }
 
