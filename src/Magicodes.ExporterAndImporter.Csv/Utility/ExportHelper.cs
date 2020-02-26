@@ -20,7 +20,6 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <summary>
         ///     导出Csv
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
         public byte[] GetCsvExportAsByteArray(ICollection<T> dataItems = null)
@@ -31,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.HasHeaderRecord = true;
                 csv.Configuration.RegisterClassMap<AutoMap<T>>();
-                if (dataItems!=null&&dataItems.Count>0)
+                if (dataItems != null && dataItems.Count > 0)
                 {
                     csv.WriteRecords(dataItems);
                 }
@@ -85,7 +84,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public byte[] GetCsvExportAsByteArray<T>(DataTable dataItems) where T:class
+        public byte[] GetCsvExportAsByteArray<T>(DataTable dataItems) where T : class
         {
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
