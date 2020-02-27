@@ -233,7 +233,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "DataTable导出Excel（无需定义类，支持列筛选器和表拆分）")]
         public async Task DynamicDataTableExport_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExcelExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicDataTableExport_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
@@ -314,7 +314,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "通过动态传值导出表头")]
         public async Task ExportHeaderAsByteArrayWithItems_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExcelExporter exporter = new ExcelExporter();
 
             var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArrayWithItems_Test)}.xlsx");
 
@@ -343,7 +343,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 #endif
         public async Task LargeDataDynamicExport_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExcelExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(LargeDataDynamicExport_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 

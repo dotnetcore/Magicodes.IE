@@ -1,9 +1,9 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Csv.Utility;
+using System;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Csv
 {
@@ -12,14 +12,31 @@ namespace Magicodes.ExporterAndImporter.Csv
     /// </summary>
     public class CsvImporter : IImporter
     {
-        public Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
+        /// <summary>
+        ///     导出模板
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public async Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
         {
-            throw new NotImplementedException();
+            using (var importer = new ImportHelper<T>(fileName))
+            {
+                return (await importer.GenerateTemplateByte())
+                    .ToCsvExportFileInfo(fileName);
+            }
         }
-
+        /// <summary>
+        ///     生成Csv导入模板
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public Task<byte[]> GenerateTemplateBytes<T>() where T : class, new()
         {
-            throw new NotImplementedException();
+            using (var importer = new ImportHelper<T>())
+            {
+                return importer.GenerateTemplateByte();
+            }
         }
         /// <summary>
         ///     导入
