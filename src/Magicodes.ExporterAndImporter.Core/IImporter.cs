@@ -22,7 +22,7 @@ namespace Magicodes.ExporterAndImporter.Core
     /// </summary>
     public interface IImporter
     {
-        /// <summary>
+        /// <summary> 
         ///     生成导入模板
         /// </summary>
         /// <typeparam name="T"></typeparam>

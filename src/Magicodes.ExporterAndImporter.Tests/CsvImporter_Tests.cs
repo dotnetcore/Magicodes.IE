@@ -67,7 +67,29 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
             }
         }
+        [Fact(DisplayName = "生成模板字节")]
+        public async Task GenerateTemplateBytes_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytes_Test) + ".csv");
+            if (File.Exists(filePath)) File.Delete(filePath);
 
+            var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+        }
+        [Fact(DisplayName = "生成模板")]
+        public async Task GenerateTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplate_Test) + ".csv");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+        }
 
     }
 }

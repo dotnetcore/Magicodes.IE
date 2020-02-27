@@ -2,8 +2,12 @@
 using Magicodes.ExporterAndImporter.Core.Models;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
@@ -58,6 +62,43 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             }
             return Task.FromResult(ImportResult);
         }
+        /// <summary>
+        ///     导出模板
+        /// </summary>
+        /// <returns></returns>
+        public Task<byte[]> GenerateTemplateByte()
+        {
+            using (var ms = new MemoryStream())
+            using (var writer = new StreamWriter(ms, Encoding.UTF8))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.HasHeaderRecord = true;
+                #region header 
+                var properties = typeof(T).GetProperties();
+                foreach (var prop in properties)
+                {
+                    var name = prop.Name;
+                    var headerAttribute = prop.GetCustomAttribute<Core.ExporterHeaderAttribute>();
+                    if (headerAttribute != null)
+                    {
+                        name = headerAttribute.DisplayName ?? prop.GetDisplayName() ?? prop.Name;
+                    }
+                    var importAttribute = prop.GetCustomAttribute<Core.ImporterHeaderAttribute>();
+                    if (importAttribute != null)
+                    {
+                        name = importAttribute.Name ?? prop.GetDisplayName() ?? prop.Name;
+                    }
+                    csv.WriteField(name);
+                }
+                csv.NextRecord();
+                #endregion
+
+                writer.Flush();
+                ms.Position = 0;
+                return Task.FromResult(ms.ToArray());
+            }
+        }
+
         /// <summary>
         ///     检查导入文件路径
         /// </summary>

@@ -41,11 +41,6 @@ namespace Magicodes.ExporterAndImporter.Csv
             var bytes = await ExportAsByteArray<T>(dataItems);
             return bytes.ToCsvExportFileInfo(fileName);
         }
-
-        public Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
-        {
-            throw new NotImplementedException();
-        }
         /// <summary>
         ///     导出字节
         /// </summary>
@@ -68,16 +63,6 @@ namespace Magicodes.ExporterAndImporter.Csv
         {
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportAsByteArray<T>(dataItems));
-        }
-
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果")
-        {
-            throw new NotImplementedException();
         }
         /// <summary>
         ///     导出Csv表头
