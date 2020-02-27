@@ -7,9 +7,11 @@
 
 trigger:
 - master
+- develop
 
 pr:
 - master
+- develop
 
 pool:
   vmImage: 'windows-2019'
