@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,6 +27,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
 using Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport;
 using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Excel
@@ -175,7 +177,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return Task.FromResult(ep.GetAsByteArray());
             }
         }
-
 
         /// <summary>
         ///     根据模板导出
