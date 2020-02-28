@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -199,7 +200,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var dt = new DataTable();
             dt.Columns.AddRange(props.Select(p =>
                 new DataColumn(p.Name,
-                    (p.PropertyType.IsGenericType) && (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)) ? p.PropertyType.GetGenericArguments()[0] : p.PropertyType)).ToArray());
+                    (p.PropertyType.IsGenericType) && (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        ? p.PropertyType.GetGenericArguments()[0]
+                        : p.PropertyType)).ToArray());
             if (source.Count <= 0) return dt;
 
             for (var i = 0; i < source.Count; i++)
@@ -220,14 +223,14 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <typeparam name="T"></typeparam>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static IList<T> ToList<T>(this DataTable dt) where T:class
+        public static IList<T> ToList<T>(this DataTable dt) where T : class
         {
             IList<T> list = new List<T>();
             string tempName = "";
             foreach (DataRow dr in dt.Rows)
             {
                 T t = Activator.CreateInstance<T>();
-                var props = typeof(T).GetProperties(); 
+                var props = typeof(T).GetProperties();
                 foreach (var pro in props)
                 {
                     tempName = pro.Name;
@@ -237,8 +240,10 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                     if (value != DBNull.Value)
                         pro.SetValue(t, value, null);
                 }
+
                 list.Add(t);
             }
+
             return list;
         }
 
@@ -255,10 +260,11 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             File.WriteAllBytes(fileName, bytes);
 
             var file = new ExportFileInfo(fileName,
-                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             return file;
         }
+
         /// <summary>
         /// 将Bytes导出为Csv文件
         /// </summary>
@@ -271,10 +277,11 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             File.WriteAllBytes(fileName, bytes);
 
             var file = new ExportFileInfo(fileName,
-                  "text/csv");
+                "text/csv");
 
             return file;
         }
+
         /// <summary>
         /// 检查文件名
         /// </summary>
@@ -282,11 +289,12 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static void CheckExcelFileName(this string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
-            if (!Path.GetExtension(fileName).Equals(".xlsx",StringComparison.OrdinalIgnoreCase))
+            if (!Path.GetExtension(fileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
             }
         }
+
         /// <summary>
         /// 检查文件名
         /// </summary>
@@ -298,6 +306,16 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             {
                 throw new ArgumentException("仅支持导出“.csv”!", nameof(fileName));
             }
+        }
+        /// <summary>
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static Bitmap GetBitmapByUrl(string url)
+        {
+            var webC = new System.Net.WebClient();
+            var bmp = new Bitmap(webC.OpenRead(url));
+            return bmp;
         }
     }
 }
