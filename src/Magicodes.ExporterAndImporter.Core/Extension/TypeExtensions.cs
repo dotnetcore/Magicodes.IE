@@ -249,6 +249,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
                 .Select(t => t.GetCSharpTypeName())));
+            
             sb.Append(">");
             return sb.ToString();
         }

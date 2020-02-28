@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
+using System.Drawing;
+using OfficeOpenXml.Drawing;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -25,7 +27,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
-
         /// <summary>
         /// 
         /// </summary>
@@ -57,7 +58,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     //加载表头筛选器
                     if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
                     {
-                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName,true,System.Reflection.BindingFlags.Default,null,_excelExporterAttribute.ExporterHeaderFilter.CreateType(),null,null);
+                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName, true, System.Reflection.BindingFlags.Default, null, _excelExporterAttribute.ExporterHeaderFilter.CreateType(), null, null);
                     }
                 }
                 return _excelExporterAttribute;
@@ -248,9 +249,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
             AddDataItems(dataItems);
-
+            AddPicture(dataItems);
             return AddHeaderAndStyles();
         }
+
 
         /// <summary>
         ///     导出Excel空表头
@@ -269,15 +271,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             AddHeader();
 
-            AddStyle();
-
-            DeleteIgnoreColumns();
-
             if (ExcelExporterSettings.AutoFitAllColumn)
             {
                 CurrentExcelWorksheet.Cells[CurrentExcelWorksheet.Dimension.Address].AutoFitColumns();
             }
 
+            AddStyle();
+            DeleteIgnoreColumns();
             //以便支持导出多Sheet
             SheetIndex++;
             return CurrentExcelPackage;
@@ -289,7 +289,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public ExcelPackage Export(DataTable dataItems)
         {
             if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport) GetExporterHeaderInfoList(dataItems);
-
             AddDataItems(dataItems);
 
             return AddHeaderAndStyles();
@@ -337,6 +336,28 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
         }
 
+        internal static System.Drawing.Bitmap Test1
+        {
+            get
+            {
+                object obj = Image.FromFile("C:\\Users\\HueiFeng\\Pictures\\Camera Roll\\.NET Platform.png");
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///     添加图片
+        /// </summary>
+        protected void AddPicture(ICollection<T> dataItems)
+        {
+            for (var i = 1; i < dataItems.Count; i++)
+            {
+                var pic = CurrentExcelWorksheet.Drawings.AddPicture(i.ToString(), Test1);
+                pic.SetPosition(i, 0, 0, 0);
+                CurrentExcelWorksheet.Row(i+1).Height = 150;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -360,7 +381,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
         /// <summary>
         /// 删除忽略列
-        /// </summary>
+        /// </summary>  
         protected void DeleteIgnoreColumns()
         {
             var deletedCount = 0;
@@ -379,7 +400,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (CurrentExcelTable == null)
             {
-                var cols = ExporterHeaderList.Count();
+                var cols = ExporterHeaderList.Count;
                 var range = CurrentExcelWorksheet.Cells[1, 1, 10, cols];
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, "Table");
             }
@@ -410,13 +431,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             foreach (var exporterHeader in ExporterHeaderList)
             {
                 var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
-
                 if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
                     col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
 
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
-
+                if (exporterHeader.ExporterHeaderAttribute.IsImg)
+                {
+                    col.Width = exporterHeader.ExporterHeaderAttribute.ImgWidth;
+                }
                 //处理日期格式
                 switch (exporterHeader.CsTypeName)
                 {

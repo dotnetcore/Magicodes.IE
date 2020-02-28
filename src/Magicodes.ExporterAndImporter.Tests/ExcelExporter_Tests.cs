@@ -523,5 +523,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
+
+        [Fact(DisplayName = "Excel导出图片测试")]
+        public async Task ExportPicture_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Test)}.xlsx");
+            DeleteFile(filePath);
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithPicture>(20));
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
     }
 }
