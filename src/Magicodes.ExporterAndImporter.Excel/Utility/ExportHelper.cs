@@ -14,6 +14,7 @@ using System.Linq.Dynamic.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using System.Drawing;
 using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -249,7 +250,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
             AddDataItems(dataItems);
-            AddPicture(dataItems);
+            AddPicture(dataItems.ToDataTable());
             return AddHeaderAndStyles();
         }
 
@@ -290,7 +291,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport) GetExporterHeaderInfoList(dataItems);
             AddDataItems(dataItems);
-
+            AddPicture(dataItems);
             return AddHeaderAndStyles();
         }
 
@@ -336,27 +337,45 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
         }
 
-        internal static System.Drawing.Bitmap Test1
-        {
-            get
-            {
-                object obj = Image.FromFile("C:\\Users\\HueiFeng\\Pictures\\Camera Roll\\.NET Platform.png");
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-
         /// <summary>
         ///     添加图片
         /// </summary>
-        protected void AddPicture(ICollection<T> dataItems)
+        protected void AddPicture(DataTable dataItems)
         {
-            for (var i = 1; i < dataItems.Count; i++)
+            for (var i = 0; i < ExporterHeaderList.Count; i++)
             {
-                var pic = CurrentExcelWorksheet.Drawings.AddPicture(i.ToString(), Test1);
-                pic.SetPosition(i, 0, 0, 0);
-                CurrentExcelWorksheet.Row(i+1).Height = 150;
+                if (ExporterHeaderList[i].ExporterHeaderAttribute.IsImg)
+                {
+                    for (var j = 1; j <= dataItems.Rows.Count; j++)
+                    {
+                        try
+                        {
+                            //TODO 最好想个合理的算法
+                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterHeaderAttribute.ImgIsNullText;
+                            var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(),
+                                Extension.GetBitmapByUrl(dataItems.Rows[j - 1][ExporterHeaderList[i].PropertyName].ToString()));
+                            pic.SetPosition(j, ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight / 5, i - 1,
+                                0);
+                            CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight;
+                            pic.SetSize(ExporterHeaderList[i].ExporterHeaderAttribute.ImgWidth * 7, ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight);
+                        }
+                        catch (Exception)
+                        {
+                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterHeaderAttribute.ImgIsNullText;
+                        }
+                    }
+                }
+                else
+                {
+                    for (var j = 1; j <= dataItems.Rows.Count; j++)
+                    {
+                        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平居中
+                        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;//垂直居中
+                    }
+                }
             }
         }
+
 
         /// <summary>
         /// 

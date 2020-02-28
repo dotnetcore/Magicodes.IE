@@ -530,7 +530,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExporter exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExportPicture_Test)}.xlsx");
             DeleteFile(filePath);
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithPicture>(20));
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>();
+            var url = Path.Combine("TestFiles", "ExporterTest.png");
+            foreach (var item in data)
+            {
+                item.Img1 = url;
+                item.Img = url;
+            }
+            var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
