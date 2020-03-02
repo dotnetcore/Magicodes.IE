@@ -152,7 +152,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                          DisplayName = item,
                          CsTypeName = "string",
                          PropertyName = item,
-                         ExporterHeaderAttribute = new ExporterHeaderAttribute(item) { }
+                         ExporterHeaderAttribute = new ExporterHeaderAttribute(item) { },
                      };
                 headerList.Add(exporterHeaderInfo);
             }

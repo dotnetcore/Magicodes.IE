@@ -19,17 +19,13 @@ namespace Magicodes.ExporterAndImporter.Core
     public class ExporterHeaderAttribute : Attribute
     {
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
-            bool isBold = true, bool isAutoFit = true,bool isImg=false,int imgHeight=0,int imgWidth=0,string imgIsNullText="")
+            bool isBold = true, bool isAutoFit = true)
         {
             DisplayName = displayName;
             FontSize = fontSize;
             Format = format;
             IsBold = isBold;
             IsAutoFit = isAutoFit;
-            IsImg = isImg;
-            ImgHeight = imgHeight;
-            ImgWidth = imgWidth;
-            ImgIsNullText = imgIsNullText;
         }
 
         /// <summary>
@@ -61,23 +57,6 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     是否忽略
         /// </summary>
         public bool IsIgnore { get; set; }
-        /// <summary>
-        ///     是否是图片
-        /// </summary>
-        public bool IsImg { get; set; }
-        /// <summary>
-        ///     高度
-        /// </summary>
-        //TODO 高度始终会按照最后一列高度来设置,考虑是否可迁移
-        public int ImgHeight { get; set; }
-        /// <summary>
-        ///     宽度
-        /// </summary>
-        public int ImgWidth { get; set; }
-        /// <summary>
-        ///     图片不存在默认填充数据
-        /// </summary>
-        public string ImgIsNullText { get; set; }
     }
 
 
