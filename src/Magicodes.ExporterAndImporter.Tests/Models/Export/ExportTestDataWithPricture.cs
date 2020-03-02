@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -14,7 +12,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "普通文本")] public string Text2 { get; set; }
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
-        [ExporterHeader(DisplayName = "图1", IsImg = true, ImgWidth = 20, IsAutoFit = false, ImgHeight = 120)]
+        [ExporterImg(true,ImgWidth = 20, ImgHeight = 120)]
+        [ExporterHeader(DisplayName = "图1")]
         public string Img1 { get; set; }
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
         public decimal Number { get; set; }
@@ -25,7 +24,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         [ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
         public DateTime Time1 { get; set; }
-        [ExporterHeader(DisplayName = "图",IsImg = true,ImgWidth = 50,IsAutoFit = false,ImgHeight = 150)]
+        [ExporterImg(true, ImgWidth = 50, ImgHeight = 120)]
+        [ExporterHeader(DisplayName = "图",IsAutoFit = false)]
         public string Img { get; set; }
     }
 }

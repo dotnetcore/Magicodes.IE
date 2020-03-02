@@ -206,7 +206,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         ExporterHeaderAttribute =
                             (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
                                 ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].GetDisplayName() ?? objProperties[i].Name),
-                        CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName()
+                        CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName(),
+                        ExporterImgAttribute =
+                            (objProperties[i].GetCustomAttributes(typeof(ExporterImgAttribute), true) as
+                                ExporterImgAttribute[])?.FirstOrDefault()??new ExporterImgAttribute(false)
+
                     };
 
                     //设置列显示名
@@ -344,24 +348,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             for (var i = 0; i < ExporterHeaderList.Count; i++)
             {
-                if (ExporterHeaderList[i].ExporterHeaderAttribute.IsImg)
+                if (ExporterHeaderList[i].ExporterImgAttribute.IsImg)
                 {
                     for (var j = 1; j <= dataItems.Rows.Count; j++)
                     {
                         try
                         {
                             //TODO 最好想个合理的算法
-                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterHeaderAttribute.ImgIsNullText;
+                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterImgAttribute.ImgIsNullText;
                             var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(),
                                 Extension.GetBitmapByUrl(dataItems.Rows[j - 1][ExporterHeaderList[i].PropertyName].ToString()));
-                            pic.SetPosition(j, ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight / 5, i - 1,
+                            pic.SetPosition(j, ExporterHeaderList[i].ExporterImgAttribute.ImgHeight / 5, i - 1,
                                 0);
-                            CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight;
-                            pic.SetSize(ExporterHeaderList[i].ExporterHeaderAttribute.ImgWidth * 7, ExporterHeaderList[i].ExporterHeaderAttribute.ImgHeight);
+                            CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExporterImgAttribute.ImgHeight;
+                            pic.SetSize(ExporterHeaderList[i].ExporterImgAttribute.ImgWidth * 7, ExporterHeaderList[i].ExporterImgAttribute.ImgHeight);
                         }
                         catch (Exception)
                         {
-                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterHeaderAttribute.ImgIsNullText;
+                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterImgAttribute.ImgIsNullText;
                         }
                     }
                 }
@@ -455,9 +459,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
-                if (exporterHeader.ExporterHeaderAttribute.IsImg)
+                if (exporterHeader.ExporterImgAttribute.IsImg)
                 {
-                    col.Width = exporterHeader.ExporterHeaderAttribute.ImgWidth;
+                    col.Width = exporterHeader.ExporterImgAttribute.ImgWidth;
                 }
                 //处理日期格式
                 switch (exporterHeader.CsTypeName)
