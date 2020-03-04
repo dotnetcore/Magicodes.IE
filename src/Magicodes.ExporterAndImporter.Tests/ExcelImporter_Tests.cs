@@ -615,6 +615,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
         }
+        [Fact(DisplayName ="导入图片测试",Skip="未完成")]
+        public async Task ImportPicture_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
+            var import = await Importer.Import<ImportPictureDto>(filePath);
+
+
+        }
 
 
 
