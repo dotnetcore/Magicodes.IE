@@ -25,7 +25,7 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     图片不存在默认填充数据
         /// </summary>
         public string ImgIsNullText { get; set; }
-
+        
         public ExporterImgAttribute(bool isImg, int imgHeight=15, int imgWidth=50, string imgIsNullText=null)
         {
             IsImg = isImg;
@@ -37,6 +37,9 @@ namespace Magicodes.ExporterAndImporter.Core
         public ExporterImgAttribute(bool isImg)
         {
             IsImg = isImg;
+            ImgHeight = 15;
+            ImgWidth = 50;
+            ImgIsNullText = null;
         }
     }
 }

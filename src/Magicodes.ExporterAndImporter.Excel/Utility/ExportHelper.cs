@@ -348,7 +348,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             for (var i = 0; i < ExporterHeaderList.Count; i++)
             {
-                if (ExporterHeaderList[i].ExporterImgAttribute.IsImg)
+                if (ExporterHeaderList[i].ExporterImgAttribute != null && ExporterHeaderList[i].ExporterImgAttribute.IsImg)
                 {
                     for (var j = 1; j <= dataItems.Rows.Count; j++)
                     {
@@ -459,7 +459,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
-                if (exporterHeader.ExporterImgAttribute.IsImg)
+                if (exporterHeader.ExporterImgAttribute!=null&&exporterHeader.ExporterImgAttribute.IsImg)
                 {
                     col.Width = exporterHeader.ExporterImgAttribute.ImgWidth;
                 }
