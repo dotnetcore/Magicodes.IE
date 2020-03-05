@@ -6,7 +6,7 @@ namespace Magicodes.ExporterAndImporter.Core
     ///     导出图片特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class ExporterImgAttribute:Attribute
+    public class ExporterImgAttribute : Attribute
     {
         /// <summary>
         ///     是否是图片
@@ -25,15 +25,22 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     图片不存在默认填充数据
         /// </summary>
         public string ImgIsNullText { get; set; }
-        
-        public ExporterImgAttribute(bool isImg, int imgHeight=15, int imgWidth=50, string imgIsNullText=null)
+        /// <summary>
+        /// </summary>
+        /// <param name="isImg"></param>
+        /// <param name="imgHeight"></param>
+        /// <param name="imgWidth"></param>
+        /// <param name="imgIsNullText"></param>
+        public ExporterImgAttribute(bool isImg, int imgHeight = 15, int imgWidth = 50, string imgIsNullText = null)
         {
             IsImg = isImg;
             ImgHeight = imgHeight;
             ImgWidth = imgWidth;
             ImgIsNullText = imgIsNullText;
         }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="isImg"></param>
         public ExporterImgAttribute(bool isImg)
         {
             IsImg = isImg;

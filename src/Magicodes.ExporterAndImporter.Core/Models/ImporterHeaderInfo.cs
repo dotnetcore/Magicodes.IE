@@ -12,7 +12,6 @@
 // ======================================================================
 
 using System.Collections.Generic;
-using Magicodes.ExporterAndImporter.Core;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -35,6 +34,10 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     列属性
         /// </summary>
         public ImporterHeaderAttribute Header { get; set; }
+        /// <summary>
+        ///     图属性
+        /// </summary>
+        public ExcelImporterImgAttribute Img { get; set; }
 
         /// <summary>
         /// </summary>

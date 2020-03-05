@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -24,6 +25,7 @@ using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
@@ -487,7 +489,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name
                         };
-
+                var importerImgAttribute=(propertyInfo.GetCustomAttributes(typeof(ExcelImporterImgAttribute),true) as ExcelImporterImgAttribute[])?
+                    .FirstOrDefault()??new ExcelImporterImgAttribute
+                    { 
+                    };
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                     importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
 
@@ -498,7 +503,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     IsRequired = propertyInfo.IsRequired(),
                     PropertyName = propertyInfo.Name,
-                    Header = importerHeaderAttribute
+                    Header = importerHeaderAttribute,
+                    Img=importerImgAttribute
                 };
                 ImporterHeaderInfos.Add(colHeader);
 
@@ -621,6 +627,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
 
         }
+        /// <summary>
+        ///     获取图片
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="PositionID"></param>
+        /// <returns></returns>
+        private ExcelPicture GetImage(ExcelWorksheet worksheet, int PositionID)
+        {
+            var pic = worksheet.Drawings[PositionID] as ExcelPicture;
+            return pic;
+        }
+
+        
 
         /// <summary>
         ///     解析数据
@@ -631,14 +650,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             var worksheet = GetImportSheet(excelPackage);
             if (worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
-
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
 
+            int ImgBase;
             for (var rowIndex = ExcelImporterSettings.HeaderRowIndex + 1;
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
+                ImgBase = 0;
                 //跳过空行
                 if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
                 {
@@ -650,12 +670,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         ImporterHeaderInfos.Any(p1 => p1.PropertyName == p.Name && p1.IsExist)))
                     {
                         var col = ImporterHeaderInfos.First(a => a.PropertyName == propertyInfo.Name);
-
+                        
                         var cell = worksheet.Cells[rowIndex, col.Header.ColumnIndex];
                         try
                         {
                             var cellValue = cell.Value?.ToString();
                             if (!cellValue.IsNullOrWhiteSpace())
+                            {
                                 if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
                                 {
                                     //TODO:进一步缓存并优化
@@ -677,18 +698,41 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     //propertyInfo.SetValue(dataItem,
                                     //    value == null ? null : Convert.ChangeType(value, type));
                                     else
+                                    {
                                         propertyInfo.SetValue(dataItem,
                                             value);
+                                    }
+
                                     continue;
                                 }
+                            }
+                            else {
+                                if (col.Img.IsImg)
+                                {
+                                    var p = ImgBase == 0
+                                        ? rowIndex - 2 + (ImgBase++ * worksheet.Dimension.End.Row)
+                                        : rowIndex - 3 + (ImgBase++ * worksheet.Dimension.End.Row);
+                                    var pic = GetImage(worksheet,p);
+                                    var path = Path.Combine(col.Img.FilePath, Guid.NewGuid().ToString()+"."+ pic.ImageFormat.ToString());
+                                    string val = "";
+                                    if (col.Img.EnumImg == EnumImg.Url)
+                                    {
+                                        val = pic.Image.SaveImg(path,pic.ImageFormat);
+                                    }
+                                    else {
+                                        val = pic.Image.ImgToBase64String(pic.ImageFormat);
+                                    }
+                                    propertyInfo.SetValue(dataItem, val);
 
-                            //
+                                    continue;
+                                }
+                            }
+
                             if (propertyInfo.PropertyType.IsEnum)
                             {
                                 AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
                                 continue;
                             }
-
 
                             switch (propertyInfo.PropertyType.GetCSharpTypeName())
                             {

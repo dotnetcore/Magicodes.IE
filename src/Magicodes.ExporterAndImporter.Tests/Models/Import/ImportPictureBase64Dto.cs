@@ -1,16 +1,15 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using System;
-using System.IO;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
-    public class ImportPictureDto
+    public class ImportPictureBase64Dto
     {
         [ImporterHeader(Name = "加粗文本")]
-        public string  Text{ get; set; }
+        public string Text { get; set; }
         [ImporterHeader(Name = "普通文本")]
         public string Text2 { get; set; }
-        [ExcelImporterImg(IsImg =true)]
+        [ExcelImporterImg(IsImg = true,EnumImg =Core.Models.EnumImg.Base64)]
         [ImporterHeader(Name = "图1")]
         public string Img1 { get; set; }
         [ImporterHeader(Name = "数值")]
