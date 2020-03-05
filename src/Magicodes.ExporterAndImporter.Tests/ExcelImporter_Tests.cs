@@ -613,14 +613,34 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
         }
-        [Fact(DisplayName ="导入图片测试",Skip="未完成")]
+        [Fact(DisplayName ="导入图片测试")]
         public async Task ImportPicture_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
             var import = await Importer.Import<ImportPictureDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
-
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            var data= import.Data.FirstOrDefault();
+            File.Exists(data.Img).ShouldBeTrue();
+            File.Exists(data.Img1).ShouldBeTrue();
         }
+
+        [Fact(DisplayName = "导出图片测试_base64")]
+        public async Task ImportPictureBase64_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
+            var import = await Importer.Import<ImportPictureBase64Dto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            var data = import.Data.FirstOrDefault();
+            File.Exists(data.Img).ShouldBeTrue();
+            data.Img1.ShouldNotBeNull();
+        }
+
 
 
 

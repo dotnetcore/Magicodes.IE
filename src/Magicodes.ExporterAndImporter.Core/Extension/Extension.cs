@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
@@ -317,5 +318,51 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var bmp = new Bitmap(webC.OpenRead(url));
             return bmp;
         }
+        /// <summary>
+        /// 保存图片
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="path">path</param>
+        /// <returns></returns>
+        public static string SaveImg(this Image image, string path, ImageFormat format)
+        {
+            try
+            {
+                using (var img = image)
+                {
+                    img.Save(path, format);
+                }
+                return path;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+        }
+        /// <summary>
+        ///     图片转base64
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static string ImgToBase64String(this Image image, ImageFormat format)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                image.Save(ms, format);
+                byte[] arr = new byte[ms.Length];
+                ms.Position = 0;
+                ms.Read(arr, 0, (int)ms.Length);
+                ms.Close();
+                return Convert.ToBase64String(arr);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }
