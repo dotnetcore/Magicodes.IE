@@ -956,6 +956,34 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         propertyInfo.SetValue(dataItem, date);
                                     }
                                     break;
+                                case "Guid":
+                                    {
+                                        if (!Guid.TryParse(cellValue, out var guid))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的Guid格式！");
+                                            break;
+                                        }
+
+                                        propertyInfo.SetValue(dataItem, guid);
+                                    }
+                                    break;
+                                case "Nullable<Guid>":
+                                    {
+                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
+
+                                        if (!Guid.TryParse(cellValue, out var guid))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的Guid格式！");
+                                            break;
+                                        }
+
+                                        propertyInfo.SetValue(dataItem, guid);
+                                    }
+                                    break;
                                 default:
                                     propertyInfo.SetValue(dataItem, cell.Value);
                                     break;

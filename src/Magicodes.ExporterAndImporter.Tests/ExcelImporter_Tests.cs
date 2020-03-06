@@ -147,6 +147,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
             import.Data.ElementAt(0).Name.ShouldBe("1212");
             import.Data.ElementAt(0).BarCode.ShouldBe("123123");
+            import.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
+            import.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
             import.Data.ElementAt(1).Name.ShouldBe("12312312");
             import.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
         }

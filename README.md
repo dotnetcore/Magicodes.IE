@@ -6,6 +6,7 @@
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
+- **特点、详细说明、教程、Nuget、注意事项、VNext、更新历史见下文**
 
 ## 疯狂的徽章
 
@@ -35,6 +36,41 @@
 | **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
 | **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
+
+### Magicodes Nuget包推荐
+
+| 名称     |      说明      |      Nuget      | GitHUb |
+|----------|:-------------:|:-------------:|:-------------:|
+| Magicodes.WeChat.MiniProgram |小程序SDK |[![NuGet](https://buildstats.info/nuget/Magicodes.WeChat.MiniProgram)](https://www.nuget.org/packages/Magicodes.WeChat.MiniProgram) |**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
+| Magicodes.Sms.Aliyun |阿里云短信 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Aliyun)](https://www.nuget.org/packages/Magicodes.Sms.Aliyun) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
+| Magicodes.Sms.Core | 短信核心库 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Core)](https://www.nuget.org/packages/Magicodes.Sms.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
+| Magicodes.Sms.Aliyun.Abp | 阿里云短信Abp模块 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Aliyun.Abp)](https://www.nuget.org/packages/Magicodes.Sms.Aliyun.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
+| Magicodes.Storage.Core |通用存储核心库| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Core)](https://www.nuget.org/packages/Magicodes.Storage.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
+| Magicodes.Storage.AliyunOss.Core |阿里云OSS存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.AliyunOss.Core)](https://www.nuget.org/packages/Magicodes.Storage.AliyunOss.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
+| Magicodes.Storage.Local.Core |本地存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Local.Core)](https://www.nuget.org/packages/Magicodes.Storage.Local.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
+| Magicodes.Storage.Tencent.Core |腾讯云存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Tencent.Core)](https://www.nuget.org/packages/Magicodes.Storage.Tencent.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
+| Magicodes.Storage.Abp.Core | 通用存储ABP模块集成| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Abp.Core)](https://www.nuget.org/packages/Magicodes.Storage.Abp.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
+| Magicodes.WeChat.SDK.Core |微信SDK | [![NuGet](https://buildstats.info/nuget/Magicodes.WeChat.SDK.Core)](https://www.nuget.org/packages/Magicodes.WeChat.SDK.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WeChat.SDK](https://github.com/xin-lai/Magicodes.WeChat.SDK)**|
+| Magicodes.SwaggerUI |SwaggerUI API快速配置和分组| [![NuGet](https://buildstats.info/nuget/Magicodes.SwaggerUI)](https://www.nuget.org/packages/Magicodes.SwaggerUI) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.SwaggerUI](https://github.com/xin-lai/Magicodes.SwaggerUI)**|
+| Magicodes.Pay.Alipay  |支付宝支付库|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay)](https://www.nuget.org/packages/Magicodes.Pay.Alipay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Notify  |支付通用回调库|   [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Notify)](https://www.nuget.org/packages/Magicodes.Pay.Notify) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Wxpay  |微信支付库|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Wxpay)](https://www.nuget.org/packages/Magicodes.Pay.Wxpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Alipay.Global |国际支付宝支付库 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay.Global)](https://www.nuget.org/packages/Magicodes.Pay.Alipay.Global) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Allinpay  | 通联支付库 | [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Allinpay)](https://www.nuget.org/packages/Magicodes.Pay.Allinpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Abp  | ABP 支付通用封装库| [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp)](https://www.nuget.org/packages/Magicodes.Pay.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Abp.Allinpay  |ABP 通联支付模块|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp.Allinpay)](https://www.nuget.org/packages/Magicodes.Pay.Abp.Allinpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Abp.Wxpay  | ABP 微信支付模块| [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp.Wxpay)](https://www.nuget.org/packages/Magicodes.Pay.Abp.Wxpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Alipay.Global  | ABP 国际支付宝模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay.Global)](https://www.nuget.org/packages/Magicodes.Pay.Alipay.Global) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Pay.Alipay  | ABP 支付宝模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay)](https://www.nuget.org/packages/Magicodes.Pay.Alipay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
+| Magicodes.Abp.Castle.NLog  | ABP Nlog支持模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Abp.Castle.NLog)](https://www.nuget.org/packages/Magicodes.Abp.Castle.NLog) |[xin-lai](https://github.com/xin-lai)/**[Abp.Castle.NLog](https://github.com/xin-lai/Abp.Castle.NLog)**|
+| Magicodes.WxMiniProgram.Sdk  |微信小程序SDK|  [![NuGet](https://buildstats.info/nuget/Magicodes.WxMiniProgram.Sdk)](https://www.nuget.org/packages/Magicodes.WxMiniProgram.Sdk) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
+| Magicodes.WxMiniProgram.Sdk.Abp  |微信小程序SDK Abp模块|   [![NuGet](https://buildstats.info/nuget/Magicodes.WxMiniProgram.Sdk.Abp)](https://www.nuget.org/packages/Magicodes.WxMiniProgram.Sdk.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
+| Magicodes.Dingtalk.SDK |钉钉SDK| [![NuGet](https://buildstats.info/nuget/Magicodes.Dingtalk.SDK)](https://www.nuget.org/packages/Magicodes.Dingtalk.SDK)  | [xin-lai](https://github.com/xin-lai)/**[Magicodes.Dingtalk.SDK](https://github.com/xin-lai/Magicodes.Dingtalk.SDK)**|
+| Magicodes.DynamicSqlApi.Core  | 根据SQL自动解析生成动态API | [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.Core)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.Core) | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
+| Magicodes.DynamicSqlApi.All |  根据SQL自动解析生成动态API |  [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.All)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.All)   |  **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
+| Magicodes.DynamicSqlApi.CsScript |根据SQL自动解析生成动态API |    [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.CsScript)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.CsScript)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
+| Magicodes.DynamicSqlApi.Dapper | 根据SQL自动解析生成动态API |   [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.Dapper)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.Dapper)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
+| Magicodes.DynamicSqlApi.SqlServer | 根据SQL自动解析生成动态API |   [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.SqlServer)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.SqlServer)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
 
 ### **注意**
 
@@ -232,6 +268,10 @@
 
 
 ### **更新历史**
+
+#### **2019.03.06**
+- **【Nuget】版本更新到2.1.3**
+- **【Excel导入】修复GUID类型的问题。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/44>）。**
 
 #### **2019.02.25**
 - **【Nuget】版本更新到2.1.2**

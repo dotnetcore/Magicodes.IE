@@ -40,6 +40,13 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         public string Code { get; set; }
 
         /// <summary>
+        ///  测试GUID
+        /// </summary>
+        public Guid ProductIdTest1 { get; set; }
+
+        public Guid? ProductIdTest2 { get; set; }
+
+        /// <summary>
         ///     产品条码
         /// </summary>
         [ImporterHeader(Name = "产品条码", FixAllSpace = true)]
