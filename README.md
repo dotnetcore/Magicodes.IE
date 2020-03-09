@@ -6,7 +6,9 @@
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
-- **特点、详细说明、教程、Nuget、注意事项、VNext、更新历史见下文**
+- **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、更新历史见下文**
+
+**一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
 ## 疯狂的徽章
 
@@ -25,6 +27,14 @@
 - Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
 
 具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
+
+## 里程碑
+
+|  #   |    状态     | 完成时间 |                          里程碑情况                           |
+| :--: | :-----------: | :------: | :----------------------------------------------------------: |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | ☕讨论中[#46](https://github.com/dotnetcore/Magicodes.IE/issues/46) |2020-04-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
+| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩进行中 |2020-03-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/2)<br>[已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ### Nuget
 
@@ -77,7 +87,6 @@
 - **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**
 - **如需在Docker中使用，请参阅文档中的《Docker中使用》一节。**
 - **相关功能均已编写单元测试，在使用的过程中可以参考单元测试。**
-- **此库会长期支持，但是由于精力有限，希望大家能够多多参与。**
 
 ### **教程**
 
@@ -217,29 +226,9 @@
 - **支持Excel模板导出**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 
+### FAQ
 
-### **VNext**
-
-> **以下内容均已有思路，但是缺乏精力，因此虚席待PR，有兴趣的朋友可以参与进来，多多交流。**
-
-- [ ] **将代码单元测试覆盖率提高到90%（目前为86%）**
-- [x] **Pdf导出支持.NET Framework 461**
-- [x] **完成自动构建流程，并通过自动构建发包**
-- [ ] **表头样式设置**
-- [x] **自定义模板导出**
-  - [x] **Excel （[#10](https://github.com/dotnetcore/Magicodes.IE/issues/10)）**
-- [x] **加强值映射序列，比如支持方法、Dto接口的方式来获取**
-- [ ] **生成导入模板时必填项支持自定义样式配置**
-- [x] **CSV支持**
-- [x] **Sheet拆分（有兴趣的朋友可以参考张队的PR：[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)）**
-- [ ] **Excel导出支持图片**
-- [x] **解决Excel导出无法进行数据筛选的问题（[#17](https://github.com/dotnetcore/Magicodes.IE/issues/17)）**
-- [ ] **Excel单元格自动合并（[#9](https://github.com/dotnetcore/Magicodes.IE/issues/9)）**
-- [ ] **导入导出支持指定位置[CellAddress(Row = 2, Column = 2)]（[#19](https://github.com/dotnetcore/Magicodes.IE/issues/19)）**
-- [ ] **生成的导入模板支持数据验证**
-- [ ] **优化包依赖，拆解项目**
-- [x] **导入结果筛选器**
-- [x] **导入列头筛选器**
+[问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
 
 ### **联系我们**
 
