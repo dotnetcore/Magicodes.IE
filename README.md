@@ -1,6 +1,6 @@
 # Magicodes.IE
 
-导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf和Html。
+导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。
 
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
@@ -225,7 +225,8 @@
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
 - **支持Excel模板导出**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
-
+- **支持Excel导入模板生成标注**
+  ![](./res/ImportLabel.png "Excel导入标注")
 ### FAQ
 
 [问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
