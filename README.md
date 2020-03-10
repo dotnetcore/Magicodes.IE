@@ -1,6 +1,6 @@
 # Magicodes.IE
 
-导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。
+导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。已加入NCC开源组织。
 
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
