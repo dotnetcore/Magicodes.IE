@@ -356,16 +356,25 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     for (var j = 1; j <= rowCount; j++)
                     {
                         var cell = CurrentExcelWorksheet.Cells[j + 1, i + 1];
-                        var path = cell.Text;
-                        if (File.Exists(path))
+                        var url = cell.Text;
+                        if (File.Exists(url) || url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                         {
                             try
                             {
                                 cell.Value = string.Empty;
-                                var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), Extension.GetBitmapByUrl(path));
-                                pic.SetPosition(j, ExporterHeaderList[i].ExportImageFieldAttribute.Height / 5, i - 1, 0);
-                                CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
-                                pic.SetSize(ExporterHeaderList[i].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[i].ExportImageFieldAttribute.Height);
+                                var bitmap = Extension.GetBitmapByUrl(url);
+                                if (bitmap == null)
+                                {
+                                    cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
+                                }
+                                else
+                                {
+                                    var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
+                                    pic.SetPosition(j, ExporterHeaderList[i].ExportImageFieldAttribute.Height / 5, i - 1, 0);
+                                    CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
+                                    pic.SetSize(ExporterHeaderList[i].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[i].ExportImageFieldAttribute.Height);
+                                }
+                               
                             }
                             catch (Exception)
                             {
