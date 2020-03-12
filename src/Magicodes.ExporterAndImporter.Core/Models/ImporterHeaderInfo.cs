@@ -37,7 +37,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     图属性
         /// </summary>
-        public ExcelImporterImgAttribute Img { get; set; }
+        public ImportImageFieldAttribute ImportImageFieldAttribute { get; set; }
 
         /// <summary>
         /// </summary>

@@ -207,9 +207,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
                                 ExporterHeaderAttribute[])?.FirstOrDefault() ?? new ExporterHeaderAttribute(objProperties[i].GetDisplayName() ?? objProperties[i].Name),
                         CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName(),
-                        ExporterImgAttribute =
-                            (objProperties[i].GetCustomAttributes(typeof(ExporterImgAttribute), true) as
-                                ExporterImgAttribute[])?.FirstOrDefault()??new ExporterImgAttribute(false)
+                        ExportImageFieldAttribute = objProperties[i].GetAttribute<ExportImageFieldAttribute>(true)
 
                     };
 
@@ -254,7 +252,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
             AddDataItems(dataItems);
-            AddPicture(dataItems.ToDataTable());
+            //仅当存在图片表头才渲染图片
+            if (ExporterHeaderList.Any(p => p.ExportImageFieldAttribute != null))
+            {
+                AddPictures(dataItems.Count);
+            }
             return AddHeaderAndStyles();
         }
 
@@ -295,7 +297,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport) GetExporterHeaderInfoList(dataItems);
             AddDataItems(dataItems);
-            AddPicture(dataItems);
+            //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
+            //AddPictures(dataItems.Rows.Count);
             return AddHeaderAndStyles();
         }
 
@@ -344,39 +347,44 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     添加图片
         /// </summary>
-        protected void AddPicture(DataTable dataItems)
+        protected void AddPictures(int rowCount)
         {
             for (var i = 0; i < ExporterHeaderList.Count; i++)
             {
-                if (ExporterHeaderList[i].ExporterImgAttribute != null && ExporterHeaderList[i].ExporterImgAttribute.IsImg)
+                if (ExporterHeaderList[i].ExportImageFieldAttribute != null)
                 {
-                    for (var j = 1; j <= dataItems.Rows.Count; j++)
+                    for (var j = 1; j <= rowCount; j++)
                     {
-                        try
+                        var cell = CurrentExcelWorksheet.Cells[j + 1, i + 1];
+                        var path = cell.Text;
+                        if (File.Exists(path))
                         {
-                            //TODO 最好想个合理的算法
-                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterImgAttribute.ImgIsNullText;
-                            var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(),
-                                Extension.GetBitmapByUrl(dataItems.Rows[j - 1][ExporterHeaderList[i].PropertyName].ToString()));
-                            pic.SetPosition(j, ExporterHeaderList[i].ExporterImgAttribute.ImgHeight / 5, i - 1,
-                                0);
-                            CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExporterImgAttribute.ImgHeight;
-                            pic.SetSize(ExporterHeaderList[i].ExporterImgAttribute.ImgWidth * 7, ExporterHeaderList[i].ExporterImgAttribute.ImgHeight);
+                            try
+                            {
+                                var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), Extension.GetBitmapByUrl(path));
+                                pic.SetPosition(j, ExporterHeaderList[i].ExportImageFieldAttribute.Height / 5, i - 1, 0);
+                                CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
+                                pic.SetSize(ExporterHeaderList[i].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[i].ExportImageFieldAttribute.Height);
+                            }
+                            catch (Exception)
+                            {
+                                cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
+                            }
                         }
-                        catch (Exception)
+                        else
                         {
-                            CurrentExcelWorksheet.Cells[j + 1, i + 1].Value = ExporterHeaderList[i].ExporterImgAttribute.ImgIsNullText;
+                            cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
                         }
                     }
                 }
-                else
-                {
-                    for (var j = 1; j <= dataItems.Rows.Count; j++)
-                    {
-                        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平居中
-                        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;//垂直居中
-                    }
-                }
+                //else
+                //{
+                //    for (var j = 1; j <= rowCount; j++)
+                //    {
+                //        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平居中
+                //        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;//垂直居中
+                //    }
+                //}
             }
         }
 
@@ -459,9 +467,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
-                if (exporterHeader.ExporterImgAttribute!=null&&exporterHeader.ExporterImgAttribute.IsImg)
+                if (exporterHeader.ExportImageFieldAttribute != null)
                 {
-                    col.Width = exporterHeader.ExporterImgAttribute.ImgWidth;
+                    col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
                 //处理日期格式
                 switch (exporterHeader.CsTypeName)

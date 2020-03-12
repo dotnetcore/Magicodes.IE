@@ -72,7 +72,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.LongNo = 45875266524;
             }
             var result = await exporter.Export(filePath, data);
-
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -80,6 +79,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Cells[sheet.Dimension.Address].Rows.ShouldBe(101);
+                sheet.Cells["A2"].Text.ShouldBe(data[0].Text);
 
                 //[ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
                 sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
@@ -259,11 +259,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+#if DEBUG
+        [Fact(DisplayName = "大量数据导出Excel", Skip = "本地Debug模式下跳过，太费时")]
+#else
         [Fact(DisplayName = "大量数据导出Excel")]
-        public async Task Export_Test()
+#endif
+        public async Task Export100000Data_Test()
         {
             IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export_Test) + ".xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export100000Data_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
@@ -485,8 +489,11 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
-
+#if DEBUG
+        [Fact(DisplayName = "Excel模板大量导出", Skip = "本地Debug模式下跳过，太费时")]
+#else
         [Fact(DisplayName = "Excel模板大量导出")]
+#endif
         public async Task ExportByTemplate_Large_Test()
         {
             //导出5000条数据不超过1秒

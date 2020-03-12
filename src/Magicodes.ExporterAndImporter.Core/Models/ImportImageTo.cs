@@ -1,16 +1,17 @@
 ﻿namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
-    ///     图片导出类型
+    ///     图片导入类型
     /// </summary>
-    public enum EnumImg
+    public enum ImportImageTo
     {
         /// <summary>
-        ///     本地存储
+        ///     导入到临时目录
         /// </summary>
-        Url,
+        TempFolder,
+
         /// <summary>
-        ///     base64格式
+        ///     导入为base64格式
         /// </summary>
         Base64
     }
