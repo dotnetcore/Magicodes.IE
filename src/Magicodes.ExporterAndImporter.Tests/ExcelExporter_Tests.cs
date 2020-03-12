@@ -27,6 +27,7 @@ using Xunit;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
+using OfficeOpenXml.Drawing;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -537,7 +538,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExporter exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExportPicture_Test)}.xlsx");
             DeleteFile(filePath);
-            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>();
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(5);
             var url = Path.Combine("TestFiles", "ExporterTest.png");
             foreach (var item in data)
             {
@@ -547,6 +548,19 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Drawings.Count.ShouldBe(10);
+                foreach (ExcelPicture item in sheet.Drawings)
+                {
+                    //检查图片位置
+                    new int[] { 2, 6 }.ShouldContain(item.From.Column);
+                    item.ShouldNotBeNull();
+                }
+            }
         }
 
     }

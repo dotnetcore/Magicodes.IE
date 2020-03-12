@@ -361,6 +361,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             try
                             {
+                                cell.Value = string.Empty;
                                 var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), Extension.GetBitmapByUrl(path));
                                 pic.SetPosition(j, ExporterHeaderList[i].ExportImageFieldAttribute.Height / 5, i - 1, 0);
                                 CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
