@@ -102,12 +102,13 @@
 
 6. **多Sheet导入（待补充）**
 7. **Csv导入导出（待补充）**
+8. **Excel图片导入导出（待补充）**
 
-8. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
+9. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
-9. **进阶篇之导入导出筛选器（待补充）**
-10. **主体API说明**
-11. **其他教程见下文或单元测试**
+10. **进阶篇之导入导出筛选器（待补充）**
+11. **主体API说明**
+**其他教程见下文或单元测试**
 
 **更新历史见下文。**
 
@@ -227,6 +228,15 @@
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 - **支持Excel导入模板生成标注**
   ![](./res/ImportLabel.png "Excel导入标注")
+- **支持Excel图片导入导出**
+  - 图片导入
+    - 导入为Base64
+    - 导入到临时目录
+    - 导入到指定目录
+  - 图片导出
+    - 将文件路径导出为图片
+    - 将网络路径导出为图片
+
 ### FAQ
 
 [问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
@@ -258,6 +268,16 @@
 
 
 ### **更新历史**
+
+#### **2019.03.07**
+- **【Nuget】版本更新到2.1.4**
+- **【Excel导入】支持图片导入，见特性ImportImageFieldAttribute**
+  - 导入为Base64
+  - 导入到临时目录
+  - 导入到指定目录
+- **【Excel导出】支持图片导出，见特性ExportImageFieldAttribute**
+  - 将文件路径导出为图片
+  - 将网络路径导出为图片
 
 #### **2019.03.06**
 - **【Nuget】版本更新到2.1.3**

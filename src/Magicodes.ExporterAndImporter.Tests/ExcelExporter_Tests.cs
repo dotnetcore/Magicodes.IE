@@ -543,7 +543,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             foreach (var item in data)
             {
                 item.Img1 = url;
-                item.Img = url;
+                item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
             }
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
