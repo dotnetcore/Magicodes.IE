@@ -619,30 +619,44 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
             var import = await Importer.Import<ImportPictureDto>(filePath);
             import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-            var data= import.Data.FirstOrDefault();
-            File.Exists(data.Img).ShouldBeTrue();
-            File.Exists(data.Img1).ShouldBeTrue();
+            foreach (var item in import.Data)
+            {
+                File.Exists(item.Img).ShouldBeTrue();
+                File.Exists(item.Img1).ShouldBeTrue();
+            }
+
+            //添加严格校验，防止图片位置错误等问题
+            var image1 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
+            var image2 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
+            var image3 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
+            var image4 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
+            new FileInfo(import.Data.ElementAt(0).Img1).Length.ShouldBe(image1.Length);
+            new FileInfo(import.Data.ElementAt(0).Img).Length.ShouldBe(image2.Length);
+            new FileInfo(import.Data.ElementAt(1).Img1).Length.ShouldBe(image3.Length);
+            new FileInfo(import.Data.ElementAt(1).Img).Length.ShouldBe(image4.Length);
+            new FileInfo(import.Data.ElementAt(2).Img).Length.ShouldBe(image1.Length);
+            new FileInfo(import.Data.ElementAt(2).Img1).Length.ShouldBe(image1.Length);
         }
 
-        [Fact(DisplayName = "导出图片测试_base64")]
+        [Fact(DisplayName = "导入图片测试_base64")]
         public async Task ImportPictureBase64_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
             var import = await Importer.Import<ImportPictureBase64Dto>(filePath);
             import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-            var data = import.Data.FirstOrDefault();
-            File.Exists(data.Img).ShouldBeTrue();
-            data.Img1.ShouldNotBeNull();
+            foreach (var item in import.Data)
+            {
+                File.Exists(item.Img).ShouldBeTrue();
+                item.Img1.ShouldNotBeNull();
+            }
         }
-
-
-
-
     }
 }

@@ -32,10 +32,11 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     列属性
         /// </summary>
         public ExporterHeaderAttribute ExporterHeaderAttribute { get; set; }
+
         /// <summary>
         ///     图片属性
         /// </summary>
-        public ExporterImgAttribute ExporterImgAttribute { get; set; }
+        public ExportImageFieldAttribute ExportImageFieldAttribute { get; set; }
 
         /// <summary>
         ///     C#数据类型

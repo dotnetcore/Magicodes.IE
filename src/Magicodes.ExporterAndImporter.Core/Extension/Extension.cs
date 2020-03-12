@@ -314,15 +314,15 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static Bitmap GetBitmapByUrl(string url)
         {
-            var webC = new System.Net.WebClient();
-            var bmp = new Bitmap(webC.OpenRead(url));
-            return bmp;
+            var wc = new System.Net.WebClient();
+            return new Bitmap(wc.OpenRead(url));
         }
         /// <summary>
         /// 保存图片
         /// </summary>
         /// <param name="image"></param>
         /// <param name="path">path</param>
+        /// <param name="format"></param>
         /// <returns></returns>
         public static string SaveImg(this Image image, string path, ImageFormat format)
         {
@@ -336,7 +336,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             catch (Exception)
             {
-
                 return null;
             }
 
@@ -345,18 +344,21 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         ///     图片转base64
         /// </summary>
         /// <param name="image"></param>
+        /// <param name="format"></param>
         /// <returns></returns>
         public static string ImgToBase64String(this Image image, ImageFormat format)
         {
             try
             {
-                MemoryStream ms = new MemoryStream();
-                image.Save(ms, format);
-                byte[] arr = new byte[ms.Length];
-                ms.Position = 0;
-                ms.Read(arr, 0, (int)ms.Length);
-                ms.Close();
-                return Convert.ToBase64String(arr);
+                using (var ms = new MemoryStream())
+                {
+                    image.Save(ms, format);
+                    var arr = new byte[ms.Length];
+                    ms.Position = 0;
+                    ms.Read(arr, 0, (int)ms.Length);
+                    ms.Close();
+                    return Convert.ToBase64String(arr);
+                }
             }
             catch
             {
