@@ -308,6 +308,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static Bitmap GetBitmapByUrl(string url)
         {
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             var wc = new System.Net.WebClient();
             return new Bitmap(wc.OpenRead(url));
         }

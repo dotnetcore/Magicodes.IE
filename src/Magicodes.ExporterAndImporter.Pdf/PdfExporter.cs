@@ -104,12 +104,11 @@ namespace Magicodes.ExporterAndImporter.Pdf
 #if !NET461
                         HtmlContent = htmlString,
                         Encoding = Encoding.UTF8,
-                        PagesCount = pdfExporterAttribute.IsEnablePagesCount,
+                        PagesCount = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
 #else
                 HtmlText = htmlString,
-                CountPages = pdfExporterAttribute.IsEnablePagesCount,
+                CountPages = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
 #endif
-
                 WebSettings = { DefaultEncoding = Encoding.UTF8.BodyName },
             };
             if (pdfExporterAttribute?.HeaderSettings != null)
