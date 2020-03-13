@@ -540,10 +540,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
             var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(5);
             var url = Path.Combine("TestFiles", "ExporterTest.png");
-            foreach (var item in data)
+            for (var i = 0; i < data.Count; i++)
             {
+                var item = data[i];
                 item.Img1 = url;
-                item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
+                if (i == 4)
+                    item.Img = null;
+                else
+                    item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
             }
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
@@ -553,7 +557,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 //检查转换结果
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Drawings.Count.ShouldBe(10);
+                //验证Alt
+                sheet.Cells["G6"].Value.ShouldBe("404");
+                //验证图片
+                sheet.Drawings.Count.ShouldBe(9);
                 foreach (ExcelPicture item in sheet.Drawings)
                 {
                     //检查图片位置

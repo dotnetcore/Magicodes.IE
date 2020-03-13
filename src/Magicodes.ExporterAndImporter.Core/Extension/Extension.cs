@@ -50,11 +50,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static DataTable ToDataTable<T>(this IEnumerable<T> source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
             var table = Cache<T>.SchemeFactory();
 
             foreach (var item in source)
@@ -204,7 +199,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                     (p.PropertyType.IsGenericType) && (p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
                         ? p.PropertyType.GetGenericArguments()[0]
                         : p.PropertyType)).ToArray());
-            if (source.Count <= 0) return dt;
 
             for (var i = 0; i < source.Count; i++)
             {
@@ -289,7 +283,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="fileName"></param>
         public static void CheckExcelFileName(this string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException("文件名必须填写!", nameof(fileName));
             if (!Path.GetExtension(fileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
@@ -324,21 +318,13 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="path">path</param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string SaveImg(this Image image, string path, ImageFormat format)
+        public static string Save(this Image image, string path, ImageFormat format)
         {
-            try
+            using (var img = image)
             {
-                using (var img = image)
-                {
-                    img.Save(path, format);
-                }
-                return path;
+                img.Save(path, format);
             }
-            catch (Exception)
-            {
-                return null;
-            }
-
+            return path;
         }
         /// <summary>
         ///     图片转base64
@@ -346,23 +332,16 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="image"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public static string ImgToBase64String(this Image image, ImageFormat format)
+        public static string ToBase64String(this Image image, ImageFormat format)
         {
-            try
+            using (var ms = new MemoryStream())
             {
-                using (var ms = new MemoryStream())
-                {
-                    image.Save(ms, format);
-                    var arr = new byte[ms.Length];
-                    ms.Position = 0;
-                    ms.Read(arr, 0, (int)ms.Length);
-                    ms.Close();
-                    return Convert.ToBase64String(arr);
-                }
-            }
-            catch
-            {
-                return null;
+                image.Save(ms, format);
+                var arr = new byte[ms.Length];
+                ms.Position = 0;
+                ms.Read(arr, 0, (int)ms.Length);
+                ms.Close();
+                return Convert.ToBase64String(arr);
             }
         }
 

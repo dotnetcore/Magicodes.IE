@@ -55,11 +55,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         protected Dictionary<string, List<IWriter>> SheetWriters { get; set; }
 
         /// <summary>
-        ///     模板文件导出结果
-        /// </summary>
-        protected TemplateExportResult TemplateExportResult { get; set; }
-
-        /// <summary>
         ///     值字典
         /// </summary>
         protected Dictionary<string, string> ValuesDictionary { get; set; }

@@ -49,12 +49,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <summary>
         ///     是否启用分页数
         /// </summary>
-        public bool? IsEnablePagesCount { get; set; }
-
-        /// <summary>
-        ///     编码，默认UTF8
-        /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public bool IsEnablePagesCount { get; set; }
 
         /// <summary>
         ///     是否输出HTML模板

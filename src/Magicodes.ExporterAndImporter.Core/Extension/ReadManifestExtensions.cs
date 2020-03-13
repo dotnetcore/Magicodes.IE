@@ -36,8 +36,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
             using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
-                if (stream == null) throw new InvalidOperationException($"无法加载嵌入式资源，请确认路径是否正确：{embeddedFileName}。");
-
                 using (var reader = new StreamReader(stream, Encoding.UTF8))
                 {
                     return reader.ReadToEnd();

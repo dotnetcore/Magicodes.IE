@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-        [Fact(DisplayName = "自定义模板导出Html测试")]
+        [Fact(DisplayName = "默认模板导出Html测试")]
         public async Task ExportHtmlByTemplate_Test()
         {
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "tpl1.cshtml");
@@ -51,7 +51,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "导出收据")]
+        [Fact(DisplayName = "导出收据（自定义模板）")]
         public async Task ExportReceipt_Test()
         {
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",

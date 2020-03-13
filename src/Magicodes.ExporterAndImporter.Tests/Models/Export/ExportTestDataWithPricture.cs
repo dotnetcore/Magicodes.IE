@@ -27,7 +27,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
         public DateTime Time1 { get; set; }
 
-        [ExportImageField(Width = 50, Height = 120)]
+        [ExportImageField(Width = 50, Height = 120, Alt = "404")]
         [ExporterHeader(DisplayName = "图", IsAutoFit = false)]
         public string Img { get; set; }
     }

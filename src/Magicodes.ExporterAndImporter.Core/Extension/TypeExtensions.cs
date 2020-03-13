@@ -38,19 +38,16 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static string GetDisplayName(this ICustomAttributeProvider customAttributeProvider, bool inherit = false)
         {
-            string displayName = null;
             var displayAttribute = customAttributeProvider.GetAttribute<DisplayAttribute>();
+            string displayName;
             if (displayAttribute != null)
             {
                 displayName = displayAttribute.Name;
             }
             else
             {
-                var displayNameAttribute = customAttributeProvider.GetAttribute<DisplayNameAttribute>();
-                if (displayNameAttribute != null)
-                    displayName = displayNameAttribute.DisplayName;
+                displayName = customAttributeProvider.GetAttribute<DisplayNameAttribute>()?.DisplayName;
             }
-
             return displayName;
         }
 

@@ -716,10 +716,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)
                                     {
                                         case ImportImageTo.TempFolder:
-                                            value = excelPicture.Image.SaveImg(path, excelPicture.ImageFormat);
+                                            value = Extension.Save(excelPicture.Image, path, excelPicture.ImageFormat);
                                             break;
                                         case ImportImageTo.Base64:
-                                            value = excelPicture.Image.ImgToBase64String(excelPicture.ImageFormat);
+                                            value = excelPicture.Image.ToBase64String(excelPicture.ImageFormat);
                                             break;
                                         default:
                                             break;

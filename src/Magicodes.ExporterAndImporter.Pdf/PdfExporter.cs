@@ -26,7 +26,7 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
-
+using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
@@ -103,17 +103,14 @@ namespace Magicodes.ExporterAndImporter.Pdf
             {
 #if !NET461
                         HtmlContent = htmlString,
-                        Encoding = pdfExporterAttribute?.Encoding,
+                        Encoding = Encoding.UTF8,
                         PagesCount = pdfExporterAttribute.IsEnablePagesCount,
 #else
                 HtmlText = htmlString,
                 CountPages = pdfExporterAttribute.IsEnablePagesCount,
 #endif
 
-                WebSettings = { DefaultEncoding = pdfExporterAttribute?.Encoding.BodyName },
-
-                //HeaderSettings = pdfExporterAttribute?.HeaderSettings,
-                //FooterSettings = pdfExporterAttribute?.FooterSettings
+                WebSettings = { DefaultEncoding = Encoding.UTF8.BodyName },
             };
             if (pdfExporterAttribute?.HeaderSettings != null)
                 objSettings.HeaderSettings = pdfExporterAttribute?.HeaderSettings;
