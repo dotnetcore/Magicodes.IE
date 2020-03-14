@@ -103,7 +103,7 @@
 
 6. **多Sheet导入（待补充）**
 7. **Csv导入导出（待补充）**
-8. **Excel图片导入导出（待补充）**
+8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")**
 
 9. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
