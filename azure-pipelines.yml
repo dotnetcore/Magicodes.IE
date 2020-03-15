@@ -4,10 +4,20 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 # ´úÂë¸²¸ÇÂÊ²Î¿¼£ºhttps://docs.microsoft.com/zh-cn/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops#collect-code-coverage
 # https://www.meziantou.net/computing-code-coverage-for-a-dotnet-core-project-with-azure-devops-and-coverlet.htm
+# trigger 
+# https://docs.microsoft.com/zh-cn/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml
 
+# specific path build
 trigger:
-- master
-- develop
+  branches:
+    include:
+    - master
+    - develop
+  paths:
+    include:
+    - src/*
+    exclude:
+    - src/*.md
 
 pr:
 - master
