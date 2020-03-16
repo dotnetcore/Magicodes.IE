@@ -292,6 +292,29 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+
+        [Fact(DisplayName = "多个sheet导出")]
+        public async Task ExportMutiCollection_Test()
+        {
+            var exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportMutiCollection_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+
+            var result = exporter.Append(list1).Append(list2).Export(filePath);
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+
         [Fact(DisplayName = "通过Dto导出表头")]
         public async Task ExportHeaderAsByteArray_Test()
         {

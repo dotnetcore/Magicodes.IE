@@ -37,7 +37,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// </summary>
     public class ExcelExporter : IExcelExporter
     {
-
+        private ExcelPackage _excelPackage;
         /// <summary>
         ///     导出Excel
         /// </summary>
@@ -50,8 +50,42 @@ namespace Magicodes.ExporterAndImporter.Excel
             var bytes = await ExportAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
         }
+        /// <summary>
+        /// append collectioin to context
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        public ExcelExporter Append<T>(ICollection<T> dataItems) where T : class
+        {
 
-        
+            var helper = this._excelPackage == null ? new ExportHelper<T>() : new ExportHelper<T>(_excelPackage);
+            var sheetName = helper.ExcelExporterSettings?.Name ?? "导出结果";
+
+            if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == sheetName) ?? false)
+            {
+                throw new ArgumentNullException($"已经存在名字为{sheetName }的sheet");
+            }
+            this._excelPackage = helper.Export(dataItems);
+
+            return this;
+        }
+
+        /// <summary>
+        /// export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public ExportFileInfo Export(string fileName)
+        {
+            fileName.CheckExcelFileName();
+            if (this._excelPackage == null)
+            {
+                throw new ArgumentNullException("this method can only be called after method Append<T>;");
+            }
+            var bytes = _excelPackage.GetAsByteArray();
+            return bytes.ToExcelExportFileInfo(fileName);
+        }
 
         /// <summary>
         ///     导出Excel

@@ -38,6 +38,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 IsDynamicDatableExport = true;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="existExcelPackage"></param>
+
+        public ExportHelper(ExcelPackage existExcelPackage)
+        {
+            if (typeof(DataTable).Equals(typeof(T)))
+            {
+                IsDynamicDatableExport = true;
+            }
+            if (existExcelPackage != null)
+            {
+                this._excelPackage = existExcelPackage;
+            }
+        }
+
 
         /// <summary>
         ///     导出设置
