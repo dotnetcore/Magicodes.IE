@@ -1,4 +1,5 @@
-﻿using Magicodes.ExporterAndImporter.Core;
+﻿using System.Collections.Generic;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using System.Data;
@@ -36,5 +37,24 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+
+
+        /// <summary>
+        /// append the collection to context
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
+
+
+
+        /// <summary>
+        /// export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        ExportFileInfo Export(string fileName);
+
     }
 }
