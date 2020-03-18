@@ -40,7 +40,8 @@ namespace Magicodes.ExporterAndImporter.Excel
 
 
         /// <summary>
-        /// append the collection to context
+        ///     追加集合到当前导出程序
+        ///     append the collection to context
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
@@ -50,11 +51,20 @@ namespace Magicodes.ExporterAndImporter.Excel
 
 
         /// <summary>
-        /// export excel after append all collectioins
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        ExportFileInfo Export(string fileName);
+        Task<ExportFileInfo> ExportAppendData(string fileName);
+
+        /// <summary>
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportAppendDataAsByteArray();
 
     }
 }

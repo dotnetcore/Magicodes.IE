@@ -64,7 +64,7 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == sheetName) ?? false)
             {
-                throw new ArgumentNullException($"已经存在名字为{sheetName }的sheet");
+                throw new ArgumentNullException($"已经存在名字为{sheetName}的sheet");
             }
             this._excelPackage = helper.Export(dataItems);
 
@@ -72,18 +72,27 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
+        /// 导出所有的追加数据
+        /// </summary>
+        /// <returns></returns>
+        public Task<byte[]> ExportAppendDataAsByteArray()
+        {
+            if (this._excelPackage == null)
+            {
+                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+            }
+            return Task.FromResult(_excelPackage.GetAsByteArray());
+        }
+
+        /// <summary>
         /// export excel after append all collectioins
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public ExportFileInfo Export(string fileName)
+        public async Task<ExportFileInfo> ExportAppendData(string fileName)
         {
             fileName.CheckExcelFileName();
-            if (this._excelPackage == null)
-            {
-                throw new ArgumentNullException("this method can only be called after method Append<T>;");
-            }
-            var bytes = _excelPackage.GetAsByteArray();
+            var bytes = await ExportAppendDataAsByteArray();
             return bytes.ToExcelExportFileInfo(fileName);
         }
 

@@ -308,10 +308,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
 
-            var result = exporter.Append(list1).Append(list2).Export(filePath);
+            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
             result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+                pck.Workbook.Worksheets.First().Name.ShouldBe(typeof(ExportTestDataWithAttrs).GetAttribute<ExcelExporterAttribute>().Name);
+                pck.Workbook.Worksheets.Last().Name.ShouldBe(typeof(ExportTestDataWithSplitSheet).GetAttribute<ExcelExporterAttribute>().Name);
+            }
+
         }
 
 
