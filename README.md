@@ -4,6 +4,8 @@
 
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
+[Magicodes.IE 2.1发布](https://mp.weixin.qq.com/s?__biz=MzU0Mzk1OTU2Mg==&mid=2247485222&idx=1&sn=a0f7c099fd76fea79bf3f7185d533652&chksm=fb023843cc75b1558c28ad09fd3814ba3839f11f878bb7d4c288d342afc7ededbf27f8b3f18d&token=630215531&lang=zh_CN#rd)
+
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
 - **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、更新历史见下文**
@@ -34,7 +36,7 @@
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
 | [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | ☕讨论中[#46](https://github.com/dotnetcore/Magicodes.IE/issues/46) |2020-04-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
+| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | ☕进行中[#46](https://github.com/dotnetcore/Magicodes.IE/issues/46) |2020-04-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/4) <br> [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4?closed=1) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ### Nuget
@@ -108,7 +110,8 @@
 9. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
 10. **进阶篇之导入导出筛选器（待补充）**
-11. **主体API说明**
+11. **Excel导出多个实体（待补充）**
+
 **其他教程见下文或单元测试**
 
 **更新历史见下文。**
@@ -237,6 +240,7 @@
   - 图片导出
     - 将文件路径导出为图片
     - 将网络路径导出为图片
+- **支持多个实体导出多个Sheet**
 
 ### FAQ
 
@@ -269,6 +273,47 @@
 
 
 ### **更新历史**
+
+#### **2020.03.18**
+- **【Nuget】版本更新到2.2.0-beta1**
+- **【Excel导出】添加以下API: ** 
+````csharp
+
+        /// <summary>
+        ///     追加集合到当前导出程序
+        ///     append the collection to context
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
+
+        /// <summary>
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        Task<ExportFileInfo> ExportAppendData(string fileName);
+
+        /// <summary>
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportAppendDataAsByteArray();
+
+````  
+
+- **【Excel导出】支持多个实体导出多个Sheet**，感谢@ccccccmd 的贡献 [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) ，Issue见 [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)。使用代码参考，具体见单元测试（ExportMutiCollection_Test）：
+
+````csharp
+            var exporter = new ExcelExporter();
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+````
 
 #### **2020.03.12**
 - **【Nuget】版本更新到2.1.4**
