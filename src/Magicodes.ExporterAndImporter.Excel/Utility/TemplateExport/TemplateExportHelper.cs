@@ -237,6 +237,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             SheetWriters = new Dictionary<string, List<IWriter>>();
             foreach (var worksheet in excelPackage.Workbook.Worksheets)
             {
+                if (worksheet.Dimension==null)
+                    continue;
                 var writers = new List<IWriter>();
                 if (!SheetWriters.ContainsKey(worksheet.Name)) SheetWriters.Add(worksheet.Name, writers);
                 var endColumnIndex = worksheet.Dimension.End.Column;
