@@ -274,9 +274,14 @@
 
 ### **更新历史**
 
+#### **2020.03.19**
+- **【Nuget】版本更新到2.2.0-beta2**
+- **【Excel导入】修复日期格式的导入Bug，支持DateTime和DateTimeOffset以及可为空类型，默认支持本地化时间格式（默认根据地区自动使用本地日期时间格式）**
+- **【Excel导入导出】添加单元测试ExportAndImportUseOneDto_Test，对使用同一个Dto导出并导入进行测试。Issue见 [#53](https://github.com/dotnetcore/Magicodes.IE/issues/53)**
+  
 #### **2020.03.18**
 - **【Nuget】版本更新到2.2.0-beta1**
-- **【Excel导出】添加以下API: ** 
+- **【Excel导出】添加以下API:** 
 ````csharp
 
         /// <summary>
