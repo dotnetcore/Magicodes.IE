@@ -62,7 +62,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     导出所有的追加数据
         ///     export excel after append all collectioins
         /// </summary>
-        /// <param name="fileName"></param>
         /// <returns></returns>
         Task<byte[]> ExportAppendDataAsByteArray();
 
