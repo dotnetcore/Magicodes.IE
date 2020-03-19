@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
 
             var data = GenFu.GenFu.ListOf<SalaryInfo>(100);
-            
+            data[1].TestDateTimeOffset2 = DateTimeOffset.Now.Date.AddSeconds(123413);
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
