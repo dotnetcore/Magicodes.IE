@@ -70,7 +70,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var data = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             foreach (var item in data)
             {
-                item.LongNo = 45875266524;
+                item.LongNo = 458752665;
             }
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
