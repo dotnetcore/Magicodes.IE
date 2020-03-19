@@ -930,9 +930,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     break;
                                 case "DateTime":
                                     {
-                                        if (!DateTime.TryParse(cellValue, out var date))
+                                        if (!DateTime.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            break;
+                                        }
+
+                                        propertyInfo.SetValue(dataItem, date);
+                                    }
+                                    break;
+                                case "DateTimeOffset":
+                                    {
+                                        if (!DateTimeOffset.TryParse(cell.Text, out var date))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
                                             break;
                                         }
 
@@ -941,15 +952,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     break;
                                 case "Nullable<DateTime>":
                                     {
-                                        if (string.IsNullOrWhiteSpace(cellValue))
+                                        if (string.IsNullOrWhiteSpace(cell.Text))
                                         {
                                             propertyInfo.SetValue(dataItem, null);
                                             break;
                                         }
 
-                                        if (!DateTime.TryParse(cellValue, out var date))
+                                        if (!DateTime.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            break;
+                                        }
+
+                                        propertyInfo.SetValue(dataItem, date);
+                                    }
+                                    break;
+                                case "Nullable<DateTimeOffset>":
+                                    {
+                                        if (string.IsNullOrWhiteSpace(cell.Text))
+                                        {
+                                            propertyInfo.SetValue(dataItem, null);
+                                            break;
+                                        }
+
+                                        if (!DateTimeOffset.TryParse(cell.Text, out var date))
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
                                             break;
                                         }
 
@@ -1029,30 +1057,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             var rowError = GetDataRowErrorInfo(rowIndex);
             rowError.FieldErrors.Add(importerHeaderInfo.Header.Name, errorMessage);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        private static bool GetBooleanValue(string value)
-        {
-            if (string.IsNullOrEmpty(value)) return false;
-
-            switch (value.ToLower())
-            {
-                case "1":
-                case "是":
-                case "yes":
-                case "true":
-                    return true;
-                case "0":
-                case "否":
-                case "no":
-                case "false":
-                default:
-                    return false;
-            }
         }
 
         /// <summary>

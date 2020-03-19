@@ -537,7 +537,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var books = new List<BookInfo>();
             for (int i = 0; i < 5000; i++)
             {
-                books.Add(new BookInfo(i + 1, "000000000" + i, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100 + i, "备注"));
+                books.Add(new BookInfo(i + 1, "0000000" + i, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100 + i, "备注"));
             }
 
             var stopwatch = new Stopwatch();

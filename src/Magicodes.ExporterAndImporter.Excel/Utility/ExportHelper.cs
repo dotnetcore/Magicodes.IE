@@ -15,6 +15,7 @@ using Magicodes.ExporterAndImporter.Core.Filters;
 using System.Drawing;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using System.Globalization;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -490,24 +491,34 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
                 if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
+                { 
                     col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
 
+                }
+                else
+                {
+                    //处理日期格式
+                    switch (exporterHeader.CsTypeName)
+                    {
+                        case "DateTime":
+                        case "DateTimeOffset":
+                        //case "DateTime?":
+                        case "Nullable<DateTime>":
+                        case "Nullable<DateTimeOffset>":
+                            //设置本地化时间格式
+                            col.Style.Numberformat.Format = CultureInfo.CurrentUICulture.DateTimeFormat.FullDateTimePattern;
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
                 if (exporterHeader.ExportImageFieldAttribute != null)
                 {
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
-                //处理日期格式
-                switch (exporterHeader.CsTypeName)
-                {
-                    case "DateTime":
-                    case "DateTime?":
-                        col.Style.Numberformat.Format = "yyyy-MM-dd";
-                        break;
-                    default:
-                        break;
-                }
+                
             }
         }
     }
