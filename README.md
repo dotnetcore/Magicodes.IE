@@ -4,6 +4,8 @@
 
 [Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
 
+[Magicodes.IE 2.1发布](https://mp.weixin.qq.com/s?__biz=MzU0Mzk1OTU2Mg==&mid=2247485222&idx=1&sn=a0f7c099fd76fea79bf3f7185d533652&chksm=fb023843cc75b1558c28ad09fd3814ba3839f11f878bb7d4c288d342afc7ededbf27f8b3f18d&token=630215531&lang=zh_CN#rd)
+
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
 - **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、更新历史见下文**
@@ -34,7 +36,7 @@
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
 | [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | ☕讨论中[#46](https://github.com/dotnetcore/Magicodes.IE/issues/46) |2020-04-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
+| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | ☕进行中[#46](https://github.com/dotnetcore/Magicodes.IE/issues/46) |2020-04-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/4) <br> [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4?closed=1) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ### Nuget
@@ -108,7 +110,8 @@
 9. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
 10. **进阶篇之导入导出筛选器（待补充）**
-11. **主体API说明**
+11. **Excel导出多个实体（待补充）**
+
 **其他教程见下文或单元测试**
 
 **更新历史见下文。**
@@ -237,6 +240,7 @@
   - 图片导出
     - 将文件路径导出为图片
     - 将网络路径导出为图片
+- **支持多个实体导出多个Sheet**
 
 ### FAQ
 
@@ -270,7 +274,48 @@
 
 ### **更新历史**
 
-#### **2019.03.12**
+#### **2020.03.18**
+- **【Nuget】版本更新到2.2.0-beta1**
+- **【Excel导出】添加以下API: ** 
+````csharp
+
+        /// <summary>
+        ///     追加集合到当前导出程序
+        ///     append the collection to context
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
+
+        /// <summary>
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        Task<ExportFileInfo> ExportAppendData(string fileName);
+
+        /// <summary>
+        ///     导出所有的追加数据
+        ///     export excel after append all collectioins
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportAppendDataAsByteArray();
+
+````  
+
+- **【Excel导出】支持多个实体导出多个Sheet**，感谢@ccccccmd 的贡献 [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) ，Issue见 [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)。使用代码参考，具体见单元测试（ExportMutiCollection_Test）：
+
+````csharp
+            var exporter = new ExcelExporter();
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+````
+
+#### **2020.03.12**
 - **【Nuget】版本更新到2.1.4**
 - **【Excel导入】支持图片导入，见特性ImportImageFieldAttribute**
   - 导入为Base64
@@ -280,16 +325,16 @@
   - 将文件路径导出为图片
   - 将网络路径导出为图片
 
-#### **2019.03.06**
+#### **2020.03.06**
 - **【Nuget】版本更新到2.1.3**
 - **【Excel导入】修复GUID类型的问题。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/44>）。**
 
-#### **2019.02.25**
+#### **2020.02.25**
 - **【Nuget】版本更新到2.1.2**
 - **【导入导出】已支持CSV**
 - **【文档】完善Pdf导出文档**
 
-#### **2019.02.24**
+#### **2020.02.24**
 - **【Nuget】版本更新到2.1.1-beta**
 - **【导入】Excel导入支持导入标注，仅需设置ExcelImporterAttribute的ImportDescription属性，即会在顶部生成Excel导入说明**
 - **【重构】添加两个接口**
@@ -298,34 +343,34 @@
 - **【重构】增加实例依赖注入**
 - **【构建】完成代码覆盖率的DevOps的配置**
 
-#### **2019.02.14**
+#### **2020.02.14**
 - **【Nuget】版本更新到2.1.0**
 - **【导出】PDF导出支持.NET 4.6.1，具体见单元测试**
 
-#### **2019.02.13**
+#### **2020.02.13**
 - **【Nuget】版本更新到2.0.2**
 - **【导入】修复单列导入的Bug，单元测试“OneColumnImporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/35>）。**
 - **【导出】修复导出HTML、Pdf、Word时，模板在某些情况下编译报错的问题。**
 - **【导入】重写空行检查。**
 
-#### **2019.02.11**
+#### **2020.02.11**
 - **【Nuget】版本更新到2.0.0**
 - **【导出】Excel模板导出修复多个Table渲染以及合并单元格渲染的问题，具体见单元测试“ExportByTemplate_Test1”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/34>）。**
 - **【导出】完善模板导出的单元测试，针对导出结果添加渲染检查，确保所有单元格均已渲染。**
 
-#### **2019.02.05**
+#### **2020.02.05**
 - **【Nuget】版本更新到2.0.0-beta4**
 - **【导入】支持列筛选器（需实现接口【IImportHeaderFilter】），可用于兼容多语言导入等场景，具体见单元测试【ImportHeaderFilter_Test】**
 - **【导入】支持传入标注文件路径，不传参则默认同目录"_"后缀保存**
 - **【导入】完善单元测试【ImportResultFilter_Test】**
 - **【其他】修改【ValueMappingAttribute】的命名空间为Magicodes.ExporterAndImporter.Core**
 
-#### **2019.02.04**
+#### **2020.02.04**
 - **【Nuget】版本更新到2.0.0-beta2**
 - **【导入】支持导入结果筛选器——IImportResultFilter，可用于多语言场景的错误标注，具体使用见单元测试【ImportResultFilter_Test】**
 - **【其他】修改IExporterHeaderFilter的命名空间为Magicodes.ExporterAndImporter.Core.Filters**
 
-#### **2019.01.18**
+#### **2020.01.18**
 - **【Nuget】版本更新到2.0.0-beta1**
 - **【导出】完全重构整个导出Excel模块并且重写大部分接口**
 - **【导出】支持列头筛选器——IExporterHeaderFilter，具体使用见单元测试**
@@ -355,29 +400,29 @@
         Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
 ````
 
-#### **2019.01.16**
+#### **2020.01.16**
 - **【Nuget】版本更新到1.4.25**
 - **【导出】修复没有定义导出特性会报错的情形，具体见单元测试“ExportTestDataWithoutExcelExporter_Test”。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/21>）。**
 
-#### **2019.01.16**
+#### **2020.01.16**
 - **【Nuget】版本更新到1.4.24**
 - **【导出】修复日期格式默认导出数字的Bug，默认输出“yyyy-MM-dd”，可以通过设置“[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]”来修改。问题见（<https://github.com/dotnetcore/Magicodes.IE/issues/22>）。**
 
-#### **2019.01.14**
+#### **2020.01.14**
 - **【Nuget】版本更新到1.4.21**
 - **【导出】Excel模板导出修复数据项为Null报错的Bug。**
 
-#### **2019.01.09**
+#### **2020.01.09**
 - **【Nuget】版本更新到1.4.20**
 - **【导出】Excel模板导出性能优化。5000条表格数据1秒内完成，具体见单元测试ExportByTemplate_Large_Test。**
 
-#### **2019.01.08**
+#### **2020.01.08**
 - **【Nuget】版本更新到1.4.18**
 - **【导入】支持导入最大数量限制**
     - **ImporterAttribute支持MaxCount设置，默认为50000**
     - **完成相关单元测试**
 
-#### **2019.01.07**
+#### **2020.01.07**
 - **【Nuget】版本更新到1.4.17**
 - **【重构】重构IExportFileByTemplate中的ExportByTemplate，将参数htmlTemplate改为template。以便支持Excel模板导出。**
 - **【导出】支持Excel模板导出并填写相关单元测试，如何使用见教程《Excel模板导出之导出教材订购表》**

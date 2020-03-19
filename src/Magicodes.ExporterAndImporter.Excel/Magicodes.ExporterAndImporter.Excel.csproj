@@ -3,9 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>Magicodes.IE.Excel</PackageId>
-    <FileVersion>2.1.1.0</FileVersion>
-    <Version>2.1.2</Version>
-    <AssemblyVersion>2.1.1.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.1" />
