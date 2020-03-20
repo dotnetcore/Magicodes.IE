@@ -457,23 +457,39 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected void AddHeader()
         {
-            if (CurrentExcelTable == null)
+            //NoneStyle的时候没创建Table
+            //https://github.com/JanKallman/EPPlus/blob/4dacf27661b24d92e8ba3d03d51dd5468845e6c1/EPPlus/ExcelRangeBase.cs#L2013
+            var isNoneStyle = ExcelExporterSettings.TableStyle == TableStyles.None.ToString();
+
+            if (CurrentExcelTable == null && !isNoneStyle)
             {
+
                 var cols = ExporterHeaderList.Count;
                 var range = CurrentExcelWorksheet.Cells[1, 1, 10, cols];
-                CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, "Table");
+                CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, "");
+                CurrentExcelTable.ShowHeader = true;
             }
-            CurrentExcelTable.ShowHeader = true;
+
             foreach (var exporterHeaderDto in ExporterHeaderList)
             {
+
+
                 var exporterHeaderAttribute = exporterHeaderDto.ExporterHeaderAttribute;
                 if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
                 {
-                    var col = CurrentExcelTable.Columns[exporterHeaderDto.Index - 1];
-                    col.Name = exporterHeaderDto.DisplayName;
-
                     var colCell = CurrentExcelWorksheet.Cells[1, exporterHeaderDto.Index];
                     colCell.Style.Font.Bold = exporterHeaderAttribute.IsBold;
+
+                    if (CurrentExcelTable != null)
+                    {
+                        var col = CurrentExcelTable.Columns[exporterHeaderDto.Index - 1];
+                        col.Name = exporterHeaderDto.DisplayName;
+                    }
+                    else
+                    {
+                        colCell.Value = exporterHeaderDto.DisplayName;
+                    }
+
 
                     var size = ExcelExporterSettings?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
                     if (size.HasValue)
