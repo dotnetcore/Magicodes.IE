@@ -6,6 +6,8 @@
 
 [Magicodes.IE 2.1发布](https://mp.weixin.qq.com/s?__biz=MzU0Mzk1OTU2Mg==&mid=2247485222&idx=1&sn=a0f7c099fd76fea79bf3f7185d533652&chksm=fb023843cc75b1558c28ad09fd3814ba3839f11f878bb7d4c288d342afc7ededbf27f8b3f18d&token=630215531&lang=zh_CN#rd)
 
+[如何做好一个开源项目（一）](https://docs.xin-lai.com/2020/03/22/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E5%A6%82%E4%BD%95%E5%81%9A%E5%A5%BD%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%B8%80%EF%BC%89/)
+
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
 - **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、更新历史见下文**
@@ -105,7 +107,7 @@
 
 6. **多Sheet导入（待补充）**
 7. **Csv导入导出（待补充）**
-8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")**
+8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
 
 9. **[Excel模板导出之导出教材订购表](docs/7.Excel模板导出之导出教材订购表.md "7.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
