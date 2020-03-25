@@ -3,7 +3,7 @@
 //           filename : ExcelExporterAttribute.cs
 //           description :
 // 
-//           created by 雪雁 at  2019-09-11 13:51
+//           created by 雪雁 at  2020-03-25 13:51
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
@@ -11,18 +11,21 @@
 // 
 // ======================================================================
 
-using Magicodes.ExporterAndImporter.Core;
-
 namespace Magicodes.ExporterAndImporter.Excel
 {
     /// <summary>
-    ///     Excel导出特性
+    /// 输出类型
     /// </summary>
-    public class ExcelExporterAttribute : ExporterAttribute
+    public enum ExcelOutputTypes
     {
         /// <summary>
-        ///  输出类型
+        /// Excel数据表格
         /// </summary>
-        public ExcelOutputTypes ExcelOutputType { get; set; } = ExcelOutputTypes.DataTable;
+        DataTable = 0,
+
+        /// <summary>
+        /// 普通的单元格写入
+        /// </summary>
+        None = 1
     }
 }

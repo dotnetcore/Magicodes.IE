@@ -98,7 +98,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(Name = "是否行")]
         public bool IsOk { get; set; }
 
-        [ImporterHeader(Name = "公式测试")] public DateTime FormulaTest { get; set; }
+        [ImporterHeader(Name = "公式测试")] 
+        public DateTime FormulaTest { get; set; }
 
         /// <summary>
         ///     身份证

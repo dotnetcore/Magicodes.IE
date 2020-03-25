@@ -91,6 +91,11 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //默认DateTime
                 sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
 
+                sheet.Tables.Count.ShouldBe(1);
+
+                var tb = sheet.Tables.First();
+                tb.Columns.Count.ShouldBe(9);
+                tb.Columns.First().Name.ShouldBe("加粗文本");
             }
         }
 
@@ -597,6 +602,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     new int[] { 2, 6 }.ShouldContain(item.From.Column);
                     item.ShouldNotBeNull();
                 }
+                sheet.Tables.Count.ShouldBe(0);
             }
         }
 
