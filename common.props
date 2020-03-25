@@ -1,9 +1,8 @@
 <Project>
   <PropertyGroup>
-    <Version>2.2.0-beta2</Version>
+    <Version>2.2.0-beta3</Version>
   </PropertyGroup>
   <PropertyGroup>
-    <!--<TargetFramework>netstandard2.0</TargetFramework>-->
     <Authors>雪雁</Authors>
     <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>

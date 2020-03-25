@@ -25,7 +25,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
     /// <typeparam name="T"></typeparam>
     public class ExportHelper<T> where T : class
     {
-        private ExporterAttribute _excelExporterAttribute;
+        private ExcelExporterAttribute _excelExporterAttribute;
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
@@ -60,7 +60,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         ///     导出设置
         /// </summary>
-        public ExporterAttribute ExcelExporterSettings
+        public ExcelExporterAttribute ExcelExporterSettings
         {
             get
             {
@@ -69,10 +69,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     var type = typeof(T);
                     if (typeof(DataTable).Equals(type))
                     {
-                        _excelExporterAttribute = new ExporterAttribute();
+                        _excelExporterAttribute = new ExcelExporterAttribute();
                     }
                     else
-                        _excelExporterAttribute = type.GetAttribute<ExporterAttribute>(true) ?? new ExporterAttribute();
+                        _excelExporterAttribute = type.GetAttribute<ExcelExporterAttribute>(true);
+
+                    if (_excelExporterAttribute == null)
+                    {
+                        var exporterAttribute = type.GetAttribute<ExporterAttribute>(true);
+                        if (exporterAttribute != null)
+                        {
+                            _excelExporterAttribute = new ExcelExporterAttribute()
+                            {
+                                Author = exporterAttribute.Author,
+                                AutoFitAllColumn = exporterAttribute.AutoFitAllColumn,
+                                //ExcelOutputType = 
+                                ExporterHeaderFilter = exporterAttribute.ExporterHeaderFilter,
+                                FontSize = exporterAttribute.FontSize,
+                                HeaderFontSize = exporterAttribute.HeaderFontSize,
+                                MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
+                                Name = exporterAttribute.Name,
+                                TableStyle = exporterAttribute.TableStyle
+                            };
+                        }
+                        else
+                            _excelExporterAttribute = new ExcelExporterAttribute();
+                    }
 
                     //加载表头筛选器
                     if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
@@ -354,12 +376,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (dataItems == null || dataItems.Count == 0)
                 return;
 
-            var tbStyle = TableStyles.Medium10;
-            if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
-                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-
-            var er = excelRange.LoadFromCollection(dataItems, true, tbStyle);
-            CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+            if (ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable)
+            {
+                var tbStyle = TableStyles.Medium10;
+                if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
+                    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
+                var er = excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+                CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+            }
+            else
+            {
+                excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+            }
         }
 
         /// <summary>
@@ -392,7 +420,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
                                     pic.SetSize(ExporterHeaderList[i].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[i].ExportImageFieldAttribute.Height);
                                 }
-                               
+
                             }
                             catch (Exception)
                             {
@@ -461,9 +489,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             //https://github.com/JanKallman/EPPlus/blob/4dacf27661b24d92e8ba3d03d51dd5468845e6c1/EPPlus/ExcelRangeBase.cs#L2013
             var isNoneStyle = ExcelExporterSettings.TableStyle == TableStyles.None.ToString();
 
-            if (CurrentExcelTable == null && !isNoneStyle)
+            if (CurrentExcelTable == null && ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable && !isNoneStyle)
             {
-
                 var cols = ExporterHeaderList.Count;
                 var range = CurrentExcelWorksheet.Cells[1, 1, 10, cols];
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, "");
@@ -472,8 +499,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             foreach (var exporterHeaderDto in ExporterHeaderList)
             {
-
-
                 var exporterHeaderAttribute = exporterHeaderDto.ExporterHeaderAttribute;
                 if (exporterHeaderAttribute != null && !exporterHeaderAttribute.IsIgnore)
                 {
@@ -507,7 +532,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
                 if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
-                { 
+                {
                     col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
 
                 }
@@ -534,7 +559,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
-                
+
             }
         }
     }

@@ -4,7 +4,7 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExcelExporter(Name = "测试")]
+    [ExcelExporter(Name = "测试", ExcelOutputType = ExcelOutputTypes.None)]
     public class ExportTestDataWithPicture
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]

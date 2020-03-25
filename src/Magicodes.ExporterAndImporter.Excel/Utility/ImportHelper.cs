@@ -712,7 +712,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     var excelPicture = GetImage(worksheet, position);
                                     var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid().ToString() + "." + excelPicture.ImageFormat.ToString());
                                     var value = string.Empty;
-                                    
+
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)
                                     {
                                         case ImportImageTo.TempFolder:
@@ -930,13 +930,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     break;
                                 case "DateTime":
                                     {
-                                        if (!DateTime.TryParse(cell.Text, out var date))
+                                        if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Value} 无效，请填写正确的日期时间格式！");
+                                            break;
+                                        }
+                                        try
+                                        {
+                                            var date = cell.GetValue<DateTime>();
+                                            propertyInfo.SetValue(dataItem, date);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            AddRowDataError(rowIndex, col, $"值 {cell.Value} 无效，请填写正确的日期时间格式！");
                                             break;
                                         }
 
-                                        propertyInfo.SetValue(dataItem, date);
                                     }
                                     break;
                                 case "DateTimeOffset":

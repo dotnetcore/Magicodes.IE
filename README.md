@@ -276,6 +276,11 @@
 
 ### **更新历史**
 
+#### **2020.03.25**
+- **【Nuget】版本更新到2.2.0-beta3**
+- **【Excel导入】修复日期问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
+- **【Excel导出】添加ExcelOutputType设置，支持输出无格式的导出。[#54](https://github.com/dotnetcore/Magicodes.IE/issues/54)可以使用此方式。**
+
 #### **2020.03.19**
 - **【Nuget】版本更新到2.2.0-beta2**
 - **【Excel导入】修复日期格式的导入Bug，支持DateTime和DateTimeOffset以及可为空类型，默认支持本地化时间格式（默认根据地区自动使用本地日期时间格式）**
