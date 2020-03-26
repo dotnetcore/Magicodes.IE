@@ -493,7 +493,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 var cols = ExporterHeaderList.Count;
                 var range = CurrentExcelWorksheet.Cells[1, 1, 10, cols];
-                CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, "");
+                //https://github.com/dotnetcore/Magicodes.IE/issues/66
+                CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, $"Table{CurrentExcelWorksheet.Index}");
                 CurrentExcelTable.ShowHeader = true;
             }
 

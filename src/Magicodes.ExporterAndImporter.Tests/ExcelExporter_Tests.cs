@@ -326,6 +326,32 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
+        [Fact(DisplayName = "多个sheet导出（空数据）")]
+        public async Task ExportMutiCollectionWithEmpty_Test()
+        {
+            var exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportMutiCollectionWithEmpty_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+
+            var list1 = new List<ExportTestDataWithAttrs>();
+
+            var list2 = new List<ExportTestDataWithSplitSheet>();
+
+
+            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+            }
+
+        }
+
 
         [Fact(DisplayName = "通过Dto导出表头")]
         public async Task ExportHeaderAsByteArray_Test()

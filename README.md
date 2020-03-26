@@ -10,9 +10,11 @@
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
-- **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、更新历史见下文**
+- **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
+
+最新版本：**2.2.0-beta4**
 
 ## 疯狂的徽章
 
@@ -276,6 +278,10 @@
 
 ### **更新历史**
 
+#### **2020.03.26**
+- **【Nuget】版本更新到2.2.0-beta4**
+- **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
+ 
 #### **2020.03.25**
 - **【Nuget】版本更新到2.2.0-beta3**
 - **【Excel导入】修复日期问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
