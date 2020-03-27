@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.2.0-beta4</Version>
+    <Version>2.2.0-beta5</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -9,12 +9,13 @@
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
     <Description>
-      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
+      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
       交流QQ群：85318032
-      - **【Nuget】版本更新到2.2.0-beta4**
-      - **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
+      https://github.com/dotnetcore/Magicodes.IE/issues/68
+      - **【Nuget】版本更新到2.2.0-beta5**
+      - **【Excel导入导出】修复.NET Core 2.2的包引用问题**
     </Description>
   </PropertyGroup>
   <PropertyGroup>

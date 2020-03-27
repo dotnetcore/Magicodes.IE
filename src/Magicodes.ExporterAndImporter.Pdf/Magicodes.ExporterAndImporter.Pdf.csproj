@@ -15,9 +15,6 @@
     <PackageReference Include="Haukcode.DinkToPdf" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
-    
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
   </ItemGroup>
 
