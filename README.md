@@ -278,6 +278,10 @@
 
 ### **更新历史**
 
+#### **2020.03.27**
+- **【Nuget】版本更新到2.2.0-beta6**
+- **【Excel导入导出】修复.NET Core 2.2的包引用问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
+      
 #### **2020.03.26**
 - **【Nuget】版本更新到2.2.0-beta4**
 - **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
