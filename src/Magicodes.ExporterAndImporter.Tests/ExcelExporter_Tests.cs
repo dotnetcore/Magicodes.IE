@@ -513,7 +513,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     WarningError = "故障",
                     Status = "停机"
                 }
-            };
+            }; 
 
             var suggests = new List<Suggest>
             {
