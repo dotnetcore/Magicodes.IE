@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.2.0-beta6</Version>
+    <Version>2.2.0-beta7</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -13,9 +13,7 @@
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
       交流QQ群：85318032
-      https://github.com/dotnetcore/Magicodes.IE/issues/68
-      - **【Nuget】版本更新到2.2.0-beta6**
-      - **【Excel导入导出】修复.NET Core 2.2的包引用问题**
+      【Excel模板导出】修复渲染问题 [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)**
     </Description>
   </PropertyGroup>
   <PropertyGroup>
