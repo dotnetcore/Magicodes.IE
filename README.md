@@ -230,12 +230,29 @@
 
 	- **bool类型默认会生成“是”和“否”的数据项**
 	- **如果已设置自定义值映射，则不会生成默认选项**
+	
 - **支持excel多Sheet导入；**
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
-- **支持Excel模板导出**
+  
+- **支持Excel模板导出，并且支持图片渲染**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
+  
+  渲染语法如下所示：
+  
+  ```
+    {{Company}}  //单元格渲染
+    {{Table>>BookInfos|RowNo}} //表格渲染开始语法
+    {{Remark|>>Table}}//表格渲染结束语法
+    {{Image::ImageUrl?Width=50&Height=120&Alt=404}} //图片渲染
+    {{Image::ImageUrl?w=50&h=120&Alt=404}} //图片渲染
+    {{Image::ImageUrl?Alt=404}} //图片渲染
+  ```
+  
+  后续将支持自定义管道。
+  
 - **支持Excel导入模板生成标注**
   ![](./res/ImportLabel.png "Excel导入标注")
+  
 - **支持Excel图片导入导出**
   - 图片导入
     - 导入为Base64
@@ -244,6 +261,7 @@
   - 图片导出
     - 将文件路径导出为图片
     - 将网络路径导出为图片
+  
 - **支持多个实体导出多个Sheet**
 
 ### FAQ
@@ -280,7 +298,14 @@
 
 #### **2020.04.02**
 - **【Nuget】版本更新到2.2.0-beta8**
-- **【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)**
+
+- **【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)，渲染语法如下所示：**
+
+ ```
+  {{Image::ImageUrl?Width=50&Height=120&Alt=404}}
+  {{Image::ImageUrl?w=50&h=120&Alt=404}}
+  {{Image::ImageUrl?Alt=404}}
+ ```
 
 #### **2020.03.29**
 - **【Nuget】版本更新到2.2.0-beta7**
@@ -293,7 +318,7 @@
 #### **2020.03.26**
 - **【Nuget】版本更新到2.2.0-beta4**
 - **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
- 
+
 #### **2020.03.25**
 - **【Nuget】版本更新到2.2.0-beta3**
 - **【Excel导入】修复日期问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
@@ -334,7 +359,7 @@
         /// <returns></returns>
         Task<byte[]> ExportAppendDataAsByteArray();
 
-````  
+````
 
 - **【Excel导出】支持多个实体导出多个Sheet**，感谢@ccccccmd 的贡献 [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) ，Issue见 [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)。使用代码参考，具体见单元测试（ExportMutiCollection_Test）：
 
