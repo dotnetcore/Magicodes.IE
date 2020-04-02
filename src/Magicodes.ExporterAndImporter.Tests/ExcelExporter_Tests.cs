@@ -432,7 +432,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "Excel模板导出教材订购明细样表")]
+        #region 模板导出
+        [Fact(DisplayName = "Excel模板导出教材订购明细样表（含图片）")]
         public async Task ExportByTemplate_Test()
         {
             //模板路径
@@ -445,12 +446,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (File.Exists(filePath)) File.Delete(filePath);
             //根据模板导出
             await exporter.ExportByTemplate(filePath,
-                new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null, DateTime.Now.ToLongDateString(),
+                new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null, DateTime.Now.ToLongDateString(), "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png",
                     new List<BookInfo>()
                     {
-                        new BookInfo(1, "0000000001", "《XX从入门到放弃》", null, "机械工业出版社", "3.14", 100, "备注"),
+                        new BookInfo(1, "0000000001", "《XX从入门到放弃》", null, "机械工业出版社", "3.14", 100, "备注"){
+                            Cover = Path.Combine("TestFiles", "ExporterTest.png")
+                        },
                         new BookInfo(2, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, null),
                         new BookInfo(3, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
+                        {
+                            Cover = Path.Combine("TestFiles", "ExporterTest.png")
+                        }
                     }),
                 tplPath);
 
@@ -460,6 +466,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var sheet = pck.Workbook.Worksheets.First();
                 //确保所有的转换均已完成
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+                //检查图片
+                sheet.Drawings.Count.ShouldBe(3);
+
             }
         }
 
@@ -513,7 +522,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     WarningError = "故障",
                     Status = "停机"
                 }
-            }; 
+            };
 
             var suggests = new List<Suggest>
             {
@@ -573,12 +582,13 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", "雪雁", DateTime.Now.ToLongDateString(), books), tplPath);
+            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", "雪雁", DateTime.Now.ToLongDateString(), "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png", books), tplPath);
             stopwatch.Stop();
             //执行时间不得超过1秒（受实际执行机器性能影响）,在测试管理器中运行普遍小于400ms
             //stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
 
         }
+        #endregion
 
         [Fact(DisplayName = "无特性定义导出测试")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
@@ -593,6 +603,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+        #region 图片导出
         [Fact(DisplayName = "Excel导出图片测试")]
         public async Task ExportPicture_Test()
         {
@@ -631,6 +642,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Tables.Count.ShouldBe(0);
             }
         }
+        #endregion
 
     }
 }

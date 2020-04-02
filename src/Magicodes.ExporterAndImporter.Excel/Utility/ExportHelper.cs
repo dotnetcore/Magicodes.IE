@@ -395,13 +395,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected void AddPictures(int rowCount)
         {
-            for (var i = 0; i < ExporterHeaderList.Count; i++)
+            for (var colIndex = 0; colIndex < ExporterHeaderList.Count; colIndex++)
             {
-                if (ExporterHeaderList[i].ExportImageFieldAttribute != null)
+                if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
                 {
-                    for (var j = 1; j <= rowCount; j++)
+                    for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
                     {
-                        var cell = CurrentExcelWorksheet.Cells[j + 1, i + 1];
+                        var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
                         var url = cell.Text;
                         if (File.Exists(url) || url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                         {
@@ -411,25 +411,25 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 var bitmap = Extension.GetBitmapByUrl(url);
                                 if (bitmap == null)
                                 {
-                                    cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
+                                    cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
                                 }
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(j, ExporterHeaderList[i].ExportImageFieldAttribute.Height / 5, i - 1, 0);
-                                    CurrentExcelWorksheet.Row(j + 1).Height = ExporterHeaderList[i].ExportImageFieldAttribute.Height;
-                                    pic.SetSize(ExporterHeaderList[i].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[i].ExportImageFieldAttribute.Height);
+                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - 1, 0);
+                                    CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
+                                    pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                 }
 
                             }
                             catch (Exception)
                             {
-                                cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
+                                cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
                             }
                         }
                         else
                         {
-                            cell.Value = ExporterHeaderList[i].ExportImageFieldAttribute.Alt;
+                            cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
                         }
                     }
                 }

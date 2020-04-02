@@ -346,6 +346,5 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 return Convert.ToBase64String(arr);
             }
         }
-
     }
 }

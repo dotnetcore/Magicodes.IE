@@ -58,6 +58,11 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         public string Remark { get; }
 
+        /// <summary>
+        /// 封面
+        /// </summary>
+        public string Cover { get; set; }
+
         public BookInfo(int rowNo, string no, string name, string editorInChief, string publishingHouse, string price, int purchaseQuantity, string remark)
         {
             RowNo = rowNo;
