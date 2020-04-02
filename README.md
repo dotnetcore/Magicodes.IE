@@ -26,10 +26,10 @@
 - ![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE?style=social)	![GitHub stars](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE?style=social)
 - ![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE?style=social)	![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE?style=social)
 
-### Azure DevOps 
+### Azure DevOps
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
-- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master) 
-- Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop) 
+- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
+- Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop)
 - Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
 - Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
 
@@ -230,15 +230,15 @@
 
 	- **bool类型默认会生成“是”和“否”的数据项**
 	- **如果已设置自定义值映射，则不会生成默认选项**
-	
+
 - **支持excel多Sheet导入；**
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
-  
+
 - **支持Excel模板导出，并且支持图片渲染**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
-  
+
   渲染语法如下所示：
-  
+
   ```
     {{Company}}  //单元格渲染
     {{Table>>BookInfos|RowNo}} //表格渲染开始语法
@@ -247,12 +247,12 @@
     {{Image::ImageUrl?w=50&h=120&Alt=404}} //图片渲染
     {{Image::ImageUrl?Alt=404}} //图片渲染
   ```
-  
+
   后续将支持自定义管道。
-  
+
 - **支持Excel导入模板生成标注**
   ![](./res/ImportLabel.png "Excel导入标注")
-  
+
 - **支持Excel图片导入导出**
   - 图片导入
     - 导入为Base64
@@ -261,7 +261,7 @@
   - 图片导出
     - 将文件路径导出为图片
     - 将网络路径导出为图片
-  
+
 - **支持多个实体导出多个Sheet**
 
 ### FAQ
@@ -299,7 +299,7 @@
 #### **2020.04.02**
 - **【Nuget】版本更新到2.2.0-beta8**
 
-- **【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)，渲染语法如下所示：**
+- **【Excel模板导出】支持图片 [#62](https://github.com/dotnetcore/Magicodes.IE/issues/62)，渲染语法如下所示：**
 
  ```
   {{Image::ImageUrl?Width=50&Height=120&Alt=404}}
@@ -314,7 +314,7 @@
 #### **2020.03.27**
 - **【Nuget】版本更新到2.2.0-beta6**
 - **【Excel导入导出】修复.NET Core 2.2的包引用问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
-      
+
 #### **2020.03.26**
 - **【Nuget】版本更新到2.2.0-beta4**
 - **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
@@ -328,10 +328,10 @@
 - **【Nuget】版本更新到2.2.0-beta2**
 - **【Excel导入】修复日期格式的导入Bug，支持DateTime和DateTimeOffset以及可为空类型，默认支持本地化时间格式（默认根据地区自动使用本地日期时间格式）**
 - **【Excel导入导出】添加单元测试ExportAndImportUseOneDto_Test，对使用同一个Dto导出并导入进行测试。Issue见 [#53](https://github.com/dotnetcore/Magicodes.IE/issues/53)**
-  
+
 #### **2020.03.18**
 - **【Nuget】版本更新到2.2.0-beta1**
-- **【Excel导出】添加以下API:** 
+- **【Excel导出】添加以下API:**
 ````csharp
 
         /// <summary>
@@ -394,7 +394,7 @@
 - **【导入】Excel导入支持导入标注，仅需设置ExcelImporterAttribute的ImportDescription属性，即会在顶部生成Excel导入说明**
 - **【重构】添加两个接口**
   - IExcelExporter：继承自IExporter, IExportFileByTemplate，Excel特有的API将在此补充
-  - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets” 
+  - IExcelImporter：继承自IImporter，Excel特有的API在此补充，例如“ImportMultipleSheet”、“ImportSameSheets”
 - **【重构】增加实例依赖注入**
 - **【构建】完成代码覆盖率的DevOps的配置**
 
