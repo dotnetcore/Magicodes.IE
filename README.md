@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.2.0-beta7**
+最新版本：**2.2.0-beta8**
 
 ## 疯狂的徽章
 
@@ -278,10 +278,14 @@
 
 ### **更新历史**
 
+#### **2020.04.02**
+- **【Nuget】版本更新到2.2.0-beta8**
+- **【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)**
+
 #### **2020.03.29**
 - **【Nuget】版本更新到2.2.0-beta7**
 - **【Excel模板导出】修复渲染问题 [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)**
-- 
+
 #### **2020.03.27**
 - **【Nuget】版本更新到2.2.0-beta6**
 - **【Excel导入导出】修复.NET Core 2.2的包引用问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
