@@ -239,6 +239,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     return;
                 for (var i = 0; i < objProperties.Length; i++)
                 {
+                   
                     var item = new ExporterHeaderInfo
                     {
                         Index = i + 1,
@@ -257,6 +258,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                        item.ExporterHeaderAttribute.DisplayName.IsNullOrWhiteSpace()
                         ? item.PropertyName
                         : item.ExporterHeaderAttribute.DisplayName;
+                    //设置Format
+                    item.ExporterHeaderAttribute.Format = item.ExporterHeaderAttribute.Format.IsNullOrWhiteSpace()
+                        ? objProperties[i].GetDisplayFormat()
+                        : item.ExporterHeaderAttribute.Format;
                     AddExportHeaderInfo(item);
                 }
             }

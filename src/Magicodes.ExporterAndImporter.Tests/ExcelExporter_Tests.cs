@@ -26,6 +26,7 @@ using Shouldly;
 using Xunit;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 using OfficeOpenXml.Drawing;
 
@@ -643,6 +644,32 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
         #endregion
+        [Fact(DisplayName = "数据注解导出测试")]
+        public async Task ExportTestDataAnnotations_Test()
+        {
+            IExporter exporter=new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
+            DeleteFile(filePath);
+            var result = await exporter.Export(filePath,
+                GenFu.GenFu.ListOf<ExportTestDataAnnotations>());
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+
+                sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
+                
+                sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
+                sheet.Tables.Count.ShouldBe(1);
+                var tb = sheet.Tables.First();
+
+                tb.Columns[0].Name.ShouldBe("Custom列1");
+                tb.Columns[1].Name.ShouldBe("列2");
+            }
+        }
+
 
     }
 }
