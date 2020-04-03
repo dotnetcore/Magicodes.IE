@@ -667,6 +667,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 tb.Columns[0].Name.ShouldBe("Custom列1");
                 tb.Columns[1].Name.ShouldBe("列2");
+                tb.Columns.Count.ShouldBe(4);
             }
         }
 

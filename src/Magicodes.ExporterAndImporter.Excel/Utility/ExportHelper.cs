@@ -262,6 +262,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     item.ExporterHeaderAttribute.Format = item.ExporterHeaderAttribute.Format.IsNullOrWhiteSpace()
                         ? objProperties[i].GetDisplayFormat()
                         : item.ExporterHeaderAttribute.Format;
+                    //设置Ignore
+                    item.ExporterHeaderAttribute.IsIgnore =
+                        (objProperties[i].GetAttribute<IEIgnoreAttribute>(true)==null) ?
+                        item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
+                                                          
                     AddExportHeaderInfo(item);
                 }
             }

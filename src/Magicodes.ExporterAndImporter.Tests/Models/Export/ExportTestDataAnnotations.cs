@@ -25,6 +25,11 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         [ExporterHeader(Format = "yyyy-MM-dd")]
         public DateTime Time2 { get; set; }
-
+        /// <summary>
+        ///     忽略
+        /// </summary>
+        [IEIgnoreAttribute]
+        public string Ignore { get; set; }
+        
     }
 }
