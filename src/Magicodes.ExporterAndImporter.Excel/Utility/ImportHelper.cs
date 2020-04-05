@@ -494,9 +494,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                     importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
-
+                var ignore = (propertyInfo.GetAttribute<IEIgnoreAttribute>(true) == null)
+                    ? importerHeaderAttribute.IsIgnore
+                    : propertyInfo.GetAttribute<IEIgnoreAttribute>(true).IsImportIgnore;
                 //忽略字段处理
-                if (importerHeaderAttribute.IsIgnore) continue;
+                if (ignore) continue;
 
                 var colHeader = new ImporterHeaderInfo
                 {
@@ -527,6 +529,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         colHeader.Header.Description = propertyInfo.GetAttribute<DisplayAttribute>()?.Description;
                     }
                 }
+
+                colHeader.Header.IsIgnore = ignore;
+                
                 ImporterHeaderInfos.Add(colHeader);
                 #region 处理值映射
 

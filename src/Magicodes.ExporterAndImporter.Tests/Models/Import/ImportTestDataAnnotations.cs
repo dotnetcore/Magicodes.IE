@@ -18,7 +18,11 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [Display(Name = "列2",Order = 1)]
         public string  Name1{ get; set; }
         [ImporterHeader(Name = "Time1")]
-        public DateTime Name2 { get; set; }
+        public DateTime Time { get; set; }
+        
+        [ImporterHeader(Name = "Time2",IsIgnore = true)]
+        [IEIgnoreAttribute]
+        public DateTime Time2 { get; set; }
         
         
     }
