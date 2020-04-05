@@ -13,6 +13,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -503,8 +505,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     Header = importerHeaderAttribute,
                     ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true)
                 };
+                //设置ColumnIndex
+                if (colHeader.Header.ColumnIndex > 0)
+                {
+                    colHeader.Header.ColumnIndex = colHeader.Header.ColumnIndex;
+                }
+                else if (propertyInfo.GetAttribute<DisplayAttribute>(true) != null &&
+                         propertyInfo.GetAttribute<DisplayAttribute>(true).GetOrder() != null)
+                {
+                    colHeader.Header.ColumnIndex = propertyInfo.GetAttribute<DisplayAttribute>(true).Order;
+                }
+                //设置Description
+                if (colHeader.Header.Description.IsNullOrWhiteSpace())
+                {
+                    if (propertyInfo.GetAttribute<DescriptionAttribute>()?.Description!=null)
+                    {
+                        colHeader.Header.Description = propertyInfo.GetAttribute<DescriptionAttribute>()?.Description;
+                    }
+                    else if (propertyInfo.GetAttribute<DisplayAttribute>()?.Description != null) 
+                    {
+                        colHeader.Header.Description = propertyInfo.GetAttribute<DisplayAttribute>()?.Description;
+                    }
+                }
                 ImporterHeaderInfos.Add(colHeader);
-
                 #region 处理值映射
 
                 var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();

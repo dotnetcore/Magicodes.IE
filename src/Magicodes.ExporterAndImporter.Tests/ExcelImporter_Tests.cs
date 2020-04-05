@@ -615,7 +615,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
         }
-        [Fact(DisplayName ="导入图片测试")]
+
+        #region 图片测试
+
+         [Fact(DisplayName ="导入图片测试")]
         public async Task ImportPicture_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
@@ -660,5 +663,18 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.Img1.ShouldNotBeNull();
             }
         }
+
+        #endregion
+       
+        [Fact(DisplayName = "导入测试数据注解")]
+        public async Task ImportDataAnnotations_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "数据注解测试模板.xlsx");
+            var import = await Importer.Import<ImportTestDataAnnotations>(filePath);
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
+            import.Data.ElementAt(0).Name1.ShouldBe(import.Data.ElementAt(0).Name);
+        }
+
     }
 }
