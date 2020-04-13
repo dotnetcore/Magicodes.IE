@@ -132,6 +132,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         #region 检查模板
                         ParseTemplate(excelPackage);
+
+                        //Import results return header information
+                        //导入结果返回表头信息
+                        ImportResult.ImporterHeaderInfos = ImporterHeaderInfos;
+
                         if (ImportResult.HasError) return Task.FromResult(ImportResult);
                         #endregion
                         ParseData(excelPackage);
@@ -160,6 +165,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         }
                         RepeatDataCheck();
                         #endregion
+
 
                         //执行结果筛选器
                         if (ExcelImporterSettings.ImportResultFilter != null)
