@@ -17,7 +17,7 @@
 最新版本：**2.2.0-beta8**
 
 ## 疯狂的徽章
-
+[![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
 ### GitHub
 
 - ![GitHub contributors](https://img.shields.io/github/contributors/dotnetcore/Magicodes.IE?style=social) ![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE?style=social)
@@ -610,3 +610,33 @@
 - **【导入】导入增加对中间空格的处理支持，需设置FixAllSpace**
 - **【导入】导入完善对日期类型的支持**
 - **【导入】完善导入的单元测试**
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/dotnetcore/Magicodes.IE/graphs/contributors"><img src="https://opencollective.com/magicodes/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/magicodes/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/magicodes"><img src="https://opencollective.com/magicodes/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/magicodes/contribute)]
+
+<a href="https://opencollective.com/magicodes/organization/0/website"><img src="https://opencollective.com/magicodes/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/1/website"><img src="https://opencollective.com/magicodes/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/2/website"><img src="https://opencollective.com/magicodes/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/3/website"><img src="https://opencollective.com/magicodes/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/4/website"><img src="https://opencollective.com/magicodes/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/5/website"><img src="https://opencollective.com/magicodes/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/6/website"><img src="https://opencollective.com/magicodes/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/7/website"><img src="https://opencollective.com/magicodes/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/8/website"><img src="https://opencollective.com/magicodes/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/magicodes/organization/9/website"><img src="https://opencollective.com/magicodes/organization/9/avatar.svg"></a>
