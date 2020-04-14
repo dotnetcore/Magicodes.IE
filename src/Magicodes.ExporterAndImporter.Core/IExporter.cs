@@ -33,10 +33,14 @@ namespace Magicodes.ExporterAndImporter.Core
 
         /// <summary>
         ///     导出
+        ///     Support export through configuration
+        ///     支持通过配置导出
+        ///     https://github.com/dotnetcore/Magicodes.IE/issues/61
         /// </summary>
         /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaders">导出表头设置</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class;
+        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, List<ExporterHeaderInfo> exporterHeaders = null) where T : class;
 
         /// <summary>
         ///     导出

@@ -29,6 +29,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 using OfficeOpenXml.Drawing;
+using System.Linq.Dynamic.Core;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -647,7 +648,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "数据注解导出测试")]
         public async Task ExportTestDataAnnotations_Test()
         {
-            IExporter exporter=new ExcelExporter();
+            IExporter exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
             DeleteFile(filePath);
             var result = await exporter.Export(filePath,
@@ -660,7 +661,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var sheet = pck.Workbook.Worksheets.First();
 
                 sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
-                
+
                 sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
                 sheet.Tables.Count.ShouldBe(1);
                 var tb = sheet.Tables.First();
@@ -671,6 +672,41 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        #region 根据表头导出（ExportByHeaders）
+        [Fact(DisplayName = "根据表头导出（ExportByHeaders）")]
+        public async Task ExportByHeaders_Test()
+        {
+            IExporter exporter = new ExcelExporter();
 
+            var filePath = GetTestFilePath($"{nameof(ExportByHeaders_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportByHeaders_TestDto>().AsQueryable().Select($"new(Text,Text2)").ToDynamicList(), new List<ExporterHeaderInfo>()
+            {
+                new ExporterHeaderInfo()
+                {
+                    CsTypeName = typeof(string).GetCSharpTypeName(),
+                    DisplayName="文本",
+                    PropertyName="Text",
+                    Index = 1,
+                    ExporterHeaderAttribute = new ExporterHeaderAttribute()
+                }
+            });
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Tables.Count.ShouldBe(1);
+                var tb = sheet.Tables.First();
+                tb.Columns[0].Name.ShouldBe("文本");
+                //tb.Columns.Count.ShouldBe(4);
+            }
+        }
+        #endregion
     }
 }

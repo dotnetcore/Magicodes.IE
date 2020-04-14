@@ -50,6 +50,8 @@ namespace Magicodes.ExporterAndImporter.Excel
             var bytes = await ExportAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
         }
+
+
         /// <summary>
         /// append collectioin to context
         /// </summary>
@@ -96,12 +98,8 @@ namespace Magicodes.ExporterAndImporter.Excel
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
-        /// <summary>
-        ///     导出Excel
-        /// </summary>
-        /// <param name="dataItems">数据</param>
-        /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class
+
+        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, List<ExporterHeaderInfo> exporterHeaders = null) where T : class
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
@@ -113,14 +111,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         var sheetDataItems = dataItems.Skip(i * helper.ExcelExporterSettings.MaxRowNumberOnASheet).Take(helper.ExcelExporterSettings.MaxRowNumberOnASheet).ToList();
                         helper.AddExcelWorksheet();
-                        helper.Export(sheetDataItems);
+                        helper.Export(sheetDataItems, exporterHeaders);
                     }
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
             else
             {
-                using (var ep = helper.Export(dataItems))
+                using (var ep = helper.Export(dataItems, exporterHeaders))
                 {
                     return Task.FromResult(ep.GetAsByteArray());
                 }

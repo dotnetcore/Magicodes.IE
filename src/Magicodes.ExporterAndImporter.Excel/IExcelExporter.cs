@@ -19,6 +19,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="sheetName">工作簿名称</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果");
+
         /// <summary>
         ///     导出
         /// </summary>
