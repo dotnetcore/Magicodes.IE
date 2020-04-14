@@ -589,6 +589,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             //stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
 
         }
+
         #endregion
 
         [Fact(DisplayName = "无特性定义导出测试")]

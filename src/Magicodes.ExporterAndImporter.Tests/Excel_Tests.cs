@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -21,7 +22,27 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
+        /// <summary>
+        ///    见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/73
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "模板导出单列测试")]
+        public async Task ExportByTemplate_SingleCol_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "SingleColTemplate.xlsx");
+            IExportFileByTemplate exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_SingleCol_Test) + ".xlsx");
+            DeleteFile(filePath);
 
+            var result = await exporter.ExportByTemplate(filePath,
+                new ExportTestDataWithSingleColTpl()
+                {
+                    List = GenFu.GenFu.ListOf<ExportTestDataWithSingleCol>()
+                }, tplPath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
         /// <summary>
         /// 见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/53
         /// </summary>
