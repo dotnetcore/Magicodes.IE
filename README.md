@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.2.0-beta8**
+最新版本：**2.2.0-beta9**
 
 ## 疯狂的徽章
 
@@ -278,6 +278,18 @@
 
 ### **更新历史**
 
+#### **2020.04.16**
+- **【Nuget】版本更新到2.2.0-beta9**
+- **【Excel模板导出】修复只存在一列时的导出 [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
+- **【Excel导入】支持返回表头和索引 [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
+- **【Excel导入导入】[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
+  - 支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出，比如
+    - DisplayAttribute
+    - DisplayFormatAttribute
+    - DescriptionAttribute
+  - 封装简单的易于使用的单一特性，例如
+    - IEIgnoreAttribute（可作用于属性、枚举成员，可影响导入和导出）
+
 #### **2020.04.02**
 - **【Nuget】版本更新到2.2.0-beta8**
 - **【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)**
@@ -293,7 +305,7 @@
 #### **2020.03.26**
 - **【Nuget】版本更新到2.2.0-beta4**
 - **【Excel多Sheet导出】修复[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)，并添加单元测试**
- 
+
 #### **2020.03.25**
 - **【Nuget】版本更新到2.2.0-beta3**
 - **【Excel导入】修复日期问题 [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
@@ -334,7 +346,7 @@
         /// <returns></returns>
         Task<byte[]> ExportAppendDataAsByteArray();
 
-````  
+````
 
 - **【Excel导出】支持多个实体导出多个Sheet**，感谢@ccccccmd 的贡献 [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) ，Issue见 [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)。使用代码参考，具体见单元测试（ExportMutiCollection_Test）：
 
