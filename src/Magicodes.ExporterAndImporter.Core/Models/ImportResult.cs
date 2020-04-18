@@ -55,5 +55,12 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         public virtual bool HasError => Exception != null ||
                                         (TemplateErrors?.Count(p => p.ErrorLevel == ErrorLevels.Error) ?? 0) > 0 ||
                                         (RowErrors?.Count ?? 0) > 0;
+
+        /// <summary>
+        ///     Imported header list information
+        ///     导入的表头列表信息
+        ///     https://github.com/dotnetcore/Magicodes.IE/issues/76
+        /// </summary>
+        public virtual IList<ImporterHeaderInfo> ImporterHeaderInfos { get; set; }
     }
 }

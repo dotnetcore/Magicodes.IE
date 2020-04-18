@@ -13,6 +13,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -132,6 +134,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         #region 检查模板
                         ParseTemplate(excelPackage);
+
+                        //Import results return header information
+                        //导入结果返回表头信息
+                        ImportResult.ImporterHeaderInfos = ImporterHeaderInfos;
+
                         if (ImportResult.HasError) return Task.FromResult(ImportResult);
                         #endregion
                         ParseData(excelPackage);
@@ -160,6 +167,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         }
                         RepeatDataCheck();
                         #endregion
+
 
                         //执行结果筛选器
                         if (ExcelImporterSettings.ImportResultFilter != null)
@@ -492,9 +500,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
                     importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
-
+                var ignore = (propertyInfo.GetAttribute<IEIgnoreAttribute>(true) == null)
+                    ? importerHeaderAttribute.IsIgnore
+                    : propertyInfo.GetAttribute<IEIgnoreAttribute>(true).IsImportIgnore;
                 //忽略字段处理
-                if (importerHeaderAttribute.IsIgnore) continue;
+                if (ignore) continue;
 
                 var colHeader = new ImporterHeaderInfo
                 {
@@ -503,8 +513,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     Header = importerHeaderAttribute,
                     ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true)
                 };
-                ImporterHeaderInfos.Add(colHeader);
+                //设置ColumnIndex
+                if (colHeader.Header.ColumnIndex > 0)
+                {
+                    colHeader.Header.ColumnIndex = colHeader.Header.ColumnIndex;
+                }
+                else if (propertyInfo.GetAttribute<DisplayAttribute>(true) != null &&
+                         propertyInfo.GetAttribute<DisplayAttribute>(true).GetOrder() != null)
+                {
+                    colHeader.Header.ColumnIndex = propertyInfo.GetAttribute<DisplayAttribute>(true).Order;
+                }
+                //设置Description
+                if (colHeader.Header.Description.IsNullOrWhiteSpace())
+                {
+                    if (propertyInfo.GetAttribute<DescriptionAttribute>()?.Description!=null)
+                    {
+                        colHeader.Header.Description = propertyInfo.GetAttribute<DescriptionAttribute>()?.Description;
+                    }
+                    else if (propertyInfo.GetAttribute<DisplayAttribute>()?.Description != null) 
+                    {
+                        colHeader.Header.Description = propertyInfo.GetAttribute<DisplayAttribute>()?.Description;
+                    }
+                }
 
+                colHeader.Header.IsIgnore = ignore;
+                
+                ImporterHeaderInfos.Add(colHeader);
                 #region 处理值映射
 
                 var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();

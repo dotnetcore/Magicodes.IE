@@ -50,6 +50,22 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             return displayName;
         }
+        /// <summary>
+        ///     获取Format
+        /// </summary>
+        /// <param name="customAttributeProvider"></param>
+        /// <returns></returns>
+        public static string GetDisplayFormat(this ICustomAttributeProvider customAttributeProvider)
+        {
+            var formatAttribute = customAttributeProvider.GetAttribute<DisplayFormatAttribute>();
+            string displayFormat=string.Empty;
+            if (formatAttribute!=null)
+            {
+                displayFormat = formatAttribute.DataFormatString;
+            }
+            return displayFormat;
+        }
+
 
         /// <summary>
         ///     获取类型描述

@@ -121,13 +121,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             //第一列乱序
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "产品导入模板.xlsx");
-            var import = await Importer.Import<ImportProductDto>(filePath);
-            import.ShouldNotBeNull();
+            var result = await Importer.Import<ImportProductDto>(filePath);
+            result.ShouldNotBeNull();
 
-            import.HasError.ShouldBeFalse();
-            import.Data.ShouldNotBeNull();
-            import.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
-            foreach (var item in import.Data)
+            result.HasError.ShouldBeFalse();
+            result.Data.ShouldNotBeNull();
+            result.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
+            foreach (var item in result.Data)
             {
                 if (item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
 
@@ -137,20 +137,23 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
             //可为空类型测试
-            import.Data.ElementAt(4).Weight.HasValue.ShouldBe(true);
-            import.Data.ElementAt(5).Weight.HasValue.ShouldBe(false);
+            result.Data.ElementAt(4).Weight.HasValue.ShouldBe(true);
+            result.Data.ElementAt(5).Weight.HasValue.ShouldBe(false);
             //提取性别公式测试
-            import.Data.ElementAt(0).Sex.ShouldBe("女");
+            result.Data.ElementAt(0).Sex.ShouldBe("女");
             //获取当前日期以及日期类型测试  如果时间不对，请打开对应的Excel即可更新为当前时间，然后再运行此单元测试
             //import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
             //数值测试
-            import.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
-            import.Data.ElementAt(0).Name.ShouldBe("1212");
-            import.Data.ElementAt(0).BarCode.ShouldBe("123123");
-            import.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
-            import.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
-            import.Data.ElementAt(1).Name.ShouldBe("12312312");
-            import.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
+            result.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
+            result.Data.ElementAt(0).Name.ShouldBe("1212");
+            result.Data.ElementAt(0).BarCode.ShouldBe("123123");
+            result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
+            result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
+            result.Data.ElementAt(1).Name.ShouldBe("12312312");
+            result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
+
+            result.ImporterHeaderInfos.ShouldNotBeNull();
+            result.ImporterHeaderInfos.Count.ShouldBe(17);
         }
 
         [Fact(DisplayName = "截断数据测试")]
@@ -301,6 +304,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             result.HasError.ShouldBeTrue();
             result.Exception.ShouldBeNull();
+            result.ImporterHeaderInfos.ShouldNotBeNull();
+            result.ImporterHeaderInfos.Count.ShouldBeGreaterThan(0);
 
             result.TemplateErrors.Count.ShouldBe(0);
 
@@ -615,7 +620,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
         }
-        [Fact(DisplayName ="导入图片测试")]
+
+        #region 图片测试
+
+         [Fact(DisplayName ="导入图片测试")]
         public async Task ImportPicture_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
@@ -660,5 +668,19 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.Img1.ShouldNotBeNull();
             }
         }
+
+        #endregion
+       
+        [Fact(DisplayName = "导入测试数据注解")]
+        public async Task ImportDataAnnotations_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "数据注解测试模板.xlsx");
+            var import = await Importer.Import<ImportTestDataAnnotations>(filePath);
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
+            import.Data.ElementAt(0).Name1.ShouldBe(import.Data.ElementAt(0).Name);
+        }
+        
+
     }
 }
