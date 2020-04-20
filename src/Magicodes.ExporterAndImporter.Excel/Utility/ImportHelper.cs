@@ -277,6 +277,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             {
                 var worksheet = GetImportSheet(excelPackage);
+                //先移除原先的错误标注
+                if (worksheet.Comments != null && worksheet.Comments.Count > 0)
+                {
+                    int length = worksheet.Comments.Count;
+                    for (int i = 0; i < length; i++)
+                    {
+                        worksheet.Comments.RemoveAt(0);
+                    }
+                }
                 //TODO:标注模板错误
                 //标注数据错误
                 foreach (var item in ImportResult.RowErrors)

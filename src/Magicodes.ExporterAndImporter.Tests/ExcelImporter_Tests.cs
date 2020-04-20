@@ -600,9 +600,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
-
         }
-
 
         /// <summary>
         /// 标注未移除 
