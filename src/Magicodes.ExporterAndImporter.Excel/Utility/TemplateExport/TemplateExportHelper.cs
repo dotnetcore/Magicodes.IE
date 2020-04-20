@@ -90,7 +90,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 				throw new ArgumentException("模板文件路径不能为空!", nameof(TemplateFilePath));
 			if (data == null) throw new ArgumentException("数据不能为空!", nameof(data));
 			if (callback == null) return;
-
+           
 			Data = data;
 
 			using (Stream stream = new FileStream(TemplateFilePath, FileMode.Open))
@@ -100,6 +100,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 					ParseTemplateFile(excelPackage);
 
 					ParseData(excelPackage);
+                    callback.Invoke(excelPackage);
 				}
 			}
 		}

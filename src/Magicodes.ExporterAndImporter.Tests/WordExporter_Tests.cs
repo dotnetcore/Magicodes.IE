@@ -67,12 +67,14 @@ namespace Magicodes.ExporterAndImporter.Tests
 			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordBytesByTemplate_Test) + ".docx");
 			if (File.Exists(filePath)) File.Delete(filePath);
 			//此处使用默认模板导出
-			var result = await exporter.ExportBytesByTemplate(
+			var result = await exporter.ExportListBytesByTemplate(
 				GenFu.GenFu.ListOf<ExportTestData>(), tpl);
 			result.ShouldNotBeNull();
-			using var file = File.OpenWrite(filePath);
-			file.Write(result, 0, result.Length);
-			File.Exists(filePath).ShouldBeTrue();
+            using (var file = File.OpenWrite(filePath))
+            {
+				file.Write(result, 0, result.Length);
+			}
+            File.Exists(filePath).ShouldBeTrue();
 		}
 
 		[Fact(DisplayName = "自定义模板导出Word文件测试")]

@@ -644,8 +644,10 @@ namespace Magicodes.ExporterAndImporter.Tests
                 },
                 tplPath);
             result.ShouldNotBeNull();
-            using var file = File.OpenWrite(filePath);
-            file.Write(result, 0, result.Length);
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果

@@ -123,5 +123,38 @@ namespace Magicodes.ExporterAndImporter.Word
 				}
 			}
 		}
+        /// <summary>
+		///   根据模板导出bytes
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <returns></returns>
+
+		public async Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data, string template) where T : class
+        {
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportListByTemplate(data, template);
+
+            using (var generatedDocument = new MemoryStream())
+            {
+                using (var package =
+                    WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
+                {
+                    var mainPart = package.MainDocumentPart;
+                    if (mainPart == null)
+                    {
+                        mainPart = package.AddMainDocumentPart();
+                        new Document(new Body()).Save(mainPart);
+                    }
+
+                    var converter = new HtmlConverter(mainPart);
+                    converter.ParseHtml(htmlString);
+
+                    mainPart.Document.Save();
+                    return generatedDocument.ToArray();
+                }
+            }
+        }
 	}
 }

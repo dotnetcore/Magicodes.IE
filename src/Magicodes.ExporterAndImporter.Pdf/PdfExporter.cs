@@ -201,5 +201,19 @@ namespace Magicodes.ExporterAndImporter.Pdf
 			var htmlString = await exporter.ExportByTemplate(data, template);
 			return await ExportPdf(exporterAttribute, htmlString);
 		}
+        /// <summary>
+        /// 简单实现
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="template"></param>
+        /// <returns></returns>
+        public async Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data, string template) where T : class
+        {
+            var exporterAttribute = GetExporterAttribute<T>();
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportListByTemplate(data, template);
+            return await ExportPdf(exporterAttribute, htmlString);
+        }
 	}
 }
