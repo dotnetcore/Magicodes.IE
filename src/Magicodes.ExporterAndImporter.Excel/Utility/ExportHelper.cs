@@ -239,7 +239,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     return;
                 for (var i = 0; i < objProperties.Length; i++)
                 {
-                   
+
                     var item = new ExporterHeaderInfo
                     {
                         Index = i + 1,
@@ -264,9 +264,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         : item.ExporterHeaderAttribute.Format;
                     //设置Ignore
                     item.ExporterHeaderAttribute.IsIgnore =
-                        (objProperties[i].GetAttribute<IEIgnoreAttribute>(true)==null) ?
+                        (objProperties[i].GetAttribute<IEIgnoreAttribute>(true) == null) ?
                         item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
-                                                          
+
                     AddExportHeaderInfo(item);
                 }
             }
@@ -502,10 +502,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (CurrentExcelTable == null && ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable && !isNoneStyle)
             {
                 var cols = ExporterHeaderList.Count;
-                var range = CurrentExcelWorksheet.Cells[1, 1, 10, cols];
+                var range = CurrentExcelWorksheet.Cells[1, 1, CurrentExcelWorksheet.Dimension.End.Row, cols];
                 //https://github.com/dotnetcore/Magicodes.IE/issues/66
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, $"Table{CurrentExcelWorksheet.Index}");
                 CurrentExcelTable.ShowHeader = true;
+                Enum.TryParse(ExcelExporterSettings.TableStyle, out TableStyles outStyle);
+                CurrentExcelTable.TableStyle = outStyle;
             }
 
             foreach (var exporterHeaderDto in ExporterHeaderList)
