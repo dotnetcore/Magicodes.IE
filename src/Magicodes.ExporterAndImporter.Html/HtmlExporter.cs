@@ -1,14 +1,14 @@
 ﻿// ======================================================================
-// 
+//
 //           filename : HtmlExporter.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-09-26 14:59
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
 using System.Collections.Generic;
@@ -27,87 +27,94 @@ using Encoding = System.Text.Encoding;
 
 namespace Magicodes.ExporterAndImporter.Html
 {
-    /// <summary>
-    ///     HTML导出
-    /// </summary>
-    public partial class HtmlExporter : IExporterByTemplate
-    {
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        public HtmlExporter()
-        {
-            //配置RazorEngine
-            var config = new TemplateServiceConfiguration()
-            {
-                ReferenceResolver = new ExternalAssemblyReferenceResolver(null)
-            };
-            var service = RazorEngineService.Create(config);
-            Engine.Razor = service;
-        }
-        /// <summary>
-        ///     根据模板导出
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="dataItems"></param>
-        /// <param name="htmlTemplate">Html模板内容</param>
-        /// <returns></returns>
-        public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null)
-            where T : class
-        {
-            var result = RunCompileTpl(new ExportDocumentInfoOfListData<T>(dataItems), htmlTemplate);
-            return Task.FromResult(result);
-        }
+	/// <summary>
+	///     HTML导出
+	/// </summary>
+	public partial class HtmlExporter : IExporterByTemplate
+	{
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public HtmlExporter()
+		{
+			//配置RazorEngine
+			var config = new TemplateServiceConfiguration()
+			{
+				ReferenceResolver = new ExternalAssemblyReferenceResolver(null)
+			};
+			var service = RazorEngineService.Create(config);
+			Engine.Razor = service;
+		}
 
-        /// <summary>
-        ///     根据模板导出
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <param name="htmlTemplate">Html模板内容</param>
-        /// <returns></returns>
-        public Task<string> ExportByTemplate<T>(T data, string htmlTemplate) where T : class
-        {
-            var result = RunCompileTpl(new ExportDocumentInfo<T>(data), htmlTemplate);
-            return Task.FromResult(result);
-        }
+		/// <summary>
+		///     根据模板导出
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="dataItems"></param>
+		/// <param name="htmlTemplate">Html模板内容</param>
+		/// <returns></returns>
+		public Task<string> ExportListByTemplate<T>(ICollection<T> dataItems, string htmlTemplate = null)
+			where T : class
+		{
+			var result = RunCompileTpl(new ExportDocumentInfoOfListData<T>(dataItems), htmlTemplate);
+			return Task.FromResult(result);
+		}
 
-        /// <summary>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="fileName"></param>
-        /// <param name="dataItems"></param>
-        /// <param name="htmlTemplate"></param>
-        /// <returns></returns>
-        public async Task<ExportFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
-            string htmlTemplate = null) where T : class
-        {
-            var file = new ExportFileInfo(fileName, "text/html");
+		/// <summary>
+		///     根据模板导出
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="data"></param>
+		/// <param name="htmlTemplate">Html模板内容</param>
+		/// <returns></returns>
+		public Task<string> ExportByTemplate<T>(T data, string htmlTemplate) where T : class
+		{
+			var result = RunCompileTpl(new ExportDocumentInfo<T>(data), htmlTemplate);
+			return Task.FromResult(result);
+		}
 
-            var result = await ExportListByTemplate(dataItems, htmlTemplate);
-            File.WriteAllText(fileName, result, Encoding.UTF8);
-            return file;
-        }
+		/// <summary>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="fileName"></param>
+		/// <param name="dataItems"></param>
+		/// <param name="htmlTemplate"></param>
+		/// <returns></returns>
+		public async Task<ExportFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
+			string htmlTemplate = null) where T : class
+		{
+			var file = new ExportFileInfo(fileName, "text/html");
 
-        /// <summary>
-        /// 导出HTML文件
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="fileName"></param>
-        /// <param name="data"></param>
-        /// <param name="htmlTemplate"></param>
-        /// <returns></returns>
-        public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data,
-            string htmlTemplate) where T : class
-        {
+			var result = await ExportListByTemplate(dataItems, htmlTemplate);
+			File.WriteAllText(fileName, result, Encoding.UTF8);
+			return file;
+		}
+
+		/// <summary>
+		/// 导出HTML文件
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="fileName"></param>
+		/// <param name="data"></param>
+		/// <param name="htmlTemplate"></param>
+		/// <returns></returns>
+		public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data,
+			string htmlTemplate) where T : class
+		{
+			//var file = new ExportFileInfo(fileName, "text/html");
+			//var result = await ExportByTemplate(data, htmlTemplate);
+
+			//File.WriteAllText(fileName, result, Encoding.UTF8);
+			//return file;
+           // var fileName = "E:\\Project\\Person\\OpenSource\\Magicodes.IE\\src\\Magicodes.ExporterAndImporter.Tests\\bin\\Debug\\net461\\ExportHtmlBytesByTemplate_Test.html";
             var file = new ExportFileInfo(fileName, "text/html");
             var result = await ExportByTemplate(data, htmlTemplate);
 
             File.WriteAllText(fileName, result, Encoding.UTF8);
             return file;
-        }
+		}
 
-        /// <summary>
+	    /// <summary>
         ///     获取HTML模板
         /// </summary>
         /// <param name="htmlTemplate"></param>
@@ -119,17 +126,92 @@ namespace Magicodes.ExporterAndImporter.Html
                 : htmlTemplate;
         }
 
-        /// <summary>
-        ///     编译和运行模板
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="htmlTemplate"></param>
-        /// <returns></returns>
-        protected string RunCompileTpl(object model, string htmlTemplate = null)
+
+		/// <summary>
+		///     编译和运行模板
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="htmlTemplate"></param>
+		/// <returns></returns>
+		protected string RunCompileTpl(object model, string htmlTemplate = null)
+		{
+			var htmlTpl = GetHtmlTemplate(htmlTemplate);
+
+			return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
+		}
+
+
+		/// <summary>
+		/// 简单实现导出到bytes
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <returns></returns>
+		public async Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data,
+            string template) where T : class
         {
-            var htmlTpl = GetHtmlTemplate(htmlTemplate);
-            
-            return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
+            var result = await ExportListByTemplate(data, template);
+            return Encoding.UTF8.GetBytes(result);
+		}
+        /// <summary>
+        /// 简单实现导出到bytes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="template"></param>
+        /// <returns></returns>
+        public async Task<byte[]> ExportBytesByTemplate<T>(T data,
+            string template) where T : class
+        {
+            var result = await ExportByTemplate(data, template);
+            return Encoding.UTF8.GetBytes(result);
         }
-    }
+
+
+
+
+		///// <summary>
+		///// 简单实现导出到bytes
+		///// </summary>
+		///// <typeparam name="T"></typeparam>
+		///// <param name="data"></param>
+		///// <param name="template"></param>
+		///// <returns></returns>
+		//public async Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class
+		//{
+		//	//var file = new ExportFileInfo(template, "text/html");
+		//	//var result = await ExportByTemplate(data, template);
+		//	//return Encoding.UTF8.GetBytes(result);
+		//          //var file = new ExportFileInfo(template, "text/html");
+		//          var fileName = "E:\\Project\\Person\\OpenSource\\Magicodes.IE\\src\\Magicodes.ExporterAndImporter.Tests\\bin\\Debug\\net461\\ExportHtmlBytesByTemplate_Test.html";
+
+		//	var file = new ExportFileInfo(fileName, "text/html");
+		//          var result = await ExportByTemplate(data, template);
+
+		//          File.WriteAllText(fileName, result, Encoding.UTF8);
+		//          return null;
+
+		//	//var result = await ExportByTemplate(data, template);
+		//	//         File.WriteAllText(template, result, Encoding.UTF8);
+		//	//         return Encoding.UTF8.GetBytes(result);
+		//}
+		///// <summary>
+		///// 简单实现导出到bytes
+		//      /// </summary>
+		///// <typeparam name="T"></typeparam>
+		///// <param name="fileName"></param>
+		///// <param name="dataItems"></param>
+		///// <param name="htmlTemplate"></param>
+		///// <returns></returns>
+		//public async Task<byte[]> ExportBytesByTemplate<T>(string fileName, ICollection<T> dataItems,
+		//          string htmlTemplate = null) where T : class
+		//      {
+		//          var file = new ExportFileInfo(fileName, "text/html");
+
+		//          var result = await ExportListByTemplate(dataItems, htmlTemplate);
+		//          File.WriteAllText(fileName, result, Encoding.UTF8);
+		//          return file;
+		//      }
+	}
 }

@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
                 "SingleColTemplate.xlsx");
             IExportFileByTemplate exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_SingleCol_Test) + ".xlsx");
+            var filePath = GetTestFilePath($"{nameof(ExportByTemplate_SingleCol_Test)}.xlsx");
             DeleteFile(filePath);
 
             var result = await exporter.ExportByTemplate(filePath,
