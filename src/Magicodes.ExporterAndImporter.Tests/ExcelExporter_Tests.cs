@@ -672,6 +672,21 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "样式错误测试" )]
+        public async Task TenExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
 
+            var filePath = GetTestFilePath($"{nameof(TenExport_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<GalleryLineExportModel>(100);
+
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+     
+        }
     }
 }
