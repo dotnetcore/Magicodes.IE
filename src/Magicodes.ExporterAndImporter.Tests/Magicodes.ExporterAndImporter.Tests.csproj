@@ -98,6 +98,9 @@
     <None Update="TestFiles\Import\学生基础数据导入.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\学生基础数据导入存在问题.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\学生基础数据导入带描述头.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
