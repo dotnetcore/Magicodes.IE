@@ -101,12 +101,6 @@ namespace Magicodes.ExporterAndImporter.Html
 		public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data,
 			string htmlTemplate) where T : class
 		{
-			//var file = new ExportFileInfo(fileName, "text/html");
-			//var result = await ExportByTemplate(data, htmlTemplate);
-
-			//File.WriteAllText(fileName, result, Encoding.UTF8);
-			//return file;
-           // var fileName = "E:\\Project\\Person\\OpenSource\\Magicodes.IE\\src\\Magicodes.ExporterAndImporter.Tests\\bin\\Debug\\net461\\ExportHtmlBytesByTemplate_Test.html";
             var file = new ExportFileInfo(fileName, "text/html");
             var result = await ExportByTemplate(data, htmlTemplate);
 
@@ -167,51 +161,5 @@ namespace Magicodes.ExporterAndImporter.Html
             var result = await ExportByTemplate(data, template);
             return Encoding.UTF8.GetBytes(result);
         }
-
-
-
-
-		///// <summary>
-		///// 简单实现导出到bytes
-		///// </summary>
-		///// <typeparam name="T"></typeparam>
-		///// <param name="data"></param>
-		///// <param name="template"></param>
-		///// <returns></returns>
-		//public async Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class
-		//{
-		//	//var file = new ExportFileInfo(template, "text/html");
-		//	//var result = await ExportByTemplate(data, template);
-		//	//return Encoding.UTF8.GetBytes(result);
-		//          //var file = new ExportFileInfo(template, "text/html");
-		//          var fileName = "E:\\Project\\Person\\OpenSource\\Magicodes.IE\\src\\Magicodes.ExporterAndImporter.Tests\\bin\\Debug\\net461\\ExportHtmlBytesByTemplate_Test.html";
-
-		//	var file = new ExportFileInfo(fileName, "text/html");
-		//          var result = await ExportByTemplate(data, template);
-
-		//          File.WriteAllText(fileName, result, Encoding.UTF8);
-		//          return null;
-
-		//	//var result = await ExportByTemplate(data, template);
-		//	//         File.WriteAllText(template, result, Encoding.UTF8);
-		//	//         return Encoding.UTF8.GetBytes(result);
-		//}
-		///// <summary>
-		///// 简单实现导出到bytes
-		//      /// </summary>
-		///// <typeparam name="T"></typeparam>
-		///// <param name="fileName"></param>
-		///// <param name="dataItems"></param>
-		///// <param name="htmlTemplate"></param>
-		///// <returns></returns>
-		//public async Task<byte[]> ExportBytesByTemplate<T>(string fileName, ICollection<T> dataItems,
-		//          string htmlTemplate = null) where T : class
-		//      {
-		//          var file = new ExportFileInfo(fileName, "text/html");
-
-		//          var result = await ExportListByTemplate(dataItems, htmlTemplate);
-		//          File.WriteAllText(fileName, result, Encoding.UTF8);
-		//          return file;
-		//      }
-	}
+    }
 }
