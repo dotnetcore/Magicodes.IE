@@ -44,6 +44,27 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
         /// <summary>
+        ///     见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/90
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName ="模板导出多Sheet测试")]
+        public async Task ExportByTemplate_Multi_Sheet_Test() {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+             "MultiSheet.xlsx");
+            IExportFileByTemplate exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportByTemplate_Multi_Sheet_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var result = await exporter.ExportByTemplate(filePath,
+                new ExportTestDataWithSingleColTpl()
+                {
+                    List = GenFu.GenFu.ListOf<ExportTestDataWithSingleCol>()
+                }, tplPath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        /// <summary>
         /// 见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/53
         /// </summary>
         /// <returns></returns>
@@ -90,5 +111,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
             
         }
+
+       
     }
 }
