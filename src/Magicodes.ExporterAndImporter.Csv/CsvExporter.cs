@@ -64,6 +64,12 @@ namespace Magicodes.ExporterAndImporter.Csv
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportAsByteArray<T>(dataItems));
         }
+
+        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         ///     导出Csv表头
         /// </summary>

@@ -17,6 +17,21 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
     /// <typeparam name="T"></typeparam>
     public class ExportHelper<T> where T : class
     {
+        private readonly Type _type;
+        /// <summary>
+        /// </summary>
+        public ExportHelper()
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="type"></param>
+        public ExportHelper(Type type)
+        {
+            this._type = type;
+        }
+
         /// <summary>
         ///     导出Csv
         /// </summary>
@@ -29,7 +44,15 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.HasHeaderRecord = true;
-                csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                if (_type == null)
+                {
+                    csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                }
+                else
+                {
+                    csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                }
+   
                 if (dataItems != null && dataItems.Count > 0)
                 {
                     csv.WriteRecords(dataItems);

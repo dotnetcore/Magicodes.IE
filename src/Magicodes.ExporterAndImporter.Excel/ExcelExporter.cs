@@ -174,7 +174,38 @@ namespace Magicodes.ExporterAndImporter.Excel
 				}
 			}
 		}
-
+        /// <summary>
+        /// 导出字节
+        /// </summary>
+        /// <typeparam name="type"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        public Task<byte[]> ExportAsByteArray(DataTable dataItems,Type type)
+        {
+            var helper = new ExportHelper<string>(type);
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            {
+                using (helper.CurrentExcelPackage)
+                {
+                    var ds = dataItems.SplitDataTable(helper.ExcelExporterSettings.MaxRowNumberOnASheet);
+                    var sheetCount = ds.Tables.Count;
+                    for (int i = 0; i < sheetCount; i++)
+                    {
+                        var sheetDataItems = ds.Tables[i];
+                        helper.AddExcelWorksheet();
+                        helper.Export(sheetDataItems);
+                    }
+                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                }
+            }
+            else
+            {
+                using (var ep = helper.Export(dataItems))
+                {
+                    return Task.FromResult(ep.GetAsByteArray());
+                }
+            }
+        }
 		/// <summary>
 		///     导出excel表头
 		/// </summary>
@@ -306,5 +337,7 @@ namespace Magicodes.ExporterAndImporter.Excel
 				}
 			}
 		}
+
+
 	}
 }

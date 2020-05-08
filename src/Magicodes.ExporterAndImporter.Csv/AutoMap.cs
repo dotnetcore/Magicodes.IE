@@ -1,4 +1,5 @@
-﻿using CsvHelper.Configuration;
+﻿using System;
+using CsvHelper.Configuration;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using System.Globalization;

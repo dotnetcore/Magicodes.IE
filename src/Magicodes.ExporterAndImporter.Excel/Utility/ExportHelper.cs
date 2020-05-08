@@ -29,6 +29,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
+        private Type _type;
         /// <summary>
         /// 
         /// </summary>
@@ -39,6 +40,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 IsDynamicDatableExport = true;
             }
         }
+        /// <summary>
+        /// </summary>
+        /// <param name="type"></param>
+        public ExportHelper(Type type)
+        {
+            this._type = type;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -66,7 +75,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 if (_excelExporterAttribute == null)
                 {
-                    var type = typeof(T);
+                    var type = _type ?? typeof(T);
                     if (typeof(DataTable).Equals(type))
                     {
                         _excelExporterAttribute = new ExcelExporterAttribute();
@@ -233,7 +242,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             else if (!IsDynamicDatableExport)
             {
-                var type = typeof(T);
+                var type = _type??typeof(T);
                 var objProperties = type.GetProperties();
                 if (objProperties == null || objProperties.Length == 0)
                     return;
