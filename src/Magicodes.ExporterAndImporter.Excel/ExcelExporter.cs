@@ -294,8 +294,19 @@ namespace Magicodes.ExporterAndImporter.Excel
 				}
 			}
 		}
+		/// <summary>
+		///		根据模板导出
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+        public Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
+        {
+            throw new NotImplementedException();
+        }
 
-		public async Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
+        public async Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
 		{
 			fileName.CheckExcelFileName();
 			var bytes = await ExportAsByteArray(dataItems, exporterHeaderFilter, maxRowNumberOnASheet);

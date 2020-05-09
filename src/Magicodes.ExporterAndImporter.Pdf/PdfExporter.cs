@@ -186,7 +186,24 @@ namespace Magicodes.ExporterAndImporter.Pdf
 				HeaderFontSize = export.HeaderFontSize
 			};
 		}
+		/// <summary>
+		///		 获取全局导出定义
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		private static PdfExporterAttribute GetExporterAttribute(Type type)
+        {
+            var exporterTableAttribute = type.GetAttribute<PdfExporterAttribute>(true);
+            if (exporterTableAttribute != null)
+                return exporterTableAttribute;
 
+            var export = type.GetAttribute<ExporterAttribute>(true) ?? new PdfExporterAttribute();
+            return new PdfExporterAttribute
+            {
+                FontSize = export.FontSize,
+                HeaderFontSize = export.HeaderFontSize
+            };
+        }
 		/// <summary>
 		/// 简单实现
 		/// </summary>
@@ -213,6 +230,20 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var exporterAttribute = GetExporterAttribute<T>();
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(data, template);
+            return await ExportPdf(exporterAttribute, htmlString);
+        }
+		/// <summary>
+		///		根据模板导出
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public async Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
+		{
+            var exporterAttribute = GetExporterAttribute(type);
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportByTemplate(data, template,type);
             return await ExportPdf(exporterAttribute, htmlString);
         }
 	}

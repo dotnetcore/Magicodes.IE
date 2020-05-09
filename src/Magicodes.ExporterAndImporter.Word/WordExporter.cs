@@ -14,7 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -90,7 +93,7 @@ namespace Magicodes.ExporterAndImporter.Word
 			return fileInfo;
 		}
 
-		/// <summary>
+		/// <summary>s
 		///   根据模板导出bytes
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -123,7 +126,53 @@ namespace Magicodes.ExporterAndImporter.Word
 				}
 			}
 		}
-        /// <summary>
+		/// <summary>
+		///	根据模板导出bytes
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+        public async Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
+        {
+			var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportByTemplate(data, template,type);
+
+			using (var generatedDocument = new MemoryStream())
+			{
+				using (var package =
+					WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
+				{
+					var mainPart = package.MainDocumentPart;
+					if (mainPart == null)
+					{
+						mainPart = package.AddMainDocumentPart();
+						new Document(new Body()).Save(mainPart);
+					}
+
+					var converter = new HtmlConverter(mainPart);
+					converter.ParseHtml(htmlString);
+
+					mainPart.Document.Save();
+
+					byte[] byteArray = Encoding.UTF8.GetBytes(htmlString);
+                    using (var stream = new MemoryStream(byteArray))
+                    {
+                        mainPart.FeedData(stream);
+                    }
+                }
+                return generatedDocument.ToArray();
+			}
+        }
+        private byte[] StreamToBytes(Stream stream)
+        {
+            byte[] bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            // 设置当前流的位置为流的开始
+            stream.Seek(0, SeekOrigin.Begin);
+            return bytes;
+        }
+		/// <summary>
 		///   根据模板导出bytes
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -152,7 +201,12 @@ namespace Magicodes.ExporterAndImporter.Word
                     converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
-                    return generatedDocument.ToArray();
+                    byte[] byteArray = Encoding.UTF8.GetBytes(htmlString);
+                    using (var stream = new MemoryStream(byteArray))
+                    {
+                        mainPart.FeedData(stream);
+                    }
+					return generatedDocument.ToArray();
                 }
             }
         }

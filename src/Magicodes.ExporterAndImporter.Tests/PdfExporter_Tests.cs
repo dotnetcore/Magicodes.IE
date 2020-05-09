@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
 				"batchReceipt.cshtml");
 			var tpl = File.ReadAllText(tplPath);
-			var exporter = new PdfExporter();
+			var exporter = new PdfExporter(); 
 			var filePath = Path.Combine(Directory.GetCurrentDirectory(),
 				nameof(BathExportPortraitReceipt_Test) + ".pdf");
 			if (File.Exists(filePath)) File.Delete(filePath);

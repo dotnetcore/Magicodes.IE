@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 	/// <typeparam name="T"></typeparam>
 	public class TemplateExportHelper<T> : IDisposable where T : class
 	{
-		/// <summary>
+        /// <summary>
 		///     匹配表达式
 		/// </summary>
 		private const string VariableRegexString = "(\\{\\{)+([\\w_.>|\\?:&=]*)+(\\}\\})";

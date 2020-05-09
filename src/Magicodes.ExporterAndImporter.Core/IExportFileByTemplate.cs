@@ -41,5 +41,13 @@ namespace Magicodes.ExporterAndImporter.Core
 		/// <param name="template">HTML模板或模板路径</param>
 		/// <returns></returns>
 		Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class;
-	}
+		/// <summary>
+		///		根据模板导出
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="template"></param>
+		/// <param name="type"></param>
+		/// <returns></returns>
+        Task<byte[]> ExportBytesByTemplate(object data,string template,Type type);
+    }
 }
