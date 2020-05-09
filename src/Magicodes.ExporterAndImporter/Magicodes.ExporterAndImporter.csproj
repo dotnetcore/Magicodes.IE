@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp3.1;netcoreapp3.0</TargetFrameworks>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj" />
+	</ItemGroup>
+
+</Project>
