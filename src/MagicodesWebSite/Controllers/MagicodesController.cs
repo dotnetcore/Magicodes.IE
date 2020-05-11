@@ -12,34 +12,10 @@ namespace MagicodesWebSite.Controllers
     public class MagicodesController : ControllerBase
     {
         [HttpGet("excel")]
-        [Magicodes(Type = typeof(StudentExcel))]
-        public List<StudentExcel> Excel()
+        [Magicodes(Type = typeof(ExportTestDataWithAttrs))]
+        public List<ExportTestDataWithAttrs> Excel()
         {
-            var list = new List<StudentExcel>
-            {
-                new StudentExcel
-                {
-                    Name = "MR.A",
-                    Age = 18,
-                    Remarks = "我叫MR.A,今年18岁",
-                    Birthday = DateTime.Now
-                },
-                new StudentExcel
-                {
-                    Name = "MR.B",
-                    Age = 19,
-                    Remarks = "我叫MR.B,今年19岁",
-                    Birthday = DateTime.Now
-                },
-                new StudentExcel
-                {
-                    Name = "MR.C",
-                    Age = 20,
-                    Remarks = "我叫MR.C,今年20岁",
-                    Birthday = DateTime.Now
-                }
-            };
-            return list;
+            return GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
         }
 
         [HttpGet("pdf")]
