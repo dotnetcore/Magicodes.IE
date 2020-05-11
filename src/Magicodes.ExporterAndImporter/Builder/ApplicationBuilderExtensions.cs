@@ -14,7 +14,7 @@ namespace Magicodes.ExporterAndImporter.Builder
         /// <returns>The <see cref="IApplicationBuilder"/>.</returns>
         public static IApplicationBuilder UseMagiCodesIE(this IApplicationBuilder app)
         {
-            if (app == null)
+            if (app == null) 
             {
                 throw new ArgumentNullException(nameof(app));
             }

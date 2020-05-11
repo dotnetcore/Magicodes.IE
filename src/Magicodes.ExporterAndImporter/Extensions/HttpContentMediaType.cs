@@ -17,6 +17,6 @@
         /// <summary>
         ///     HTML
         /// </summary>
-        internal const string HTMLHttpContentMediaType = "text/html;";
+        internal const string HTMLHttpContentMediaType = "text/html";
     }
 }

@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
             var contentType = "";
             string filename = DateTime.Now.ToString("yyyyMMddHHmmss");
             byte[] result = null;
-            switch (context.Request.ContentType)
+            switch (context.Request.Headers["Magicodes-Type"])
             {
                 case HttpContentMediaType.XLSXHttpContentMediaType:
                     filename += ".xlsx";
@@ -55,6 +55,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     break;
                 case HttpContentMediaType.DOCXHttpContentMediaType:
                     filename += ".docx";
+                    contentType = HttpContentMediaType.DOCXHttpContentMediaType;
                     IExportFileByTemplate docxexporter = new WordExporter();
                     result = await docxexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), File.ReadAllText(tplPath), type);
                     break;
