@@ -14,7 +14,6 @@ namespace Magicodes.ExporterAndImporter.Extensions
 {
     public class MagicodesBase
     {
-
         public async Task<string> ReadResponseBodyStreamAsync(Stream bodyStream)
         {
             bodyStream.Seek(0, SeekOrigin.Begin);
@@ -26,7 +25,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
         {
             return JsonConvert.DeserializeObject<DataTable>(json);
         }
-        public async Task HandleSuccessfulReqeustAsync(HttpContext context, object body, Type type, string tplPath)
+        public async Task<bool> HandleSuccessfulReqeustAsync(HttpContext context, object body, Type type, string tplPath)
         {
             var contentType = "";
             string filename = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -59,13 +58,19 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     IExportFileByTemplate docxexporter = new WordExporter();
                     result = await docxexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), File.ReadAllText(tplPath), type);
                     break;
-                default:
-                    break;
             }
+            if (contentType!="")
+            {
+                context.Response.Headers.Add("Content-Disposition", $"attachment;filename={filename}");
+                context.Response.ContentType = contentType;
+                if (result != null) await context.Response.Body.WriteAsync(result, 0, result.Length);
+            }
+            else
+            {
+                return false;
+            }
+            return true;
 
-            context.Response.Headers.Add("Content-Disposition", $"attachment;filename={filename}");
-            context.Response.ContentType = contentType;
-            await context.Response.Body.WriteAsync(result, 0, result.Length);
         }
     }
 
