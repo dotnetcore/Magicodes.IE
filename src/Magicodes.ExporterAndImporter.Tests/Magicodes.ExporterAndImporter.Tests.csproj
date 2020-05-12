@@ -34,7 +34,7 @@
   <ItemGroup Condition=" $(TargetFramework.Contains('netcoreapp3.')) ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Moq" Version="4.14.1" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.AspNetCore.csproj" />
     <ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
   </ItemGroup>
   <ItemGroup>

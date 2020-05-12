@@ -2,8 +2,7 @@
   <Import Project="..\..\common.props"></Import>
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp3.1;netcoreapp3.0</TargetFrameworks>
-    <!--TODO:此包需要重构-->
-    <PackageId>Magicodes.IE</PackageId>
+    <PackageId>Magicodes.IE.AspNetCore</PackageId>
 	</PropertyGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
