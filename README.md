@@ -264,6 +264,10 @@
 
 - **支持多个实体导出多个Sheet**
 
+- **支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
+
+- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+
 ### FAQ
 
 [问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
@@ -293,8 +297,18 @@
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
 
-
 ### **更新历史**
+
+
+
+#### **2020.05.12**
+
+- **【Nuget】版本更新到2.2.0**
+- **【Excel模板导出】支持导出字节**
+- **【文档】Magicodes.IE Csv导入导出**
+- **【Excel导入导出】修复标注的添加问题**
+- **【导出】ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+- **【导入导出】支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
 #### **2020.04.16**
 - **【Nuget】版本更新到2.2.0-beta9**
