@@ -1,50 +1,54 @@
 <Project>
-  <PropertyGroup>
-    <Version>2.2.0</Version>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
-    <Product>麦扣</Product>
-    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
-    <Description>
-      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
-      开源库地址:https://github.com/xin-lai
-      博客地址：http://www.cnblogs.com/codelove/
-      交流QQ群：85318032
+	<PropertyGroup>
+		<Version>2.2.1</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Authors>雪雁</Authors>
+		<Company>湖南心莱信息科技有限公司</Company>
+		<Product>麦扣</Product>
+		<PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+		<Description>
+			导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
+			开源库地址:https://github.com/xin-lai
+			博客地址：http://www.cnblogs.com/codelove/
+			交流QQ群：85318032
+			
+			**2020.05.16**
+			- **【Nuget】版本更新到2.2.1**
+			【PDF导出】对模板引擎进行升级更新
 
-      #### **2020.05.12**
+			**2020.05.12**
 
-      - **【Nuget】版本更新到2.2.0**
-      - **【Excel模板导出】支持导出字节**
-      - **【文档】Magicodes.IE Csv导入导出**
-      - **【Excel导入导出】修复标注的添加问题**
-      - **【导出】ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
-      - **【导入导出】支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
+			- **【Nuget】版本更新到2.2.0**
+			- **【Excel模板导出】支持导出字节**
+			- **【文档】Magicodes.IE Csv导入导出**
+			- **【Excel导入导出】修复标注的添加问题**
+			- **【导出】ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+			- **【导入导出】支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
-      **2020.04.16**
+			**2020.04.16**
 
-      - **【Nuget】版本更新到2.2.0-beta9**
-      - **【Excel模板导出】修复只存在一列时的导出 [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
-      - **【Excel导入】支持返回表头和索引 [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
-      - **【Excel导入导入】[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
-      - 支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出，比如
-      - DisplayAttribute
-      - DisplayFormatAttribute
-      - DescriptionAttribute
-      - 封装简单的易于使用的单一特性，例如
-      - IEIgnoreAttribute（可作用于属性、枚举成员，可影响导入和导出）
+			- **【Nuget】版本更新到2.2.0-beta9**
+			- **【Excel模板导出】修复只存在一列时的导出 [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
+			- **【Excel导入】支持返回表头和索引 [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
+			- **【Excel导入导入】[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
+			- 支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出，比如
+			- DisplayAttribute
+			- DisplayFormatAttribute
+			- DescriptionAttribute
+			- 封装简单的易于使用的单一特性，例如
+			- IEIgnoreAttribute（可作用于属性、枚举成员，可影响导入和导出）
 
-      **2020.04.02**
-      2.2.0-beta8
-      【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)
+			**2020.04.02**
+			2.2.0-beta8
+			【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)
 
-      2.2.0-beta7
-      【Excel模板导出】修复渲染问题 [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)
-    </Description>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
+			2.2.0-beta7
+			【Excel模板导出】修复渲染问题 [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)
+		</Description>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
 </Project>
