@@ -13,7 +13,7 @@
 
 using System;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models.Export
+namespace MagicodesWebSite
 {
     /// <summary>
     ///     批量导出Dto

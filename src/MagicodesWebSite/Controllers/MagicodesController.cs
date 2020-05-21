@@ -1,6 +1,4 @@
-﻿using Magicodes._64;
-using Magicodes.ExporterAndImporter.Attributes;
-using Magicodes.ExporterAndImporter.Tests.Models.Export;
+﻿using Magicodes.ExporterAndImporter.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

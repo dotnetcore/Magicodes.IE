@@ -14,10 +14,10 @@
 using System;
 using Magicodes.ExporterAndImporter.Core;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models.Export
+namespace MagicodesWebSite
 {
     [Exporter(Name = "湖南心莱信息科技有限公司电子收款凭证")]
-    public class  ReceiptInfo
+    public class ReceiptInfo
     {
         /// <summary>
         ///     交易时间

@@ -20,7 +20,7 @@ using DinkToPdf;
 #endif
 using Magicodes.ExporterAndImporter.Pdf;
 
-namespace Magicodes.ExporterAndImporter.Tests.Models.Export
+namespace MagicodesWebSite
 {
     /// <summary>
     ///     批量
