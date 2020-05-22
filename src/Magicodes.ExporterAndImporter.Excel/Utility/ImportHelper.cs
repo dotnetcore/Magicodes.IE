@@ -140,7 +140,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImportResult = new ImportResult<T>();
             try
             {
-                if (Stream==null)
+                if (Stream == null)
                 {
                     CheckImportFile(FilePath);
                     Stream = new FileStream(FilePath, FileMode.Open);
@@ -205,6 +205,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             catch (Exception ex)
             {
                 ImportResult.Exception = ex;
+            }
+            finally {
+                if (Stream != null) ((IDisposable)Stream).Dispose();
             }
 
             return Task.FromResult(ImportResult);
