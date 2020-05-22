@@ -71,6 +71,20 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
+        ///     导入
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new()
+        {
+            using (var importer = new ImportHelper<T>(stream))
+            {
+                return importer.Import();
+            }
+        }
+
+        /// <summary>
         /// 导出业务错误数据
         /// </summary>
         /// <typeparam name="T"></typeparam>

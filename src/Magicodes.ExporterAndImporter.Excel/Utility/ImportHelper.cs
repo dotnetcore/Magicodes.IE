@@ -49,6 +49,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             FilePath = filePath;
             LabelingFilePath = labelingFilePath;
         }
+        
+        /// <summary>
+        /// </summary>
+        /// <param name="stream"></param>
+        public ImportHelper(Stream stream) {
+            Stream = stream;
+        }
 
         /// <summary>
         ///     导入全局设置
@@ -107,6 +114,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected List<ImporterHeaderInfo> ImporterHeaderInfos { get; set; }
 
         /// <summary>
+        ///     文件流
+        /// </summary>
+        protected Stream Stream { get; set; }
+
+        /// <summary>
         /// </summary>
         public void Dispose()
         {
@@ -114,6 +126,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             FilePath = null;
             ImporterHeaderInfos = null;
             ImportResult = null;
+            Stream = null;
             GC.Collect();
         }
 
@@ -127,8 +140,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImportResult = new ImportResult<T>();
             try
             {
-                CheckImportFile(FilePath);
-                using (Stream stream = new FileStream(FilePath, FileMode.Open))
+                if (Stream==null)
+                {
+                    CheckImportFile(FilePath);
+                    Stream = new FileStream(FilePath, FileMode.Open);
+                }
+                using (Stream stream = Stream)
                 {
                     using (var excelPackage = new ExcelPackage(stream))
                     {
