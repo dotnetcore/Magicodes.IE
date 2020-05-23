@@ -274,6 +274,52 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "DataTable结合DTO类型导出ByteArray Excel")]
+        public async Task DynamicExport_ByteArray_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(dt);
+            result.ShouldNotBeNull();
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+            }
+        }
+
+        [Fact(DisplayName = "DataTable结合Type类型导出ByteArray Excel")]
+        public async Task DynamicExportByType_ByteArray_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.ExportAsByteArray(dt,typeof(ExportTestDataWithAttrs));
+            result.ShouldNotBeNull();
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+            }
+        }
+
         [Fact(DisplayName = "DataTable导出Excel（无需定义类，支持列筛选器和表拆分）")]
         public async Task DynamicDataTableExport_Test()
         {

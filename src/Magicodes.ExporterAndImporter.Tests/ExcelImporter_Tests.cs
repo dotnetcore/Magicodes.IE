@@ -116,6 +116,54 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "产品信息导入")]
+        public async Task ImporterWithStream_Test()
+        {
+            //第一列乱序
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "产品导入模板.xlsx");
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                var result = await Importer.Import<ImportProductDto>(stream);
+                result.ShouldNotBeNull();
+
+                result.HasError.ShouldBeFalse();
+                result.Data.ShouldNotBeNull();
+                result.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
+                foreach (var item in result.Data)
+                {
+                    if (item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
+
+                    if (item.Code.Contains("不去除空格测试")) item.Code.ShouldContain(" ");
+                    //去除中间空格测试
+                    item.BarCode.ShouldBe("123123");
+                }
+
+                //可为空类型测试
+                result.Data.ElementAt(4).Weight.HasValue.ShouldBe(true);
+                result.Data.ElementAt(5).Weight.HasValue.ShouldBe(false);
+                //提取性别公式测试
+                result.Data.ElementAt(0).Sex.ShouldBe("女");
+                //获取当前日期以及日期类型测试  如果时间不对，请打开对应的Excel即可更新为当前时间，然后再运行此单元测试
+                //import.Data[0].FormulaTest.Date.ShouldBe(DateTime.Now.Date);
+                //数值测试
+                result.Data.ElementAt(0).DeclareValue.ShouldBe(123123);
+                result.Data.ElementAt(0).Name.ShouldBe("1212");
+                result.Data.ElementAt(0).BarCode.ShouldBe("123123");
+                result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
+                result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
+                result.Data.ElementAt(1).Name.ShouldBe("12312312");
+                result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
+
+                result.ImporterHeaderInfos.ShouldNotBeNull();
+                result.ImporterHeaderInfos.Count.ShouldBe(17);
+            }
+        }
+        /// <summary>
+        /// 测试：
+        /// 表头行位置设置
+        /// 导入逻辑测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "产品信息导入")]
         public async Task Importer_Test()
         {
             //第一列乱序

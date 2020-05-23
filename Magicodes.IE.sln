@@ -37,9 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter", "src\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.csproj", "{6FC98285-4C65-4EA4-A9F7-036B672EAF5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.AspNetCore", "src\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.AspNetCore.csproj", "{6FC98285-4C65-4EA4-A9F7-036B672EAF5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicodesWebSite", "src\MagicodesWebSite\MagicodesWebSite.csproj", "{46468401-A16B-448E-A029-F7A95F985031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicodesWebSite", "src\MagicodesWebSite\MagicodesWebSite.csproj", "{46468401-A16B-448E-A029-F7A95F985031}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

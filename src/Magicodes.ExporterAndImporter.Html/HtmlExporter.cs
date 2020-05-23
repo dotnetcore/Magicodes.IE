@@ -82,7 +82,7 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <returns></returns>
         public Task<string> ExportByTemplate(object data, string htmlTemplate, Type type)
         {
-            var result = RunCompileTpl(data, type, htmlTemplate);
+            var result = RunCompileTpl(new ExportDocumentInfo(data,type), type, htmlTemplate);
             return Task.FromResult(result);
         }
         /// <summary>

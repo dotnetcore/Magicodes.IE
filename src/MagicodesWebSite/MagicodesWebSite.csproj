@@ -13,7 +13,7 @@
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter\Magicodes.ExporterAndImporter.AspNetCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

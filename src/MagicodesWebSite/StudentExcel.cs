@@ -2,7 +2,7 @@
 using Magicodes.ExporterAndImporter.Excel;
 using System;
 
-namespace Magicodes._64
+namespace MagicodesWebSite
 {
     [ExcelExporter(Name = "学生信息", TableStyle = "Light10", AutoFitAllColumn = true,
         MaxRowNumberOnASheet = 2)]
