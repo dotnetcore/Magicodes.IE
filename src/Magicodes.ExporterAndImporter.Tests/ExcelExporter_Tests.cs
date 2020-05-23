@@ -29,6 +29,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Magicodes.ExporterAndImporter.Csv;
+using OfficeOpenXml.Style;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -59,6 +60,8 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             return dt;
         }
+
+
 
         [Fact(DisplayName = "DTO特性导出（测试格式化）")]
         public async Task AttrsExport_Test()
@@ -121,6 +124,31 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
                 pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
                     .ShouldBe(1);
+            }
+        }
+
+        [Fact(DisplayName = "居中数据导出测试")]
+        public async Task AttrExportWithAutoCenterData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithAutoCenterData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithAutoCenter>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(26);
+                pck.Workbook.Worksheets.First()
+                    .Cells[1, 1, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
+                pck.Workbook.Worksheets.First()
+                    .Cells[2, 2, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
             }
         }
 
@@ -747,7 +775,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "样式错误测试" )]
+        [Fact(DisplayName = "样式错误测试")]
         public async Task TenExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -761,7 +789,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-     
+
         }
     }
 }

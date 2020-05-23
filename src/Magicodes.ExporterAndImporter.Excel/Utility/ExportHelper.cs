@@ -98,7 +98,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 HeaderFontSize = exporterAttribute.HeaderFontSize,
                                 MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
                                 Name = exporterAttribute.Name,
-                                TableStyle = exporterAttribute.TableStyle
+                                TableStyle = exporterAttribute.TableStyle,
+                                AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter
                             };
                         }
                         else
@@ -242,7 +243,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             else if (!IsDynamicDatableExport)
             {
-                var type = _type??typeof(T);
+                var type = _type ?? typeof(T);
                 var objProperties = type.GetProperties();
                 if (objProperties == null || objProperties.Length == 0)
                     return;
@@ -517,6 +518,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 CurrentExcelTable.ShowHeader = true;
                 Enum.TryParse(ExcelExporterSettings.TableStyle, out TableStyles outStyle);
                 CurrentExcelTable.TableStyle = outStyle;
+            }
+
+            if (ExcelExporterSettings.AutoCenter)
+            {
+                CurrentExcelWorksheet.Cells[1, 1, CurrentExcelWorksheet.Dimension?.End.Row ?? 10, ExporterHeaderList.Count].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             }
 
             foreach (var exporterHeaderDto in ExporterHeaderList)
