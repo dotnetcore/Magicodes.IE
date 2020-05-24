@@ -19,13 +19,14 @@ namespace Magicodes.ExporterAndImporter.Core
     public class ExporterHeaderAttribute : Attribute
     {
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
-            bool isBold = true, bool isAutoFit = true)
+            bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false)
         {
             DisplayName = displayName;
             FontSize = fontSize;
             Format = format;
             IsBold = isBold;
             IsAutoFit = isAutoFit;
+            AutoCenterColumn = autoCenterColumn;
         }
 
         /// <summary>
@@ -52,6 +53,11 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     是否自适应
         /// </summary>
         public bool IsAutoFit { set; get; }
+
+        /// <summary>
+        ///     自动居中
+        /// </summary>
+        public bool AutoCenterColumn { get; set; }
 
         /// <summary>
         ///     是否忽略

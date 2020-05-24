@@ -581,11 +581,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             break;
                     }
                 }
+
                 if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
+
                 if (exporterHeader.ExportImageFieldAttribute != null)
                 {
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
+                }
+
+                if (exporterHeader.ExporterHeaderAttribute.AutoCenterColumn)
+                {
+                    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
 
             }

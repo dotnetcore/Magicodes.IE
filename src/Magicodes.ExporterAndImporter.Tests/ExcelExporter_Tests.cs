@@ -127,7 +127,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "居中数据导出测试")]
+        [Fact(DisplayName = "全局居中数据导出测试")]
         public async Task AttrExportWithAutoCenterData_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -149,6 +149,29 @@ namespace Magicodes.ExporterAndImporter.Tests
                     .Cells[1, 1, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
                 pck.Workbook.Worksheets.First()
                     .Cells[2, 2, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
+            }
+        }
+
+        [Fact(DisplayName = "居中数据导出测试")]
+        public async Task AttrExportWithColAutoCenterData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithAutoCenterData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColAutoCenter>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(26);
+                pck.Workbook.Worksheets.First()
+                    .Cells[1, 1, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
             }
         }
 
