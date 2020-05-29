@@ -3,6 +3,7 @@ using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Csv.Utility;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Csv
@@ -51,6 +52,21 @@ namespace Magicodes.ExporterAndImporter.Csv
             {
                 return importer.Import();
             }
+        }
+
+        /// <summary>
+        ///     导入
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new()
+        {
+            using (var importer = new ImportHelper<T>(stream))
+            {
+                return importer.Import();
+            }
+            throw new NotImplementedException();
         }
     }
 }
