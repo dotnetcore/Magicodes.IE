@@ -41,14 +41,5 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型TSheet</returns>
         Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T, TSheet>(string filePath)
             where T : class, new() where TSheet : class, new();
-
-        /// <summary>
-        /// 导入模型验证数据
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="stream">文件流</param>
-        /// <returns></returns>
-        Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new();
-         
     }
 }
