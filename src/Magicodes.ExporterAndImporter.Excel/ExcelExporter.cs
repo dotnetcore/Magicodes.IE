@@ -177,7 +177,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <summary>
         /// 导出字节
         /// </summary>
-        /// <typeparam name="type"></typeparam>
+        /// <param name="type"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
         public Task<byte[]> ExportAsByteArray(DataTable dataItems,Type type)

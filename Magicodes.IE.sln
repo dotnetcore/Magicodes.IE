@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImport
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicodesWebSite", "src\MagicodesWebSite\MagicodesWebSite.csproj", "{46468401-A16B-448E-A029-F7A95F985031}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magicodes.Benchmarks", "src\Magicodes.IE.Benchmarks\Magicodes.Benchmarks.csproj", "{39A45037-2DC2-4F6D-81F5-6984062F6366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{46468401-A16B-448E-A029-F7A95F985031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46468401-A16B-448E-A029-F7A95F985031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46468401-A16B-448E-A029-F7A95F985031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 		{46468401-A16B-448E-A029-F7A95F985031} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{39A45037-2DC2-4F6D-81F5-6984062F6366} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
