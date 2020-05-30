@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-pipelines.yml = azure-pipelines.yml
 		common.props = common.props
 		README.md = README.md
+		RELEASE.md = RELEASE.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Word", "src\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj", "{87E9EDB5-4699-403A-936C-E3D4C789A4F5}"
