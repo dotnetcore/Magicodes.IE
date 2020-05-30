@@ -13,7 +13,9 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
 using Shouldly;
@@ -69,7 +71,10 @@ namespace Magicodes.ExporterAndImporter.Tests
 			//此处使用默认模板导出
 			var result = await exporter.ExportListBytesByTemplate(
 				GenFu.GenFu.ListOf<ExportTestData>(), tpl);
+
 			result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+
             using (var file = File.OpenWrite(filePath))
             {
 				file.Write(result, 0, result.Length);
@@ -112,7 +117,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
 			var tpl = File.ReadAllText(tplPath);
 			var exporter = new WordExporter();
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Test) + ".docx");
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Type_Test) + ".docx");
 			if (File.Exists(filePath)) File.Delete(filePath);
 			//此处使用默认模板导出
 			var result = await exporter.ExportBytesByTemplate(
@@ -132,6 +137,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 					Code = "19071800001"
 				}, tpl,typeof(ReceiptInfo));
 			result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
 			using (var file = File.OpenWrite(filePath))
 			{
 				file.Write(result, 0, result.Length);

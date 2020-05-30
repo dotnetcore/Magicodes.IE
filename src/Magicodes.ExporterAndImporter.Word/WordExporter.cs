@@ -93,7 +93,7 @@ namespace Magicodes.ExporterAndImporter.Word
 			return fileInfo;
 		}
 
-		/// <summary>s
+		/// <summary>
 		///   根据模板导出bytes
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -103,28 +103,34 @@ namespace Magicodes.ExporterAndImporter.Word
 
 		public async Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class
 		{
-			var exporter = new HtmlExporter();
-			var htmlString = await exporter.ExportByTemplate(data, template);
+            var exporter = new HtmlExporter();
+            var htmlString = await exporter.ExportByTemplate(data, template);
 
-			using (var generatedDocument = new MemoryStream())
-			{
-				using (var package =
-					WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
-				{
-					var mainPart = package.MainDocumentPart;
-					if (mainPart == null)
-					{
-						mainPart = package.AddMainDocumentPart();
-						new Document(new Body()).Save(mainPart);
-					}
+            using (var generatedDocument = new MemoryStream())
+            {
+                using (var package =
+                    WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
+                {
+                    var mainPart = package.MainDocumentPart;
+                    if (mainPart == null)
+                    {
+                        mainPart = package.AddMainDocumentPart();
+                        new Document(new Body()).Save(mainPart);
+                    }
 
-					var converter = new HtmlConverter(mainPart);
-					converter.ParseHtml(htmlString);
+                    var converter = new HtmlConverter(mainPart);
+                    converter.ParseHtml(htmlString);
 
-					mainPart.Document.Save();
-					return generatedDocument.ToArray();
-				}
-			}
+                    mainPart.Document.Save();
+
+                    byte[] byteArray = Encoding.UTF8.GetBytes(htmlString);
+                    using (var stream = new MemoryStream(byteArray))
+                    {
+                        mainPart.FeedData(stream);
+                    }
+                }
+                return generatedDocument.ToArray();
+            }
 		}
 		/// <summary>
 		///	根据模板导出bytes
@@ -201,14 +207,15 @@ namespace Magicodes.ExporterAndImporter.Word
                     converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
+
                     byte[] byteArray = Encoding.UTF8.GetBytes(htmlString);
                     using (var stream = new MemoryStream(byteArray))
                     {
                         mainPart.FeedData(stream);
                     }
-					return generatedDocument.ToArray();
                 }
+                return generatedDocument.ToArray();
             }
-        }
+		}
 	}
 }
