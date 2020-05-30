@@ -53,7 +53,7 @@ namespace Magicodes.Benchmarks
         }
 
         [Benchmark]
-        public async Task ImportFromXlsxBytesTest()
+        public async Task ImportByStreamTest()
         {
             await _importer.Import<ImportStudentDto>(_stream);
         }
