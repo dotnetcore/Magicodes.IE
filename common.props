@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<Version>2.2.2</Version>
+		<Version>2.2.3</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Authors>雪雁</Authors>
@@ -13,6 +13,11 @@
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
       交流QQ群：85318032
+
+      **2020.05.31**
+      - **【Nuget】版本更新到2.2.3**
+      - **【Excel导入】增加了stream Csv导入扩展方法
+      - **【Word导出】修复word文件字节导出错误
 
       **2020.05.24**
       - **【Nuget】版本更新到2.2.2**
