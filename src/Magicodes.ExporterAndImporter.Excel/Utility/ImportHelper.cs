@@ -145,9 +145,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     CheckImportFile(FilePath);
                     Stream = new FileStream(FilePath, FileMode.Open);
                 }
-                using (Stream stream = Stream)
+                using (Stream)
                 {
-                    using (var excelPackage = new ExcelPackage(stream))
+                    using (var excelPackage = new ExcelPackage(Stream))
                     {
                         #region 检查模板
                         ParseTemplate(excelPackage);
@@ -206,10 +206,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 ImportResult.Exception = ex;
             }
-            finally {
-                if (Stream != null) ((IDisposable)Stream).Dispose();
-            }
-
+            
             return Task.FromResult(ImportResult);
         }
 
