@@ -136,6 +136,9 @@
     <None Update="TestFiles\Import\缴费流水导入模板.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\过滤学生基础数据导入.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\题库导入模板.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

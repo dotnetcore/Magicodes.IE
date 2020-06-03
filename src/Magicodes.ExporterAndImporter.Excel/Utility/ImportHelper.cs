@@ -49,11 +49,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             FilePath = filePath;
             LabelingFilePath = labelingFilePath;
         }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="stream"></param>
-        public ImportHelper(Stream stream) {
+        public ImportHelper(Stream stream)
+        {
             Stream = stream;
         }
 
@@ -206,8 +207,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 ImportResult.Exception = ex;
             }
-            finally {
-                if (Stream != null) ((IDisposable)Stream).Dispose();
+            finally
+            {
+                ((IDisposable) Stream)?.Dispose();
             }
 
             return Task.FromResult(ImportResult);
@@ -318,7 +320,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
                 //TODO:标注模板错误
                 //标注数据错误
+                var excelRangeList = new List<ExcelRange>();
                 foreach (var item in ImportResult.RowErrors)
+                {
+                    excelRangeList.Add(worksheet.Cells[1, ImporterHeaderInfos.Count]);
                     foreach (var field in item.FieldErrors)
                     {
                         var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
@@ -336,6 +341,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             cell.Comment.Author = col.Header.Author;
                         }
                     }
+                }
+
+                if (ExcelImporterSettings.IsOnlyErrorRows)
+                {
+                    excelPackage = new ExcelPackage();
+                    excelPackage.Workbook.Worksheets.Add("错误数据");
+                    worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[1, 1, 1, worksheet.Dimension.Columns]);
+                    excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[2, 1, 2, worksheet.Dimension.Columns]);
+                }
 
                 var ext = Path.GetExtension(FilePath);
                 var filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
@@ -373,6 +387,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             //if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             //业务错误必须标注
             var worksheet = GetImportSheet(excelPackage);
+
             //标注数据错误
             foreach (var item in bussinessErrorDataList)
             {
@@ -555,18 +570,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //设置Description
                 if (colHeader.Header.Description.IsNullOrWhiteSpace())
                 {
-                    if (propertyInfo.GetAttribute<DescriptionAttribute>()?.Description!=null)
+                    if (propertyInfo.GetAttribute<DescriptionAttribute>()?.Description != null)
                     {
                         colHeader.Header.Description = propertyInfo.GetAttribute<DescriptionAttribute>()?.Description;
                     }
-                    else if (propertyInfo.GetAttribute<DisplayAttribute>()?.Description != null) 
+                    else if (propertyInfo.GetAttribute<DisplayAttribute>()?.Description != null)
                     {
                         colHeader.Header.Description = propertyInfo.GetAttribute<DisplayAttribute>()?.Description;
                     }
                 }
 
                 colHeader.Header.IsIgnore = ignore;
-                
+
                 ImporterHeaderInfos.Add(colHeader);
                 #region 处理值映射
 
