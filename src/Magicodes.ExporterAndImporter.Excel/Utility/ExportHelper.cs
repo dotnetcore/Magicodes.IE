@@ -245,7 +245,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 var type = _type ?? typeof(T);
                 var objProperties = type.GetProperties();
-                if (objProperties == null || objProperties.Length == 0)
+                if (objProperties.Length == 0)
                     return;
                 for (var i = 0; i < objProperties.Length; i++)
                 {
