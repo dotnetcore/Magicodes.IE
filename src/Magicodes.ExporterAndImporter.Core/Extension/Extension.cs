@@ -346,5 +346,26 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 return Convert.ToBase64String(arr);
             }
         }
+
+
+        /// <summary>
+        ///     获取集合连续数据中最大的
+        /// </summary>
+        /// <param name="numList"></param>
+        /// <returns></returns>
+        public static int GetLargestContinuous(this List<int> numList)
+        {
+            for (int i = 0; i < numList.Count; i++)
+            {
+                if (numList.Count > i + 1 && numList[i] - numList[i + 1] == 1)
+                {
+                    //忽略
+                }
+
+                return numList[i];
+            }
+
+            return 0;
+        }
     }
 }

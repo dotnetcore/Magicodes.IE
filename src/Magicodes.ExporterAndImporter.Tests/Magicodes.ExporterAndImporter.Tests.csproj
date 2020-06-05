@@ -130,6 +130,9 @@
     <None Update="TestFiles\Import\班级学生基础数据导入.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\管轴导入数据带有空行.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\管轴导入数据.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

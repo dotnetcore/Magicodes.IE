@@ -655,6 +655,23 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         /// <summary>
+        ///     导入带有空行的测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入带有空行的测试")]
+        public async Task ImportNullRows_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "管轴导入数据带有空行.xlsx");
+            var import = await Importer.Import<ImportGalleryAxisDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeTrue();
+            import.Data.ShouldNotBeNull();
+        }
+
+        /// <summary>
         /// 重复标注测试,,想已有标注的模板再次插入标注会报错
         /// </summary>
         /// <returns></returns>

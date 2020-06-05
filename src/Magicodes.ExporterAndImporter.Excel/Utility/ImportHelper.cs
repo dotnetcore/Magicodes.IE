@@ -120,6 +120,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected Stream Stream { get; set; }
 
         /// <summary>
+        ///     空行
+        /// </summary>
+        private List<int> EmptyRows { get; } = new List<int>();
+
+        /// <summary>
         /// </summary>
         public void Dispose()
         {
@@ -209,7 +214,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             finally
             {
-                ((IDisposable) Stream)?.Dispose();
+                ((IDisposable)Stream)?.Dispose();
             }
 
             return Task.FromResult(ImportResult);
@@ -318,12 +323,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         worksheet.Comments.RemoveAt(0);
                     }
                 }
+            
                 //TODO:标注模板错误
                 //标注数据错误
                 var excelRangeList = new List<ExcelRange>();
                 foreach (var item in ImportResult.RowErrors)
                 {
                     excelRangeList.Add(worksheet.Cells[1, ImporterHeaderInfos.Count]);
+                    var gtRows = EmptyRows.Where(r => r > item.RowIndex);
+                    var ltRows= EmptyRows.Where(r => r < item.RowIndex);
+                    if (gtRows.Any()&& ltRows.Any())
+                    {
+                        var rowindex = gtRows.ToList().GetLargestContinuous();
+                        item.RowIndex += (rowindex - item.RowIndex)+1;
+                    }
+                    
                     foreach (var field in item.FieldErrors)
                     {
                         var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
@@ -736,6 +750,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //跳过空行
                 if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
                 {
+                    EmptyRows.Add(rowIndex);
                     continue;
                 }
                 {
