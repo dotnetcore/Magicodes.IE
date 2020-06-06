@@ -71,7 +71,14 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             if (_isSeparateSheet)
             {
-                helper.CopySheet(0, 1);
+#if NET461
+                helper.CopySheet(1,
+                    2);
+#else
+              helper.CopySheet(0,
+                    1);
+#endif
+
                 _isSeparateSheet = false;
             }
 
