@@ -320,6 +320,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             return AddHeaderAndStyles();
         }
 
+        /// <summary>
+        ///     复制Sheet
+        /// </summary>
+        /// <param name="currentws"></param>
+        /// <param name="tempws"></param>
+        public void CopySheet(int currentws, int tempws)
+        {
+            var tempWorksheet = _excelPackage.Workbook.Worksheets[tempws];
+            var ws = _excelPackage.Workbook.Worksheets[currentws];
+
+            tempWorksheet.Cells[1, 1, tempWorksheet.Dimension.Rows, tempWorksheet.Dimension.Columns]
+                .Copy(ws.Cells[1, ws.Dimension.End.Column + 2,
+                    tempWorksheet.Dimension.Rows, ws.Dimension.End.Column + tempWorksheet.Dimension.End.Column]);
+
+            _excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
+
+        }
 
         /// <summary>
         ///     导出Excel空表头
