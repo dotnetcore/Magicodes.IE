@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 	/// <summary>
 	///     Pdf导出逻辑
 	/// </summary>
-	public class PdfExporter : IExportListFileByTemplate, IExportFileByTemplate
+	public class PdfExporter : IPdfExporter
 	{
 #if NET461
 
@@ -246,5 +246,16 @@ namespace Magicodes.ExporterAndImporter.Pdf
             var htmlString = await exporter.ExportByTemplate(data, template,type);
             return await ExportPdf(exporterAttribute, htmlString);
         }
+
+		/// <summary>
+		/// 导出Pdf
+		/// </summary>
+		/// <param name="pdfExporterAttribute"></param>
+		/// <param name="htmlString"></param>
+		/// <returns></returns>
+		public async Task<byte[]> Export(PdfExporterAttribute pdfExporterAttribute, string htmlString)
+		{
+			return await ExportPdf(pdfExporterAttribute, htmlString);
+		}
 	}
 }
