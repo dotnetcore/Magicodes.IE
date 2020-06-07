@@ -38,7 +38,7 @@ namespace Magicodes.ExporterAndImporter.Excel
     public class ExcelExporter : IExcelExporter
     {
         private ExcelPackage _excelPackage;
-        private bool _isSeparateSheet;
+        private bool _isSeparateColumn;
         /// <summary>
         ///     导出Excel
         /// </summary>
@@ -69,7 +69,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
             this._excelPackage = helper.Export(dataItems);
 
-            if (_isSeparateSheet)
+            if (_isSeparateColumn)
             {
 #if NET461
                 helper.CopySheet(1,
@@ -79,7 +79,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                     1);
 #endif
 
-                _isSeparateSheet = false;
+                _isSeparateColumn = false;
             }
 
             return this;
@@ -87,16 +87,16 @@ namespace Magicodes.ExporterAndImporter.Excel
 
 
         /// <summary>
-        ///		分割集合到当前Sheet
+        ///		分割集合到当前Sheet追加Column
         /// </summary>
         /// <returns></returns>
-        public ExcelExporter SeparateBySheet()
+        public ExcelExporter SeparateByColumn()
         {
             if (_excelPackage == null)
             {
                 throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
             }
-            _isSeparateSheet = true;
+            _isSeparateColumn = true;
             return this;
         }
 

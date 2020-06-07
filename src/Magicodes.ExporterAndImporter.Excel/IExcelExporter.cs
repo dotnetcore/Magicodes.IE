@@ -49,10 +49,10 @@ namespace Magicodes.ExporterAndImporter.Excel
         ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
 
         /// <summary>
-        ///    分割sheet
+        ///    分割sheet追加当前column 
         /// </summary>
         /// <returns></returns>
-        ExcelExporter SeparateBySheet();
+        ExcelExporter SeparateByColumn();
  
         /// <summary>
         ///     导出所有的追加数据

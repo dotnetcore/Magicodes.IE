@@ -406,11 +406,11 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-        [Fact(DisplayName = "导出分割当前Sheet")]
-        public async Task ExprotSeparateBySheet_Test()
+        [Fact(DisplayName = "导出分割当前Sheet追加Column")]
+        public async Task ExprotSeparateByColumn_Test()
         {
             var exporter=new ExcelExporter();
-            var filePath = GetTestFilePath($"{nameof(ExprotSeparateBySheet_Test)}.xlsx");
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByColumn_Test)}.xlsx");
 
             DeleteFile(filePath);
 
@@ -418,8 +418,8 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result =await exporter.Append(list1).SeparateBySheet().Append(list2)
-                .SeparateBySheet()
+            var result =await exporter.Append(list1).SeparateByColumn().Append(list2)
+                .SeparateByColumn()
                 .Append(list2).ExportAppendData(filePath);
 
             result.ShouldNotBeNull();
