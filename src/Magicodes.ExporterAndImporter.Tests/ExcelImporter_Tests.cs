@@ -594,6 +594,28 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         /// <summary>
+        ///     仅导出错误列测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "仅导出错误列测试")]
+        public async Task ImportOnlyErrorRows()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
+            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+
+            import.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("身份证号"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证号"));
+
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(2);
+        }
+
+
+        /// <summary>
         /// 管轴导入测试 测试能否手动新增错误信息
         /// </summary>
         /// <returns></returns>
@@ -630,6 +652,23 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = Importer.OutputBussinessErrorData<ImportGalleryAxisDto>(filePath, ErrorList, out string errorDataFilePath);
             result.ShouldBeTrue();
 
+        }
+
+        /// <summary>
+        ///     导入带有空行的测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入带有空行的测试")]
+        public async Task ImportNullRows_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "管轴导入数据带有空行.xlsx");
+            var import = await Importer.Import<ImportGalleryAxisDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeTrue();
+            import.Data.ShouldNotBeNull();
         }
 
         /// <summary>

@@ -48,8 +48,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
 
-
-
+        /// <summary>
+        ///    分割sheet
+        /// </summary>
+        /// <returns></returns>
+        ExcelExporter SeparateBySheet();
+ 
         /// <summary>
         ///     导出所有的追加数据
         ///     export excel after append all collectioins

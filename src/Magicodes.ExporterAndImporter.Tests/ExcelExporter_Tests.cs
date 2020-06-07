@@ -405,6 +405,33 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+
+        [Fact(DisplayName = "导出分割当前Sheet")]
+        public async Task ExprotSeparateBySheet_Test()
+        {
+            var exporter=new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateBySheet_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result =await exporter.Append(list1).SeparateBySheet().Append(list2)
+                .SeparateBySheet()
+                .Append(list2).ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+            }
+        }
+
+
         [Fact(DisplayName = "多个sheet导出")]
         public async Task ExportMutiCollection_Test()
         {
