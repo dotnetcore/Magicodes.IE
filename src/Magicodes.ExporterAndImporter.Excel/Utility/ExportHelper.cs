@@ -76,7 +76,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 if (_excelExporterAttribute == null)
                 {
                     var type = _type ?? typeof(T);
-                    if (typeof(DataTable).Equals(type))
+                    if (typeof(DataTable) == type)
                     {
                         _excelExporterAttribute = new ExcelExporterAttribute();
                     }

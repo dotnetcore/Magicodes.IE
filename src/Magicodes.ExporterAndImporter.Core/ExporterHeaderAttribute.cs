@@ -15,9 +15,14 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
+    
+    /// <summary>
+    ///     导出属性特性
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class ExporterHeaderAttribute : Attribute
     {
+        /// <inheritdoc />
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
             bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false)
         {

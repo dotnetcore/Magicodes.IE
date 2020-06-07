@@ -43,7 +43,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     filename += ".pdf";
                     contentType = HttpContentMediaType.PDFHttpContentMediaType;
                     IExportFileByTemplate pdfexporter = new PdfExporter();
-                    var tpl = File.ReadAllText(tplPath);
+                    var tpl = await File.ReadAllTextAsync(tplPath);
                     var obj = JsonConvert.DeserializeObject(body.ToString(), type);
                     result = await pdfexporter.ExportBytesByTemplate(obj, tpl, type);
                     break;
@@ -51,13 +51,13 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     filename += ".html";
                     contentType = HttpContentMediaType.HTMLHttpContentMediaType;
                     IExportFileByTemplate htmlexporter = new HtmlExporter();
-                    result = await htmlexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), File.ReadAllText(tplPath), type);
+                    result = await htmlexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), await File.ReadAllTextAsync(tplPath), type);
                     break;
                 case HttpContentMediaType.DOCXHttpContentMediaType:
                     filename += ".docx";
                     contentType = HttpContentMediaType.DOCXHttpContentMediaType;
                     IExportFileByTemplate docxexporter = new WordExporter();
-                    result = await docxexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), File.ReadAllText(tplPath), type);
+                    result = await docxexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), await File.ReadAllTextAsync(tplPath), type);
                     break;
             }
             if (contentType!="")

@@ -18,6 +18,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
     public class ExportHelper<T> where T : class
     {
         private readonly Type _type;
+        
         /// <summary>
         /// </summary>
         public ExportHelper()
