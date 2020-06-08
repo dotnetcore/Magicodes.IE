@@ -62,7 +62,6 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-
         [Fact(DisplayName = "DTO特性导出（测试格式化）")]
         public async Task AttrsExport_Test()
         {
@@ -312,6 +311,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -329,12 +329,13 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.ExportAsByteArray(dt,typeof(ExportTestDataWithAttrs));
+            var result = await exporter.ExportAsByteArray(dt, typeof(ExportTestDataWithAttrs));
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -409,7 +410,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "导出分割当前Sheet追加Column")]
         public async Task ExprotSeparateByColumn_Test()
         {
-            var exporter=new ExcelExporter();
+            var exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExprotSeparateByColumn_Test)}.xlsx");
 
             DeleteFile(filePath);
@@ -418,7 +419,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result =await exporter.Append(list1).SeparateByColumn().Append(list2)
+            var result = await exporter.Append(list1).SeparateByColumn().Append(list2)
                 .SeparateByColumn()
                 .Append(list2).ExportAppendData(filePath);
 
@@ -445,7 +446,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
             result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
@@ -472,7 +473,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = new List<ExportTestDataWithSplitSheet>();
 
-            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
             result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
@@ -514,7 +515,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArrayWithItems_Test)}.xlsx");
 
             DeleteFile(filePath);
-            var arr = new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" };
+            var arr = new[] {"Name1", "Name2", "Name3", "Name4", "Name5", "Name6"};
             var sheetName = "Test";
             var result = await exporter.ExportHeaderAsByteArray(arr, sheetName);
             result.ShouldNotBeNull();
@@ -772,6 +773,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -780,8 +782,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
-
-
 
         #endregion 模板导出
 
@@ -834,7 +834,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 foreach (ExcelPicture item in sheet.Drawings)
                 {
                     //检查图片位置
-                    new int[] { 2, 6 }.ShouldContain(item.From.Column);
+                    new int[] {2, 6}.ShouldContain(item.From.Column);
                     item.ShouldNotBeNull();
                 }
 
@@ -885,7 +885,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
         }
     }
 }

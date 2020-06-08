@@ -39,6 +39,8 @@ namespace Magicodes.ExporterAndImporter.Excel
     {
         private ExcelPackage _excelPackage;
         private bool _isSeparateColumn;
+        private bool _isSeparateBySheet;
+
         /// <summary>
         ///     导出Excel
         /// </summary>
@@ -61,12 +63,16 @@ namespace Magicodes.ExporterAndImporter.Excel
         public ExcelExporter Append<T>(ICollection<T> dataItems) where T : class
         {
             var helper = this._excelPackage == null ? new ExportHelper<T>() : new ExportHelper<T>(_excelPackage);
-            var sheetName = helper.ExcelExporterSettings?.Name ?? "导出结果";
-
-            if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == sheetName) ?? false)
+            if (_isSeparateColumn || _isSeparateBySheet)
             {
-                throw new ArgumentNullException($"已经存在名字为{sheetName}的sheet");
+                var sheetName = helper.ExcelExporterSettings?.Name ?? "导出结果";
+
+                if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == sheetName) ?? false)
+                {
+                    throw new ArgumentNullException($"已经存在名字为{sheetName}的sheet");
+                }
             }
+
             this._excelPackage = helper.Export(dataItems);
 
             if (_isSeparateColumn)
@@ -96,7 +102,23 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
             }
+
             _isSeparateColumn = true;
+            return this;
+        }
+
+        /// <summary>
+        ///     分割多出多个sheet
+        /// </summary>
+        /// <returns></returns>
+        public ExcelExporter SeparateBySheet()
+        {
+            if (_excelPackage == null)
+            {
+                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+            }
+
+            _isSeparateBySheet = true;
             return this;
         }
 
@@ -110,6 +132,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
             }
+
             return Task.FromResult(_excelPackage.GetAsByteArray());
         }
 
@@ -133,17 +156,23 @@ namespace Magicodes.ExporterAndImporter.Excel
         public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class
         {
             var helper = new ExportHelper<T>();
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
             {
                 using (helper.CurrentExcelPackage)
                 {
-                    var sheetCount = (int)(dataItems.Count / helper.ExcelExporterSettings.MaxRowNumberOnASheet) + ((dataItems.Count % helper.ExcelExporterSettings.MaxRowNumberOnASheet) > 0 ? 1 : 0);
+                    var sheetCount = (int) (dataItems.Count / helper.ExcelExporterSettings.MaxRowNumberOnASheet) +
+                                     ((dataItems.Count % helper.ExcelExporterSettings.MaxRowNumberOnASheet) > 0
+                                         ? 1
+                                         : 0);
                     for (int i = 0; i < sheetCount; i++)
                     {
-                        var sheetDataItems = dataItems.Skip(i * helper.ExcelExporterSettings.MaxRowNumberOnASheet).Take(helper.ExcelExporterSettings.MaxRowNumberOnASheet).ToList();
+                        var sheetDataItems = dataItems.Skip(i * helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+                            .Take(helper.ExcelExporterSettings.MaxRowNumberOnASheet).ToList();
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
+
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -179,7 +208,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class
         {
             var helper = new ExportHelper<T>();
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
             {
                 using (helper.CurrentExcelPackage)
                 {
@@ -191,6 +221,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
+
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -202,6 +233,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 }
             }
         }
+
         /// <summary>
         /// 导出字节
         /// </summary>
@@ -211,7 +243,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
         {
             var helper = new ExportHelper<string>(type);
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
             {
                 using (helper.CurrentExcelPackage)
                 {
@@ -223,6 +256,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
+
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -234,6 +268,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 }
             }
         }
+
         /// <summary>
         ///     导出excel表头
         /// </summary>
@@ -248,16 +283,17 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 var item = items[i - 1];
                 var exporterHeaderInfo =
-                     new ExporterHeaderInfo()
-                     {
-                         Index = i,
-                         DisplayName = item,
-                         CsTypeName = "string",
-                         PropertyName = item,
-                         ExporterHeaderAttribute = new ExporterHeaderAttribute(item) { },
-                     };
+                    new ExporterHeaderInfo()
+                    {
+                        Index = i,
+                        DisplayName = item,
+                        CsTypeName = "string",
+                        PropertyName = item,
+                        ExporterHeaderAttribute = new ExporterHeaderAttribute(item) { },
+                    };
                 headerList.Add(exporterHeaderInfo);
             }
+
             helper.AddExcelWorksheet(sheetName);
             helper.AddExporterHeaderInfoList(headerList);
             using (var ep = helper.ExportHeaders())
@@ -294,10 +330,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 var file = new FileInfo(fileName);
 
-                helper.Export(template, data, (package) =>
-                 {
-                     package.SaveAs(file);
-                 });
+                helper.Export(template, data, (package) => { package.SaveAs(file); });
                 return Task.FromResult(new ExportFileInfo(file.Name, file.Extension));
             }
         }
@@ -314,14 +347,12 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 using (var sr = new MemoryStream())
                 {
-                    helper.Export(template, data, (package) =>
-                    {
-                        package.SaveAs(sr);
-                    });
+                    helper.Export(template, data, (package) => { package.SaveAs(sr); });
                     return Task.FromResult(sr.ToArray());
                 }
             }
         }
+
         /// <summary>
         ///		根据模板导出
         /// </summary>
@@ -334,7 +365,8 @@ namespace Magicodes.ExporterAndImporter.Excel
             throw new NotImplementedException();
         }
 
-        public async Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
+        public async Task<ExportFileInfo> Export(string fileName, DataTable dataItems,
+            IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray(dataItems, exporterHeaderFilter, maxRowNumberOnASheet);
@@ -347,13 +379,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="dataItems"></param>
         /// <param name="exporterHeaderFilter"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
+        public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
+            int maxRowNumberOnASheet = 1000000)
         {
             var helper = new ExportHelper<DataTable>();
             helper.ExcelExporterSettings.MaxRowNumberOnASheet = maxRowNumberOnASheet;
             helper.SetExporterHeaderFilter(exporterHeaderFilter);
 
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 && dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
             {
                 using (helper.CurrentExcelPackage)
                 {
@@ -365,6 +399,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
+
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -376,6 +411,5 @@ namespace Magicodes.ExporterAndImporter.Excel
                 }
             }
         }
-
     }
 }
