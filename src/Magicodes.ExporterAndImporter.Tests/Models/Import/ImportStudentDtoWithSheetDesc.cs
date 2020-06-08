@@ -22,12 +22,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true, ImportDescription = @"导入说明：
-1、*代表必填
-2、介质代号严格区分大小写，一般使用大写字母，比如：N7、N7 - a、N7 - b、H2S、PL、BA等，且不得使用除[-]以外的特殊字符，系统不能存在重复的介质代号，否则将会导入失败。
-3、介质名称填写内容为文本格式，示例：0.7MPa氮气、硫化氢、TDI装船线等。
-4、颜色代码填写内容为文本格式，输入方式有：a.规定颜色值为颜色名称的颜色（比如 red）、b.规定颜色值为十六进制值的颜色（比如 #ff0000）、c.规定颜色值为 rgb 代码的颜色（比如 rgb(255,0,0)），一般使用rgb代码，对应的输入示例为：red、#ff0000、rgb(255,0,0)。
-5、介质状态填写内容为文本格式，示例：气、液、液 / 气等。", DescriptionHeight = 132)]
+    [ExcelImporter(IsLabelingError = false, ImportDescription = @"导入说明：", DescriptionHeight = 132)]
     public class ImportStudentDtoWithSheetDesc
     {
         /// <summary>
@@ -39,7 +34,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     学籍号
         /// </summary>
-        [ImporterHeader(Name = "学籍号", IsAllowRepeat = false)]
+        [ImporterHeader(Name = "学籍号")]
         [MaxLength(30, ErrorMessage = "学籍号字数超出最大限制,请修改!")]
         public string StudentCode { get; set; }
 
@@ -54,7 +49,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     身份证号码
         /// </summary>
-        [ImporterHeader(Name = "身份证号", IsAllowRepeat = false)]
+        [ImporterHeader(Name = "身份证号")]
         [Required(ErrorMessage = "身份证号不能为空")]
         [MaxLength(18, ErrorMessage = "身份证字数超出最大限制,请修改!")]
         public string IdCard { get; set; }
