@@ -19,6 +19,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="sheetName">工作簿名称</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果");
+
         /// <summary>
         ///     导出
         /// </summary>
@@ -27,7 +28,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaderFilter">表头筛选器</param>
         /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
         /// <returns>文件</returns>
-        Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+        Task<ExportFileInfo> Export(string fileName, DataTable dataItems,
+            IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
 
         /// <summary>
         ///     导出
@@ -36,7 +38,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaderFilter">表头筛选器</param>
         /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+        Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
+            int maxRowNumberOnASheet = 1000000);
 
 
         /// <summary>
@@ -49,11 +52,17 @@ namespace Magicodes.ExporterAndImporter.Excel
         ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
 
         /// <summary>
-        ///    分割sheet
+        ///    分割sheet追加当前column 
+        /// </summary>
+        /// <returns></returns>
+        ExcelExporter SeparateByColumn();
+
+        /// <summary>
+        ///     分割导出多个sheet
         /// </summary>
         /// <returns></returns>
         ExcelExporter SeparateBySheet();
- 
+
         /// <summary>
         ///     导出所有的追加数据
         ///     export excel after append all collectioins
@@ -68,6 +77,5 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <returns></returns>
         Task<byte[]> ExportAppendDataAsByteArray();
-
     }
 }
