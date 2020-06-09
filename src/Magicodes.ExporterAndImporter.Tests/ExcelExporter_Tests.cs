@@ -444,7 +444,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
-
             var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
             result.ShouldNotBeNull();
 

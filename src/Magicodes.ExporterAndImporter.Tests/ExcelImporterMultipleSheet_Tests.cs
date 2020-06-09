@@ -46,8 +46,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         [Fact(DisplayName = "学生基础数据及缴费流水号导入")]
         public async Task StudentInfoAndPaymentLogImporter_Test()
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据及缴费流水号导入.xlsx");
+        { var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据及缴费流水号导入.xlsx");
             var importDic = await Importer.ImportMultipleSheet<ImportStudentAndPaymentLogDto>(filePath);
             foreach(var item in importDic)
             {
@@ -56,7 +55,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
                 if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-                import.HasError.ShouldBeTrue();
+            
                 import.Data.ShouldNotBeNull();
                 if (item.Key == "1班导入数据")
                 {
@@ -66,6 +65,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
                 if (item.Key == "缴费数据")
                 {
+                    import.HasError.ShouldBeTrue();
                     import.Data.Count.ShouldBe(20);
                     ImportPaymentLogDto dto = (ImportPaymentLogDto)import.Data.ElementAt(0);
                     dto.Name.ShouldBe("刘茵");
