@@ -64,6 +64,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         ExcelExporter SeparateBySheet();
 
         /// <summary>
+        ///     将rows追加到当前sheet
+        /// </summary>
+        /// <returns></returns>
+        ExcelExporter SeparateByRow();
+
+        /// <summary>
         ///     导出所有的追加数据
         ///     export excel after append all collectioins
         /// </summary>

@@ -40,6 +40,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         private ExcelPackage _excelPackage;
         private bool _isSeparateColumn;
         private bool _isSeparateBySheet;
+        private bool _isSeparateByRow;
+        private bool _isAppendHeaders;
 
         /// <summary>
         ///     导出Excel
@@ -63,7 +65,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         public ExcelExporter Append<T>(ICollection<T> dataItems) where T : class
         {
             var helper = this._excelPackage == null ? new ExportHelper<T>() : new ExportHelper<T>(_excelPackage);
-            if (_isSeparateColumn || _isSeparateBySheet)
+            if (_isSeparateColumn || _isSeparateBySheet || _isSeparateByRow)
             {
                 var sheetName = helper.ExcelExporterSettings?.Name ?? "导出结果";
 
@@ -88,6 +90,20 @@ namespace Magicodes.ExporterAndImporter.Excel
                 _isSeparateColumn = false;
             }
 
+            if (_isSeparateByRow)
+            {
+#if NET461
+                helper.CopyRows(1,
+                    2, _isAppendHeaders);
+#else
+              helper.CopyRows(0,
+                    1, _isAppendHeaders);
+#endif
+            }
+
+            _isSeparateBySheet = false;
+            _isSeparateByRow = false;
+            _isAppendHeaders = false;
             return this;
         }
 
@@ -119,6 +135,41 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
 
             _isSeparateBySheet = true;
+            return this;
+        }
+
+        /// <summary>
+        ///     追加rows到当前sheet
+        /// </summary>
+        /// <returns></returns>
+        public ExcelExporter SeparateByRow()
+        {
+            if (_excelPackage == null)
+            {
+                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+            }
+
+            _isSeparateByRow = true;
+            return this;
+        }
+
+        /// <summary>
+        ///     追加表头
+        /// </summary>
+        /// <returns></returns>
+        public ExcelExporter AppendHeaders()
+        {
+            if (_excelPackage == null)
+            {
+                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+            }
+
+            if (!_isSeparateByRow)
+            {
+                throw new ArgumentNullException("调用当前方法之前，必须先调用SeparateByRow方法！");
+            }
+
+            _isAppendHeaders = true;
             return this;
         }
 
@@ -161,7 +212,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 using (helper.CurrentExcelPackage)
                 {
-                    var sheetCount = (int) (dataItems.Count / helper.ExcelExporterSettings.MaxRowNumberOnASheet) +
+                    var sheetCount = (int)(dataItems.Count / helper.ExcelExporterSettings.MaxRowNumberOnASheet) +
                                      ((dataItems.Count % helper.ExcelExporterSettings.MaxRowNumberOnASheet) > 0
                                          ? 1
                                          : 0);
