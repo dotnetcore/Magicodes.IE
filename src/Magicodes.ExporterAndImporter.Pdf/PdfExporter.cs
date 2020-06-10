@@ -250,11 +250,30 @@ namespace Magicodes.ExporterAndImporter.Pdf
 		/// <summary>
 		/// 导出Pdf
 		/// </summary>
+		/// <param name="data"></param>
 		/// <param name="pdfExporterAttribute"></param>
-		/// <param name="htmlString"></param>
+		/// <param name="template"></param>
 		/// <returns></returns>
-		public async Task<byte[]> Export(PdfExporterAttribute pdfExporterAttribute, string htmlString)
+		public async Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data, PdfExporterAttribute pdfExporterAttribute, string template) where T : class
 		{
+			var exporter = new HtmlExporter();
+			var htmlString = await exporter.ExportListByTemplate(data, template);
+			return await ExportPdf(pdfExporterAttribute, htmlString);
+		}
+		
+		/// <summary>
+		/// 	导出Pdf
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="pdfExporterAttribute"></param>
+		/// <param name="template"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public async Task<byte[]> ExportBytesByTemplate<T>(T data, PdfExporterAttribute pdfExporterAttribute, string template) where T : class
+		{
+			var exporter = new HtmlExporter();
+			var htmlString = await exporter.ExportByTemplate(data, template);
 			return await ExportPdf(pdfExporterAttribute, htmlString);
 		}
 	}

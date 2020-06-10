@@ -14,13 +14,24 @@ namespace Magicodes.ExporterAndImporter.Pdf
     public interface IPdfExporter : IExportListFileByTemplate, IExportFileByTemplate
     {
         /// <summary>
+        /// 导出Pdf 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="pdfExporterAttribute">Pdf导出设置</param>
+        /// <param name="template">模板</param>
+        /// <returns></returns>
+        Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data, PdfExporterAttribute pdfExporterAttribute,
+            string template) where T : class;
+
+        /// <summary>
         /// 导出Pdf
         /// </summary>
-        /// <param name="pdfExporterAttribute">Pdf导出设置</param>
-        /// <param name="htmlString">HTML模板</param>
+        /// <param name="data"></param>
+        /// <param name="pdfExporterAttribute"></param>
+        /// <param name="template"></param>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<byte[]> Export(
-            PdfExporterAttribute pdfExporterAttribute,
-            string htmlString);
+        Task<byte[]> ExportBytesByTemplate<T>(T data, PdfExporterAttribute pdfExporterAttribute, string template)
+            where T : class;
     }
 }
