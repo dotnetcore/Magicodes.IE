@@ -62,7 +62,6 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-
         [Fact(DisplayName = "DTO特性导出（测试格式化）")]
         public async Task AttrsExport_Test()
         {
@@ -312,6 +311,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -329,12 +329,13 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.ExportAsByteArray(dt,typeof(ExportTestDataWithAttrs));
+            var result = await exporter.ExportAsByteArray(dt, typeof(ExportTestDataWithAttrs));
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -406,11 +407,11 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-        [Fact(DisplayName = "导出分割当前Sheet")]
-        public async Task ExprotSeparateBySheet_Test()
+        [Fact(DisplayName = "导出分割当前Sheet追加Column")]
+        public async Task ExprotSeparateByColumn_Test()
         {
-            var exporter=new ExcelExporter();
-            var filePath = GetTestFilePath($"{nameof(ExprotSeparateBySheet_Test)}.xlsx");
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByColumn_Test)}.xlsx");
 
             DeleteFile(filePath);
 
@@ -418,8 +419,8 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result =await exporter.Append(list1).SeparateBySheet().Append(list2)
-                .SeparateBySheet()
+            var result = await exporter.Append(list1).SeparateByColumn().Append(list2)
+                .SeparateByColumn()
                 .Append(list2).ExportAppendData(filePath);
 
             result.ShouldNotBeNull();
@@ -445,7 +446,8 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+
             result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
@@ -472,7 +474,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = new List<ExportTestDataWithSplitSheet>();
 
-            var result = exporter.Append(list1).Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
             result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
@@ -772,6 +774,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 file.Write(result, 0, result.Length);
             }
+
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 //检查转换结果
@@ -780,8 +783,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
-
-
 
         #endregion 模板导出
 
@@ -885,7 +886,59 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+        }
 
+
+        [Fact(DisplayName = "导出分割当前Sheet追加Rows")]
+        public async Task ExprotSeparateByRows_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByRows_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = await exporter.Append(list1).SeparateByRow().Append(list2)
+                .ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var ec = pck.Workbook.Worksheets.First();
+                ec.Dimension.Rows.ShouldBe(57);
+            }
+        }
+
+        [Fact(DisplayName = "导出分割当前Sheet追加Rows和headers")]
+        public async Task ExprotSeparateByRowsAndHeaders_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByRowsAndHeaders_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = await exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2)
+                .ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var ec = pck.Workbook.Worksheets.First();
+                ec.Dimension.Rows.ShouldBe(58);
+            }
         }
     }
 }

@@ -76,7 +76,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 if (_excelExporterAttribute == null)
                 {
                     var type = _type ?? typeof(T);
-                    if (typeof(DataTable).Equals(type))
+                    if (typeof(DataTable) == type)
                     {
                         _excelExporterAttribute = new ExcelExporterAttribute();
                     }
@@ -335,8 +335,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     tempWorksheet.Dimension.Rows, ws.Dimension.End.Column + tempWorksheet.Dimension.End.Column]);
 
             _excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
-
         }
+
+        /// <summary>
+        ///     复制Rows
+        /// </summary>
+        /// <param name="currentws"></param>
+        /// <param name="tempws"></param>
+        /// <param name="isAppendHeaders"></param>
+        public void CopyRows(int currentws, int tempws, bool isAppendHeaders)
+        {
+            var tempWorksheet = _excelPackage.Workbook.Worksheets[tempws];
+            var ws = _excelPackage.Workbook.Worksheets[currentws];
+
+            int beginRows = 2;
+            if (isAppendHeaders)
+            {
+                beginRows = 1;
+            }
+
+            tempWorksheet.Cells[beginRows, 1, tempWorksheet.Dimension.Rows, tempWorksheet.Dimension.Columns]
+                .Copy(ws.Cells[ws.Dimension.Rows + 2, 1,
+                    tempWorksheet.Dimension.Rows + ws.Dimension.Rows, tempWorksheet.Dimension.End.Column]);
+
+            _excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
+        }
+
 
         /// <summary>
         ///     导出Excel空表头

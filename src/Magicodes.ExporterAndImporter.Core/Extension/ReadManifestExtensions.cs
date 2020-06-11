@@ -35,12 +35,11 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
 
             using (var stream = assembly.GetManifestResourceStream(resourceName))
+            using (var reader = new StreamReader(stream, Encoding.UTF8)) 
             {
-                using (var reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
+                    return reader.ReadToEnd(); 
             }
+            
         }
     }
 }

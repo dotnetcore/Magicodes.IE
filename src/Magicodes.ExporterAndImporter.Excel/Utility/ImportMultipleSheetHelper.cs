@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
@@ -205,25 +206,25 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 rowIndex++;
                 return new { RowIndex = rowIndex, RowData = p };
-            }).ToList().AsQueryable();
+            }).ToList().AsQueryable().ToList();
 
             foreach (var notAllowRepeatCol in notAllowRepeatCols)
             {
                 //查询指定列
-                var qDataByProp = qDataList
-                    .Select($"new(RowData.{notAllowRepeatCol.PropertyName} as Value, RowIndex)")
-                    .OrderBy("Value").ToDynamicList();
-
+                //var qDataByProp = qDataList
+                //    .Select($"new(RowData.{notAllowRepeatCol.PropertyName} as Value,RowIndex)")
+                //    .OrderBy("Value").ToDynamicList();
+                var qDataByProp = qDataList;
                 //重复行的行号
                 var listRepeatRows = new List<int>();
                 for (var i = 0; i < qDataByProp.Count; i++)
                 {
                     //当前行值
-                    var currentValue = qDataByProp[i].Value;
+                    var currentValue = qDataByProp[i].RowData;
                     if (i == 0 || string.IsNullOrEmpty(currentValue?.ToString())) continue;
 
                     //上一行的值
-                    var preValue = qDataByProp[i - 1].Value;
+                    var preValue = qDataByProp[i - 1].RowData;
                     if (currentValue == preValue)
                     {
                         listRepeatRows.Add(qDataByProp[i - 1].RowIndex);

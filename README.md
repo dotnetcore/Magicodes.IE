@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.2.2**
+最新版本：**2.2.3**
 
 ## 疯狂的徽章
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
@@ -117,6 +117,7 @@
 
 10. **进阶篇之导入导出筛选器（待补充）**
 11. **Excel导出多个实体（待补充）**
+12. **[性能测试](docs/12.性能测试.md)**
 
 **其他教程见下文或单元测试**
 

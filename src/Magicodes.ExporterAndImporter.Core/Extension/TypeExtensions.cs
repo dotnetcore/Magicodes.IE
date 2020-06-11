@@ -179,7 +179,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         ///     获取枚举定义列表
         /// </summary>
         /// <returns>返回枚举列表元组（名称、值、显示名、描述）</returns>
-        public static List<Tuple<string, int, string, string>> GetEnumDefinitionList(this Type type)
+        public static IEnumerable<Tuple<string, int, string, string>> GetEnumDefinitionList(this Type type)
         {
             var list = new List<Tuple<string, int, string, string>>();
             var attrType = type;
