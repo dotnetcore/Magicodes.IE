@@ -448,8 +448,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 						}
 					}
 					break;
-
-				default:
+				case "formula":
+                    string str = "执行到这里了哈哈哈";
+					
+                    break;
+                default:
 					break;
 			}
 			return true;
