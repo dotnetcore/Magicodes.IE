@@ -1,49 +1,56 @@
 # Release Log
 
+**2020.06.07**
+
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.4**
+- **ã€Excelå¯¼å…¥ã€‘å¢žåŠ `å¯¼å…¥å¤±è´¥`ä»…è¿”å›žé”™è¯¯è¡ŒåŠŸèƒ½**
+- **ã€Excelå¯¼å…¥ã€‘ä¿®å¤å¯¼å…¥çš„ç©ºè¡Œæ ‡æ³¨ä½ç½®åç§»**
+- **ã€Excelå¯¼å‡ºã€‘å¢žåŠ `SeparateByColumn`è¿›è¡Œåˆ†å‰²è¿½åŠ åˆ—**  
+
 #### 2020.05.31
 
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.3**
-- **¡¾Excelµ¼Èë¡¿Ôö¼ÓÁËstream Csvµ¼ÈëÀ©Õ¹·½·¨**
-- **¡¾Wordµ¼³ö¡¿ÐÞ¸´wordÎÄ¼þ×Ö½Úµ¼³ö´íÎó**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.3**
+- **ã€Excelå¯¼å…¥ã€‘å¢žåŠ äº†stream Csvå¯¼å…¥æ‰©å±•æ–¹æ³•**
+- **ã€Wordå¯¼å‡ºã€‘ä¿®å¤wordæ–‡ä»¶å­—èŠ‚å¯¼å‡ºé”™è¯¯**
 
 
 #### **2020.05.24**
 
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.2**
-- **¡¾Excelµ¼Èë¡¿Ôö¼ÓÁËstreamµ¼ÈëÀ©Õ¹·½·¨**
-- **¡¾Excelµ¼³ö¡¿Ôö¼ÓÁËÄÚÈÝ¾ÓÖÐ£¨µ¥ÁÐ¾ÓÖÐ¡¢Õû±í¾ÓÖÐ£©**
-- **¡¾µ¼³ö¡¿¶ÔÒ»Ð©ÖÐ¼ä¼þ´úÂë½øÐÐÁËÐÞ¸´¼°ÓÅ»¯**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.2**
+- **ã€Excelå¯¼å…¥ã€‘å¢žåŠ äº†streamå¯¼å…¥æ‰©å±•æ–¹æ³•**
+- **ã€Excelå¯¼å‡ºã€‘å¢žåŠ äº†å†…å®¹å±…ä¸­ï¼ˆå•åˆ—å±…ä¸­ã€æ•´è¡¨å±…ä¸­ï¼‰**
+- **ã€å¯¼å‡ºã€‘å¯¹ä¸€äº›ä¸­é—´ä»¶ä»£ç è¿›è¡Œäº†ä¿®å¤åŠä¼˜åŒ–**
 
 #### **2020.05.16**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.1**
-- **¡¾PDFµ¼³ö¡¿¶ÔÄ£°åÒýÇæ½øÐÐÉý¼¶¸üÐÂ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.1**
+- **ã€PDFå¯¼å‡ºã€‘å¯¹æ¨¡æ¿å¼•æ“Žè¿›è¡Œå‡çº§æ›´æ–°**
 
 
 #### **2020.05.12**
 
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0**
-- **¡¾ExcelÄ£°åµ¼³ö¡¿Ö§³Öµ¼³ö×Ö½Ú**
-- **¡¾ÎÄµµ¡¿Magicodes.IE Csvµ¼Èëµ¼³ö**
-- **¡¾Excelµ¼Èëµ¼³ö¡¿ÐÞ¸´±ê×¢µÄÌí¼ÓÎÊÌâ**
-- **¡¾µ¼³ö¡¿ASP.NET Core Web API ÖÐÊ¹ÓÃ×Ô¶¨Òå¸ñÊ½»¯³ÌÐòµ¼³öExcel¡¢Pdf¡¢CsvµÈÄÚÈÝ** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
-- **¡¾µ¼Èëµ¼³ö¡¿Ö§³ÖÊ¹ÓÃSystem.ComponentModel.DataAnnotationsÃüÃû¿Õ¼äÏÂµÄ²¿·ÖÌØÐÔÀ´¿ØÖÆµ¼Èëµ¼³ö**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0**
+- **ã€Excelæ¨¡æ¿å¯¼å‡ºã€‘æ”¯æŒå¯¼å‡ºå­—èŠ‚**
+- **ã€æ–‡æ¡£ã€‘Magicodes.IE Csvå¯¼å…¥å¯¼å‡º**
+- **ã€Excelå¯¼å…¥å¯¼å‡ºã€‘ä¿®å¤æ ‡æ³¨çš„æ·»åŠ é—®é¢˜**
+- **ã€å¯¼å‡ºã€‘ASP.NET Core Web API ä¸­ä½¿ç”¨è‡ªå®šä¹‰æ ¼å¼åŒ–ç¨‹åºå¯¼å‡ºExcelã€Pdfã€Csvç­‰å†…å®¹** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+- **ã€å¯¼å…¥å¯¼å‡ºã€‘æ”¯æŒä½¿ç”¨System.ComponentModel.DataAnnotationså‘½åç©ºé—´ä¸‹çš„éƒ¨åˆ†ç‰¹æ€§æ¥æŽ§åˆ¶å¯¼å…¥å¯¼å‡º**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
 #### **2020.04.16**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta9**
-- **¡¾ExcelÄ£°åµ¼³ö¡¿ÐÞ¸´Ö»´æÔÚÒ»ÁÐÊ±µÄµ¼³ö [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
-- **¡¾Excelµ¼Èë¡¿Ö§³Ö·µ»Ø±íÍ·ºÍË÷Òý [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
-- **¡¾Excelµ¼Èëµ¼Èë¡¿[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
-  - Ö§³ÖÊ¹ÓÃSystem.ComponentModel.DataAnnotationsÃüÃû¿Õ¼äÏÂµÄ²¿·ÖÌØÐÔÀ´¿ØÖÆµ¼Èëµ¼³ö£¬±ÈÈç
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta9**
+- **ã€Excelæ¨¡æ¿å¯¼å‡ºã€‘ä¿®å¤åªå­˜åœ¨ä¸€åˆ—æ—¶çš„å¯¼å‡º [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
+- **ã€Excelå¯¼å…¥ã€‘æ”¯æŒè¿”å›žè¡¨å¤´å’Œç´¢å¼• [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
+- **ã€Excelå¯¼å…¥å¯¼å…¥ã€‘[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
+  - æ”¯æŒä½¿ç”¨System.ComponentModel.DataAnnotationså‘½åç©ºé—´ä¸‹çš„éƒ¨åˆ†ç‰¹æ€§æ¥æŽ§åˆ¶å¯¼å…¥å¯¼å‡ºï¼Œæ¯”å¦‚
     - DisplayAttribute
     - DisplayFormatAttribute
     - DescriptionAttribute
-  - ·â×°¼òµ¥µÄÒ×ÓÚÊ¹ÓÃµÄµ¥Ò»ÌØÐÔ£¬ÀýÈç
-    - IEIgnoreAttribute£¨¿É×÷ÓÃÓÚÊôÐÔ¡¢Ã¶¾Ù³ÉÔ±£¬¿ÉÓ°Ïìµ¼ÈëºÍµ¼³ö£©
+  - å°è£…ç®€å•çš„æ˜“äºŽä½¿ç”¨çš„å•ä¸€ç‰¹æ€§ï¼Œä¾‹å¦‚
+    - IEIgnoreAttributeï¼ˆå¯ä½œç”¨äºŽå±žæ€§ã€æžšä¸¾æˆå‘˜ï¼Œå¯å½±å“å¯¼å…¥å’Œå¯¼å‡ºï¼‰
 
 #### **2020.04.02**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta8**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta8**
 
-- **¡¾ExcelÄ£°åµ¼³ö¡¿Ö§³ÖÍ¼Æ¬ [#62](https://github.com/dotnetcore/Magicodes.IE/issues/62)£¬äÖÈ¾Óï·¨ÈçÏÂËùÊ¾£º**
+- **ã€Excelæ¨¡æ¿å¯¼å‡ºã€‘æ”¯æŒå›¾ç‰‡ [#62](https://github.com/dotnetcore/Magicodes.IE/issues/62)ï¼Œæ¸²æŸ“è¯­æ³•å¦‚ä¸‹æ‰€ç¤ºï¼š**
 
  ```
   {{Image::ImageUrl?Width=50&Height=120&Alt=404}}
@@ -52,34 +59,34 @@
  ```
 
 #### **2020.03.29**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta7**
-- **¡¾ExcelÄ£°åµ¼³ö¡¿ÐÞ¸´äÖÈ¾ÎÊÌâ [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta7**
+- **ã€Excelæ¨¡æ¿å¯¼å‡ºã€‘ä¿®å¤æ¸²æŸ“é—®é¢˜ [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)**
 
 #### **2020.03.27**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta6**
-- **¡¾Excelµ¼Èëµ¼³ö¡¿ÐÞ¸´.NET Core 2.2µÄ°üÒýÓÃÎÊÌâ [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta6**
+- **ã€Excelå¯¼å…¥å¯¼å‡ºã€‘ä¿®å¤.NET Core 2.2çš„åŒ…å¼•ç”¨é—®é¢˜ [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
 
 #### **2020.03.26**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta4**
-- **¡¾Excel¶àSheetµ¼³ö¡¿ÐÞ¸´[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)£¬²¢Ìí¼Óµ¥Ôª²âÊÔ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta4**
+- **ã€Excelå¤šSheetå¯¼å‡ºã€‘ä¿®å¤[#66](https://github.com/dotnetcore/Magicodes.IE/issues/66)ï¼Œå¹¶æ·»åŠ å•å…ƒæµ‹è¯•**
 
 #### **2020.03.25**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta3**
-- **¡¾Excelµ¼Èë¡¿ÐÞ¸´ÈÕÆÚÎÊÌâ [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
-- **¡¾Excelµ¼³ö¡¿Ìí¼ÓExcelOutputTypeÉèÖÃ£¬Ö§³ÖÊä³öÎÞ¸ñÊ½µÄµ¼³ö¡£[#54](https://github.com/dotnetcore/Magicodes.IE/issues/54)¿ÉÒÔÊ¹ÓÃ´Ë·½Ê½¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta3**
+- **ã€Excelå¯¼å…¥ã€‘ä¿®å¤æ—¥æœŸé—®é¢˜ [#68](https://github.com/dotnetcore/Magicodes.IE/issues/68)**
+- **ã€Excelå¯¼å‡ºã€‘æ·»åŠ ExcelOutputTypeè®¾ç½®ï¼Œæ”¯æŒè¾“å‡ºæ— æ ¼å¼çš„å¯¼å‡ºã€‚[#54](https://github.com/dotnetcore/Magicodes.IE/issues/54)å¯ä»¥ä½¿ç”¨æ­¤æ–¹å¼ã€‚**
 
 #### **2020.03.19**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta2**
-- **¡¾Excelµ¼Èë¡¿ÐÞ¸´ÈÕÆÚ¸ñÊ½µÄµ¼ÈëBug£¬Ö§³ÖDateTimeºÍDateTimeOffsetÒÔ¼°¿ÉÎª¿ÕÀàÐÍ£¬Ä¬ÈÏÖ§³Ö±¾µØ»¯Ê±¼ä¸ñÊ½£¨Ä¬ÈÏ¸ù¾ÝµØÇø×Ô¶¯Ê¹ÓÃ±¾µØÈÕÆÚÊ±¼ä¸ñÊ½£©**
-- **¡¾Excelµ¼Èëµ¼³ö¡¿Ìí¼Óµ¥Ôª²âÊÔExportAndImportUseOneDto_Test£¬¶ÔÊ¹ÓÃÍ¬Ò»¸öDtoµ¼³ö²¢µ¼Èë½øÐÐ²âÊÔ¡£Issue¼û [#53](https://github.com/dotnetcore/Magicodes.IE/issues/53)**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta2**
+- **ã€Excelå¯¼å…¥ã€‘ä¿®å¤æ—¥æœŸæ ¼å¼çš„å¯¼å…¥Bugï¼Œæ”¯æŒDateTimeå’ŒDateTimeOffsetä»¥åŠå¯ä¸ºç©ºç±»åž‹ï¼Œé»˜è®¤æ”¯æŒæœ¬åœ°åŒ–æ—¶é—´æ ¼å¼ï¼ˆé»˜è®¤æ ¹æ®åœ°åŒºè‡ªåŠ¨ä½¿ç”¨æœ¬åœ°æ—¥æœŸæ—¶é—´æ ¼å¼ï¼‰**
+- **ã€Excelå¯¼å…¥å¯¼å‡ºã€‘æ·»åŠ å•å…ƒæµ‹è¯•ExportAndImportUseOneDto_Testï¼Œå¯¹ä½¿ç”¨åŒä¸€ä¸ªDtoå¯¼å‡ºå¹¶å¯¼å…¥è¿›è¡Œæµ‹è¯•ã€‚Issueè§ [#53](https://github.com/dotnetcore/Magicodes.IE/issues/53)**
 
 #### **2020.03.18**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.2.0-beta1**
-- **¡¾Excelµ¼³ö¡¿Ìí¼ÓÒÔÏÂAPI:**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.2.0-beta1**
+- **ã€Excelå¯¼å‡ºã€‘æ·»åŠ ä»¥ä¸‹API:**
 ````csharp
 
         /// <summary>
-        ///     ×·¼Ó¼¯ºÏµ½µ±Ç°µ¼³ö³ÌÐò
+        ///     è¿½åŠ é›†åˆåˆ°å½“å‰å¯¼å‡ºç¨‹åº
         ///     append the collection to context
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -88,7 +95,7 @@
         ExcelExporter Append<T>(ICollection<T> dataItems) where T : class;
 
         /// <summary>
-        ///     µ¼³öËùÓÐµÄ×·¼ÓÊý¾Ý
+        ///     å¯¼å‡ºæ‰€æœ‰çš„è¿½åŠ æ•°æ®
         ///     export excel after append all collectioins
         /// </summary>
         /// <param name="fileName"></param>
@@ -96,7 +103,7 @@
         Task<ExportFileInfo> ExportAppendData(string fileName);
 
         /// <summary>
-        ///     µ¼³öËùÓÐµÄ×·¼ÓÊý¾Ý
+        ///     å¯¼å‡ºæ‰€æœ‰çš„è¿½åŠ æ•°æ®
         ///     export excel after append all collectioins
         /// </summary>
         /// <param name="fileName"></param>
@@ -105,7 +112,7 @@
 
 ````
 
-- **¡¾Excelµ¼³ö¡¿Ö§³Ö¶à¸öÊµÌåµ¼³ö¶à¸öSheet**£¬¸ÐÐ»@ccccccmd µÄ¹±Ï× [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) £¬Issue¼û [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)¡£Ê¹ÓÃ´úÂë²Î¿¼£¬¾ßÌå¼ûµ¥Ôª²âÊÔ£¨ExportMutiCollection_Test£©£º
+- **ã€Excelå¯¼å‡ºã€‘æ”¯æŒå¤šä¸ªå®žä½“å¯¼å‡ºå¤šä¸ªSheet**ï¼Œæ„Ÿè°¢@ccccccmd çš„è´¡çŒ® [#pr52](https://github.com/dotnetcore/Magicodes.IE/pull/52) ï¼ŒIssueè§ [#50](https://github.com/dotnetcore/Magicodes.IE/issues/50)ã€‚ä½¿ç”¨ä»£ç å‚è€ƒï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•ï¼ˆExportMutiCollection_Testï¼‰ï¼š
 
 ````csharp
             var exporter = new ExcelExporter();
@@ -115,242 +122,242 @@
 ````
 
 #### **2020.03.12**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.1.4**
-- **¡¾Excelµ¼Èë¡¿Ö§³ÖÍ¼Æ¬µ¼Èë£¬¼ûÌØÐÔImportImageFieldAttribute**
-  - µ¼ÈëÎªBase64
-  - µ¼Èëµ½ÁÙÊ±Ä¿Â¼
-  - µ¼Èëµ½Ö¸¶¨Ä¿Â¼
-- **¡¾Excelµ¼³ö¡¿Ö§³ÖÍ¼Æ¬µ¼³ö£¬¼ûÌØÐÔExportImageFieldAttribute**
-  - ½«ÎÄ¼þÂ·¾¶µ¼³öÎªÍ¼Æ¬
-  - ½«ÍøÂçÂ·¾¶µ¼³öÎªÍ¼Æ¬
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.1.4**
+- **ã€Excelå¯¼å…¥ã€‘æ”¯æŒå›¾ç‰‡å¯¼å…¥ï¼Œè§ç‰¹æ€§ImportImageFieldAttribute**
+  - å¯¼å…¥ä¸ºBase64
+  - å¯¼å…¥åˆ°ä¸´æ—¶ç›®å½•
+  - å¯¼å…¥åˆ°æŒ‡å®šç›®å½•
+- **ã€Excelå¯¼å‡ºã€‘æ”¯æŒå›¾ç‰‡å¯¼å‡ºï¼Œè§ç‰¹æ€§ExportImageFieldAttribute**
+  - å°†æ–‡ä»¶è·¯å¾„å¯¼å‡ºä¸ºå›¾ç‰‡
+  - å°†ç½‘ç»œè·¯å¾„å¯¼å‡ºä¸ºå›¾ç‰‡
 
 #### **2020.03.06**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.1.3**
-- **¡¾Excelµ¼Èë¡¿ÐÞ¸´GUIDÀàÐÍµÄÎÊÌâ¡£ÎÊÌâ¼û£¨<https://github.com/dotnetcore/Magicodes.IE/issues/44>£©¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.1.3**
+- **ã€Excelå¯¼å…¥ã€‘ä¿®å¤GUIDç±»åž‹çš„é—®é¢˜ã€‚é—®é¢˜è§ï¼ˆ<https://github.com/dotnetcore/Magicodes.IE/issues/44>ï¼‰ã€‚**
 
 #### **2020.02.25**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.1.2**
-- **¡¾µ¼Èëµ¼³ö¡¿ÒÑÖ§³ÖCSV**
-- **¡¾ÎÄµµ¡¿ÍêÉÆPdfµ¼³öÎÄµµ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.1.2**
+- **ã€å¯¼å…¥å¯¼å‡ºã€‘å·²æ”¯æŒCSV**
+- **ã€æ–‡æ¡£ã€‘å®Œå–„Pdfå¯¼å‡ºæ–‡æ¡£**
 
 #### **2020.02.24**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.1.1-beta**
-- **¡¾µ¼Èë¡¿Excelµ¼ÈëÖ§³Öµ¼Èë±ê×¢£¬½öÐèÉèÖÃExcelImporterAttributeµÄImportDescriptionÊôÐÔ£¬¼´»áÔÚ¶¥²¿Éú³ÉExcelµ¼ÈëËµÃ÷**
-- **¡¾ÖØ¹¹¡¿Ìí¼ÓÁ½¸ö½Ó¿Ú**
-  - IExcelExporter£º¼Ì³Ð×ÔIExporter, IExportFileByTemplate£¬ExcelÌØÓÐµÄAPI½«ÔÚ´Ë²¹³ä
-  - IExcelImporter£º¼Ì³Ð×ÔIImporter£¬ExcelÌØÓÐµÄAPIÔÚ´Ë²¹³ä£¬ÀýÈç¡°ImportMultipleSheet¡±¡¢¡°ImportSameSheets¡±
-- **¡¾ÖØ¹¹¡¿Ôö¼ÓÊµÀýÒÀÀµ×¢Èë**
-- **¡¾¹¹½¨¡¿Íê³É´úÂë¸²¸ÇÂÊµÄDevOpsµÄÅäÖÃ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.1.1-beta**
+- **ã€å¯¼å…¥ã€‘Excelå¯¼å…¥æ”¯æŒå¯¼å…¥æ ‡æ³¨ï¼Œä»…éœ€è®¾ç½®ExcelImporterAttributeçš„ImportDescriptionå±žæ€§ï¼Œå³ä¼šåœ¨é¡¶éƒ¨ç”ŸæˆExcelå¯¼å…¥è¯´æ˜Ž**
+- **ã€é‡æž„ã€‘æ·»åŠ ä¸¤ä¸ªæŽ¥å£**
+  - IExcelExporterï¼šç»§æ‰¿è‡ªIExporter, IExportFileByTemplateï¼ŒExcelç‰¹æœ‰çš„APIå°†åœ¨æ­¤è¡¥å……
+  - IExcelImporterï¼šç»§æ‰¿è‡ªIImporterï¼ŒExcelç‰¹æœ‰çš„APIåœ¨æ­¤è¡¥å……ï¼Œä¾‹å¦‚â€œImportMultipleSheetâ€ã€â€œImportSameSheetsâ€
+- **ã€é‡æž„ã€‘å¢žåŠ å®žä¾‹ä¾èµ–æ³¨å…¥**
+- **ã€æž„å»ºã€‘å®Œæˆä»£ç è¦†ç›–çŽ‡çš„DevOpsçš„é…ç½®**
 
 #### **2020.02.14**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.1.0**
-- **¡¾µ¼³ö¡¿PDFµ¼³öÖ§³Ö.NET 4.6.1£¬¾ßÌå¼ûµ¥Ôª²âÊÔ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.1.0**
+- **ã€å¯¼å‡ºã€‘PDFå¯¼å‡ºæ”¯æŒ.NET 4.6.1ï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•**
 
 #### **2020.02.13**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.0.2**
-- **¡¾µ¼Èë¡¿ÐÞ¸´µ¥ÁÐµ¼ÈëµÄBug£¬µ¥Ôª²âÊÔ¡°OneColumnImporter_Test¡±¡£ÎÊÌâ¼û£¨<https://github.com/dotnetcore/Magicodes.IE/issues/35>£©¡£**
-- **¡¾µ¼³ö¡¿ÐÞ¸´µ¼³öHTML¡¢Pdf¡¢WordÊ±£¬Ä£°åÔÚÄ³Ð©Çé¿öÏÂ±àÒë±¨´íµÄÎÊÌâ¡£**
-- **¡¾µ¼Èë¡¿ÖØÐ´¿ÕÐÐ¼ì²é¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.0.2**
+- **ã€å¯¼å…¥ã€‘ä¿®å¤å•åˆ—å¯¼å…¥çš„Bugï¼Œå•å…ƒæµ‹è¯•â€œOneColumnImporter_Testâ€ã€‚é—®é¢˜è§ï¼ˆ<https://github.com/dotnetcore/Magicodes.IE/issues/35>ï¼‰ã€‚**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤å¯¼å‡ºHTMLã€Pdfã€Wordæ—¶ï¼Œæ¨¡æ¿åœ¨æŸäº›æƒ…å†µä¸‹ç¼–è¯‘æŠ¥é”™çš„é—®é¢˜ã€‚**
+- **ã€å¯¼å…¥ã€‘é‡å†™ç©ºè¡Œæ£€æŸ¥ã€‚**
 
 #### **2020.02.11**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.0.0**
-- **¡¾µ¼³ö¡¿ExcelÄ£°åµ¼³öÐÞ¸´¶à¸öTableäÖÈ¾ÒÔ¼°ºÏ²¢µ¥Ôª¸ñäÖÈ¾µÄÎÊÌâ£¬¾ßÌå¼ûµ¥Ôª²âÊÔ¡°ExportByTemplate_Test1¡±¡£ÎÊÌâ¼û£¨<https://github.com/dotnetcore/Magicodes.IE/issues/34>£©¡£**
-- **¡¾µ¼³ö¡¿ÍêÉÆÄ£°åµ¼³öµÄµ¥Ôª²âÊÔ£¬Õë¶Ôµ¼³ö½á¹ûÌí¼ÓäÖÈ¾¼ì²é£¬È·±£ËùÓÐµ¥Ôª¸ñ¾ùÒÑäÖÈ¾¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.0.0**
+- **ã€å¯¼å‡ºã€‘Excelæ¨¡æ¿å¯¼å‡ºä¿®å¤å¤šä¸ªTableæ¸²æŸ“ä»¥åŠåˆå¹¶å•å…ƒæ ¼æ¸²æŸ“çš„é—®é¢˜ï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•â€œExportByTemplate_Test1â€ã€‚é—®é¢˜è§ï¼ˆ<https://github.com/dotnetcore/Magicodes.IE/issues/34>ï¼‰ã€‚**
+- **ã€å¯¼å‡ºã€‘å®Œå–„æ¨¡æ¿å¯¼å‡ºçš„å•å…ƒæµ‹è¯•ï¼Œé’ˆå¯¹å¯¼å‡ºç»“æžœæ·»åŠ æ¸²æŸ“æ£€æŸ¥ï¼Œç¡®ä¿æ‰€æœ‰å•å…ƒæ ¼å‡å·²æ¸²æŸ“ã€‚**
 
 #### **2020.02.05**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.0.0-beta4**
-- **¡¾µ¼Èë¡¿Ö§³ÖÁÐÉ¸Ñ¡Æ÷£¨ÐèÊµÏÖ½Ó¿Ú¡¾IImportHeaderFilter¡¿£©£¬¿ÉÓÃÓÚ¼æÈÝ¶àÓïÑÔµ¼ÈëµÈ³¡¾°£¬¾ßÌå¼ûµ¥Ôª²âÊÔ¡¾ImportHeaderFilter_Test¡¿**
-- **¡¾µ¼Èë¡¿Ö§³Ö´«Èë±ê×¢ÎÄ¼þÂ·¾¶£¬²»´«²ÎÔòÄ¬ÈÏÍ¬Ä¿Â¼"_"ºó×º±£´æ**
-- **¡¾µ¼Èë¡¿ÍêÉÆµ¥Ôª²âÊÔ¡¾ImportResultFilter_Test¡¿**
-- **¡¾ÆäËû¡¿ÐÞ¸Ä¡¾ValueMappingAttribute¡¿µÄÃüÃû¿Õ¼äÎªMagicodes.ExporterAndImporter.Core**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.0.0-beta4**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒåˆ—ç­›é€‰å™¨ï¼ˆéœ€å®žçŽ°æŽ¥å£ã€IImportHeaderFilterã€‘ï¼‰ï¼Œå¯ç”¨äºŽå…¼å®¹å¤šè¯­è¨€å¯¼å…¥ç­‰åœºæ™¯ï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•ã€ImportHeaderFilter_Testã€‘**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒä¼ å…¥æ ‡æ³¨æ–‡ä»¶è·¯å¾„ï¼Œä¸ä¼ å‚åˆ™é»˜è®¤åŒç›®å½•"_"åŽç¼€ä¿å­˜**
+- **ã€å¯¼å…¥ã€‘å®Œå–„å•å…ƒæµ‹è¯•ã€ImportResultFilter_Testã€‘**
+- **ã€å…¶ä»–ã€‘ä¿®æ”¹ã€ValueMappingAttributeã€‘çš„å‘½åç©ºé—´ä¸ºMagicodes.ExporterAndImporter.Core**
 
 #### **2020.02.04**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.0.0-beta2**
-- **¡¾µ¼Èë¡¿Ö§³Öµ¼Èë½á¹ûÉ¸Ñ¡Æ÷¡ª¡ªIImportResultFilter£¬¿ÉÓÃÓÚ¶àÓïÑÔ³¡¾°µÄ´íÎó±ê×¢£¬¾ßÌåÊ¹ÓÃ¼ûµ¥Ôª²âÊÔ¡¾ImportResultFilter_Test¡¿**
-- **¡¾ÆäËû¡¿ÐÞ¸ÄIExporterHeaderFilterµÄÃüÃû¿Õ¼äÎªMagicodes.ExporterAndImporter.Core.Filters**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.0.0-beta2**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒå¯¼å…¥ç»“æžœç­›é€‰å™¨â€”â€”IImportResultFilterï¼Œå¯ç”¨äºŽå¤šè¯­è¨€åœºæ™¯çš„é”™è¯¯æ ‡æ³¨ï¼Œå…·ä½“ä½¿ç”¨è§å•å…ƒæµ‹è¯•ã€ImportResultFilter_Testã€‘**
+- **ã€å…¶ä»–ã€‘ä¿®æ”¹IExporterHeaderFilterçš„å‘½åç©ºé—´ä¸ºMagicodes.ExporterAndImporter.Core.Filters**
 
 #### **2020.01.18**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½2.0.0-beta1**
-- **¡¾µ¼³ö¡¿ÍêÈ«ÖØ¹¹Õû¸öµ¼³öExcelÄ£¿é²¢ÇÒÖØÐ´´ó²¿·Ö½Ó¿Ú**
-- **¡¾µ¼³ö¡¿Ö§³ÖÁÐÍ·É¸Ñ¡Æ÷¡ª¡ªIExporterHeaderFilter£¬¾ßÌåÊ¹ÓÃ¼ûµ¥Ôª²âÊÔ**
-- **¡¾µ¼³ö¡¿ÐÞ¸´×ª»»DataTableÊ±Ö§³ÖÎª¿ÕÀàÐÍ**
-- **¡¾µ¼³ö¡¿µ¼³öExcelÖ§³Ö²ð·ÖSheet£¬½öÐèÉèÖÃÌØÐÔ¡¾ExporterAttribute¡¿µÄ¡¾MaxRowNumberOnASheet¡¿µÄÖµ£¬Îª0Ôò²»²ð·Ö¡£¾ßÌå¼ûµ¥Ôª²âÊÔ**
-- **¡¾µ¼³ö¡¿ÐÞ¸´µ¼³ö½á¹ûÎÞ·¨É¸Ñ¡µÄÎÊÌâ¡£Ä¿Ç°µ¼³ö¼´ÎªÊý¾Ý±í**
-- **¡¾µ¼³ö¡¿Ìí¼ÓÀ©Õ¹·½·¨ToExcelExportFileInfo**
-- **¡¾µ¼³ö¡¿IExporterÔÙÌí¼ÓÁ½¸ö¶¯Ì¬DataTableµ¼³ö·½·¨£¬ÎÞÐè¶¨ÒåDto¼´¿É¶¯Ì¬µ¼³öÊý¾Ý£¬²¢ÇÒÖ§³Ö±íÍ·É¸Ñ¡Æ÷¡¢Sheet²ð·Ö**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°2.0.0-beta1**
+- **ã€å¯¼å‡ºã€‘å®Œå…¨é‡æž„æ•´ä¸ªå¯¼å‡ºExcelæ¨¡å—å¹¶ä¸”é‡å†™å¤§éƒ¨åˆ†æŽ¥å£**
+- **ã€å¯¼å‡ºã€‘æ”¯æŒåˆ—å¤´ç­›é€‰å™¨â€”â€”IExporterHeaderFilterï¼Œå…·ä½“ä½¿ç”¨è§å•å…ƒæµ‹è¯•**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤è½¬æ¢DataTableæ—¶æ”¯æŒä¸ºç©ºç±»åž‹**
+- **ã€å¯¼å‡ºã€‘å¯¼å‡ºExcelæ”¯æŒæ‹†åˆ†Sheetï¼Œä»…éœ€è®¾ç½®ç‰¹æ€§ã€ExporterAttributeã€‘çš„ã€MaxRowNumberOnASheetã€‘çš„å€¼ï¼Œä¸º0åˆ™ä¸æ‹†åˆ†ã€‚å…·ä½“è§å•å…ƒæµ‹è¯•**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤å¯¼å‡ºç»“æžœæ— æ³•ç­›é€‰çš„é—®é¢˜ã€‚ç›®å‰å¯¼å‡ºå³ä¸ºæ•°æ®è¡¨**
+- **ã€å¯¼å‡ºã€‘æ·»åŠ æ‰©å±•æ–¹æ³•ToExcelExportFileInfo**
+- **ã€å¯¼å‡ºã€‘IExporterå†æ·»åŠ ä¸¤ä¸ªåŠ¨æ€DataTableå¯¼å‡ºæ–¹æ³•ï¼Œæ— éœ€å®šä¹‰Dtoå³å¯åŠ¨æ€å¯¼å‡ºæ•°æ®ï¼Œå¹¶ä¸”æ”¯æŒè¡¨å¤´ç­›é€‰å™¨ã€Sheetæ‹†åˆ†**
 ````csharp
         /// <summary>
-        ///     µ¼³öExcel
+        ///     å¯¼å‡ºExcel
         /// </summary>
-        /// <param name="fileName">ÎÄ¼þÃû³Æ</param>
-        /// <param name="dataItems">Êý¾Ý</param>
-        /// <param name="exporterHeaderFilter">±íÍ·É¸Ñ¡Æ÷</param>
-        /// <param name="maxRowNumberOnASheet">Ò»¸öSheet×î´óÔÊÐíµÄÐÐÊý£¬ÉèÖÃÁËÖ®ºó½«Êä³ö¶à¸öSheet</param>
-        /// <returns>ÎÄ¼þ</returns>
+        /// <param name="fileName">æ–‡ä»¶åç§°</param>
+        /// <param name="dataItems">æ•°æ®</param>
+        /// <param name="exporterHeaderFilter">è¡¨å¤´ç­›é€‰å™¨</param>
+        /// <param name="maxRowNumberOnASheet">ä¸€ä¸ªSheetæœ€å¤§å…è®¸çš„è¡Œæ•°ï¼Œè®¾ç½®äº†ä¹‹åŽå°†è¾“å‡ºå¤šä¸ªSheet</param>
+        /// <returns>æ–‡ä»¶</returns>
         Task<ExportFileInfo> Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
 
         /// <summary>
-        ///     µ¼³öExcel
+        ///     å¯¼å‡ºExcel
         /// </summary>
-        /// <param name="dataItems">Êý¾Ý</param>
-        /// <param name="exporterHeaderFilter">±íÍ·É¸Ñ¡Æ÷</param>
-        /// <param name="maxRowNumberOnASheet">Ò»¸öSheet×î´óÔÊÐíµÄÐÐÊý£¬ÉèÖÃÁËÖ®ºó½«Êä³ö¶à¸öSheet</param>
-        /// <returns>ÎÄ¼þ¶þ½øÖÆÊý×é</returns>
+        /// <param name="dataItems">æ•°æ®</param>
+        /// <param name="exporterHeaderFilter">è¡¨å¤´ç­›é€‰å™¨</param>
+        /// <param name="maxRowNumberOnASheet">ä¸€ä¸ªSheetæœ€å¤§å…è®¸çš„è¡Œæ•°ï¼Œè®¾ç½®äº†ä¹‹åŽå°†è¾“å‡ºå¤šä¸ªSheet</param>
+        /// <returns>æ–‡ä»¶äºŒè¿›åˆ¶æ•°ç»„</returns>
         Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
 ````
 
 #### **2020.01.16**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.25**
-- **¡¾µ¼³ö¡¿ÐÞ¸´Ã»ÓÐ¶¨Òåµ¼³öÌØÐÔ»á±¨´íµÄÇéÐÎ£¬¾ßÌå¼ûµ¥Ôª²âÊÔ¡°ExportTestDataWithoutExcelExporter_Test¡±¡£ÎÊÌâ¼û£¨<https://github.com/dotnetcore/Magicodes.IE/issues/21>£©¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.25**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤æ²¡æœ‰å®šä¹‰å¯¼å‡ºç‰¹æ€§ä¼šæŠ¥é”™çš„æƒ…å½¢ï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•â€œExportTestDataWithoutExcelExporter_Testâ€ã€‚é—®é¢˜è§ï¼ˆ<https://github.com/dotnetcore/Magicodes.IE/issues/21>ï¼‰ã€‚**
 
 #### **2020.01.16**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.24**
-- **¡¾µ¼³ö¡¿ÐÞ¸´ÈÕÆÚ¸ñÊ½Ä¬ÈÏµ¼³öÊý×ÖµÄBug£¬Ä¬ÈÏÊä³ö¡°yyyy-MM-dd¡±£¬¿ÉÒÔÍ¨¹ýÉèÖÃ¡°[ExporterHeader(DisplayName = "ÈÕÆÚ2", Format = "yyyy-MM-dd HH:mm:ss")]¡±À´ÐÞ¸Ä¡£ÎÊÌâ¼û£¨<https://github.com/dotnetcore/Magicodes.IE/issues/22>£©¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.24**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤æ—¥æœŸæ ¼å¼é»˜è®¤å¯¼å‡ºæ•°å­—çš„Bugï¼Œé»˜è®¤è¾“å‡ºâ€œyyyy-MM-ddâ€ï¼Œå¯ä»¥é€šè¿‡è®¾ç½®â€œ[ExporterHeader(DisplayName = "æ—¥æœŸ2", Format = "yyyy-MM-dd HH:mm:ss")]â€æ¥ä¿®æ”¹ã€‚é—®é¢˜è§ï¼ˆ<https://github.com/dotnetcore/Magicodes.IE/issues/22>ï¼‰ã€‚**
 
 #### **2020.01.14**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.21**
-- **¡¾µ¼³ö¡¿ExcelÄ£°åµ¼³öÐÞ¸´Êý¾ÝÏîÎªNull±¨´íµÄBug¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.21**
+- **ã€å¯¼å‡ºã€‘Excelæ¨¡æ¿å¯¼å‡ºä¿®å¤æ•°æ®é¡¹ä¸ºNullæŠ¥é”™çš„Bugã€‚**
 
 #### **2020.01.09**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.20**
-- **¡¾µ¼³ö¡¿ExcelÄ£°åµ¼³öÐÔÄÜÓÅ»¯¡£5000Ìõ±í¸ñÊý¾Ý1ÃëÄÚÍê³É£¬¾ßÌå¼ûµ¥Ôª²âÊÔExportByTemplate_Large_Test¡£**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.20**
+- **ã€å¯¼å‡ºã€‘Excelæ¨¡æ¿å¯¼å‡ºæ€§èƒ½ä¼˜åŒ–ã€‚5000æ¡è¡¨æ ¼æ•°æ®1ç§’å†…å®Œæˆï¼Œå…·ä½“è§å•å…ƒæµ‹è¯•ExportByTemplate_Large_Testã€‚**
 
 #### **2020.01.08**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.18**
-- **¡¾µ¼Èë¡¿Ö§³Öµ¼Èë×î´óÊýÁ¿ÏÞÖÆ**
-    - **ImporterAttributeÖ§³ÖMaxCountÉèÖÃ£¬Ä¬ÈÏÎª50000**
-    - **Íê³ÉÏà¹Øµ¥Ôª²âÊÔ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.18**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒå¯¼å…¥æœ€å¤§æ•°é‡é™åˆ¶**
+    - **ImporterAttributeæ”¯æŒMaxCountè®¾ç½®ï¼Œé»˜è®¤ä¸º50000**
+    - **å®Œæˆç›¸å…³å•å…ƒæµ‹è¯•**
 
 #### **2020.01.07**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.17**
-- **¡¾ÖØ¹¹¡¿ÖØ¹¹IExportFileByTemplateÖÐµÄExportByTemplate£¬½«²ÎÊýhtmlTemplate¸ÄÎªtemplate¡£ÒÔ±ãÖ§³ÖExcelÄ£°åµ¼³ö¡£**
-- **¡¾µ¼³ö¡¿Ö§³ÖExcelÄ£°åµ¼³ö²¢ÌîÐ´Ïà¹Øµ¥Ôª²âÊÔ£¬ÈçºÎÊ¹ÓÃ¼û½Ì³Ì¡¶ExcelÄ£°åµ¼³öÖ®µ¼³ö½Ì²Ä¶©¹º±í¡·**
-    - **Ö§³Öµ¥Ôª¸ñµ¥¸ö°ó¶¨**
-    - **Ö§³ÖÁÐ±í**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.17**
+- **ã€é‡æž„ã€‘é‡æž„IExportFileByTemplateä¸­çš„ExportByTemplateï¼Œå°†å‚æ•°htmlTemplateæ”¹ä¸ºtemplateã€‚ä»¥ä¾¿æ”¯æŒExcelæ¨¡æ¿å¯¼å‡ºã€‚**
+- **ã€å¯¼å‡ºã€‘æ”¯æŒExcelæ¨¡æ¿å¯¼å‡ºå¹¶å¡«å†™ç›¸å…³å•å…ƒæµ‹è¯•ï¼Œå¦‚ä½•ä½¿ç”¨è§æ•™ç¨‹ã€ŠExcelæ¨¡æ¿å¯¼å‡ºä¹‹å¯¼å‡ºæ•™æè®¢è´­è¡¨ã€‹**
+    - **æ”¯æŒå•å…ƒæ ¼å•ä¸ªç»‘å®š**
+    - **æ”¯æŒåˆ—è¡¨**
 
 
 #### **2019.12.17**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.16**
-- **¡¾µ¼Èë¡¿Excelµ¼ÈëÖ§³Ö¶àsheetµ¼Èë£¬¸ÐÐ»tanyongzheng£¨[https://github.com/dotnetcore/Magicodes.IE/pull/18](https://github.com/dotnetcore/Magicodes.IE/pull/18)£©**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.16**
+- **ã€å¯¼å…¥ã€‘Excelå¯¼å…¥æ”¯æŒå¤šsheetå¯¼å…¥ï¼Œæ„Ÿè°¢tanyongzhengï¼ˆ[https://github.com/dotnetcore/Magicodes.IE/pull/18](https://github.com/dotnetcore/Magicodes.IE/pull/18)ï¼‰**
 
 #### **2019.12.10**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.15**
-- **¡¾²âÊÔ¡¿µ¥Ôª²âÊÔÌí¼Ó¶à¿ò¼Ü°æ±¾Ö§³Ö (<https://docs.xin-lai.com/2019/12/10/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/Magicodes.IE%E7%BC%96%E5%86%99%E5%A4%9A%E6%A1%86%E6%9E%B6%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E5%92%8C%E6%89%A7%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/>)**
-- **¡¾ÐÞ¸´¡¿ÐÞ¸´²¿·Ö.NET Framework 461ÏÂµÄÎÊÌâ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.15**
+- **ã€æµ‹è¯•ã€‘å•å…ƒæµ‹è¯•æ·»åŠ å¤šæ¡†æž¶ç‰ˆæœ¬æ”¯æŒ (<https://docs.xin-lai.com/2019/12/10/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/Magicodes.IE%E7%BC%96%E5%86%99%E5%A4%9A%E6%A1%86%E6%9E%B6%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E5%92%8C%E6%89%A7%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/>)**
+- **ã€ä¿®å¤ã€‘ä¿®å¤éƒ¨åˆ†.NET Framework 461ä¸‹çš„é—®é¢˜**
 
 #### **2019.12.06**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.14**
-- **¡¾ÖØ¹¹¡¿´óÁ¿ÖØ¹¹**
-	- **ÒÆ³ý²¿·ÖÎ´Ê¹ÓÃµÄ´úÂë**
-	- **½«TemplateFileInfoÖØÃüÃûÎªExportFileInfo**
-	- **½«IExporterByTemplate½Ó¿Ú²ð·ÖÎª4¸ö½Ó¿Ú£ºIExportListFileByTemplate, IExportListStringByTemplate, IExportStringByTemplate, IExportFileByTemplate£¬²¢ÐÞ¸ÄÏà¹ØÊµÏÖ**
-	- **ÖØ¹¹ImportHelper²¿·Ö´úÂë**
-- **¡¾µ¼Èë¡¿ÐÞ¸´µ¼ÈëExcelÊ±±íÍ·ÉèÖÃµÄÎÊÌâ£¬ÒÑ¶Ô´Ë±àÐ´µ¥Ôª²âÊÔ£¬¼û¡¾²úÆ·ÐÅÏ¢µ¼Èë¡¿**
-- **¡¾ÍêÉÆ¡¿±àÐ´ExportAsByteArray¶ÔÓÚDataTableµÄµ¥Ôª²âÊÔ£¬ExportWordFileByTemplate_Test**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.14**
+- **ã€é‡æž„ã€‘å¤§é‡é‡æž„**
+	- **ç§»é™¤éƒ¨åˆ†æœªä½¿ç”¨çš„ä»£ç **
+	- **å°†TemplateFileInfoé‡å‘½åä¸ºExportFileInfo**
+	- **å°†IExporterByTemplateæŽ¥å£æ‹†åˆ†ä¸º4ä¸ªæŽ¥å£ï¼šIExportListFileByTemplate, IExportListStringByTemplate, IExportStringByTemplate, IExportFileByTemplateï¼Œå¹¶ä¿®æ”¹ç›¸å…³å®žçŽ°**
+	- **é‡æž„ImportHelperéƒ¨åˆ†ä»£ç **
+- **ã€å¯¼å…¥ã€‘ä¿®å¤å¯¼å…¥Excelæ—¶è¡¨å¤´è®¾ç½®çš„é—®é¢˜ï¼Œå·²å¯¹æ­¤ç¼–å†™å•å…ƒæµ‹è¯•ï¼Œè§ã€äº§å“ä¿¡æ¯å¯¼å…¥ã€‘**
+- **ã€å®Œå–„ã€‘ç¼–å†™ExportAsByteArrayå¯¹äºŽDataTableçš„å•å…ƒæµ‹è¯•ï¼ŒExportWordFileByTemplate_Test**
 
 #### **2019.11.25**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.13**
-- **¡¾µ¼³ö¡¿Pdfµ¼³öÖ§³ÖÌØÐÔÅäÖÃ£¬Ïê¼ûµ¥Ôª²âÊÔ¡¾µ¼³öÊúÏòÅÅ°æÊÕ¾Ý¡¿¡£Ä¿Ç°Ö÷ÒªÖ§³ÖÒÔÏÂÉèÖÃ£º**
-	- **Orientation£ºÅÅ°æ·½Ïò£¨ºáÅÅ¡¢ÊúÅÅ£©**
-	- **PaperKind£ºÖ½ÕÅÀàÐÍ£¬Ä¬ÈÏA4**
-	- **IsEnablePagesCount£ºÊÇ·ñÆôÓÃ·ÖÒ³Êý**
-	- **Encoding£º±àÂëÉèÖÃ£¬Ä¬ÈÏUTF8**
-	- **IsWriteHtml£ºÊÇ·ñÊä³öHTMLÄ£°å£¬Èç¹ûÆôÓÃ£¬Ôò»áÊä³ö.htmlºó×ºµÄ¶ÔÓ¦µÄHTMLÎÄ¼þ£¬·½±ãµ÷´í**
-	- **HeaderSettings£ºÍ·²¿ÉèÖÃ£¬Í¨³£¿ÉÒÔÉèÖÃÍ·²¿µÄ·ÖÒ³ÄÚÈÝºÍÐÅÏ¢**
-	- **FooterSettings£ºµ×²¿ÉèÖÃ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.13**
+- **ã€å¯¼å‡ºã€‘Pdfå¯¼å‡ºæ”¯æŒç‰¹æ€§é…ç½®ï¼Œè¯¦è§å•å…ƒæµ‹è¯•ã€å¯¼å‡ºç«–å‘æŽ’ç‰ˆæ”¶æ®ã€‘ã€‚ç›®å‰ä¸»è¦æ”¯æŒä»¥ä¸‹è®¾ç½®ï¼š**
+	- **Orientationï¼šæŽ’ç‰ˆæ–¹å‘ï¼ˆæ¨ªæŽ’ã€ç«–æŽ’ï¼‰**
+	- **PaperKindï¼šçº¸å¼ ç±»åž‹ï¼Œé»˜è®¤A4**
+	- **IsEnablePagesCountï¼šæ˜¯å¦å¯ç”¨åˆ†é¡µæ•°**
+	- **Encodingï¼šç¼–ç è®¾ç½®ï¼Œé»˜è®¤UTF8**
+	- **IsWriteHtmlï¼šæ˜¯å¦è¾“å‡ºHTMLæ¨¡æ¿ï¼Œå¦‚æžœå¯ç”¨ï¼Œåˆ™ä¼šè¾“å‡º.htmlåŽç¼€çš„å¯¹åº”çš„HTMLæ–‡ä»¶ï¼Œæ–¹ä¾¿è°ƒé”™**
+	- **HeaderSettingsï¼šå¤´éƒ¨è®¾ç½®ï¼Œé€šå¸¸å¯ä»¥è®¾ç½®å¤´éƒ¨çš„åˆ†é¡µå†…å®¹å’Œä¿¡æ¯**
+	- **FooterSettingsï¼šåº•éƒ¨è®¾ç½®**
 
 #### **2019.11.24**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.12**
-- **¡¾µ¼³ö¡¿µ¼³ö¶¯Ì¬ÀàÖ§³Ö³¬¹ý100WÊý¾ÝÊ±×Ô¶¯²ð·ÖSheet£¨¾ßÌå¼ûPR£º[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)£©**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.12**
+- **ã€å¯¼å‡ºã€‘å¯¼å‡ºåŠ¨æ€ç±»æ”¯æŒè¶…è¿‡100Wæ•°æ®æ—¶è‡ªåŠ¨æ‹†åˆ†Sheetï¼ˆå…·ä½“è§PRï¼š[https://github.com/xin-lai/Magicodes.IE/pull/14](https://github.com/xin-lai/Magicodes.IE/pull/14)ï¼‰**
 
 #### **2019.11.20**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.11**
-- **¡¾µ¼³ö¡¿ÐÞ¸´DatatableÁÐµÄË³ÐòºÍDTOµÄË³Ðò²»Ò»ÖÂ£¬µ¼ÖÂÊý¾Ý·Å´íÁÐ£¨¾ßÌå¼ûPR£º[https://github.com/xin-lai/Magicodes.IE/pull/13](https://github.com/xin-lai/Magicodes.IE/pull/13)£©**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.11**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤Datatableåˆ—çš„é¡ºåºå’ŒDTOçš„é¡ºåºä¸ä¸€è‡´ï¼Œå¯¼è‡´æ•°æ®æ”¾é”™åˆ—ï¼ˆå…·ä½“è§PRï¼š[https://github.com/xin-lai/Magicodes.IE/pull/13](https://github.com/xin-lai/Magicodes.IE/pull/13)ï¼‰**
 
 #### **2019.11.16**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.10**
-- **¡¾µ¼³ö¡¿ÐÞ¸´Pdfµ¼³öÔÚ¶àÏß³ÌÏÂµÄÎÊÌâ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.10**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤Pdfå¯¼å‡ºåœ¨å¤šçº¿ç¨‹ä¸‹çš„é—®é¢˜**
 
 #### **2019.11.13**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.5**
-- **¡¾µ¼³ö¡¿ÐÞ¸´µ¼³öPdfÔÚÄ³Ð©Çé¿öÏÂ¿ÉÄÜ»áµ¼ÖÂÄÚ´æ±¨´íµÄÎÊÌâ**
-- **¡¾µ¼³ö¡¿Ìí¼ÓÅúÁ¿µ¼³öÊÕ¾Ýµ¥Ôª²âÊÔÊ¾Àý£¬²¢Ìí¼Ó´óÁ¿Êý¾ÝÑù±¾½øÐÐ²âÊÔ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.5**
+- **ã€å¯¼å‡ºã€‘ä¿®å¤å¯¼å‡ºPdfåœ¨æŸäº›æƒ…å†µä¸‹å¯èƒ½ä¼šå¯¼è‡´å†…å­˜æŠ¥é”™çš„é—®é¢˜**
+- **ã€å¯¼å‡ºã€‘æ·»åŠ æ‰¹é‡å¯¼å‡ºæ”¶æ®å•å…ƒæµ‹è¯•ç¤ºä¾‹ï¼Œå¹¶æ·»åŠ å¤§é‡æ•°æ®æ ·æœ¬è¿›è¡Œæµ‹è¯•**
 
 #### **2019.11.5**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.4**
-- **¡¾µ¼Èë¡¿ÐÞ¸´Ã¶¾ÙÀàÐÍµÄÎÊÌâ£¬²¢±àÐ´µ¥Ôª²âÊÔ**
-- **¡¾µ¼Èë¡¿Ôö¼ÓÖµÓ³Éä£¬Ö§³ÖÍ¨¹ý¡°ValueMappingAttribute¡±ÌØÐÔÉèÖÃÖµÓ³Éä¹ØÏµ¡£ÓÃÓÚÉú³Éµ¼ÈëÄ£°åµÄÊý¾ÝÑéÖ¤Ô¼ÊøÒÔ¼°½øÐÐÊý¾Ý×ª»»¡£**
-- **¡¾µ¼Èë¡¿ÓÅ»¯Ã¶¾ÙºÍBoolÀàÐÍµÄµ¼ÈëÊý¾ÝÑéÖ¤ÏîµÄÉú³É£¬ÒÔ±ãÓÚÄ£°åÉú³ÉºÍÊý¾Ý×ª»»**
-	- **Ã¶¾ÙÄ¬ÈÏÇé¿öÏÂ»á×Ô¶¯»ñÈ¡Ã¶¾ÙµÄÃèÊö¡¢ÏÔÊ¾Ãû¡¢Ãû³ÆºÍÖµÉú³ÉÊý¾ÝÏî**
-	- **boolÀàÐÍÄ¬ÈÏ»áÉú³É¡°ÊÇ¡±ºÍ¡°·ñ¡±µÄÊý¾ÝÏî**
-	- **Èç¹ûÒÑÉèÖÃ×Ô¶¨ÒåÖµÓ³Éä£¬Ôò²»»áÉú³ÉÄ¬ÈÏÑ¡Ïî**
-- **¡¾µ¼Èë¡¿Ö§³ÖÃ¶¾Ù¿ÉÎª¿ÕÀàÐÍ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.4**
+- **ã€å¯¼å…¥ã€‘ä¿®å¤æžšä¸¾ç±»åž‹çš„é—®é¢˜ï¼Œå¹¶ç¼–å†™å•å…ƒæµ‹è¯•**
+- **ã€å¯¼å…¥ã€‘å¢žåŠ å€¼æ˜ å°„ï¼Œæ”¯æŒé€šè¿‡â€œValueMappingAttributeâ€ç‰¹æ€§è®¾ç½®å€¼æ˜ å°„å…³ç³»ã€‚ç”¨äºŽç”Ÿæˆå¯¼å…¥æ¨¡æ¿çš„æ•°æ®éªŒè¯çº¦æŸä»¥åŠè¿›è¡Œæ•°æ®è½¬æ¢ã€‚**
+- **ã€å¯¼å…¥ã€‘ä¼˜åŒ–æžšä¸¾å’ŒBoolç±»åž‹çš„å¯¼å…¥æ•°æ®éªŒè¯é¡¹çš„ç”Ÿæˆï¼Œä»¥ä¾¿äºŽæ¨¡æ¿ç”Ÿæˆå’Œæ•°æ®è½¬æ¢**
+	- **æžšä¸¾é»˜è®¤æƒ…å†µä¸‹ä¼šè‡ªåŠ¨èŽ·å–æžšä¸¾çš„æè¿°ã€æ˜¾ç¤ºåã€åç§°å’Œå€¼ç”Ÿæˆæ•°æ®é¡¹**
+	- **boolç±»åž‹é»˜è®¤ä¼šç”Ÿæˆâ€œæ˜¯â€å’Œâ€œå¦â€çš„æ•°æ®é¡¹**
+	- **å¦‚æžœå·²è®¾ç½®è‡ªå®šä¹‰å€¼æ˜ å°„ï¼Œåˆ™ä¸ä¼šç”Ÿæˆé»˜è®¤é€‰é¡¹**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒæžšä¸¾å¯ä¸ºç©ºç±»åž‹**
 
 #### **2019.10.30**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.4.0**
-- **¡¾µ¼³ö¡¿Excelµ¼³öÖ§³Ö¶¯Ì¬ÁÐµ¼³ö£¨»ùÓÚDataTable£©£¬¸ÐÐ»ÕÅÉÆÓÑ£¨https://github.com/xin-lai/Magicodes.IE/pull/8 £©**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.4.0**
+- **ã€å¯¼å‡ºã€‘Excelå¯¼å‡ºæ”¯æŒåŠ¨æ€åˆ—å¯¼å‡ºï¼ˆåŸºäºŽDataTableï¼‰ï¼Œæ„Ÿè°¢å¼ å–„å‹ï¼ˆhttps://github.com/xin-lai/Magicodes.IE/pull/8 ï¼‰**
 
 #### **2019.10.22**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.3.7**
-- **¡¾µ¼Èë¡¿ÐÞ¸´ºöÂÔÁÐµÄÑéÖ¤ÎÊÌâ**
-- **¡¾µ¼Èë¡¿ÐÞÕýÑéÖ¤´íÎóÐÅÏ¢£¬Ò»ÐÐ½öÔÊÐí´æÔÚÒ»ÌõÊý¾Ý**
-- **¡¾µ¼Èë¡¿ÐÞ¸´ºöÂÔÁÐÔÚÄ³Ð©Çé¿öÏÂ¿ÉÄÜÒý·¢µÄÒì³£**
-- **¡¾µ¼Èë¡¿Ìí¼Ó´æÔÚºöÂÔÁÐµÄµ¼ÈëÇéÐÎÏÂµÄµ¥Ôª²âÊÔ**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.3.7**
+- **ã€å¯¼å…¥ã€‘ä¿®å¤å¿½ç•¥åˆ—çš„éªŒè¯é—®é¢˜**
+- **ã€å¯¼å…¥ã€‘ä¿®æ­£éªŒè¯é”™è¯¯ä¿¡æ¯ï¼Œä¸€è¡Œä»…å…è®¸å­˜åœ¨ä¸€æ¡æ•°æ®**
+- **ã€å¯¼å…¥ã€‘ä¿®å¤å¿½ç•¥åˆ—åœ¨æŸäº›æƒ…å†µä¸‹å¯èƒ½å¼•å‘çš„å¼‚å¸¸**
+- **ã€å¯¼å…¥ã€‘æ·»åŠ å­˜åœ¨å¿½ç•¥åˆ—çš„å¯¼å…¥æƒ…å½¢ä¸‹çš„å•å…ƒæµ‹è¯•**
 
 #### **2019.10.21**
-- **¡¾Nuget¡¿°æ±¾¸üÐÂµ½1.3.4**
-- **¡¾µ¼Èë¡¿Ö§³ÖÉèÖÃºöÂÔÁÐ£¬ÒÔ±ãÓÚÔÚDto¶¨ÒåÊý¾ÝÁÐ×ö´¦Àí»òÓ³Éä**
+- **ã€Nugetã€‘ç‰ˆæœ¬æ›´æ–°åˆ°1.3.4**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒè®¾ç½®å¿½ç•¥åˆ—ï¼Œä»¥ä¾¿äºŽåœ¨Dtoå®šä¹‰æ•°æ®åˆ—åšå¤„ç†æˆ–æ˜ å°„**
 
 #### **2019.10.18**
-- **¡¾ÓÅ»¯¡¿ÓÅ»¯.NET±ê×¼¿â2.1ÏÂ¼¯ºÏ×ªDataTableµÄÐÔÄÜ**
-- **¡¾ÖØ¹¹¡¿¶à´¦IList<T>ÐÞ¸ÄÎªICollection<T>**
-- **¡¾ÍêÉÆ¡¿²¹³ä²¿·Öµ¥Ôª²âÊÔ**
+- **ã€ä¼˜åŒ–ã€‘ä¼˜åŒ–.NETæ ‡å‡†åº“2.1ä¸‹é›†åˆè½¬DataTableçš„æ€§èƒ½**
+- **ã€é‡æž„ã€‘å¤šå¤„IList<T>ä¿®æ”¹ä¸ºICollection<T>**
+- **ã€å®Œå–„ã€‘è¡¥å……éƒ¨åˆ†å•å…ƒæµ‹è¯•**
 
 #### **2019.10.12**
-- **¡¾ÖØ¹¹¡¿ÖØ¹¹HTML¡¢PDFµ¼³öµÈÂß¼­£¬²¢ÐÞ¸ÄIExporterByTemplateÎª£º**
+- **ã€é‡æž„ã€‘é‡æž„HTMLã€PDFå¯¼å‡ºç­‰é€»è¾‘ï¼Œå¹¶ä¿®æ”¹IExporterByTemplateä¸ºï¼š**
   - **Task<string> ExportListByTemplate<T>(IList<T> dataItems, string htmlTemplate = null) where T : class;**
   - **Task<string> ExportByTemplate<T>(T data, string htmlTemplate = null) where T : class;**
-- **¡¾Ê¾Àý¡¿Ìí¼ÓÊÕ¾Ýµ¼³öµÄµ¥Ôª²âÊÔÊ¾Àý**
+- **ã€ç¤ºä¾‹ã€‘æ·»åŠ æ”¶æ®å¯¼å‡ºçš„å•å…ƒæµ‹è¯•ç¤ºä¾‹**
 
 
 
 #### **2019.9.28**
-- **¡¾µ¼³ö¡¿ÐÞ¸ÄÄ¬ÈÏµÄµ¼³öHTML¡¢Word¡¢PdfÄ£°å**
-- **¡¾µ¼Èë¡¿Ìí¼Ó½Ø¶ÏÐÐµÄµ¥Ôª²âÊÔ£¬ÒÔ²âÊÔÖÐ¼ä¿Õ¸ñºÍ½áÎ²¿Õ¸ñ**
-- **¡¾µ¼Èë¡¿½«¡¾Êý¾Ý´íÎó¼ì²â¡¿ºÍ¡¾µ¼Èë¡¿µ¥Ôª²âÊÔµÄDto·Ö¿ª£¬È·±£È«²¿µ¥Ôª²âÊÔÍ¨¹ý**
-- **¡¾ÎÄµµ¡¿¸üÐÂÎÄµµ**
+- **ã€å¯¼å‡ºã€‘ä¿®æ”¹é»˜è®¤çš„å¯¼å‡ºHTMLã€Wordã€Pdfæ¨¡æ¿**
+- **ã€å¯¼å…¥ã€‘æ·»åŠ æˆªæ–­è¡Œçš„å•å…ƒæµ‹è¯•ï¼Œä»¥æµ‹è¯•ä¸­é—´ç©ºæ ¼å’Œç»“å°¾ç©ºæ ¼**
+- **ã€å¯¼å…¥ã€‘å°†ã€æ•°æ®é”™è¯¯æ£€æµ‹ã€‘å’Œã€å¯¼å…¥ã€‘å•å…ƒæµ‹è¯•çš„Dtoåˆ†å¼€ï¼Œç¡®ä¿å…¨éƒ¨å•å…ƒæµ‹è¯•é€šè¿‡**
+- **ã€æ–‡æ¡£ã€‘æ›´æ–°æ–‡æ¡£**
 
 #### **2019.9.26**
-- **¡¾µ¼³ö¡¿Ö§³Öµ¼³öWord¡¢Pdf¡¢HTML£¬Ö§³Ö×Ô¶¨Òåµ¼³öÄ£°å**
-- **¡¾µ¼³ö¡¿Ìí¼ÓÏà¹Øµ¼³öµÄµ¥Ôª²âÊÔ**
-- **¡¾µ¼Èë¡¿Ö§³ÖÖØ¸´ÑéÖ¤£¬ÐèÉèÖÃImporterHeaderÌØÐÔµÄIsAllowRepeatÎªfalse**
+- **ã€å¯¼å‡ºã€‘æ”¯æŒå¯¼å‡ºWordã€Pdfã€HTMLï¼Œæ”¯æŒè‡ªå®šä¹‰å¯¼å‡ºæ¨¡æ¿**
+- **ã€å¯¼å‡ºã€‘æ·»åŠ ç›¸å…³å¯¼å‡ºçš„å•å…ƒæµ‹è¯•**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒé‡å¤éªŒè¯ï¼Œéœ€è®¾ç½®ImporterHeaderç‰¹æ€§çš„IsAllowRepeatä¸ºfalse**
 
 #### **2019.9.19**
-- **¡¾µ¼Èë¡¿Ö§³Ö½ØÖ¹ÁÐÉèÖÃ£¬ÈçÎ´ÉèÖÃÔòÄ¬ÈÏÓöµ½¿Õ¸ñ½ØÖ¹**
-- **¡¾µ¼Èë¡¿µ¼ÈëÖ§³ÖÍ¨¹ýÌØÐÔÉèÖÃSheetÃû³Æ**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒæˆªæ­¢åˆ—è®¾ç½®ï¼Œå¦‚æœªè®¾ç½®åˆ™é»˜è®¤é‡åˆ°ç©ºæ ¼æˆªæ­¢**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥æ”¯æŒé€šè¿‡ç‰¹æ€§è®¾ç½®Sheetåç§°**
 
 #### **2019.9.18**
 
-- **¡¾µ¼Èë¡¿ÖØ¹¹µ¼ÈëÄ£¿é**
-- **¡¾µ¼Èë¡¿Í³Ò»µ¼Èë´íÎóÏûÏ¢**
-	- **Exception £ºµ¼ÈëÒì³£ÐÅÏ¢**
-	- **RowErrors £º Êý¾Ý´íÎóÐÅÏ¢**
-	- **TemplateErrors £ºÄ£°å´íÎóÐÅÏ¢£¬Ö§³Ö´íÎó·Ö¼¶**
-	- **HasError : ÊÇ·ñ´æÔÚ´íÎó£¨½öµ±³öÏÖÒì³£²¢ÇÒ´íÎóµÈ¼¶ÎªErrorÊ±·µ»Øtrue£©**
-- **¡¾µ¼Èë¡¿»ù´¡ÀàÐÍ±ØÌî×Ô¶¯Ê¶±ð£¬±ÈÈçint¡¢doubleµÈ²»¿ÉÎª¿ÕÀàÐÍ×Ô¶¯Ê¶±ð£¬ÎÞÐè¶îÍâÉèÖÃRequired**
-- **¡¾µ¼Èë¡¿ÐÞ¸ÄExcelÄ£°åµÄSheetÃû³Æ**
-- **¡¾µ¼Èë¡¿Ö§³Öµ¼Èë±íÍ·Î»ÖÃÉèÖÃ£¬Ä¬ÈÏÎª1**
-- **¡¾µ¼Èë¡¿Ö§³ÖÁÐÂÒÐò£¨µ¼ÈëÄ£°åµÄÁÐÐòºÅ²»ÔÙÐèÒª¹Ì¶¨£©**
-- **¡¾µ¼Èë¡¿Ö§³ÖÁÐË÷ÒýÉèÖÃ**
-- **¡¾µ¼Èë¡¿Ö§³Ö½«µ¼ÈëµÄExcel½øÐÐ´íÎó±ê×¢£¬Ö§³Ö¶à¸ö´íÎó**
-- **¡¾µ¼Èë¡¿¼ÓÇ¿¶Ô»ù´¡ÀàÐÍºÍ¿ÉÎª¿ÕÀàÐÍµÄÖ§³Ö**
-- **¡¾EPPlus¡¿ÓÉÓÚEPPlus.CoreÒÑ¾­²»Î¬»¤£¬½«EPPlusµÄ°ü´ÓEPPlus.Core¸ÄÎªEPPlus£¬**
+- **ã€å¯¼å…¥ã€‘é‡æž„å¯¼å…¥æ¨¡å—**
+- **ã€å¯¼å…¥ã€‘ç»Ÿä¸€å¯¼å…¥é”™è¯¯æ¶ˆæ¯**
+	- **Exception ï¼šå¯¼å…¥å¼‚å¸¸ä¿¡æ¯**
+	- **RowErrors ï¼š æ•°æ®é”™è¯¯ä¿¡æ¯**
+	- **TemplateErrors ï¼šæ¨¡æ¿é”™è¯¯ä¿¡æ¯ï¼Œæ”¯æŒé”™è¯¯åˆ†çº§**
+	- **HasError : æ˜¯å¦å­˜åœ¨é”™è¯¯ï¼ˆä»…å½“å‡ºçŽ°å¼‚å¸¸å¹¶ä¸”é”™è¯¯ç­‰çº§ä¸ºErroræ—¶è¿”å›žtrueï¼‰**
+- **ã€å¯¼å…¥ã€‘åŸºç¡€ç±»åž‹å¿…å¡«è‡ªåŠ¨è¯†åˆ«ï¼Œæ¯”å¦‚intã€doubleç­‰ä¸å¯ä¸ºç©ºç±»åž‹è‡ªåŠ¨è¯†åˆ«ï¼Œæ— éœ€é¢å¤–è®¾ç½®Required**
+- **ã€å¯¼å…¥ã€‘ä¿®æ”¹Excelæ¨¡æ¿çš„Sheetåç§°**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒå¯¼å…¥è¡¨å¤´ä½ç½®è®¾ç½®ï¼Œé»˜è®¤ä¸º1**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒåˆ—ä¹±åºï¼ˆå¯¼å…¥æ¨¡æ¿çš„åˆ—åºå·ä¸å†éœ€è¦å›ºå®šï¼‰**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒåˆ—ç´¢å¼•è®¾ç½®**
+- **ã€å¯¼å…¥ã€‘æ”¯æŒå°†å¯¼å…¥çš„Excelè¿›è¡Œé”™è¯¯æ ‡æ³¨ï¼Œæ”¯æŒå¤šä¸ªé”™è¯¯**
+- **ã€å¯¼å…¥ã€‘åŠ å¼ºå¯¹åŸºç¡€ç±»åž‹å’Œå¯ä¸ºç©ºç±»åž‹çš„æ”¯æŒ**
+- **ã€EPPlusã€‘ç”±äºŽEPPlus.Coreå·²ç»ä¸ç»´æŠ¤ï¼Œå°†EPPlusçš„åŒ…ä»ŽEPPlus.Coreæ”¹ä¸ºEPPlusï¼Œ**
 
 #### **2019.9.11**
 
-- **¡¾µ¼Èë¡¿µ¼ÈëÖ§³Ö×Ô¶¯È¥³ýÇ°ºó¿Õ¸ñ£¬Ä¬ÈÏÆôÓÃ£¬¿ÉÒÔÕë¶ÔÁÐ½øÐÐ¹Ø±Õ£¬¾ßÌå¼ûAutoTrimÉèÖÃ**
-- **¡¾µ¼Èë¡¿µ¼ÈëDtoµÄ×Ö¶ÎÔÊÐí²»ÉèÖÃImporterHeader£¬Ö§³ÖÍ¨¹ýDisplayAttributeÌØÐÔ»ñÈ¡ÁÐÃû**
-- **¡¾µ¼Èë¡¿µ¼ÈëµÄExcelÒÆ³ý¶ÔSheetÃû³ÆµÄÔ¼Êø£¬Ä¬ÈÏ»ñÈ¡µÚÒ»¸öSheet**
-- **¡¾µ¼Èë¡¿µ¼ÈëÔö¼Ó¶ÔÖÐ¼ä¿Õ¸ñµÄ´¦ÀíÖ§³Ö£¬ÐèÉèÖÃFixAllSpace**
-- **¡¾µ¼Èë¡¿µ¼ÈëÍêÉÆ¶ÔÈÕÆÚÀàÐÍµÄÖ§³Ö**
-- **¡¾µ¼Èë¡¿ÍêÉÆµ¼ÈëµÄµ¥Ôª²âÊÔ**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥æ”¯æŒè‡ªåŠ¨åŽ»é™¤å‰åŽç©ºæ ¼ï¼Œé»˜è®¤å¯ç”¨ï¼Œå¯ä»¥é’ˆå¯¹åˆ—è¿›è¡Œå…³é—­ï¼Œå…·ä½“è§AutoTrimè®¾ç½®**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥Dtoçš„å­—æ®µå…è®¸ä¸è®¾ç½®ImporterHeaderï¼Œæ”¯æŒé€šè¿‡DisplayAttributeç‰¹æ€§èŽ·å–åˆ—å**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥çš„Excelç§»é™¤å¯¹Sheetåç§°çš„çº¦æŸï¼Œé»˜è®¤èŽ·å–ç¬¬ä¸€ä¸ªSheet**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥å¢žåŠ å¯¹ä¸­é—´ç©ºæ ¼çš„å¤„ç†æ”¯æŒï¼Œéœ€è®¾ç½®FixAllSpace**
+- **ã€å¯¼å…¥ã€‘å¯¼å…¥å®Œå–„å¯¹æ—¥æœŸç±»åž‹çš„æ”¯æŒ**
+- **ã€å¯¼å…¥ã€‘å®Œå–„å¯¼å…¥çš„å•å…ƒæµ‹è¯•**
