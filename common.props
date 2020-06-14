@@ -22,8 +22,8 @@
             - exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2).ExportAppendData(filePath);
             - ** [Excel导出】修复‘IsAllowRepeat＝true’ [#107](https://github.com/dotnetcore/Magicodes.IE/issues/107) **
             - ** [Pdf导出】增加PDF扩展方法，支持通过以参数形式传递特性参数 [#104](https://github.com/dotnetcore/Magicodes.IE/issues/104) **
-            - Task<byte[]> ExportListBytesByTemplate<T>(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);
-            - Task<byte[]> ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);
+            - `ExportListBytesByTemplate＜T＞(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);`
+            - `ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);`
 
             **2020.06.07**
             - ** 【Nuget】版本更新到2.2.4**
