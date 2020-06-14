@@ -1,42 +1,44 @@
 <Project>
-	<PropertyGroup>
-		<Version>2.2.4</Version>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Authors>雪雁</Authors>
-		<Company>湖南心莱信息科技有限公司</Company>
-		<Product>麦扣</Product>
-		<PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
-		<Description>
-      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
-      开源库地址:https://github.com/xin-lai
-      博客地址：http://www.cnblogs.com/codelove/
-      交流QQ群：85318032
-                
-      **2020.06.07**
-      - ** 【Nuget】版本更新到2.2.4**
-      - ** 【Excel导入】增加`导入失败`仅返回错误行功能**
-      - ** 【Excel导入】修复导入的空行标注位置偏移**
-      - ** 【Excel导出】增加`SeparateByColumn`进行分割追加列**  
-            
-      **2020.05.31**
-      - **【Nuget】版本更新到2.2.3**
-      - **【Excel导入】增加了stream Csv导入扩展方法
-      - **【Word导出】修复word文件字节导出错误
+    <PropertyGroup>
+        <Version>2.2.5</Version>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Authors>雪雁</Authors>
+        <Company>湖南心莱信息科技有限公司</Company>
+        <Product>麦扣</Product>
+        <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+        <Description>
+            导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
+            开源库地址:https://github.com/xin-lai
+            博客地址：http://www.cnblogs.com/codelove/
+            交流QQ群：85318032
 
-      **2020.05.24**
-      - **【Nuget】版本更新到2.2.2**
-      - **【Excel导入】增加了stream导入扩展方法
-      - **【Excel导出】增加了内容居中（单列居中、整表居中）
-      - **【导出】对一些中间件代码进行了修复及优化
-            
-            
+            **2020.06.14**
+            - ** 【Nuget】版本更新到2.2.5**
+            - ** 【Excel导出】增加分栏、分sheet、追加rows导出 [#74](https://github.com/dotnetcore/Magicodes.IE/issues/74)**
+            - exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+            - exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            - exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2).ExportAppendData(filePath);
+            - ** [Excel导出】修复‘IsAllowRepeat＝true’ [#107](https://github.com/dotnetcore/Magicodes.IE/issues/107) **
+            - ** [Pdf导出】增加PDF扩展方法，支持通过以参数形式传递特性参数 [#104](https://github.com/dotnetcore/Magicodes.IE/issues/104) **
+            - Task<byte[]> ExportListBytesByTemplate<T>(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);
+            - Task<byte[]> ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);
 
+            **2020.06.07**
+            - ** 【Nuget】版本更新到2.2.4**
+            - ** 【Excel导入】增加`导入失败`仅返回错误行功能**
+            - ** 【Excel导入】修复导入的空行标注位置偏移**
+            - ** 【Excel导出】增加`SeparateByColumn`进行分割追加列**
 
-    </Description>
-	</PropertyGroup>
-	<PropertyGroup>
-		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-	</PropertyGroup>
+            **2020.05.31**
+            - **【Nuget】版本更新到2.2.3**
+            - **【Excel导入】增加了stream Csv导入扩展方法
+            - **【Word导出】修复word文件字节导出错误
+
+        </Description>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
 </Project>

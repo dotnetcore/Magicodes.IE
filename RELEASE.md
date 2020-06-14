@@ -1,5 +1,17 @@
 # Release Log
 
+**2020.06.14**
+
+- ** 【Nuget】版本更新到2.2.5**
+- ** 【Excel导出】增加分栏、分sheet、追加rows导出 [#74](https://github.com/dotnetcore/Magicodes.IE/issues/74)**
+      - exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+      - exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+      - exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2).ExportAppendData(filePath);
+- ** [Excel导出】修复‘IsAllowRepeat＝true’ [#107](https://github.com/dotnetcore/Magicodes.IE/issues/107) **
+- ** [Pdf导出】增加PDF扩展方法，支持通过以参数形式传递特性参数 [#104](https://github.com/dotnetcore/Magicodes.IE/issues/104) **
+      - Task<byte[]> ExportListBytesByTemplate<T>(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);
+      - Task<byte[]> ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);
+
 **2020.06.07**
 
 - **【Nuget】版本更新到2.2.4**
