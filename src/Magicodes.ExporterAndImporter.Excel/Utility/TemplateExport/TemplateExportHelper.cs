@@ -373,14 +373,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 			//自定义渲染，以“::”作为切割。
 			//TODO:允许注入自定义管道逻辑
 			var typeKey = Regex.Split(expressonStr, "::").First().TrimStart('{').ToLower();
+            string body, expresson = string.Empty;
 			switch (typeKey)
 			{
 				case "image":
 				case "img":
 					{
-						var body = Regex.Split(expressonStr, "::").Last().TrimEnd('}');
-						var expresson = string.Empty;
-						var alt = string.Empty;
+                        body = Regex.Split(expressonStr, "::").Last().TrimEnd('}');
+                        var alt = string.Empty;
 						var height = 0;
 						var width = 0;
 						if (body.Contains("?") && body.Contains("="))
@@ -449,8 +449,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 					}
 					break;
 				case "formula":
-                    string str = "执行到这里了哈哈哈";
-					
+                    body = Regex.Split(expressonStr, "::").Last().TrimEnd('}');
+                    if (body.Contains("?") && body.Contains("="))
+                    {
+                        var arr = body.Split('?');
+                        var @function = arr[0];
+                        var @params = arr[1].Replace("params=","").Replace("&",",");
+                        var cell = sheet.Cells[cellAddress];
+                        cell.Formula = $"={@function}({@params})";
+                    }
                     break;
                 default:
 					break;
