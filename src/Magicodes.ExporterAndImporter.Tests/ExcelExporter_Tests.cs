@@ -602,6 +602,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
                 //检查图片
                 sheet.Drawings.Count.ShouldBe(3);
+                //TODO 检查合计是否正确
+                
+                //TODO 检查均值是否正确
             }
         }
 
