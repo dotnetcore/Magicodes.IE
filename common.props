@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.2.6</Version>
+        <Version>2.2.7</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,11 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+
+          **2020.06.17**
+          - ** 【Nuget】版本更新到2.2.7**
+          - ** 【HTML导出】添加对NETCore2.2模板引擎的支持
 
           **2020.06.16**
           - ** 【Nuget】版本更新到2.2.6**
