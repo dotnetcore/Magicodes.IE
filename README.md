@@ -109,7 +109,7 @@
 
 5. **动态导出（待补充）**
 
-6. **多Sheet导入（待补充）**
+6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
 7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
 8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
 
