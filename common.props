@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.2.7</Version>
+        <Version>3.0.0-beta1</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -14,6 +14,10 @@
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
 
+          **2020.06.22**
+          - ** 【Nuget】版本更新到3.0.0-beta1**
+          - ** 【Excel导出】添加对Excel模板导出函数的支持
+              - {{Formula::AVERAGE?params=G4:G6}}
 
           **2020.06.17**
           - ** 【Nuget】版本更新到2.2.7**
@@ -34,11 +38,6 @@
           - `ExportListBytesByTemplate＜T＞(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);`
           - `ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);`
 
-          **2020.06.07**
-          - ** 【Nuget】版本更新到2.2.4**
-          - ** 【Excel导入】增加`导入失败`仅返回错误行功能**
-          - ** 【Excel导入】修复导入的空行标注位置偏移**
-          - ** 【Excel导出】增加`SeparateByColumn`进行分割追加列**
 
         </Description>
     </PropertyGroup>

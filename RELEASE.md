@@ -1,5 +1,13 @@
 # Release Log
 
+**2020.06.22**
+
+- **【Nuget】版本更新到3.0.0-beta1**
+- **【Excel导出】添加对Excel模板导出函数的支持**
+
+          - {{Formula::AVERAGE?params=G4:G6}}
+          - {{Formula::SUM?params=G4:G6&G4}}
+
 **2020.06.16**
 
 - **【Nuget】版本更新到2.2.6**
