@@ -99,6 +99,23 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return importer.OutputBussinessErrorData(bussinessErrorDataList, out msg);
             }
         }
+
+        /// <summary>
+        /// 导出业务错误数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream">流</param>
+        /// <param name="bussinessErrorDataList">错误数据</param>
+        /// <param name="fileByte">成功:错误数据返回文件流字节,失败 返回null</param>
+        /// <returns></returns>
+        public bool OutputBussinessErrorData<T>(Stream stream, List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte) where T : class, new()
+        {
+            using (var importer = new ImportHelper<T>())
+            {
+                return importer.OutputBussinessErrorDataByte(stream, bussinessErrorDataList, out fileByte);
+            }
+        }
+
         /// <summary>
         /// 导入多个Sheet数据
         /// </summary>

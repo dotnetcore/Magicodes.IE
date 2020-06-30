@@ -23,6 +23,15 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="msg">成功:错误数据返回路径,失败 返回错误原因</param>
         /// <returns></returns>
         bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string msg) where T : class, new();
+        /// <summary>
+        /// 导出业务错误数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream">流</param>
+        /// <param name="bussinessErrorDataList">错误数据</param>
+        /// <param name="fileByte">成功:错误数据返回文件流字节,失败 返回null</param>
+        /// <returns></returns>
+        bool OutputBussinessErrorData<T>(Stream stream, List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte) where T : class, new();
 
         /// <summary>
         /// 导入多个Sheet数据
