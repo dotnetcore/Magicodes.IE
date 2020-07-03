@@ -30,15 +30,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
         private Type _type;
+        private string _sheetName;
         /// <summary>
         /// 
         /// </summary>
-        public ExportHelper()
+        public ExportHelper(string sheetName = null)
         {
             if (typeof(DataTable).Equals(typeof(T)))
             {
                 IsDynamicDatableExport = true;
             }
+
+            _sheetName = sheetName;
         }
         /// <summary>
         /// </summary>
@@ -53,7 +56,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         /// <param name="existExcelPackage"></param>
 
-        public ExportHelper(ExcelPackage existExcelPackage)
+        public ExportHelper(ExcelPackage existExcelPackage, string sheetName = null)
         {
             if (typeof(DataTable).Equals(typeof(T)))
             {
@@ -63,6 +66,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 this._excelPackage = existExcelPackage;
             }
+            _sheetName = sheetName;
         }
 
 
@@ -126,7 +130,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 if (_excelWorksheet == null)
                 {
-                    AddExcelWorksheet();
+                    AddExcelWorksheet(_sheetName);
                 }
 
 

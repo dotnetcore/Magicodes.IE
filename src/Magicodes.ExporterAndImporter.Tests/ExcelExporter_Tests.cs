@@ -446,7 +446,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
 
             result.ShouldNotBeNull();
 
@@ -455,7 +455,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 pck.Workbook.Worksheets.Count.ShouldBe(2);
                 pck.Workbook.Worksheets.First().Name
-                    .ShouldBe(typeof(ExportTestDataWithAttrs).GetAttribute<ExcelExporterAttribute>().Name);
+                    .ShouldBe("sheet1");
                 pck.Workbook.Worksheets.Last().Name
                     .ShouldBe(typeof(ExportTestDataWithSplitSheet).GetAttribute<ExcelExporterAttribute>().Name);
             }

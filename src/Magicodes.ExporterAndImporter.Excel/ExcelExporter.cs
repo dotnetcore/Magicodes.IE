@@ -61,17 +61,18 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
+        /// <param name="sheetName"></param>
         /// <returns></returns>
-        public ExcelExporter Append<T>(ICollection<T> dataItems) where T : class
+        public ExcelExporter Append<T>(ICollection<T> dataItems, string sheetName = null) where T : class
         {
-            var helper = this._excelPackage == null ? new ExportHelper<T>() : new ExportHelper<T>(_excelPackage);
+            var helper = this._excelPackage == null ? new ExportHelper<T>(sheetName) : new ExportHelper<T>(_excelPackage, sheetName);
             if (_isSeparateColumn || _isSeparateBySheet || _isSeparateByRow)
             {
-                var sheetName = helper.ExcelExporterSettings?.Name ?? "导出结果";
+                var name = helper.ExcelExporterSettings?.Name ?? "导出结果";
 
-                if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == sheetName) ?? false)
+                if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == name) ?? false)
                 {
-                    throw new ArgumentNullException($"已经存在名字为{sheetName}的sheet");
+                    throw new ArgumentNullException($"已经存在名字为{name}的sheet");
                 }
             }
 
