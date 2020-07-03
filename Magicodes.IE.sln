@@ -28,13 +28,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9045-459D-B1C4-4A155C858681}"
 	ProjectSection(SolutionItems) = preProject
 		docs\1.基础教程之导入学生数据.md = docs\1.基础教程之导入学生数据.md
+		docs\12.NETCore中通过请求头导出多种格式文件.md = docs\12.NETCore中通过请求头导出多种格式文件.md
+		docs\13.性能测试.md = docs\13.性能测试.md
 		docs\2.基础教程之导出Excel.md = docs\2.基础教程之导出Excel.md
 		docs\3.基础教程之导出Pdf收据.md = docs\3.基础教程之导出Pdf收据.md
 		docs\4.在Docker中使用.md = docs\4.在Docker中使用.md
+		docs\6.多Sheet导入.md = docs\6.多Sheet导入.md
 		docs\7.Csv导入导出.md = docs\7.Csv导入导出.md
 		docs\8.Excel图片导入导出.md = docs\8.Excel图片导入导出.md
 		docs\9.Excel模板导出之导出教材订购表.md = docs\9.Excel模板导出之导出教材订购表.md
-		docs\12.性能测试.md = docs\12.性能测试.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"

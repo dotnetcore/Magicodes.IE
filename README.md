@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.2.4**
+最新版本：**2.2.7**
 
 ## 疯狂的徽章
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
@@ -109,7 +109,7 @@
 
 5. **动态导出（待补充）**
 
-6. **多Sheet导入（待补充）**
+6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
 7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
 8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
 
@@ -117,7 +117,8 @@
 
 10. **进阶篇之导入导出筛选器（待补充）**
 11. **Excel导出多个实体（待补充）**
-12. **[性能测试](docs/12.性能测试.md)**
+12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
+13. **[性能测试](docs/13.性能测试.md)**
 
 **其他教程见下文或单元测试**
 

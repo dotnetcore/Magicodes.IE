@@ -429,6 +429,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
         }
 
+
+
         [Fact(DisplayName = "大量数据导出并导入")]
         public async Task LargeDataImport_Test()
         {
@@ -548,8 +550,13 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             bool result = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string msg);
 
+            using(var stream = new FileStream(filePath, FileMode.Open))
+            {
+                var resultByte = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(stream, ErrorList, out byte[] fileByte);
+                resultByte.ShouldBeTrue();
+                fileByte.ShouldNotBeNull();
+            }
             result.ShouldBeTrue();
-
 
 
         }

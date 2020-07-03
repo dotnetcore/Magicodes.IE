@@ -1,5 +1,32 @@
 # Release Log
 
+**2020.06.22**
+
+- **【Nuget】版本更新到2.3.0-beta1**
+- **【Excel导出】添加对Excel模板导出函数的支持**
+
+          - {{Formula::AVERAGE?params=G4:G6}}
+          - {{Formula::SUM?params=G4:G6&G4}}
+
+**2020.06.16**
+
+- **【Nuget】版本更新到2.2.6**
+- **【HTML导出】添加对NETCore2.2模板引擎的支持**
+
+**2020.06.14**
+
+- **【Nuget】版本更新到2.2.5**
+- **【Excel导出】增加分栏、分sheet、追加rows导出 [#74](https://github.com/dotnetcore/Magicodes.IE/issues/74)**
+
+      - exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+      - exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+      - exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2).ExportAppendData(filePath);
+- **[Excel导出】修复‘IsAllowRepeat＝true’ [#107](https://github.com/dotnetcore/Magicodes.IE/issues/107)**
+- **[Pdf导出】增加PDF扩展方法，支持通过以参数形式传递特性参数 [#104](https://github.com/dotnetcore/Magicodes.IE/issues/104)**
+
+      - Task<byte[]> ExportListBytesByTemplate<T>(ICollection＜T＞ data, PdfExporterAttribute pdfExporterAttribute,string temple);
+      - Task<byte[]> ExportBytesByTemplate＜T＞(T data, PdfExporterAttribute pdfExporterAttribute,string template);
+
 **2020.06.07**
 
 - **【Nuget】版本更新到2.2.4**

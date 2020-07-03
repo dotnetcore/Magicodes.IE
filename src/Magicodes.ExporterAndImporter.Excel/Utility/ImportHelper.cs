@@ -425,6 +425,66 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
+        /// 标注业务错误
+        /// </summary>
+        /// <param name="excelPackage"></param>
+        /// <param name="bussinessErrorDataList"></param>
+        /// <param name="fileByte">返回错误Excel流字节</param>
+        internal virtual void LabelingBussinessError(ExcelPackage excelPackage, List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte)
+        {
+            if (bussinessErrorDataList == null)
+            {
+                fileByte = null;
+                return;
+            }
+            this.ImportResult = new ImportResult<T>();
+            ParseHeader();
+            ParseTemplate(excelPackage);
+            //执行结果筛选器
+            if (ExcelImporterSettings.ImportResultFilter != null)
+            {
+                var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
+
+                if (filter == null)
+                {
+                    throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
+                }
+                ImportResult = filter.Filter(ImportResult);
+            }
+            //if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
+            //业务错误必须标注
+            var worksheet = GetImportSheet(excelPackage);
+
+            //标注数据错误
+            foreach (var item in bussinessErrorDataList)
+            {
+                item.RowIndex += ExcelImporterSettings.HeaderRowIndex;
+                foreach (var field in item.FieldErrors)
+                {
+                    var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
+                    var cell = worksheet.Cells[item.RowIndex, col.Header.ColumnIndex];
+                    cell.Style.Font.Color.SetColor(Color.Red);
+                    cell.Style.Font.Bold = true;
+                    if (cell.Comment == null)
+                    {
+                        cell.AddComment(string.Join(",", field.Value), col.Header.Author);
+                    }
+                    else
+                    {
+                        cell.Comment.Text = field.Value;
+
+                    }
+                }
+            }
+            using(var stream = new MemoryStream())
+            {
+                excelPackage.SaveAs(stream);
+                fileByte = stream.ToArray();
+            }
+            return;
+        }
+
+        /// <summary>
         ///     检查导入文件路劲
         /// </summary>
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
@@ -1207,6 +1267,35 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             catch (Exception ex)
             {
                 msg = ex.Message;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 将存在的错误数据通过导入模板返回,并且标识业务错误原因
+        /// </summary>
+        /// <param name="stream">流</param>
+        /// <param name="bussinessErrorDataList">错误的业务数据</param>
+        /// <param name="fileByte">成功:错误错误文件流字节,失败 返回null</param>
+        /// <returns></returns>
+        public bool OutputBussinessErrorDataByte(Stream stream, List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte)
+        {
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    using (var excelPackage = new ExcelPackage(memoryStream))
+                    {
+                        //生成Excel错误标注
+                        LabelingBussinessError(excelPackage, bussinessErrorDataList, out fileByte);
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                fileByte = null;
                 return false;
             }
         }
