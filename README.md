@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.2.7**
+最新版本：**2.3.0-beta2**
 
 ## 疯狂的徽章
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 

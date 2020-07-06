@@ -1,5 +1,15 @@
 # Release Log
 
+**2020.07.06**
+
+- **【Nuget】版本更新到2.3.0-beta2**
+- **【Excel导出】导出业务错误数据支持直接返回错误数据的文件流字节**
+- **【Excel导出】对追加sheet实现同一个Model可自定义传入不同sheet名称**
+
+     -  exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
+     
+- **【Nuget】针对于一些客户端不支持SemVer 2.0.0 进行采取兼容机制**
+
 **2020.06.22**
 
 - **【Nuget】版本更新到2.3.0-beta1**
