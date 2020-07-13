@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0-beta2</Version>
+        <Version>2.3.0-beta3</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -14,26 +14,21 @@
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
 
+          **2020.07.13**
+          - ** 【Nuget】版本更新到2.3.0-beta3**
+          - 【PDF导出】修复Linux下导出PDf 出错问题 #125
+
           **2020.07.06**
           - ** 【Nuget】版本更新到2.3.0-beta2**
           - 【Excel导出】导出业务错误数据支持直接返回错误数据的文件流字节
-          - 【Excel导出】对追加sheet实现同一个Model可自定义传入不同sheet名称 
-            -  exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
+          - 【Excel导出】对追加sheet实现同一个Model可自定义传入不同sheet名称
+          -  exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
           - 【Nuget】针对于一些客户端不支持SemVer 2.0.0 进行采取兼容机制
 
-            **2020.06.22**
+          **2020.06.22**
           - ** 【Nuget】版本更新到2.3.0-beta1**
           - ** 【Excel导出】添加对Excel模板导出函数的支持
           - {{Formula::AVERAGE?params=G4:G6}}
-
-          **2020.06.17**
-          - ** 【Nuget】版本更新到2.2.7**
-          - ** 【HTML导出】添加对NETCore2.2模板引擎的支持
-
-          **2020.06.16**
-          - ** 【Nuget】版本更新到2.2.6**
-          - ** 【HTML导出】添加对NETCore2.2模板引擎的支持
-
 
 
         </Description>
