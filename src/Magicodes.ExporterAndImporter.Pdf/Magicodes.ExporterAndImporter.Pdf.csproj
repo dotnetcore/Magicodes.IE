@@ -18,4 +18,10 @@
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="runtimes\**\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>  
+  </ItemGroup>
+
 </Project>
