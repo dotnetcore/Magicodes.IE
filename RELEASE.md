@@ -1,5 +1,8 @@
 # Release Log
 
+**2020.07.14**
+- **【Nuget】版本更新到2.3.0-beta4**
+
 **2020.07.13**
 - **【Nuget】版本更新到2.3.0-beta3**
 - **【PDF导出】修复Linux下导出PDf 出错问题 [#125](https://github.com/dotnetcore/Magicodes.IE/issues/125)**

@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0-beta3</Version>
+        <Version>2.3.0-beta4</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,9 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.07.14**
+          - ** 【Nuget】版本更新到2.3.0-beta4**
 
           **2020.07.13**
           - ** 【Nuget】版本更新到2.3.0-beta3**
