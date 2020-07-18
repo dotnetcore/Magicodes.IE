@@ -2,7 +2,7 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-# ���븲���ʲο���https://docs.microsoft.com/zh-cn/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops#collect-code-coverage
+# ´úÂë¸²¸ÇÂÊ²Î¿¼£ºhttps://docs.microsoft.com/zh-cn/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops#collect-code-coverage
 # https://www.meziantou.net/computing-code-coverage-for-a-dotnet-core-project-with-azure-devops-and-coverlet.htm
 # trigger 
 # https://docs.microsoft.com/zh-cn/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml
@@ -43,7 +43,7 @@ steps:
   inputs:
     script: |
       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
-      ls TestResults
+       ls TestResults
       dotnet tool install -g dotnet-reportgenerator-globaltool
       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*"
   continueOnError: true
