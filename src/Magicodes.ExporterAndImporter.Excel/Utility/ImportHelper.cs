@@ -318,7 +318,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         worksheet.Comments.RemoveAt(0);
                     }
                 }
-            
+
                 //TODO:标注模板错误
                 //标注数据错误
                 var excelRangeList = new List<ExcelRange>();
@@ -326,13 +326,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     excelRangeList.Add(worksheet.Cells[1, ImporterHeaderInfos.Count]);
                     var gtRows = EmptyRows.Where(r => r > item.RowIndex);
-                    var ltRows= EmptyRows.Where(r => r < item.RowIndex);
-                    if (gtRows.Any()&& ltRows.Any())
+                    var ltRows = EmptyRows.Where(r => r < item.RowIndex);
+                    if (gtRows.Any() && ltRows.Any())
                     {
                         var rowindex = gtRows.ToList().GetLargestContinuous();
-                        item.RowIndex += (rowindex - item.RowIndex)+1;
+                        item.RowIndex += (rowindex - item.RowIndex) + 1;
                     }
-                    
+
                     foreach (var field in item.FieldErrors)
                     {
                         var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
@@ -476,7 +476,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                 }
             }
-            using(var stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
                 excelPackage.SaveAs(stream);
                 fileByte = stream.ToArray();

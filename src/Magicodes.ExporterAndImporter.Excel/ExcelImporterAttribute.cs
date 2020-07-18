@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)
         /// </summary>
         public double DescriptionHeight { get; set; } = 13.5;
-        
+
         /// <summary>
         ///     是否仅导出错误数据
         /// </summary>
