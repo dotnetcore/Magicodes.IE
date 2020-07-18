@@ -2,7 +2,7 @@
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-# ´úÂë¸²¸ÇÂÊ²Î¿¼£ºhttps://docs.microsoft.com/zh-cn/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops#collect-code-coverage
+# ä»£ç è¦†ç›–ç‡å‚è€ƒï¼šhttps://docs.microsoft.com/zh-cn/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops#collect-code-coverage
 # https://www.meziantou.net/computing-code-coverage-for-a-dotnet-core-project-with-azure-devops-and-coverlet.htm
 # trigger 
 # https://docs.microsoft.com/zh-cn/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml
