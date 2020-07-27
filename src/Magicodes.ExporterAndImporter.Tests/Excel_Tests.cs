@@ -47,8 +47,9 @@ namespace Magicodes.ExporterAndImporter.Tests
         ///     见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/90
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName ="模板导出多Sheet测试")]
-        public async Task ExportByTemplate_Multi_Sheet_Test() {
+        [Fact(DisplayName = "模板导出多Sheet测试")]
+        public async Task ExportByTemplate_Multi_Sheet_Test()
+        {
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
              "MultiSheet.xlsx");
             IExportFileByTemplate exporter = new ExcelExporter();
@@ -59,6 +60,35 @@ namespace Magicodes.ExporterAndImporter.Tests
                 new ExportTestDataWithSingleColTpl()
                 {
                     List = GenFu.GenFu.ListOf<ExportTestDataWithSingleCol>()
+                }, tplPath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        /// <summary>
+        ///     见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/131
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "模板导出")]
+        public async Task ExportByTemplate_Images_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "Issue#131.xlsx");
+            IExportFileByTemplate exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportByTemplate_Images_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var result = await exporter.ExportByTemplate(filePath,
+                new Issue131()
+                {
+                    List = new List<DTO_Product>()
+                    {
+                        new DTO_Product()
+                        {
+                            ImageUrl = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "issue131.png")
+                        }
+                    }
+                  
                 }, tplPath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -91,7 +121,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             }
             importResult.HasError.ShouldBeFalse();
-           
+
             importResult.Data.Count.ShouldBe(data.Count);
             for (int i = 0; i < importResult.Data.Count; i++)
             {
@@ -105,13 +135,15 @@ namespace Magicodes.ExporterAndImporter.Tests
                 {
                     item.TestNullDate2.Value.Date.ShouldBe(data[i].TestNullDate2.Value.Date);
                 }
-                
+
                 item.TestDateTimeOffset1.ShouldBe(data[i].TestDateTimeOffset1);
                 item.TestDateTimeOffset2.ShouldBe(data[i].TestDateTimeOffset2);
             }
-            
+
         }
 
-       
+
+
+
     }
 }
