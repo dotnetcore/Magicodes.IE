@@ -1,14 +1,17 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Excel;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -88,10 +91,19 @@ namespace Magicodes.ExporterAndImporter.Tests
                             ImageUrl = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "issue131.png")
                         }
                     }
-                  
+
                 }, tplPath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var ec = pck.Workbook.Worksheets.First();
+                var pic = ec.Drawings[0] as ExcelPicture;
+                pic.GetPrivateProperty<int>("_height").ShouldBe(120);
+                pic.GetPrivateProperty<int>("_width").ShouldBe(120); ;
+
+            }
         }
 
         /// <summary>
