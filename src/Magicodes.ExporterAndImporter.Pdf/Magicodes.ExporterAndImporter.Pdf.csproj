@@ -19,9 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="runtimes\**\**\*.*">
+    <None Include="runtimes/linux-x64/native/wkhtmltox.so">
       <Pack>true</Pack>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <PackagePath>runtimes/linux-x64/native/wkhtmltox.so</PackagePath>
     </None>
   </ItemGroup>
 
