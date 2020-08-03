@@ -58,6 +58,9 @@
     <None Update="TestFiles\ExportTemplates\batchReceipt.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\ExportTemplates\Issue#131.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\ExportTemplates\MultiSheet.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -147,6 +150,9 @@
     </None>
     <None Update="TestFiles\Import\数据注解测试模板.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\issue131.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

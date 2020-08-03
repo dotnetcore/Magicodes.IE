@@ -333,5 +333,21 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 #endif
            
         }
+
+        /// <summary>
+        ///     获取私有属性值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <param name="propertyname"></param>
+        /// <returns></returns>
+        public static T GetPrivateProperty<T>(this object instance, string propertyname)
+        {
+            Type type = instance.GetType().BaseType;
+            FieldInfo[] finfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            var field = finfos.FirstOrDefault(f => f.Name == propertyname);
+            var val = (T)field.GetValue(instance);
+            return (T)field.GetValue(instance);
+        }
     }
 }

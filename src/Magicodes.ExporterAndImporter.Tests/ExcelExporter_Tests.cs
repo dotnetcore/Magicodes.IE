@@ -446,7 +446,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
 
-            var result = exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            var result = exporter.Append(list1, "sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
 
             result.ShouldNotBeNull();
 
@@ -603,7 +603,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //检查图片
                 sheet.Drawings.Count.ShouldBe(3);
                 //TODO 检查合计是否正确
-                
+
                 //TODO 检查均值是否正确
             }
         }
@@ -696,6 +696,8 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
+
+
 
         [Fact(DisplayName = "Excel模板导出Bytes测试（issues#34_2）")]
         public async Task ExportBytesByTemplate_Test1()
