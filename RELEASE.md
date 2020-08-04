@@ -1,5 +1,10 @@
 # Release Log
 
+**2020.08.04**
+- **【Nuget】版本更新到2.3.0-beta5**
+- **在runtimes native包问题**
+- **对于跨平台native中 `COM Interop is not supported on this platform.`修复** [#130](https://github.com/dotnetcore/Magicodes.IE/issues/130)
+
 **2020.07.14**
 - **【Nuget】版本更新到2.3.0-beta4**
 

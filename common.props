@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0-beta4</Version>
+        <Version>2.3.0-beta5</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,14 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.08.04**
+          - ** 【Nuget】版本更新到2.3.0-beta5**
+          - 在runtimes native包问题
+          - 对于跨平台native中 `COM Interop is not supported on this platform.` #130
+
+          **2020.07.14**
+          - ** 【Nuget】版本更新到2.3.0-beta4**
 
           **2020.07.14**
           - ** 【Nuget】版本更新到2.3.0-beta4**
@@ -27,11 +35,6 @@
           - 【Excel导出】对追加sheet实现同一个Model可自定义传入不同sheet名称
           -  exporter.Append(list1,"sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
           - 【Nuget】针对于一些客户端不支持SemVer 2.0.0 进行采取兼容机制
-
-          **2020.06.22**
-          - ** 【Nuget】版本更新到2.3.0-beta1**
-          - ** 【Excel导出】添加对Excel模板导出函数的支持
-          - {{Formula::AVERAGE?params=G4:G6}}
 
 
         </Description>
