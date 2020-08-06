@@ -111,7 +111,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入模型验证数据
         /// </summary>
         /// <returns></returns>
-        public Task<ImportResult<object>> Import(string sheetName, Type importDataType)
+        public Task<ImportResult<object>> Import(string sheetName, Type importDataType, bool isSaveLabelingError = true)
         {
             _importDataType = importDataType;
             ImportResult = new ImportResult<object>();
@@ -158,7 +158,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     #endregion
 
-                    LabelingError(_excelPackage);
+                    LabelingError(_excelPackage,isSaveLabelingError);
                 }
 
             }
@@ -258,7 +258,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     标注错误
         /// </summary>
         /// <param name="excelPackage"></param>
-        protected virtual void LabelingError(ExcelPackage excelPackage)
+        /// <param name="isSaveLabelingError"></param>
+        protected virtual void LabelingError(ExcelPackage excelPackage, bool isSaveLabelingError = true)
         {
             //是否标注错误
             if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
@@ -275,9 +276,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         cell.Style.Font.Bold = true;
                         cell.AddComment(string.Join(",", field.Value), col.Header.Author);
                     }
-
-                var ext = Path.GetExtension(FilePath);
-                excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
+                if (isSaveLabelingError)
+                {
+                    var ext = Path.GetExtension(FilePath);
+                    excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
+                }
             }
         }
 
