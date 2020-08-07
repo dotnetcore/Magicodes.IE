@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -36,9 +37,39 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
         {
-            using (var importer = new ImportHelper<T>())
+            var isMultipleSheetType = false;
+            var tableType = typeof(T);
+            List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
+            var sheetProperties = tableType.GetProperties();
+
+            for (var i = 0; i < sheetProperties.Length; i++)
             {
-                return importer.GenerateTemplate(fileName);
+                var sheetProperty = sheetProperties[i];
+                var importerAttribute =
+                    (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                if (importerAttribute == null)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(importerAttribute.SheetName))
+                {
+                    isMultipleSheetType = true;
+                    sheetPropertyList.Add(sheetProperty);
+                }
+            }
+
+            if (isMultipleSheetType)
+            {
+                using (var importer = new ImportMultipleSheetHelper(sheetPropertyList))
+                {
+                    return importer.GenerateTemplate(fileName);
+                }
+            }
+            {
+                using (var importer = new ImportHelper<T>())
+                {
+                    return importer.GenerateTemplate(fileName);
+                }
             }
         }
 
@@ -49,9 +80,40 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>二进制字节</returns>
         public Task<byte[]> GenerateTemplateBytes<T>() where T : class, new()
         {
-            using (var importer = new ImportHelper<T>())
+            var isMultipleSheetType = false;
+            var tableType = typeof(T);
+            List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
+            var sheetProperties = tableType.GetProperties();
+
+            for (var i = 0; i < sheetProperties.Length; i++)
             {
-                return importer.GenerateTemplateByte();
+                var sheetProperty = sheetProperties[i];
+                var importerAttribute =
+                    (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                if (importerAttribute == null)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(importerAttribute.SheetName))
+                {
+                    isMultipleSheetType = true;
+                    sheetPropertyList.Add(sheetProperty);
+                }
+            }
+
+            if (isMultipleSheetType)
+            {
+                using (var importer = new ImportMultipleSheetHelper(sheetPropertyList))
+                {
+                    return importer.GenerateTemplateByte();
+                }
+            }
+            else
+            {
+                using (var importer = new ImportHelper<T>())
+                {
+                    return importer.GenerateTemplateByte();
+                }
             }
         }
 
@@ -215,6 +277,34 @@ namespace Magicodes.ExporterAndImporter.Excel
                 }
             }
             return resultList;
+        }
+
+
+        /// <summary>
+        /// 判断Dto类型是否为多Sheet类
+        /// </summary>
+        /// <typeparam name="T">Dto类型</typeparam>
+        /// <returns></returns>
+        private bool DtoTypeIsMultipleSheet<T>()
+        {
+            var tableType = typeof(T);
+            var sheetProperties = tableType.GetProperties();
+
+            for (var i = 0; i < sheetProperties.Length; i++)
+            {
+                var sheetProperty = sheetProperties[i];
+                var importerAttribute =
+                    (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                if (importerAttribute == null)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(importerAttribute.SheetName))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
