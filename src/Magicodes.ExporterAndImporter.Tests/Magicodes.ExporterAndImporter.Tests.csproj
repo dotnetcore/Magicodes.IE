@@ -106,6 +106,9 @@
     <None Update="TestFiles\Import\学生基础数据及缴费流水号导入.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\学生基础数据及缴费流水号导入_标注错误.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\学生基础数据导入.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

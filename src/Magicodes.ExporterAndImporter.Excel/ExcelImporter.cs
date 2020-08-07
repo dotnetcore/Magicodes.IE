@@ -133,8 +133,9 @@ namespace Magicodes.ExporterAndImporter.Excel
             var sheetProperties = tableType.GetProperties();
             using (var importer = new ImportMultipleSheetHelper(filePath))
             {
-                foreach (var sheetProperty in sheetProperties)
+                for (var i=0;i<sheetProperties.Length;i++)
                 {
+                    var sheetProperty = sheetProperties[i];
                     var importerAttribute =
                         (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
                     if (importerAttribute == null)
@@ -145,7 +146,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
                     }
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType);
+                    var isSaveLabelingError = false;
+                    //最后一个属性才保存标注的错误,避免多次保存
+                    if (i == sheetProperties.Length - 1)
+                    {
+                        isSaveLabelingError = true;
+                    }
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType,isSaveLabelingError);
                     resultList.Add(importerAttribute.SheetName, result);
                 }
             }
@@ -172,8 +179,9 @@ namespace Magicodes.ExporterAndImporter.Excel
             var sheetProperties = tableType.GetProperties();
             using (var importer = new ImportMultipleSheetHelper(filePath))
             {
-                foreach (var sheetProperty in sheetProperties)
+                for (var i = 0; i < sheetProperties.Length; i++)
                 {
+                    var sheetProperty = sheetProperties[i];
                     var importerAttribute =
                         (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
                     if (importerAttribute == null)
@@ -184,7 +192,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
                     }
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType);
+                    var isSaveLabelingError = false;
+                    //最后一个属性才保存标注的错误,避免多次保存
+                    if (i == sheetProperties.Length - 1)
+                    {
+                        isSaveLabelingError = true;
+                    }
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType,isSaveLabelingError);
                     var tResult = new ImportResult<TSheet>();
                     tResult.Data = new List<TSheet>();
                     if (result.Data.Count > 0)
