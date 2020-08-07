@@ -9,6 +9,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -95,7 +96,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.Count.ShouldBe(16);
                     ImportStudentDto dto = (ImportStudentDto)import.Data.ElementAt(0);
                     dto.Name.ShouldBe("杨圣超");
-                } 
+                }
                 if (item.Key == "缴费数据")
                 {
                     import.HasError.ShouldBeTrue();
@@ -113,24 +114,31 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
-        [Fact(DisplayName = "多Sheet导出模板")]
+        [Fact(DisplayName = "多Sheet导入模板生成")]
         public async Task MultipleSheetGenerateTemplate_Test()
         {
-            var Importer = new ExcelImporter();
-            var bytes1 = await Importer.GenerateTemplateBytes<ImportClassStudentDto>();
-            var str1 = Convert.ToBase64String(bytes1);
-            _testOutputHelper.WriteLine($"已导出多Sheet的Excel模板，Base64：{str1}");
-            var tempaltePath2 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据及缴费流水号模板导出.xlsx");
-            await Importer.GenerateTemplate<ImportStudentAndPaymentLogDto>(tempaltePath2);
+            var importer = new ExcelImporter();
+            var result = await importer.GenerateTemplateBytes<ImportClassStudentDto>();
+            var filePath = GetTestFilePath($"{nameof(MultipleSheetGenerateTemplate_Test)}.xlsx");
+            DeleteFile(filePath);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            result.ToExcelExportFileInfo(filePath);
+            File.Exists(filePath).ShouldBeTrue();
 
-            if (File.Exists(tempaltePath2))
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                _testOutputHelper.WriteLine($"已导出Excel模板，路径：{tempaltePath2}");
+                //检查转换结果
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+#if NET461
+                pck.Workbook.Worksheets[1].Name.ShouldBe("1班导入数据");
+                pck.Workbook.Worksheets[2].Name.ShouldBe("2班导入数据");       
+#else
+                pck.Workbook.Worksheets[0].Name.ShouldBe("1班导入数据");
+                pck.Workbook.Worksheets[1].Name.ShouldBe("2班导入数据");
+#endif
+
             }
-            //一个Sheet导出
-            var bytes3 = await Importer.GenerateTemplateBytes<ImportStudentDto>();
-            var str3 = Convert.ToBase64String(bytes3);
-            _testOutputHelper.WriteLine($"已导出单个Sheet的Excel模板，Base64：{str3}");
         }
     }
 }
