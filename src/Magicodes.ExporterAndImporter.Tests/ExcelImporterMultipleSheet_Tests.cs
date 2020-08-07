@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -109,6 +110,27 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 _testOutputHelper.WriteLine($"保存标注错误Excel文件已生成,路径：{labelingErrorExcelPath}");
             }
+        }
+
+
+        [Fact(DisplayName = "多Sheet导出模板")]
+        public async Task MultipleSheetGenerateTemplate_Test()
+        {
+            var Importer = new ExcelImporter();
+            var bytes1 = await Importer.GenerateTemplateBytes<ImportClassStudentDto>();
+            var str1 = Convert.ToBase64String(bytes1);
+            _testOutputHelper.WriteLine($"已导出多Sheet的Excel模板，Base64：{str1}");
+            var tempaltePath2 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据及缴费流水号模板导出.xlsx");
+            await Importer.GenerateTemplate<ImportStudentAndPaymentLogDto>(tempaltePath2);
+
+            if (File.Exists(tempaltePath2))
+            {
+                _testOutputHelper.WriteLine($"已导出Excel模板，路径：{tempaltePath2}");
+            }
+            //一个Sheet导出
+            var bytes3 = await Importer.GenerateTemplateBytes<ImportStudentDto>();
+            var str3 = Convert.ToBase64String(bytes3);
+            _testOutputHelper.WriteLine($"已导出单个Sheet的Excel模板，Base64：{str3}");
         }
     }
 }
