@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0-beta5</Version>
+        <Version>2.3.0-beta6</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -14,6 +14,12 @@
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
 
+          **2020.08.10**
+          - **【Nuget】版本更新到2.3.0-beta6**
+          - 多Sheet导入保存标注错误单元测试，并没出现多数据导入效验bug #108
+          - Excel多Sheet 导入模板生成 #133
+          - 修复Excel模板图片高度问题 #131
+           
           **2020.08.04**
           - ** 【Nuget】版本更新到2.3.0-beta5**
           - 在runtimes native包问题
