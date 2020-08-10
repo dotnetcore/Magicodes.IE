@@ -1,5 +1,11 @@
 # Release Log
 
+**2020.08.10**
+- **【Nuget】版本更新到2.3.0-beta6**
+- 多Sheet导入保存标注错误单元测试，并没出现多数据导入效验bug [#108](https://github.com/dotnetcore/Magicodes.IE/issues/108)
+- Excel多Sheet 导入模板生成 [#133](https://github.com/dotnetcore/Magicodes.IE/issues/133)
+- 修复Excel模板图片高度问题 [#131](https://github.com/dotnetcore/Magicodes.IE/issues/131)
+
 **2020.08.04**
 - **【Nuget】版本更新到2.3.0-beta5**
 - **在runtimes native包问题**
