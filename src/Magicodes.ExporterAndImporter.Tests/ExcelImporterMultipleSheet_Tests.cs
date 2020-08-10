@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
@@ -70,6 +72,72 @@ namespace Magicodes.ExporterAndImporter.Tests
                     ImportPaymentLogDto dto = (ImportPaymentLogDto)import.Data.ElementAt(0);
                     dto.Name.ShouldBe("刘茵");
                 }
+            }
+        }
+
+
+        [Fact(DisplayName = "学生基础数据及缴费流水号导入_标注错误")]
+        public async Task ClassStudentInfoImporter_SaveLabelingError_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据及缴费流水号导入_标注错误.xlsx");
+
+            var importDic = await Importer.ImportMultipleSheet<ImportStudentAndPaymentLogDto>(filePath);
+            foreach (var item in importDic)
+            {
+                var import = item.Value;
+                import.ShouldNotBeNull();
+                if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+                if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+
+                import.Data.ShouldNotBeNull();
+                if (item.Key == "1班导入数据")
+                {
+                    import.Data.Count.ShouldBe(16);
+                    ImportStudentDto dto = (ImportStudentDto)import.Data.ElementAt(0);
+                    dto.Name.ShouldBe("杨圣超");
+                }
+                if (item.Key == "缴费数据")
+                {
+                    import.HasError.ShouldBeTrue();
+                    import.Data.Count.ShouldBe(20);
+                    ImportPaymentLogDto dto = (ImportPaymentLogDto)import.Data.ElementAt(0);
+                    dto.Name.ShouldBe("刘茵");
+                }
+            }
+            var ext = Path.GetExtension(filePath);
+            var labelingErrorExcelPath = filePath.Replace(ext, "_" + ext);
+            if (File.Exists(labelingErrorExcelPath))
+            {
+                _testOutputHelper.WriteLine($"保存标注错误Excel文件已生成,路径：{labelingErrorExcelPath}");
+            }
+        }
+
+
+        [Fact(DisplayName = "多Sheet导入模板生成")]
+        public async Task MultipleSheetGenerateTemplate_Test()
+        {
+            var importer = new ExcelImporter();
+            var result = await importer.GenerateTemplateBytes<ImportClassStudentDto>();
+            var filePath = GetTestFilePath($"{nameof(MultipleSheetGenerateTemplate_Test)}.xlsx");
+            DeleteFile(filePath);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            result.ToExcelExportFileInfo(filePath);
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+#if NET461
+                pck.Workbook.Worksheets[1].Name.ShouldBe("1班导入数据");
+                pck.Workbook.Worksheets[2].Name.ShouldBe("2班导入数据");       
+#else
+                pck.Workbook.Worksheets[0].Name.ShouldBe("1班导入数据");
+                pck.Workbook.Worksheets[1].Name.ShouldBe("2班导入数据");
+#endif
+
             }
         }
     }

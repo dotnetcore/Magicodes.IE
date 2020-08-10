@@ -29,6 +29,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
         private ExcelPackage _excelPackage;
 
+        private List<PropertyInfo> _sheetPropertyList;
+
+
         private ImportMultipleSheetHelper()
         {
 
@@ -43,6 +46,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             FilePath = filePath;
             CheckImportFile(FilePath);
             _excelStream = new FileStream(FilePath, FileMode.Open);
+        }
+
+        /// <summary>
+        /// Sheet属性信息列表
+        /// </summary>
+        /// <param name="sheetPropertyList"></param>
+        public ImportMultipleSheetHelper(List<PropertyInfo> sheetPropertyList)
+        {
+            _sheetPropertyList = sheetPropertyList;
         }
 
         /// <summary>
@@ -111,7 +123,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入模型验证数据
         /// </summary>
         /// <returns></returns>
-        public Task<ImportResult<object>> Import(string sheetName, Type importDataType)
+        public Task<ImportResult<object>> Import(string sheetName, Type importDataType, bool isSaveLabelingError = true)
         {
             _importDataType = importDataType;
             ImportResult = new ImportResult<object>();
@@ -158,7 +170,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     #endregion
 
-                    LabelingError(_excelPackage);
+                    LabelingError(_excelPackage,isSaveLabelingError);
                 }
 
             }
@@ -258,7 +270,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     标注错误
         /// </summary>
         /// <param name="excelPackage"></param>
-        protected virtual void LabelingError(ExcelPackage excelPackage)
+        /// <param name="isSaveLabelingError"></param>
+        protected virtual void LabelingError(ExcelPackage excelPackage, bool isSaveLabelingError = true)
         {
             //是否标注错误
             if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
@@ -275,9 +288,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         cell.Style.Font.Bold = true;
                         cell.AddComment(string.Join(",", field.Value), col.Header.Author);
                     }
-
-                var ext = Path.GetExtension(FilePath);
-                excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
+                if (isSaveLabelingError)
+                {
+                    var ext = Path.GetExtension(FilePath);
+                    excelPackage.SaveAs(new FileInfo(FilePath.Replace(ext, "_" + ext)));
+                }
             }
         }
 
@@ -461,53 +476,137 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
+        ///     解析头部
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">导入实体没有定义ImporterHeader属性</exception>
+        protected virtual bool ParseImporterHeader(Type sheetType)
+        {
+            ImporterHeaderInfos = new List<ImporterHeaderInfo>();
+            var objProperties = sheetType.GetProperties();
+            if (objProperties.Length == 0) return false;
+
+            foreach (var propertyInfo in objProperties)
+            {
+                //TODO:简化并重构
+                //如果不设置，则自动使用默认定义
+                var importerHeaderAttribute =
+                    (propertyInfo.GetCustomAttributes(typeof(ImporterHeaderAttribute), true) as
+                        ImporterHeaderAttribute[])?.FirstOrDefault() ?? new ImporterHeaderAttribute
+                        {
+                            Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name
+                        };
+
+                if (string.IsNullOrWhiteSpace(importerHeaderAttribute.Name))
+                    importerHeaderAttribute.Name = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
+
+                //忽略字段处理
+                if (importerHeaderAttribute.IsIgnore) continue;
+
+                var colHeader = new ImporterHeaderInfo
+                {
+                    IsRequired = propertyInfo.IsRequired(),
+                    PropertyName = propertyInfo.Name,
+                    Header = importerHeaderAttribute
+                };
+                ImporterHeaderInfos.Add(colHeader);
+
+                #region 处理值映射
+
+                var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
+                foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
+                    !colHeader.MappingValues.ContainsKey(mappingAttribute.Text)))
+                    colHeader.MappingValues.Add(mappingAttribute.Text, mappingAttribute.Value);
+
+                //如果存在自定义映射，则不会生成默认映射
+                if (mappings.Any()) continue;
+
+                //为bool类型生成默认映射
+                switch (propertyInfo.PropertyType.GetCSharpTypeName())
+                {
+                    case "Boolean":
+                    case "Nullable<Boolean>":
+                        {
+                            if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
+                            if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
+                            break;
+                        }
+                }
+
+                var type = propertyInfo.PropertyType;
+                var isNullable = type.IsNullable();
+                if (isNullable) type = type.GetNullableUnderlyingType();
+                //为枚举类型生成默认映射
+                if (type.IsEnum)
+                {
+                    var values = type.GetEnumTextAndValues();
+                    foreach (var value in values.Where(value => !colHeader.MappingValues.ContainsKey(value.Key)))
+                        colHeader.MappingValues.Add(value.Key, value.Value);
+
+                    if (isNullable)
+                        if (!colHeader.MappingValues.ContainsKey(string.Empty))
+                            colHeader.MappingValues.Add(string.Empty, null);
+                }
+
+                #endregion
+            }
+
+            return true;
+        }
+        /// <summary>
         ///     构建Excel模板
         /// </summary>
         protected virtual void StructureExcel(ExcelPackage excelPackage)
         {
-            var worksheet =
-                excelPackage.Workbook.Worksheets.Add(_importDataType.GetDisplayName() ??
-                                                     ExcelImporterSettings.SheetName ?? "导入数据");
-            if (!ParseImporterHeader()) return;
-
-            //设置列头
-            for (var i = 0; i < ImporterHeaderInfos.Count; i++)
+            foreach (var sheetProperty in _sheetPropertyList)
             {
-                //忽略
-                if (ImporterHeaderInfos[i].Header.IsIgnore) continue;
+                var sheetType= sheetProperty.PropertyType;
+                var importerAttribute =
+                    (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
 
-                worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Value =
-                    ImporterHeaderInfos[i].Header.Name;
-                if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].Header.Description))
-                    worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].AddComment(
-                        ImporterHeaderInfos[i].Header.Description,
-                        ImporterHeaderInfos[i].Header.Author);
-                //如果必填，则列头标红sd
-                if (ImporterHeaderInfos[i].IsRequired)
-                    worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
+                var worksheet =
+                    excelPackage.Workbook.Worksheets.Add(importerAttribute.SheetName);
+                if (!ParseImporterHeader(sheetType)) return;
 
-                if (ImporterHeaderInfos[i].MappingValues.Count > 0)
+                //设置列头
+                for (var i = 0; i < ImporterHeaderInfos.Count; i++)
                 {
-                    //针对枚举类型和Bool类型添加数据约束
-                    var range = ExcelCellBase.GetAddress(ExcelImporterSettings.HeaderRowIndex + 1, i + 1,
-                        ExcelPackage.MaxRows, i + 1);
-                    var dataValidations = worksheet.DataValidations.AddListValidation(range);
-                    foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
-                        dataValidations.Formula.Values.Add(mappingValue.Key);
+                    //忽略
+                    if (ImporterHeaderInfos[i].Header.IsIgnore) continue;
+
+                    worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].Value =
+                        ImporterHeaderInfos[i].Header.Name;
+                    if (!string.IsNullOrWhiteSpace(ImporterHeaderInfos[i].Header.Description))
+                        worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].AddComment(
+                            ImporterHeaderInfos[i].Header.Description,
+                            ImporterHeaderInfos[i].Header.Author);
+                    //如果必填，则列头标红
+                    if (ImporterHeaderInfos[i].IsRequired)
+                        worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
+
+                    if (ImporterHeaderInfos[i].MappingValues.Count > 0)
+                    {
+                        //针对枚举类型和Bool类型添加数据约束
+                        var range = ExcelCellBase.GetAddress(importerAttribute.HeaderRowIndex + 1, i + 1,
+                            ExcelPackage.MaxRows, i + 1);
+                        var dataValidations = worksheet.DataValidations.AddListValidation(range);
+                        foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
+                            dataValidations.Formula.Values.Add(mappingValue.Key);
+                    }
                 }
+
+                worksheet.Cells.AutoFitColumns();
+                worksheet.Cells.Style.WrapText = true;
+                worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[worksheet.Dimension.Address].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                worksheet.Cells[worksheet.Dimension.Address].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[worksheet.Dimension.Address].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[worksheet.Dimension.Address].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[worksheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
             }
-
-            worksheet.Cells.AutoFitColumns();
-            worksheet.Cells.Style.WrapText = true;
-            worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            worksheet.Cells[worksheet.Dimension.Address].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-
-            worksheet.Cells[worksheet.Dimension.Address].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
         }
 
         /// <summary>
