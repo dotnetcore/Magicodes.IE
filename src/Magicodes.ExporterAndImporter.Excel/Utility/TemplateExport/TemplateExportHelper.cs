@@ -224,8 +224,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                     {
                         continue;
                     }
-
-                    sheet.Row(rowIndex).Height = pic.Image.Height;
+                    //https://github.com/dotnetcore/Magicodes.IE/issues/131
+                    //sheet.Row(rowIndex).Height = pic.Image.Height;
+                    sheet.Row(rowIndex).Height = pic.GetPrivateProperty<int>("_height");
                     rows.Add(rowIndex);
                 }
             }
