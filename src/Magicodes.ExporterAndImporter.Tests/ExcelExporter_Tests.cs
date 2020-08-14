@@ -24,11 +24,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Magicodes.ExporterAndImporter.Csv;
+using Magicodes.ExporterAndImporter.Tests.Extensions;
 using OfficeOpenXml.Style;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -406,6 +408,25 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+        [Fact(DisplayName = "DTO导出支持动态类型")]
+        public async Task ExportAsByteArraySupportDynamicType_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+            string fields = "text,number,name";
+            var shapedData = source.ShapeData(fields) as ICollection<ExpandoObject>;
+
+            var result = await exporter.ExportAsByteArray<ExpandoObject>(shapedData);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
         [Fact(DisplayName = "导出分割当前Sheet追加Column")]
         public async Task ExprotSeparateByColumn_Test()
