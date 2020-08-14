@@ -5,7 +5,7 @@
     <PackageId>Magicodes.IE.Excel</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Magicodes.EPPlus" Version="4.6.0" />
+    <PackageReference Include="Magicodes.EPPlus" Version="4.6.1" />
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.1" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.20" />
