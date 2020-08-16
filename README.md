@@ -165,6 +165,28 @@
 **![](./res/重复错误.png "重复错误.png")**
 - **支持单个数据模板导出，常用于导出收据、凭据等业务**
 - **支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（[https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8 ) ））**
+- **支持 dynamic/ExpandoObject 动态列导出**
+```csharp
+        [Fact(DisplayName = "DTO导出支持动态类型")]
+        public async Task ExportAsByteArraySupportDynamicType_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+            string fields = "text,number,name";
+            var shapedData = source.ShapeData(fields) as ICollection<ExpandoObject>;
+
+            var result = await exporter.ExportAsByteArray<ExpandoObject>(shapedData);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+        }
+```
 - **支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。**
 ```csharp
         /// <summary>

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using System.Drawing;
+using System.Dynamic;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Globalization;
@@ -39,6 +40,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (typeof(DataTable).Equals(typeof(T)))
             {
                 IsDynamicDatableExport = true;
+            }
+
+            if (typeof(ExpandoObject).Equals(typeof(T)))
+            {
+                IsExpandoObjectType = true;
             }
 
             _sheetName = sheetName;
@@ -177,7 +183,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             get
             {
                 if (_exporterHeaderList == null) GetExporterHeaderInfoList();
-                if ((_exporterHeaderList == null || _exporterHeaderList.Count == 0) && !IsDynamicDatableExport) throw new Exception("请定义表头！");
+                if ((_exporterHeaderList == null || _exporterHeaderList.Count == 0) && !IsDynamicDatableExport && !IsExpandoObjectType) throw new Exception("请定义表头！");
                 return _exporterHeaderList;
             }
             set => _exporterHeaderList = value;
@@ -215,6 +221,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected bool IsDynamicDatableExport { get; set; }
 
         /// <summary>
+        /// 是否为ExpandoObject类型，调用LoadFromDictionaries以支持动态导出
+        /// </summary>
+        protected bool IsExpandoObjectType { get; set; }
+
+        /// <summary>
         /// 添加导出表头
         /// </summary>
         /// <param name="exporterHeaderInfos"></param>
@@ -227,7 +238,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     获取头部定义
         /// </summary>
         /// <returns></returns>
-        protected virtual void GetExporterHeaderInfoList(DataTable dt = null)
+        protected virtual void GetExporterHeaderInfoList(DataTable dt = null, ICollection<T> dataItems = null)
         {
             _exporterHeaderList = new List<ExporterHeaderInfo>();
             if (dt != null)
@@ -241,6 +252,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         ExporterHeaderAttribute = new ExporterHeaderAttribute(dt.Columns[i].ColumnName),
                         CsTypeName = dt.Columns[i].DataType.GetCSharpTypeName(),
                         DisplayName = dt.Columns[i].ColumnName
+                    };
+                    AddExportHeaderInfo(item);
+                }
+            }
+            else if (IsExpandoObjectType)
+            {
+                var items = dataItems as IEnumerable<IDictionary<string, object>>;
+                var keys = new List<string>(items.First().Keys);
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    var item = new ExporterHeaderInfo
+                    {
+                        Index = i + 1,
+                        PropertyName = keys[i],
+                        ExporterHeaderAttribute = new ExporterHeaderAttribute(keys[i]),
+                        CsTypeName = keys[i].GetType().GetCSharpTypeName(),
+                        DisplayName = keys[i]
                     };
                     AddExportHeaderInfo(item);
                 }
@@ -316,6 +344,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
             AddDataItems(dataItems);
+            // 为了传入dataItems，在这里提前调用一下
+            if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
             //仅当存在图片表头才渲染图片
             if (ExporterHeaderList.Any(p => p.ExportImageFieldAttribute != null))
             {
@@ -446,12 +476,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var tbStyle = TableStyles.Medium10;
                 if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
                     tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-                var er = excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+                var er = IsExpandoObjectType
+                    ? excelRange.LoadFromDictionaries(dataItems as List<ExpandoObject>, true, TableStyles.None)
+                    : excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
             }
             else
             {
-                excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+                if (IsExpandoObjectType)
+                    excelRange.LoadFromDictionaries(dataItems as List<ExpandoObject>, true, TableStyles.None);
+                else
+                    excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
             }
         }
 

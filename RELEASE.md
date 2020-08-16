@@ -1,5 +1,9 @@
 # Release Log
 
+**2020.08.16**
+- **【Nuget】版本更新到2.3.0-beta7**
+- excel添加对ExpandoObject类型的支持 [#135](https://github.com/dotnetcore/Magicodes.IE/issues/135)**
+
 **2020.08.10**
 - **【Nuget】版本更新到2.3.0-beta6**
 - 多Sheet导入保存标注错误单元测试，并没出现多数据导入效验bug [#108](https://github.com/dotnetcore/Magicodes.IE/issues/108)
