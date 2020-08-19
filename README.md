@@ -40,6 +40,7 @@
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
 | [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚢进行中 |2020-06-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | ☕进行中 |2020-06-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
