@@ -10,11 +10,11 @@
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
-- **[特点](https://github.com/dotnetcore/Magicodes.IE/#%E7%89%B9%E7%82%B9)、详细说明、[教程](https://github.com/dotnetcore/Magicodes.IE/#%E6%95%99%E7%A8%8B)、[Nuget](https://github.com/dotnetcore/Magicodes.IE/#nuget)、注意事项、[里程碑](https://github.com/dotnetcore/Magicodes.IE/#%E9%87%8C%E7%A8%8B%E7%A2%91)、[FAQ](https://github.com/dotnetcore/Magicodes.IE/#faq)、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
+- **特点、详细说明、教程、Nuget、注意事项、里程碑、FAQ、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.3.0-beta8**
+最新版本：**2.3.0-beta6**
 
 ## 疯狂的徽章
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
@@ -40,7 +40,7 @@
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
 | [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚢进行中 |2020-09-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
+| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚢进行中 |2020-06-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | ☕进行中 |2020-06-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
