@@ -10,7 +10,7 @@
 
 - Github：<https://github.com/dotnetcore/Magicodes.IE>
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
-- **[特点](https://github.com/dotnetcore/Magicodes.IE/#%E7%89%B9%E7%82%B9)、详细说明、[教程](https://github.com/dotnetcore/Magicodes.IE/#%E6%95%99%E7%A8%8B)、Nuget、注意事项、[里程碑](https://github.com/dotnetcore/Magicodes.IE/#%E9%87%8C%E7%A8%8B%E7%A2%91)、[FAQ](https://github.com/dotnetcore/Magicodes.IE/#faq)、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
+- **[特点](https://github.com/dotnetcore/Magicodes.IE/#%E7%89%B9%E7%82%B9)、详细说明、[教程](https://github.com/dotnetcore/Magicodes.IE/#%E6%95%99%E7%A8%8B)、[Nuget](https://github.com/dotnetcore/Magicodes.IE/#nuget)、注意事项、[里程碑](https://github.com/dotnetcore/Magicodes.IE/#%E9%87%8C%E7%A8%8B%E7%A2%91)、[FAQ](https://github.com/dotnetcore/Magicodes.IE/#faq)、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
