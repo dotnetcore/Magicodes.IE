@@ -1003,9 +1003,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
-                //pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
-                //    .ShouldBe(26);
-              
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(list.Count + 1);
+                pck.Workbook.Worksheets.First().Cells["A2"].Text.ShouldBe(list[0].IdCard);
+
             }
         }
     }
