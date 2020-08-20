@@ -966,5 +966,47 @@ namespace Magicodes.ExporterAndImporter.Tests
                 ec.Dimension.Rows.ShouldBe(58);
             }
         }
+
+        /// <summary>
+        /// #140 https://github.com/dotnetcore/Magicodes.IE/issues/140
+        /// 身份证导出文本格式测试
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "身份证导出文本格式测试")]
+        public async Task Issue140_IdCardExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(Issue140_IdCardExport_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list = new List<Issue140_IdCardExportDto>()
+            {
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+            };
+            var result = await exporter.Export(filePath, list);
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                //pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                //    .ShouldBe(26);
+              
+            }
+        }
     }
 }

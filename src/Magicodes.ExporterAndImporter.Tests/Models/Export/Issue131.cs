@@ -32,5 +32,4 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader()]
         public decimal Size { set; get; }
     }
-
 }
