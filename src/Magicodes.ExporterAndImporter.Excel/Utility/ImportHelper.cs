@@ -305,6 +305,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="excelPackage"></param>
         internal virtual void LabelingError(ExcelPackage excelPackage)
         {
+            //如果源路径为空则不允许生成标注文件
+            if (string.IsNullOrWhiteSpace(FilePath))
+            {
+                return;
+            }
+
             //是否标注错误
             if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             {
@@ -359,7 +365,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[1, 1, 1, worksheet.Dimension.Columns]);
                     excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[2, 1, 2, worksheet.Dimension.Columns]);
                 }
-
                 var ext = Path.GetExtension(FilePath);
                 var filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
                 excelPackage.SaveAs(new FileInfo(filePath));
