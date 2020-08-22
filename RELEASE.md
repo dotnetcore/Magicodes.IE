@@ -1,5 +1,9 @@
 # Release Log
 
+**2020.08.22**
+- **【Nuget】版本更新到2.3.0-beta8**
+- 修复基于文件流导入时的NULL异常，并完善单元测试 [#141](https://github.com/dotnetcore/Magicodes.IE/issues/141)**
+
 **2020.08.16**
 - **【Nuget】版本更新到2.3.0-beta7**
 - excel添加对ExpandoObject类型的支持 [#135](https://github.com/dotnetcore/Magicodes.IE/issues/135)**
