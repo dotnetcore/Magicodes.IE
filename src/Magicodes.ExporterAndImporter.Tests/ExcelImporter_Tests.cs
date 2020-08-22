@@ -125,12 +125,13 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var result = await Importer.Import<ImportProductDto>(stream);
                 result.ShouldNotBeNull();
 
-                result.HasError.ShouldBeFalse();
+                result.HasError.ShouldBeTrue();
+                result.RowErrors.Count.ShouldBe(1);
                 result.Data.ShouldNotBeNull();
                 result.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
                 foreach (var item in result.Data)
                 {
-                    if (item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
+                    if (item.Name!=null && item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
 
                     if (item.Code.Contains("不去除空格测试")) item.Code.ShouldContain(" ");
                     //去除中间空格测试
@@ -150,7 +151,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 result.Data.ElementAt(0).BarCode.ShouldBe("123123");
                 result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
                 result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
-                result.Data.ElementAt(1).Name.ShouldBe("12312312");
+                result.Data.ElementAt(1).Name.ShouldBe(null);
                 result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
 
                 result.ImporterHeaderInfos.ShouldNotBeNull();
@@ -172,12 +173,13 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await Importer.Import<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
 
-            result.HasError.ShouldBeFalse();
+            result.HasError.ShouldBeTrue();
+            result.RowErrors.Count.ShouldBe(1);
             result.Data.ShouldNotBeNull();
             result.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
             foreach (var item in result.Data)
             {
-                if (item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
+                if (item.Name != null && item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
 
                 if (item.Code.Contains("不去除空格测试")) item.Code.ShouldContain(" ");
                 //去除中间空格测试
@@ -197,7 +199,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.Data.ElementAt(0).BarCode.ShouldBe("123123");
             result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
             result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
-            result.Data.ElementAt(1).Name.ShouldBe("12312312");
+            result.Data.ElementAt(1).Name.ShouldBe(null);
             result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
 
             result.ImporterHeaderInfos.ShouldNotBeNull();
