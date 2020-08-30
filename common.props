@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0-beta8</Version>
+        <Version>2.3.0</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -14,28 +14,8 @@
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
           
-          **2020.08.16**
-          - ** 【Nuget】版本更新到2.3.0-beta7**
-          - excel添加对ExpandoObject类型的支持 #135
-
-          **2020.08.10**
-          - **【Nuget】版本更新到2.3.0-beta6**
-          - 多Sheet导入保存标注错误单元测试，并没出现多数据导入效验bug #108
-          - Excel多Sheet 导入模板生成 #133
-          - 修复Excel模板图片高度问题 #131
-           
-          **2020.08.04**
-          - ** 【Nuget】版本更新到2.3.0-beta5**
-          - 在runtimes native包问题
-          - 对于跨平台native中 COM Interop is not supported on this platform. #130
-
-          **2020.07.14**
-          - ** 【Nuget】版本更新到2.3.0-beta4**
-
-          **2020.07.13**
-          - ** 【Nuget】版本更新到2.3.0-beta3**
-          - 【PDF导出】修复Linux下导出PDf 出错问题 #125
-
+          **2020.08.30**
+          - ** 【Nuget】版本更新到2.3.0 **
 
         </Description>
     </PropertyGroup>

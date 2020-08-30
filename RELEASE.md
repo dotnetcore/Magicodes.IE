@@ -1,5 +1,8 @@
 # Release Log
 
+## 2.3.0
+**2020.08.30**
+
 ## 2.3.0-beta8
 **2020.08.22**
 - 修复基于文件流导入时的NULL异常，并完善单元测试 [#141](https://github.com/dotnetcore/Magicodes.IE/issues/141)**
