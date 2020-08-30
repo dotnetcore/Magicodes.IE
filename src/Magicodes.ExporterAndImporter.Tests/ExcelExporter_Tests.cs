@@ -98,6 +98,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //默认DateTime
                 sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
 
+                //单元格宽度测试
+                sheet.Column(7).Width.ShouldBe(100);
+
                 sheet.Tables.Count.ShouldBe(1);
 
                 var tb = sheet.Tables.First();

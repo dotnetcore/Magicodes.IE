@@ -671,6 +671,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
 
+                //设置单元格宽度
+                var width = exporterHeader.ExporterHeaderAttribute.Width;
+                if (width > 0)
+                {
+                    col.Width = width;
+                }
+
                 if (exporterHeader.ExporterHeaderAttribute.AutoCenterColumn)
                 {
                     col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;

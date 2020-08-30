@@ -62,6 +62,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]
         public DateTime? Time2 { get; set; }
 
+        [ExporterHeader(Width = 100)]
         public DateTime Time3 { get; set; }
 
         public DateTime Time4 { get; set; }
