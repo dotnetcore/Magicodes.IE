@@ -14,7 +14,7 @@
 
 **一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
 
-最新版本：**2.3.0-beta8**
+最新版本：**[2.3.0-beta8](https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md#release-log)**
 
 ## 疯狂的徽章
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
@@ -47,6 +47,8 @@
 
 ### Nuget
 
+#### 稳定版（推荐）
+
 | **名称** |      **Nuget**      |
 |----------|:-------------:|
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
@@ -56,6 +58,18 @@
 | **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
+
+#### Beta版
+
+| **名称** |      **Nuget**      |
+|----------|:-------------:|
+| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
+| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
+| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
+| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
+| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
+| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
+| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
 ### Magicodes Nuget包推荐
 
