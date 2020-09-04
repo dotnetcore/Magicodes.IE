@@ -1,39 +1,21 @@
 # Magicodes.IE
 
-导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。已加入NCC开源组织。
+[![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
+[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
+[![stats](https://img.shields.io/nuget/dt/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/stats/packages/Magicodes.IE.Core?groupby=Version)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dotnetcore/Magicodes.IE/blob/master/LICENSE)
 
-[Magicodes.IE 2.0发布](https://docs.xin-lai.com/2020/02/12/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%202.0%E5%8F%91%E5%B8%83/)
+[![Stargazers over time](https://starchart.cc/apache/shardingsphere.svg)](https://starchart.cc/apache/shardingsphere)
 
-[Magicodes.IE 2.1发布](https://mp.weixin.qq.com/s?__biz=MzU0Mzk1OTU2Mg==&mid=2247485222&idx=1&sn=a0f7c099fd76fea79bf3f7185d533652&chksm=fb023843cc75b1558c28ad09fd3814ba3839f11f878bb7d4c288d342afc7ededbf27f8b3f18d&token=630215531&lang=zh_CN#rd)
-
-[如何做好一个开源项目（一）](https://docs.xin-lai.com/2020/03/22/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E5%A6%82%E4%BD%95%E5%81%9A%E5%A5%BD%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%B8%80%EF%BC%89/)
-
-- Github：<https://github.com/dotnetcore/Magicodes.IE>
-- 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
-- **[特点](https://github.com/dotnetcore/Magicodes.IE/#%E7%89%B9%E7%82%B9)、详细说明、[教程](https://github.com/dotnetcore/Magicodes.IE/#%E6%95%99%E7%A8%8B)、[Nuget](https://github.com/dotnetcore/Magicodes.IE/#nuget)、注意事项、[里程碑](https://github.com/dotnetcore/Magicodes.IE/#%E9%87%8C%E7%A8%8B%E7%A2%91)、[FAQ](https://github.com/dotnetcore/Magicodes.IE/#faq)、[更新历史](https://github.com/dotnetcore/Magicodes.IE#%E6%9B%B4%E6%96%B0%E5%8E%86%E5%8F%B2)见下文**
-
-**一旦成为贡献者，我们将会邀请您加入Magicodes.IE管理委员会的微信群，并拥有相关的投票权。**
-
-最新版本：**[2.3.0](https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md#release-log)**
-
-## 疯狂的徽章
+![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
+![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
-### GitHub
 
-- ![GitHub contributors](https://img.shields.io/github/contributors/dotnetcore/Magicodes.IE?style=social) ![GitHub license badge](https://img.shields.io/github/license/dotnetcore/Magicodes.IE?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/dotnetcore/Magicodes.IE?style=social)
-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/dotnetcore/Magicodes.IE?style=social)  ​![GitHub last commit](https://img.shields.io/github/last-commit/dotnetcore/Magicodes.IE?style=social)
-- ![GitHub issues badge](https://img.shields.io/github/issues/dotnetcore/Magicodes.IE?style=social) ![GitHub issues badge](https://img.shields.io/github/issues-closed/dotnetcore/Magicodes.IE?style=social)
-- ![GitHub forks badge](https://img.shields.io/github/forks/dotnetcore/Magicodes.IE?style=social)	![GitHub stars](https://img.shields.io/github/stars/dotnetcore/Magicodes.IE?style=social)
-- ![GitHub pull requests](https://img.shields.io/github/issues-pr/dotnetcore/Magicodes.IE?style=social)	![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dotnetcore/Magicodes.IE?style=social)
+## 概述
 
-### Azure DevOps
-- Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
-- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
-- Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop)
-- Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
-- Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
+导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。
 
-具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
+**![总体说明](./docs/Magicodes.IE.png)**
 
 ## 里程碑
 
@@ -44,67 +26,6 @@
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
-
-### Nuget
-
-#### 稳定版（推荐）
-
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
-| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
-| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
-| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
-| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
-| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
-| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
-| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
-
-#### Beta版
-
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
-| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
-| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
-| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
-| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
-| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
-| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
-| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
-
-### Magicodes Nuget包推荐
-
-| 名称     |      说明      |      Nuget      | GitHUb |
-|----------|:-------------:|:-------------:|:-------------:|
-| Magicodes.WeChat.MiniProgram |小程序SDK |[![NuGet](https://buildstats.info/nuget/Magicodes.WeChat.MiniProgram)](https://www.nuget.org/packages/Magicodes.WeChat.MiniProgram) |**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
-| Magicodes.Sms.Aliyun |阿里云短信 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Aliyun)](https://www.nuget.org/packages/Magicodes.Sms.Aliyun) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
-| Magicodes.Sms.Core | 短信核心库 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Core)](https://www.nuget.org/packages/Magicodes.Sms.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
-| Magicodes.Sms.Aliyun.Abp | 阿里云短信Abp模块 | [![NuGet](https://buildstats.info/nuget/Magicodes.Sms.Aliyun.Abp)](https://www.nuget.org/packages/Magicodes.Sms.Aliyun.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Sms](https://github.com/xin-lai/Magicodes.Sms)**|
-| Magicodes.Storage.Core |通用存储核心库| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Core)](https://www.nuget.org/packages/Magicodes.Storage.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
-| Magicodes.Storage.AliyunOss.Core |阿里云OSS存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.AliyunOss.Core)](https://www.nuget.org/packages/Magicodes.Storage.AliyunOss.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
-| Magicodes.Storage.Local.Core |本地存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Local.Core)](https://www.nuget.org/packages/Magicodes.Storage.Local.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
-| Magicodes.Storage.Tencent.Core |腾讯云存储| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Tencent.Core)](https://www.nuget.org/packages/Magicodes.Storage.Tencent.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
-| Magicodes.Storage.Abp.Core | 通用存储ABP模块集成| [![NuGet](https://buildstats.info/nuget/Magicodes.Storage.Abp.Core)](https://www.nuget.org/packages/Magicodes.Storage.Abp.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Storage](https://github.com/xin-lai/Magicodes.Storage)**|
-| Magicodes.WeChat.SDK.Core |微信SDK | [![NuGet](https://buildstats.info/nuget/Magicodes.WeChat.SDK.Core)](https://www.nuget.org/packages/Magicodes.WeChat.SDK.Core) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WeChat.SDK](https://github.com/xin-lai/Magicodes.WeChat.SDK)**|
-| Magicodes.SwaggerUI |SwaggerUI API快速配置和分组| [![NuGet](https://buildstats.info/nuget/Magicodes.SwaggerUI)](https://www.nuget.org/packages/Magicodes.SwaggerUI) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.SwaggerUI](https://github.com/xin-lai/Magicodes.SwaggerUI)**|
-| Magicodes.Pay.Alipay  |支付宝支付库|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay)](https://www.nuget.org/packages/Magicodes.Pay.Alipay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Notify  |支付通用回调库|   [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Notify)](https://www.nuget.org/packages/Magicodes.Pay.Notify) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Wxpay  |微信支付库|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Wxpay)](https://www.nuget.org/packages/Magicodes.Pay.Wxpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Alipay.Global |国际支付宝支付库 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay.Global)](https://www.nuget.org/packages/Magicodes.Pay.Alipay.Global) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Allinpay  | 通联支付库 | [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Allinpay)](https://www.nuget.org/packages/Magicodes.Pay.Allinpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Abp  | ABP 支付通用封装库| [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp)](https://www.nuget.org/packages/Magicodes.Pay.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Abp.Allinpay  |ABP 通联支付模块|  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp.Allinpay)](https://www.nuget.org/packages/Magicodes.Pay.Abp.Allinpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Abp.Wxpay  | ABP 微信支付模块| [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Abp.Wxpay)](https://www.nuget.org/packages/Magicodes.Pay.Abp.Wxpay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Alipay.Global  | ABP 国际支付宝模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay.Global)](https://www.nuget.org/packages/Magicodes.Pay.Alipay.Global) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Pay.Alipay  | ABP 支付宝模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Pay.Alipay)](https://www.nuget.org/packages/Magicodes.Pay.Alipay) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.Pay](https://github.com/xin-lai/Magicodes.Pay)**|
-| Magicodes.Abp.Castle.NLog  | ABP Nlog支持模块 |  [![NuGet](https://buildstats.info/nuget/Magicodes.Abp.Castle.NLog)](https://www.nuget.org/packages/Magicodes.Abp.Castle.NLog) |[xin-lai](https://github.com/xin-lai)/**[Abp.Castle.NLog](https://github.com/xin-lai/Abp.Castle.NLog)**|
-| Magicodes.WxMiniProgram.Sdk  |微信小程序SDK|  [![NuGet](https://buildstats.info/nuget/Magicodes.WxMiniProgram.Sdk)](https://www.nuget.org/packages/Magicodes.WxMiniProgram.Sdk) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
-| Magicodes.WxMiniProgram.Sdk.Abp  |微信小程序SDK Abp模块|   [![NuGet](https://buildstats.info/nuget/Magicodes.WxMiniProgram.Sdk.Abp)](https://www.nuget.org/packages/Magicodes.WxMiniProgram.Sdk.Abp) |[xin-lai](https://github.com/xin-lai)/**[Magicodes.WxMiniProgram.Sdk](https://github.com/xin-lai/Magicodes.WxMiniProgram.Sdk)**|
-| Magicodes.Dingtalk.SDK |钉钉SDK| [![NuGet](https://buildstats.info/nuget/Magicodes.Dingtalk.SDK)](https://www.nuget.org/packages/Magicodes.Dingtalk.SDK)  | [xin-lai](https://github.com/xin-lai)/**[Magicodes.Dingtalk.SDK](https://github.com/xin-lai/Magicodes.Dingtalk.SDK)**|
-| Magicodes.DynamicSqlApi.Core  | 根据SQL自动解析生成动态API | [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.Core)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.Core) | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
-| Magicodes.DynamicSqlApi.All |  根据SQL自动解析生成动态API |  [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.All)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.All)   |  **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
-| Magicodes.DynamicSqlApi.CsScript |根据SQL自动解析生成动态API |    [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.CsScript)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.CsScript)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
-| Magicodes.DynamicSqlApi.Dapper | 根据SQL自动解析生成动态API |   [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.Dapper)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.Dapper)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
-| Magicodes.DynamicSqlApi.SqlServer | 根据SQL自动解析生成动态API |   [![NuGet](https://buildstats.info/nuget/Magicodes.DynamicSqlApi.SqlServer)](https://www.nuget.org/packages/Magicodes.DynamicSqlApi.SqlServer)   | **[Magicodes.DynamicSqlApi](https://github.com/xin-lai/Magicodes.DynamicSqlApi)** |
 
 ### **注意**
 
@@ -139,11 +60,7 @@
 
 **更新历史见下文。**
 
-
-
-### **特点**
-
-**![总体说明](./docs/Magicodes.IE.png)**
+## 特点
 
 - **需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；**
 **![](./res/导入Dto.png "导入Dto")**
