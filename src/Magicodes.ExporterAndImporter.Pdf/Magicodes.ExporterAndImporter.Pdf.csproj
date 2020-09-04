@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
+
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1;</TargetFrameworks>
     <PackageId>Magicodes.IE.Pdf</PackageId>
