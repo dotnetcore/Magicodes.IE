@@ -54,14 +54,11 @@ namespace Magicodes.ExporterAndImporter.Pdf
             // Check the platform and load the appropriate Library
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                var executablePath = Assembly.GetEntryAssembly().Location;
-                var mainModuleName = Assembly.GetEntryAssembly().ManifestModule.Name;
-                var currentPath = executablePath.Replace(mainModuleName, "");
-
-                var wkHtmlToPdfPath = Path.Combine(currentPath, $"runtimes//linux-x64//native//wkhtmltox.so");
+                var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var wkHtmlToPdfPath = Path.Combine(appPath, "runtimes", "linux-x64", "native", "wkhtmltox.so");
                 if (!File.Exists(wkHtmlToPdfPath))
                 {
-                    wkHtmlToPdfPath = Path.Combine(currentPath, $"wkhtmltox.so");
+                    wkHtmlToPdfPath = Path.Combine(appPath, $"wkhtmltox.so");
                 }
 
                 context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
