@@ -31,12 +31,12 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     列属性
         /// </summary>
-        public ExporterHeaderAttribute ExporterHeaderAttribute { get; set; } = new ExporterHeaderAttribute();
+        public ExporterHeaderAttribute ExporterHeaderAttribute { get; set; }
 
         /// <summary>
         ///     图片属性
         /// </summary>
-        public ExportImageFieldAttribute ExportImageFieldAttribute { get; set; } = new ExportImageFieldAttribute();
+        public ExportImageFieldAttribute ExportImageFieldAttribute { get; set; }
 
         /// <summary>
         ///     C#数据类型
