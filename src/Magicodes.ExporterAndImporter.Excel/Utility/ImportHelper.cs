@@ -631,6 +631,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     Header = importerHeaderAttribute,
                     ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true)
                 };
+
                 //设置ColumnIndex
                 if (colHeader.Header.ColumnIndex > 0)
                 {

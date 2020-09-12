@@ -270,6 +270,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         CsTypeName = keys[i].GetType().GetCSharpTypeName(),
                         DisplayName = keys[i]
                     };
+
+                    if (keys[i].GetType().IsEnum)
+                    {
+                        var type = keys[i].GetType();
+                        var isNullable = type.IsNullable();
+                        if (isNullable) type = type.GetNullableUnderlyingType();
+                        var values = type.GetEnumTextAndValues();
+
+                        foreach (var value in values.Where(value => !item.MappingValues.ContainsKey(value.Key)))
+                            item.MappingValues.Add(value.Key, value.Value);
+
+                        if (isNullable)
+                            if (!item.MappingValues.ContainsKey(string.Empty))
+                                item.MappingValues.Add(string.Empty, null);
+
+                    }
                     AddExportHeaderInfo(item);
                 }
             }
@@ -309,6 +325,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         (objProperties[i].GetAttribute<IEIgnoreAttribute>(true) == null) ?
                         item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
 
+                    if (objProperties[i].GetType().IsEnum)
+                    {
+                        var propType = objProperties[i].GetType();
+                        var isNullable = propType.IsNullable();
+                        if (isNullable) propType = propType.GetNullableUnderlyingType();
+                        var values = propType.GetEnumTextAndValues();
+
+                        foreach (var value in values.Where(value => !item.MappingValues.ContainsKey(value.Key)))
+                            item.MappingValues.Add(value.Key, value.Value);
+
+                        if (isNullable)
+                            if (!item.MappingValues.ContainsKey(string.Empty))
+                                item.MappingValues.Add(string.Empty, null);
+
+                    }
+
                     AddExportHeaderInfo(item);
                 }
             }
@@ -343,6 +375,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns>文件</returns>
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
+
             AddDataItems(dataItems);
             // 为了传入dataItems，在这里提前调用一下
             if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
@@ -488,6 +521,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 else
                     excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
             }
+        }
+
+        /// <summary>
+        ///     数据解析
+        /// </summary>
+        /// <param name="dataItems"></param>
+        protected virtual void ParseData(ICollection<T> dataItems)
+        {
+            var type = typeof(T);
+            var properties = type.GetProperties();
+            foreach (var dataItem in dataItems)
+            {
+                //var data = new T();
+                //foreach (var propertyInfo in properties)
+                //{
+                //    propertyInfo.SetValue(dataItem,
+                //        value);
+                //}
+
+            }
+
+
+
         }
 
         /// <summary>

@@ -11,6 +11,8 @@
 // 
 // ======================================================================
 
+using System.Collections.Generic;
+
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
@@ -47,5 +49,9 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     最终显示的列名
         /// </summary>
         public string DisplayName { set; get; }
+
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
     }
 }

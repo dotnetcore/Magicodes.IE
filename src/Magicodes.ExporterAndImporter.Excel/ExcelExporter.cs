@@ -84,8 +84,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                 helper.CopySheet(1,
                     2);
 #else
-              helper.CopySheet(0,
-                    1);
+                helper.CopySheet(0,
+                      1);
 #endif
 
                 _isSeparateColumn = false;
@@ -97,8 +97,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                 helper.CopyRows(1,
                     2, _isAppendHeaders);
 #else
-              helper.CopyRows(0,
-                    1, _isAppendHeaders);
+                helper.CopyRows(0,
+                      1, _isAppendHeaders);
 #endif
             }
 
@@ -463,5 +463,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                 }
             }
         }
+
+
     }
 }

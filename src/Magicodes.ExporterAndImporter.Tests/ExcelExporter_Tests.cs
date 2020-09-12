@@ -415,9 +415,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ExportAsByteArraySupportDynamicType_Test()
         {
             IExporter exporter = new ExcelExporter();
-
             var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
-
+            
             DeleteFile(filePath);
 
             var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
