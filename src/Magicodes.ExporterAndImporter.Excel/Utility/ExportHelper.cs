@@ -325,9 +325,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         (objProperties[i].GetAttribute<IEIgnoreAttribute>(true) == null) ?
                         item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
 
-                    if (objProperties[i].GetType().IsEnum)
+                    if (objProperties[i].PropertyType.IsEnum)
                     {
-                        var propType = objProperties[i].GetType();
+                        var propType = objProperties[i].PropertyType;
                         var isNullable = propType.IsNullable();
                         if (isNullable) propType = propType.GetNullableUnderlyingType();
                         var values = propType.GetEnumTextAndValues();
@@ -375,7 +375,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns>文件</returns>
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
-
+            ParseData(dataItems);
             AddDataItems(dataItems);
             // 为了传入dataItems，在这里提前调用一下
             if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
@@ -534,14 +534,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             foreach (var dataItem in dataItems)
             {
                 //var data = new T();
-                //foreach (var propertyInfo in properties)
-                //{
-                //    propertyInfo.SetValue(dataItem,
-                //        value);
-                //}
+                foreach (var propertyInfo in properties)
+                {
+                    if (propertyInfo.PropertyType.IsEnum)
+                    {
+                        
+                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                        var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem);
+                        //if (col.MappingValues.Count>0&& col.MappingValues.ContainsKey(dataItem))
+                        //{
+                            
+                        //}
+                        propertyInfo.SetValue(dataItem,
+                            10);
+                    }
+                
+                }
 
             }
-
 
 
         }
