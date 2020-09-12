@@ -15,7 +15,7 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
-    
+
     /// <summary>
     ///     导出属性特性
     /// </summary>
@@ -24,7 +24,7 @@ namespace Magicodes.ExporterAndImporter.Core
     {
         /// <inheritdoc />
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
-            bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false)
+            bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false, int width = 0)
         {
             DisplayName = displayName;
             FontSize = fontSize;
@@ -32,6 +32,7 @@ namespace Magicodes.ExporterAndImporter.Core
             IsBold = isBold;
             IsAutoFit = isAutoFit;
             AutoCenterColumn = autoCenterColumn;
+            Width = width;
         }
 
         /// <summary>
@@ -68,6 +69,11 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     是否忽略
         /// </summary>
         public bool IsIgnore { get; set; }
+
+        /// <summary>
+        ///     宽度
+        /// </summary>
+        public int Width { get; set; }
     }
 
 
