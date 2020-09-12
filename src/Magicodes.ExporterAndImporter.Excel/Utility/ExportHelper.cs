@@ -573,7 +573,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected void DeleteIgnoreColumns()
         {
             var deletedCount = 0;
-            foreach (var exporterHeaderDto in ExporterHeaderList.Where(p => p.ExporterHeaderAttribute.IsIgnore))
+            foreach (var exporterHeaderDto in ExporterHeaderList.Where(p => p.ExporterHeaderAttribute != null && p.ExporterHeaderAttribute.IsIgnore))
             {
                 //TODO:后续重写底层逻辑，直接从数据层面拦截
                 CurrentExcelWorksheet.DeleteColumn(exporterHeaderDto.Index - deletedCount);
@@ -640,7 +640,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             foreach (var exporterHeader in ExporterHeaderList)
             {
                 var col = CurrentExcelWorksheet.Column(exporterHeader.Index);
-                if (!string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
+                if (exporterHeader.ExporterHeaderAttribute != null && !string.IsNullOrWhiteSpace(exporterHeader.ExporterHeaderAttribute.Format))
                 {
                     col.Style.Numberformat.Format = exporterHeader.ExporterHeaderAttribute.Format;
 
@@ -663,7 +663,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                 }
 
-                if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
+                if (!ExcelExporterSettings.AutoFitAllColumn && exporterHeader.ExporterHeaderAttribute != null && exporterHeader.ExporterHeaderAttribute.IsAutoFit)
                     col.AutoFit();
 
                 if (exporterHeader.ExportImageFieldAttribute != null)
@@ -671,18 +671,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
 
-                //设置单元格宽度
-                var width = exporterHeader.ExporterHeaderAttribute.Width;
-                if (width > 0)
+                if (exporterHeader.ExporterHeaderAttribute!=null)
                 {
-                    col.Width = width;
-                }
+                    //设置单元格宽度
+                    var width = exporterHeader.ExporterHeaderAttribute.Width;
+                    if (width > 0)
+                    {
+                        col.Width = width;
+                    }
 
-                if (exporterHeader.ExporterHeaderAttribute.AutoCenterColumn)
-                {
-                    col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    if (exporterHeader.ExporterHeaderAttribute.AutoCenterColumn)
+                    {
+                        col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    }
                 }
-
             }
         }
     }
