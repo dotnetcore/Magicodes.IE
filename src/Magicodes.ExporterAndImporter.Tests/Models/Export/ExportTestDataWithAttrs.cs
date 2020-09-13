@@ -36,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
             return exporterHeaderInfo;
         }
     }
-
+    
     [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true)]
     public class ExportTestDataWithAttrs
     {

@@ -415,9 +415,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ExportAsByteArraySupportDynamicType_Test()
         {
             IExporter exporter = new ExcelExporter();
-
             var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
-
+            
             DeleteFile(filePath);
 
             var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
@@ -892,12 +891,13 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
 
                 sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
+                new List<string> {"是", "否"}.ShouldContain(sheet.Cells["G2"].Text);
                 sheet.Tables.Count.ShouldBe(1);
                 var tb = sheet.Tables.First();
 
                 tb.Columns[0].Name.ShouldBe("Custom列1");
                 tb.Columns[1].Name.ShouldBe("列2");
-                tb.Columns.Count.ShouldBe(4);
+                tb.Columns.Count.ShouldBe(8);
             }
         }
 

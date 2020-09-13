@@ -19,7 +19,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// 时间测试
         /// </summary>
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
-         public DateTime Time1 { get; set; }
+        public DateTime Time1 { get; set; }
         /// <summary>
         /// 时间测试
         /// </summary>
@@ -30,6 +30,24 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         [IEIgnoreAttribute]
         public string Ignore { get; set; }
-        
+
+        [ValueMapping("A Test", "A")]
+        [ValueMapping("B Test", "B")]
+        public MyEmum MyEmum { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool? Bool { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool Bool1 { get; set; }
+        public bool Bool2 { get; set; }
+    }
+
+    public enum MyEmum
+    {
+        A,
+        B
     }
 }

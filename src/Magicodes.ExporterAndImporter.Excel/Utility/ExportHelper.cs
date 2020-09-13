@@ -5,6 +5,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,8 @@ using System.Dynamic;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -309,6 +312,31 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         (objProperties[i].GetAttribute<IEIgnoreAttribute>(true) == null) ?
                         item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
 
+                    var mappings = objProperties[i].GetAttributes<ValueMappingAttribute>().ToList();
+                    foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
+                        !item.MappingValues.ContainsKey(mappingAttribute.Value)))
+                        item.MappingValues.Add(mappingAttribute.Value, mappingAttribute.Text);
+
+                    //如果存在自定义映射，则不会生成默认映射
+                    if (!mappings.Any())
+                    {
+                        if (objProperties[i].PropertyType.IsEnum)
+                        {
+                            var propType = objProperties[i].PropertyType;
+                            var isNullable = propType.IsNullable();
+                            if (isNullable) propType = propType.GetNullableUnderlyingType();
+                            var values = propType.GetEnumTextAndValues();
+
+                            foreach (var value in values.Where(value => !item.MappingValues.ContainsKey(value.Key)))
+                                item.MappingValues.Add(value.Value, value.Key);
+
+                            if (isNullable)
+                                if (!item.MappingValues.ContainsKey(string.Empty))
+                                    item.MappingValues.Add(string.Empty, null);
+
+                        }
+                    }
+
                     AddExportHeaderInfo(item);
                 }
             }
@@ -343,7 +371,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns>文件</returns>
         public virtual ExcelPackage Export(ICollection<T> dataItems)
         {
-            AddDataItems(dataItems);
+            if (!IsExpandoObjectType)
+            {
+                var list = ParseData(dataItems);
+                AddDataItems(list);
+            }
+            else
+            {
+                AddDataItems(dataItems);
+            }
             // 为了传入dataItems，在这里提前调用一下
             if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
             //仅当存在图片表头才渲染图片
@@ -463,7 +499,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         /// <param name="dataItems"></param>
         /// <param name="excelRange"></param>
-        protected void AddDataItems(ICollection<T> dataItems, ExcelRangeBase excelRange = null)
+        protected void AddDataItems(dynamic dataItems, ExcelRangeBase excelRange = null)
         {
             if (excelRange == null)
                 excelRange = CurrentExcelWorksheet.Cells["A1"];
@@ -476,18 +512,81 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var tbStyle = TableStyles.Medium10;
                 if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
                     tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-                var er = IsExpandoObjectType
-                    ? excelRange.LoadFromDictionaries(dataItems as List<ExpandoObject>, true, TableStyles.None)
-                    : excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+                var er = excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
             }
             else
             {
                 if (IsExpandoObjectType)
-                    excelRange.LoadFromDictionaries(dataItems as List<ExpandoObject>, true, TableStyles.None);
+                    excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
                 else
-                    excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
+                    excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
             }
+        }
+
+        /// <summary>
+        ///     数据解析
+        /// </summary>
+        /// <param name="dataItems"></param>
+        protected virtual List<ExpandoObject> ParseData(ICollection<T> dataItems)
+        {
+            var type = typeof(T);
+            var properties = type.GetProperties();
+            List<ExpandoObject> list = new List<ExpandoObject>();
+            foreach (var dataItem in dataItems)
+            {
+                dynamic obj = new ExpandoObject();
+                foreach (var propertyInfo in properties)
+                {
+                    if (propertyInfo.PropertyType.IsEnum)
+                    {
+                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                        var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
+
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value ?? string.Empty))
+                        {
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                        }
+                    }
+                    else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
+                    {
+                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                        var value = Convert.ToBoolean(type.GetProperty(propertyInfo.Name)?.GetValue(dataItem));
+
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
+                        {
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                        }
+                        else
+                        {
+                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                        }
+                    }
+                    else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
+                    {
+                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                        var value = Convert.ToBoolean(type.GetProperty(propertyInfo.Name)?.GetValue(dataItem));
+
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
+                        {
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                        }
+                        else
+                        {
+                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                        }
+                    }
+                    else
+                    {
+                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
+                    }
+                }
+                list.Add(obj);
+            }
+            return list;
         }
 
         /// <summary>
@@ -687,5 +786,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
             }
         }
+
     }
 }
