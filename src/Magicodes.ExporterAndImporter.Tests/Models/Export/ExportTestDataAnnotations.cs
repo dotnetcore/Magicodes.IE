@@ -33,7 +33,16 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 
         [ValueMapping("A Test", "A")]
         [ValueMapping("B Test", "B")]
-        public MyEmum Testa { get; set; }
+        public MyEmum MyEmum { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool? Bool { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool Bool1 { get; set; }
+        public bool Bool2 { get; set; }
     }
 
     public enum MyEmum
