@@ -23,32 +23,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Extension;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Drawing.Imaging;
-using Magicodes.ExporterAndImporter.Core.IO;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Extension;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Drawing.Imaging;
-using Magicodes.ExporterAndImporter.Core.IO;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-*/
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -523,10 +497,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("文件路径不能为空!", nameof(filePath));
 
             //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
-            //if (!File.Exists(filePath))
-            //{
-            //    throw new ImportException("导入文件不存在!");
-            //}
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("导入文件不存在!");
+            }
         }
 
         /// <summary>
