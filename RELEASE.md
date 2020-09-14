@@ -1,5 +1,11 @@
 # Release Log
 
+## 2.4.0-beta1
+**2020.09.14**
+- 支持单元格导出宽度设置 [#129](https://github.com/dotnetcore/Magicodes.IE/issues/129)
+- Excel导出支持对Enum的ValueMapping设置 [#106](https://github.com/dotnetcore/Magicodes.IE/issues/106)
+- Excel导出支持对bool类型的ValueMapping设置 [#16](https://github.com/dotnetcore/Magicodes.IE/issues/16)
+
 ## 2.3.0
 **2020.08.30**
 
