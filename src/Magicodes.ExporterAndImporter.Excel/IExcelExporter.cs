@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 

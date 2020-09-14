@@ -11,11 +11,11 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Excel;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -134,7 +134,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         ///     状态
         ///     测试可为空的枚举类型
         /// </summary>
-        [ImporterHeader(Name = "状态")] 
+        [ImporterHeader(Name = "状态")]
         public StudentStatus? Status { get; set; }
 
         /// <summary>

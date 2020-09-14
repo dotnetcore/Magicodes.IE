@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using Magicodes.ExporterAndImporter.Core.Models;
+﻿using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using Shouldly;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -132,7 +128,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(2);
 #if NET461
                 pck.Workbook.Worksheets[1].Name.ShouldBe("1班导入数据");
-                pck.Workbook.Worksheets[2].Name.ShouldBe("2班导入数据");       
+                pck.Workbook.Worksheets[2].Name.ShouldBe("2班导入数据");
 #else
                 pck.Workbook.Worksheets[0].Name.ShouldBe("1班导入数据");
                 pck.Workbook.Worksheets[1].Name.ShouldBe("2班导入数据");

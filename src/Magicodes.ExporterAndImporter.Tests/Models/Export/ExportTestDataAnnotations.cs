@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -19,7 +19,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// 时间测试
         /// </summary>
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
-         public DateTime Time1 { get; set; }
+        public DateTime Time1 { get; set; }
         /// <summary>
         /// 时间测试
         /// </summary>
@@ -30,6 +30,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         [IEIgnoreAttribute]
         public string Ignore { get; set; }
-        
+
     }
 }

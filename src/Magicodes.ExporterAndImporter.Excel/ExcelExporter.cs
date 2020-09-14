@@ -11,15 +11,6 @@
 //
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
@@ -27,8 +18,12 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
 using Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport;
 using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Table;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -84,8 +79,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                 helper.CopySheet(1,
                     2);
 #else
-              helper.CopySheet(0,
-                    1);
+                helper.CopySheet(0,
+                      1);
 #endif
 
                 _isSeparateColumn = false;
@@ -97,8 +92,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                 helper.CopyRows(1,
                     2, _isAppendHeaders);
 #else
-              helper.CopyRows(0,
-                    1, _isAppendHeaders);
+                helper.CopyRows(0,
+                      1, _isAppendHeaders);
 #endif
             }
 

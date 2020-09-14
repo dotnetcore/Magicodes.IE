@@ -16,7 +16,6 @@ using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
-using CsvHelper.Configuration.Attributes;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {

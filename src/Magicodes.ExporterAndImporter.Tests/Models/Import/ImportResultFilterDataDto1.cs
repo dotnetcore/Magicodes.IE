@@ -11,14 +11,12 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

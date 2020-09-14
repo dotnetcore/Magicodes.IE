@@ -2,7 +2,6 @@
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Csv.Utility;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -66,7 +65,6 @@ namespace Magicodes.ExporterAndImporter.Csv
             {
                 return importer.Import();
             }
-            throw new NotImplementedException();
         }
     }
 }

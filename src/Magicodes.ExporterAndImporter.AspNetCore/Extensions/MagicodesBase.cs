@@ -60,7 +60,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     result = await docxexporter.ExportBytesByTemplate(JsonConvert.DeserializeObject(body.ToString(), type), await File.ReadAllTextAsync(tplPath), type);
                     break;
             }
-            if (contentType!="")
+            if (contentType != "")
             {
                 context.Response.Headers.Add("Content-Disposition", $"attachment;filename={filename}");
                 context.Response.ContentType = contentType;

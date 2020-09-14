@@ -1,12 +1,11 @@
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
-    [ExcelImporter(SheetName="SheetName")]
+    [ExcelImporter(SheetName = "SheetName")]
     public class ImportTestDataAnnotations
     {
         /// <summary>
@@ -15,15 +14,15 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [Display(Name = "Custom列")]
         [ImporterHeader(Name = "Custom列1")]
         public string Name { get; set; }
-        [Display(Name = "列2",Order = 1)]
-        public string  Name1{ get; set; }
+        [Display(Name = "列2", Order = 1)]
+        public string Name1 { get; set; }
         [ImporterHeader(Name = "Time1")]
         public DateTime Time { get; set; }
-        
-        [ImporterHeader(Name = "Time2",IsIgnore = true)]
+
+        [ImporterHeader(Name = "Time2", IsIgnore = true)]
         [IEIgnoreAttribute]
         public DateTime Time2 { get; set; }
-        
-        
+
+
     }
 }

@@ -11,10 +11,10 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core.Extension;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -72,7 +72,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     {
         /// <summary>
         /// </summary>
-        public ExportDocumentInfo(object data,Type type)
+        public ExportDocumentInfo(object data, Type type)
         {
             Headers = new List<ExporterHeaderAttribute>();
             Data = data;

@@ -11,19 +11,16 @@
 //
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using RazorEngine;
-using RazorEngine.Compilation;
-using RazorEngine.Compilation.ReferenceResolver;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Encoding = System.Text.Encoding;
 
 namespace Magicodes.ExporterAndImporter.Html
@@ -82,7 +79,7 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <returns></returns>
         public Task<string> ExportByTemplate(object data, string htmlTemplate, Type type)
         {
-            var result = RunCompileTpl(new ExportDocumentInfo(data,type), type, htmlTemplate);
+            var result = RunCompileTpl(new ExportDocumentInfo(data, type), type, htmlTemplate);
             return Task.FromResult(result);
         }
         /// <summary>
@@ -195,7 +192,7 @@ namespace Magicodes.ExporterAndImporter.Html
         /// <returns></returns>
         public async Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
         {
-            var result = await ExportByTemplate(data, template,type);
+            var result = await ExportByTemplate(data, template, type);
             return Encoding.UTF8.GetBytes(result);
         }
     }

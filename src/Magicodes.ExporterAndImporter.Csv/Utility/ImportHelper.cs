@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using System;
 using System.Globalization;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
@@ -80,7 +80,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             }
             finally
             {
-                ((IDisposable) Stream)?.Dispose();
+                ((IDisposable)Stream)?.Dispose();
             }
             return Task.FromResult(ImportResult);
         }

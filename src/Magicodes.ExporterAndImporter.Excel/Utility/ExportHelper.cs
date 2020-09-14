@@ -1,22 +1,17 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using System.Drawing;
-using System.Dynamic;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Style;
-using System.Globalization;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -30,19 +25,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
         private List<ExporterHeaderInfo> _exporterHeaderList;
-        private Type _type;
-        private string _sheetName;
+        private readonly Type _type;
+        private readonly string _sheetName;
         /// <summary>
         /// 
         /// </summary>
         public ExportHelper(string sheetName = null)
         {
-            if (typeof(DataTable).Equals(typeof(T)))
+            if (typeof(DataTable) == typeof(T))
             {
                 IsDynamicDatableExport = true;
             }
 
-            if (typeof(ExpandoObject).Equals(typeof(T)))
+            if (typeof(ExpandoObject) == typeof(T))
             {
                 IsExpandoObjectType = true;
             }
@@ -61,10 +56,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// 
         /// </summary>
         /// <param name="existExcelPackage"></param>
-
+        /// <param name="sheetName"></param>
         public ExportHelper(ExcelPackage existExcelPackage, string sheetName = null)
         {
-            if (typeof(DataTable).Equals(typeof(T)))
+            if (typeof(DataTable) == typeof(T))
             {
                 IsDynamicDatableExport = true;
             }
@@ -473,9 +468,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             if (ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable)
             {
-                var tbStyle = TableStyles.Medium10;
-                if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
-                    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
+                //var tbStyle = TableStyles.Medium10;
+                //if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
+                //    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
                 var er = IsExpandoObjectType
                     ? excelRange.LoadFromDictionaries(dataItems as List<ExpandoObject>, true, TableStyles.None)
                     : excelRange.LoadFromCollection(dataItems, true, TableStyles.None);

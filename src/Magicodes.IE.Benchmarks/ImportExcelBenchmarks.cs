@@ -36,7 +36,7 @@ namespace Magicodes.Benchmarks
                 {
                     Phone = "13211111111",
                     Name = "Mr.A",
-                    IdCard="1111111111111111111",
+                    IdCard = "1111111111111111111",
                     SerialNumber = i,
                     StudentCode = "A"
                 });

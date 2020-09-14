@@ -11,10 +11,9 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

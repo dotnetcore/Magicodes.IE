@@ -11,15 +11,14 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Excel.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Models;
-using Magicodes.ExporterAndImporter.Excel.Utility;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -195,7 +194,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var sheetProperties = tableType.GetProperties();
             using (var importer = new ImportMultipleSheetHelper(filePath))
             {
-                for (var i=0;i<sheetProperties.Length;i++)
+                for (var i = 0; i < sheetProperties.Length; i++)
                 {
                     var sheetProperty = sheetProperties[i];
                     var importerAttribute =
@@ -208,13 +207,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
                     }
-                    var isSaveLabelingError = false;
+                    bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    if (i == sheetProperties.Length - 1)
-                    {
-                        isSaveLabelingError = true;
-                    }
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType,isSaveLabelingError);
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
                     resultList.Add(importerAttribute.SheetName, result);
                 }
             }
@@ -254,13 +249,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
                     }
-                    var isSaveLabelingError = false;
+                    bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    if (i == sheetProperties.Length - 1)
-                    {
-                        isSaveLabelingError = true;
-                    }
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType,isSaveLabelingError);
+                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
                     var tResult = new ImportResult<TSheet>();
                     tResult.Data = new List<TSheet>();
                     if (result.Data.Count > 0)

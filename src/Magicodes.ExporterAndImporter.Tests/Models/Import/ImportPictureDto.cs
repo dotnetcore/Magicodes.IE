@@ -1,7 +1,6 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
 using System;
-using System.IO;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

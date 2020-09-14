@@ -11,17 +11,6 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Reflection;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
@@ -29,6 +18,42 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+
+/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
+在此之前:
+using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Filters;
+using Magicodes.ExporterAndImporter.Core.Models;
+using OfficeOpenXml;
+在此之后:
+using System.Drawing.Imaging;
+using Magicodes.ExporterAndImporter.Core.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
+在此之前:
+using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Filters;
+using Magicodes.ExporterAndImporter.Core.Models;
+using OfficeOpenXml;
+在此之后:
+using System.Drawing.Imaging;
+using Magicodes.ExporterAndImporter.Core.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+*/
+using System.IO;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -335,8 +360,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     var ltRows = EmptyRows.Where(r => r < item.RowIndex);
                     if (gtRows.Any() && ltRows.Any())
                     {
-                        var rowindex = gtRows.ToList().GetLargestContinuous();
-                        item.RowIndex += (rowindex - item.RowIndex) + 1;
+                        var rowIndex = gtRows.ToList().GetLargestContinuous();
+                        item.RowIndex += (rowIndex - item.RowIndex) + 1;
                     }
 
                     foreach (var field in item.FieldErrors)

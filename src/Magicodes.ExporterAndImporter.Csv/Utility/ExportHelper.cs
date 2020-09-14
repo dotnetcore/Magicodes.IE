@@ -1,13 +1,12 @@
-﻿using System;
-using CsvHelper;
+﻿using CsvHelper;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using CsvHelper.TypeConversion;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
@@ -18,7 +17,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
     public class ExportHelper<T> where T : class
     {
         private readonly Type _type;
-        
+
         /// <summary>
         /// </summary>
         public ExportHelper()
@@ -53,7 +52,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
                 {
                     csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 }
-   
+
                 if (dataItems != null && dataItems.Count > 0)
                 {
                     csv.WriteRecords(dataItems);

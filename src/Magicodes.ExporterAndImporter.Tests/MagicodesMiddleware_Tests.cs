@@ -1,18 +1,18 @@
-﻿#if NETCOREAPP3_0||NETCOREAPP3_1
+﻿#if NETCOREAPP3_0 || NETCOREAPP3_1
 using Magicodes.ExporterAndImporter.Builder;
 using MagicodesWebSite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
+using OfficeOpenXml;
+using Shouldly;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using OfficeOpenXml;
-using Shouldly;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -48,10 +48,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             var response = await client.SendAsync(request);
             var repstr = await response.Content.ReadAsStringAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(text,repstr);
+            Assert.Equal(text, repstr);
         }
 
-        #region FunctionalTests
+#region FunctionalTests
         [Fact]
         public async Task AllowsXlsxHttpContentMediaType()
         {
@@ -212,7 +212,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
         }
 
-        #endregion
+#endregion
 
 
     }

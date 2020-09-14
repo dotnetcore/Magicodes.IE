@@ -1,10 +1,10 @@
 using Magicodes.ExporterAndImporter.Builder;
+using Magicodes.ExporterAndImporter.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using Magicodes.ExporterAndImporter.Filters;
 
 namespace MagicodesWebSite
 {
@@ -82,7 +82,7 @@ namespace MagicodesWebSite
         {
             public void ConfigureServices(IServiceCollection services)
             {
-                services.AddControllers(options=>options.Filters.Add(typeof(MagicodesFilter)));
+                services.AddControllers(options => options.Filters.Add(typeof(MagicodesFilter)));
             }
             public void Configure(IApplicationBuilder app)
             {

@@ -58,8 +58,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static string GetDisplayFormat(this ICustomAttributeProvider customAttributeProvider)
         {
             var formatAttribute = customAttributeProvider.GetAttribute<DisplayFormatAttribute>();
-            string displayFormat=string.Empty;
-            if (formatAttribute!=null)
+            string displayFormat = string.Empty;
+            if (formatAttribute != null)
             {
                 displayFormat = formatAttribute.DataFormatString;
             }
@@ -262,7 +262,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
                 .Select(t => t.GetCSharpTypeName())));
-            
+
             sb.Append(">");
             return sb.ToString();
         }
@@ -277,7 +277,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             //Get the first
             var constructorInfo = type.GetConstructors().FirstOrDefault();
             var parameterInfos = constructorInfo?.GetParameters();
-            var objects=new List<object>();
+            var objects = new List<object>();
             //GetAssemblies need to add conditional screening
             //var getAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             List<Type> types = new List<Type>();
@@ -285,9 +285,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             {
                 try
                 {
-                    foreach (var typeitem in item.GetTypes())
+                    foreach (var typeItem in item.GetTypes())
                     {
-                        types.Add(typeitem);
+                        types.Add(typeItem);
                     }
                 }
                 catch (Exception)
@@ -329,9 +329,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             return list;
 #else
-         return AppDomain.CurrentDomain.GetAssemblies();
+            return AppDomain.CurrentDomain.GetAssemblies();
 #endif
-           
+
         }
 
         /// <summary>

@@ -11,8 +11,6 @@
 // 
 // ======================================================================
 
-using System;
-using System.Text;
 #if NET461
 using TuesPechkin;
 using System.Drawing.Printing;
