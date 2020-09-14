@@ -27,6 +27,41 @@
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
+### Azure DevOps
+- Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
+- Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
+- Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop)
+- Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
+- Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
+
+具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
+
+### Nuget
+
+#### 稳定版（推荐）
+
+| **名称** |      **Nuget**      |
+|----------|:-------------:|
+| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
+| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
+| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
+| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
+| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
+| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
+| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
+
+#### Beta版
+
+| **名称** |      **Nuget**      |
+|----------|:-------------:|
+| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
+| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
+| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
+| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
+| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
+| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
+| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
+
 ### **注意**
 
 - **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**

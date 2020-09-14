@@ -656,6 +656,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     Header = importerHeaderAttribute,
                     ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true)
                 };
+
                 //设置ColumnIndex
                 if (colHeader.Header.ColumnIndex > 0)
                 {
@@ -888,7 +889,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                        ? rowIndex - 2 + (imageBaseIndex++ * worksheet.Dimension.End.Row)
                                        : rowIndex - 3 + (imageBaseIndex++ * worksheet.Dimension.End.Row);
                                     var excelPicture = GetImage(worksheet, position);
-                                    var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid().ToString() + "." + excelPicture.ImageFormat.ToString());
+                                    var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);
                                     var value = string.Empty;
 
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)

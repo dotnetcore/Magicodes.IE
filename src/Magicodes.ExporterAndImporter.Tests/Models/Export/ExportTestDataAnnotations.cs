@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -31,5 +31,23 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [IEIgnoreAttribute]
         public string Ignore { get; set; }
 
+        [ValueMapping("A Test", "A")]
+        [ValueMapping("B Test", "B")]
+        public MyEmum MyEmum { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool? Bool { get; set; }
+
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool Bool1 { get; set; }
+        public bool Bool2 { get; set; }
+    }
+
+    public enum MyEmum
+    {
+        A,
+        B
     }
 }
