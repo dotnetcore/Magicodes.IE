@@ -594,8 +594,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected void AddPictures(int rowCount)
         {
+            int ignoreCount = 0;
             for (var colIndex = 0; colIndex < ExporterHeaderList.Count; colIndex++)
             {
+                if (ExporterHeaderList[colIndex].ExporterHeaderAttribute.IsIgnore)
+                {
+                    ignoreCount++;
+                }
                 if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
                 {
                     for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
@@ -615,7 +620,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - 1, 0);
+                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
                                     CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
                                     //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                     pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
@@ -770,7 +775,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
 
-                if (exporterHeader.ExporterHeaderAttribute!=null)
+                if (exporterHeader.ExporterHeaderAttribute != null)
                 {
                     //设置单元格宽度
                     var width = exporterHeader.ExporterHeaderAttribute.Width;
