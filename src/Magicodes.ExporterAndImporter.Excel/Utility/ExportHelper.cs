@@ -120,11 +120,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             _excelExporterAttribute = new ExcelExporterAttribute();
                     }
 
-                    //加载表头筛选器
-                    if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
+                    #region 加载表头筛选器
+                    IExporterHeaderFilter filter = null;
+                    //判断容器中是否已注册
+                    if (AppDependencyResolver.HasInit)
                     {
-                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName, true, System.Reflection.BindingFlags.Default, null, _excelExporterAttribute.ExporterHeaderFilter.CreateType(), null, null);
+                        filter = AppDependencyResolver.Current.GetService<IExporterHeaderFilter>();
                     }
+                    else if (filter == null && _excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
+                    {
+                        filter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName, true, System.Reflection.BindingFlags.Default, null, _excelExporterAttribute.ExporterHeaderFilter.CreateType(), null, null);
+                    }
+                    if (filter != null)
+                    {
+                        ExporterHeaderFilter = filter;
+                    }
+                    #endregion
                 }
                 return _excelExporterAttribute;
             }

@@ -191,17 +191,27 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         #endregion
 
 
-                        //执行结果筛选器
-                        if (ExcelImporterSettings.ImportResultFilter != null)
+                        #region 执行结果筛选器
+                        IImportResultFilter filter = null;
+                        //判断容器中是否已注册
+                        if (AppDependencyResolver.HasInit)
                         {
-                            var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
+                            filter = AppDependencyResolver.Current.GetService<IImportResultFilter>();
+                        }
+                        else if (filter == null && ExcelImporterSettings.ImportResultFilter != null)
+                        {
+                            filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
 
                             if (filter == null)
                             {
                                 throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
                             }
+                        }
+                        if (filter != null)
+                        {
                             ImportResult = filter.Filter(ImportResult);
                         }
+                        #endregion
                         //生成Excel错误标注
                         LabelingError(excelPackage);
                     }
@@ -697,18 +707,27 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 #endregion
             }
 
-            //列筛选器
-            if (ExcelImporterSettings.ImportHeaderFilter != null)
+            #region 执行列筛选器
+            IImportHeaderFilter filter = null;
+            //判断容器中是否已注册
+            if (AppDependencyResolver.HasInit)
             {
-                var filter = (IImportHeaderFilter)ExcelImporterSettings.ImportHeaderFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportHeaderFilter.FullName);
+                filter = AppDependencyResolver.Current.GetService<IImportHeaderFilter>();
+            }
+            else if (filter == null && ExcelImporterSettings.ImportHeaderFilter != null)
+            {
+                filter = (IImportHeaderFilter)ExcelImporterSettings.ImportHeaderFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportHeaderFilter.FullName);
 
                 if (filter == null)
                 {
                     throw new Exception("导入列筛选器必须实现接口IImportHeaderFilter！");
                 }
+            }
+            if (filter != null)
+            {
                 ImporterHeaderInfos = filter.Filter(ImporterHeaderInfos);
             }
-
+            #endregion
             return true;
         }
 
