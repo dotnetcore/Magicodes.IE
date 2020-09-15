@@ -66,4 +66,22 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(Name = "产品代码", Description = "最大长度为20", AutoTrim = false, IsAllowRepeat = false)]
         public string Code { get; set; }
     }
+
+    [ExcelImporter(IsLabelingError = true)]
+    public class DIImportResultFilterDataDto1
+    {
+        /// <summary>
+        ///     产品名称
+        /// </summary>
+        [ImporterHeader(Name = "产品名称")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     产品代码
+        ///     长度验证
+        ///     重复验证
+        /// </summary>
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为20", AutoTrim = false, IsAllowRepeat = false)]
+        public string Code { get; set; }
+    }
 }
