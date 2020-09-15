@@ -52,6 +52,11 @@ namespace Magicodes.ExporterAndImporter.Core
         public bool AutoFitAllColumn { get; set; }
 
         /// <summary>
+        ///     数据超过此行之后不启用自适应，默认关闭
+        /// </summary>
+        public int AutoFitMaxRows { get; set; }
+
+        /// <summary>
         ///     作者
         /// </summary>
         public string Author { get; set; }

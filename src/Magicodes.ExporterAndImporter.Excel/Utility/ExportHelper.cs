@@ -106,6 +106,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 Author = exporterAttribute.Author,
                                 AutoFitAllColumn = exporterAttribute.AutoFitAllColumn,
                                 //ExcelOutputType = 
+                                AutoFitMaxRows = exporterAttribute.AutoFitMaxRows,
                                 ExporterHeaderFilter = exporterAttribute.ExporterHeaderFilter,
                                 FontSize = exporterAttribute.FontSize,
                                 HeaderFontSize = exporterAttribute.HeaderFontSize,
@@ -387,6 +388,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 AddPictures(dataItems.Count);
             }
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
             return AddHeaderAndStyles();
         }
 
@@ -470,7 +473,27 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             AddDataItems(dataItems);
             //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
             //AddPictures(dataItems.Rows.Count);
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Rows.Count);
             return AddHeaderAndStyles();
+        }
+
+        /// <summary>
+        /// 在数据达到设置值时禁用自适应列
+        /// </summary>
+        /// <param name="count"></param>
+        private void DisableAutoFitWhenDataRowsIsLarge(int count)
+        {
+            //如果已经设置了AutoFitMaxRows并且当前数据超过此设置，则关闭自适应列的配置
+            if (ExcelExporterSettings.AutoFitMaxRows != 0 && count > ExcelExporterSettings.AutoFitMaxRows)
+            {
+                ExcelExporterSettings.AutoFitAllColumn = false;
+                foreach (var item in ExporterHeaderList)
+                {
+                    if (item.ExporterHeaderAttribute != null)
+                        item.ExporterHeaderAttribute.IsAutoFit = false;
+                }
+            }
         }
 
         /// <summary>
