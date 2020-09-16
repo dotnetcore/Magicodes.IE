@@ -1,5 +1,18 @@
 # Release Log
 
+## 2.4.0-beta2
+**2020.09.16**
+- [#152](https://github.com/dotnetcore/Magicodes.IE/issues/152) 筛选器支持依赖注入
+ ```csharp
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    {
+        AppDependencyResolver.Init(app.ApplicationServices);
+        //all other code
+    }
+ ```
+- #151 导出添加AutoFitMaxRows，超过指定行数则不启用AutoFit
+- 添加全局IsDisableAllFilter属性，以通过特性禁用所有筛选器
+
 ## 2.4.0-beta1
 **2020.09.14**
 - 支持单元格导出宽度设置 [#129](https://github.com/dotnetcore/Magicodes.IE/issues/129)
