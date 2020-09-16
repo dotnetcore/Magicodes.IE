@@ -78,7 +78,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             HeaderRowIndex = importerAttribute.HeaderRowIndex,
                             MaxCount = importerAttribute.MaxCount,
                             ImportResultFilter = importerAttribute.ImportResultFilter,
-                            ImportHeaderFilter = importerAttribute.ImportHeaderFilter
+                            ImportHeaderFilter = importerAttribute.ImportHeaderFilter,
+                            IsDisableAllFilter = importerAttribute.IsDisableAllFilter
                         };
                     }
                     else
@@ -155,6 +156,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     using (var excelPackage = new ExcelPackage(Stream))
                     {
                         #region 检查模板
+                        //获取导入实体列定义
+                        ParseHeader();
                         ParseTemplate(excelPackage);
 
                         //Import results return header information
@@ -192,21 +195,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
 
                         #region 执行结果筛选器
-                        IImportResultFilter filter = null;
-                        //判断容器中是否已注册
-                        if (AppDependencyResolver.HasInit)
-                        {
-                            filter = AppDependencyResolver.Current.GetService<IImportResultFilter>();
-                        }
-                        else if (filter == null && ExcelImporterSettings.ImportResultFilter != null)
-                        {
-                            filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
-
-                            if (filter == null)
-                            {
-                                throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
-                            }
-                        }
+                        var filter = GetFilter<IImportResultFilter>(ExcelImporterSettings.ImportResultFilter);
                         if (filter != null)
                         {
                             ImportResult = filter.Filter(ImportResult);
@@ -222,6 +211,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 ImportResult.Exception = ex;
             }
             return Task.FromResult(ImportResult);
+        }
+
+        /// <summary>
+        /// 获取筛选器
+        /// </summary>
+        /// <typeparam name="TFilter"></typeparam>
+        /// <param name="filterType"></param>
+        /// <returns></returns>
+        private TFilter GetFilter<TFilter>(Type filterType = null) where TFilter : IFilter
+        {
+            return filterType.GetFilter<TFilter>(ExcelImporterSettings.IsDisableAllFilter);
         }
 
         /// <summary>
@@ -397,16 +397,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ParseHeader();
             ParseTemplate(excelPackage);
             //执行结果筛选器
-            if (ExcelImporterSettings.ImportResultFilter != null)
+            var filter = GetFilter<IImportResultFilter>(ExcelImporterSettings.ImportResultFilter);
+            if (filter != null)
             {
-                var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
-
-                if (filter == null)
-                {
-                    throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
-                }
                 ImportResult = filter.Filter(ImportResult);
             }
+
             //if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             //业务错误必须标注
             var worksheet = GetImportSheet(excelPackage);
@@ -455,16 +451,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ParseHeader();
             ParseTemplate(excelPackage);
             //执行结果筛选器
-            if (ExcelImporterSettings.ImportResultFilter != null)
+            var filter = GetFilter<IImportResultFilter>(ExcelImporterSettings.ImportResultFilter);
+            if (filter != null)
             {
-                var filter = (IImportResultFilter)ExcelImporterSettings.ImportResultFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportResultFilter.FullName);
-
-                if (filter == null)
-                {
-                    throw new Exception("结果筛选器必须实现接口IImportResultFilter！");
-                }
                 ImportResult = filter.Filter(ImportResult);
             }
+
             //if (ExcelImporterSettings.IsLabelingError && ImportResult.HasError)
             //业务错误必须标注
             var worksheet = GetImportSheet(excelPackage);
@@ -520,8 +512,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void ParseTemplate(ExcelPackage excelPackage)
         {
             ImportResult.TemplateErrors = new List<TemplateErrorInfo>();
-            //获取导入实体列定义
-            ParseHeader();
             try
             {
                 //根据名称获取Sheet，如果不存在则取第一个
@@ -708,21 +698,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
 
             #region 执行列筛选器
-            IImportHeaderFilter filter = null;
-            //判断容器中是否已注册
-            if (AppDependencyResolver.HasInit)
-            {
-                filter = AppDependencyResolver.Current.GetService<IImportHeaderFilter>();
-            }
-            else if (filter == null && ExcelImporterSettings.ImportHeaderFilter != null)
-            {
-                filter = (IImportHeaderFilter)ExcelImporterSettings.ImportHeaderFilter.Assembly.CreateInstance(ExcelImporterSettings.ImportHeaderFilter.FullName);
-
-                if (filter == null)
-                {
-                    throw new Exception("导入列筛选器必须实现接口IImportHeaderFilter！");
-                }
-            }
+            var filter = GetFilter<IImportHeaderFilter>(ExcelImporterSettings.ImportHeaderFilter);
             if (filter != null)
             {
                 ImporterHeaderInfos = filter.Filter(ImporterHeaderInfos);

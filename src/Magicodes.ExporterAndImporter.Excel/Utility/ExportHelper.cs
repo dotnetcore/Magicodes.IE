@@ -113,7 +113,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
                                 Name = exporterAttribute.Name,
                                 TableStyle = exporterAttribute.TableStyle,
-                                AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter
+                                AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter,
+                                IsDisableAllFilter = exporterAttribute.IsDisableAllFilter
                             };
                         }
                         else
@@ -121,20 +122,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
 
                     #region 加载表头筛选器
-                    IExporterHeaderFilter filter = null;
-                    //判断容器中是否已注册
-                    if (AppDependencyResolver.HasInit)
-                    {
-                        filter = AppDependencyResolver.Current.GetService<IExporterHeaderFilter>();
-                    }
-                    else if (filter == null && _excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
-                    {
-                        filter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName, true, System.Reflection.BindingFlags.Default, null, _excelExporterAttribute.ExporterHeaderFilter.CreateType(), null, null);
-                    }
-                    if (filter != null)
-                    {
-                        ExporterHeaderFilter = filter;
-                    }
+                    ExporterHeaderFilter = GetFilter<IExporterHeaderFilter>(_excelExporterAttribute.ExporterHeaderFilter);
                     #endregion
                 }
                 return _excelExporterAttribute;
@@ -826,5 +814,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
         }
 
+        /// <summary>
+        /// 获取筛选器
+        /// </summary>
+        /// <typeparam name="TFilter"></typeparam>
+        /// <param name="filterType"></param>
+        /// <returns></returns>
+        private TFilter GetFilter<TFilter>(Type filterType = null) where TFilter : IFilter
+        {
+            return filterType.GetFilter<TFilter>(ExcelExporterSettings.IsDisableAllFilter);
+        }
     }
 }

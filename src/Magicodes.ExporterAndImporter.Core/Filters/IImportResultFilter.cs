@@ -6,7 +6,7 @@ namespace Magicodes.ExporterAndImporter.Core.Filters
     /// 导入结果筛选器
     /// 可以处理标注内容
     /// </summary>
-    public interface IImportResultFilter
+    public interface IImportResultFilter : IFilter
     {
         /// <summary>
         /// 处理导入结果

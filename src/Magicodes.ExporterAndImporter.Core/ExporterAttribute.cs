@@ -65,5 +65,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 头部筛选器
         /// </summary>
         public Type ExporterHeaderFilter { get; set; }
+
+        /// <summary>
+        /// 是否禁用所有筛选器
+        /// </summary>
+        public bool IsDisableAllFilter { get; set; }
     }
 }

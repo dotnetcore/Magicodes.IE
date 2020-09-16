@@ -25,18 +25,25 @@ namespace Magicodes.ExporterAndImporter.Tests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         public IExcelImporter Importer = new ExcelImporter();
-
+        ServiceCollection services;
         public DIFilter_Tests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
             //初始化容器
-            var services = new ServiceCollection();
+            services = new ServiceCollection();
             //添加注入关系
             services.AddSingleton<IImportResultFilter, ImportResultFilterTest>();
             services.AddSingleton<IImportHeaderFilter, ImportHeaderFilterTest>();
             services.AddSingleton<IExporterHeaderFilter, TestExporterHeaderFilter1>();
             var serviceProvider = services.BuildServiceProvider();
             AppDependencyResolver.Init(serviceProvider);
+            _testOutputHelper.WriteLine("DIFilter_Tests");
+        }
+
+        [Fact()]
+        public void AppDependencyResolverGetService_Test()
+        {
+            AppDependencyResolver.Current.GetService<IImportResultFilter>().ShouldNotBeNull();
         }
 
         [Fact(DisplayName = "DI_结果筛选器测试")]
@@ -124,7 +131,17 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         public void Dispose()
         {
-            AppDependencyResolver.Dispose();
+
+            var descriptorToRemove1 = services.FirstOrDefault(d => d.ServiceType == typeof(IImportResultFilter));
+            services.Remove(descriptorToRemove1);
+
+            var descriptorToRemove2 = services.FirstOrDefault(d => d.ServiceType == typeof(IImportHeaderFilter));
+            services.Remove(descriptorToRemove2);
+
+            var descriptorToRemove3 = services.FirstOrDefault(d => d.ServiceType == typeof(IExporterHeaderFilter));
+            services.Remove(descriptorToRemove3);
+
+            AppDependencyResolver.Current.Dispose();
         }
     }
 }

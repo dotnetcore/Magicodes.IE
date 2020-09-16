@@ -47,22 +47,23 @@ namespace Magicodes.ExporterAndImporter.Core
             _resolver = new AppDependencyResolver(services);
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
+            _serviceProvider = null;
             _resolver = null;
         }
 
-        private readonly IServiceProvider _serviceProvider;
+        private IServiceProvider _serviceProvider;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        public object GetService(Type serviceType)
-        {
-            return _serviceProvider.GetService(serviceType);
-        }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="serviceType"></param>
+        ///// <returns></returns>
+        //public object GetService(Type serviceType)
+        //{
+        //    return _serviceProvider.GetService(serviceType);
+        //}
 
         /// <summary>
         /// 

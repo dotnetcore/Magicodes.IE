@@ -11,6 +11,7 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core.Filters;
 using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
@@ -348,6 +349,31 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var field = finfos.FirstOrDefault(f => f.Name == propertyname);
             var val = (T)field.GetValue(instance);
             return (T)field.GetValue(instance);
+        }
+
+        /// <summary>
+        /// 获取筛选器
+        /// </summary>
+        /// <typeparam name="TFilter"></typeparam>
+        /// <param name="filterType"></param>
+        /// <param name="isDisableAllFilter"></param>
+        /// <returns></returns>
+        public static TFilter GetFilter<TFilter>(this Type filterType, bool isDisableAllFilter) where TFilter : IFilter
+        {
+            TFilter filter = default;
+            if (!isDisableAllFilter)
+            {
+                //判断容器中是否已注册
+                if (AppDependencyResolver.HasInit)
+                {
+                    filter = AppDependencyResolver.Current.GetService<TFilter>();
+                }
+                else if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
+                {
+                    filter=(TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                }
+            }
+            return filter;
         }
     }
 }
