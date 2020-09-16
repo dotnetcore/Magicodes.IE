@@ -24,7 +24,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true)]
+    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = true)]
     public class ImportStudentDto
     {
         /// <summary>

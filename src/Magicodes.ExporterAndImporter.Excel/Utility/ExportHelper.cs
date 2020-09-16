@@ -106,24 +106,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 Author = exporterAttribute.Author,
                                 AutoFitAllColumn = exporterAttribute.AutoFitAllColumn,
                                 //ExcelOutputType = 
+                                AutoFitMaxRows = exporterAttribute.AutoFitMaxRows,
                                 ExporterHeaderFilter = exporterAttribute.ExporterHeaderFilter,
                                 FontSize = exporterAttribute.FontSize,
                                 HeaderFontSize = exporterAttribute.HeaderFontSize,
                                 MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
                                 Name = exporterAttribute.Name,
                                 TableStyle = exporterAttribute.TableStyle,
-                                AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter
+                                AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter,
+                                IsDisableAllFilter = exporterAttribute.IsDisableAllFilter
                             };
                         }
                         else
                             _excelExporterAttribute = new ExcelExporterAttribute();
                     }
 
-                    //加载表头筛选器
-                    if (_excelExporterAttribute.ExporterHeaderFilter != null && typeof(IExporterHeaderFilter).IsAssignableFrom(_excelExporterAttribute.ExporterHeaderFilter))
-                    {
-                        ExporterHeaderFilter = (IExporterHeaderFilter)_excelExporterAttribute.ExporterHeaderFilter.Assembly.CreateInstance(_excelExporterAttribute.ExporterHeaderFilter.FullName, true, System.Reflection.BindingFlags.Default, null, _excelExporterAttribute.ExporterHeaderFilter.CreateType(), null, null);
-                    }
+                    #region 加载表头筛选器
+                    ExporterHeaderFilter = GetFilter<IExporterHeaderFilter>(_excelExporterAttribute.ExporterHeaderFilter);
+                    #endregion
                 }
                 return _excelExporterAttribute;
             }
@@ -387,6 +387,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 AddPictures(dataItems.Count);
             }
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
             return AddHeaderAndStyles();
         }
 
@@ -470,7 +472,27 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             AddDataItems(dataItems);
             //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
             //AddPictures(dataItems.Rows.Count);
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Rows.Count);
             return AddHeaderAndStyles();
+        }
+
+        /// <summary>
+        /// 在数据达到设置值时禁用自适应列
+        /// </summary>
+        /// <param name="count"></param>
+        private void DisableAutoFitWhenDataRowsIsLarge(int count)
+        {
+            //如果已经设置了AutoFitMaxRows并且当前数据超过此设置，则关闭自适应列的配置
+            if (ExcelExporterSettings.AutoFitMaxRows != 0 && count > ExcelExporterSettings.AutoFitMaxRows)
+            {
+                ExcelExporterSettings.AutoFitAllColumn = false;
+                foreach (var item in ExporterHeaderList)
+                {
+                    if (item.ExporterHeaderAttribute != null)
+                        item.ExporterHeaderAttribute.IsAutoFit = false;
+                }
+            }
         }
 
         /// <summary>
@@ -594,8 +616,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected void AddPictures(int rowCount)
         {
+            int ignoreCount = 0;
             for (var colIndex = 0; colIndex < ExporterHeaderList.Count; colIndex++)
             {
+                if (ExporterHeaderList[colIndex].ExporterHeaderAttribute.IsIgnore)
+                {
+                    ignoreCount++;
+                }
                 if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
                 {
                     for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
@@ -615,7 +642,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - 1, 0);
+                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
                                     CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
                                     //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                     pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
@@ -770,7 +797,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     col.Width = exporterHeader.ExportImageFieldAttribute.Width;
                 }
 
-                if (exporterHeader.ExporterHeaderAttribute!=null)
+                if (exporterHeader.ExporterHeaderAttribute != null)
                 {
                     //设置单元格宽度
                     var width = exporterHeader.ExporterHeaderAttribute.Width;
@@ -787,5 +814,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
         }
 
+        /// <summary>
+        /// 获取筛选器
+        /// </summary>
+        /// <typeparam name="TFilter"></typeparam>
+        /// <param name="filterType"></param>
+        /// <returns></returns>
+        private TFilter GetFilter<TFilter>(Type filterType = null) where TFilter : IFilter
+        {
+            return filterType.GetFilter<TFilter>(ExcelExporterSettings.IsDisableAllFilter);
+        }
     }
 }
