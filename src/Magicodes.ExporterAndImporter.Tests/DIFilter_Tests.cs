@@ -21,7 +21,7 @@ namespace Magicodes.ExporterAndImporter.Tests
     /// <summary>
     /// 依赖注入Filter测试
     /// </summary>
-    public class DIFilter_Tests : TestBase
+    public class DIFilter_Tests : TestBase, IDisposable
     {
         private readonly ITestOutputHelper _testOutputHelper;
         public IExcelImporter Importer = new ExcelImporter();
@@ -120,6 +120,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
             #endregion 通过筛选器修改列名
+        }
+
+        public void Dispose()
+        {
+            AppDependencyResolver.Dispose();
         }
     }
 }
