@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Extensions
 
             foreach (TSource obj in source)
             {
-                var shapedObj=new ExpandoObject();
+                var shapedObj = new ExpandoObject();
 
                 foreach (var propertyInfo in propertyInfoList)
                 {

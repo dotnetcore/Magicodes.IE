@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.3.0</Version>
+        <Version>2.4.0-beta1</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,9 +13,13 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
-          
-          **2020.08.30**
-          - ** 【Nuget】版本更新到2.3.0 **
+
+          **2020.09.14**
+          - 【Nuget】版本更新到2.4.0-beta1
+          1、支持单元格导出宽度设置
+          2、Excel导出支持对Enum的ValueMapping设置
+          3、Excel导出支持对bool类型的ValueMapping设置
+
 
         </Description>
     </PropertyGroup>

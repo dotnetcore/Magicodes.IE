@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -101,7 +100,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var ec = pck.Workbook.Worksheets.First();
                 var pic = ec.Drawings[0] as ExcelPicture;
                 pic.GetPrivateProperty<int>("_height").ShouldBe(120);
-                pic.GetPrivateProperty<int>("_width").ShouldBe(120); 
+                pic.GetPrivateProperty<int>("_width").ShouldBe(120);
 
             }
         }

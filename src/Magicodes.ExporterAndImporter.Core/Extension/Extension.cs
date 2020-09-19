@@ -354,7 +354,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static int GetLargestContinuous(this List<int> numList)
         {
-            for (int i = 0; i < numList.Count; i++)
+            for (int i = 0; i < numList.Count;)
             {
                 if (numList.Count > i + 1 && numList[i] - numList[i + 1] == 1)
                 {

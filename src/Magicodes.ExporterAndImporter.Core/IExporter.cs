@@ -11,8 +11,8 @@
 // 
 // ======================================================================
 
-using System;
 using Magicodes.ExporterAndImporter.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="dataItems">数据</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
-        Task<byte[]> ExportAsByteArray(DataTable dataItems,Type type);
+        Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type);
 
         /// <summary>
         ///     导出

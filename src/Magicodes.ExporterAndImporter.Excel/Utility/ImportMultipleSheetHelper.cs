@@ -1,17 +1,34 @@
-﻿using System;
+﻿using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Models;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
+
+/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
+在此之前:
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
-using OfficeOpenXml.Style;
+在此之后:
+using System.Linq.Expressions;
+using System.Reflection;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
+在此之前:
+using Magicodes.ExporterAndImporter.Core.Models;
+using OfficeOpenXml;
+在此之后:
+using System.Linq.Expressions;
+using System.Reflection;
+*/
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -170,7 +187,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     #endregion
 
-                    LabelingError(_excelPackage,isSaveLabelingError);
+                    LabelingError(_excelPackage, isSaveLabelingError);
                 }
 
             }
@@ -560,7 +577,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             foreach (var sheetProperty in _sheetPropertyList)
             {
-                var sheetType= sheetProperty.PropertyType;
+                var sheetType = sheetProperty.PropertyType;
                 var importerAttribute =
                     (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
 

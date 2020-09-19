@@ -6,7 +6,7 @@ namespace Magicodes.ExporterAndImporter.Core
     ///     忽略特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class IEIgnoreAttribute:Attribute
+    public class IEIgnoreAttribute : Attribute
     {
         /// <summary>
         ///     是否忽略导入，默认true

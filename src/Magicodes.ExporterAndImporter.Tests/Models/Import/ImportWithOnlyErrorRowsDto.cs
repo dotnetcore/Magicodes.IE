@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -12,7 +9,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true,IsOnlyErrorRows = true)]
+    [ExcelImporter(IsLabelingError = true, IsOnlyErrorRows = true)]
     public class ImportWithOnlyErrorRowsDto
     {
 

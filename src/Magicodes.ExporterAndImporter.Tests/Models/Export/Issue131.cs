@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Magicodes.ExporterAndImporter.Core;
 using System.Collections.Generic;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     public class Issue131
     {
         public List<DTO_Product> List { get; set; }
-        
+
     }
 
     public class DTO_Product

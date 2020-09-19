@@ -17,7 +17,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 
     public class ExportTestDataWithColAutoCenter
     {
-        [ExporterHeader(DisplayName = "姓名", IsBold = true,AutoCenterColumn =true)]
+        [ExporterHeader(DisplayName = "姓名", IsBold = true, AutoCenterColumn = true)]
         public string Name { get; set; }
 
         [ExporterHeader(DisplayName = "年龄")]

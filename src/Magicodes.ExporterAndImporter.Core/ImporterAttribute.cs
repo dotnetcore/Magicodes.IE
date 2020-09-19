@@ -43,5 +43,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 必须实现【IImportHeaderFilter】
         /// </summary>
         public Type ImportHeaderFilter { get; set; }
+
+        /// <summary>
+        /// 是否禁用所有筛选器
+        /// </summary>
+        public bool IsDisableAllFilter { get; set; }
     }
 }

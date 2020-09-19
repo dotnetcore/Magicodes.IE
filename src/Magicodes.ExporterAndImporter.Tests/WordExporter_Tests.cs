@@ -11,139 +11,203 @@
 //
 // ======================================================================
 
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
+在此之前:
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core.Extension;
+在此之后:
+using Magicodes.ExporterAndImporter.Core.Extension;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
+在此之前:
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
+在此之后:
+using Magicodes.ExporterAndImporter.Core.Extension;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp2.2)”的未合并的更改
+在此之前:
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
+在此之后:
+using Magicodes.ExporterAndImporter.Core.Extension;
+*/
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
 using Shouldly;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using 
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
+在此之前:
 using Xunit;
+在此之后:
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
+在此之前:
+using Xunit;
+在此之后:
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp2.2)”的未合并的更改
+在此之前:
+using Xunit;
+在此之后:
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
+*/
+Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-	public class WordExporter_Tests : TestBase
-	{
-		[Fact(DisplayName = "导出Word测试")]
-		public async Task ExportWord_Test()
-		{
-			var exporter = new WordExporter();
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWord_Test) + ".docx");
-			if (File.Exists(filePath)) File.Delete(filePath);
-			//此处使用默认模板导出
-			var result = await exporter.ExportListByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
-			result.ShouldNotBeNull();
-			File.Exists(filePath).ShouldBeTrue();
-		}
+    public class WordExporter_Tests : TestBase
+    {
+        [Fact(DisplayName = "导出Word测试")]
+        public async Task ExportWord_Test()
+        {
+            var exporter = new WordExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWord_Test) + ".docx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportListByTemplate(filePath, GenFu.GenFu.ListOf<ExportTestData>());
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
-		[Fact(DisplayName = "自定义模板导出Word测试")]
-		public async Task ExportWordByTemplate_Test()
-		{
-			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "tpl1.cshtml");
-			var tpl = File.ReadAllText(tplPath);
-			var exporter = new WordExporter();
-			var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
-				 GenFu.GenFu.ListOf<ExportTestData>(), tpl));
-			ex.Message.ShouldContain("文件名必须填写");
+        [Fact(DisplayName = "自定义模板导出Word测试")]
+        public async Task ExportWordByTemplate_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "tpl1.cshtml");
+            var tpl = File.ReadAllText(tplPath);
+            var exporter = new WordExporter();
+            var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
+                 GenFu.GenFu.ListOf<ExportTestData>(), tpl));
+            ex.Message.ShouldContain("文件名必须填写");
 
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordByTemplate_Test) + ".docx");
-			if (File.Exists(filePath)) File.Delete(filePath);
-			//此处使用默认模板导出
-			var result = await exporter.ExportListByTemplate(filePath,
-				GenFu.GenFu.ListOf<ExportTestData>(), tpl);
-			result.ShouldNotBeNull();
-			File.Exists(filePath).ShouldBeTrue();
-		}
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordByTemplate_Test) + ".docx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportListByTemplate(filePath,
+                GenFu.GenFu.ListOf<ExportTestData>(), tpl);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
-		[Fact(DisplayName = "自定义模板导出WordBytes测试")]
-		public async Task ExportWordBytesByTemplate_Test()
-		{
-			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "tpl1.cshtml");
-			var tpl = File.ReadAllText(tplPath);
-			var exporter = new WordExporter();
-			var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
-				 GenFu.GenFu.ListOf<ExportTestData>(), tpl));
-			ex.Message.ShouldContain("文件名必须填写");
+        [Fact(DisplayName = "自定义模板导出WordBytes测试")]
+        public async Task ExportWordBytesByTemplate_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "tpl1.cshtml");
+            var tpl = File.ReadAllText(tplPath);
+            var exporter = new WordExporter();
+            var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
+                 GenFu.GenFu.ListOf<ExportTestData>(), tpl));
+            ex.Message.ShouldContain("文件名必须填写");
 
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordBytesByTemplate_Test) + ".docx");
-			if (File.Exists(filePath)) File.Delete(filePath);
-			//此处使用默认模板导出
-			var result = await exporter.ExportListBytesByTemplate(
-				GenFu.GenFu.ListOf<ExportTestData>(), tpl);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordBytesByTemplate_Test) + ".docx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportListBytesByTemplate(
+                GenFu.GenFu.ListOf<ExportTestData>(), tpl);
 
-			result.ShouldNotBeNull();
+            result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
 
             using (var file = File.OpenWrite(filePath))
             {
-				file.Write(result, 0, result.Length);
-			}
+                file.Write(result, 0, result.Length);
+            }
             File.Exists(filePath).ShouldBeTrue();
-		}
+        }
 
-		[Fact(DisplayName = "自定义模板导出Word文件测试")]
-		public async Task ExportWordFileByTemplate_Test()
-		{
-			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
-			var tpl = File.ReadAllText(tplPath);
-			var exporter = new WordExporter();
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Test) + ".docx");
-			if (File.Exists(filePath)) File.Delete(filePath);
-			//此处使用默认模板导出
-			var result = await exporter.ExportByTemplate(filePath,
-				new ReceiptInfo
-				{
-					Amount = 22939.43M,
-					Grade = "2019秋",
-					IdNo = "43062619890622xxxx",
-					Name = "张三",
-					Payee = "湖南心莱信息科技有限公司",
-					PaymentMethod = "微信支付",
-					Profession = "运动训练",
-					Remark = "学费",
-					TradeStatus = "已完成",
-					TradeTime = DateTime.Now,
-					UppercaseAmount = "贰万贰仟玖佰叁拾玖圆肆角叁分",
-					Code = "19071800001"
-				}, tpl);
-			result.ShouldNotBeNull();
-			File.Exists(filePath).ShouldBeTrue();
-		}
+        [Fact(DisplayName = "自定义模板导出Word文件测试")]
+        public async Task ExportWordFileByTemplate_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
+            var tpl = File.ReadAllText(tplPath);
+            var exporter = new WordExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Test) + ".docx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportByTemplate(filePath,
+                new ReceiptInfo
+                {
+                    Amount = 22939.43M,
+                    Grade = "2019秋",
+                    IdNo = "43062619890622xxxx",
+                    Name = "张三",
+                    Payee = "湖南心莱信息科技有限公司",
+                    PaymentMethod = "微信支付",
+                    Profession = "运动训练",
+                    Remark = "学费",
+                    TradeStatus = "已完成",
+                    TradeTime = DateTime.Now,
+                    UppercaseAmount = "贰万贰仟玖佰叁拾玖圆肆角叁分",
+                    Code = "19071800001"
+                }, tpl);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
-		[Fact(DisplayName = "自定义模板导出Word文件测试Type类型测试")]
-		public async Task ExportWordFileByTemplate_Type_Test()
-		{
-			var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
-			var tpl = File.ReadAllText(tplPath);
-			var exporter = new WordExporter();
-			var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Type_Test) + ".docx");
-			if (File.Exists(filePath)) File.Delete(filePath);
-			//此处使用默认模板导出
-			var result = await exporter.ExportBytesByTemplate(
-				new ReceiptInfo
-				{
-					Amount = 22939.43M,
-					Grade = "2019秋",
-					IdNo = "43062619890622xxxx",
-					Name = "张三",
-					Payee = "湖南心莱信息科技有限公司",
-					PaymentMethod = "微信支付",
-					Profession = "运动训练",
-					Remark = "学费",
-					TradeStatus = "已完成",
-					TradeTime = DateTime.Now,
-					UppercaseAmount = "贰万贰仟玖佰叁拾玖圆肆角叁分",
-					Code = "19071800001"
-				}, tpl,typeof(ReceiptInfo));
-			result.ShouldNotBeNull();
+        [Fact(DisplayName = "自定义模板导出Word文件测试Type类型测试")]
+        public async Task ExportWordFileByTemplate_Type_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "receipt.cshtml");
+            var tpl = File.ReadAllText(tplPath);
+            var exporter = new WordExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordFileByTemplate_Type_Test) + ".docx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //此处使用默认模板导出
+            var result = await exporter.ExportBytesByTemplate(
+                new ReceiptInfo
+                {
+                    Amount = 22939.43M,
+                    Grade = "2019秋",
+                    IdNo = "43062619890622xxxx",
+                    Name = "张三",
+                    Payee = "湖南心莱信息科技有限公司",
+                    PaymentMethod = "微信支付",
+                    Profession = "运动训练",
+                    Remark = "学费",
+                    TradeStatus = "已完成",
+                    TradeTime = DateTime.Now,
+                    UppercaseAmount = "贰万贰仟玖佰叁拾玖圆肆角叁分",
+                    Code = "19071800001"
+                }, tpl, typeof(ReceiptInfo));
+            result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
-			using (var file = File.OpenWrite(filePath))
-			{
-				file.Write(result, 0, result.Length);
-			}
-			File.Exists(filePath).ShouldBeTrue();
-		}
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
+            File.Exists(filePath).ShouldBeTrue();
+        }
 
-	}
+    }
 }

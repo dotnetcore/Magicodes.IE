@@ -11,11 +11,6 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -25,6 +20,11 @@ using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -131,7 +131,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 result.Data.Count.ShouldBeGreaterThanOrEqualTo(2);
                 foreach (var item in result.Data)
                 {
-                    if (item.Name!=null && item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
+                    if (item.Name != null && item.Name.Contains("空格测试")) item.Name.ShouldBe(item.Name.Trim());
 
                     if (item.Code.Contains("不去除空格测试")) item.Code.ShouldContain(" ");
                     //去除中间空格测试
@@ -552,7 +552,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             bool result = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string msg);
 
-            using(var stream = new FileStream(filePath, FileMode.Open))
+            using (var stream = new FileStream(filePath, FileMode.Open))
             {
                 var resultByte = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(stream, ErrorList, out byte[] fileByte);
                 resultByte.ShouldBeTrue();

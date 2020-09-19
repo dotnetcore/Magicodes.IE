@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP3_0||NETCOREAPP3_1
+﻿#if NETCOREAPP3_0 || NETCOREAPP3_1
 using Magicodes.ExporterAndImporter.Builder;
 using Magicodes.ExporterAndImporter.Filters;
 using MagicodesWebSite;
@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using OfficeOpenXml;
+using Shouldly;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using OfficeOpenXml;
-using Shouldly;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             _client.BaseAddress = new Uri("http://localhost");
         }
 
-        #region FunctionalTests
+#region FunctionalTests
         [Fact]
         public async Task AllowsXlsxHttpContentMediaType()
         {
@@ -110,11 +110,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             Assert.NotNull(response.Content.Headers.ContentType);
             Assert.Equal(expectedContentType, response.Content.Headers.ContentType.MediaType);
 
-            var result =await response.Content.ReadAsByteArrayAsync();
+            var result = await response.Content.ReadAsByteArrayAsync();
             result.ShouldNotBeNull();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(XlsxHttpContentMediaType_AttrsExport_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
-            using (var file=File.OpenWrite(filePath))
+            using (var file = File.OpenWrite(filePath))
             {
                 file.Write(result, 0, result.Length);
             }
@@ -192,7 +192,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await response.Content.ReadAsByteArrayAsync();
             result.ShouldNotBeNull();
         }
-        #endregion
+#endregion
 
     }
 }

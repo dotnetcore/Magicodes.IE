@@ -11,14 +11,12 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -53,6 +51,24 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 
     [ExcelImporter(ImportResultFilter = typeof(ImportResultFilterTest), IsLabelingError = true)]
     public class ImportResultFilterDataDto1
+    {
+        /// <summary>
+        ///     产品名称
+        /// </summary>
+        [ImporterHeader(Name = "产品名称")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     产品代码
+        ///     长度验证
+        ///     重复验证
+        /// </summary>
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为20", AutoTrim = false, IsAllowRepeat = false)]
+        public string Code { get; set; }
+    }
+
+    [ExcelImporter(IsLabelingError = true)]
+    public class DIImportResultFilterDataDto1
     {
         /// <summary>
         ///     产品名称

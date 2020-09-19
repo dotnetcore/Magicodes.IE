@@ -14,24 +14,21 @@
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Excel;
-using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Tests.Extensions;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
 using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Magicodes.ExporterAndImporter.Csv;
-using Magicodes.ExporterAndImporter.Tests.Extensions;
-using OfficeOpenXml.Style;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {

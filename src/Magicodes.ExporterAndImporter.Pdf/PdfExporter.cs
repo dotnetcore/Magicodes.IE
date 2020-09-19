@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using System.Reflection;
 #if NET461
 
@@ -42,9 +41,9 @@ namespace Magicodes.ExporterAndImporter.Pdf
     {
 #if NET461
 
-		private static readonly IConverter PdfConverter = new ThreadSafeConverter(new PdfToolset(
-			new WinAnyCPUEmbeddedDeployment(
-				new TempFolderDeployment())));
+        private static readonly IConverter PdfConverter = new ThreadSafeConverter(new PdfToolset(
+            new WinAnyCPUEmbeddedDeployment(
+                new TempFolderDeployment())));
 
 #else
         private static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
@@ -150,8 +149,8 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 Encoding = Encoding.UTF8,
                 PagesCount = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
 #else
-				HtmlText = htmlString,
-				CountPages = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
+                HtmlText = htmlString,
+                CountPages = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
 #endif
                 WebSettings = { DefaultEncoding = Encoding.UTF8.BodyName },
             };
