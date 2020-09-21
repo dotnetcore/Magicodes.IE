@@ -606,10 +606,14 @@ namespace Magicodes.ExporterAndImporter.Tests
                         {
                             Cover = Path.Combine("TestFiles", "ExporterTest.png")
                         },
-                        new BookInfo(2, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, null),
-                        new BookInfo(3, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
+                        new BookInfo(2, "0000000001", "《XX从入门到放弃》", null, "机械工业出版社", "3.14", 100, "备注")
                         {
-                            Cover = Path.Combine("TestFiles", "ExporterTest.png")
+                            Cover = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png"
+                        },
+                        new BookInfo(3, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, null),
+                        new BookInfo(4, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
+                        {
+                            Cover = Path.Combine("TestFiles", "issue131.png")
                         }
                     }),
                 tplPath);
@@ -621,7 +625,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //确保所有的转换均已完成
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
                 //检查图片
-                sheet.Drawings.Count.ShouldBe(3);
+                sheet.Drawings.Count.ShouldBe(4);
                 //TODO 检查合计是否正确
 
                 //TODO 检查均值是否正确
