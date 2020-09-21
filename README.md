@@ -50,18 +50,6 @@
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
-#### Beta版
-
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
-| **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
-| **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
-| **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
-| **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
-| **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
-| **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
-| **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore?includePreReleases=true)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
-
 ### **注意**
 
 - **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**
@@ -86,7 +74,7 @@
 
 9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
-10. **进阶篇之导入导出筛选器（待补充）**
+10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
 11. **Excel导出多个实体（待补充）**
 12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
 13. **[性能测试](docs/13.性能测试.md)**
