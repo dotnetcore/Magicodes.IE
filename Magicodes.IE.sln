@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9
 		docs\2.基础教程之导出Excel.md = docs\2.基础教程之导出Excel.md
 		docs\3.基础教程之导出Pdf收据.md = docs\3.基础教程之导出Pdf收据.md
 		docs\4.在Docker中使用.md = docs\4.在Docker中使用.md
+		docs\5.动态导出.md = docs\5.动态导出.md
 		docs\6.多Sheet导入.md = docs\6.多Sheet导入.md
 		docs\7.Csv导入导出.md = docs\7.Csv导入导出.md
 		docs\8.Excel图片导入导出.md = docs\8.Excel图片导入导出.md
