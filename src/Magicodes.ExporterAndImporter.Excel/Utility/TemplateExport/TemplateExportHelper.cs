@@ -268,10 +268,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             var rows = new List<int>();
             foreach (ExcelDrawing item in sheet.Drawings)
             {
-                if (item is ExcelPicture)
+                if (item is ExcelPicture pic)
                 {
-                    var pic = item as ExcelPicture;
-                    var rowIndex = item.From.Row + 1;
+                    var rowIndex = pic.From.Row + 1;
                     if (rows.Contains(rowIndex))
                     {
                         continue;
@@ -366,6 +365,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             {
                 var rowIndex = address.Start.Row + i + insertRows;
                 var targetAddress = new ExcelAddress(rowIndex, address.Start.Column, rowIndex, address.Start.Column);
+                //https://github.com/dotnetcore/Magicodes.IE/issues/155
+                sheet.Row(rowIndex).Height = sheet.Row(address.Start.Row).Height;
                 RenderCell(target, sheet, cellString, targetAddress.Address, dataVar, null, parameters, i);
             }
         }
@@ -426,7 +427,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             //自定义渲染，以“::”作为切割。
             //TODO:允许注入自定义管道逻辑
             var typeKey = Regex.Split(expressonStr, "::").First().TrimStart('{').ToLower();
-            string body, expresson = string.Empty;
+            string body, expresson;
             switch (typeKey)
             {
                 case "image":
