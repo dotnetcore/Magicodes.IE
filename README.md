@@ -78,7 +78,7 @@
 
 4. **[在Docker中使用](docs/4.在Docker中使用.md "4.在Docker中使用")**
 
-5. **动态导出（待补充）**
+5. **[动态导出](docs/5.动态导出.md "5.动态导出")**
 
 6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
 7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
