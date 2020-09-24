@@ -12,60 +12,6 @@
 // ======================================================================
 
 using DynamicExpresso;
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
-在此之前:
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using DynamicExpresso;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-在此之后:
-using System.Collections.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using System;
-using System.Text.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
-在此之前:
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using DynamicExpresso;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-在此之后:
-using System.Collections.Core;
-using Magicodes.ExporterAndImporter.Core.Extension;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using System;
-using System.Text.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-*/
 using Magicodes.ExporterAndImporter.Core.Extension;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
