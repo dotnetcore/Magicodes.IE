@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.4.0-beta3
+**2020.09.24**
+- [#142](https://github.com/dotnetcore/Magicodes.IE/issues/142) 【修复】根据模板列表高度的设置，统一设置渲染高度
+
 ## 2.4.0-beta2
 **2020.09.16**
 - [#152](https://github.com/dotnetcore/Magicodes.IE/issues/152) 筛选器支持依赖注入
