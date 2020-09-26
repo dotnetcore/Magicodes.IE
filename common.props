@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.4.0-beta3</Version>
+        <Version>2.4.0-beta4</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,7 +13,11 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
-          
+
+          **2020.09.26**
+          - 【Nuget】版本更新到2.4.0-beta4
+            #157 【修复】对低版本框架的兼容
+
           **2020.09.24**
           - 【Nuget】版本更新到2.4.0-beta3
           #142 【修复】根据模板列表高度的设置，统一设置渲染高度
@@ -23,13 +27,6 @@
           1、#152 筛选器支持依赖注入
           2、#151 导出添加AutoFitMaxRows，超过指定行数则不启用AutoFit
           3、添加全局IsDisableAllFilter属性，以通过特性禁用所有筛选器
-
-          **2020.09.14**
-          - 【Nuget】版本更新到2.4.0-beta1
-          1、支持单元格导出宽度设置
-          2、Excel导出支持对Enum的ValueMapping设置
-          3、Excel导出支持对bool类型的ValueMapping设置
-
 
         </Description>
     </PropertyGroup>
