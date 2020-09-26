@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿#if NETSTANDARD
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Magicodes.ExporterAndImporter.Core
@@ -81,3 +82,4 @@ namespace Magicodes.ExporterAndImporter.Core
         }
     }
 }
+#endif 

@@ -1,4 +1,5 @@
-﻿using Magicodes.ExporterAndImporter.Core;
+﻿#if NETCOREAPP
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
@@ -126,7 +127,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Dimension.Columns.ShouldBe(4);
             }
 
-            #endregion 通过筛选器修改列名
+#endregion 通过筛选器修改列名
         }
 
         public void Dispose()
@@ -145,3 +146,4 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
     }
 }
+#endif

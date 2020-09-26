@@ -12,7 +12,6 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core.Filters;
-using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 #if NETSTANDARD
 using System.Runtime.Loader;
+using Microsoft.Extensions.DependencyModel;
 #endif
 using System.Text;
 
@@ -51,6 +51,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             return displayName;
         }
+
         /// <summary>
         ///     获取Format
         /// </summary>
@@ -66,7 +67,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             return displayFormat;
         }
-
 
         /// <summary>
         ///     获取类型描述
@@ -361,8 +361,10 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static TFilter GetFilter<TFilter>(this Type filterType, bool isDisableAllFilter) where TFilter : IFilter
         {
             TFilter filter = default;
+
             if (!isDisableAllFilter)
             {
+#if NETSTANDARD
                 //判断容器中是否已注册
                 if (AppDependencyResolver.HasInit)
                 {
@@ -370,8 +372,16 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 }
                 else if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
                 {
-                    filter=(TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
                 }
+
+#else
+                if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
+                {
+                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true,
+                        System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                }
+#endif
             }
             return filter;
         }
