@@ -22,6 +22,7 @@
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
 | [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕讨论中 |2020-10-30| [进入讨论](https://github.com/dotnetcore/Magicodes.IE/issues/158) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | ☕进行中 |2020-09-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
@@ -75,7 +76,7 @@
 9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 
 10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
-11. **Excel导出多个实体（待补充）**
+11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
 12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
 13. **[性能测试](docs/13.性能测试.md)**
 
