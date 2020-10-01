@@ -765,6 +765,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板.xlsx");
             var import = await Importer.Import<ImportPictureDto>(filePath);
+
             import.ShouldNotBeNull();
             import.HasError.ShouldBeFalse();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
@@ -787,6 +788,32 @@ namespace Magicodes.ExporterAndImporter.Tests
             new FileInfo(import.Data.ElementAt(1).Img).Length.ShouldBe(image4.Length);
             new FileInfo(import.Data.ElementAt(2).Img).Length.ShouldBe(image1.Length);
             new FileInfo(import.Data.ElementAt(2).Img1).Length.ShouldBe(image1.Length);
+        }
+
+        [Fact(DisplayName = "导入图片测试头部非第一行")]
+        public async Task ImportPictureHeaderNotFirstRow_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板非表头非第一行.xlsx");
+            var import = await Importer.Import<ImportPictureHeaderNotFirstRowDto>(filePath);
+
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+        }
+
+        [Fact(DisplayName = "导入图片测试头部非第一行并且带有不规整的前几行")]
+        public async Task ImportPictureHeaderNotFirstRowAndIrregularRow_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "图片导入模板非表头非第一行并且带有不规整的行.xlsx");
+            var import = await Importer.Import<ImportPictureHeaderNotFirstRowDto>(filePath);
+
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeFalse();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
         }
 
         [Fact(DisplayName = "导入图片测试_base64")]

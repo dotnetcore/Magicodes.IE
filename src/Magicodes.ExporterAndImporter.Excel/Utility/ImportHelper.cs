@@ -782,7 +782,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             return worksheet.Drawings[position] as ExcelPicture;
         }
 
-
+        /// <summary>
+        ///      获取图片
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="row"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        private ExcelPicture GetImage(ExcelWorksheet worksheet, int row, int column)
+        {
+            //var excelDrawings = worksheet.Drawings.Where(o => o.From.Row == row && o.From.Column ==
+            //    column);
+            var excelDrawings = worksheet.Drawings.FirstOrDefault(o => o.From.Row == row - 1 && o.From.Column ==
+                column - 1);
+            return excelDrawings as ExcelPicture;
+        }
 
         /// <summary>
         ///     解析数据
@@ -854,17 +868,43 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             {
                                 if (col.ImportImageFieldAttribute != null)
                                 {
-                                    var position = imageBaseIndex == 0
-                                       ? rowIndex - 2 + (imageBaseIndex++ * worksheet.Dimension.End.Row)
-                                       : rowIndex - 3 + (imageBaseIndex++ * worksheet.Dimension.End.Row);
-                                    var excelPicture = GetImage(worksheet, position);
+                                    //var position = 0;
+
+                                    //first   index    row  
+                                    // 4 ------ 7 ------ 3       3
+                                    // 3 ------ 5 ------ 2       2
+                                    // 2 ------ 3 ------ 1       0
+
+                                    //var row = ExcelImporterSettings.HeaderRowIndex > 1
+                                    //    ? ExcelImporterSettings.HeaderRowIndex + 1
+                                    //    : 2;
+
+                                    //var row1 = row + (ExcelImporterSettings.HeaderRowIndex);
+
+                                    //if (imageBaseIndex == 0)
+                                    //{
+                                    //    position = rowIndex -
+                                    //               row +
+                                    //               (imageBaseIndex++ * worksheet.Dimension.End.Row);
+                                    //}
+                                    //else
+                                    //{
+                                    //    position = rowIndex -
+                                    //               row1 +
+                                    //              imageBaseIndex++ * worksheet.Dimension.End.Row;
+                                    //}
+
+                                    //var excelPicture = GetImage(worksheet, position);
+
+                                    var excelPicture = GetImage(worksheet, cell.Start.Row, cell.Start.Column);
+
                                     var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);
                                     var value = string.Empty;
 
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)
                                     {
                                         case ImportImageTo.TempFolder:
-                                            value = Extension.Save(excelPicture.Image, path, excelPicture.ImageFormat);
+                                            value = Extension.Save(excelPicture?.Image, path, excelPicture.ImageFormat);
                                             break;
                                         case ImportImageTo.Base64:
                                             value = excelPicture.Image.ToBase64String(excelPicture.ImageFormat);
