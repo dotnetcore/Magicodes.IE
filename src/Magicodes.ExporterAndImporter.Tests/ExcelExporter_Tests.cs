@@ -896,6 +896,19 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Tables.Count.ShouldBe(1);
                 var tb = sheet.Tables.First();
 
+                var enums = typeof(MyEmum).GetEnumDefinitionList();
+                var list=new List<string>();
+                foreach (var (item1, item2, item3, item4) in enums)
+                {
+                    list.Add(item1);
+                    list.Add(item2.ToString());
+                    list.Add(item3);
+                    list.Add(item4);
+                }
+                list.Add("A Test");
+                list.Add("B Test");
+                list.ShouldContain(sheet.Cells["E2"].Text);
+
                 tb.Columns[0].Name.ShouldBe("Custom列1");
                 tb.Columns[1].Name.ShouldBe("列2");
                 tb.Columns.Count.ShouldBe(8);

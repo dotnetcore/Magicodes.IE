@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
+using System.ComponentModel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -48,6 +49,9 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     public enum MyEmum
     {
         A,
-        B
+        B,
+        [Description("C Test")]
+        C,
+        D
     }
 }

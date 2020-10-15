@@ -516,6 +516,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ExcelWorksheets.Add(_excelWorksheet);
             return _excelWorksheet;
         }
+
         /// <summary>
         ///     添加导出数据
         /// </summary>
@@ -569,6 +570,26 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
                             ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                        }
+                        else
+                        {
+                            var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
+                            var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
+                            if (tuple != null)
+                            {
+                                if (!tuple.Item4.IsNullOrWhiteSpace())
+                                {
+                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
+                                }
+                                else
+                                {
+                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
+                                }
+                            }
+                            else
+                            {
+                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                            }
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
