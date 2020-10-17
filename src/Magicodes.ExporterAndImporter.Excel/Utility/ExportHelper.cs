@@ -387,7 +387,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 AddPictures(dataItems.Count);
             }
-            SetSkipRows();
             DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
             return AddHeaderAndStyles();
         }
@@ -460,6 +459,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             DeleteIgnoreColumns();
             //以便支持导出多Sheet
             SheetIndex++;
+            SetSkipRows();
             return CurrentExcelPackage;
         }
 
@@ -647,8 +647,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
                 if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
                 {
-                    var rowIndex = ExcelExporterSettings.HeaderRowIndex;
-                    for (;rowIndex <= rowCount; rowIndex++)
+                    for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
                     {
                         var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
                         var url = cell.Text;
@@ -665,7 +664,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
+                                    pic.SetPosition(rowIndex+ExcelExporterSettings.HeaderRowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
                                     CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
                                     //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                     pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);

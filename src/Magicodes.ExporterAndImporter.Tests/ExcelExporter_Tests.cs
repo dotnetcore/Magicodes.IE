@@ -893,7 +893,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "Excel导出图片测试自定义")]
+        [Fact(DisplayName = "Excel导出图片测试自定义开始行位置")]
         public async Task ExportPictureCustomRowStartIndex_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -920,16 +920,17 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //检查转换结果
                 var sheet = pck.Workbook.Worksheets.First();
                 //验证Alt
-                sheet.Cells["G6"].Value.ShouldBe("404");
+                sheet.Cells["G9"].Value.ShouldBe("404");
                 //验证图片
                 sheet.Drawings.Count.ShouldBe(9);
                 foreach (ExcelPicture item in sheet.Drawings)
                 {
                     //检查图片位置
-                    new int[] { 2, 6 }.ShouldContain(item.From.Column);
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
                     item.ShouldNotBeNull();
                 }
-
+                sheet.Dimension.Start.Row.ShouldBe(4);
+                sheet.Dimension.Rows.ShouldBe(6);
                 sheet.Tables.Count.ShouldBe(0);
             }
         }
