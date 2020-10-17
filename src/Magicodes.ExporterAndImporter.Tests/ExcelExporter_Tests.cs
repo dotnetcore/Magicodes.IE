@@ -885,7 +885,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 foreach (ExcelPicture item in sheet.Drawings)
                 {
                     //检查图片位置
-                    new int[] { 2, 6 }.ShouldContain(item.From.Column);
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
                     item.ShouldNotBeNull();
                 }
 
