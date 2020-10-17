@@ -387,7 +387,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 AddPictures(dataItems.Count);
             }
-
+            SetSkipRows();
             DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
             return AddHeaderAndStyles();
         }
@@ -415,12 +415,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="currentws"></param>
         /// <param name="tempws"></param>
         /// <param name="isAppendHeaders"></param>
-        public void CopyRows(int currentws, int tempws, bool isAppendHeaders)
+        ///  <param name="beginRows"></param>
+        public void CopyRows(int currentws, int tempws, bool isAppendHeaders, int beginRows = 2)
         {
             var tempWorksheet = _excelPackage.Workbook.Worksheets[tempws];
             var ws = _excelPackage.Workbook.Worksheets[currentws];
 
-            int beginRows = 2;
             if (isAppendHeaders)
             {
                 beginRows = 1;
@@ -470,6 +470,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport) GetExporterHeaderInfoList(dataItems);
             AddDataItems(dataItems);
+            SetSkipRows();
             //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
             //AddPictures(dataItems.Rows.Count);
 
@@ -646,7 +647,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
                 if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
                 {
-                    for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
+                    var rowIndex = ExcelExporterSettings.HeaderRowIndex;
+                    for (;rowIndex <= rowCount; rowIndex++)
                     {
                         var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
                         var url = cell.Text;
@@ -712,6 +714,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             var er = excelRange.LoadFromDataTable(dataTable, true, tbStyle);
             CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+        }
+
+        /// <summary>
+        ///设置x行开始追加内容
+        /// </summary>
+        private void SetSkipRows()
+        {
+            if (ExcelExporterSettings.HeaderRowIndex > 1)
+            {
+                CurrentExcelWorksheet.InsertRow(1, ExcelExporterSettings.HeaderRowIndex);
+            }
         }
 
         /// <summary>

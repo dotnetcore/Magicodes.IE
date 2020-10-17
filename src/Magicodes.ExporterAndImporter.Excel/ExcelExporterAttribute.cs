@@ -30,5 +30,9 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         public bool AutoCenter { get; set; }
 
+        /// <summary>
+        ///     表头位置
+        /// </summary>
+        public int HeaderRowIndex { get; set; } = 1;
     }
 }

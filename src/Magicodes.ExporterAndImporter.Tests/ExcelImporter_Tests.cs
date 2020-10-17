@@ -399,7 +399,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
-
         /// <summary>
         /// https://github.com/dotnetcore/Magicodes.IE/issues/35
         /// </summary>
