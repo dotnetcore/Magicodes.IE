@@ -13,7 +13,7 @@
 
 ## 概述
 
-导入导出通用库，支持Dto导入导出以及动态导出，支持Excel、Word、Pdf、Csv和Html。
+导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
 
 **![总体说明](./docs/Magicodes.IE.png)**
 
