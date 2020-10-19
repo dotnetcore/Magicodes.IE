@@ -15,7 +15,7 @@
 
 Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
 
-**![General description](./docs/Magicodes.IE.png)**
+**![General description](./docs/Magicodes.IE.en.png)**
 
 ## Milestone
 
