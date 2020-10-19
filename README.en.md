@@ -1,4 +1,4 @@
-# Magicodes.IE | [English](README.en.md)
+# Magicodes.IE | [简体中文](README.md)
 
 [![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -11,22 +11,21 @@
 ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
 
-## 概述
+## Overview
 
-导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
 
-**![总体说明](./docs/Magicodes.IE.png)**
+**![General description](./docs/Magicodes.IE.png)**
 
-## 里程碑
+## Milestone
 
-|  #   |    状态     | 完成时间 |                          里程碑情况                           |
+|  #   |    Status     | Completion time | Milestone situation |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕进行中 |2020-10-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
-| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩已完成 |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
-| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
-| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
+| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2020-10-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
+| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
+| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩Completed |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
+| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩Completed |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ### Azure DevOps
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -35,13 +34,13 @@
 - Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
 - Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
 
-具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
+For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
 ### Nuget
 
-#### 稳定版（推荐）
+#### Stable version (recommended)
 
-| **名称** |      **Nuget**      |
+| **Name** | **Nuget** |
 |----------|:-------------:|
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
 | **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
@@ -51,15 +50,17 @@
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
-### **注意**
+### **Note**
 
-- **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**
-- **如需在Docker中使用，请参阅文档中的《Docker中使用》一节。**
-- **相关功能均已编写单元测试，在使用的过程中可以参考单元测试。**
+- Excel import does not support ".xls" files, that is, Excel97-2003 is not supported. 
+- For use in Docker, please refer to the section "Use in Docker" in the documentation. 
+- Relevant functions have been compiled with unit tests. You can refer to unit tests during the use process. 
 
-### **教程**
+### **Tutorial**
 
-1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）**
+Sorry, due to limited energy, please help translate.
+
+1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据") **
 
 2. **[基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")  [（点此访问国内文档）](https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/)**
 
@@ -80,48 +81,48 @@
 12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
 13. **[性能测试](docs/13.性能测试.md)**
 
-**其他教程见下文或单元测试**
+**See below for other tutorials or unit tests**
 
-**更新历史见下文。**
+**See below for update history. **
 
-## 特点
+## Features
 
-- **需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；**
+- **Need to be used in conjunction with related import and export DTO models, support import and export through DTO and related characteristics. Configure features to control related logic and display results without modifying the logic code;**
 **![](./res/导入Dto.png "导入Dto")**
-- **支持各种筛选器，以便支持多语言、动态控制列展示等场景，具体使用见单元测试：**
-  - **导入列头筛选器（可动态指定导入列、导入的值映射关系）**
-  - **导出列头筛选器（可动态控制导出列，支持动态导出（DataTable））**
-  - **导入结果筛选器（可修改标注文件）**
-- **导出支持文本自定义过滤或处理；**
-- **导入支持中间空行自动跳过；**
-- **导入支持自动根据 DTO 生成导入模板,针对必填项将自动标注；**
-**![](./res/自动生成的导入模板.png "自动生成的导入模板")**
-- **导入支持数据下拉选择，目前仅支持枚举类型；**
-- **导入数据支持前后空格以及中间空格处理，允许指定列进行设置；**
-- **导入支持模板自动检查，数据自动校验，异常统一处理，并提供统一的错误封装，包含异常、模板错误和行数据错误；**
-**![](./res/数据错误统一返回.png "数据错误")**
-- **支持导入表头位置设置，默认为1；**
-- **支持导入列乱序，无需按顺序一一对应；**
-- **支持导入指定列索引，默认自动识别；**
-- **导出Excel支持拆分Sheet，仅需设置特性【ExporterAttribute】的【MaxRowNumberOnASheet】的值，为0则不拆分。具体见单元测试；**
-- **支持将导入Excel进行错误标注；**
-**![](./res/数据错误.png "数据错误标注")**
-**![](./res/多个错误.png "多个错误")**
-- **导入支持截止列设置，如未设置则默认遇到空格截止；**
-- **支持导出HTML、Word、Pdf，支持自定义导出模板；**
-  - **导出HTML**
-**![](./res/导出html.png "导出HTML")**
-  - **导出Word**
-**![](./res/导出Word.png "导出Word")**
-  - **导出Pdf，支持设置，具体见更新日志**
-**![](./res/导出Pdf.png "导出Pdf")**
-  - **导出收据**
-**![](./res/导出收据.png "导出收据.png")**
-- **导入支持重复验证；**
-**![](./res/重复错误.png "重复错误.png")**
-- **支持单个数据模板导出，常用于导出收据、凭据等业务**
-- **支持动态列导出（基于DataTable），并且超过100W将自动拆分Sheet。（感谢张善友老师（[https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8 ) ））**
-- **支持 dynamic/ExpandoObject 动态列导出**
+- **Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:**
+  - **Import column header filter (you can dynamically specify the imported column and imported value mapping relationship)**
+  - **Export column header filter (can dynamically control the export column, support dynamic export (DataTable))**
+  - **Import result filter (can modify annotation file)**
+- **Export supports text custom filtering or processing;**
+- **Import supports automatic skipping of blank lines in the middle;**
+- **Import supports automatically generate import templates based on DTO, and automatically mark required items;**
+![](./res/自动生成的导入模板.png "自动生成的导入模板")
+- **Import supports data drop-down selection, currently only supports enumerated types;**
+- **Imported data supports the processing of leading and trailing spaces and intermediate spaces, allowing specific columns to be set;**
+- **Import supports automatic template checking, automatic data verification, unified exception handling, and unified error encapsulation, including exceptions, template errors and row data errors;**
+![](./res/数据错误统一返回.png "数据错误")
+- **Support import header position setting, the default is 1;**
+- **Support import columns out of order, no need to correspond one to one in order;**
+- **Support to import the specified column index, automatic recognition by default;**
+- **Exporting Excel supports splitting of Sheets, only need to set the value of [MaxRowNumberOnASheet] of the characteristic [ExporterAttribute]. If it is 0, no splitting is required. See unit test for details;**
+- **Support importing into Excel for error marking;**
+![](./res/数据错误.png "数据错误标注")
+![](./res/多个错误.png "多个错误")
+- **Import supports cutoff column setting, if not set, blank cutoff will be encountered by default;**
+- **Support exporting HTML, Word, Pdf, support custom export template;**
+  -**Export HTML**
+![](./res/导出html.png "导出HTML")
+  -**Export Word**
+![](./res/导出Word.png "导出Word")
+  -**Export Pdf, support settings, see the update log for details**
+![](./res/导出Pdf.png "导出Pdf")
+  -**Export receipt**
+![](./res/导出收据.png "导出收据.png")
+- **Import supports repeated verification;**
+![](./res/重复错误.png "重复错误.png")
+- **Support single data template export, often used to export receipts, credentials and other businesses**
+- **Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou ([https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8) ))* *
+- **Support dynamic/ExpandoObject dynamic column export**
 ```csharp
         [Fact(DisplayName = "DTO导出支持动态类型")]
         public async Task ExportAsByteArraySupportDynamicType_Test()
@@ -143,7 +144,7 @@
             File.Exists(filePath).ShouldBeTrue();
         }
 ```
-- **支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。**
+- **Support value mapping, support setting value mapping relationship through "ValueMappingAttribute" feature. It is used to generate data validation constraints for import templates and perform data conversion. **
 ```csharp
         /// <summary>
         ///     性别
@@ -155,8 +156,8 @@
         public Genders Gender { get; set; }
 ```
 
-- **支持枚举和Bool类型的导入数据验证项的生成，以及相关数据转换**
-	- **枚举默认情况下会自动获取枚举的描述、显示名、名称和值生成数据项**
+- **Support the generation of imported data verification items of enumeration and Bool type, and related data conversion**
+	- **Enumeration will automatically obtain the description, display name, name and value of the enumeration by default to generate data items**
 
 		```csharp
 			/// <summary>
@@ -208,80 +209,55 @@
 			}
 		```
 
-		**![](./res/enum.png "枚举转数据映射序列")**
+		![](./res/enum.png "枚举转数据映射序列")
 
-	- **bool类型默认会生成“是”和“否”的数据项**
-	- **如果已设置自定义值映射，则不会生成默认选项**
+	- **The bool type will generate "yes" and "no" data items by default**
+	- **If custom value mapping has been set, no default options will be generated**
 
-- **支持excel多Sheet导入；**
+- **Support excel multi-sheet import**
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
 
-- **支持Excel模板导出，并且支持图片渲染**
+- **Support Excel template export, and support image rendering**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 
-  渲染语法如下所示：
+  The rendering syntax is as follows:
 
   ```
-    {{Company}}  //单元格渲染
-    {{Table>>BookInfos|RowNo}} //表格渲染开始语法
-    {{Remark|>>Table}}//表格渲染结束语法
-    {{Image::ImageUrl?Width=50&Height=120&Alt=404}} //图片渲染
-    {{Image::ImageUrl?w=50&h=120&Alt=404}} //图片渲染
-    {{Image::ImageUrl?Alt=404}} //图片渲染
+    {{Company}}  //Cell rendering
+    {{Table>>BookInfos|RowNo}} //Table rendering start syntax
+    {{Remark|>>Table}}//Table rendering end syntax
+    {{Image::ImageUrl?Width=50&Height=120&Alt=404}} //Picture rendering
+    {{Image::ImageUrl?w=50&h=120&Alt=404}} //Picture rendering
+    {{Image::ImageUrl?Alt=404}} //Picture rendering
   ```
 
-  后续将支持自定义管道。
+  Custom pipelines will be supported in the future.
 
-- **支持Excel导入模板生成标注**
+- **Support Excel import template to generate annotation**
   ![](./res/ImportLabel.png "Excel导入标注")
 
-- **支持Excel图片导入导出**
-  - 图片导入
-    - 导入为Base64
-    - 导入到临时目录
-    - 导入到指定目录
-  - 图片导出
-    - 将文件路径导出为图片
-    - 将网络路径导出为图片
+- **Support Excel image import and export**
+  - Picture import
+    - Import as Base64
+    - Import to temporary directory
+    - Import to the specified directory
+   - Picture export
+    - Export file path as picture
+    - Export network path as picture
 
-- **支持多个实体导出多个Sheet**
+- **Support multiple entities to export multiple Sheets**
 
-- **支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
+- **Support using some features under the System.ComponentModel.DataAnnotations namespace to control import and export** [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
-- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+- **Support the use of custom formatter in ASP.NET Core Web API to export content such as Excel, Pdf, Csv** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64 )
 
 ### FAQ
 
-[问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
+[Question List](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
 
-### **联系我们**
+### **Update history**
 
-> ##### **订阅号**
-
-**关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档：**
-
-**![](./res/wechat.jpg "麦扣聊技术")**
-
-> ##### **QQ群**
-
-- **编程交流群<85318032>**
-<image src="./res/wechatq.jpg" width="259" height="259" alt="微信生态群">
-
-
-> ##### **文档官网&官方博客**
-
-- **文档官网：<https://docs.xin-lai.com/>**
-- **博客：<http://www.cnblogs.com/codelove/>**
-
-
-> ##### **其他开源库**
-
-- **<https://github.com/xin-lai>**
-- **<https://gitee.com/magicodes>**
-
-### **更新历史**
-
-**[更新历史](RELEASE.md)**
+**[Update history](RELEASE.md)**
 
 ## Contributors
 
