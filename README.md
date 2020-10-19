@@ -260,7 +260,7 @@
 
 **关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档：**
 
-**![](./res/wechat.jpg "麦扣聊技术")**
+<image src="./res/wechat.jpg" width="259" height="259" alt="麦扣聊技术">
 
 > ##### **QQ群**
 
