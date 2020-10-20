@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.4.0</Version>
+        <Version>2.5.0-beta1</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,11 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.10.20**
+          - 【Nuget】版本更新到2.5.0-beta1
+          - Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)
+          - 增加Excel枚举导出对DescriptionAttribute的支持[#168](https://github.com/dotnetcore/Magicodes.IE/issues/168)
 
           **2020.10.01**
           - 【Nuget】版本更新到2.4.0

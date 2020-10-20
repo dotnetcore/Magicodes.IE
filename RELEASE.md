@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.0-beta1
+**2020.10.20**
+- Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)
+- 增加Excel枚举导出对DescriptionAttribute的支持 [#168](https://github.com/dotnetcore/Magicodes.IE/issues/168)
+
 ## 2.4.0
 **2020.10.01**
 - 支持单元格导出宽度设置 [#129](https://github.com/dotnetcore/Magicodes.IE/issues/129)
