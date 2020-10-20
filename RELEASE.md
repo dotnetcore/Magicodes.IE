@@ -1,5 +1,24 @@
 # Release Log
 
+## 2.4.0
+**2020.10.01**
+- 支持单元格导出宽度设置 [#129](https://github.com/dotnetcore/Magicodes.IE/issues/129)
+- Excel导出支持对Enum的ValueMapping设置 [#106](https://github.com/dotnetcore/Magicodes.IE/issues/106)
+- Excel导出支持对bool类型的ValueMapping设置 [#16](https://github.com/dotnetcore/Magicodes.IE/issues/16)
+- [#152](https://github.com/dotnetcore/Magicodes.IE/issues/152) 筛选器支持依赖注入
+ ```csharp
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    {
+        AppDependencyResolver.Init(app.ApplicationServices);
+        //all other code
+    }
+ ```
+- #151 导出添加AutoFitMaxRows，超过指定行数则不启用AutoFit
+- 添加全局IsDisableAllFilter属性，以通过特性禁用所有筛选器
+- [#142](https://github.com/dotnetcore/Magicodes.IE/issues/142) 【修复】根据模板列表高度的设置，统一设置渲染高度
+- [#157](https://github.com/dotnetcore/Magicodes.IE/issues/157)【修复】对低版本框架的兼容
+- Excel导入对图片获取算法的优化
+
 ## 2.4.0-beta4
 **2020.09.26**
 - [#157](https://github.com/dotnetcore/Magicodes.IE/issues/157)【修复】对低版本框架的兼容

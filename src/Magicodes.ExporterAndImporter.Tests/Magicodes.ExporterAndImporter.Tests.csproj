@@ -100,7 +100,13 @@
     <None Update="TestFiles\Import\单列导入测试.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\图片导入模板非表头非第一行.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\图片导入模板.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\Import\图片导入模板非表头非第一行并且带有不规整的行.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\Import\学生基础数据及缴费流水号导入.xlsx">
