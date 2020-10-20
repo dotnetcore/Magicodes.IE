@@ -298,6 +298,27 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "DataTable结合DTO自定义行开始位置导出Excel")]
+        public async Task DynamicExportCustomRowStartIndex_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExportCustomRowStartIndex_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrsCustomRowStartIndex>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.Export<ExportTestDataWithAttrsCustomRowStartIndex>(filePath, dt);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+                sheet.Dimension.Rows.ShouldBe(1005);
+            }
+        }
+
         [Fact(DisplayName = "DataTable结合DTO类型导出ByteArray Excel")]
         public async Task DynamicExport_ByteArray_Test()
         {
@@ -413,7 +434,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             IExporter exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
-            
+
             DeleteFile(filePath);
 
             var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
@@ -864,13 +885,56 @@ namespace Magicodes.ExporterAndImporter.Tests
                 foreach (ExcelPicture item in sheet.Drawings)
                 {
                     //检查图片位置
-                    new int[] { 2, 6 }.ShouldContain(item.From.Column);
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
                     item.ShouldNotBeNull();
                 }
 
                 sheet.Tables.Count.ShouldBe(0);
             }
         }
+
+        [Fact(DisplayName = "Excel导出图片测试自定义开始行位置")]
+        public async Task ExportPictureCustomRowStartIndex_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPictureCustomRowStartIndex_Test)}.xlsx");
+            DeleteFile(filePath);
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPictureCustomRowStatIndex>(5);
+            var url = Path.Combine("TestFiles", "ExporterTest.png");
+            for (var i = 0; i < data.Count; i++)
+            {
+                var item = data[i];
+                item.Img1 = url;
+                if (i == 4)
+                    item.Img = null;
+                else
+                    item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
+            }
+
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //验证Alt
+                sheet.Cells["G9"].Value.ShouldBe("404");
+                //验证图片
+                sheet.Drawings.Count.ShouldBe(9);
+                foreach (ExcelPicture item in sheet.Drawings)
+                {
+                    //检查图片位置
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
+                    item.ShouldNotBeNull();
+                }
+                sheet.Dimension.Start.Row.ShouldBe(4);
+                sheet.Dimension.Rows.ShouldBe(6);
+                sheet.Tables.Count.ShouldBe(0);
+            }
+        }
+
 
         #endregion
 
@@ -892,9 +956,22 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
 
                 sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
-                new List<string> {"是", "否"}.ShouldContain(sheet.Cells["G2"].Text);
+                new List<string> { "是", "否" }.ShouldContain(sheet.Cells["G2"].Text);
                 sheet.Tables.Count.ShouldBe(1);
                 var tb = sheet.Tables.First();
+
+                var enums = typeof(MyEmum).GetEnumDefinitionList();
+                var list = new List<string>();
+                foreach (var (item1, item2, item3, item4) in enums)
+                {
+                    list.Add(item1);
+                    list.Add(item2.ToString());
+                    list.Add(item3);
+                    list.Add(item4);
+                }
+                list.Add("A Test");
+                list.Add("B Test");
+                list.ShouldContain(sheet.Cells["E2"].Text);
 
                 tb.Columns[0].Name.ShouldBe("Custom列1");
                 tb.Columns[1].Name.ShouldBe("列2");

@@ -387,7 +387,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 AddPictures(dataItems.Count);
             }
-
             DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
             return AddHeaderAndStyles();
         }
@@ -415,12 +414,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="currentws"></param>
         /// <param name="tempws"></param>
         /// <param name="isAppendHeaders"></param>
-        public void CopyRows(int currentws, int tempws, bool isAppendHeaders)
+        ///  <param name="beginRows"></param>
+        public void CopyRows(int currentws, int tempws, bool isAppendHeaders, int beginRows = 2)
         {
             var tempWorksheet = _excelPackage.Workbook.Worksheets[tempws];
             var ws = _excelPackage.Workbook.Worksheets[currentws];
 
-            int beginRows = 2;
             if (isAppendHeaders)
             {
                 beginRows = 1;
@@ -460,6 +459,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             DeleteIgnoreColumns();
             //以便支持导出多Sheet
             SheetIndex++;
+            SetSkipRows();
             return CurrentExcelPackage;
         }
 
@@ -470,6 +470,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport) GetExporterHeaderInfoList(dataItems);
             AddDataItems(dataItems);
+            SetSkipRows();
             //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
             //AddPictures(dataItems.Rows.Count);
 
@@ -516,6 +517,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ExcelWorksheets.Add(_excelWorksheet);
             return _excelWorksheet;
         }
+
         /// <summary>
         ///     添加导出数据
         /// </summary>
@@ -569,6 +571,26 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
                             ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                        }
+                        else
+                        {
+                            var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
+                            var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
+                            if (tuple != null)
+                            {
+                                if (!tuple.Item4.IsNullOrWhiteSpace())
+                                {
+                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
+                                }
+                                else
+                                {
+                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
+                                }
+                            }
+                            else
+                            {
+                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                            }
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
@@ -642,7 +664,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(rowIndex, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
+                                    pic.SetPosition(rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0), ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
                                     CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
                                     //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                     pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
@@ -691,6 +713,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             var er = excelRange.LoadFromDataTable(dataTable, true, tbStyle);
             CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+        }
+
+        /// <summary>
+        ///设置x行开始追加内容
+        /// </summary>
+        private void SetSkipRows()
+        {
+            if (ExcelExporterSettings.HeaderRowIndex > 1)
+            {
+                CurrentExcelWorksheet.InsertRow(1, ExcelExporterSettings.HeaderRowIndex);
+            }
         }
 
         /// <summary>

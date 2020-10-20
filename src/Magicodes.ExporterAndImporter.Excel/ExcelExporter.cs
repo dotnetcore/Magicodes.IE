@@ -268,7 +268,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
@@ -446,7 +445,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-
                     return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
                 }
             }
