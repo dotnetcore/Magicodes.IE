@@ -14,17 +14,45 @@
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Magicodes.ExporterAndImporter.Core.Filters;
+using Magicodes.ExporterAndImporter.Core.Models;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
 
     /// <summary>
+    /// 导入列头筛选器测试
+    /// 1）测试修改列头
+    /// 2）测试修改值映射
+    /// </summary>
+    public class ImportStudentDtoHeaderFilterTest : IImportHeaderFilter
+    {
+        public List<ImporterHeaderInfo> Filter(List<ImporterHeaderInfo> importerHeaderInfos)
+        {
+            foreach (var item in importerHeaderInfos)
+            {
+                if (item.PropertyName == "Gender")
+                {
+                    item.MappingValues = new Dictionary<string, dynamic>()
+                    {
+                        {"男0",0 },
+                        {"女1",1 }
+                    };
+                }
+            }
+            return importerHeaderInfos;
+        }
+    }
+
+    /// <summary>
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = true)]
+    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = false,
+        ImportHeaderFilter = typeof(ImportStudentDtoHeaderFilterTest))]
     public class ImportStudentDto
     {
         /// <summary>

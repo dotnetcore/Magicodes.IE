@@ -41,7 +41,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public IExcelImporter Importer = new ExcelImporter();
 
         /// <summary>
-        /// 测试枚举
+        /// 生成学生数据导入模板
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "生成学生数据导入模板")]
@@ -55,6 +55,14 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                var dataValidataions = sheet.DataValidations.FirstOrDefault()
+                    as OfficeOpenXml.DataValidation.ExcelDataValidationList;
+                new List<string> { "男0", "女1" }.ShouldBe(dataValidataions.Formula.Values);
+            }
             //TODO:读取Excel检查表头和格式
         }
 
