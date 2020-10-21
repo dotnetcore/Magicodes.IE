@@ -16,6 +16,7 @@ using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
+using OfficeOpenXml.DataValidation;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using System;
@@ -622,13 +623,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     : propertyInfo.GetAttribute<IEIgnoreAttribute>(true).IsImportIgnore;
                 //忽略字段处理
                 if (ignore) continue;
-
+      
                 var colHeader = new ImporterHeaderInfo
                 {
                     IsRequired = propertyInfo.IsRequired(),
                     PropertyName = propertyInfo.Name,
                     Header = importerHeaderAttribute,
-                    ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true)
+                    ImportImageFieldAttribute = propertyInfo.GetAttribute<ImportImageFieldAttribute>(true),
+                    PropertyInfo = propertyInfo
                 };
 
                 //设置ColumnIndex
@@ -754,6 +756,59 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
                         dataValidations.Formula.Values.Add(mappingValue.Key);
                 }
+
+                //如果开启数据验证，则添加验证约束
+                if (ImporterHeaderInfos[i].Header.IsInterValidation)
+                {
+                    //TODO 考虑是否需要拿字段原属性，作为数据验证的标准？
+                    if (ImporterHeaderInfos[i].PropertyInfo.PropertyType==typeof(int))
+                    {
+                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<RangeAttribute>();
+                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MinLengthAttribute>();
+                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MaxLengthAttribute>();
+                        //TODO 对于范围性的ExcelDataValidationOperator.Between考虑使用RangeAttribute,
+                        //对于小于或者大于ExcelDataValidationOperator.lessThan MinLengthAttribute or MaxLengthAttribute
+                        //对于这种考虑我想我们是否舍弃≥、≤、≠、=、between
+               
+                        //关于如何选择操作符(选择一种方式)
+                        //1、用户手动选择 
+                        //    or 
+                        //2、根据min、max、range去自动处理这些，将这些限制为约束性的条件
+                        //在选择min后我们自动将选择＞
+                        //在选择max情况下我们自动选择<
+                        //当选择range的情况下将去定位为在某个范围之内，如果超出则errormessage
+                    }
+                }
+
+
+                ////DateTime、int、decimal、Time
+                //// Integer validation
+                //var intValidation = worksheet.DataValidations.AddIntegerValidation("A1");
+                //intValidation.Prompt = "Value between 1 and 5";
+                //intValidation.Operator = ExcelDataValidationOperator.between;
+                //intValidation.Formula.Value = 1;
+                //intValidation.Formula2.Value = 5;
+
+                ////decimal validation
+                //var decimalValidation = worksheet.DataValidations.AddDecimalValidation("A1");
+                //intValidation.Prompt = "Value between 1 and 5";
+                //intValidation.Operator = ExcelDataValidationOperator.between;
+                //intValidation.Formula.Value = 1;
+                //intValidation.Formula2.Value = 5;
+
+                //// DateTime validation
+                //var dateTimeValidation = worksheet.DataValidations.AddDateTimeValidation("A2");
+                //dateTimeValidation.Prompt = "A date greater than today";
+                //dateTimeValidation.Operator = ExcelDataValidationOperator.greaterThan;
+                //dateTimeValidation.Formula.Value = DateTime.Now.Date;
+
+                //// Time validation
+                //var timeValidation = worksheet.DataValidations.AddTimeValidation("A3");
+                //timeValidation.Operator = ExcelDataValidationOperator.greaterThan;
+                //var time = timeValidation.Formula.Value;
+                //time.Hour = 13;
+                //time.Minute = 30;
+                //time.Second = 10;
             }
 
             worksheet.Cells.AutoFitColumns();
@@ -769,7 +824,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             //绿色太丑了
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
 
-
+            
         }
         /// <summary>
         ///     获取图片

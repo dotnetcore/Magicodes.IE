@@ -58,6 +58,23 @@ namespace Magicodes.ExporterAndImporter.Tests
             //TODO:读取Excel检查表头和格式
         }
 
+        /// <summary>
+        /// 生成学生数据导入模板带有数据验证
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "生成学生数据导入模板带有数据验证")]
+        public async Task GenerateStudentImportSheetDataValidationTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<GenerateStudentImportSheetDataValidationDto>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            //TODO:读取Excel检查表头和格式
+        }
 
         /// <summary>
         /// 测试生成导入描述头
