@@ -768,8 +768,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
             //绿色太丑了
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
-
-
         }
         /// <summary>
         ///     获取图片
