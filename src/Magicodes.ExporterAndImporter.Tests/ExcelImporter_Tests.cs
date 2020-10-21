@@ -51,7 +51,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Importer.GenerateTemplate<ImportStudentDto>(filePath);
+            var result = await Importer.GenerateTemplate<GenerateStudentImportTemplateDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
