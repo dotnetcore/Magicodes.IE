@@ -12,6 +12,7 @@
 // ======================================================================
 
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -47,5 +48,10 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     是否存在
         /// </summary>
         public bool IsExist { get; set; }
+
+        /// <summary>
+        ///     属性信息
+        /// </summary>
+        public PropertyInfo PropertyInfo { get; set; }
     }
 }
