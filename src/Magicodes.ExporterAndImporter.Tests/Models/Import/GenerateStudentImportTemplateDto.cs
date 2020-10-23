@@ -1,33 +1,43 @@
-﻿// ======================================================================
-// 
-//           filename : ImportStudentDto.cs
-//           description :
-// 
-//           created by 雪雁 at  2019-11-05 20:02
-//           文档官网：https://docs.xin-lai.com
-//           公众号教程：麦扣聊技术
-//           QQ群：85318032（编程交流）
-//           Blog：http://www.cnblogs.com/codelove/
-// 
-// ======================================================================
-
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
+
     /// <summary>
-    /// 导入学生数据Dto
-    /// IsLabelingError：是否标注数据错误
+    /// 导入列头筛选器测试
+    /// 1）测试修改列头
+    /// 2）测试修改值映射
     /// </summary>
-    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = true)]
-    public class ImportStudentDto
+    public class ImportStudentDtoHeaderFilterTest : IImportHeaderFilter
+    {
+        public List<ImporterHeaderInfo> Filter(List<ImporterHeaderInfo> importerHeaderInfos)
+        {
+            foreach (var item in importerHeaderInfos)
+            {
+                if (item.PropertyName == "Gender")
+                {
+                    item.MappingValues = new Dictionary<string, dynamic>()
+                    {
+                        {"男0",0 },
+                        {"女1",1 }
+                    };
+                }
+            }
+            return importerHeaderInfos;
+        }
+    }
+
+    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = false,
+        ImportHeaderFilter = typeof(ImportStudentDtoHeaderFilterTest))]
+    public class GenerateStudentImportTemplateDto
     {
         /// <summary>
         ///     序号
@@ -184,61 +194,4 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     }
 
 
-    /// <summary>
-    ///     性别
-    /// </summary>
-    public enum Genders
-    {
-        /// <summary>
-        ///     男
-        /// </summary>
-        Man = 0,
-
-        /// <summary>
-        ///     女
-        /// </summary>
-        Female = 1
-    }
-
-    /// <summary>
-    ///     学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
-    /// </summary>
-    public enum StudentStatus
-    {
-        /// <summary>
-        ///     正常
-        /// </summary>
-        [Display(Name = "正常")] Normal = 0,
-
-        /// <summary>
-        ///     流失
-        /// </summary>
-        [Display(Name = "流水")]
-        [Description("流水")] PupilsAway = 1,
-
-        /// <summary>
-        ///     休学
-        /// </summary>
-        [Display(Name = "休学")] Suspension = 2,
-
-        /// <summary>
-        ///     勤工俭学
-        /// </summary>
-        [Display(Name = "勤工俭学")] WorkStudy = 3,
-
-        /// <summary>
-        ///     顶岗实习
-        /// </summary>
-        [Display(Name = "顶岗实习")] PostPractice = 4,
-
-        /// <summary>
-        ///     毕业
-        /// </summary>
-        [Display(Name = "毕业")] Graduation = 5,
-
-        /// <summary>
-        ///     参军
-        /// </summary>
-        [Display(Name = "参军")] JoinTheArmy = 6
-    }
 }
