@@ -29,6 +29,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
+using DateTime = System.DateTime;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -623,7 +624,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     : propertyInfo.GetAttribute<IEIgnoreAttribute>(true).IsImportIgnore;
                 //忽略字段处理
                 if (ignore) continue;
-      
+
                 var colHeader = new ImporterHeaderInfo
                 {
                     IsRequired = propertyInfo.IsRequired(),
@@ -760,55 +761,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //如果开启数据验证，则添加验证约束
                 if (ImporterHeaderInfos[i].Header.IsInterValidation)
                 {
-                    //TODO 考虑是否需要拿字段原属性，作为数据验证的标准？
-                    if (ImporterHeaderInfos[i].PropertyInfo.PropertyType==typeof(int))
-                    {
-                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<RangeAttribute>();
-                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MinLengthAttribute>();
-                        //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MaxLengthAttribute>();
-                        //TODO 对于范围性的ExcelDataValidationOperator.Between考虑使用RangeAttribute,
-                        //对于小于或者大于ExcelDataValidationOperator.lessThan MinLengthAttribute or MaxLengthAttribute
-                        //对于这种考虑我想我们是否舍弃≥、≤、≠、=、between
-               
-                        //关于如何选择操作符(选择一种方式)
-                        //1、用户手动选择 
-                        //    or 
-                        //2、根据min、max、range去自动处理这些，将这些限制为约束性的条件
-                        //在选择min后我们自动将选择＞
-                        //在选择max情况下我们自动选择<
-                        //当选择range的情况下将去定位为在某个范围之内，如果超出则errormessage
-                    }
+                    var range = ExcelCellBase.GetAddress(ExcelImporterSettings.HeaderRowIndex + 1, i + 1,
+                        ExcelPackage.MaxRows, i + 1);
+                    SetInterValidation(worksheet, ImporterHeaderInfos[i].PropertyInfo, range);
                 }
-
-
-                ////DateTime、int、decimal、Time
-                //// Integer validation
-                //var intValidation = worksheet.DataValidations.AddIntegerValidation("A1");
-                //intValidation.Prompt = "Value between 1 and 5";
-                //intValidation.Operator = ExcelDataValidationOperator.between;
-                //intValidation.Formula.Value = 1;
-                //intValidation.Formula2.Value = 5;
-
-                ////decimal validation
-                //var decimalValidation = worksheet.DataValidations.AddDecimalValidation("A1");
-                //intValidation.Prompt = "Value between 1 and 5";
-                //intValidation.Operator = ExcelDataValidationOperator.between;
-                //intValidation.Formula.Value = 1;
-                //intValidation.Formula2.Value = 5;
-
-                //// DateTime validation
-                //var dateTimeValidation = worksheet.DataValidations.AddDateTimeValidation("A2");
-                //dateTimeValidation.Prompt = "A date greater than today";
-                //dateTimeValidation.Operator = ExcelDataValidationOperator.greaterThan;
-                //dateTimeValidation.Formula.Value = DateTime.Now.Date;
-
-                //// Time validation
-                //var timeValidation = worksheet.DataValidations.AddTimeValidation("A3");
-                //timeValidation.Operator = ExcelDataValidationOperator.greaterThan;
-                //var time = timeValidation.Formula.Value;
-                //time.Hour = 13;
-                //time.Minute = 30;
-                //time.Second = 10;
             }
 
             worksheet.Cells.AutoFitColumns();
@@ -823,9 +779,145 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
             //绿色太丑了
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
-
-            
         }
+
+        /// <summary>
+        ///     设置内置验证
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="propertyInfo"></param>
+        /// <param name="address"></param>
+        /// <remarks>在ResourceType为空的情况下，默认会选择属性本身的类型去做相应的处理，
+        /// </remarks>
+        private void SetInterValidation(ExcelWorksheet worksheet, PropertyInfo propertyInfo,string address)
+        {
+            ExcelDataValidationOperator dataValidationOperator = default;
+            var prompt = "";
+            object formulaVal = 0;
+            object formula2Val = 0;
+            Type type = null;
+            var range = propertyInfo.GetAttribute<RangeAttribute>();
+            if (range != null)
+            {
+                prompt = range.ErrorMessage;
+                type = range.ErrorMessageResourceType;
+                formulaVal = range.Minimum;
+                formula2Val = range.Maximum;
+                if (formula2Val.ToString().IsNullOrWhiteSpace())
+                {
+                    dataValidationOperator = ExcelDataValidationOperator.greaterThan;
+                }
+                else if (formulaVal.ToString().IsNullOrWhiteSpace())
+                {
+                    dataValidationOperator = ExcelDataValidationOperator.lessThan;
+                }
+                else
+                {
+                    dataValidationOperator = ExcelDataValidationOperator.greaterThanOrEqual;
+                }
+            }
+            else
+            {
+                var minLength = propertyInfo.GetAttribute<MinLengthAttribute>();
+                if (minLength != null)
+                {
+                    dataValidationOperator = ExcelDataValidationOperator.greaterThan;
+                    prompt = minLength.ErrorMessage;
+                    type = minLength.ErrorMessageResourceType;
+                    formulaVal = minLength.Length;
+                }
+                else
+                {
+                    var maxLength = propertyInfo.GetAttribute<MaxLengthAttribute>();
+                    if (maxLength != null)
+                    {
+                        dataValidationOperator = ExcelDataValidationOperator.lessThan;
+                        prompt = maxLength.ErrorMessage;
+                        type = maxLength.ErrorMessageResourceType;
+                        formulaVal = maxLength.Length;
+                    }
+                    else
+                    {
+                        var stringLength = propertyInfo.GetAttribute<StringLengthAttribute>();
+                        if (stringLength != null)
+                        {
+                            prompt = stringLength.ErrorMessage;
+                            type = stringLength.ErrorMessageResourceType;
+                            formulaVal = stringLength.MinimumLength;
+                            formula2Val = stringLength.MaximumLength;
+                            if (formula2Val.ToString().IsNullOrWhiteSpace())
+                            {
+                                dataValidationOperator = ExcelDataValidationOperator.greaterThan;
+                            }else if (formulaVal.ToString().IsNullOrWhiteSpace())
+                            {
+                                dataValidationOperator = ExcelDataValidationOperator.lessThan;
+                            }
+                            else
+                            {
+                                dataValidationOperator = ExcelDataValidationOperator.greaterThanOrEqual;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (type == default)
+            {
+                type = propertyInfo.PropertyType;
+            }
+
+            if (type == typeof(int))
+            {
+                var intValidation = worksheet.DataValidations.AddIntegerValidation(address);
+                intValidation.Prompt = prompt;
+                intValidation.Operator = dataValidationOperator;
+                intValidation.Formula.Value = Convert.ToInt32(formulaVal);
+                intValidation.Formula2.Value = Convert.ToInt32(formula2Val);
+                intValidation.Error = prompt;
+                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<RangeAttribute>();
+                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MinLengthAttribute>();
+                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MaxLengthAttribute>();
+                //TODO 对于范围性的ExcelDataValidationOperator.Between考虑使用RangeAttribute,
+                //对于小于或者大于ExcelDataValidationOperator.lessThan MinLengthAttribute or MaxLengthAttribute
+                //对于这种考虑我想我们是否舍弃≥、≤、≠、=、between
+
+                //关于如何选择操作符(选择一种方式)
+                //1、用户手动选择 
+                //    or 
+                //2、根据min、max、range去自动处理这些，将这些限制为约束性的条件
+                //在选择min后我们自动将选择＞
+                //在选择max情况下我们自动选择<
+                //当选择range的情况下将去定位为在某个范围之内，如果超出则errormessage
+            }
+            else if (type == typeof(DateTime))
+            {
+                var dateTimeValidation = worksheet.DataValidations.AddDateTimeValidation(address);
+                dateTimeValidation.Prompt = prompt;
+                dateTimeValidation.Operator = dataValidationOperator;
+                dateTimeValidation.Formula.Value = Convert.ToDateTime(formulaVal);
+                dateTimeValidation.Formula2.Value = Convert.ToDateTime(formula2Val);
+            }
+            else if (type == typeof(decimal) ||
+                     type == typeof(double) ||
+                     type == typeof(float))
+            {
+                var decimalValidation = worksheet.DataValidations.AddDecimalValidation(address);
+                decimalValidation.Prompt = prompt;
+                decimalValidation.Operator = dataValidationOperator;
+                decimalValidation.Formula.Value = Convert.ToDouble(formulaVal);
+                decimalValidation.Formula2.Value = Convert.ToDouble(formula2Val);
+            }
+            else if (type == typeof(string))
+            {
+                var textLengthValidation = worksheet.DataValidations.AddTextLengthValidation(address);
+                textLengthValidation.Prompt = prompt;
+                textLengthValidation.Operator = dataValidationOperator;
+                textLengthValidation.Formula.Value = Convert.ToInt32(formulaVal);
+                textLengthValidation.Formula2.Value = Convert.ToInt32(formula2Val);
+                textLengthValidation.ShowErrorMessage = true;
+            }
+        }
+
         /// <summary>
         ///     获取图片
         /// </summary>

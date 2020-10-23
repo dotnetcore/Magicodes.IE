@@ -66,7 +66,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task GenerateStudentImportSheetDataValidationTemplate_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
+                nameof(GenerateStudentImportSheetDataValidationTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result = await Importer.GenerateTemplate<GenerateStudentImportSheetDataValidationDto>(filePath);

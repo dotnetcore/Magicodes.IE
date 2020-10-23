@@ -15,8 +15,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     学籍号
         /// </summary>
-        [ImporterHeader(Name = "学籍号", IsAllowRepeat = false)]
-        [MaxLength(30, ErrorMessage = "学籍号字数超出最大限制,请修改!")]
+        [ImporterHeader(Name = "学籍号", IsAllowRepeat = false, IsInterValidation = true)]
+        [MaxLength(5, ErrorMessage = "学籍号字数超出最大限制,请修改!")]
         public string StudentCode { get; set; }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     年龄
         /// </summary>
-        [ImporterHeader(Name = "年龄",IsInterValidation = true)]
+        [ImporterHeader(Name = "年龄", IsInterValidation = true)]
         public int Age { get; set; }
 
         /// <summary>
