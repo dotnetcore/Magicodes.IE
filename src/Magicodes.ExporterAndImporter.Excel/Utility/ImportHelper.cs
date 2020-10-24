@@ -153,11 +153,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     CheckImportFile(FilePath);
                     Stream = new FileStream(FilePath, FileMode.Open);
                 }
+
                 using (Stream)
                 {
                     using (var excelPackage = new ExcelPackage(Stream))
                     {
                         #region 检查模板
+
                         //获取导入实体列定义
                         ParseHeader();
                         ParseTemplate(excelPackage);
@@ -167,9 +169,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         ImportResult.ImporterHeaderInfos = ImporterHeaderInfos;
 
                         if (ImportResult.HasError) return Task.FromResult(ImportResult);
+
                         #endregion
+
                         ParseData(excelPackage);
+
                         #region 数据验证
+
                         for (var i = 0; i < ImportResult.Data.Count; i++)
                         {
                             var isValid = ValidatorHelper.TryValidate(ImportResult.Data.ElementAt(i),
@@ -192,17 +198,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 }
                             }
                         }
+
                         RepeatDataCheck();
+
                         #endregion
 
 
                         #region 执行结果筛选器
+
                         var filter = GetFilter<IImportResultFilter>(ExcelImporterSettings.ImportResultFilter);
                         if (filter != null)
                         {
                             ImportResult = filter.Filter(ImportResult);
                         }
+
                         #endregion
+
                         //生成Excel错误标注
                         LabelingError(excelPackage);
                     }
@@ -212,6 +223,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 ImportResult.Exception = ex;
             }
+
             return Task.FromResult(ImportResult);
         }
 
@@ -373,11 +385,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     excelPackage = new ExcelPackage();
                     excelPackage.Workbook.Worksheets.Add("错误数据");
-                    worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[1, 1, 1, worksheet.Dimension.Columns]);
-                    excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0].Cells[2, 1, 2, worksheet.Dimension.Columns]);
+                    worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0]
+                        .Cells[1, 1, 1, worksheet.Dimension.Columns]);
+                    excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns]
+                        .Copy(excelPackage.Workbook.Worksheets[0].Cells[2, 1, 2, worksheet.Dimension.Columns]);
                 }
+
                 var ext = Path.GetExtension(FilePath);
-                var filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
+                var filePath = string.IsNullOrWhiteSpace(LabelingFilePath)
+                    ? FilePath.Replace(ext, "_" + ext)
+                    : LabelingFilePath;
                 excelPackage.SaveAs(new FileInfo(filePath));
             }
         }
@@ -388,13 +405,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="excelPackage"></param>
         /// <param name="bussinessErrorDataList"></param>
         /// <param name="filePath">返回错误Excel路径</param>
-        internal virtual void LabelingBussinessError(ExcelPackage excelPackage, List<DataRowErrorInfo> bussinessErrorDataList, out string filePath)
+        internal virtual void LabelingBussinessError(ExcelPackage excelPackage,
+            List<DataRowErrorInfo> bussinessErrorDataList, out string filePath)
         {
             if (bussinessErrorDataList == null)
             {
                 filePath = "";
                 return;
             }
+
             this.ImportResult = new ImportResult<T>();
             ParseHeader();
             ParseTemplate(excelPackage);
@@ -432,7 +451,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
 
             var ext = Path.GetExtension(FilePath);
-            filePath = string.IsNullOrWhiteSpace(LabelingFilePath) ? FilePath.Replace(ext, "_" + ext) : LabelingFilePath;
+            filePath = string.IsNullOrWhiteSpace(LabelingFilePath)
+                ? FilePath.Replace(ext, "_" + ext)
+                : LabelingFilePath;
             excelPackage.SaveAs(new FileInfo(filePath));
         }
 
@@ -442,13 +463,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="excelPackage"></param>
         /// <param name="bussinessErrorDataList"></param>
         /// <param name="fileByte">返回错误Excel流字节</param>
-        internal virtual void LabelingBussinessError(ExcelPackage excelPackage, List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte)
+        internal virtual void LabelingBussinessError(ExcelPackage excelPackage,
+            List<DataRowErrorInfo> bussinessErrorDataList, out byte[] fileByte)
         {
             if (bussinessErrorDataList == null)
             {
                 fileByte = null;
                 return;
             }
+
             this.ImportResult = new ImportResult<T>();
             ParseHeader();
             ParseTemplate(excelPackage);
@@ -484,11 +507,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                 }
             }
+
             using (var stream = new MemoryStream())
             {
                 excelPackage.SaveAs(stream);
                 fileByte = stream.ToArray();
             }
+
             return;
         }
 
@@ -524,6 +549,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     ExcelImporterSettings.HeaderRowIndex++;
                 }
+
                 for (var columnIndex = 1; columnIndex <= endColumnCount; columnIndex++)
                 {
 
@@ -644,6 +670,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     colHeader.Header.ColumnIndex = propertyInfo.GetAttribute<DisplayAttribute>(true).Order;
                 }
+
                 //设置Description
                 if (colHeader.Header.Description.IsNullOrWhiteSpace())
                 {
@@ -660,6 +687,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 colHeader.Header.IsIgnore = ignore;
 
                 ImporterHeaderInfos.Add(colHeader);
+
                 #region 处理值映射
 
                 var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
@@ -701,12 +729,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
 
             #region 执行列筛选器
+
             var filter = GetFilter<IImportHeaderFilter>(ExcelImporterSettings.ImportHeaderFilter);
             if (filter != null)
             {
                 ImporterHeaderInfos = filter.Filter(ImporterHeaderInfos);
             }
+
             #endregion
+
             return true;
         }
 
@@ -787,78 +818,51 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="worksheet"></param>
         /// <param name="propertyInfo"></param>
         /// <param name="address"></param>
-        /// <remarks>在ResourceType为空的情况下，默认会选择属性本身的类型去做相应的处理，
+        /// <remarks>在ResourceType为空的情况下，默认会选择属性本身的类型去做相应的处理
         /// </remarks>
-        private void SetInterValidation(ExcelWorksheet worksheet, PropertyInfo propertyInfo,string address)
+        private void SetInterValidation(ExcelWorksheet worksheet, PropertyInfo propertyInfo, string address)
         {
+            //MaxLength属性和MinLength属性可以去控制对指定列的大小
+            //StringLength属允许去指定小长度和最大长度,和max和min有有些类似，不过仅对string类型生效
+            //Range属性允许我们设置范围性约束
             ExcelDataValidationOperator dataValidationOperator = default;
-            var prompt = "";
+            var errorMsg = "";
             object formulaVal = 0;
             object formula2Val = 0;
             Type type = null;
             var range = propertyInfo.GetAttribute<RangeAttribute>();
+            var minLength = propertyInfo.GetAttribute<MinLengthAttribute>();
+            var maxLength = propertyInfo.GetAttribute<MaxLengthAttribute>();
+            var stringLength = propertyInfo.GetAttribute<StringLengthAttribute>();
             if (range != null)
             {
-                prompt = range.ErrorMessage;
+                errorMsg = range.ErrorMessage;
                 type = range.ErrorMessageResourceType;
                 formulaVal = range.Minimum;
                 formula2Val = range.Maximum;
-                if (formula2Val.ToString().IsNullOrWhiteSpace())
-                {
-                    dataValidationOperator = ExcelDataValidationOperator.greaterThan;
-                }
-                else if (formulaVal.ToString().IsNullOrWhiteSpace())
-                {
-                    dataValidationOperator = ExcelDataValidationOperator.lessThan;
-                }
-                else
-                {
-                    dataValidationOperator = ExcelDataValidationOperator.greaterThanOrEqual;
-                }
+                dataValidationOperator = ExcelDataValidationOperator.between;
             }
-            else
+            else if (minLength != null)
             {
-                var minLength = propertyInfo.GetAttribute<MinLengthAttribute>();
-                if (minLength != null)
-                {
-                    dataValidationOperator = ExcelDataValidationOperator.greaterThan;
-                    prompt = minLength.ErrorMessage;
-                    type = minLength.ErrorMessageResourceType;
-                    formulaVal = minLength.Length;
-                }
-                else
-                {
-                    var maxLength = propertyInfo.GetAttribute<MaxLengthAttribute>();
-                    if (maxLength != null)
-                    {
-                        dataValidationOperator = ExcelDataValidationOperator.lessThan;
-                        prompt = maxLength.ErrorMessage;
-                        type = maxLength.ErrorMessageResourceType;
-                        formulaVal = maxLength.Length;
-                    }
-                    else
-                    {
-                        var stringLength = propertyInfo.GetAttribute<StringLengthAttribute>();
-                        if (stringLength != null)
-                        {
-                            prompt = stringLength.ErrorMessage;
-                            type = stringLength.ErrorMessageResourceType;
-                            formulaVal = stringLength.MinimumLength;
-                            formula2Val = stringLength.MaximumLength;
-                            if (formula2Val.ToString().IsNullOrWhiteSpace())
-                            {
-                                dataValidationOperator = ExcelDataValidationOperator.greaterThan;
-                            }else if (formulaVal.ToString().IsNullOrWhiteSpace())
-                            {
-                                dataValidationOperator = ExcelDataValidationOperator.lessThan;
-                            }
-                            else
-                            {
-                                dataValidationOperator = ExcelDataValidationOperator.greaterThanOrEqual;
-                            }
-                        }
-                    }
-                }
+                dataValidationOperator = ExcelDataValidationOperator.greaterThan;
+                errorMsg = minLength.ErrorMessage;
+                type = minLength.ErrorMessageResourceType;
+                formulaVal = minLength.Length;
+            }
+            else if (maxLength != null)
+            {
+                dataValidationOperator = ExcelDataValidationOperator.lessThan;
+                errorMsg = maxLength.ErrorMessage;
+                type = maxLength.ErrorMessageResourceType;
+                formulaVal = maxLength.Length;
+            }
+            else if (stringLength != null)
+            {
+                errorMsg = stringLength.ErrorMessage;
+                type = stringLength.ErrorMessageResourceType;
+                formulaVal = stringLength.MinimumLength;
+                formula2Val = stringLength.MaximumLength;
+                dataValidationOperator = ExcelDataValidationOperator.between;
             }
 
             if (type == default)
@@ -866,55 +870,36 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 type = propertyInfo.PropertyType;
             }
 
-            if (type == typeof(int))
-            {
-                var intValidation = worksheet.DataValidations.AddIntegerValidation(address);
-                intValidation.Prompt = prompt;
-                intValidation.Operator = dataValidationOperator;
-                intValidation.Formula.Value = Convert.ToInt32(formulaVal);
-                intValidation.Formula2.Value = Convert.ToInt32(formula2Val);
-                intValidation.Error = prompt;
-                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<RangeAttribute>();
-                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MinLengthAttribute>();
-                //ImporterHeaderInfos[i].PropertyInfo.GetAttribute<MaxLengthAttribute>();
-                //TODO 对于范围性的ExcelDataValidationOperator.Between考虑使用RangeAttribute,
-                //对于小于或者大于ExcelDataValidationOperator.lessThan MinLengthAttribute or MaxLengthAttribute
-                //对于这种考虑我想我们是否舍弃≥、≤、≠、=、between
-
-                //关于如何选择操作符(选择一种方式)
-                //1、用户手动选择 
-                //    or 
-                //2、根据min、max、range去自动处理这些，将这些限制为约束性的条件
-                //在选择min后我们自动将选择＞
-                //在选择max情况下我们自动选择<
-                //当选择range的情况下将去定位为在某个范围之内，如果超出则errormessage
-            }
-            else if (type == typeof(DateTime))
-            {
-                var dateTimeValidation = worksheet.DataValidations.AddDateTimeValidation(address);
-                dateTimeValidation.Prompt = prompt;
-                dateTimeValidation.Operator = dataValidationOperator;
-                dateTimeValidation.Formula.Value = Convert.ToDateTime(formulaVal);
-                dateTimeValidation.Formula2.Value = Convert.ToDateTime(formula2Val);
-            }
-            else if (type == typeof(decimal) ||
-                     type == typeof(double) ||
-                     type == typeof(float))
-            {
-                var decimalValidation = worksheet.DataValidations.AddDecimalValidation(address);
-                decimalValidation.Prompt = prompt;
-                decimalValidation.Operator = dataValidationOperator;
-                decimalValidation.Formula.Value = Convert.ToDouble(formulaVal);
-                decimalValidation.Formula2.Value = Convert.ToDouble(formula2Val);
-            }
-            else if (type == typeof(string))
+            if (minLength != null || maxLength != null || stringLength != null)
             {
                 var textLengthValidation = worksheet.DataValidations.AddTextLengthValidation(address);
-                textLengthValidation.Prompt = prompt;
+                textLengthValidation.Error = errorMsg;
                 textLengthValidation.Operator = dataValidationOperator;
                 textLengthValidation.Formula.Value = Convert.ToInt32(formulaVal);
                 textLengthValidation.Formula2.Value = Convert.ToInt32(formula2Val);
                 textLengthValidation.ShowErrorMessage = true;
+            }
+            else if (range != null)
+            {
+                //仅DateTime、int支持范围性
+                if (type == typeof(int))
+                {
+                    var intValidation = worksheet.DataValidations.AddIntegerValidation(address);
+                    intValidation.Operator = dataValidationOperator;
+                    intValidation.Formula.Value = Convert.ToInt32(formulaVal);
+                    intValidation.Formula2.Value = Convert.ToInt32(formula2Val);
+                    intValidation.Error = errorMsg;
+                    intValidation.ShowErrorMessage = true;
+                }
+                else if (type == typeof(DateTime))
+                {
+                    var dateTimeValidation = worksheet.DataValidations.AddDateTimeValidation(address);
+                    dateTimeValidation.Error = errorMsg;
+                    dateTimeValidation.ShowErrorMessage = true;
+                    dateTimeValidation.Operator = dataValidationOperator;
+                    dateTimeValidation.Formula.Value = Convert.ToDateTime(formulaVal);
+                    dateTimeValidation.Formula2.Value = Convert.ToDateTime(formula2Val);
+                }
             }
         }
 
