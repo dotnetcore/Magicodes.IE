@@ -49,7 +49,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [Range(minimum: 18, maximum: 20, ErrorMessage = "年龄范围需要在18-20岁哦", ErrorMessageResourceType = typeof(string))]
         public int IgnoreType { get; set; }
 
-        [ImporterHeader(Name = "出生日期", IsInterValidation = true)]
+        [ImporterHeader(Name = "出生日期", IsInterValidation = true, ShowInputMessage = "输入日期")]
         [Range(typeof(DateTime), minimum: "2020-10-20", maximum: "2020-10-24", ErrorMessage = "日期范围超出了哦")]
         public DateTime Birthday { get; set; }
 
@@ -64,7 +64,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     性别
         /// </summary>
-        [ImporterHeader(Name = "性别")]
         [Required(ErrorMessage = "性别不能为空")]
         [ValueMapping("男", 0)]
         [ValueMapping("女", 1)]
@@ -110,8 +109,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     QQ
         /// </summary>
-        [ImporterHeader(Name = "QQ号")]
-        [MaxLength(30, ErrorMessage = "QQ号字数超出最大限制,请修改!")]
+        [ImporterHeader(Name = "QQ号", IsInterValidation = true, ShowInputMessage = "性别列")]
         public string QQ { get; set; }
 
         /// <summary>

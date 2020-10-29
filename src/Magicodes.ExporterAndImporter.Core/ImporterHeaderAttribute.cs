@@ -66,5 +66,11 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <remarks>对于Excel数据验证，仅用于生成导入模板特性中，作为限制用户对Excel模板数据的约束性</remarks>
         /// </summary>
         public bool IsInterValidation { get; set; }
+
+        /// <summary>
+        ///    选定单元格时，显示输入的信息
+        /// <remarks>仅在IsInterValidation启用的情况下</remarks>
+        /// </summary>
+        public string ShowInputMessage { get; set; }
     }
 }

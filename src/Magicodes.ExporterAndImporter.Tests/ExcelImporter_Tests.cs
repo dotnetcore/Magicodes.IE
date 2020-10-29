@@ -22,6 +22,7 @@ using OfficeOpenXml;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -117,7 +118,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
             //TODO:读取Excel检查表头和格式
         }
 

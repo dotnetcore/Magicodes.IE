@@ -794,7 +794,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     var range = ExcelCellBase.GetAddress(ExcelImporterSettings.HeaderRowIndex + 1, i + 1,
                         ExcelPackage.MaxRows, i + 1);
-                    SetInterValidation(worksheet, ImporterHeaderInfos[i].PropertyInfo, range);
+                    SetInterValidation(worksheet, ImporterHeaderInfos[i].PropertyInfo, range, ImporterHeaderInfos[i].Header.ShowInputMessage);
                 }
             }
 
@@ -818,9 +818,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="worksheet"></param>
         /// <param name="propertyInfo"></param>
         /// <param name="address"></param>
+        /// <param name="showInputMessage"></param>
         /// <remarks>在ResourceType为空的情况下，默认会选择属性本身的类型去做相应的处理
         /// </remarks>
-        private void SetInterValidation(ExcelWorksheet worksheet, PropertyInfo propertyInfo, string address)
+        private void SetInterValidation(ExcelWorksheet worksheet, PropertyInfo propertyInfo, string address, string showInputMessage)
         {
             //MaxLength属性和MinLength属性可以去控制对指定列的大小
             //StringLength属允许去指定小长度和最大长度,和max和min有有些类似，不过仅对string类型生效
@@ -878,6 +879,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 textLengthValidation.Formula.Value = Convert.ToInt32(formulaVal);
                 textLengthValidation.Formula2.Value = Convert.ToInt32(formula2Val);
                 textLengthValidation.ShowErrorMessage = true;
+
+                if (!showInputMessage.IsNullOrWhiteSpace())
+                {
+                    textLengthValidation.ShowInputMessage = true;
+                    textLengthValidation.Prompt = showInputMessage;
+                }
             }
             else if (range != null)
             {
@@ -890,6 +897,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     intValidation.Formula2.Value = Convert.ToInt32(formula2Val);
                     intValidation.Error = errorMsg;
                     intValidation.ShowErrorMessage = true;
+
+                    if (!showInputMessage.IsNullOrWhiteSpace())
+                    {
+                        intValidation.ShowInputMessage = true;
+                        intValidation.Prompt = showInputMessage;
+                    }
                 }
                 else if (type == typeof(DateTime))
                 {
@@ -899,7 +912,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     dateTimeValidation.Operator = dataValidationOperator;
                     dateTimeValidation.Formula.Value = Convert.ToDateTime(formulaVal);
                     dateTimeValidation.Formula2.Value = Convert.ToDateTime(formula2Val);
+
+                    if (!showInputMessage.IsNullOrWhiteSpace())
+                    {
+                        dateTimeValidation.ShowInputMessage = true;
+                        dateTimeValidation.Prompt = showInputMessage;
+                    }
                 }
+            }
+            else
+            {
+                if (!showInputMessage.IsNullOrWhiteSpace())
+                {
+                    //如果仅启用数据验证属性，没有对数据大小的校验，则判断是否存在输入提示信息,enum和bool不支持
+                    var anyValidation = worksheet.DataValidations.AddAnyValidation(address);
+                    anyValidation.ShowInputMessage = true;
+                    anyValidation.Prompt = showInputMessage;
+                }
+
             }
         }
 
