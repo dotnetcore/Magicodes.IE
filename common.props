@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.0-beta2</Version>
+        <Version>2.5.0-beta3</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,10 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.10.29**
+          - 【Nuget】版本更新到2.5.0-beta3
+          - 导入模板支持Excel内置验证 [#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)
 
           **2020.10.20**
           - 【Nuget】版本更新到2.5.0-beta2
@@ -34,10 +38,6 @@
           **2020.09.26**
           - 【Nuget】版本更新到2.4.0-beta4
           #157 【修复】对低版本框架的兼容
-
-          **2020.09.24**
-          - 【Nuget】版本更新到2.4.0-beta3
-          #142 【修复】根据模板列表高度的设置，统一设置渲染高度
 
         </Description>
     </PropertyGroup>
