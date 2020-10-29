@@ -48,9 +48,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 
             foreach (var item in importResult.Data)
             {
-                var item1 = item as ImportResultFilterDataDto1;
                 //判断两个列是否重复，如果重复则提示 https://github.com/dotnetcore/Magicodes.IE/issues/144
-                if (item1.Code == item1.Name)
+                if (item is ImportResultFilterDataDto1 item1 && item1.Code == item1.Name)
                 {
                     items.Add(new DataRowErrorInfo()
                     {
