@@ -15,6 +15,9 @@
 
 导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
 
+- Github：<https://github.com/dotnetcore/Magicodes.IE>
+- 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
+
 **![总体说明](./docs/Magicodes.IE.png)**
 
 ## 里程碑
