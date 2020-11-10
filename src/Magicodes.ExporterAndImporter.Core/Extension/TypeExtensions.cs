@@ -91,9 +91,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static string GetTypeDisplayOrDescription(this ICustomAttributeProvider customAttributeProvider,
             bool inherit = false)
         {
-            var dispaly = customAttributeProvider.GetDescription(inherit);
-            if (dispaly.IsNullOrWhiteSpace()) dispaly = customAttributeProvider.GetDisplayName(inherit);
-            return dispaly ?? string.Empty;
+            var displayDescription = customAttributeProvider.GetDescription(inherit);
+            if (displayDescription.IsNullOrWhiteSpace()) displayDescription = customAttributeProvider.GetDisplayName(inherit);
+            return displayDescription ?? string.Empty;
         }
 
 
@@ -315,7 +315,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 #if NETSTANDARD
             var list = new List<Assembly>();
             var deps = DependencyContext.Default;
-            var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
+            //var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
             foreach (var lib in deps.CompileLibraries)
             {
                 try
@@ -347,7 +347,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             Type type = instance.GetType().BaseType;
             FieldInfo[] finfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
             var field = finfos.FirstOrDefault(f => f.Name == propertyname);
-            var val = (T)field.GetValue(instance);
             return (T)field.GetValue(instance);
         }
 
