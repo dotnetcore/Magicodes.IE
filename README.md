@@ -1,4 +1,4 @@
-<img align="right" src="./res/logo.jpg" width="400"/>
+<img align="right" src="./res/logo.jpg" width="300"/>
 
 # Magicodes.IE | [English](README.en.md)
 

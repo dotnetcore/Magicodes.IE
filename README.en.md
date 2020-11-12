@@ -1,3 +1,5 @@
+<img align="right" src="./res/logo.jpg" width="300"/>
+
 # Magicodes.IE | [简体中文](README.md)
 
 [![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
