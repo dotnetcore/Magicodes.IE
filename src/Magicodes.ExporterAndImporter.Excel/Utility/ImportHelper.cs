@@ -972,12 +972,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
 
-            int imageBaseIndex;
             for (var rowIndex = ExcelImporterSettings.HeaderRowIndex + 1;
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
-                imageBaseIndex = 0;
                 //跳过空行
                 if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
                 {
@@ -1015,8 +1013,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         Enum.IsDefined(type, value))
                                         propertyInfo.SetValue(dataItem,
                                             value == null ? null : Enum.ToObject(type, value));
-                                    //propertyInfo.SetValue(dataItem,
-                                    //    value == null ? null : Convert.ChangeType(value, type));
                                     else
                                     {
                                         propertyInfo.SetValue(dataItem,
@@ -1030,34 +1026,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             {
                                 if (col.ImportImageFieldAttribute != null)
                                 {
-                                    //var position = 0;
-
-                                    //first   index    row  
-                                    // 4 ------ 7 ------ 3       3
-                                    // 3 ------ 5 ------ 2       2
-                                    // 2 ------ 3 ------ 1       0
-
-                                    //var row = ExcelImporterSettings.HeaderRowIndex > 1
-                                    //    ? ExcelImporterSettings.HeaderRowIndex + 1
-                                    //    : 2;
-
-                                    //var row1 = row + (ExcelImporterSettings.HeaderRowIndex);
-
-                                    //if (imageBaseIndex == 0)
-                                    //{
-                                    //    position = rowIndex -
-                                    //               row +
-                                    //               (imageBaseIndex++ * worksheet.Dimension.End.Row);
-                                    //}
-                                    //else
-                                    //{
-                                    //    position = rowIndex -
-                                    //               row1 +
-                                    //              imageBaseIndex++ * worksheet.Dimension.End.Row;
-                                    //}
-
-                                    //var excelPicture = GetImage(worksheet, position);
-
                                     var excelPicture = GetImage(worksheet, cell.Start.Row, cell.Start.Column);
 
                                     var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);
