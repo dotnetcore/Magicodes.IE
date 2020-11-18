@@ -869,6 +869,25 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ElementAt(0).Name1.ShouldBe(import.Data.ElementAt(0).Name);
         }
 
+        /// <summary>
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/182
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "导入数量限制测试")]
+        public async Task ImportMaxCountLimit_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ImportMaxCountLimit_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ImportMaxCountLimitDto>(50001));
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            var importResult = await Importer.Import<ImportMaxCountLimitDto>(filePath);
+            importResult.HasError.ShouldBeFalse();
+        }
+
 
     }
 }
