@@ -27,7 +27,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
     /// 导出辅助类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ExportHelper<T> where T : class
+    public class ExportHelper<T> where T : class, new()
     {
         private ExcelExporterAttribute _excelExporterAttribute;
         private ExcelWorksheet _excelWorksheet;
@@ -35,6 +35,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private List<ExporterHeaderInfo> _exporterHeaderList;
         private Type _type;
         private string _sheetName;
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,6 +53,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             _sheetName = sheetName;
         }
+
         /// <summary>
         /// </summary>
         /// <param name="type"></param>
@@ -373,8 +375,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (!IsExpandoObjectType)
             {
-                var list = ParseData(dataItems);
-                AddDataItems(list);
+                //var list = ParseData(dataItems);
+                AddDataItems(dataItems);
             }
             else
             {
@@ -536,7 +538,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 var tbStyle = TableStyles.Medium10;
                 if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
                     tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-                var er = excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
+                var er = excelRange.LoadFromCollection(dataItems, true, TableStyles.None);
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
             }
             else
@@ -552,14 +554,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     数据解析
         /// </summary>
         /// <param name="dataItems"></param>
-        protected virtual List<ExpandoObject> ParseData(ICollection<T> dataItems)
+        protected virtual List<T> ParseData(ICollection<T> dataItems)
         {
             var type = typeof(T);
             var properties = type.GetProperties();
-            List<ExpandoObject> list = new List<ExpandoObject>();
+            List<T> list = new List<T>();
             foreach (var dataItem in dataItems)
             {
-                dynamic obj = new ExpandoObject();
+                dynamic obj = new T();
                 foreach (var propertyInfo in properties)
                 {
                     if (propertyInfo.PropertyType.IsEnum)
@@ -570,7 +572,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value ?? string.Empty))
                         {
                             var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                            (obj)[propertyInfo.Name] = mapValue.Value;
                         }
                         else
                         {
@@ -580,16 +582,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             {
                                 if (!tuple.Item4.IsNullOrWhiteSpace())
                                 {
-                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
+                                    (obj)[propertyInfo.Name] = tuple.Item4;
                                 }
                                 else
                                 {
-                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
+                                    obj[propertyInfo.Name] = tuple.Item2;
                                 }
                             }
                             else
                             {
-                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                                (obj)[propertyInfo.Name] = value;
                             }
                         }
                     }
@@ -601,11 +603,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
                         {
                             var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                            (obj)[propertyInfo.Name] = mapValue.Value;
                         }
                         else
                         {
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                            (obj)[propertyInfo.Name] = value;
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
@@ -616,22 +618,107 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
                         {
                             var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+                            (obj)[propertyInfo.Name] = mapValue.Value;
                         }
                         else
                         {
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                            (obj)[propertyInfo.Name] = value;
                         }
                     }
                     else
                     {
-                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
+                        (obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
                     }
                 }
                 list.Add(obj);
             }
             return list;
         }
+
+        ///// <summary>
+        /////     数据解析
+        ///// </summary>
+        ///// <param name="dataItems"></param>
+        //protected virtual List<ExpandoObject> ParseData(ICollection<T> dataItems)
+        //{
+        //    var type = typeof(T);
+        //    var properties = type.GetProperties();
+        //    List<ExpandoObject> list = new List<ExpandoObject>();
+        //    foreach (var dataItem in dataItems)
+        //    {
+        //        dynamic obj = new ExpandoObject();
+        //        foreach (var propertyInfo in properties)
+        //        {
+        //            if (propertyInfo.PropertyType.IsEnum)
+        //            {
+        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+        //                var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
+
+        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value ?? string.Empty))
+        //                {
+        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+        //                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+        //                }
+        //                else
+        //                {
+        //                    var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
+        //                    var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
+        //                    if (tuple != null)
+        //                    {
+        //                        if (!tuple.Item4.IsNullOrWhiteSpace())
+        //                        {
+        //                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
+        //                        }
+        //                        else
+        //                        {
+        //                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+        //                    }
+        //                }
+        //            }
+        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
+        //            {
+        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+        //                var value = Convert.ToBoolean(type.GetProperty(propertyInfo.Name)?.GetValue(dataItem));
+
+        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
+        //                {
+        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+        //                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+        //                }
+        //                else
+        //                {
+        //                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+        //                }
+        //            }
+        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
+        //            {
+        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+        //                var value = Convert.ToBoolean(type.GetProperty(propertyInfo.Name)?.GetValue(dataItem));
+
+        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
+        //                {
+        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+        //                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
+        //                }
+        //                else
+        //                {
+        //                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
+        //            }
+        //        }
+        //        list.Add(obj);
+        //    }
+        //    return list;
+        //}
 
         /// <summary>
         ///     添加图片
