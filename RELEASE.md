@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.0-beta4
+**2020.11.20**
+- 导入Excel对Enum类型匹配值映射时，忽略值前后空格
+
 ## 2.5.0-beta3
 **2020.10.29**
 - Excel生成导入模板支持内置数据验证[#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)

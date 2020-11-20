@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.0-beta3</Version>
+        <Version>2.5.0-beta4</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -14,6 +14,10 @@
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
 
+          **2020.11.20**
+          - 【Nuget】版本更新到2.5.0-beta4
+          - 导入Excel对Enum类型匹配值映射时，忽略值前后空格
+
           **2020.10.29**
           - 【Nuget】版本更新到2.5.0-beta3
           - 导入模板支持Excel内置验证 [#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)
@@ -22,22 +26,6 @@
           - 【Nuget】版本更新到2.5.0-beta2
           - Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)
           - 增加Excel枚举导出对DescriptionAttribute的支持[#168](https://github.com/dotnetcore/Magicodes.IE/issues/168)
-
-          **2020.10.01**
-          - 【Nuget】版本更新到2.4.0
-          - 支持单元格导出宽度设置 [#129](https://github.com/dotnetcore/Magicodes.IE/issues/129)
-          - Excel导出支持对Enum的ValueMapping设置 [#106](https://github.com/dotnetcore/Magicodes.IE/issues/106)
-          - Excel导出支持对bool类型的ValueMapping设置 [#16](https://github.com/dotnetcore/Magicodes.IE/issues/16)
-          - [#152](https://github.com/dotnetcore/Magicodes.IE/issues/152) 筛选器支持依赖注入
-          - #151 导出添加AutoFitMaxRows，超过指定行数则不启用AutoFit
-          - 添加全局IsDisableAllFilter属性，以通过特性禁用所有筛选器
-          - [#142](https://github.com/dotnetcore/Magicodes.IE/issues/142) 【修复】根据模板列表高度的设置，统一设置渲染高度
-          - [#157](https://github.com/dotnetcore/Magicodes.IE/issues/157)【修复】对低版本框架的兼容
-          - Excel导入对图片获取算法的优化
-
-          **2020.09.26**
-          - 【Nuget】版本更新到2.4.0-beta4
-          #157 【修复】对低版本框架的兼容
 
         </Description>
     </PropertyGroup>
