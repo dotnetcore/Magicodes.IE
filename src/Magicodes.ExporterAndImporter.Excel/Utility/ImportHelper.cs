@@ -835,33 +835,36 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             var cellValue = cell.Value?.ToString();
                             if (!cellValue.IsNullOrWhiteSpace())
                             {
-                                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
+                                if (col.MappingValues.Count > 0)
                                 {
-                                    //TODO:进一步缓存并优化
-                                    var isEnum = propertyInfo.PropertyType.IsEnum;
-                                    var isNullable = propertyInfo.PropertyType.IsNullable();
-                                    var type = propertyInfo.PropertyType;
-                                    if (isNullable)
+                                    cellValue = cellValue.Trim();
+                                    if (col.MappingValues.ContainsKey(cellValue))
                                     {
-                                        type = propertyInfo.PropertyType.GetNullableUnderlyingType();
-                                        isEnum = type.IsEnum;
+                                        //TODO:进一步缓存并优化
+                                        var isEnum = propertyInfo.PropertyType.IsEnum;
+                                        var isNullable = propertyInfo.PropertyType.IsNullable();
+                                        var type = propertyInfo.PropertyType;
+                                        if (isNullable)
+                                        {
+                                            type = propertyInfo.PropertyType.GetNullableUnderlyingType();
+                                            isEnum = type.IsEnum;
+                                        }
+
+                                        var value = col.MappingValues[cellValue];
+
+                                        if (isEnum && isNullable && (value is int || value is short) &&
+                                            Enum.IsDefined(type, value))
+                                            propertyInfo.SetValue(dataItem,
+                                                value == null ? null : Enum.ToObject(type, value));
+                                        //propertyInfo.SetValue(dataItem,
+                                        //    value == null ? null : Convert.ChangeType(value, type));
+                                        else
+                                        {
+                                            propertyInfo.SetValue(dataItem,
+                                                value);
+                                        }
+                                        continue;
                                     }
-
-                                    var value = col.MappingValues[cellValue];
-
-                                    if (isEnum && isNullable && (value is int || value is short) &&
-                                        Enum.IsDefined(type, value))
-                                        propertyInfo.SetValue(dataItem,
-                                            value == null ? null : Enum.ToObject(type, value));
-                                    //propertyInfo.SetValue(dataItem,
-                                    //    value == null ? null : Convert.ChangeType(value, type));
-                                    else
-                                    {
-                                        propertyInfo.SetValue(dataItem,
-                                            value);
-                                    }
-
-                                    continue;
                                 }
                             }
                             else
