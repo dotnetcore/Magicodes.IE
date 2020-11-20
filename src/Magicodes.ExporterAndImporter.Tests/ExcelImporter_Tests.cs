@@ -22,6 +22,7 @@ using OfficeOpenXml;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public IExcelImporter Importer = new ExcelImporter();
 
         /// <summary>
-        /// 测试枚举
+        /// 生成学生数据导入模板
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "生成学生数据导入模板")]
@@ -51,13 +52,38 @@ namespace Magicodes.ExporterAndImporter.Tests
                 nameof(GenerateStudentImportTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await Importer.GenerateTemplate<ImportStudentDto>(filePath);
+            var result = await Importer.GenerateTemplate<GenerateStudentImportTemplateDto>(filePath);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                var dataValidataions = sheet.DataValidations.FirstOrDefault()
+                    as OfficeOpenXml.DataValidation.ExcelDataValidationList;
+                new List<string> { "男0", "女1" }.ShouldBe(dataValidataions.Formula.Values);
+            }
+            //TODO:读取Excel检查表头和格式
+        }
+
+        /// <summary>
+        /// 生成学生数据导入模板带有数据验证
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "生成学生数据导入模板带有数据验证")]
+        public async Task GenerateStudentImportSheetDataValidationTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                nameof(GenerateStudentImportSheetDataValidationTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<GenerateStudentImportSheetDataValidationDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
             //TODO:读取Excel检查表头和格式
         }
-
 
         /// <summary>
         /// 测试生成导入描述头
@@ -92,7 +118,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
             //TODO:读取Excel检查表头和格式
         }
 

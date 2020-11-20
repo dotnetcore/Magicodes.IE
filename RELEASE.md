@@ -1,5 +1,13 @@
 # Release Log
 
+## 2.5.0-beta3
+**2020.10.29**
+- Excel生成导入模板支持内置数据验证[#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)
+  - 支持数据验证
+    - 支持MaxLengthAttribute、MinLengthAttribute、StringLengthAttribute、RangeAttribute
+  - 支持输入提示 
+
+
 ## 2.5.0-beta2
 **2020.10.20**
 - Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)

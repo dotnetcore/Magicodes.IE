@@ -45,6 +45,25 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
                     items[i].FieldErrors[key] = value?.Replace("存在数据重复，请检查！所在行：", "Duplicate data exists, please check! Where:");
                 }
             }
+
+            foreach (var item in importResult.Data)
+            {
+                //判断两个列是否重复，如果重复则提示 https://github.com/dotnetcore/Magicodes.IE/issues/144
+                if (item is ImportResultFilterDataDto1 item1 && item1.Code == item1.Name)
+                {
+                    items.Add(new DataRowErrorInfo()
+                    {
+                        RowIndex = 2, //请按照正确的行号去填写
+                        FieldErrors = new Dictionary<string, string>()
+                        {
+                            {"产品名称","Code和Name重复"}
+                        }
+                    });
+                }
+            }
+
+            importResult.RowErrors = items;
+
             return importResult;
         }
     }

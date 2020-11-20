@@ -1,5 +1,7 @@
-# Magicodes.IE | [English](README.en.md)
+<img align="right" src="./res/logo.jpg" width="300"/>
 
+# Magicodes.IE | [English](README.en.md)
+[![Member project of .NET Core Community](https://img.shields.io/badge/member%20project%20of-NCC-9e20c9.svg)](https://github.com/dotnetcore)
 [![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 [![stats](https://img.shields.io/nuget/dt/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/stats/packages/Magicodes.IE.Core?groupby=Version)
@@ -14,6 +16,9 @@
 ## 概述
 
 导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+
+- Github：<https://github.com/dotnetcore/Magicodes.IE>
+- 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
 
 **![总体说明](./docs/Magicodes.IE.png)**
 
@@ -258,15 +263,13 @@
 
 > ##### **订阅号**
 
-**关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档：**
+**关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档，并且加入微信生态群：**
 
 **![](./res/wechat.jpg "麦扣聊技术")**
 
 > ##### **QQ群**
 
-- **编程交流群<85318032>**
-<image src="./res/wechatq.jpg" width="259" height="259" alt="微信生态群">
-
+- **编程交流群<85318032>**（由于不经常在线，为了避免骚扰，设置了一定门槛）
 
 > ##### **文档官网&官方博客**
 
