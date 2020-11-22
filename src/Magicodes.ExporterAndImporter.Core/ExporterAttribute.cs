@@ -29,7 +29,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         ///     头部字体大小
         /// </summary>
-        public float? HeaderFontSize { set; get; }
+        public float HeaderFontSize { set; get; } = 0;
 
         /// <summary>
         ///     正文字体大小

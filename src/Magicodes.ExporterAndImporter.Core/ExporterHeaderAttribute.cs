@@ -43,7 +43,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         ///     字体大小
         /// </summary>
-        public float? FontSize { set; get; }
+        public float FontSize { set; get; } = 0;
 
         /// <summary>
         ///     是否加粗

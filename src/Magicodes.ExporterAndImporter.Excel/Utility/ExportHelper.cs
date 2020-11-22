@@ -783,10 +783,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         colCell.Value = exporterHeaderDto.DisplayName;
                     }
 
+                    //设置表头字体大小
+                    if (exporterHeaderAttribute.FontSize > 0)
+                    {
+                        colCell.Style.Font.Size = exporterHeaderAttribute.FontSize;
+                    }
+                    else if (ExcelExporterSettings.HeaderFontSize > 0)
+                    {
+                        colCell.Style.Font.Size = ExcelExporterSettings.HeaderFontSize;
+                    }
 
-                    var size = ExcelExporterSettings?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
-                    if (size.HasValue)
-                        colCell.Style.Font.Size = size.Value;
+
                 }
             }
         }

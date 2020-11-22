@@ -29,7 +29,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     ///     在Excel导出中，Name将为Sheet名称
     ///     在HTML、Pdf、Word导出中，Name将为标题
     /// </summary>
-    [ExcelExporter(Name = "通用导出测试", Author = "雪雁", AutoFitMaxRows = 5000)]
+    [ExcelExporter(Name = "通用导出测试", Author = "雪雁", AutoFitMaxRows = 5000, HeaderFontSize = 14)]
 #if !NET461
     [PdfExporter(Orientation = Orientation.Landscape, PaperKind = PaperKind.A4, IsWriteHtml = true, IsEnablePagesCount = false)]
 #else
