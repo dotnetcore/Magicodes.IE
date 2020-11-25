@@ -889,7 +889,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     item.ShouldNotBeNull();
                 }
 
-                sheet.Tables.Count.ShouldBe(0);
+                sheet.Tables.Count.ShouldBe(1);
             }
         }
 
@@ -931,7 +931,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 }
                 sheet.Dimension.Start.Row.ShouldBe(4);
                 sheet.Dimension.Rows.ShouldBe(6);
-                sheet.Tables.Count.ShouldBe(0);
+                sheet.Tables.Count.ShouldBe(1);
             }
         }
 
@@ -944,8 +944,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExporter exporter = new ExcelExporter();
             var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
             DeleteFile(filePath);
+            var data = GenFu.GenFu.ListOf<ExportTestDataAnnotations>();
+
+            data[0].Number = null;
             var result = await exporter.Export(filePath,
-                GenFu.GenFu.ListOf<ExportTestDataAnnotations>());
+                data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -975,7 +978,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 tb.Columns[0].Name.ShouldBe("Custom列1");
                 tb.Columns[1].Name.ShouldBe("列2");
-                tb.Columns.Count.ShouldBe(8);
+                tb.Columns.Count.ShouldBe(9);
             }
         }
 

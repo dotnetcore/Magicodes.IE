@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
-        public decimal Number { get; set; }
+        public int Number { get; set; }
         [ExporterHeader(DisplayName = "名称", IsAutoFit = true)]
         public string Name { get; set; }
 
