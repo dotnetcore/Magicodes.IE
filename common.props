@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.0-beta4</Version>
+        <Version>2.5.0-beta5</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,11 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.11.25**
+          - 【Nuget】版本更新到2.5.0-beta5
+          - fix MappingValues The total length of a DataValidation list cannot exceed 255 characters [#196](https://github.com/dotnetcore/Magicodes.IE/issues/196)
+          - Excel导出List数据类型存在错误，以及格式化问题。 [#191](https://github.com/dotnetcore/Magicodes.IE/issues/191) [#193](https://github.com/dotnetcore/Magicodes.IE/issues/193)
 
           **2020.11.20**
           - 【Nuget】版本更新到2.5.0-beta4
