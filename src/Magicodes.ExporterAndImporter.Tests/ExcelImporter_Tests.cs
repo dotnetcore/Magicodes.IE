@@ -58,11 +58,11 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.Count.ShouldBe(3);
                 var sheet = pck.Workbook.Worksheets.First();
                 var dataValidataions = sheet.DataValidations.FirstOrDefault()
                     as OfficeOpenXml.DataValidation.ExcelDataValidationList;
-                new List<string> { "男0", "女1" }.ShouldBe(dataValidataions.Formula.Values);
+                dataValidataions.Formula.ExcelFormula.ShouldBe("hidden_Gender!$A$1:$A$2");
             }
             //TODO:读取Excel检查表头和格式
         }
@@ -101,7 +101,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.Count.ShouldBe(3);
                 var sheet = pck.Workbook.Worksheets.First();
                 var attr = typeof(ImportStudentDtoWithSheetDesc).GetAttribute<ExcelImporterAttribute>();
                 var text = sheet.Cells["A1"].Text.Replace("\n", string.Empty).Replace("\r", string.Empty);
