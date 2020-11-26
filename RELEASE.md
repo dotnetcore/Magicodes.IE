@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.0-beta6
+**2020.11.26**
+ - The ColumnIndex property does not appear to be valid in Excel import  [#198](https://github.com/dotnetcore/Magicodes.IE/issues/198)
+
 ## 2.5.0-beta5
 **2020.11.25**
 - fix MappingValues The total length of a DataValidation list cannot exceed 255 characters [#196](https://github.com/dotnetcore/Magicodes.IE/issues/196)
