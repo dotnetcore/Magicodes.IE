@@ -870,5 +870,14 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
 
+        [Fact(DisplayName = "ColumnIndex测试")]
+        public async Task ImportTestColumnIndex_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "ColumnIndex导入测试.xlsx");
+            var import = await Importer.Import<ImportTestColumnIndex>(filePath);
+            import.HasError.ShouldBeFalse();
+            import.ImporterHeaderInfos.Count.ShouldBe(2);
+        }
+
     }
 }

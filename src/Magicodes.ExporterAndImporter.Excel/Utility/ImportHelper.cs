@@ -559,7 +559,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     if (ExcelImporterSettings.EndColumnCount.HasValue &&
                         columnIndex > ExcelImporterSettings.EndColumnCount.Value ||
                         string.IsNullOrWhiteSpace(header))
-                        break;
+                        continue;
 
                     //不处理空表头
                     if (string.IsNullOrWhiteSpace(header)) continue;
@@ -577,7 +577,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 foreach (var item in ImporterHeaderInfos)
-                    if (!excelHeaders.ContainsKey(item.Header.Name))
+                    if (!excelHeaders.ContainsKey(item.Header.Name)&&
+                        !excelHeaders.ContainsValue(item.Header.ColumnIndex))
                     {
                         //仅验证必填字段
                         if (item.IsRequired)
