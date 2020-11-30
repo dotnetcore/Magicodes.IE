@@ -3,10 +3,11 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
 using System.ComponentModel;
+using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExcelExporter(Name = "数据注解测试")]
+    [ExcelExporter(Name = "数据注解测试",TableStyle = TableStyles.Light10)]
     public class ExportTestDataAnnotations
     {
         /// <summary>

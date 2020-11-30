@@ -1,6 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System.ComponentModel.DataAnnotations;
+using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -18,7 +19,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     7、是否为吊架填写内容为文本格式，示例：是、否。
     8、吊架百分比填写内容为文本格式，示例：*、50%，20%。"
 , DescriptionHeight = 200)]
-    [ExcelExporter(Name = "管轴模型", TableStyle = "Light10", AutoFitAllColumn = true)]
+    [ExcelExporter(Name = "管轴模型", TableStyle = TableStyles.Light10, AutoFitAllColumn = true)]
 
     public class ImportGalleryAxisDto
     {

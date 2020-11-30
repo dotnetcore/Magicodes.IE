@@ -16,11 +16,12 @@ using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using System;
+using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
 
-    [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true, AutoFitMaxRows = 5000,HeaderRowIndex = 4)]
+    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10, AutoFitAllColumn = true, AutoFitMaxRows = 5000,HeaderRowIndex = 4)]
     public class ExportTestDataWithAttrsCustomRowStartIndex
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
