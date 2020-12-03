@@ -1,5 +1,20 @@
 # Release Log
 
+## 2.5.0-beta6
+**2020.11.26**
+ - The ColumnIndex property does not appear to be valid in Excel import  [#198](https://github.com/dotnetcore/Magicodes.IE/issues/198)
+
+## 2.5.0-beta5
+**2020.11.25**
+- fix MappingValues The total length of a DataValidation list cannot exceed 255 characters [#196](https://github.com/dotnetcore/Magicodes.IE/issues/196)
+- Excel导出List数据类型存在错误，以及格式化问题。 [#191](https://github.com/dotnetcore/Magicodes.IE/issues/191) [#193](https://github.com/dotnetcore/Magicodes.IE/issues/193)
+
+## 2.5.0-beta4
+**2020.11.20**
+To fix The Mapping Values of The total length of a Data Validation list always exceed 255 characters (# 196) (https://github.com/dotnetcore/Magicodes.IE/issues/196)
+- Excel export List data type errors, and formatting issues.# # [191] (https://github.com/dotnetcore/Magicodes.IE/issues/191) [193] (https://github.com/dotnetcore/Magicodes.IE/issues/193)
+- 导入Excel对Enum类型匹配值映射时，忽略值前后空格
+
 ## 2.5.0-beta3
 **2020.10.29**
 - Excel生成导入模板支持内置数据验证[#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)
