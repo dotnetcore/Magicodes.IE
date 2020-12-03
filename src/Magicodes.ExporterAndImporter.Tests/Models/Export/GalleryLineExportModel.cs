@@ -1,12 +1,13 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     /// <summary>
     /// 管线导出模型
     /// </summary>
-    [ExcelExporter(Name = "管线模型", TableStyle = "Light10")]
+    [ExcelExporter(Name = "管线模型", TableStyle = TableStyles.Light10)]
     public class GalleryLineExportModel
     {
         /// <summary>

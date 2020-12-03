@@ -559,7 +559,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     if (ExcelImporterSettings.EndColumnCount.HasValue &&
                         columnIndex > ExcelImporterSettings.EndColumnCount.Value ||
                         string.IsNullOrWhiteSpace(header))
-                        continue;
+                        break;
 
                     //不处理空表头
                     if (string.IsNullOrWhiteSpace(header)) continue;
@@ -577,8 +577,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 foreach (var item in ImporterHeaderInfos)
-                    if (!excelHeaders.ContainsKey(item.Header.Name)&&
-                        !excelHeaders.ContainsValue(item.Header.ColumnIndex))
+                    if (!excelHeaders.ContainsKey(item.Header.Name))
                     {
                         //仅验证必填字段
                         if (item.IsRequired)
@@ -976,16 +975,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void ParseData(ExcelPackage excelPackage)
         {
             var worksheet = GetImportSheet(excelPackage);
-            if (worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
+            if (ExcelImporterSettings.MaxCount != int.MaxValue && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
 
-            int imageBaseIndex;
             for (var rowIndex = ExcelImporterSettings.HeaderRowIndex + 1;
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
-                imageBaseIndex = 0;
                 //跳过空行
                 if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
                 {
@@ -1005,70 +1002,37 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             var cellValue = cell.Value?.ToString();
                             if (!cellValue.IsNullOrWhiteSpace())
                             {
-                                if (col.MappingValues.Count > 0)
+                                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
                                 {
-                                    cellValue = cellValue.Trim();
-                                    if (col.MappingValues.ContainsKey(cellValue))
+                                    //TODO:进一步缓存并优化
+                                    var isEnum = propertyInfo.PropertyType.IsEnum;
+                                    var isNullable = propertyInfo.PropertyType.IsNullable();
+                                    var type = propertyInfo.PropertyType;
+                                    if (isNullable)
                                     {
-                                        //TODO:进一步缓存并优化
-                                        var isEnum = propertyInfo.PropertyType.IsEnum;
-                                        var isNullable = propertyInfo.PropertyType.IsNullable();
-                                        var type = propertyInfo.PropertyType;
-                                        if (isNullable)
-                                        {
-                                            type = propertyInfo.PropertyType.GetNullableUnderlyingType();
-                                            isEnum = type.IsEnum;
-                                        }
-
-                                        var value = col.MappingValues[cellValue];
-
-                                        if (isEnum && isNullable && (value is int || value is short) &&
-                                            Enum.IsDefined(type, value))
-                                            propertyInfo.SetValue(dataItem,
-                                                value == null ? null : Enum.ToObject(type, value));
-                                        //propertyInfo.SetValue(dataItem,
-                                        //    value == null ? null : Convert.ChangeType(value, type));
-                                        else
-                                        {
-                                            propertyInfo.SetValue(dataItem,
-                                                value);
-                                        }
-                                        continue;
+                                        type = propertyInfo.PropertyType.GetNullableUnderlyingType();
+                                        isEnum = type.IsEnum;
                                     }
+
+                                    var value = col.MappingValues[cellValue];
+
+                                    if (isEnum && isNullable && (value is int || value is short) &&
+                                        Enum.IsDefined(type, value))
+                                        propertyInfo.SetValue(dataItem,
+                                            value == null ? null : Enum.ToObject(type, value));
+                                    else
+                                    {
+                                        propertyInfo.SetValue(dataItem,
+                                            value);
+                                    }
+
+                                    continue;
                                 }
                             }
                             else
                             {
                                 if (col.ImportImageFieldAttribute != null)
                                 {
-                                    //var position = 0;
-
-                                    //first   index    row  
-                                    // 4 ------ 7 ------ 3       3
-                                    // 3 ------ 5 ------ 2       2
-                                    // 2 ------ 3 ------ 1       0
-
-                                    //var row = ExcelImporterSettings.HeaderRowIndex > 1
-                                    //    ? ExcelImporterSettings.HeaderRowIndex + 1
-                                    //    : 2;
-
-                                    //var row1 = row + (ExcelImporterSettings.HeaderRowIndex);
-
-                                    //if (imageBaseIndex == 0)
-                                    //{
-                                    //    position = rowIndex -
-                                    //               row +
-                                    //               (imageBaseIndex++ * worksheet.Dimension.End.Row);
-                                    //}
-                                    //else
-                                    //{
-                                    //    position = rowIndex -
-                                    //               row1 +
-                                    //              imageBaseIndex++ * worksheet.Dimension.End.Row;
-                                    //}
-
-                                    //var excelPicture = GetImage(worksheet, position);
-
                                     var excelPicture = GetImage(worksheet, cell.Start.Row, cell.Start.Column);
 
                                     var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);

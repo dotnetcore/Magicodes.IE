@@ -42,11 +42,6 @@ namespace Magicodes.ExporterAndImporter.Core
         public int MaxRowNumberOnASheet { get; set; } = 0;
 
         /// <summary>
-        ///     表格样式风格
-        /// </summary>
-        public string TableStyle { get; set; } = "Medium10";
-
-        /// <summary>
         ///     自适应所有列
         /// </summary>
         public bool AutoFitAllColumn { get; set; }

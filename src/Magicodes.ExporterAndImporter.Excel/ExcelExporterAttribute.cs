@@ -12,6 +12,7 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
+using OfficeOpenXml.Table;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -34,5 +35,11 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     表头位置
         /// </summary>
         public int HeaderRowIndex { get; set; } = 1;
+
+
+        /// <summary>
+        ///     表格样式风格
+        /// </summary>
+        public TableStyles TableStyle { get; set; } = TableStyles.None;
     }
 }

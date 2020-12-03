@@ -112,7 +112,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 HeaderFontSize = exporterAttribute.HeaderFontSize,
                                 MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
                                 Name = exporterAttribute.Name,
-                                TableStyle = exporterAttribute.TableStyle,
+                                TableStyle = _excelExporterAttribute?.TableStyle ?? TableStyles.None,
                                 AutoCenter = _excelExporterAttribute != null && _excelExporterAttribute.AutoCenter,
                                 IsDisableAllFilter = exporterAttribute.IsDisableAllFilter
                             };
@@ -533,18 +533,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             if (ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable)
             {
-                var tbStyle = TableStyles.None;
-                if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
-                    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-                var er = excelRange.LoadFromDictionaries(dataItems, true, tbStyle);
+                //如果TableStyle=None则Table不为null
+                var er = excelRange.LoadFromDictionaries(dataItems, true, ExcelExporterSettings.TableStyle);
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
             }
             else
             {
-                if (IsExpandoObjectType)
-                    excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
-                else
-                    excelRange.LoadFromDictionaries(dataItems, true, TableStyles.None);
+                //if (IsExpandoObjectType)
+                //    excelRange.LoadFromDictionaries(dataItems, true, ExcelExporterSettings.TableStyle);
+                //else
+                excelRange.LoadFromDictionaries(dataItems, true, ExcelExporterSettings.TableStyle);
             }
         }
 
@@ -769,9 +767,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return;
 
-            var tbStyle = TableStyles.Medium10;
-            if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
-                tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
+            var tbStyle = ExcelExporterSettings.TableStyle;
+            //if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
+            //    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
 
             var er = excelRange.LoadFromDataTable(dataTable, true, tbStyle);
             CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
@@ -809,7 +807,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             //NoneStyle的时候没创建Table
             //https://github.com/JanKallman/EPPlus/blob/4dacf27661b24d92e8ba3d03d51dd5468845e6c1/EPPlus/ExcelRangeBase.cs#L2013
-            var isNoneStyle = ExcelExporterSettings.TableStyle == TableStyles.None.ToString();
+            var isNoneStyle = ExcelExporterSettings.TableStyle == TableStyles.None;
 
             if (CurrentExcelTable == null && ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable && !isNoneStyle)
             {
@@ -818,8 +816,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //https://github.com/dotnetcore/Magicodes.IE/issues/66
                 CurrentExcelTable = CurrentExcelWorksheet.Tables.Add(range, $"Table{CurrentExcelWorksheet.Index}");
                 CurrentExcelTable.ShowHeader = true;
-                Enum.TryParse(ExcelExporterSettings.TableStyle, out TableStyles outStyle);
-                CurrentExcelTable.TableStyle = outStyle;
+                //Enum.TryParse(ExcelExporterSettings.TableStyle, out TableStyles outStyle);
+                CurrentExcelTable.TableStyle = ExcelExporterSettings.TableStyle;
             }
 
             if (ExcelExporterSettings.AutoCenter)
