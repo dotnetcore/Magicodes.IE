@@ -23,11 +23,12 @@ Import and export general library, support Dto import and export, template expor
 
 |  #   |    Status     | Completion time | Milestone situation |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2020-10-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
-| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
-| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩Completed |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
-| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩Completed |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-02-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩Completed  |2020-10-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
+| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
+| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩Completed |2020-04-31| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
+| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩Completed |2020-03-15| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ### Azure DevOps
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -62,7 +63,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 Sorry, due to limited energy, please help translate.
 
-1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据") **
+1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")**
 
 2. **[基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")  [（点此访问国内文档）](https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/)**
 
@@ -85,7 +86,7 @@ Sorry, due to limited energy, please help translate.
 
 **See below for other tutorials or unit tests**
 
-**See below for update history. **
+**See below for update history.**
 
 ## Features
 

@@ -26,8 +26,8 @@
 
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | 🚢规划中 |2020-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕进行中 |2020-10-30| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-02-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩已完成 |2020-10-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩已完成 |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
@@ -93,7 +93,7 @@
 
 - **需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；**
 **![](./res/导入Dto.png "导入Dto")**
-- **支持各种筛选器，以便支持多语言、动态控制列展示等场景，具体使用见单元测试：**
+- **支持各种筛选器，支持依赖注入，以便支持多语言、动态控制列展示等场景，具体使用见单元测试：**
   - **导入列头筛选器（可动态指定导入列、导入的值映射关系）**
   - **导出列头筛选器（可动态控制导出列，支持动态导出（DataTable））**
   - **导入结果筛选器（可修改标注文件）**
@@ -148,7 +148,7 @@
             File.Exists(filePath).ShouldBeTrue();
         }
 ```
-- **支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系。用于生成导入模板的数据验证约束以及进行数据转换。**
+- **支持值映射，支持通过“ValueMappingAttribute”特性设置值映射关系，目前仅可用于枚举和Bool类型，支持导入导出。**
 ```csharp
         /// <summary>
         ///     性别
@@ -233,6 +233,8 @@
     {{Image::ImageUrl?Width=50&Height=120&Alt=404}} //图片渲染
     {{Image::ImageUrl?w=50&h=120&Alt=404}} //图片渲染
     {{Image::ImageUrl?Alt=404}} //图片渲染
+    {{Formula::AVERAGE?params=G4:G6}}  //公式渲染
+    {{Formula::SUM?params=G4:G6&G4}}   //公式渲染
   ```
 
   后续将支持自定义管道。
@@ -255,6 +257,28 @@
 
 - **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
 
+- **支持分栏、分sheet、追加rows导出**
+
+```csharp
+exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+```
+具体见上面教程《Magicodes.IE之花式导出》
+
+- **支持单元格导出宽度设置**
+```csharp
+[ExporterHeader(Width = 100)]
+public DateTime Time3 { get; set; }
+```
+
+- **Excel导出支持HeaderRowIndex，在ExcelExporterAttribute导出特性类中添加HeaderRowIndex属性，方便导出时去指定从第一行开始导出。**
+
+- **Excel生成导入模板支持内置数据验证**
+ 
+对于内置数据验证的支持可通过IsInterValidation属性开启，并且需要注意的是仅支持MaxLengthAttribute、 MinLengthAttribute、 StringLengthAttribute、 RangeAttribute支持对内置数据验证的开启操作。 
+![](./res/dataval1.png "Excel验证")
+![](./res/dataval2.png "Excel验证")
+支持对输入提示的展示操作：
+![](./res/dataval3.png "Excel验证")
 ### FAQ
 
 [问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
