@@ -111,7 +111,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ExportByColumnIndex_Test()
         {
             var exporter = new ExcelExporter();
-            var filePath = GetTestFilePath($"{nameof(ExportColumnIndex_Test)}.xlsx");
+            var filePath = GetTestFilePath($"{nameof(ExportByColumnIndex_Test)}.xlsx");
             DeleteFile(filePath);
 
             var data = GenFu.GenFu.ListOf<Issue179>(100);
