@@ -74,6 +74,11 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     宽度
         /// </summary>
         public int Width { get; set; }
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public int ColumnIndex { get; set; } = 10000;
     }
 
 
