@@ -1,8 +1,14 @@
 # Release Log
 
+
+## 2.5.1
+
+### 2020.12.21
+- 导出支持使用ColumnIndex指定导出顺序，以导出时在某些情况下顺序不一致的问题（Export supports the use of ColumnIndex to specify the export order, so that the order is inconsistent in some cases when exporting）  [#179](https://github.com/dotnetcore/Magicodes.IE/issues/179)
+
 ## 2.5.0
 
-**2020.12.03**
+## 2020.12.03
 
 - Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)
 - 增加Excel枚举导出对DescriptionAttribute的支持 [#168](https://github.com/dotnetcore/Magicodes.IE/issues/168)

@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.0</Version>
+        <Version>2.5.1</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -13,6 +13,10 @@
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
           交流QQ群：85318032
+
+          **2020.12.21**
+          - 【Nuget】版本更新到2.5.1
+          - 导出支持使用ColumnIndex指定导出顺序，以导出时在某些情况下顺序不一致的问题（Export supports the use of ColumnIndex to specify the export order, so that the order is inconsistent in some cases when exporting）  [#179](https://github.com/dotnetcore/Magicodes.IE/issues/179)
 
           **2020.12.03**
           - 【Nuget】版本更新到2.5.0
