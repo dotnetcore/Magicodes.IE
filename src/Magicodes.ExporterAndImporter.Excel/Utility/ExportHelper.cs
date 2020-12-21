@@ -279,7 +279,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             else if (!IsDynamicDatableExport)
             {
                 var type = _type ?? typeof(T);
-                var objProperties = type.GetProperties();
+                //#179 GetProperties方法不按特定顺序（如字母顺序或声明顺序）返回属性，因此此处支持按ColumnIndex排序返回
+                var objProperties = type.GetProperties().OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
                 if (objProperties.Length == 0)
                     return;
                 for (var i = 0; i < objProperties.Length; i++)
