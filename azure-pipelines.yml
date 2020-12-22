@@ -41,9 +41,10 @@ steps:
     packageType: 'sdk'
     version: '5.x'
 
-- task: CmdLine@2
+- task: PowerShell@2
   displayName: Run Tests and ReportGenerator
   inputs:
+    targetType: 'inline'
     script: |
       #执行单元测试
       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
