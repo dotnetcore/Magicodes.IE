@@ -39,6 +39,11 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
+    version: '3.x'
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
     version: '5.x'
 
 - task: CmdLine@2
