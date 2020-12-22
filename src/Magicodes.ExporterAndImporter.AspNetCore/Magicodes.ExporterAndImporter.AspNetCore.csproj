@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
 	<PropertyGroup>
-		<TargetFrameworks>netcoreapp3.1;netcoreapp3.0</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
     <PackageId>Magicodes.IE.AspNetCore</PackageId>
 	</PropertyGroup>
 	<ItemGroup>
