@@ -6,6 +6,9 @@
 # https://www.meziantou.net/computing-code-coverage-for-a-dotnet-core-project-with-azure-devops-and-coverlet.htm
 # trigger 
 # https://docs.microsoft.com/zh-cn/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml
+# ReportGenerator，将Coverlet，OpenCover，dotCover，Visual Studio，NCover，Cobertura，JaCoCo，Clover，gcov或lcov生成的覆盖率报告转换为各种格式的可读报告：
+# https://github.com/danielpalme/ReportGenerator
+# https://danielpalme.github.io/ReportGenerator/usage.html
 
 # specific path build
 trigger:
@@ -62,7 +65,33 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)\coveragereport\Cobertura.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)\coveragereport'
 
+- task: PowerShell@2
+  displayName: 'Package Push'
+  condition: eq(variables['Build.SourceBranchName'], 'master')
+  env:
+    NUGET_API_KEY: $(nugetapikey)
+    GITHUB_API_KEY: $(githubapikey)
+  inputs:
+    targetType: 'inline'
+    script: |
+      # 打包
+      Get-ChildItem -Path ./ -Recurse |
+        Where-Object { $_.Name.EndsWith(".csproj") -and !$_.Name.Contains("Test") } |
+        ForEach-Object -Process { 
+              Write-Host $_.Name
+              dotnet pack $_.FullName -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --include-source --output $(Build.ArtifactStagingDirectory) -c $(BuildConfiguration)
+         }
+      ls $(Build.ArtifactStagingDirectory)
 
+      #推包
+      dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
+
+      #使用gpr工具推送到GitHub
+      dotnet tool install -g gpr --no-cache -v q
+      gpr push --api-key $GITHUB_API_KEY $(Build.ArtifactStagingDirectory)\*.nupkg
+    failOnStderr: true
+    showWarnings: true
+    ignoreLASTEXITCODE: true
 
 
     
