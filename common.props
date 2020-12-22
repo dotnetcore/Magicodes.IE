@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.1</Version>
+        <Version>2.5.1.1</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -9,9 +9,10 @@
         <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
         <Description>
-          导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
+          导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
           开源库地址:https://github.com/xin-lai
           博客地址：http://www.cnblogs.com/codelove/
+          公众号：麦扣聊技术
           交流QQ群：85318032
 
           **2020.12.21**

@@ -43,10 +43,10 @@ steps:
   inputs:
     script: |
       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
-       ls TestResults
+      ls TestResults
       dotnet tool install -g dotnet-reportgenerator-globaltool
-      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*"
-  continueOnError: true
+      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
+  continueOnError: false
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
