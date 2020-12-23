@@ -37,10 +37,15 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: UseDotNet@2
+# - task: UseDotNet@2
+#   inputs:
+#     packageType: 'sdk'
+#     version: '5.x'
+
+- task: DotNetCoreCLI@2
   inputs:
-    packageType: 'sdk'
-    version: '5.x'
+    command: 'build'
+    configuration: $(BuildConfiguration)
 
 - task: PowerShell@2
   displayName: Run Tests and ReportGenerator
