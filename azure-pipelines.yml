@@ -29,7 +29,7 @@ pr:
 
 pool:
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml
-  vmImage: 'ubuntu-20.04'
+  vmImage: 'windows-latest'
 
 variables:
   solution: '**/*.sln'
