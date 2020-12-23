@@ -61,7 +61,7 @@
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
 
-<img align="right" src="./res/logo.jpg" width="300">
+<img align="right" src="res/logo.jpg" width="300">
 <h1 id="magicodesie--简体中文">Magicodes.IE | <a href="README.html">简体中文</a></h1>
 <p><a href="https://github.com/dotnetcore"><img src="https://img.shields.io/badge/member%20project%20of-NCC-9e20c9.svg" alt="Member project of .NET Core Community"></a>
 <a href="https://www.nuget.org/packages/Magicodes.IE.Core"><img src="https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square" alt="nuget"></a>
@@ -214,7 +214,7 @@
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Need to be used in conjunction with related import and export DTO models, support import and export through DTO and related characteristics. Configure features to control related logic and display results without modifying the logic code;</strong>
-<strong><img src="./res/%E5%AF%BC%E5%85%A5Dto.png" alt="" title="导入Dto"></strong></li>
+<strong><img src="res/%E5%AF%BC%E5%85%A5Dto.png" alt="" title="导入Dto"></strong></li>
 <li><strong>Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:</strong>
 <ul>
 <li><strong>Import column header filter (you can dynamically specify the imported column and imported value mapping relationship)</strong></li>
@@ -225,30 +225,30 @@
 <li><strong>Export supports text custom filtering or processing;</strong></li>
 <li><strong>Import supports automatic skipping of blank lines in the middle;</strong></li>
 <li><strong>Import supports automatically generate import templates based on DTO, and automatically mark required items;</strong>
-<img src="./res/%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%9A%84%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.png" alt="" title="自动生成的导入模板"></li>
+<img src="res/%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%9A%84%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.png" alt="" title="自动生成的导入模板"></li>
 <li><strong>Import supports data drop-down selection, currently only supports enumerated types;</strong></li>
 <li><strong>Imported data supports the processing of leading and trailing spaces and intermediate spaces, allowing specific columns to be set;</strong></li>
 <li><strong>Import supports automatic template checking, automatic data verification, unified exception handling, and unified error encapsulation, including exceptions, template errors and row data errors;</strong>
-<img src="./res/%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E.png" alt="" title="数据错误"></li>
+<img src="res/%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E.png" alt="" title="数据错误"></li>
 <li><strong>Support import header position setting, the default is 1;</strong></li>
 <li><strong>Support import columns out of order, no need to correspond one to one in order;</strong></li>
 <li><strong>Support to import the specified column index, automatic recognition by default;</strong></li>
 <li><strong>Exporting Excel supports splitting of Sheets, only need to set the value of [MaxRowNumberOnASheet] of the characteristic [ExporterAttribute]. If it is 0, no splitting is required. See unit test for details;</strong></li>
 <li><strong>Support importing into Excel for error marking;</strong>
-<img src="./res/%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF.png" alt="" title="数据错误标注">
-<img src="./res/%E5%A4%9A%E4%B8%AA%E9%94%99%E8%AF%AF.png" alt="" title="多个错误"></li>
+<img src="res/%E6%95%B0%E6%8D%AE%E9%94%99%E8%AF%AF.png" alt="" title="数据错误标注">
+<img src="res/%E5%A4%9A%E4%B8%AA%E9%94%99%E8%AF%AF.png" alt="" title="多个错误"></li>
 <li><strong>Import supports cutoff column setting, if not set, blank cutoff will be encountered by default;</strong></li>
 <li><strong>Support exporting HTML, Word, Pdf, support custom export template;</strong>
 -<strong>Export HTML</strong>
-<img src="./res/%E5%AF%BC%E5%87%BAhtml.png" alt="" title="导出HTML">
+<img src="res/%E5%AF%BC%E5%87%BAhtml.png" alt="" title="导出HTML">
 -<strong>Export Word</strong>
-<img src="./res/%E5%AF%BC%E5%87%BAWord.png" alt="" title="导出Word">
+<img src="res/%E5%AF%BC%E5%87%BAWord.png" alt="" title="导出Word">
 -<strong>Export Pdf, support settings, see the update log for details</strong>
-<img src="./res/%E5%AF%BC%E5%87%BAPdf.png" alt="" title="导出Pdf">
+<img src="res/%E5%AF%BC%E5%87%BAPdf.png" alt="" title="导出Pdf">
 -<strong>Export receipt</strong>
-<img src="./res/%E5%AF%BC%E5%87%BA%E6%94%B6%E6%8D%AE.png" alt="" title="导出收据.png"></li>
+<img src="res/%E5%AF%BC%E5%87%BA%E6%94%B6%E6%8D%AE.png" alt="" title="导出收据.png"></li>
 <li><strong>Import supports repeated verification;</strong>
-<img src="./res/%E9%87%8D%E5%A4%8D%E9%94%99%E8%AF%AF.png" alt="" title="重复错误.png"></li>
+<img src="res/%E9%87%8D%E5%A4%8D%E9%94%99%E8%AF%AF.png" alt="" title="重复错误.png"></li>
 <li><strong>Support single data template export, often used to export receipts, credentials and other businesses</strong></li>
 <li>*<em>Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou (<a href="https://github.com/xin-lai/Magicodes.IE/pull/8">https://github.com/xin-lai/Magicodes.IE/pull/8</a> ))</em> *</li>
 <li><strong>Support dynamic/ExpandoObject dynamic column export</strong></li>
@@ -337,7 +337,7 @@
   		JoinTheArmy = 6,
   	}
 </code></pre>
-<p><img src="./res/enum.png" alt="" title="枚举转数据映射序列"></p>
+<p><img src="res/enum.png" alt="" title="枚举转数据映射序列"></p>
 </li>
 <li><p><strong>The bool type will generate &quot;yes&quot; and &quot;no&quot; data items by default</strong></p>
 </li>
@@ -346,10 +346,10 @@
 </ul>
 </li>
 <li><p><strong>Support excel multi-sheet import</strong>
-<strong><img src="./res/multipleSheet.png" alt="" title="枚举转数据映射序列"></strong></p>
+<strong><img src="res/multipleSheet.png" alt="" title="枚举转数据映射序列"></strong></p>
 </li>
 <li><p><strong>Support Excel template export, and support image rendering</strong>
-<strong><img src="./res/ExcelTplExport.png" alt="" title="Excel模板导出"></strong></p>
+<strong><img src="res/ExcelTplExport.png" alt="" title="Excel模板导出"></strong></p>
 <p>The rendering syntax is as follows:</p>
 <pre><code>  {{Company}}  //Cell rendering
   {{Table&gt;&gt;BookInfos|RowNo}} //Table rendering start syntax
@@ -361,7 +361,7 @@
 <p>Custom pipelines will be supported in the future.</p>
 </li>
 <li><p><strong>Support Excel import template to generate annotation</strong>
-<img src="./res/ImportLabel.png" alt="" title="Excel导入标注"></p>
+<img src="res/ImportLabel.png" alt="" title="Excel导入标注"></p>
 </li>
 <li><p><strong>Support Excel image import and export</strong></p>
 <ul>

@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "vHN07dziAX+VLjnZl6NqPQ=="
+          "hash": "BAwvwVGdqe8XHiz/RMfzBw=="
         }
       },
       "is_incremental": false,
@@ -507,7 +507,579 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "ydS9D0aLN/Auyl2JmFH74g=="
+          "hash": "kHc9ZmSH0JCpquHcUUZJ1Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/1574832770808.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/1574832770808.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-4.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-4.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-5.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-5.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-6.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-6.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-7.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-7.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-8.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-8.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2-9.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2-9.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2.基础教程导出Excel-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2.基础教程导出Excel-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2.基础教程导出Excel-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2.基础教程导出Excel-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2.基础教程导出Excel-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2.基础教程导出Excel-3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/2.基础教程导出Excel-支持动态类型.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/2.基础教程导出Excel-支持动态类型.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/3.基础教程之导出Pdf收据-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/3.基础教程之导出Pdf收据-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/3.基础教程之导出Pdf收据-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/3.基础教程之导出Pdf收据-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/3.基础教程之导出Pdf收据-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/3.基础教程之导出Pdf收据-3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/3.基础教程之导出Pdf收据-4.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/3.基础教程之导出Pdf收据-4.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/6.1多Sheet导入-班级学生基础数据导入-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/6.1多Sheet导入-班级学生基础数据导入-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/6.1多Sheet导入-班级学生基础数据导入-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/6.1多Sheet导入-班级学生基础数据导入-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/6.2多Sheet导入-学生基础数据及缴费流水号导入-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/6.2多Sheet导入-学生基础数据及缴费流水号导入-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/6.2多Sheet导入-学生基础数据及缴费流水号导入-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/6.2多Sheet导入-学生基础数据及缴费流水号导入-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/8-1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/8-1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/8-2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/8-2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/8-3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/8-3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/8-4.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/8-4.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/ExcelTplExport.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/ExcelTplExport.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Excel导出模板.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/Excel导出模板.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/ImportLabel.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/ImportLabel.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Magicodes.IE.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/Magicodes.IE.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/dataval1.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/dataval1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/dataval2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/dataval2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/dataval3.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/dataval3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/enum.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/enum.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/f1536893905558.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/f1536893905558.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/logo.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/logo.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/multipleSheet.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/multipleSheet.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/wechat.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/wechat.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/wechatq.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/wechatq.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/多个错误.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/多个错误.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/导入Dto.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/导入Dto.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/导出Pdf.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/导出Pdf.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/导出Word.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/导出Word.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/导出html.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/导出html.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/导出收据.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/导出收据.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/数据错误.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/数据错误.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/数据错误统一返回.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/数据错误统一返回.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/自动生成的导入模板.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/自动生成的导入模板.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/重复错误.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/重复错误.png"
         }
       },
       "is_incremental": false,
@@ -547,6 +1119,13 @@
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 38,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
