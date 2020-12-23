@@ -37,23 +37,40 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-# - task: UseDotNet@2
-#   inputs:
-#     packageType: 'sdk'
-#     version: '5.x'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '5.x'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     configuration: $(BuildConfiguration)
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    configuration: $(BuildConfiguration)
+    arguments: '--logger:trx --collect:"XPlat Code Coverage"'
+
+# - task: PowerShell@2
+#   displayName: Run Tests and ReportGenerator
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       #执行单元测试
+#       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
+#       ls TestResults
+#       dotnet tool install -g dotnet-reportgenerator-globaltool
+#       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
+#     failOnStderr: true
+#   continueOnError: false
+
 - task: PowerShell@2
   displayName: Run Tests and ReportGenerator
   inputs:
     targetType: 'inline'
     script: |
-      #执行单元测试
-      dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
       ls TestResults
       dotnet tool install -g dotnet-reportgenerator-globaltool
       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
