@@ -28,7 +28,8 @@ pr:
 - develop
 
 pool:
-  vmImage: 'windows-2019'
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml
+  vmImage: 'ubuntu-20.04'
 
 variables:
   solution: '**/*.sln'
