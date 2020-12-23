@@ -20,6 +20,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <!--修复Ubuntu下dotnet test的问题-->
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.6.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
   </ItemGroup>
