@@ -47,6 +47,7 @@ steps:
     command: 'build'
     configuration: $(BuildConfiguration)
     vstsFeed: xinlaiopencode/xinlaiopencode
+    includeNuGetOrg: true
 
 - task: DotNetCoreCLI@2
   inputs:
