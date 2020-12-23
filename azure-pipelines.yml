@@ -49,24 +49,24 @@ steps:
     vstsFeed: xinlaiopencode/xinlaiopencode
     includeNuGetOrg: true
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    configuration: $(BuildConfiguration)
-    arguments: '--logger trx --collect "XPlat Code Coverage"'
-
-# - task: PowerShell@2
-#   displayName: Run Tests and ReportGenerator
+# - task: DotNetCoreCLI@2
 #   inputs:
-#     targetType: 'inline'
-#     script: |
-#       #执行单元测试
-#       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
-#       ls TestResults
-#       dotnet tool install -g dotnet-reportgenerator-globaltool
-#       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
-#     failOnStderr: true
-#   continueOnError: false
+#     command: 'test'
+#     configuration: $(BuildConfiguration)
+#     arguments: '--logger trx --collect "XPlat Code Coverage"'
+
+- task: PowerShell@2
+  displayName: Run Tests and ReportGenerator
+  inputs:
+    targetType: 'inline'
+    script: |
+      #执行单元测试
+      dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
+      ls TestResults
+      dotnet tool install -g dotnet-reportgenerator-globaltool
+      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
+    failOnStderr: true
+  continueOnError: false
 
 - task: PowerShell@2
   displayName: Run Tests and ReportGenerator
