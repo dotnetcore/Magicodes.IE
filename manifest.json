@@ -1,0 +1,578 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/Magicodes.IE/Magicodes.IE/source",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html",
+          "hash": "vHN07dziAX+VLjnZl6NqPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "RELEASE.md",
+      "output": {
+        ".html": {
+          "relative_path": "RELEASE.html",
+          "hash": "QMfoflRVhY9L3yE4+l0xcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.AutoMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.AutoMap-1.html",
+          "hash": "vpbY9gkr16XOFEepaUC5sQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html",
+          "hash": "/+AGCip/g1Z0HJrqAc2p3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvHelperEnumConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvHelperEnumConverter.html",
+          "hash": "VJKTGGL1KhRlMjR5/95/Cw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvImporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html",
+          "hash": "+T4HLMJ8YKIrzzEAVBhZQw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html",
+          "hash": "pqdatCPkEduPhPiV1nexKQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.ImportHelper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.ImportHelper-1.html",
+          "hash": "1AziPbLhOUB6dGojBK6zDA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.Utility.html",
+          "hash": "tX6OseOV/1gekC1sbw1DsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Csv.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Csv.html",
+          "hash": "ikK+O1VmUfCLXB8NId7TBA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html",
+          "hash": "ACXylyzvhqoJ/FGNb6ZG7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelExporterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelExporterAttribute.html",
+          "hash": "WjuE2O8ut9F18gQ1qyikRA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html",
+          "hash": "CScLQD4XT8OstA2baz5i7g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.html",
+          "hash": "k+ZjqMBT4IO85HeSKXWqqw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelOutputTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelOutputTypes.html",
+          "hash": "Sf0M0i9cnkRrnV/08cooMA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html",
+          "hash": "cvqYNOuVE+bpqYCGqoGMWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.IExcelImporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.IExcelImporter.html",
+          "hash": "7Lk1yBjxirM+3v/fJZg7EQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.DataTableHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.DataTableHelper.html",
+          "hash": "jRW161VQf6J9gRE7pU6qVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ExcelHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ExcelHelper.html",
+          "hash": "i5FEN9JgN7+j1LrAHghftA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html",
+          "hash": "8RIlNmrfDYfPyIJircUsqQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html",
+          "hash": "zAivVVGZyvaAUS+52Aswew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html",
+          "hash": "aAR/3oQwRPb0miFxKhy4dQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html",
+          "hash": "NVN8jXL6axvlkCAMjUBWkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html",
+          "hash": "AAgTKpcnKb8TCw65NrmoKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html",
+          "hash": "guKWxEPz3L0VlZWk6Dc0ow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.WriterTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.WriterTypes.html",
+          "hash": "o/L2DosOkiixcbW8eG7LKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.html",
+          "hash": "Mms7MKpP3oiGGXngCeu3sA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ValidatorHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ValidatorHelper.html",
+          "hash": "U+m3/IjsPxBDNfoPOlr2xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.html",
+          "hash": "fOCx7GkhepSNcZN8rtTF/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.html",
+          "hash": "Y8GKBvyg0p72fbuA0rQK9g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Html.HtmlExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Html.HtmlExporter.html",
+          "hash": "Yxdm+YdmUruBzVRyDgKYWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Html.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Html.html",
+          "hash": "86JpmIbdU/tSzWex688Ouw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.IPdfExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.IPdfExporter.html",
+          "hash": "Knksl7GI/X/tk7E7H/12tQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporter.html",
+          "hash": "o8Rtc2Gm/9+0Eus6PHyg5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html",
+          "hash": "P9PrKKtEcZEHuTvSceU4+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.html",
+          "hash": "KWIoars/czS9ynyG9+Idhg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Word.Utility.WordHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Word.Utility.WordHelper.html",
+          "hash": "fKck6pfMvH98B8kZodi/uQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Word.Utility.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Word.Utility.html",
+          "hash": "7mJETn/Nuo9rV5ELAJqCrw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Word.WordExporter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Word.WordExporter.html",
+          "hash": "QnQBqcikZrq8zar3mQvonQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Word.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Word.html",
+          "hash": "urmNzVUpyE1URBUEfN1kZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "gc7AxGc7zT+dRzgFIcj2nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "ydS9D0aLN/Auyl2JmFH74g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "4qMCZ+yQxHsWo73ZXViqdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 38,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
