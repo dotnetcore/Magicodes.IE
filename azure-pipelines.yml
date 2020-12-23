@@ -46,6 +46,7 @@ steps:
   inputs:
     command: 'build'
     configuration: $(BuildConfiguration)
+    vstsFeed: xinlaiopencode/xinlaiopencode
 
 - task: DotNetCoreCLI@2
   inputs:
