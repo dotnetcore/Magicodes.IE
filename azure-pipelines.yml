@@ -51,7 +51,7 @@ steps:
   inputs:
     command: 'test'
     configuration: $(BuildConfiguration)
-    arguments: '--logger:trx --collect:"XPlat Code Coverage"'
+    arguments: '--logger trx --collect "XPlat Code Coverage"'
 
 # - task: PowerShell@2
 #   displayName: Run Tests and ReportGenerator
