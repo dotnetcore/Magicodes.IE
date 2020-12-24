@@ -40,6 +40,10 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '5.x'
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.0.x'
 
 - task: CmdLine@2
   displayName: Run Tests and ReportGenerator
