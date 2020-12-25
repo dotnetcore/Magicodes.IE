@@ -50,7 +50,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="dataItems"></param>
         /// <param name="sheetName"></param>
         /// <returns></returns>
-        ExcelExporter Append<T>(ICollection<T> dataItems, string sheetName = null) where T : class;
+        ExcelExporter Append<T>(ICollection<T> dataItems, string sheetName = null) where T : class,new();
 
         /// <summary>
         ///    分割sheet追加当前column 

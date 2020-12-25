@@ -785,8 +785,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     var range = ExcelCellBase.GetAddress(ExcelImporterSettings.HeaderRowIndex + 1, i + 1,
                         ExcelPackage.MaxRows, i + 1);
                     var dataValidations = worksheet.DataValidations.AddListValidation(range);
+                    var hiddenWorksheet = excelPackage.Workbook.Worksheets.Add($"hidden_{ImporterHeaderInfos[i].PropertyName}");
+                    hiddenWorksheet.Hidden = eWorkSheetHidden.Hidden;
+                    int y = 1;
                     foreach (var mappingValue in ImporterHeaderInfos[i].MappingValues)
-                        dataValidations.Formula.Values.Add(mappingValue.Key);
+                    {
+                        hiddenWorksheet.Cells[y, 1].Value = mappingValue.Key;
+                        y++;
+                    }
+                    dataValidations.Formula.ExcelFormula = $"hidden_{ImporterHeaderInfos[i].PropertyName}!$A$1:$A$" + ImporterHeaderInfos[i].MappingValues.Count;
                 }
 
                 //如果开启数据验证，则添加验证约束
