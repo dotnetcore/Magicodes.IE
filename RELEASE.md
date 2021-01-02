@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.1.3
+
+**2021.01.02**
+- Add PDF support for paper size
+- Add PDF support for margins [#223](https://github.com/dotnetcore/Magicodes.IE/issues/223)
 
 ## 2.5.1
 
