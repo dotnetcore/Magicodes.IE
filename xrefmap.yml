@@ -2917,6 +2917,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.IsWriteHtml
   nameWithType: PdfExporterAttribute.IsWriteHtml
+- uid: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings
+  name: MarginSettings
+  href: api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html#Magicodes_ExporterAndImporter_Pdf_PdfExporterAttribute_MarginSettings
+  commentId: P:Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings
+  fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings
+  nameWithType: PdfExporterAttribute.MarginSettings
+- uid: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings*
+  name: MarginSettings
+  href: api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html#Magicodes_ExporterAndImporter_Pdf_PdfExporterAttribute_MarginSettings_
+  commentId: Overload:Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.MarginSettings
+  nameWithType: PdfExporterAttribute.MarginSettings
 - uid: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.Orientation
   name: Orientation
   href: api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html#Magicodes_ExporterAndImporter_Pdf_PdfExporterAttribute_Orientation
@@ -2943,6 +2956,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperKind
   nameWithType: PdfExporterAttribute.PaperKind
+- uid: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize
+  name: PaperSize
+  href: api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html#Magicodes_ExporterAndImporter_Pdf_PdfExporterAttribute_PaperSize
+  commentId: P:Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize
+  fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize
+  nameWithType: PdfExporterAttribute.PaperSize
+- uid: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize*
+  name: PaperSize
+  href: api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html#Magicodes_ExporterAndImporter_Pdf_PdfExporterAttribute_PaperSize_
+  commentId: Overload:Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.PaperSize
+  nameWithType: PdfExporterAttribute.PaperSize
 - uid: Magicodes.ExporterAndImporter.Word
   name: Magicodes.ExporterAndImporter.Word
   href: api/Magicodes.ExporterAndImporter.Word.html
