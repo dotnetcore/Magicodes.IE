@@ -17,14 +17,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Reflection;
 #if NET461
-
-using System.Drawing.Imaging;
 using TuesPechkin;
-
+using System.Drawing.Printing;
 #else
 using DinkToPdf;
 #endif
-
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -164,7 +161,8 @@ namespace Magicodes.ExporterAndImporter.Pdf
             {
                 GlobalSettings =
                 {
-                    PaperSize = pdfExporterAttribute?.PaperKind,
+                    PaperSize = pdfExporterAttribute?.PaperKind == PaperKind.Custom
+                    ? pdfExporterAttribute.PaperSize : pdfExporterAttribute?.PaperKind,
                     Orientation = pdfExporterAttribute?.Orientation,
 #if !NET461
                     //Out = fileName,
@@ -177,12 +175,12 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 Objects =
                 {
                     objSettings
-                }
+    }
             };
 
             if (pdfExporterAttribute?.MarginSettings != null)
             {
-                htmlToPdfDocument.GlobalSettings.Margins = pdfExporterAttribute?.MarginSettings;     
+                htmlToPdfDocument.GlobalSettings.Margins = pdfExporterAttribute?.MarginSettings;
             }
 
 
