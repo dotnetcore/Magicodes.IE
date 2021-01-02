@@ -166,7 +166,6 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 {
                     PaperSize = pdfExporterAttribute?.PaperKind,
                     Orientation = pdfExporterAttribute?.Orientation,
-
 #if !NET461
                     //Out = fileName,
                     ColorMode = ColorMode.Color,
@@ -180,6 +179,13 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     objSettings
                 }
             };
+
+            if (pdfExporterAttribute?.MarginSettings != null)
+            {
+                htmlToPdfDocument.GlobalSettings.Margins = pdfExporterAttribute?.MarginSettings;     
+            }
+
+
             var result = PdfConverter.Convert(htmlToPdfDocument);
             return await Task.FromResult(result);
         }
