@@ -110,8 +110,8 @@ steps:
   displayName: 'Package Push'
   condition: eq(variables['Build.SourceBranchName'], 'master')
   env:
-    NUGET_API_KEY: ${NUGETAPIKEY}
-    GITHUB_API_KEY: ${GITHUBAPIKEY}
+    NUGET_API_KEY: ${nugetapikey}
+    GITHUB_API_KEY: ${githubapikey}
   inputs:
     targetType: 'inline'
     script: |
