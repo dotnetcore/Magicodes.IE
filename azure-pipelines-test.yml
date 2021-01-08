@@ -1,0 +1,33 @@
+# specific path build
+trigger:
+  branches:
+    include:
+    - azure-pipelines
+    - azure-pipelines/*
+
+pr:
+- master
+- develop
+
+pool:
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml
+  vmImage: 'windows-latest'
+
+- task: PowerShell@2
+  displayName: 'Package Push'
+  env:
+    NUGET_API_KEY: ${nugetapikey}
+    GITHUB_API_KEY: ${githubapikey}
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host Test
+      Write-Host ${env:NUGET_API_KEY}
+      Write-Host $NUGET_API_KEY
+
+    failOnStderr: true
+    showWarnings: true
+    ignoreLASTEXITCODE: true
+
+
+    
