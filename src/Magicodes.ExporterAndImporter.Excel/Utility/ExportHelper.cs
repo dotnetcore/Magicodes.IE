@@ -236,6 +236,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             _exporterHeaderList = exporterHeaderInfos;
         }
+        /// <summary>
+        /// 获得经过排序的属性
+        /// </summary>
+        protected virtual List<PropertyInfo> SortedProperties
+        {
+            get
+            {
+                var type = _type ?? typeof(T);
+                var objProperties = type.GetProperties().OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToList();
+                return objProperties;
+            }
+        }
 
         /// <summary>
         ///     获取头部定义
@@ -278,12 +290,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             else if (!IsDynamicDatableExport)
             {
-                var type = _type ?? typeof(T);
+                //var type = _type ?? typeof(T);
                 //#179 GetProperties方法不按特定顺序（如字母顺序或声明顺序）返回属性，因此此处支持按ColumnIndex排序返回
-                var objProperties = type.GetProperties().OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
-                if (objProperties.Length == 0)
+                //var objProperties = type.GetProperties().OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
+                var objProperties = SortedProperties;
+                if (objProperties.Count == 0)
                     return;
-                for (var i = 0; i < objProperties.Length; i++)
+                for (var i = 0; i < objProperties.Count; i++)
                 {
 
                     var item = new ExporterHeaderInfo
@@ -553,8 +566,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="dataItems"></param>
         protected virtual DataTable ParseData(ICollection<T> dataItems)
         {
+            var x = ExporterHeaderList.Count;
             var type = typeof(T);
-            var properties = type.GetProperties();
+            var properties = SortedProperties;
             DataTable dt = new DataTable();
             foreach (var propertyInfo in properties)
             {
