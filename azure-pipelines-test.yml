@@ -13,6 +13,8 @@ pool:
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml
   vmImage: 'windows-latest'
 
+steps:
+
 - task: PowerShell@2
   displayName: 'Package Push'
   env:
