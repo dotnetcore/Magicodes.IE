@@ -24,8 +24,7 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host Test
-      Write-Host ${env:NUGET_API_KEY}
-      Write-Host $NUGET_API_KEY
+      Write-Host "NUGET_API_KEY: $env:NUGET_API_KEY"
 
     failOnStderr: true
     showWarnings: true
