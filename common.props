@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.1.3</Version>
+        <Version>2.5.1.4</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -16,6 +16,10 @@
           公众号：麦扣聊技术
           交流QQ群：85318032
 
+          **2021.01.09**
+          - 【Nuget】版本更新到2.5.1.4
+          - 修复Excel导出列头索引与内容排序不一致问题及单测  [#226](https://github.com/dotnetcore/Magicodes.IE/issues/226)
+          
           **2021.01.02**
           - 【Nuget】版本更新到2.5.1.3
           - Add PDF support for paper size

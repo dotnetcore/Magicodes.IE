@@ -1,5 +1,11 @@
 # Release Log
 
+## 2.5.1.4
+
+**2021.01.09**
+- 【Nuget】版本更新到2.5.1.4
+- 修复Excel导出列头索引与内容排序不一致问题及单测  [#226](https://github.com/dotnetcore/Magicodes.IE/issues/226)
+
 ## 2.5.1.3
 
 **2021.01.02**
