@@ -120,7 +120,6 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host $NUGET_API_KEY
       # 打包
       Get-ChildItem -Path ./ -Recurse |
         Where-Object { $_.Name.EndsWith(".csproj") -and !$_.Name.Contains("Test") } |
@@ -131,11 +130,11 @@ steps:
       ls $(Build.ArtifactStagingDirectory)
 
       #推包
-      dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
+      dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
 
       #使用gpr工具推送到GitHub
       dotnet tool install -g gpr --no-cache -v q
-      gpr push --api-key $GITHUB_API_KEY $(Build.ArtifactStagingDirectory)\*.nupkg
+      gpr push --api-key $env:GITHUB_API_KEY $(Build.ArtifactStagingDirectory)\*.nupkg
     failOnStderr: true
     showWarnings: true
     ignoreLASTEXITCODE: true
