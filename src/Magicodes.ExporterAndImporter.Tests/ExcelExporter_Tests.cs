@@ -682,6 +682,28 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "模板导出大量数据测试")]
+        public async Task Export10000ByTemplate_Test()
+        {
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "Export10000ByTemplate_Test.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export10000ByTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var books = GenFu.GenFu.ListOf<BookInfo>(10000);
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath,
+                new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null,
+                    DateTime.Now.ToLongDateString(), "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png",
+                    books),
+                tplPath);
+
+        }
+
         /// <summary>
         /// https://github.com/dotnetcore/Magicodes.IE/issues/34
         /// </summary>
