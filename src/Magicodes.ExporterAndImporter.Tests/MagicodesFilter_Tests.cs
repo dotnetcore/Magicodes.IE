@@ -32,7 +32,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             _client.BaseAddress = new Uri("http://localhost");
         }
 
-#region FunctionalTests
+        #region FunctionalTests
         [Fact]
         public async Task AllowsXlsxHttpContentMediaType()
         {
@@ -192,7 +192,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await response.Content.ReadAsByteArrayAsync();
             result.ShouldNotBeNull();
         }
-#endregion
+        #endregion
 
     }
 }

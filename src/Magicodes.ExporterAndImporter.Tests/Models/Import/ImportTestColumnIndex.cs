@@ -1,5 +1,4 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
-using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

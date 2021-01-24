@@ -321,9 +321,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 {
                     PaperKind = PaperKind.A4,
                     IsEnablePagesCount = true,
-                    #if NETCOREAPP
-                    HeaderSettings =new HeaderSettings() { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
-                    #endif
+#if NETCOREAPP
+                    HeaderSettings = new HeaderSettings() { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+#endif
                 }, tpl);
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))

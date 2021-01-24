@@ -1,24 +1,18 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Dynamic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using System.Drawing;
-using System.Dynamic;
-using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Style;
-using System.Globalization;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
@@ -64,6 +58,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// 
         /// </summary>
         /// <param name="existExcelPackage"></param>
+        /// <param name="sheetName"></param>
 
         public ExportHelper(ExcelPackage existExcelPackage, string sheetName = null)
         {
@@ -694,7 +689,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (value != null)
                         {
                             dr[propertyInfo.Name]
-                                =value;
+                                = value;
                         }
                         else
                         {
