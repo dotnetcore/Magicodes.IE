@@ -1,76 +1,7 @@
-﻿
-/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
-在此之前:
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
+﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
-在此之后:
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.Collections.Core.Filters;
-using System.ExporterAndImporter.Core.Models;
-using System.ComponentModel.Excel;
-using System;
-using Magicodes.ExporterAndImporter.Generic;
-using System.ComponentModel;
-using Magicodes.ExporterAndImporter.ComponentModel.DataAnnotations;
-using System.Text;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
-在此之前:
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
-using Magicodes.ExporterAndImporter.Excel;
-在此之后:
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.Collections.Core.Filters;
-using System.ExporterAndImporter.Core.Models;
-using System.ComponentModel.Excel;
-using System;
-using Magicodes.ExporterAndImporter.Generic;
-using System.ComponentModel;
-using Magicodes.ExporterAndImporter.ComponentModel.DataAnnotations;
-using System.Text;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (net5.0)”的未合并的更改
-在此之前:
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
-using Magicodes.ExporterAndImporter.Excel;
-在此之后:
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.Collections.Core.Filters;
-using System.ExporterAndImporter.Core.Models;
-using System.ComponentModel.Excel;
-using System;
-using Magicodes.ExporterAndImporter.Generic;
-using System.ComponentModel;
-using Magicodes.ExporterAndImporter.ComponentModel.DataAnnotations;
-using System.Text;
-*/
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
-using System.Collections.Excel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
