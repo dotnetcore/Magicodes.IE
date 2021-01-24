@@ -1,13 +1,13 @@
-using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using OfficeOpenXml.Table;
 using System;
 using System.ComponentModel;
-using OfficeOpenXml.Table;
+using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExcelExporter(Name = "数据注解测试",TableStyle = TableStyles.Light10)]
+    [ExcelExporter(Name = "数据注解测试", TableStyle = TableStyles.Light10)]
     public class ExportTestDataAnnotations
     {
         /// <summary>

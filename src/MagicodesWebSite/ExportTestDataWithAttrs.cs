@@ -1,11 +1,11 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
-using System;
 using OfficeOpenXml.Table;
+using System;
 
 namespace MagicodesWebSite
 {
-    [ExcelExporter(Name = "测试", TableStyle =TableStyles.Light10, AutoFitAllColumn = true)]
+    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10, AutoFitAllColumn = true)]
     public class ExportTestDataWithAttrs
     {
 

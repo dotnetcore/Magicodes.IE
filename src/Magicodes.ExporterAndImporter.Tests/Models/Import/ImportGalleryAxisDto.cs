@@ -1,7 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
-using System.ComponentModel.DataAnnotations;
 using OfficeOpenXml.Table;
+using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

@@ -51,7 +51,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             Assert.Equal(text, repstr);
         }
 
-#region FunctionalTests
+        #region FunctionalTests
         [Fact]
         public async Task AllowsXlsxHttpContentMediaType()
         {
@@ -212,7 +212,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
         }
 
-#endregion
+        #endregion
 
 
     }

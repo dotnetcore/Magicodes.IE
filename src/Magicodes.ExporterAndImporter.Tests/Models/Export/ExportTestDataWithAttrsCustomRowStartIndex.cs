@@ -12,16 +12,41 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Core.Filters;
-using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using OfficeOpenXml.Table;
+using 
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
+在此之前:
 using System;
 using OfficeOpenXml.Table;
+在此之后:
+using OfficeOpenXml.Table;
+using System;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
+在此之前:
+using System;
+using OfficeOpenXml.Table;
+在此之后:
+using OfficeOpenXml.Table;
+using System;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net5.0)”的未合并的更改
+在此之前:
+using System;
+using OfficeOpenXml.Table;
+在此之后:
+using OfficeOpenXml.Table;
+using System;
+*/
+System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
 
-    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10, AutoFitAllColumn = true, AutoFitMaxRows = 5000,HeaderRowIndex = 4)]
+    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10, AutoFitAllColumn = true, AutoFitMaxRows = 5000, HeaderRowIndex = 4)]
     public class ExportTestDataWithAttrsCustomRowStartIndex
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]

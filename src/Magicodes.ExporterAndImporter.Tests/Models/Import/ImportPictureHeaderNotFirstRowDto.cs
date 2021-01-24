@@ -1,9 +1,46 @@
-﻿using System;
+﻿
+/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
+在此之前:
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Magicodes.ExporterAndImporter.Core;
+在此之后:
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using System;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
+在此之前:
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Magicodes.ExporterAndImporter.Core;
+在此之后:
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Excel;
+using System;
+*/
+
+/* 项目“Magicodes.ExporterAndImporter.Tests (net5.0)”的未合并的更改
+在此之前:
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Magicodes.ExporterAndImporter.Core;
+在此之后:
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.ExporterAndImporter.Excel;
+using System;
+*/
+using Magicodes.ExporterAndImporter.Core;
+using System.Collections.Generic;
+using System.Text;
+using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {

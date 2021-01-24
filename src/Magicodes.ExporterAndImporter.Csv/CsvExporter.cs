@@ -21,7 +21,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class,new()
+        public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new()
         {
             fileName.CheckCsvFileName();
             var bytes = await ExportAsByteArray(dataItems);
