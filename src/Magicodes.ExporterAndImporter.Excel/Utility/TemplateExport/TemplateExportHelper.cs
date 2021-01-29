@@ -162,7 +162,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 var tableKey = tableGroup.Key;
                 //TODO:处理异常“No property or field”
                 var rowCount = target.Eval<int>($"data.{tableKey}.Count");
-                Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
+                //Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
                 var isFirst = true;
                 foreach (var col in tableGroup)
                 {
