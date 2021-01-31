@@ -2231,19 +2231,6 @@ references:
   commentId: T:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter
   nameWithType: IWriter
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address
-  name: Address
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_Address
-  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address
-  nameWithType: IWriter.Address
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address*
-  name: Address
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_Address_
-  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address
-  isSpec: "True"
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.Address
-  nameWithType: IWriter.Address
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.CellString
   name: CellString
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_CellString
@@ -2257,6 +2244,32 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.CellString
   nameWithType: IWriter.CellString
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex
+  name: ColIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_ColIndex
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex
+  nameWithType: IWriter.ColIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex*
+  name: ColIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_ColIndex_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.ColIndex
+  nameWithType: IWriter.ColIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex
+  name: RowIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_RowIndex
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex
+  nameWithType: IWriter.RowIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex*
+  name: RowIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_RowIndex_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.RowIndex
+  nameWithType: IWriter.RowIndex
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TableKey
   name: TableKey
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_TableKey
@@ -2270,6 +2283,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TableKey
   nameWithType: IWriter.TableKey
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress
+  name: TplAddress
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_TplAddress
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress
+  nameWithType: IWriter.TplAddress
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress*
+  name: TplAddress
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_TplAddress_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.TplAddress
+  nameWithType: IWriter.TplAddress
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.WriterType
   name: WriterType
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.IWriter.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_IWriter_WriterType
@@ -2469,19 +2495,6 @@ references:
   commentId: T:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer
   nameWithType: Writer
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address
-  name: Address
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_Address
-  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address
-  nameWithType: Writer.Address
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address*
-  name: Address
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_Address_
-  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address
-  isSpec: "True"
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.Address
-  nameWithType: Writer.Address
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.CellString
   name: CellString
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_CellString
@@ -2495,6 +2508,32 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.CellString
   nameWithType: Writer.CellString
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex
+  name: ColIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_ColIndex
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex
+  nameWithType: Writer.ColIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex*
+  name: ColIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_ColIndex_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.ColIndex
+  nameWithType: Writer.ColIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex
+  name: RowIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_RowIndex
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex
+  nameWithType: Writer.RowIndex
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex*
+  name: RowIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_RowIndex_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.RowIndex
+  nameWithType: Writer.RowIndex
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TableKey
   name: TableKey
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_TableKey
@@ -2508,6 +2547,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TableKey
   nameWithType: Writer.TableKey
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress
+  name: TplAddress
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_TplAddress
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress
+  nameWithType: Writer.TplAddress
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress*
+  name: TplAddress
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_TplAddress_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.TplAddress
+  nameWithType: Writer.TplAddress
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.WriterType
   name: WriterType
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_Writer_WriterType
