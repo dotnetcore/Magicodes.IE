@@ -8,6 +8,7 @@ using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Dynamic;
 using System.Globalization;
 using System.IO;
@@ -721,12 +722,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
                         var url = cell.Text;
-                        if (File.Exists(url) || url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        if (File.Exists(url) || url.StartsWith("http", StringComparison.OrdinalIgnoreCase) || url.IsBase64StringValid())
                         {
                             try
                             {
                                 cell.Value = string.Empty;
-                                var bitmap = Extension.GetBitmapByUrl(url);
+                                Bitmap bitmap;
+                                if (url.IsBase64StringValid())
+                                {
+                                    bitmap = url.Base64StringToBitmap();
+                                }
+                                else
+                                {
+                                    bitmap = Extension.GetBitmapByUrl(url);
+                                }
+
                                 if (bitmap == null)
                                 {
                                     cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;

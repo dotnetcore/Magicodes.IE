@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 #if NETSTANDARD2_1
 using System.Reflection;
@@ -33,16 +34,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
     /// </summary>
     public static class Extension
     {
-        /// <summary>
-        ///     判断指定的字符串是null、空还是空白字符
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static bool IsNullOrWhiteSpace(this string str)
-        {
-            return string.IsNullOrWhiteSpace(str);
-        }
-
 #if NETSTANDARD2_1
         /// <summary>
         /// 将集合转成DataTable
@@ -312,6 +303,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             var wc = new System.Net.WebClient();
             return new Bitmap(wc.OpenRead(url));
         }
+
         /// <summary>
         /// 保存图片
         /// </summary>
@@ -346,6 +338,26 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
         }
 
+        /// <summary>
+        ///     base64转Bitmap
+        /// </summary>
+        /// <param name="base64String"></param>
+        /// <returns></returns>
+        public static Bitmap Base64StringToBitmap(this string base64String)
+        {
+            var bitmapData = Convert.FromBase64String(s: FixBase64ForImage(Image: base64String));
+            var streamBitmap = new MemoryStream(buffer: bitmapData);
+            var bitmap = new Bitmap(original: (Bitmap)Image.FromStream(stream: streamBitmap));
+            return bitmap;
+        }
+
+        private static string FixBase64ForImage(string Image)
+        {
+            var sbText = new System.Text.StringBuilder(Image, Image.Length);
+            sbText.Replace("\r\n", string.Empty);
+            sbText.Replace(" ", string.Empty);
+            return sbText.ToString();
+        }
 
         /// <summary>
         ///     获取集合连续数据中最大的

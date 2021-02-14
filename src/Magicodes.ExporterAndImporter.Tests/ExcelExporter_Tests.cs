@@ -679,7 +679,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("图")).ShouldBeTrue();
                 //检查合计是否正确
-                
+
                 sheet.Cells["H11"].Formula.ShouldBe("=SUM(G4:G6,G4)");
                 sheet.Cells["H12"].Formula.ShouldBe("=AVERAGE(G4:G6)");
             }
