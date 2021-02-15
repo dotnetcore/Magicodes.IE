@@ -518,7 +518,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var result = exporter.Append(list1, "sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
 
-            result.ShouldNotBeNull();
+            await result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -545,7 +545,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var list2 = new List<ExportTestDataWithSplitSheet>();
 
             var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
-            result.ShouldNotBeNull();
+            await result.ShouldNotBeNull();
 
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))

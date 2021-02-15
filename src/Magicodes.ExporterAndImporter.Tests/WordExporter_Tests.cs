@@ -10,80 +10,13 @@
 //           Blog：http://www.cnblogs.com/codelove/
 //
 // ======================================================================
-
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
-在此之前:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Extension;
-在此之后:
-using Magicodes.ExporterAndImporter.Core.Extension;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
-在此之前:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Extension;
-在此之后:
-using Magicodes.ExporterAndImporter.Core.Extension;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp2.2)”的未合并的更改
-在此之前:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Extension;
-在此之后:
-using Magicodes.ExporterAndImporter.Core.Extension;
-*/
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
 using Shouldly;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using
-/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp3.1)”的未合并的更改
-在此之前:
 using Xunit;
-在此之后:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (net461)”的未合并的更改
-在此之前:
-using Xunit;
-在此之后:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Tests (netcoreapp2.2)”的未合并的更改
-在此之前:
-using Xunit;
-在此之后:
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-*/
-Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {

@@ -129,7 +129,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
             result.ShouldNotBeNull();
-            result.Length.ShouldBeGreaterThan(0);
+            result.Length.ShouldBeGreaterThan(0); 
             File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -558,7 +558,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(16);
 
-            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+            List<DataRowErrorInfo> errorList = new List<DataRowErrorInfo>();
 
             //出现五条无法完成业务效验的错误数据
             foreach (var item in import.Data.Skip(5).ToList())
@@ -571,14 +571,14 @@ namespace Magicodes.ExporterAndImporter.Tests
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
                 errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
-                ErrorList.Add(errorInfo);
+                errorList.Add(errorInfo);
             }
 
-            bool result = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, ErrorList, out string msg);
+            bool result = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(filePath, errorList, out string msg);
 
             using (var stream = new FileStream(filePath, FileMode.Open))
             {
-                var resultByte = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(stream, ErrorList, out byte[] fileByte);
+                var resultByte = Importer.OutputBussinessErrorData<ImportStudentDtoWithSheetDesc>(stream, errorList, out byte[] fileByte);
                 resultByte.ShouldBeTrue();
                 fileByte.ShouldNotBeNull();
             }
@@ -605,23 +605,21 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(16);
 
-            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+            List<DataRowErrorInfo> errorList = new List<DataRowErrorInfo>();
 
             //出现五条无法完成业务效验的错误数据
             foreach (var item in import.Data.ToList())
             {
-
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
                     RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
-
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
                 errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
-                ErrorList.Add(errorInfo);
+                errorList.Add(errorInfo);
             }
-            var result = Importer.OutputBussinessErrorData<ImportStudentDto>(filePath, ErrorList, out string errorDataFilePath);
+            var result = Importer.OutputBussinessErrorData<ImportStudentDto>(filePath, errorList, out string errorDataFilePath);
             result.ShouldBeTrue();
 
         }
@@ -665,7 +663,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.ShouldNotBeNull();
 
 
-            List<DataRowErrorInfo> ErrorList = new List<DataRowErrorInfo>();
+            List<DataRowErrorInfo> errorList = new List<DataRowErrorInfo>();
 
             //出现五条无法完成业务效验的错误数据
             foreach (var item in import.Data.ToList())
@@ -680,9 +678,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 errorInfo.FieldErrors.Add("管轴编号", "数据库已重复");
                 errorInfo.FieldErrors.Add("管廊编号", "责任区域不存在");
                 errorInfo.FieldErrors.Add("责任区域", "责任区域不存在");
-                ErrorList.Add(errorInfo);
+                errorList.Add(errorInfo);
             }
-            var result = Importer.OutputBussinessErrorData<ImportGalleryAxisDto>(filePath, ErrorList, out string errorDataFilePath);
+            var result = Importer.OutputBussinessErrorData<ImportGalleryAxisDto>(filePath, errorList, out string errorDataFilePath);
             result.ShouldBeTrue();
 
         }
