@@ -42,7 +42,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
 
         /// <summary>
         /// </summary>
-        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
+        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>(W);
 
         /// <summary>
         ///     是否存在

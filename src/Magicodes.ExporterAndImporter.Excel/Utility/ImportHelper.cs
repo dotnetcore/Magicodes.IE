@@ -1002,7 +1002,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             var cellValue = cell.Value?.ToString();
                             if (!cellValue.IsNullOrWhiteSpace())
                             {
-                                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(cellValue))
+                                if (col.MappingValues.Count > 0 &&
+                                    (col.MappingValues.ContainsKey(cellValue)))
                                 {
                                     //TODO:进一步缓存并优化
                                     var isEnum = propertyInfo.PropertyType.IsEnum;
@@ -1025,8 +1026,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         propertyInfo.SetValue(dataItem,
                                             value);
                                     }
-
                                     continue;
+                                }
+                                else
+                                {
+                                    if (int.TryParse(cellValue, out int result))
+                                    {
+                                        propertyInfo.SetValue(dataItem,
+                                            result);
+                                        continue;
+                                    }
                                 }
                             }
                             else
