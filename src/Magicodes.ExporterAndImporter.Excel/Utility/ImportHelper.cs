@@ -1028,8 +1028,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     continue;
                                 }
-                                else if(propertyInfo.PropertyType.IsEnum||
-                                        propertyInfo.PropertyType.IsNullable())
+                                else if (propertyInfo.PropertyType.IsEnum &&
+                                         propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                                 {
                                     if (int.TryParse(cellValue, out int result))
                                     {
