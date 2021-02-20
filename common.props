@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.1.6</Version>
+        <Version>2.5.1.7</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -16,6 +16,10 @@
           公众号：麦扣聊技术
           交流QQ群：85318032
 
+          **2021.02.20**
+          - 【Nuget】版本更新到2.5.1.7
+          - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
+          - 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
           **2021.01.31**
           - 【Nuget】版本更新到2.5.1.6
           - 部分重构模板导出
@@ -29,31 +33,6 @@
           **2021.01.09**
           - 【Nuget】版本更新到2.5.1.4
           - 修复Excel导出列头索引与内容排序不一致问题及单测  [#226](https://github.com/dotnetcore/Magicodes.IE/issues/226)
-
-          **2021.01.02**
-          - 【Nuget】版本更新到2.5.1.3
-          - Add PDF support for paper size
-          - Add PDF support for margins [#223](https://github.com/dotnetcore/Magicodes.IE/issues/223)
-
-          **2020.12.21**
-          - 【Nuget】版本更新到2.5.1
-          - 导出支持使用ColumnIndex指定导出顺序，以导出时在某些情况下顺序不一致的问题（Export supports the use of ColumnIndex to specify the export order, so that the order is inconsistent in some cases when exporting）  [#179](https://github.com/dotnetcore/Magicodes.IE/issues/179)
-
-          **2020.12.03**
-          - 【Nuget】版本更新到2.5.0
-          - Excel导出支持HeaderRowIndex [#164](https://github.com/dotnetcore/Magicodes.IE/issues/164)
-          - 增加Excel枚举导出对DescriptionAttribute的支持 [#168](https://github.com/dotnetcore/Magicodes.IE/issues/168)
-          - Excel生成导入模板支持内置数据验证[#167](https://github.com/dotnetcore/Magicodes.IE/issues/167)
-          - 支持数据验证
-          - 支持MaxLengthAttribute、MinLengthAttribute、StringLengthAttribute、RangeAttribute
-          - 支持输入提示
-          To fix The Mapping Values of The total length of a Data Validation list always exceed 255 characters (#196)(https://github.com/dotnetcore/Magicodes.IE/issues/196)
-          - Excel export List data type errors, and formatting issues.[#191](https://github.com/dotnetcore/Magicodes.IE/issues/191) [#193](https://github.com/dotnetcore/Magicodes.IE/issues/193)
-          - 导入Excel对Enum类型匹配值映射时，忽略值前后空格
-          - fix MappingValues The total length of a DataValidation list cannot exceed 255 characters [#196](https://github.com/dotnetcore/Magicodes.IE/issues/196)
-          - Excel导出List数据类型存在错误，以及格式化问题。 [#191](https://github.com/dotnetcore/Magicodes.IE/issues/191) [#193](https://github.com/dotnetcore/Magicodes.IE/issues/193)
-          - The ColumnIndex property does not appear to be valid in Excel import  [#198](https://github.com/dotnetcore/Magicodes.IE/issues/198)
-          - TableStyle修改为枚举类型
 
         </Description>
     </PropertyGroup>

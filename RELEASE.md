@@ -1,5 +1,10 @@
 # Release Log
 
+### 2.5.1.7
+**2021.02.20**
+- Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
+- 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
+
 ### 2.5.1.6
 
 **2021.01.31**
