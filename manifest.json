@@ -8,11 +8,11 @@
         "InvalidFileLink"
       ],
       "type": "Conceptual",
-      "source_relative_path": "README.md",
+      "source_relative_path": "README.zh-CN.md",
       "output": {
         ".html": {
-          "relative_path": "README.html",
-          "hash": "BAwvwVGdqe8XHiz/RMfzBw=="
+          "relative_path": "README.zh-CN.html",
+          "hash": "IDCCT4Yl92TZHJmXNa8mKw=="
         }
       },
       "is_incremental": false,
@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "8mYYavfQp2+CIrFuZUlk2g=="
+          "hash": "2QiN0IojGwTqewwzFr5FZQ=="
         }
       },
       "is_incremental": false,
@@ -507,7 +507,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "kHc9ZmSH0JCpquHcUUZJ1Q=="
+          "hash": "/VJkq0Au2pNL5pigd7H7nw=="
         }
       },
       "is_incremental": false,
