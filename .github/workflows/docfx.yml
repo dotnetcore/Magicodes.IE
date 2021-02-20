@@ -15,7 +15,7 @@ jobs:
           ref: master
           path: source
       - name: ReName README.MD 
-        run:  Get-ChildItem ./README.en.md | rename-item -newname 'index.md'
+        run:  Get-ChildItem ./README.md | rename-item -newname 'index.md'
         working-directory: ./source
       - name: install DocFX
         run: "& choco install docfx -y"
