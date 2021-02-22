@@ -612,8 +612,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 var errorInfo = new DataRowErrorInfo()
                 {
-                    //由于 Index 从开始
-                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
+                    //由于 Index 从1开始
+                    RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 2,
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
                 errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");

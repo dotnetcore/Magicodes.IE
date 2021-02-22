@@ -431,7 +431,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             //标注数据错误
             foreach (var item in bussinessErrorDataList)
             {
-                item.RowIndex += ExcelImporterSettings.HeaderRowIndex;
+                //item.RowIndex += (ExcelImporterSettings.HeaderRowIndex);
                 foreach (var field in item.FieldErrors)
                 {
                     var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
