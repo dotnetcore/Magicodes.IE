@@ -592,7 +592,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 foreach (var propertyInfo in properties)
                 {
                     var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
-                    var nullableType = propertyInfo.PropertyType.GetNullableUnderlyingType();
                     if (
                         propertyInfo.PropertyType.IsEnum ||
                         propertyInfo.PropertyType.GetNullableUnderlyingType() != null &&
