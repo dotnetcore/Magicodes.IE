@@ -8,9 +8,11 @@ using OfficeOpenXml.Drawing;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -136,6 +138,20 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pic.GetPrivateProperty<int>("_height").ShouldBe(120);
                 pic.GetPrivateProperty<int>("_width").ShouldBe(120);
 
+            }
+        }
+
+        [Fact(DisplayName = "issue236")]
+        public async Task Import_Test()
+        {
+            IExcelImporter Importer = new ExcelImporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import",
+                    "issue236.xlsx");
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                var result = await Importer.Import<Issue236>(stream);
+                Importer.OutputBussinessErrorData<Issue236>(filePath,
+                 result.RowErrors.ToList(), out var msg);
             }
         }
 
