@@ -1052,7 +1052,14 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ExportTestDataAnnotations_Test()
         {
             IExporter exporter = new ExcelExporter();
+            var filePath1 = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}1.xlsx");
+            var data1 = GenFu.GenFu.ListOf<CarInfoExcelDto>();
 
+            data1[0].CarType = EnumCarType.垃圾车;
+            var result2 = await exporter.Export(filePath1,
+                data1);
+
+            //----------------------
             var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
             DeleteFile(filePath);
             var data = GenFu.GenFu.ListOf<ExportTestDataAnnotations>();
