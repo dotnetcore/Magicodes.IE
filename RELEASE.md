@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.1.8
+ **2021.02.23**
+- Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)
+- 使用Stream方式导入xlsx，rowErrors里的rowIndex位置不对[#236](https://github.com/dotnetcore/Magicodes.IE/issues/236)
+
 ### 2.5.1.7
 **2021.02.20**
 - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)

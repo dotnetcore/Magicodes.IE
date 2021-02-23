@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <Version>2.5.1.7</Version>
+        <Version>2.5.1.8</Version>
     </PropertyGroup>
     <PropertyGroup>
         <Authors>雪雁</Authors>
@@ -15,7 +15,11 @@
           博客地址：http://www.cnblogs.com/codelove/
           公众号：麦扣聊技术
           交流QQ群：85318032
-
+          **2021.02.23**
+          - 【Nuget】版本更新到2.5.1.8
+          - Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)
+          - 使用Stream方式导入xlsx，rowErrors里的rowIndex位置不对[#236](https://github.com/dotnetcore/Magicodes.IE/issues/236)
+          
           **2021.02.20**
           - 【Nuget】版本更新到2.5.1.7
           - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
