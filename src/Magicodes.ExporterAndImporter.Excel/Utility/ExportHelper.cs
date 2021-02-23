@@ -570,7 +570,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 if (propertyInfo.PropertyType.IsEnum ||
                     propertyInfo.PropertyType == typeof(bool) ||
-                    propertyInfo.PropertyType == typeof(bool?))
+                    propertyInfo.PropertyType == typeof(bool?) ||
+                    (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum))
                 {
                     dt.Columns.Add(propertyInfo.Name);
                 }
@@ -585,40 +586,52 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
             }
 
-
             foreach (var dataItem in dataItems)
             {
                 var dr = dt.NewRow();
                 foreach (var propertyInfo in properties)
                 {
                     var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
-                    if (propertyInfo.PropertyType.IsEnum)
+                    var nullableType = propertyInfo.PropertyType.GetNullableUnderlyingType();
+                    if (
+                        propertyInfo.PropertyType.IsEnum ||
+                        propertyInfo.PropertyType.GetNullableUnderlyingType() != null &&
+                        propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                     {
-                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                        if (value != null)
+                        {
+                            var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
 
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value ?? string.Empty))
-                        {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-                            dr[propertyInfo.Name] = mapValue.Value;
-                        }
-                        else
-                        {
-                            var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
-                            var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
-                            if (tuple != null)
+                            if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
                             {
-                                if (!tuple.Item4.IsNullOrWhiteSpace())
-                                {
-                                    dr[propertyInfo.Name] = tuple.Item4;
-                                }
-                                else
-                                {
-                                    dr[propertyInfo.Name] = tuple.Item2;
-                                }
+                                var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
+                                dr[propertyInfo.Name] = mapValue.Value;
                             }
                             else
                             {
-                                dr[propertyInfo.Name] = value;
+                                var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
+                                if (enumDefinitionList == null)
+                                {
+                                    enumDefinitionList = propertyInfo.PropertyType.GetNullableUnderlyingType()
+                                        .GetEnumDefinitionList();
+                                }
+
+                                var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
+                                if (tuple != null)
+                                {
+                                    if (!tuple.Item4.IsNullOrWhiteSpace())
+                                    {
+                                        dr[propertyInfo.Name] = tuple.Item4;
+                                    }
+                                    else
+                                    {
+                                        dr[propertyInfo.Name] = tuple.Item2;
+                                    }
+                                }
+                                else
+                                {
+                                    dr[propertyInfo.Name] = value;
+                                }
                             }
                         }
                     }

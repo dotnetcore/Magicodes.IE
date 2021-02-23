@@ -23,6 +23,8 @@ using OfficeOpenXml.Style;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Dynamic;
 using System.IO;
@@ -992,10 +994,72 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         #endregion
 
+        //文件导出类
+        [ExcelExporter(Name = "车辆信息表", TableStyle = OfficeOpenXml.Table.TableStyles.Light8, AutoFitAllColumn = true, MaxRowNumberOnASheet = 2000)]
+        public class CarInfoExcelDto
+        {
+            ///
+            /// 车牌号
+            ///
+            [ImporterHeader(Name = "车牌号")]
+            [ExporterHeader(DisplayName = "车牌号")]
+            [Required(ErrorMessage = "车牌号不能为空")]
+            public string CarNum { get; set; }
+            /// <summary>
+            /// 所属组织机构
+            /// </summary>   
+            [ImporterHeader(Name = "所属组织机构")]
+            [ExporterHeader(DisplayName = "所属组织机构")]
+            [Required(ErrorMessage = "所属组织机构不能为空")]
+            public string OrgName { get; set; }
+            /// <summary>
+            /// 定位设备id
+            /// </summary>   
+            [ImporterHeader(Name = "定位设备")]
+            [ExporterHeader(DisplayName = "定位设备")]
+            public string GpsEquipNum { get; set; }
+            /// <summary>
+            /// 通讯设备id
+            /// </summary>  
+            [ImporterHeader(Name = "通讯设备")]
+            [ExporterHeader(DisplayName = "通讯设备")]
+            public string TelephonyNum { get; set; }
+
+            /// <summary>
+            /// 车辆类型
+            /// </summary>   
+            [ImporterHeader(Name = "车辆类型")]
+            [ExporterHeader(DisplayName = "车辆类型")]
+            [Required(ErrorMessage = "车辆类型不能为空")]
+            public EnumCarType? CarType { get; set; }
+        }
+
+
+
+        //   车辆类型
+        public enum EnumCarType
+        {
+            [Description("未知")]
+            未知 = 0,
+            [Description("垃圾车")]
+            垃圾车 = 1,
+            [Description("工作车")]
+            工作车 = 2
+        }
+
+
         [Fact(DisplayName = "数据注解导出测试")]
         public async Task ExportTestDataAnnotations_Test()
         {
             IExporter exporter = new ExcelExporter();
+            var filePath1 = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}1.xlsx");
+            var data1 = GenFu.GenFu.ListOf<CarInfoExcelDto>();
+
+            data1[0].CarType = EnumCarType.垃圾车;
+            var result2 = await exporter.Export(filePath1,
+                data1);
+
+            //----------------------
             var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
             DeleteFile(filePath);
             var data = GenFu.GenFu.ListOf<ExportTestDataAnnotations>();
