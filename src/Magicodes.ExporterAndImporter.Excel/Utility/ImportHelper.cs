@@ -503,7 +503,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     else
                     {
                         cell.Comment.Text = field.Value;
-
                     }
                 }
             }
@@ -513,8 +512,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 excelPackage.SaveAs(stream);
                 fileByte = stream.ToArray();
             }
-
-            return;
         }
 
         /// <summary>
