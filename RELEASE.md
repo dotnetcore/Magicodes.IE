@@ -1,5 +1,9 @@
 # Release Log
 
+### 2.5.2
+**2021.03.05**
+- Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
 ### 2.5.1.7
 **2021.02.20**
 - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
