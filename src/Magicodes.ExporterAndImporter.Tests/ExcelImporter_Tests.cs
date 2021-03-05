@@ -1,14 +1,14 @@
 // ======================================================================
-// 
+//
 //           filename : ExcelImporter_Tests.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-09-11 13:51
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
@@ -129,7 +129,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var result = await Importer.GenerateTemplateBytes<ImportProductDto>();
             result.ShouldNotBeNull();
-            result.Length.ShouldBeGreaterThan(0); 
+            result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -183,6 +183,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 result.ImporterHeaderInfos.Count.ShouldBe(17);
             }
         }
+
         /// <summary>
         /// 测试：
         /// 表头行位置设置
@@ -299,7 +300,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             //错
             import.Data.ElementAt(3).IsDisorderly.ShouldBeFalse();
 
-            #endregion
+            #endregion 检查Bool值映射
 
             import.RowErrors.Count.ShouldBe(0);
             import.TemplateErrors.Count.ShouldBe(0);
@@ -359,14 +360,13 @@ namespace Magicodes.ExporterAndImporter.Tests
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品型号") &&
                 p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
 
-            #endregion
+            #endregion 重复错误
 
             result.RowErrors.Count.ShouldBeGreaterThan(0);
 
             //一行仅允许存在一条数据
             foreach (var item in result.RowErrors.GroupBy(p => p.RowIndex).Select(p => new { p.Key, Count = p.Count() }))
                 item.Count.ShouldBe(1);
-
         }
 
         [Fact(DisplayName = "结果筛选器测试")]
@@ -393,7 +393,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 p.FieldErrors.Values.Contains("Duplicate data exists, please check! Where:5，6。"));
 
             //TODO:检查标注
-
         }
 
         [Fact(DisplayName = "学生基础数据导入")]
@@ -421,7 +420,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
-
         }
 
         /// <summary>
@@ -455,8 +453,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.TemplateErrors.Count(p => p.ErrorLevel == ErrorLevels.Warning).ShouldBe(1);
         }
 
-
-
         [Fact(DisplayName = "大量数据导出并导入")]
         public async Task LargeDataImport_Test()
         {
@@ -481,7 +477,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult = await Importer.Import<ExportTestData>(filePath);
             importResult.HasError.ShouldBeFalse();
         }
-
 
         [Fact(DisplayName = "导入列头筛选器测试")]
         public async Task ImportHeaderFilter_Test()
@@ -508,9 +503,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
-
         }
-
 
         [Fact(DisplayName = "学生基础数据导入带头部描述")]
         public async Task StudentInfoWithDescImporter_Test()
@@ -537,11 +530,10 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
-
         }
 
         /// <summary>
-        /// 使用错误数据按照导入模板导出  
+        /// 使用错误数据按照导入模板导出
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
@@ -567,7 +559,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 {
                     //由于 Index 从开始
                     RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
-
                 };
                 errorInfo.FieldErrors.Add("序号", "数据库已重复");
                 errorInfo.FieldErrors.Add("学籍号", "无效的学籍号,疑似外来人物");
@@ -583,12 +574,10 @@ namespace Magicodes.ExporterAndImporter.Tests
                 fileByte.ShouldNotBeNull();
             }
             result.ShouldBeTrue();
-
-
         }
 
         /// <summary>
-        /// 使用错误数据按照导入模板导出  
+        /// 使用错误数据按照导入模板导出
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
@@ -621,7 +610,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
             var result = Importer.OutputBussinessErrorData<ImportStudentDto>(filePath, errorList, out string errorDataFilePath);
             result.ShouldBeTrue();
-
         }
 
         /// <summary>
@@ -645,7 +633,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.RowErrors.Count.ShouldBe(2);
         }
 
-
         /// <summary>
         /// 管轴导入测试 测试能否手动新增错误信息
         /// </summary>
@@ -662,18 +649,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
 
-
             List<DataRowErrorInfo> errorList = new List<DataRowErrorInfo>();
 
             //出现五条无法完成业务效验的错误数据
             foreach (var item in import.Data.ToList())
             {
-
                 var errorInfo = new DataRowErrorInfo()
                 {
                     //由于 Index 从开始
                     RowIndex = import.Data.ToList().FindIndex(o => o.Equals(item)) + 1,
-
                 };
                 errorInfo.FieldErrors.Add("管轴编号", "数据库已重复");
                 errorInfo.FieldErrors.Add("管廊编号", "责任区域不存在");
@@ -682,7 +666,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
             var result = Importer.OutputBussinessErrorData<ImportGalleryAxisDto>(filePath, errorList, out string errorDataFilePath);
             result.ShouldBeTrue();
-
         }
 
         /// <summary>
@@ -731,18 +714,15 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
-
         }
 
-
         /// <summary>
-        /// 标注未移除 
+        /// 标注未移除
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "标注需要手动移除测试")]
         public async Task ImportComment_Test()
         {
-
             //存在四条重复的学籍号码 ,我们手动修改了两条错误数据还剩下两条错误数据
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入存在问题.xlsx");
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -752,7 +732,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.First().Cells["B3"].Comment.ShouldNotBeNull();
                 pck.Workbook.Worksheets.First().Cells["B4"].Comment.ShouldNotBeNull();
                 pck.Workbook.Worksheets.First().Cells["B5"].Comment.ShouldNotBeNull();
-
             }
 
             var import = await Importer.Import<ImportStudentDto>(filePath);
@@ -776,7 +755,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //这个时候 B4 B5 上面的标注应该去掉
                 pck.Workbook.Worksheets.First().Cells["B4"].Comment.ShouldBeNull();
                 pck.Workbook.Worksheets.First().Cells["B5"].Comment.ShouldBeNull();
-
             }
         }
 
@@ -855,7 +833,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        #endregion
+        #endregion 图片测试
 
         [Fact(DisplayName = "导入测试数据注解")]
         public async Task ImportDataAnnotations_Test()
@@ -886,7 +864,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult.HasError.ShouldBeFalse();
         }
 
-
         [Fact(DisplayName = "ColumnIndex测试")]
         public async Task ImportTestColumnIndex_Test()
         {
@@ -896,5 +873,24 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.ImporterHeaderInfos.Count.ShouldBe(2);
         }
 
+        [Fact(DisplayName = "合并行数据导入")]
+        public async Task MergeRowsImportTest()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "合并行.xlsx");
+            var import = await Importer.Import<MergeRowsImportDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Select(p => p.Sex).Take(8).All(p => p == "男").ShouldBeTrue();
+            import.Data.Select(p => p.Sex).Skip(8).All(p => p == "女").ShouldBeTrue();
+
+            import.Data.Select(p => p.Name).Take(3).All(p => p == "张三").ShouldBeTrue();
+            import.Data.Select(p => p.Name).Skip(3).Take(4).All(p => p == "李四").ShouldBeTrue();
+            import.Data.Select(p => p.Name).Skip(7).Take(6).All(p => p == "王五").ShouldBeTrue();
+            import.Data.Count.ShouldBe(13);
+        }
     }
 }
