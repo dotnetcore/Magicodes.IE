@@ -1,5 +1,9 @@
 # Release Log
 
+### 2.5.2
+**2021.03.05**
+- Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
 ## 2.5.1.8
  **2021.02.23**
 - Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)

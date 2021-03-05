@@ -279,6 +279,9 @@ public DateTime Time3 { get; set; }
 ![](./res/dataval2.png "Excel验证")
 支持对输入提示的展示操作：
 ![](./res/dataval3.png "Excel验证")
+
+- **Excel导入支持合并行数据** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
 ### FAQ
 
 [问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)

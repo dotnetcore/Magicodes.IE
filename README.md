@@ -254,6 +254,35 @@ Sorry, due to limited energy, please help translate.
 
 - **Support the use of custom formatter in ASP.NET Core Web API to export content such as Excel, Pdf, Csv** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64 )
 
+- **Support export by column, sheet, and additional rows** 
+
+```csharp
+exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+```
+
+For details, see the above tutorial "Magicodes.IE Fancy Export"
+
+- **Support cell export width setting**
+
+```csharp
+[ExporterHeader(Width = 100)]
+public DateTime Time3 { get; set; }
+```
+
+- **Excel export supports HeaderRowIndex. Add the HeaderRowIndex attribute to the ExcelExporterAttribute export attribute class, so that it is convenient to specify the export from the first row when exporting. **
+
+- **Excel generated import template supports built-in data verification**
+
+The support for the built-in data validation can be turned on through the IsInterValidation attribute, and it should be noted that only MaxLengthAttribute, MinLengthAttribute, StringLengthAttribute, and RangeAttribute support the opening operation of the built-in data validation.
+
+![](./res/dataval1.png "Excel验证")
+![](./res/dataval2.png "Excel验证")
+
+Support display operations for input prompts:
+![](./res/dataval3.png "Excel验证")
+
+- **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
 ### FAQ
 
 [Question List](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
