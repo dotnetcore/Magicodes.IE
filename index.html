@@ -8,7 +8,7 @@
     <title>Magicodes.IE | &#31616;&#20307;&#20013;&#25991; </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Magicodes.IE | &#31616;&#20307;&#20013;&#25991; ">
-    <meta name="generator" content="docfx 2.56.6.0">
+    <meta name="generator" content="docfx 2.56.7.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -386,6 +386,31 @@
 </li>
 <li><p><strong>Support the use of custom formatter in ASP.NET Core Web API to export content such as Excel, Pdf, Csv</strong> <a href="https://github.com/dotnetcore/Magicodes.IE/issues/64">#64</a></p>
 </li>
+<li><p><strong>Support export by column, sheet, and additional rows</strong></p>
+</li>
+</ul>
+<pre><code class="lang-csharp">exporter.Append(list1).SeparateByColumn().Append(list2).ExportAppendData(filePath);
+</code></pre>
+<p>For details, see the above tutorial &quot;Magicodes.IE Fancy Export&quot;</p>
+<ul>
+<li><strong>Support cell export width setting</strong></li>
+</ul>
+<pre><code class="lang-csharp">[ExporterHeader(Width = 100)]
+public DateTime Time3 { get; set; }
+</code></pre>
+<ul>
+<li><p>**Excel export supports HeaderRowIndex. Add the HeaderRowIndex attribute to the ExcelExporterAttribute export attribute class, so that it is convenient to specify the export from the first row when exporting. **</p>
+</li>
+<li><p><strong>Excel generated import template supports built-in data verification</strong></p>
+</li>
+</ul>
+<p>The support for the built-in data validation can be turned on through the IsInterValidation attribute, and it should be noted that only MaxLengthAttribute, MinLengthAttribute, StringLengthAttribute, and RangeAttribute support the opening operation of the built-in data validation.</p>
+<p><img src="res/dataval1.png" alt="" title="Excel验证">
+<img src="res/dataval2.png" alt="" title="Excel验证"></p>
+<p>Support display operations for input prompts:
+<img src="res/dataval3.png" alt="" title="Excel验证"></p>
+<ul>
+<li><strong>Excel import supports merging row data</strong> <a href="https://github.com/dotnetcore/Magicodes.IE/issues/239">#239</a></li>
 </ul>
 <h3 id="faq">FAQ</h3>
 <p><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion">Question List</a></p>
