@@ -50,7 +50,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <summary>
         /// 用于缓存表达式
         /// </summary>
-        private Dictionary<string, Lambda> cellWriteFuncs = new Dictionary<string, Lambda>();
+        private readonly Dictionary<string, Lambda> cellWriteFuncs = new Dictionary<string, Lambda>();
 
         /// <summary>
         ///     模板文件路径
@@ -81,6 +81,37 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         ///     表值字典
         /// </summary>
         protected Dictionary<string, List<Dictionary<string, string>>> TableValuesDictionary { get; set; }
+
+        /// <summary>
+        /// 是否是支持的动态类型
+        /// </summary>
+        private bool IsDynamicSupportTypes
+        {
+            get
+            {
+                if (isDynamicSupportTypes.HasValue) return isDynamicSupportTypes.Value;
+
+                var name = typeof(T).Name;
+                switch (name)
+                {
+                    case "Dictionary`2":
+                        {
+                            if (typeof(T).GetGenericArguments()[0].Equals(typeof(string)))
+                            {
+                                return true;
+                            }
+                            return false;
+                        }
+                    case "JObject":
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        private bool? isDynamicSupportTypes;
 
         /// <summary>
         ///     根据模板导出Excel
@@ -213,17 +244,18 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 }
 
                 #region 更新单元格
+
                 var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > startRow);
                 foreach (var item in updateCellWriters)
                 {
                     item.RowIndex += rowCount - 1;
                 }
-                #endregion
+
+                #endregion 更新单元格
+
                 //表格渲染完成后更新插入的行数
                 insertRows += rowCount - 1;
             }
-
-
         }
 
         /// <summary>
@@ -306,17 +338,26 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         {
             //处理单元格渲染管道
             RenderCellPipeline(target, sheet, ref expresson, cellAddress, cellFunc, parameters, dataVar, invokeParams);
-            
             //如果表达式没有处理，则进行处理
             if (expresson.Contains("{{"))
             {
-                expresson = expresson
+                if (IsDynamicSupportTypes)
+                {
+                    dataVar = dataVar.TrimEnd('.');
+                    expresson = expresson
+                                .Replace("{{", dataVar + "[\"")
+                                .Replace("}}", "\"] + \"");
+                }
+                else
+                {
+                    expresson = expresson
                                 .Replace("{{", dataVar)
                                 .Replace("}}", " + \"");
+                }
 
                 expresson = expresson.StartsWith("\"")
-                    ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
-                    : "\"" + expresson;
+                        ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
+                        : "\"" + expresson;
 
                 expresson = expresson.EndsWith("\"")
                     ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
@@ -325,13 +366,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
 
                 var result = cellFunc.Invoke(invokeParams);
-                sheet.Cells[cellAddress].Value = result;
+                sheet.Cells[cellAddress].Value = IsDynamicSupportTypes ? result?.ToString() : result;
             }
-            else if(!string.IsNullOrWhiteSpace(expresson))
+            else if (!string.IsNullOrWhiteSpace(expresson))
             {
                 sheet.Cells[cellAddress].Value = expresson;
             }
-
         }
 
         /// <summary>
@@ -347,7 +387,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="address"></param>
         private void RenderCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
         {
-            var dataVar = "\" + data." + tableKey + "[index].";
+            var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
             //渲染一列单元格
             for (var i = 0; i < rowCount; i++)
             {
@@ -460,7 +500,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             {
                                 expresson = body;
                             }
-                            expresson = (dataVar + expresson).Trim('\"').Trim().Trim('+');
+                            expresson = (dataVar + (IsDynamicSupportTypes ? ("[\"" + expresson + "\"]") : (expresson))).Trim('\"').Trim().Trim('+');
                             cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
                             //获取图片地址
                             var imageUrl = cellFunc.Invoke(invokeParams)?.ToString();
@@ -498,6 +538,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             expressonStr = expressonStr.Replace(item.Value, string.Empty);
                         }
                         break;
+
                     case "formula":
                         body = Regex.Split(item.Value, "::").Last().TrimEnd('}');
                         if (body.Contains("?") && body.Contains("="))
@@ -510,11 +551,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             expressonStr = expressonStr.Replace(item.Value, string.Empty);
                         }
                         break;
+
                     default:
                         break;
                 }
             }
-
 
             return true;
         }
