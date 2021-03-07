@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.zh-CN.html",
-          "hash": "OiPH579MHBQrrS+A6+jwNA=="
+          "hash": "Vps5Jb9HRVJ13RqRc/Z0iQ=="
         }
       },
       "is_incremental": false,
@@ -507,7 +507,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "/wLHFDpjySzoOrVdBSl9qA=="
+          "hash": "ICYGoKbry6bUehC+9HK8sg=="
         }
       },
       "is_incremental": false,
@@ -926,6 +926,28 @@
       "output": {
         "resource": {
           "relative_path": "res/f1536893905558.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/image-20210306105147319.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/image-20210306105147319.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/image-20210307180551091.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/image-20210307180551091.png"
         }
       },
       "is_incremental": false,

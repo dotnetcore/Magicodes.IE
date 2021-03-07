@@ -72,6 +72,20 @@
 <p><img src="https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master" alt="Azure DevOps tests (master)">
 <img src="https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master" alt="Azure DevOps coverage (branch)">
 <a href="https://opencollective.com/magicodes"><img src="https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors" alt="Financial Contributors on Open Collective"></a></p>
+<h2 id="目录">目录</h2>
+<ol>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
+<li><a href="#%E9%87%8C%E7%A8%8B%E7%A2%91">里程碑</a></li>
+<li><a href="#%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA">自动构建</a></li>
+<li><a href="#Nuget%E5%8C%85">Nuget包</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
+<li><a href="#%E6%95%99%E7%A8%8B">教程</a></li>
+<li><a href="#%E7%89%B9%E7%82%B9">特点</a></li>
+<li><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion">FAQ</a></li>
+<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC">联系我们</a></li>
+<li><a href="RELEASE.html">更新历史</a></li>
+<li><a href="#%E8%B5%9E%E5%8A%A9">赞助</a></li>
+</ol>
 <h2 id="概述">概述</h2>
 <p>导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。</p>
 <ul>
@@ -93,7 +107,7 @@
 <tr>
 <td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0">3.0</a></td>
 <td style="text-align: center;">☕进行中</td>
-<td style="text-align: center;">2021-02-31</td>
+<td style="text-align: center;">2021-12-31</td>
 <td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/3">待办</a></td>
 </tr>
 <tr>
@@ -128,7 +142,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="azure-devops">Azure DevOps</h3>
+<h2 id="自动构建">自动构建</h2>
 <ul>
 <li>Build Status：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&amp;branchName=master"><img src="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master" alt="Build Status"></a></li>
 <li>Azure DevOps coverage (master):  <img src="https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master" alt="Azure DevOps coverage (branch)"></li>
@@ -137,7 +151,7 @@
 <li>Azure DevOps tests (develop):  <img src="https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop" alt="Azure DevOps tests (develop)"></li>
 </ul>
 <p>具体见：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&amp;_a=summary">https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&amp;_a=summary</a></p>
-<h3 id="nuget">Nuget</h3>
+<h2 id="nuget包">Nuget包</h2>
 <h4 id="稳定版推荐">稳定版（推荐）</h4>
 <table>
 <thead>
@@ -177,40 +191,28 @@
 </tr>
 </tbody>
 </table>
-<h3 id="注意"><strong>注意</strong></h3>
+<h2 id="注意事项"><strong>注意事项</strong></h2>
 <ul>
 <li><strong>Excel导入不支持“.xls”文件，即不支持Excel97-2003。</strong></li>
 <li><strong>如需在Docker中使用，请参阅文档中的《Docker中使用》一节。</strong></li>
 <li><strong>相关功能均已编写单元测试，在使用的过程中可以参考单元测试。</strong></li>
 </ul>
-<h3 id="教程"><strong>教程</strong></h3>
+<h2 id="教程"><strong>教程</strong></h2>
 <ol>
-<li><p><strong><a href="docs/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE.md" title="1.基础教程之导入学生数据">基础教程之导入学生数据</a>  （<a href="https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/">点此访问国内文档</a>）</strong></p>
-</li>
-<li><p><strong><a href="docs/2.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel.md" title="2.基础教程之导出Excel">基础教程之导出Excel</a>  <a href="https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/">（点此访问国内文档）</a></strong></p>
-</li>
-<li><p><strong><a href="docs/3.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf%E6%94%B6%E6%8D%AE.md" title="3.基础教程之导出Pdf收据">基础教程之导出Pdf收据</a></strong> <a href="https://docs.xin-lai.com/2020/02/25/%E7%BB%84%E4%BB%B6/Magicodes.IE/3.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf/"><strong>(点此访问国内文档)</strong></a></p>
-</li>
-<li><p><strong><a href="docs/4.%E5%9C%A8Docker%E4%B8%AD%E4%BD%BF%E7%94%A8.md" title="4.在Docker中使用">在Docker中使用</a></strong></p>
-</li>
-<li><p><strong><a href="docs/5.%E5%8A%A8%E6%80%81%E5%AF%BC%E5%87%BA.md" title="5.动态导出">动态导出</a></strong></p>
-</li>
-<li><p><strong><a href="docs/6.%E5%A4%9ASheet%E5%AF%BC%E5%85%A5.md" title="6.多Sheet导入">多Sheet导入</a></strong></p>
-</li>
-<li><p><strong><a href="docs/7.Csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA.md" title="7.Csv导入导出">Csv导入导出</a></strong></p>
-</li>
-<li><p><strong><a href="docs/8.Excel%E5%9B%BE%E7%89%87%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA.md" title="8.Excel图片导入导出">Excel图片导入导出</a></strong> <a href="https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/"><strong>(点此访问国内文档)</strong></a></p>
-</li>
-<li><p><strong><a href="docs/9.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8.md" title="9.Excel模板导出之导出教材订购表">Excel模板导出之导出教材订购表</a>（<a href="https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/">点此访问国内文档</a>）</strong></p>
-</li>
-<li><p><strong><a href="https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/">进阶篇之导入导出筛选器</a></strong></p>
-</li>
-<li><p><strong><a href="https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/">Magicodes.IE之花式导出</a></strong></p>
-</li>
-<li><p><strong><a href="docs/12.NETCore%E4%B8%AD%E9%80%9A%E8%BF%87%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%AF%BC%E5%87%BA%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6.md">.NETCore中通过请求头导出多种格式文件</a></strong></p>
-</li>
-<li><p><strong><a href="docs/13.%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.md">性能测试</a></strong></p>
-</li>
+<li><strong><a href="docs/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE.md" title="1.基础教程之导入学生数据">基础教程之导入学生数据</a>  （<a href="https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/">点此访问国内文档</a>）</strong></li>
+<li><strong><a href="docs/2.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel.md" title="2.基础教程之导出Excel">基础教程之导出Excel</a>  <a href="https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/">（点此访问国内文档）</a></strong></li>
+<li><strong><a href="docs/3.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf%E6%94%B6%E6%8D%AE.md" title="3.基础教程之导出Pdf收据">基础教程之导出Pdf收据</a></strong> <a href="https://docs.xin-lai.com/2020/02/25/%E7%BB%84%E4%BB%B6/Magicodes.IE/3.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf/"><strong>(点此访问国内文档)</strong></a></li>
+<li><strong><a href="docs/4.%E5%9C%A8Docker%E4%B8%AD%E4%BD%BF%E7%94%A8.md" title="4.在Docker中使用">在Docker中使用</a></strong></li>
+<li><strong><a href="docs/5.%E5%8A%A8%E6%80%81%E5%AF%BC%E5%87%BA.md" title="5.动态导出">动态导出</a></strong></li>
+<li><strong><a href="docs/6.%E5%A4%9ASheet%E5%AF%BC%E5%85%A5.md" title="6.多Sheet导入">多Sheet导入</a></strong></li>
+<li><strong><a href="docs/7.Csv%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA.md" title="7.Csv导入导出">Csv导入导出</a></strong></li>
+<li><strong><a href="docs/8.Excel%E5%9B%BE%E7%89%87%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA.md" title="8.Excel图片导入导出">Excel图片导入导出</a></strong> <a href="https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/"><strong>(点此访问国内文档)</strong></a></li>
+<li><strong><a href="docs/9.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8.md" title="9.Excel模板导出之导出教材订购表">Excel模板导出之导出教材订购表</a>（<a href="https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/">点此访问国内文档</a>）</strong></li>
+<li><strong><a href="https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/">进阶篇之导入导出筛选器</a></strong></li>
+<li><strong><a href="https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/">Magicodes.IE之花式导出</a></strong></li>
+<li><strong><a href="docs/12.NETCore%E4%B8%AD%E9%80%9A%E8%BF%87%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%AF%BC%E5%87%BA%E5%A4%9A%E7%A7%8D%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6.md">.NETCore中通过请求头导出多种格式文件</a></strong></li>
+<li><strong><a href="docs/13.%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95.md">性能测试</a></strong></li>
+<li><a href="docs/Excel%E5%90%88%E5%B9%B6%E8%A1%8C%E5%AF%BC%E5%85%A5.md"><strong>合并行导入</strong></a></li>
 </ol>
 <p><strong>其他教程见下文或单元测试</strong></p>
 <p><strong>更新历史见下文。</strong></p>
@@ -418,11 +420,11 @@ public DateTime Time3 { get; set; }
 支持对输入提示的展示操作：
 <img src="res/dataval3.png" alt="" title="Excel验证"></p>
 <ul>
-<li><strong>Excel导入支持合并行数据</strong> <a href="https://github.com/dotnetcore/Magicodes.IE/issues/239">#239</a></li>
+<li><p><strong>Excel导入支持合并行数据</strong> <a href="https://github.com/dotnetcore/Magicodes.IE/issues/239">#239</a></p>
+<p><img src="res/image-20210306105147319.png" alt="合并行导入文件"></p>
+</li>
 </ul>
-<h3 id="faq">FAQ</h3>
-<p><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion">问题列表</a></p>
-<h3 id="联系我们"><strong>联系我们</strong></h3>
+<h2 id="联系我们"><strong>联系我们</strong></h2>
 <blockquote>
 <h5 id="订阅号"><strong>订阅号</strong></h5>
 </blockquote>
@@ -448,12 +450,23 @@ public DateTime Time3 { get; set; }
 <li><strong><a href="https://github.com/xin-lai">https://github.com/xin-lai</a></strong></li>
 <li><strong><a href="https://gitee.com/magicodes">https://gitee.com/magicodes</a></strong></li>
 </ul>
-<h3 id="更新历史"><strong>更新历史</strong></h3>
-<p><strong><a href="RELEASE.html">更新历史</a></strong></p>
-<h2 id="contributors">Contributors</h2>
+<h2 id="赞助">赞助</h2>
+<h3 id="微信支付宝">微信&amp;支付宝</h3>
+<table>
+<tr>
+<td>
+<img align="left" src="https://docs.xin-lai.com/medias/reward/alipay.jpg" width="300">
+</td>
+<td>
+<img align="right" src="https://docs.xin-lai.com/medias/reward/wechat.jpg" width="300">
+</td>
+</tr>
+</table>
+<ul>
+<li><strong>我们都是凭着热情业余驱动，一杯咖啡，即可让我们奋勇前行！</strong></li>
+</ul>
 <h3 id="code-contributors">Code Contributors</h3>
-<p>This project exists thanks to all the people who contribute. [<a href="CONTRIBUTING.md">Contribute</a>].
-<a href="https://github.com/dotnetcore/Magicodes.IE/graphs/contributors"><img src="https://opencollective.com/magicodes/contributors.svg?width=890&button=false"></a></p>
+<p><a href="https://github.com/dotnetcore/Magicodes.IE/graphs/contributors"><img src="https://opencollective.com/magicodes/contributors.svg?width=890&button=false"></a></p>
 <h3 id="financial-contributors">Financial Contributors</h3>
 <p>Become a financial contributor and help us sustain our community. [<a href="https://opencollective.com/magicodes/contribute">Contribute</a>]</p>
 <h4 id="individuals">Individuals</h4>
