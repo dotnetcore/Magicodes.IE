@@ -23,7 +23,7 @@ Import and export general library, support Dto import and export, template expor
 
 |  #   |    Status     | Completion time | Milestone situation |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-02-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-12-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩Completed  |2020-10-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
@@ -282,6 +282,8 @@ Support display operations for input prompts:
 ![](./res/dataval3.png "Excel验证")
 
 - **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
+ ![合并行导入文件](res/image-20210306105147319.png)
 
 ### FAQ
 

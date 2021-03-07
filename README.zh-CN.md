@@ -40,7 +40,7 @@
 
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-02-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
 | [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩已完成 |2020-10-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩已完成 |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
@@ -317,9 +317,20 @@ public DateTime Time3 { get; set; }
 
 ## 赞助
 
-<img align="left" src="https://docs.xin-lai.com/medias/reward/alipay.jpg" width="300"/>
+### 微信&支付宝
 
+<table>
+<tr>
+<td>
+<img align="left" src="https://docs.xin-lai.com/medias/reward/alipay.jpg" width="300"/>
+</td>
+<td>
 <img align="right" src="https://docs.xin-lai.com/medias/reward/wechat.jpg" width="300"/>
+</td>
+</tr>
+</table>
+
+- **我们都是凭着热情业余驱动，一杯咖啡，即可让我们奋勇前行！**
 
 ### Code Contributors
 
