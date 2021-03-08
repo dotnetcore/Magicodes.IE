@@ -91,11 +91,10 @@
 11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
 12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
 13. **[性能测试](docs/13.性能测试.md)**
-14. [**合并行导入**](docs/Excel合并行导入.md)
+14. [**Excel合并行导入**](docs/Excel合并行导入.md)
+15. [**Excel模板导出之使用JSON完成动态导出**](Excel模板导出之使用JSON完成动态导出.md)
 
 **其他教程见下文或单元测试**
-
-**更新历史见下文。**
 
 ## 特点
 
@@ -229,7 +228,7 @@
 - **支持excel多Sheet导入；**
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
 
-- **支持Excel模板导出，并且支持图片渲染**
+- **支持Excel模板导出，JSON动态导出，并且支持图片渲染**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 
   渲染语法如下所示：
@@ -299,6 +298,8 @@ public DateTime Time3 { get; set; }
 **关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档，并且加入微信生态群：**
 
 **![](./res/wechat.jpg "麦扣聊技术")**
+
+<img src="res/image-20210308181757077.png" align="left"  width="300" />
 
 > ##### **QQ群**
 

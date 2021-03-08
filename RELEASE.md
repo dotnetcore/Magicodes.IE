@@ -1,7 +1,15 @@
 # Release Log
 
-### 2.5.2
+## 2.5.3
+
+**2021.03.08**
+
+- Excel模板导出支持使用JSON对象完成动态导出 [#I398DI](https://gitee.com/magicodes/Magicodes.IE/issues/I398DI)
+
+## 2.5.2
+
 **2021.03.05**
+
 - Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
 ## 2.5.1.8
@@ -9,19 +17,19 @@
 - Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)
 - 使用Stream方式导入xlsx，rowErrors里的rowIndex位置不对[#236](https://github.com/dotnetcore/Magicodes.IE/issues/236)
 
-### 2.5.1.7
+## 2.5.1.7
 **2021.02.20**
 - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
 - 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
 
-### 2.5.1.6
+## 2.5.1.6
 
 **2021.01.31**
 - 部分重构模板导出
 - Excel模板导出语法解析加强 [#211](https://github.com/dotnetcore/Magicodes.IE/issues/211)
 - 修复当表格下面存在变量时，无法渲染的Bug
 
-### 2.5.1.5
+## 2.5.1.5
 
 **2021.01.29**
 - 移除模板导出时的控制台日志输出
