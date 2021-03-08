@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.zh-CN.html",
-          "hash": "Vps5Jb9HRVJ13RqRc/Z0iQ=="
+          "hash": "VkSBFj5miBGkszSJ9AWH+A=="
         }
       },
       "is_incremental": false,
@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "5kKGxlJdrH5vzkPncjc74Q=="
+          "hash": "ucQWPkhdHqoEIK3eSi3bhA=="
         }
       },
       "is_incremental": false,
@@ -948,6 +948,39 @@
       "output": {
         "resource": {
           "relative_path": "res/image-20210307180551091.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/image-20210308175620226.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/image-20210308175620226.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/image-20210308180430331.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/image-20210308180430331.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/image-20210308181757077.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/image-20210308181757077.png"
         }
       },
       "is_incremental": false,
