@@ -17,6 +17,7 @@ using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Extensions;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
+using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
@@ -61,7 +62,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             return dt;
         }
-
 
         [Fact(DisplayName = "DTO特性导出（测试格式化以及列头索引）")]
         public async Task AttrsExport_Test()
@@ -111,7 +111,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 tb.Columns[2].Name.ShouldBe("加粗文本");
             }
         }
-
 
         [Fact(DisplayName = "导出字段顺序测试")]
         public async Task ExportByColumnIndex_Test()
@@ -504,7 +503,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-
         [Fact(DisplayName = "多个sheet导出")]
         public async Task ExportMutiCollection_Test()
         {
@@ -706,7 +704,41 @@ namespace Magicodes.ExporterAndImporter.Tests
                     DateTime.Now.ToLongDateString(), "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png",
                     books),
                 tplPath);
+        }
 
+        [Fact(DisplayName = "动态模板导出测试")]
+        public async Task DynamicExportByTemplate_Test()
+        {
+            string json = @"{
+              'Company': '雪雁',
+              'Address': '湖南长沙',
+              'Contact': '雪雁',
+              'Tel': '136xxx',
+              'BookInfos': [
+                {'No':'a1','RowNo':1,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'},
+                {'No':'a1','RowNo':1,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'}
+              ]
+            }";
+            var jobj = JObject.Parse(json);
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "DynamicExportTpl.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExportByTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath, jobj, tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //确保所有的转换均已完成
+                sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+            }
         }
 
         /// <summary>
@@ -797,8 +829,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
-
-
 
         [Fact(DisplayName = "Excel模板导出Bytes测试（issues#34_2）")]
         public async Task ExportBytesByTemplate_Test1()
@@ -891,7 +921,6 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         #endregion 模板导出
-
 
         [Fact(DisplayName = "无特性定义导出测试")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
@@ -991,8 +1020,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-
-        #endregion
+        #endregion 图片导出
 
         [Fact(DisplayName = "数据注解导出测试")]
         public async Task ExportTestDataAnnotations_Test()
@@ -1053,7 +1081,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
-
 
         [Fact(DisplayName = "导出分割当前Sheet追加Rows")]
         public async Task ExprotSeparateByRows_Test()
@@ -1146,7 +1173,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
                     .ShouldBe(list.Count + 1);
                 pck.Workbook.Worksheets.First().Cells["A2"].Text.ShouldBe(list[0].IdCard);
-
             }
         }
     }
