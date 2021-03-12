@@ -90,7 +90,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             get
             {
                 //TODO:支持DataTable
-                return IsDictionaryType || IsJObjectType;
+                return IsDictionaryType || IsJObjectType || IsExpandoObjectType;
             }
         }
 
@@ -143,9 +143,33 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             }
         }
 
+        public bool IsExpandoObjectType
+        {
+            get
+            {
+                if (isExpandoObjectType.HasValue) return isExpandoObjectType.Value;
+
+                var name = typeof(T).Name;
+                switch (name)
+                {
+                    case "ExpandoObject":
+                        {
+                            isExpandoObjectType = true;
+                            break;
+                        }
+                    default:
+                        isExpandoObjectType = false;
+                        break;
+                }
+                return isExpandoObjectType.Value;
+            }
+        }
+
         private bool? isJObjectType;
 
         private bool? isDictionaryType;
+
+        private bool? isExpandoObjectType;
 
         /// <summary>
         ///     根据模板导出Excel
@@ -181,7 +205,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         private void ParseData(ExcelPackage excelPackage)
         {
             var target = new Interpreter();
-            target.SetVariable("data", Data, typeof(T));
+            //.Reference(typeof(System.Linq.Enumerable))
+            //.Reference(typeof(IEnumerable<>))
+            //.Reference(typeof(IDictionary<,>));
+            if (IsExpandoObjectType)
+            {
+                target.SetVariable("data", Data, typeof(IDictionary<string, object>));
+            }
+            else
+                target.SetVariable("data", Data, typeof(T));
 
             //表格渲染参数
             var tbParameters = new[] {
@@ -238,19 +270,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 //TODO:处理异常“No property or field”
 
                 var rowCount = 0;
-                if (IsDynamicSupportTypes && IsDictionaryType)
+                if (IsDictionaryType || IsExpandoObjectType)
                 {
-                    var tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
+                    IEnumerable<IDictionary<string, object>> tableData = null;
+                    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
+                    //if (IsExpandoObjectType)
+                    //    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data.{tableKey}");
+
                     rowCount = tableData.Count();
-                    //通过反射获取行数
-                    //rowCount = Convert.ToInt32(tableData.GetType().GetProperty("Count").GetValue(tableData));
+                    target.SetVariable(tableKey, tableData, typeof(IEnumerable<IDictionary<string, object>>));
                 }
                 else
                 {
                     rowCount = target.Eval<int>($"data.{tableKey}.Count");
                 }
 
-                //Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
+
                 var isFirst = true;
                 foreach (var col in tableGroup)
                 {
@@ -281,7 +316,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             //sheet.Row(refRow).StyleID = sheet.Row(targetRow + i).StyleID;
                         }
                     }
-
                     RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, col, address);
 
                     if (isFirst)
@@ -351,7 +385,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 //{{Remark|>>Table}}
                 cellString = cellString.Split('|')[0].Trim() + "}}";
 
-            RenderCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
+            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
         }
 
         /// <summary>
@@ -432,9 +466,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="cellString"></param>
         /// <param name="address"></param>
-        private void RenderCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
+        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
         {
-            var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
+            //var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
+            string dataVar;
+            if (IsDictionaryType || IsExpandoObjectType)
+            {
+                dataVar = ($"\" + {tableKey}.Skip(index).First()");
+            }
+            else if (IsJObjectType)
+            {
+                dataVar = $"\" + data[\"{tableKey}\"][index]";
+            }
+            else
+            {
+                dataVar = ($"\" + data.{tableKey}[index].");
+            }
+
             //渲染一列单元格
             for (var i = 0; i < rowCount; i++)
             {
