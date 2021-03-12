@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.zh-CN.html",
-          "hash": "VkSBFj5miBGkszSJ9AWH+A=="
+          "hash": "R1mfHuc96uvPDYt3dtwckQ=="
         }
       },
       "is_incremental": false,
@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "ucQWPkhdHqoEIK3eSi3bhA=="
+          "hash": "jHvj+jnT9P106oZWJqx2Yw=="
         }
       },
       "is_incremental": false,
@@ -288,7 +288,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html",
-          "hash": "2YKarxoq0nVOjzSTRtN9Sg=="
+          "hash": "2B+WUxn9y0tvti6wf7tXuA=="
         }
       },
       "is_incremental": false,

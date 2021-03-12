@@ -2404,6 +2404,57 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).GetNameVaulesFromQueryStringExpresson
   nameWithType: TemplateExportHelper<T>.GetNameVaulesFromQueryStringExpresson
   nameWithType.vb: TemplateExportHelper(Of T).GetNameVaulesFromQueryStringExpresson
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsDictionaryType
+  name: IsDictionaryType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsDictionaryType
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsDictionaryType
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsDictionaryType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsDictionaryType
+  nameWithType: TemplateExportHelper<T>.IsDictionaryType
+  nameWithType.vb: TemplateExportHelper(Of T).IsDictionaryType
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsDictionaryType*
+  name: IsDictionaryType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsDictionaryType_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsDictionaryType
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsDictionaryType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsDictionaryType
+  nameWithType: TemplateExportHelper<T>.IsDictionaryType
+  nameWithType.vb: TemplateExportHelper(Of T).IsDictionaryType
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsExpandoObjectType
+  name: IsExpandoObjectType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsExpandoObjectType
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsExpandoObjectType
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsExpandoObjectType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsExpandoObjectType
+  nameWithType: TemplateExportHelper<T>.IsExpandoObjectType
+  nameWithType.vb: TemplateExportHelper(Of T).IsExpandoObjectType
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsExpandoObjectType*
+  name: IsExpandoObjectType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsExpandoObjectType_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsExpandoObjectType
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsExpandoObjectType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsExpandoObjectType
+  nameWithType: TemplateExportHelper<T>.IsExpandoObjectType
+  nameWithType.vb: TemplateExportHelper(Of T).IsExpandoObjectType
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsJObjectType
+  name: IsJObjectType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsJObjectType
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsJObjectType
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsJObjectType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsJObjectType
+  nameWithType: TemplateExportHelper<T>.IsJObjectType
+  nameWithType.vb: TemplateExportHelper(Of T).IsJObjectType
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsJObjectType*
+  name: IsJObjectType
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_IsJObjectType_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.IsJObjectType
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.IsJObjectType
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).IsJObjectType
+  nameWithType: TemplateExportHelper<T>.IsJObjectType
+  nameWithType.vb: TemplateExportHelper(Of T).IsJObjectType
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.ParseTemplateFile(ExcelPackage)
   name: ParseTemplateFile(ExcelPackage)
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_ParseTemplateFile_ExcelPackage_
