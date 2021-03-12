@@ -763,5 +763,27 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
      
         }
+
+        [Fact(DisplayName = "忽略所有列进行导出测试")]
+        public async Task IgnoresAllColumnsExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(IgnoresAllColumnsExport_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(0);
+            }
+        }
     }
 }
