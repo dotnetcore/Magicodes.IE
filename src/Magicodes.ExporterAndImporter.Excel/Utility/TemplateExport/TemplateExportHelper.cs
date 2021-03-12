@@ -132,7 +132,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 {
                     case "Dictionary`2":
                         {
-                            isDictionaryType = typeof(T).GetGenericArguments()[0].Equals(typeof(string)) ? true : false;
+                            isDictionaryType = typeof(T).GetGenericArguments()[0].Equals(typeof(string));
                             break;
                         }
                     default:
@@ -148,19 +148,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             get
             {
                 if (isExpandoObjectType.HasValue) return isExpandoObjectType.Value;
-
-                var name = typeof(T).Name;
-                switch (name)
-                {
-                    case "ExpandoObject":
-                        {
-                            isExpandoObjectType = true;
-                            break;
-                        }
-                    default:
-                        isExpandoObjectType = false;
-                        break;
-                }
+                isExpandoObjectType = typeof(T).Name == "ExpandoObject";
                 return isExpandoObjectType.Value;
             }
         }
@@ -283,6 +271,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 else
                 {
                     rowCount = target.Eval<int>($"data.{tableKey}.Count");
+                    var tableData = target.Eval<IEnumerable<dynamic>>($"data.{tableKey}");
+                    target.SetVariable(tableKey, tableData);
                 }
 
 
@@ -480,7 +470,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             }
             else
             {
-                dataVar = ($"\" + data.{tableKey}[index].");
+                dataVar = $"\" + {tableKey}.Skip(index).First().";
             }
 
             //渲染一列单元格
