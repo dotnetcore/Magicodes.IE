@@ -706,7 +706,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 tplPath);
         }
 
-        [Fact(DisplayName = "动态模板导出测试")]
+        [Fact(DisplayName = "模板导出动态导出测试")]
         public async Task DynamicExportByTemplate_Test()
         {
             string json = @"{
@@ -739,6 +739,72 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //确保所有的转换均已完成
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
+        }
+
+        [Fact(DisplayName = "模板导出字典动态导出测试")]
+        public async Task DynamicExportWithDictionaryByTemplate_Test()
+        {
+            var data = new Dictionary<string, object>()
+            {
+                { "Company","雪雁" },
+                { "Address", "湖南长沙" },
+                { "Contact", "雪雁" },
+                { "Tel", "136xxx" },
+                { "BookInfos",new List<Dictionary<string,object>>()
+                    {
+                        new Dictionary<string, object>()
+                        {
+                            {"No","A1" },
+                            {"RowNo",1 },
+                            {"Name","Docker+Kubernetes应用开发与快速上云" },
+                            {"EditorInChief","李文强" },
+                            {"PublishingHouse","机械工业出版社" },
+                            {"Price",65 },
+                            {"PurchaseQuantity",50000 },
+                            {"Cover","https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965" },
+                            {"Remark","买起" }
+                        },
+                        new Dictionary<string, object>()
+                        {
+                            {"No","A2" },
+                            {"RowNo",2 },
+                            {"Name","Docker+Kubernetes应用开发与快速上云" },
+                            {"EditorInChief","李文强" },
+                            {"PublishingHouse","机械工业出版社" },
+                            {"Price",65 },
+                            {"PurchaseQuantity",50000 },
+                            {"Cover","https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965" },
+                            {"Remark","k8s真香" }
+                        }
+                    }
+                }
+            };
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "DynamicExportTpl.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExportWithDictionaryByTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath, data, tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //确保所有的转换均已完成
+                sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+            }
+        }
+
+        [Fact(DisplayName = "模板导出字典动态导出测试")]
+        public async Task DynamicExportWithExpandoObjectByTemplate_Test()
+        {
+            dynamic data = new ExpandoObject();
+            data.Company = "雪雁";
         }
 
         /// <summary>
