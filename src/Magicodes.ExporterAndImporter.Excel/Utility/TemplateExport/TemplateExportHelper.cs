@@ -83,35 +83,69 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         protected Dictionary<string, List<Dictionary<string, string>>> TableValuesDictionary { get; set; }
 
         /// <summary>
-        /// 是否是支持的动态类型
+        /// 是否是支持的动态类型（JObject、Dictionary（仅支持key为string类型））
         /// </summary>
         private bool IsDynamicSupportTypes
         {
             get
             {
-                if (isDynamicSupportTypes.HasValue) return isDynamicSupportTypes.Value;
+                //TODO:支持DataTable
+                return IsDictionaryType || IsJObjectType;
+            }
+        }
+
+        /// <summary>
+        /// 是否是JObject类型
+        /// </summary>
+        public bool IsJObjectType
+        {
+            get
+            {
+                if (isJObjectType.HasValue) return isJObjectType.Value;
+
+                var name = typeof(T).Name;
+                switch (name)
+                {
+                    case "JObject":
+                        isJObjectType = true;
+                        break;
+
+                    default:
+                        isJObjectType = false;
+                        break;
+                }
+                return isJObjectType.Value;
+            }
+        }
+
+        /// <summary>
+        /// 是否是符合要求的字典类型
+        /// </summary>
+        public bool IsDictionaryType
+        {
+            get
+            {
+                if (isDictionaryType.HasValue) return isDictionaryType.Value;
 
                 var name = typeof(T).Name;
                 switch (name)
                 {
                     case "Dictionary`2":
                         {
-                            if (typeof(T).GetGenericArguments()[0].Equals(typeof(string)))
-                            {
-                                return true;
-                            }
-                            return false;
+                            isDictionaryType = typeof(T).GetGenericArguments()[0].Equals(typeof(string)) ? true : false;
+                            break;
                         }
-                    case "JObject":
-                        return true;
-
                     default:
-                        return false;
+                        isDictionaryType = false;
+                        break;
                 }
+                return isDictionaryType.Value;
             }
         }
 
-        private bool? isDynamicSupportTypes;
+        private bool? isJObjectType;
+
+        private bool? isDictionaryType;
 
         /// <summary>
         ///     根据模板导出Excel
@@ -202,7 +236,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 var tableKey = tableGroup.Key;
                 var startRow = 0;
                 //TODO:处理异常“No property or field”
-                var rowCount = target.Eval<int>($"data.{tableKey}.Count");
+
+                var rowCount = 0;
+                if (IsDynamicSupportTypes && IsDictionaryType)
+                {
+                    var tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
+                    rowCount = tableData.Count();
+                    //通过反射获取行数
+                    //rowCount = Convert.ToInt32(tableData.GetType().GetProperty("Count").GetValue(tableData));
+                }
+                else
+                {
+                    rowCount = target.Eval<int>($"data.{tableKey}.Count");
+                }
+
                 //Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
                 var isFirst = true;
                 foreach (var col in tableGroup)
