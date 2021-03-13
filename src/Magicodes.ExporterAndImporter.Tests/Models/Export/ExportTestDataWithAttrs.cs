@@ -20,38 +20,6 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    public class DataTableTestExporterHeaderFilter : IExporterHeaderFilter
-    {
-        /// <summary>
-        /// 表头筛选器（修改忽略列）
-        /// </summary>
-        /// <param name="exporterHeaderInfo"></param>
-        /// <returns></returns>
-        public ExporterHeaderInfo Filter(ExporterHeaderInfo exporterHeaderInfo)
-        {
-            if (exporterHeaderInfo.DisplayName.Equals("Number"))
-            {
-                exporterHeaderInfo.DisplayName = "数值";
-            }
-            return exporterHeaderInfo;
-        }
-    }
-
-
-    [ExcelExporter(Name = "测试忽略dto所有属性", TableStyle = "Light10", AutoFitAllColumn = true)]
-    public class ExportTestIgnoreAllColumns
-    {
-        [ExporterHeader(DisplayName = "忽略1", IsBold = true, IsIgnore = true)]
-        public string IgnoreText1 { get; set; }
-
-        [ExporterHeader(DisplayName = "忽略2", IsBold = true, IsIgnore = true)]
-        public string IgnoreText2 { get; set; }
-
-        [ExporterHeader(DisplayName = "忽略3", IsBold = true, IsIgnore = true)]
-        public string IgnoreText3 { get; set; }
-    }
-
-
     [ExcelExporter(Name = "测试", TableStyle = TableStyles.Dark10, AutoFitAllColumn = true, AutoFitMaxRows = 5000)]
     public class ExportTestDataWithAttrs
     {
