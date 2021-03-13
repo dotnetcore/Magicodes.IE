@@ -11,9 +11,9 @@
 // 
 // ======================================================================
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core.Models;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -44,5 +44,13 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="labelingFilePath">标注文件路径</param>
         /// <returns></returns>
         Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new();
+
+        /// <summary>
+        /// 导入模型验证数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream">文件流</param>
+        /// <returns></returns>
+        Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new();
     }
 }

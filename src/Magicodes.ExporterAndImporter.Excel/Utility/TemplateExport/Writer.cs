@@ -21,7 +21,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <summary>
         /// 地址
         /// </summary>
-        public string Address { get; set; }
+        public string TplAddress { get; set; }
 
         /// <summary>
         /// 单元格原始字符串
@@ -42,5 +42,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// 表格数据对象Key
         /// </summary>
         public string TableKey { get; set; }
+
+        /// <summary>
+        /// 行号
+        /// </summary>
+        public int RowIndex { get; set; }
+
+        /// <summary>
+        /// 列号
+        /// </summary>
+        public int ColIndex { get; set; }
     }
 }

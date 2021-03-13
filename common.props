@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.2.0-beta9</Version>
+    <Version>2.5.3.1</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -8,31 +8,49 @@
     <Product>麦扣</Product>
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+    <PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
     <Description>
-      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Csv、Pdf和Html以及动态导出。
+      Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
+      导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
+      公众号：麦扣聊技术
       交流QQ群：85318032
 
-      **2020.04.16**
-
-      - **【Nuget】版本更新到2.2.0-beta9**
-      - **【Excel模板导出】修复只存在一列时的导出 [#73](https://github.com/dotnetcore/Magicodes.IE/issues/73)**
-      - **【Excel导入】支持返回表头和索引 [#76](https://github.com/dotnetcore/Magicodes.IE/issues/76)**
-      - **【Excel导入导入】[#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)**
-      - 支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出，比如
-      - DisplayAttribute
-      - DisplayFormatAttribute
-      - DescriptionAttribute
-      - 封装简单的易于使用的单一特性，例如
-      - IEIgnoreAttribute（可作用于属性、枚举成员，可影响导入和导出）
+      **2021.03.12**
+      - Excel模板导出支持使用Dictionary、ExpandoObject完成动态导出
+      - 优化模板导出逻辑
       
-      **2020.04.02**
-      2.2.0-beta8
-      【Excel模板导出】支持图片 [#61](https://github.com/dotnetcore/Magicodes.IE/issues/61)
+      **2021.03.08**
+      - Excel模板导出支持使用JSON对象完成动态导出
 
-      2.2.0-beta7
-      【Excel模板导出】修复渲染问题 [#51](https://github.com/dotnetcore/Magicodes.IE/issues/51)
+      **2021.03.05**
+      - Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
+      **2021.02.23**
+      - 【Nuget】版本更新到2.5.1.8
+      - Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)
+      - 使用Stream方式导入xlsx，rowErrors里的rowIndex位置不对[#236](https://github.com/dotnetcore/Magicodes.IE/issues/236)
+
+      **2021.02.20**
+      - 【Nuget】版本更新到2.5.1.7
+      - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
+      - 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
+
+      **2021.01.31**
+      - 【Nuget】版本更新到2.5.1.6
+      - 部分重构模板导出
+      - Excel模板导出语法解析加强 #211
+      - 修复当表格下面存在变量时，无法渲染的Bug
+
+      **2021.01.29**
+      - 【Nuget】版本更新到2.5.1.5
+      - 移除模板导出时的控制台日志输出
+
+      **2021.01.09**
+      - 【Nuget】版本更新到2.5.1.4
+      - 修复Excel导出列头索引与内容排序不一致问题及单测  [#226](https://github.com/dotnetcore/Magicodes.IE/issues/226)
     </Description>
   </PropertyGroup>
   <PropertyGroup>

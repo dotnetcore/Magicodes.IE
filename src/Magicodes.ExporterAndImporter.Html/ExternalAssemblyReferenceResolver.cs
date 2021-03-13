@@ -11,11 +11,11 @@
 // 
 // ======================================================================
 
+using RazorEngine.Compilation;
+using RazorEngine.Compilation.ReferenceResolver;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using RazorEngine.Compilation;
-using RazorEngine.Compilation.ReferenceResolver;
 
 namespace Magicodes.ExporterAndImporter.Html
 {
@@ -37,7 +37,7 @@ namespace Magicodes.ExporterAndImporter.Html
            .ToList();
             //添加DataTable的引用
             results.Add(CompilerReference.From(typeof(DataTable).Assembly));
-            if (_assembliesToLoad!=null)
+            if (_assembliesToLoad != null)
             {
                 foreach (var item in _assembliesToLoad)
                 {

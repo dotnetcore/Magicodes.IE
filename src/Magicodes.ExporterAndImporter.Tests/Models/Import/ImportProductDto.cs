@@ -11,10 +11,9 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -57,7 +56,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     客户Id
         /// </summary>
-        [ImporterHeader(Name = "客户代码")]
+        [ImporterHeader(Name = "客户代码", ColumnIndex = 6)]
         public long ClientId { get; set; }
 
         /// <summary>

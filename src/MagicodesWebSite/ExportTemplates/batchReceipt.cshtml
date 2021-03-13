@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: SimSun !important;
+        }
+
+        p {
+            margin: 0px;
+        }
+
+        footer {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            margin-right: 5%;
+            margin-top: 1.2rem;
+            text-align: right;
+        }
+
+        table,
+        td {
+            border: 1px solid #444;
+            border-collapse: collapse;
+            height: 2rem;
+            padding: 5px;
+        }
+
+        .evenNum {
+            margin-bottom: 8%;
+            padding-top: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    @for (var i = 0; i < Model.Data.ReceiptInfoInputs.Count; i++)
+    {
+        <div style="height: 41%; width: 100%;" class="@(i % 2 == 0 ? "" : "evenNum")">
+            <p style="color: #000; font-size: 1.8rem; height: 32px; text-align: center;">
+                @Model.Data.Title
+            </p>
+            <p style="color: #333; font-size: 1.2rem; margin-left: 5%; margin-top: 1%;">
+                <text>NO：@Model.Data.ReceiptInfoInputs[i].Code</text>
+                <text style="padding-left: 52%; text-align: right;">交易时间：@Model.Data.ReceiptInfoInputs[i].TradeTime.ToString("yyyy-MM-dd HH:mm:ss")</text>
+            </p>
+
+            <table width="90%" style="margin-left: 5%; margin-top: 1%;">
+                <tr style="font-size: 1rem;">
+                    <td style="text-align: center; width: 11%;">交款姓名</td>
+                    <td colspan="2">@Model.Data.ReceiptInfoInputs[i].Name</td>
+                    <td style="text-align: center; width: 13%;">身份证号码</td>
+                    <td colspan="3">@Model.Data.ReceiptInfoInputs[i].IdNo</td>
+                </tr>
+                <tr style="font-size: 1rem;">
+                    <td style="text-align: center">交易金额</td>
+                    <td colspan="6">
+                        <span>￥：@Model.Data.ReceiptInfoInputs[i].Amount</span>
+                        <span style="padding: 0 2% 0 2%;">人民币(大写):</span>
+                        <span>@Model.Data.ReceiptInfoInputs[i].UppercaseAmount</span>
+                    </td>
+                </tr>
+                <tr style="font-size: 1rem;">
+                    <td style="text-align: center">收款方式</td>
+                    <td colspan="2">@Model.Data.ReceiptInfoInputs[i].PaymentMethod</td>
+                    <td style="text-align: center; width: 13%;">交易状态</td>
+                    <td colspan="3">@Model.Data.ReceiptInfoInputs[i].TradeStatus</td>
+                </tr>
+
+                <tr style="font-size: 1rem;">
+                    <td style="text-align: center">收款事由</td>
+                    <td style="width: 22.3%;">@Model.Data.ReceiptInfoInputs[i].Remark</td>
+                    <td style="text-align: center; width: 11%;">入学年级</td>
+                    <td style="width: 22.3%;" colspan="2">@Model.Data.ReceiptInfoInputs[i].Grade</td>
+                    <td style="text-align: center; width: 11%;">专业</td>
+                    <td style="width: 22.3%;">@Model.Data.ReceiptInfoInputs[i].Profession</td>
+                </tr>
+
+
+            </table>
+            <footer>
+                <span style="float: left;">
+                    <img src="@Model.Data.LogoUrl"
+                         style="display: inline-block; height: auto; margin-left: 45%; vertical-align: middle; width: 8rem;">
+                </span>
+                <span>收款方：@Model.Data.Payee</span>
+            </footer>
+            <img src="@Model.Data.SealUrl" style="float: right; height: auto; margin-right: 6%; margin-top: -8rem; opacity: 0.5; width: 9rem;">
+        </div>
+    }
+</body>
+</html>

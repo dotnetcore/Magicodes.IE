@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using System;
 using System.Globalization;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Csv.Utility
 {
@@ -24,6 +24,15 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         {
             FilePath = filePath;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="stream"></param>
+        public ImportHelper(Stream stream)
+        {
+            Stream = stream;
+        }
+
         /// <summary>
         ///     导入文件路径
         /// </summary>
@@ -33,6 +42,11 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         ///     导入结果
         /// </summary>
         internal ImportResult<T> ImportResult { get; set; }
+
+        /// <summary>
+        ///     文件流
+        /// </summary>
+        protected Stream Stream { get; set; }
 
         /// <summary>
         ///     导入模型
@@ -45,9 +59,13 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             ImportResult = new ImportResult<T>();
             try
             {
-                CheckImportFile(FilePath);
+                if (Stream == null)
+                {
+                    CheckImportFile(FilePath);
+                    Stream = new FileStream(FilePath, FileMode.Open);
+                }
 
-                using (var reader = new System.IO.StreamReader(FilePath))
+                using (var reader = new System.IO.StreamReader(Stream))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Configuration.RegisterClassMap<AutoMap<T>>();
@@ -59,6 +77,10 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             catch (Exception ex)
             {
                 ImportResult.Exception = ex;
+            }
+            finally
+            {
+                ((IDisposable)Stream)?.Dispose();
             }
             return Task.FromResult(ImportResult);
         }
@@ -119,6 +141,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         {
             FilePath = null;
             ImportResult = null;
+            Stream = null;
             GC.Collect();
         }
 

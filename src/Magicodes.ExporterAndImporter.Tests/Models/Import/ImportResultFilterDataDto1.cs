@@ -11,14 +11,12 @@
 // 
 // ======================================================================
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
@@ -47,12 +45,49 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
                     items[i].FieldErrors[key] = value?.Replace("存在数据重复，请检查！所在行：", "Duplicate data exists, please check! Where:");
                 }
             }
+
+            foreach (var item in importResult.Data)
+            {
+                //判断两个列是否重复，如果重复则提示 https://github.com/dotnetcore/Magicodes.IE/issues/144
+                if (item is ImportResultFilterDataDto1 item1 && item1.Code == item1.Name)
+                {
+                    items.Add(new DataRowErrorInfo()
+                    {
+                        RowIndex = 2, //请按照正确的行号去填写
+                        FieldErrors = new Dictionary<string, string>()
+                        {
+                            {"产品名称","Code和Name重复"}
+                        }
+                    });
+                }
+            }
+
+            importResult.RowErrors = items;
+
             return importResult;
         }
     }
 
     [ExcelImporter(ImportResultFilter = typeof(ImportResultFilterTest), IsLabelingError = true)]
     public class ImportResultFilterDataDto1
+    {
+        /// <summary>
+        ///     产品名称
+        /// </summary>
+        [ImporterHeader(Name = "产品名称")]
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     产品代码
+        ///     长度验证
+        ///     重复验证
+        /// </summary>
+        [ImporterHeader(Name = "产品代码", Description = "最大长度为20", AutoTrim = false, IsAllowRepeat = false)]
+        public string Code { get; set; }
+    }
+
+    [ExcelImporter(IsLabelingError = true)]
+    public class DIImportResultFilterDataDto1
     {
         /// <summary>
         ///     产品名称

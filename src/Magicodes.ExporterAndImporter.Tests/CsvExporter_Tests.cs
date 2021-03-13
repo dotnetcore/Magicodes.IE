@@ -73,7 +73,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 while (csv.Read())
                 {
                     var exportData = data[index];
-                    csv.GetField<string>("日期1").ShouldBeGreaterThanOrEqualTo(exportData.Time1.ToString("yyyy-MM-dd")); 
+                    csv.GetField<string>("日期1").ShouldBeGreaterThanOrEqualTo(exportData.Time1.ToString("yyyy-MM-dd"));
                     csv.GetField<string>("日期2").ShouldBeGreaterThanOrEqualTo(exportData.Time2?.ToString("yyyy-MM-dd HH:mm:ss"));
                     index++;
                 }
@@ -153,6 +153,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ToCsvExportFileInfo(filePath);
             File.Exists(filePath).ShouldBeTrue();
         }
-     
+
     }
 }

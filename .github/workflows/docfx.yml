@@ -1,0 +1,54 @@
+name: docfx build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      # Check out the branch that triggered this workflow to the 'source' subdirectory
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: source
+      - name: ReName README.MD 
+        run:  Get-ChildItem ./README.md | rename-item -newname 'index.md'
+        working-directory: ./source
+      - name: install DocFX
+        run: "& choco install docfx -y"
+      # Run a build
+      - name: Build docs
+        run: "& docfx ./docfx.json"
+        working-directory: ./source
+      # Check out gh-pages branch to the 'docs' subdirectory
+      - name: Checkout docs
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: docs
+      # Sync the site
+      - name: Clear docs repo
+        run: Get-ChildItem -Force -Exclude .git | ForEach-Object { Remove-Item -Recurse -Verbose -Force $_ }
+        working-directory: ./docs
+      - name: Sync new content
+        run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/source/_site/*" "$env:GITHUB_WORKSPACE/docs"
+        working-directory: ./docs
+        # update docs
+      - name: Commit to gh-pages and push
+        run: |
+          $ErrorActionPreference = "Continue"
+          git add -A
+          git diff HEAD --exit-code
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No changes to commit!"
+          } else {
+            git config --global user.name "github-actions-docfx[bot]"
+            git config --global user.email "hueifeng2020@outlook.com"
+            git commit -m "Updated docs from commit $env:GITHUB_SHA on $env:GITHUB_REF"
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git push origin gh-pages
+          }
+        working-directory: ./docs

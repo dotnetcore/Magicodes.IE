@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1
 {
     public class SystemPressureHisotry

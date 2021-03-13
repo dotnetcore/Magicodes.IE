@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
+
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1;</TargetFrameworks>
     <PackageId>Magicodes.IE.Pdf</PackageId>
@@ -16,6 +17,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="runtimes/linux-x64/native/wkhtmltox.so">
+      <Pack>true</Pack>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <PackagePath>runtimes/linux-x64/native/wkhtmltox.so</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

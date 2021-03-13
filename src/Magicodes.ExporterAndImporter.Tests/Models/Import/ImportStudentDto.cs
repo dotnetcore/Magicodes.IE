@@ -1,30 +1,29 @@
 ﻿// ======================================================================
-// 
+//
 //           filename : ImportStudentDto.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-11-05 20:02
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Excel;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
-
     /// <summary>
     /// 导入学生数据Dto
     /// IsLabelingError：是否标注数据错误
     /// </summary>
-    [ExcelImporter(IsLabelingError = true)]
+    [ExcelImporter(IsLabelingError = true, IsDisableAllFilter = true)]
     public class ImportStudentDto
     {
         /// <summary>
@@ -134,7 +133,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         ///     状态
         ///     测试可为空的枚举类型
         /// </summary>
-        [ImporterHeader(Name = "状态")] 
+        [ImporterHeader(Name = "状态")]
         public StudentStatus? Status { get; set; }
 
         /// <summary>
@@ -180,7 +179,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(IsIgnore = true)]
         public Guid? GradeId { get; set; }
     }
-
 
     /// <summary>
     ///     性别

@@ -4,6 +4,6 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Tes
     {
         public string ExhaustPressure { get; set; }
         public string ExhaustTemperature { get; set; }
-        
+
     }
 }
