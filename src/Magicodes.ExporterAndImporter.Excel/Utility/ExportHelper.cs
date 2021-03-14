@@ -13,7 +13,6 @@ using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
@@ -182,7 +181,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             get
             {
                 if (_exporterHeaderList == null) GetExporterHeaderInfoList();
-                if ((_exporterHeaderList == null || _exporterHeaderList.Count == 0) && !IsDynamicDatableExport && !IsExpandoObjectType) throw new Exception("请定义表头！");
+                if ((_exporterHeaderList == null || _exporterHeaderList.Count == 0) && !IsDynamicDatableExport && !IsExpandoObjectType) throw new ArgumentException("请定义表头！");
+                if (_exporterHeaderList.Count(t => t.ExporterHeaderAttribute.IsIgnore == false) == 0 && _exporterHeaderList.Count != 0) throw new ArgumentException("请勿忽略全部表头！");
                 return _exporterHeaderList;
             }
             set => _exporterHeaderList = value;

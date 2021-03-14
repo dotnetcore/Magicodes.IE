@@ -889,25 +889,15 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         [Fact(DisplayName = "忽略所有列进行导出测试")]
-        public async Task IgnoresAllColumnsExport_Test()
+        public async Task ItThrowsIfIgnoresAllColumnsExport_Test()
         {
             IExporter exporter = new ExcelExporter();
-
-            var filePath = GetTestFilePath($"{nameof(IgnoresAllColumnsExport_Test)}.xlsx");
-
+            var filePath = GetTestFilePath($"{nameof(ItThrowsIfIgnoresAllColumnsExport_Test)}.xlsx");
             DeleteFile(filePath);
 
-            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
-            result.ShouldNotBeNull();
-            result.Length.ShouldBeGreaterThan(0);
-            File.WriteAllBytes(filePath, result);
-            File.Exists(filePath).ShouldBeTrue();
-
-            using (var pck = new ExcelPackage(new FileInfo(filePath)))
-            {
-                var sheet = pck.Workbook.Worksheets.First();
-                sheet.Dimension.Columns.ShouldBe(0);
-            }
+            Func<Task> f = async () => await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
+            var exception = await Assert.ThrowsAsync<ArgumentException>(f);
+            exception.Message.ShouldBe("请勿忽略全部表头！");
         }
     }
 }
