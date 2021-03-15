@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.zh-CN.html",
-          "hash": "veAXmtparEYUpERL658OFQ=="
+          "hash": "gtVnb52u9TA0Fuf2Ea5REQ=="
         }
       },
       "is_incremental": false,
@@ -856,6 +856,17 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "res/IE_WeChat.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/IE_WeChat.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "res/ImportLabel.png",
       "output": {
         "resource": {
@@ -970,17 +981,6 @@
       "output": {
         "resource": {
           "relative_path": "res/image-20210308180430331.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "res/image-20210308181757077.png",
-      "output": {
-        "resource": {
-          "relative_path": "res/image-20210308181757077.png"
         }
       },
       "is_incremental": false,
