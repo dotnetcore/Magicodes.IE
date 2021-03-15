@@ -297,9 +297,16 @@ public DateTime Time3 { get; set; }
 
 **关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档，并且加入微信生态群：**
 
-**![](./res/wechat.jpg "麦扣聊技术")**
-
-<img src="res/image-20210308181757077.png" align="left"  width="300" />
+<table>
+<tr>
+<td>
+<img align="left" src="./res/wechat.jpg" width="300"/>
+</td>
+<td>
+<img align="right" src="res/IE_WeChat.png" width="300"/>
+</td>
+</tr>
+</table>
 
 > ##### **QQ群**
 
