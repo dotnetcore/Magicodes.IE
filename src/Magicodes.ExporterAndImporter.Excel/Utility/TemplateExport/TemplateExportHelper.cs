@@ -535,6 +535,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             }
             //匹配所有的管道变量
             var matches = _pipeLineVariableRegex.Matches(expressonStr);
+            var cellImageCount = 0;
             foreach (Match item in matches)
             {
                 var typeKey = Regex.Split(item.Value, "::").First().TrimStart('{').ToLower();
@@ -611,7 +612,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                         var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
                                         var address = new ExcelAddress(cell.Address);
 
-                                        excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
+                                        excelImage.SetPosition(address.Start.Row - 1, 5, address.Start.Column - 1, (cellImageCount * width) + (5 * (cellImageCount + 1)));
                                         excelImage.SetSize(width, height);
                                     }
                                 }
@@ -621,6 +622,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                 }
                             }
                             expressonStr = expressonStr.Replace(item.Value, string.Empty);
+                            cellImageCount++;
                         }
                         break;
 

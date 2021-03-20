@@ -60,7 +60,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //确保所有的转换均已完成
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
                 //检查图片
-                sheet.Drawings.Count.ShouldBe(4);
+                sheet.Drawings.Count.ShouldBe(7);
 
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("图")).ShouldBeTrue();
                 //检查合计是否正确
