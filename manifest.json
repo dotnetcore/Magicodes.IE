@@ -156,7 +156,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html",
-          "hash": "REFHkEDxIStlkcjcCkVatg=="
+          "hash": "vfcXr2ujNTvSndmdzEcXgg=="
         }
       },
       "is_incremental": false,
@@ -204,7 +204,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.IExcelImporter.html",
-          "hash": "E+Xbf1Rhz6Xmy0rGWAX53w=="
+          "hash": "161jm8saP6AigRpZQJI7uQ=="
         }
       },
       "is_incremental": false,
@@ -264,7 +264,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html",
-          "hash": "HNzI+HBlJ523k+oFXK7T5g=="
+          "hash": "b/v8IkFy6Kcgdd5Xn/SWYw=="
         }
       },
       "is_incremental": false,

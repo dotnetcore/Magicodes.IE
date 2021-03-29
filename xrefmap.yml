@@ -762,6 +762,15 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet
   nameWithType: ExcelImporter.ImportMultipleSheet
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet``1(Stream)
+  name: ImportMultipleSheet<T>(Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_ImportMultipleSheet__1_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet``1(Stream)
+  name.vb: ImportMultipleSheet(Of T)(Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet<T>(Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet(Of T)(Stream)
+  nameWithType: ExcelImporter.ImportMultipleSheet<T>(Stream)
+  nameWithType.vb: ExcelImporter.ImportMultipleSheet(Of T)(Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet``1(System.String)
   name: ImportMultipleSheet<T>(String)
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_ImportMultipleSheet__1_System_String_
@@ -1056,6 +1065,15 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet
   nameWithType: IExcelImporter.ImportMultipleSheet
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet``1(Stream)
+  name: ImportMultipleSheet<T>(Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelImporter.html#Magicodes_ExporterAndImporter_Excel_IExcelImporter_ImportMultipleSheet__1_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet``1(Stream)
+  name.vb: ImportMultipleSheet(Of T)(Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet<T>(Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet(Of T)(Stream)
+  nameWithType: IExcelImporter.ImportMultipleSheet<T>(Stream)
+  nameWithType.vb: IExcelImporter.ImportMultipleSheet(Of T)(Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.IExcelImporter.ImportMultipleSheet``1(System.String)
   name: ImportMultipleSheet<T>(String)
   href: api/Magicodes.ExporterAndImporter.Excel.IExcelImporter.html#Magicodes_ExporterAndImporter_Excel_IExcelImporter_ImportMultipleSheet__1_System_String_
@@ -2005,6 +2023,12 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.ImportMultipleSheetHelper(List(Of System.Reflection.PropertyInfo))
   nameWithType: ImportMultipleSheetHelper.ImportMultipleSheetHelper(List<PropertyInfo>)
   nameWithType.vb: ImportMultipleSheetHelper.ImportMultipleSheetHelper(List(Of PropertyInfo))
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.#ctor(Stream)
+  name: ImportMultipleSheetHelper(Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper__ctor_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.#ctor(Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.ImportMultipleSheetHelper(Stream)
+  nameWithType: ImportMultipleSheetHelper.ImportMultipleSheetHelper(Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.#ctor(System.String)
   name: ImportMultipleSheetHelper(String)
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper__ctor_System_String_
