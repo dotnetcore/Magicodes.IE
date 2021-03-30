@@ -92,7 +92,7 @@
 12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
 13. **[性能测试](docs/13.性能测试.md)**
 14. [**Excel合并行导入**](docs/Excel合并行导入.md)
-15. [**Excel模板导出之动态导出**](Excel模板导出之动态导出.md)
+15. [**Excel模板导出之动态导出**](docs/Excel模板导出之动态导出.md)
 
 **其他教程见下文或单元测试**
 
@@ -297,9 +297,16 @@ public DateTime Time3 { get; set; }
 
 **关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档，并且加入微信生态群：**
 
-**![](./res/wechat.jpg "麦扣聊技术")**
-
-<img src="res/image-20210308181757077.png" align="left"  width="300" />
+<table>
+<tr>
+<td>
+<img align="left" src="./res/wechat.jpg" width="300"/>
+</td>
+<td>
+<img align="right" src="res/IE_WeChat.png" width="300"/>
+</td>
+</tr>
+</table>
 
 > ##### **QQ群**
 

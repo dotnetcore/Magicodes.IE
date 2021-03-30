@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP3_0 || NETCOREAPP3_1
+﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0
 using Magicodes.ExporterAndImporter.Builder;
 using MagicodesWebSite;
 using Microsoft.AspNetCore.Builder;
@@ -51,7 +51,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             Assert.Equal(text, repstr);
         }
 
-        #region FunctionalTests
+#region FunctionalTests
         [Fact]
         public async Task AllowsXlsxHttpContentMediaType()
         {
@@ -212,7 +212,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
         }
 
-        #endregion
+#endregion
 
 
     }

@@ -37,6 +37,10 @@
     <PackageReference Include="Moq" Version="4.14.1" />
     <ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.3" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj" />
