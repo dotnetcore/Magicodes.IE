@@ -1,5 +1,11 @@
 # Release Log
 
+## 2.5.3.2
+
+**2021.03.30**
+- Excel修复OutputBussinessErrorData扩展方法
+- 多Sheet导入对Stream的支持
+
 ## 2.5.3.1
 
 **2021.03.12**
