@@ -53,6 +53,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
 
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        public ImportMultipleSheetHelper(Stream stream)
+        {
+            _excelStream = stream;
+        }
 
         /// <summary>
         /// 
