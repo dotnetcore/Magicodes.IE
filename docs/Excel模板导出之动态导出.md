@@ -4,6 +4,10 @@
 
 目前Magicodes.IE已支持Excel模板导出时使用`JObject`、`Dictionary`和`ExpandoObject`来进行动态导出，具体使用请看本篇教程。
 
+Tips:
+
+- [ExpandoObject 类：表示可在运行时动态添加和删除其成员的对象](https://docs.microsoft.com/zh-cn/dotnet/api/system.dynamic.expandoobject?view=net-5.0&WT.mc_id=DT-MVP-5004079)
+
 本功能的想法、部分实现初步源于[arik](https://gitee.com/arik)的贡献，这里再次感谢[arik](https://gitee.com/arik)！
 
 在开始本篇教程之前，我们重温一下模板导出的语法：
@@ -72,8 +76,6 @@ Install-Package Magicodes.IE.Excel
 
 **值得注意的是，由于此处使用了`JObject`对象，因此在使用时需要按装包`Newtonsoft.Json`。但是，`Magicodes.IE.Excel`本身并不依赖`Newtonsoft.Json`。**
 
-目前Excel模板动态导出仅支持通过`JObject`对象，在后续将支持更多动态方式。
-
 运行后可以看到如下图所示的结果：
 
 ![动态导出结果](../res/image-20210308180430331.png)
@@ -132,6 +134,10 @@ await exporter.ExportByTemplate(filePath, data, tplPath);
 ```
 
 具体代码见`DynamicExportWithDictionaryByTemplate_Test`。
+
+Tips:
+
+- [如何使用集合初始值设定项初始化字典（C# 编程指南）](https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/how-to-initialize-a-dictionary-with-a-collection-initializer?WT.mc_id=DT-MVP-5004079)
 
 ## 5.使用ExpandoObject完成动态导出
 

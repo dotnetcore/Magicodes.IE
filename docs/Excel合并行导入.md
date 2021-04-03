@@ -43,6 +43,13 @@ public class MergeRowsImportDto
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "合并行.xlsx");
         var import = await Importer.Import<MergeRowsImportDto>(filePath);
 ```
+Tips：
+
+- [Directory.GetCurrentDirectory 方法：获取应用程序的当前工作目录](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.directory.getcurrentdirectory?view=net-5.0&WT.mc_id=DT-MVP-5004079)
+- [Path.Combine 方法：将多个字符串组合成一个路径](https://docs.microsoft.com/zh-cn/dotnet/api/system.io.path.combine?view=net-5.0&WT.mc_id=DT-MVP-5004079)
+- [IExcelImporter](https://github.com/dotnetcore/Magicodes.IE/blob/master/src/Magicodes.ExporterAndImporter.Excel/IExcelImporter.cs)
+- [IImporter](https://github.com/dotnetcore/Magicodes.IE/blob/master/src/Magicodes.ExporterAndImporter.Core/IImporter.cs#L23:22)
+
 上述代码大家可以在单元测试`MergeRowsImportTest`中找到。调试运行后可以看到如下图所示：
 
 ![合并行导入](../res/image-20210307180551091.png)
