@@ -29,7 +29,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         /// 最大允许导入的函数
         /// </summary>
-        public int MaxCount = 50000;
+        public int MaxCount = 0;
 
 
         /// <summary>
