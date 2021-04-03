@@ -642,7 +642,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void ParseData(ExcelPackage excelPackage)
         {
             var worksheet = GetImportSheet(excelPackage);
-            if (ExcelImporterSettings.MaxCount != int.MaxValue && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
+
+            //检查导入最大条数限制
+            if (ExcelImporterSettings.MaxCount != 0
+               && ExcelImporterSettings.MaxCount != int.MaxValue
+               && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex
+               ) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
 
             ImportResult.Data = new List<object>();
             var propertyInfos = new List<PropertyInfo>(_importDataType.GetProperties());

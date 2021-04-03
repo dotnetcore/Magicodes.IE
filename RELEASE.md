@@ -1,10 +1,18 @@
 # Release Log
 
+## 2.5.3.3
+
+**2021.04.03**
+
+- Excel导入逻辑移除5万行的限制，默认不限制导入数量
+
+
 ## 2.5.3.2
 
 **2021.03.30**
 - Excel修复OutputBussinessErrorData扩展方法
 - 多Sheet导入对Stream的支持
+
 
 ## 2.5.3.1
 

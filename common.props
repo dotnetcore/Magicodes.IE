@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.3.2</Version>
+    <Version>2.5.3.3</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -18,10 +18,13 @@
       公众号：麦扣聊技术
       交流QQ群：85318032
 
+      **2021.04.03**
+      - Excel导入逻辑移除5万行的限制，默认不限制导入数量
+
       **2021.03.30**
       - Excel修复OutputBussinessErrorData扩展方法
       - 多Sheet导入对Stream的支持
-
+      
       **2021.03.12**
       - Excel模板导出支持使用Dictionary、ExpandoObject完成动态导出
       - 优化模板导出逻辑
