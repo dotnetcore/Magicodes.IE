@@ -61,15 +61,15 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 ### **Tutorial**
 
-1. [Basic tutorial of importing student data]("docs/1.Basic tutorial of importing student data.md")
-2. <a href="docs/2.Basic tutorial of export Excel.md" target="_blank">docs/2.Basic tutorial of export Excel.md</a>
-3. [Basic tutorial of export Pdf receipts](docs/3.Basic tutorial of export Pdf receipts.md)
-4. [Use in Docker](docs/4.Use in Docker.md)
-5. [Dynamic Export](docs/5.Dynamic Export.md)
-6. [Import Multi-Sheet Tutorial](docs/6.Import Multi-Sheet Tutorial.md)
-7. [Import and export Excel as pictures](docs/8. Import and export Excel as pictures.md)
-8. [Excel template export-Export textbook order form](docs/9.Excel template export-Export textbook order form .md) 
-9. [Excel Merge Row Cells Import](docs/Excel Merge Row Cells Import.md)
+1. <a href="docs/1.Basic tutorial of importing student data.md">Basic tutorial of importing student data</a>
+2. <a href="docs/2.Basic tutorial of export Excel.md">Basic tutorial of export Excel</a>
+3. <a href="docs/3.Basic tutorial of export Pdf receipts.md">Basic tutorial of export Pdf receipts</a>
+4. <a href="docs/4.Use in Docker.md">Use in Docker</a>
+5. <a href="docs/5.Dynamic Export.md">Dynamic Export</a>
+6. <a href="docs/6.Import Multi-Sheet Tutorial.md">Import Multi-Sheet Tutorial</a>
+7. <a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a>
+8. <a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a>
+9. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
 
 **See below for other tutorials or unit tests**
 
