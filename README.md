@@ -61,8 +61,8 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 ### **Tutorial**
 
-1. [Basic tutorial of importing student data](docs/1.Basic tutorial of importing student data.md)
-2. [Basic tutorial of export Excel](docs/2.Basic tutorial of export Excel.md)
+1. [Basic tutorial of importing student data]("docs/1.Basic tutorial of importing student data.md")
+2. <a href="docs/2.Basic tutorial of export Excel.md" target="_blank">docs/2.Basic tutorial of export Excel.md</a>
 3. [Basic tutorial of export Pdf receipts](docs/3.Basic tutorial of export Pdf receipts.md)
 4. [Use in Docker](docs/4.Use in Docker.md)
 5. [Dynamic Export](docs/5.Dynamic Export.md)
