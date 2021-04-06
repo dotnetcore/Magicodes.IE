@@ -61,28 +61,15 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 ### **Tutorial**
 
-Sorry, due to limited energy, please help translate.
-
-1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")**
-
-2. **[基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")  [（点此访问国内文档）](https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/)**
-
-3. **[基础教程之导出Pdf收据](docs/3.基础教程之导出Pdf收据.md "3.基础教程之导出Pdf收据")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/02/25/%E7%BB%84%E4%BB%B6/Magicodes.IE/3.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf/)
-
-4. **[在Docker中使用](docs/4.在Docker中使用.md "4.在Docker中使用")**
-
-5. **[动态导出](docs/5.动态导出.md "5.动态导出")**
-
-6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
-7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
-8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
-
-9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
-
-10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
-11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
-12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
-13. **[性能测试](docs/13.性能测试.md)**
+1. [Basic tutorial of importing student data](docs/1.Basic tutorial of importing student data.md)
+2. [Basic tutorial of export Excel](docs/2.Basic tutorial of export Excel.md)
+3. [Basic tutorial of export Pdf receipts](docs/3.Basic tutorial of export Pdf receipts.md)
+4. [Use in Docker](docs/4.Use in Docker.md)
+5. [Dynamic Export](docs/5.Dynamic Export.md)
+6. [Import Multi-Sheet Tutorial](docs/6.Import Multi-Sheet Tutorial.md)
+7. [Import and export Excel as pictures](docs/8. Import and export Excel as pictures.md)
+8. [Excel template export-Export textbook order form](docs/9.Excel template export-Export textbook order form .md) 
+9. [Excel Merge Row Cells Import](docs/Excel Merge Row Cells Import.md)
 
 **See below for other tutorials or unit tests**
 
