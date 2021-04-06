@@ -969,8 +969,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             var worksheet = GetImportSheet(excelPackage);
 
             //检查导入最大条数限制
-            if (ExcelImporterSettings.MaxCount !=0 
-                && ExcelImporterSettings.MaxCount != int.MaxValue 
+            if (ExcelImporterSettings.MaxCount != 0
+                && ExcelImporterSettings.MaxCount != int.MaxValue
                 && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex
                 ) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
 
@@ -1035,8 +1035,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     continue;
                                 }
-                                else if (propertyInfo.PropertyType.IsEnum &&
-                                         propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
+                                else if (propertyInfo.PropertyType.IsEnum
+                                    && (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
+                                         )
                                 {
                                     if (int.TryParse(cellValue, out int result))
                                     {
@@ -1072,7 +1073,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 }
                             }
 
-                            if (propertyInfo.PropertyType.IsEnum)
+                            if (propertyInfo.PropertyType.IsEnum ||
+                                    (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum))
                             {
                                 AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
                                 continue;

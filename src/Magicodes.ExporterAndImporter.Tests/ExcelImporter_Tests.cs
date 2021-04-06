@@ -892,5 +892,37 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Select(p => p.Name).Skip(7).Take(6).All(p => p == "王五").ShouldBeTrue();
             import.Data.Count.ShouldBe(13);
         }
+
+        [Fact(DisplayName = "Issue225-枚举测试")]
+        public async Task Issue225_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Issue225.xlsx");
+            var import = await Importer.Import<ImportStudentDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+
+            import.RowErrors.Count.ShouldBe(2);
+            import.RowErrors[0].FieldErrors.Any(p => p.Value.Contains("不存在模板下拉选项中"));
+            import.RowErrors[1].FieldErrors.Any(p => p.Value.Contains("不存在模板下拉选项中"));
+
+            import.HasError.ShouldBeTrue();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(16);
+
+            //检查值映射
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                if (i < 5)
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
+                }
+                else
+                {
+                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
+                }
+            }
+        }
     }
 }
