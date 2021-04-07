@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -36,6 +37,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
         {
+            fileName.CheckExcelFileName();
             var isMultipleSheetType = false;
             var tableType = typeof(T);
             List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
@@ -125,6 +127,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             using (var importer = new ImportHelper<T>(filePath, labelingFilePath))
             {
                 return importer.Import();
@@ -155,6 +158,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string msg) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             using (var importer = new ImportHelper<T>(filePath, null))
             {
                 return importer.OutputBussinessErrorData(bussinessErrorDataList, out msg);
@@ -185,6 +189,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
         public async Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(string filePath) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
@@ -262,6 +267,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         public async Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T, TSheet>(string filePath)
             where T : class, new() where TSheet : class, new()
         {
+            filePath.CheckExcelFileName();
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
