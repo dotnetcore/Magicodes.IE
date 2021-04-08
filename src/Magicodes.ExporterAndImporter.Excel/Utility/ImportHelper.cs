@@ -812,6 +812,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
         }
 
+        private void SetFormat()
+        {
+            //TODO 设置单元格格式
+        }
+
         /// <summary>
         ///     设置内置验证
         /// </summary>
