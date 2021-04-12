@@ -796,6 +796,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         ExcelPackage.MaxRows, i + 1);
                     SetInterValidation(worksheet, ImporterHeaderInfos[i].PropertyInfo, range, ImporterHeaderInfos[i].Header.ShowInputMessage);
                 }
+                if (!ImporterHeaderInfos[i].Header.Format.IsNullOrWhiteSpace())
+                {
+                    SetFormat(worksheet, ImporterHeaderInfos[i].Header.Format);
+                }
+
             }
 
             worksheet.Cells.AutoFitColumns();
@@ -812,9 +817,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.White);
         }
 
-        private void SetFormat()
+        /// <summary>
+        /// 设置单元格格式
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="format"></param>
+        private void SetFormat(ExcelWorksheet worksheet, string format)
         {
-            //TODO 设置单元格格式
+            //ws.Dimension.Rows + 2, 1
+            worksheet.Cells[$"{worksheet.Cells.Address},{worksheet.Cells.End.Address}"].Style.Numberformat.Format = format;
         }
 
         /// <summary>
