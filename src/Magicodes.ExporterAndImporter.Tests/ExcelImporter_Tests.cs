@@ -81,7 +81,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await Importer.GenerateTemplate<GenerateStudentImportSheetDataValidationDto>(filePath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
-
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["A2"].Style.Numberformat.Format.ShouldBe("@");
+            }
             //TODO:读取Excel检查表头和格式
         }
 
