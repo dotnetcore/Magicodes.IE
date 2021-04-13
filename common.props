@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.3.4</Version>
+    <Version>2.5.3.5</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -17,6 +17,9 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+
+      **2021.04.13**
+      - Excel导入支持列头忽略大小写导入（全局配置：IsIgnoreColumnCase）
 
       **2021.04.06**
       - Excel导入修复枚举值不在范围时的错误提示

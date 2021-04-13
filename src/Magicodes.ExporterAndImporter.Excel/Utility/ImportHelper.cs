@@ -82,7 +82,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             MaxCount = importerAttribute.MaxCount,
                             ImportResultFilter = importerAttribute.ImportResultFilter,
                             ImportHeaderFilter = importerAttribute.ImportHeaderFilter,
-                            IsDisableAllFilter = importerAttribute.IsDisableAllFilter
+                            IsDisableAllFilter = importerAttribute.IsDisableAllFilter,
+                            IsIgnoreColumnCase = importerAttribute.IsIgnoreColumnCase
                         };
                     }
                     else
@@ -572,7 +573,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 foreach (var item in ImporterHeaderInfos)
-                    if (!excelHeaders.ContainsKey(item.Header.Name))
+                {
+                    //支持忽略列名的大小写
+                    var isColumnExist = false;
+                    if (ExcelImporterSettings.IsIgnoreColumnCase)
+                    {
+                        var excelHeaderName = (excelHeaders.Keys.FirstOrDefault(p => p.Equals(item.Header.Name, StringComparison.CurrentCultureIgnoreCase)));
+                        isColumnExist = excelHeaderName != null;
+                        if (isColumnExist)
+                        {
+                            item.Header.Name = excelHeaderName;
+                        }
+                    }
+                    else
+                    {
+                        isColumnExist = (excelHeaders.ContainsKey(item.Header.Name));
+                    }
+                    if (!isColumnExist)
                     {
                         //仅验证必填字段
                         if (item.IsRequired)
@@ -602,6 +619,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (item.Header.ColumnIndex == 0)
                             item.Header.ColumnIndex = excelHeaders[item.Header.Name];
                     }
+                }
             }
             catch (Exception ex)
             {
