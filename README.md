@@ -70,10 +70,10 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 7. <a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a>
 8. <a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a>
 9. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
-12. <a href="docs/12.Exporting multiple formats in NETCore via request headers.md">12.Exporting multiple formats in NETCore via request headers</a>
-13. <a href="docs/13.Performance Measurement.md">13.Performance Measurement</a>
-14. <a href="docs/Excel Merge Row Cells Import.md">14.Excel Merge Row Cells Import</a>
-15. <a href="docs/Excel template  export - dynamic export.md">15.Excel template  export - dynamic export</a>
+12. <a href="docs/12.Exporting multiple formats in NETCore via request headers.md">Exporting multiple formats in NETCore via request headers</a>
+13. <a href="docs/13.Performance Measurement.md">Performance Measurement</a>
+14. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
+15. <a href="docs/Excel template  export - dynamic export.md">Excel template  export - dynamic export</a>
 
 **See below for other tutorials or unit tests**
 
