@@ -53,7 +53,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
 
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -149,11 +149,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入模型验证数据
         /// </summary>
         /// <returns></returns>
-        public Task<ImportResult<object>> Import(string sheetName, Type importDataType, bool isSaveLabelingError = true)
+        public Task<ImportResult<object>> Import(string sheetName, int sheetIndex, Type importDataType, bool isSaveLabelingError = true)
         {
             _importDataType = importDataType;
             ImportResult = new ImportResult<object>();
             ExcelImporterSettings.SheetName = sheetName;
+            ExcelImporterSettings.SheetIndex = sheetIndex;
             try
             {
                 if (_excelPackage == null) _excelPackage = new ExcelPackage(_excelStream);
@@ -953,13 +954,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage)
         {
 #if NET461
-            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[1];
+            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()]??(
+                 ExcelImporterSettings.SheetName != null?
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex] :
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]);
 #else
-            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[0];
+            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??(
+                 ExcelImporterSettings.SheetName != null?
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex] :
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]);
 #endif
         }
 

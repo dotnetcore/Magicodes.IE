@@ -63,7 +63,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     dto.Name.ShouldBe("杨圣超");
                 }
 
-                if (item.Key == "缴费数据")
+                if (item.Key == "1")
                 {
                     import.HasError.ShouldBeTrue();
                     import.Data.Count.ShouldBe(20);
@@ -98,7 +98,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     dto.Name.ShouldBe("杨圣超");
                 }
 
-                if (item.Key == "缴费数据")
+                if (item.Key == "1")
                 {
                     import.HasError.ShouldBeTrue();
                     import.Data.Count.ShouldBe(20);

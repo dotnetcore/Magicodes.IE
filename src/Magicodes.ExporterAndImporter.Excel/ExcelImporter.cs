@@ -208,19 +208,20 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
                     }
-                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
-                    {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
-                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
                     bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
-                    resultList.Add(importerAttribute.SheetName, result);
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex,sheetProperty.PropertyType, isSaveLabelingError);
+                    resultList.Add(importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(), result);
                 }
             }
             return resultList;
         }
-        
+
         /// <summary>
         /// 导入多个Sheet数据
         /// </summary>
@@ -243,14 +244,15 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
                     }
-                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
-                    {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
-                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
                     bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
-                    resultList.Add(importerAttribute.SheetName, result);
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex, sheetProperty.PropertyType, isSaveLabelingError);
+                    resultList.Add(importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(), result);
                 }
             }
             return resultList;
@@ -286,13 +288,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
                     }
-                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
-                    {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
-                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
                     bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex, sheetProperty.PropertyType, isSaveLabelingError);
                     var tResult = new ImportResult<TSheet>();
                     tResult.Data = new List<TSheet>();
                     if (result.Data.Count > 0)
@@ -305,7 +307,10 @@ namespace Magicodes.ExporterAndImporter.Excel
                     tResult.Exception = result.Exception;
                     tResult.RowErrors = result.RowErrors;
                     tResult.TemplateErrors = result.TemplateErrors;
-                    resultList.Add(importerAttribute.SheetName, tResult);
+                    resultList.Add(
+                        importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(),
+                        tResult);
                 }
             }
             return resultList;
