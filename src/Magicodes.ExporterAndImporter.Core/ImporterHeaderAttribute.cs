@@ -47,6 +47,11 @@ namespace Magicodes.ExporterAndImporter.Core
         public bool FixAllSpace { get; set; }
 
         /// <summary>
+        ///     格式化（仅用于模板生成）
+        /// </summary>
+        public string Format { get; set; }
+
+        /// <summary>
         ///     列索引，如果为0则自动计算
         /// </summary>
         public int ColumnIndex { get; set; }
