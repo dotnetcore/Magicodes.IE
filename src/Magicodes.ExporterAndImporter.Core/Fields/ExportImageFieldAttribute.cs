@@ -21,6 +21,17 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     图片不存在时的替代文本
         /// </summary>
         public string Alt { get; set; }
+
+        /// <summary>
+        /// 垂直偏移
+        /// </summary>
+        public int YOffset { get; set; } = 0;
+
+        /// <summary>
+        /// 水平偏移
+        /// </summary>
+        public int XOffset { get; set; } = 0;
+
         /// <summary>
         /// </summary>
         /// <param name="height"></param>
