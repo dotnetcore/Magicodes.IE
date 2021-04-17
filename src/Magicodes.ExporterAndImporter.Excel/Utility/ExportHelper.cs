@@ -3,6 +3,7 @@ using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using System;
@@ -756,7 +757,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 else
                                 {
                                     var pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
-                                    pic.SetPosition(rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0), ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
+                                    AddImage((rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0)),
+                                        colIndex - ignoreCount, pic, ExporterHeaderList[colIndex].ExportImageFieldAttribute.YOffset, ExporterHeaderList[colIndex].ExportImageFieldAttribute.XOffset);
+
+                                    //pic.SetPosition
+                                    //    (rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0),
+                                    //    ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
+
                                     CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
                                     //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                                     pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
@@ -783,6 +790,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //    }
                 //}
             }
+        }
+
+        private void AddImage(int rowIndex, int colIndex, ExcelPicture picture, int yOffset, int xOffset)
+        {
+            if (picture != null)
+            {
+                picture.From.Column = colIndex;
+                picture.From.Row = rowIndex;
+                //调整对齐
+                picture.From.ColumnOff = Pixel2MTU(xOffset);
+                picture.From.RowOff = Pixel2MTU(yOffset);
+            }
+        }
+
+        private int Pixel2MTU(int pixels)
+        {
+            int mtus = pixels * 9525;
+            return mtus;
         }
 
 

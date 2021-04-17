@@ -14,7 +14,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "忽略", IsIgnore = true)]
         public string Text3 { get; set; }
 
-        [ExportImageField(Width = 20, Height = 120)]
+        [ExportImageField(Width = 20, Height = 120, YOffset = 15)]
         [ExporterHeader(DisplayName = "图1")]
         public string Img1 { get; set; }
         [ExporterHeader(DisplayName = "数值", Format = "#,##0")]
