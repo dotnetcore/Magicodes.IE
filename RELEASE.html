@@ -62,6 +62,27 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="2536">2.5.3.6</h2>
+<p><strong>2021.04.18</strong></p>
+<ul>
+<li>支持对导入模板生成，预设值单元格格式<a href="https://github.com/dotnetcore/Magicodes.IE/issues/253">#253</a>
+例如：</li>
+</ul>
+<pre><code>[ImporterHeader(Name = &quot;序号&quot;, Format =&quot;@&quot;)]
+</code></pre>
+<ul>
+<li>单元格图片导出支持偏移设置<a href="https://github.com/dotnetcore/Magicodes.IE/issues/250">#250</a>
+例如：</li>
+</ul>
+<pre><code>**YOffset**：垂直偏移（可进行移动图片）
+**XOffset**：水平偏移（可进行移动图片）
+</code></pre>
+<ul>
+<li>支持多sheet导入SheetIndex的支持<a href="https://github.com/dotnetcore/Magicodes.IE/issues/254">#254</a>
+例如：</li>
+</ul>
+<pre><code>[ExcelImporter(SheetIndex = 2)]
+</code></pre>
 <h2 id="2535">2.5.3.5</h2>
 <p><strong>2021.04.13</strong></p>
 <ul>

@@ -443,13 +443,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_System_String_Type_System_Boolean_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,Type,System.Boolean)">Import(String, Type, Boolean)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_System_String_System_Int32_Type_System_Boolean_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,System.Int32,Type,System.Boolean)">Import(String, Int32, Type, Boolean)</h4>
   <div class="markdown level1 summary"><p>导入模型验证数据</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;object&gt;&gt; Import(string sheetName, Type importDataType, bool isSaveLabelingError = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;object&gt;&gt; Import(string sheetName, int sheetIndex, Type importDataType, bool isSaveLabelingError = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -464,6 +464,11 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">sheetName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">sheetIndex</span></td>
         <td></td>
       </tr>
       <tr>

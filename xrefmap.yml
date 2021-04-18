@@ -892,6 +892,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.IsOnlyErrorRows
   nameWithType: ExcelImporterAttribute.IsOnlyErrorRows
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex
+  name: SheetIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.html#Magicodes_ExporterAndImporter_Excel_ExcelImporterAttribute_SheetIndex
+  commentId: P:Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex
+  nameWithType: ExcelImporterAttribute.SheetIndex
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex*
+  name: SheetIndex
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.html#Magicodes_ExporterAndImporter_Excel_ExcelImporterAttribute_SheetIndex_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetIndex
+  nameWithType: ExcelImporterAttribute.SheetIndex
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.SheetName
   name: SheetName
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporterAttribute.html#Magicodes_ExporterAndImporter_Excel_ExcelImporterAttribute_SheetName
@@ -2133,12 +2146,12 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.GetImportSheet
   nameWithType: ImportMultipleSheetHelper.GetImportSheet
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,Type,System.Boolean)
-  name: Import(String, Type, Boolean)
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_System_String_Type_System_Boolean_
-  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,Type,System.Boolean)
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String, Type, System.Boolean)
-  nameWithType: ImportMultipleSheetHelper.Import(String, Type, Boolean)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,System.Int32,Type,System.Boolean)
+  name: Import(String, Int32, Type, Boolean)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_System_String_System_Int32_Type_System_Boolean_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String,System.Int32,Type,System.Boolean)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import(System.String, System.Int32, Type, System.Boolean)
+  nameWithType: ImportMultipleSheetHelper.Import(String, Int32, Type, Boolean)
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.Import*
   name: Import
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportMultipleSheetHelper.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportMultipleSheetHelper_Import_
