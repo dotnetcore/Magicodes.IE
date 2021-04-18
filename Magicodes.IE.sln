@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9
 		docs\8.Excel图片导入导出.md = docs\8.Excel图片导入导出.md
 		docs\9.Excel模板导出之导出教材订购表.md = docs\9.Excel模板导出之导出教材订购表.md
 		docs\Excel模板导出之动态导出.md = docs\Excel模板导出之动态导出.md
+		docs\Magicodes.IE之导入导出筛选器.md = docs\Magicodes.IE之导入导出筛选器.md
+		docs\Magicodes.IE之花式导出.md = docs\Magicodes.IE之花式导出.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
