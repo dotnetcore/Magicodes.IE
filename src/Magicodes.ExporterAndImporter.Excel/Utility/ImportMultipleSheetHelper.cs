@@ -9,24 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Linq.Expressions;
-using System.Reflection;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Linq.Expressions;
-using System.Reflection;
-*/
 using System.Reflection;
 using System.Threading.Tasks;
 
