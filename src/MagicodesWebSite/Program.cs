@@ -93,6 +93,7 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers(options => options.Filters.Add(typeof(MagicodesFilter)));
+                services.AddRazorPages();
                 services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Magicodes WebSite API", Version = "v1" });
@@ -106,6 +107,7 @@ namespace MagicodesWebSite
                 app.UseSwaggerUI();
                 app.UseEndpoints(endpoints =>
                 {
+                    endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
             }

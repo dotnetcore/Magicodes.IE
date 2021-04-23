@@ -1,5 +1,25 @@
 # Release Log
 
+## 2.5.3.6
+
+**2021.04.18**
+- 支持对导入模板生成，预设值单元格格式[#253](https://github.com/dotnetcore/Magicodes.IE/issues/253)
+例如：
+```
+[ImporterHeader(Name = "序号", Format ="@")]
+```
+- 单元格图片导出支持偏移设置[#250](https://github.com/dotnetcore/Magicodes.IE/issues/250)
+例如：
+```
+**YOffset**：垂直偏移（可进行移动图片）
+**XOffset**：水平偏移（可进行移动图片）
+```
+- 支持多sheet导入SheetIndex的支持[#254](https://github.com/dotnetcore/Magicodes.IE/issues/254)
+例如：
+```
+[ExcelImporter(SheetIndex = 2)]
+```
+
 ## 2.5.3.5
 
 **2021.04.13**

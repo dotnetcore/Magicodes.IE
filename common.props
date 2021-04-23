@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.3.5</Version>
+    <Version>2.5.3.6</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -17,29 +17,18 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
-
+      
+      **2021.04.18**
+    - 支持对导入模板生成，预设值单元格格式
+    - 单元格图片导出支持偏移设置
+    - 支持多sheet导入SheetIndex的支持
+    
       **2021.04.13**
       - Excel导入支持列头忽略大小写导入（全局配置：IsIgnoreColumnCase）
 
       **2021.04.06**
       - Excel导入修复枚举值不在范围时的错误提示
 
-      **2021.04.03**
-      - Excel导入逻辑移除5万行的限制，默认不限制导入数量
-
-      **2021.03.30**
-      - Excel修复OutputBussinessErrorData扩展方法
-      - 多Sheet导入对Stream的支持
-
-      **2021.03.12**
-      - Excel模板导出支持使用Dictionary、ExpandoObject完成动态导出
-      - 优化模板导出逻辑
-
-      **2021.03.08**
-      - Excel模板导出支持使用JSON对象完成动态导出
-
-      **2021.03.05**
-      - Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
     </Description>
   </PropertyGroup>
   <PropertyGroup>
