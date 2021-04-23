@@ -120,6 +120,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result = await Importer.GenerateTemplate<ImportProductDto>(filePath);
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Column(15).Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
+            }
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             //TODO:读取Excel检查表头和格式

@@ -843,7 +843,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private void SetFormat(ExcelWorksheet worksheet, string format)
         {
             //ws.Dimension.Rows + 2, 1
-            worksheet.Cells[$"{worksheet.Cells.Address},{worksheet.Cells.End.Address}"].Style.Numberformat.Format = format;
+            worksheet.Column(worksheet.Dimension.Columns).Style.Numberformat.Format = format;
         }
 
         /// <summary>
