@@ -1,5 +1,11 @@
 # Release Log
 
+## 2.5.3.7
+
+**2021.04.23**
+- 修复导入模板生成，格式错误[#261](https://github.com/dotnetcore/Magicodes.IE/issues/261)
+例如：
+
 ## 2.5.3.6
 
 **2021.04.18**
