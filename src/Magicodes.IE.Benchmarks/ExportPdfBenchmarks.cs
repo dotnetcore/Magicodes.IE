@@ -23,16 +23,11 @@ namespace Magicodes.Benchmarks
         public int RowsCount;
         private readonly List<ExportTestData> _exportTestData = new List<ExportTestData>();
         private readonly PdfExporter _exporter;
-        private readonly PdfOptimizeExporter _optimizeExporter;
-        private readonly PdfOptimizeReferenceExporter _optimizeReferenceExporter;
         private string tpl;
 
         public ExportPdfBenchmarks()
         {
             _exporter = new PdfExporter();
-            _optimizeExporter = new PdfOptimizeExporter();
-            _optimizeReferenceExporter = new PdfOptimizeReferenceExporter();
-
         }
 
         [GlobalSetup]
@@ -64,18 +59,6 @@ namespace Magicodes.Benchmarks
         public async Task ExportPdfAsByteArrayTest()
         {
             await _exporter.ExportListBytesByTemplate(_exportTestData, tpl);
-        }
-
-        [Benchmark]
-        public async Task ExportPdfOptimizeReferenceAsByteArrayTest()
-        {
-            await _optimizeReferenceExporter.ExportListBytesByTemplate(_exportTestData, tpl);
-        }
-
-        [Benchmark]
-        public async Task ExportPdfOptimizeAsByteArrayTest()
-        {
-            await _optimizeExporter.ExportListBytesByTemplate(_exportTestData, tpl);
         }
 
     }
