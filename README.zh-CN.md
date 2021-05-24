@@ -89,7 +89,7 @@
 9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
 10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
 11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
-12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
+12. **[Magicodes.IE.AspNetCore之一行代码多格式导出](docs/12.Magicodes.IE.AspNetCore之一行代码多格式导出.md)**
 13. **[性能测试](docs/13.性能测试.md)**
 14. [**Excel合并行导入**](docs/Excel合并行导入.md)
 15. [**Excel模板导出之动态导出**](docs/Excel模板导出之动态导出.md)
