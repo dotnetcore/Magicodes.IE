@@ -14,6 +14,7 @@
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using OfficeOpenXml.Table;
+using System.Collections.Generic;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
