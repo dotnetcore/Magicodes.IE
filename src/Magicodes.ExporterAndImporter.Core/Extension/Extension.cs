@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 #if NETSTANDARD2_1
@@ -377,6 +378,49 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
 
             return 0;
+        }
+
+        public static void ValueMapping(this PropertyInfo propertyInfo, ref Dictionary<string, dynamic> directory)
+        {
+            #region 处理值映射
+            var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
+            var objects = directory;
+            foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
+                !objects.ContainsKey(mappingAttribute.Text)))
+                directory.Add(mappingAttribute.Text, mappingAttribute.Value);
+
+            //如果存在自定义映射，则不会生成默认映射
+            if (mappings.Any()) return;
+
+            //为bool类型生成默认映射
+            switch (propertyInfo.PropertyType.GetCSharpTypeName())
+            {
+                case "Boolean":
+                case "Nullable<Boolean>":
+                    {
+                        if (!directory.ContainsKey("是")) directory.Add("是", true);
+                        if (!directory.ContainsKey("否")) directory.Add("否", false);
+                        break;
+                    }
+            }
+
+            var type = propertyInfo.PropertyType;
+            var isNullable = type.IsNullable();
+            if (isNullable) type = type.GetNullableUnderlyingType();
+            //为枚举类型生成默认映射
+            if (type.IsEnum)
+            {
+                var values = type.GetEnumTextAndValues();
+                var dictionary = directory;
+                foreach (var value in values.Where(value => !dictionary.ContainsKey(value.Key)))
+                    directory.Add(value.Key, value.Value);
+
+                if (isNullable)
+                    if (!directory.ContainsKey(string.Empty))
+                        directory.Add(string.Empty, null);
+            }
+
+            #endregion
         }
     }
 }

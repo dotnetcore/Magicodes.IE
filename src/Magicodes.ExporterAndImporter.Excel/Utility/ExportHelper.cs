@@ -323,30 +323,32 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         (objProperties[i].GetAttribute<IEIgnoreAttribute>(true) == null) ?
                         item.ExporterHeaderAttribute.IsIgnore : objProperties[i].GetAttribute<IEIgnoreAttribute>(true).IsExportIgnore;
 
-                    var mappings = objProperties[i].GetAttributes<ValueMappingAttribute>().ToList();
-                    foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
-                        !item.MappingValues.ContainsKey(mappingAttribute.Value)))
-                        item.MappingValues.Add(mappingAttribute.Value, mappingAttribute.Text);
+                    var itemMappingValues = item.MappingValues;
+                    objProperties[i].ValueMapping(ref itemMappingValues);
+                    //var mappings = objProperties[i].GetAttributes<ValueMappingAttribute>().ToList();
+                    //foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
+                    //    !item.MappingValues.ContainsKey(mappingAttribute.Value)))
+                    //    item.MappingValues.Add(mappingAttribute.Value, mappingAttribute.Text);
 
-                    //如果存在自定义映射，则不会生成默认映射
-                    if (!mappings.Any())
-                    {
-                        if (objProperties[i].PropertyType.IsEnum)
-                        {
-                            var propType = objProperties[i].PropertyType;
-                            var isNullable = propType.IsNullable();
-                            if (isNullable) propType = propType.GetNullableUnderlyingType();
-                            var values = propType.GetEnumTextAndValues();
+                    ////如果存在自定义映射，则不会生成默认映射
+                    //if (!mappings.Any())
+                    //{
+                    //    if (objProperties[i].PropertyType.IsEnum)
+                    //    {
+                    //        var propType = objProperties[i].PropertyType;
+                    //        var isNullable = propType.IsNullable();
+                    //        if (isNullable) propType = propType.GetNullableUnderlyingType();
+                    //        var values = propType.GetEnumTextAndValues();
 
-                            foreach (var value in values.Where(value => !item.MappingValues.ContainsKey(value.Key)))
-                                item.MappingValues.Add(value.Value, value.Key);
+                    //        foreach (var value in values.Where(value => !item.MappingValues.ContainsKey(value.Key)))
+                    //            item.MappingValues.Add(value.Value, value.Key);
 
-                            if (isNullable)
-                                if (!item.MappingValues.ContainsKey(string.Empty))
-                                    item.MappingValues.Add(string.Empty, null);
+                    //        if (isNullable)
+                    //            if (!item.MappingValues.ContainsKey(string.Empty))
+                    //                item.MappingValues.Add(string.Empty, null);
 
-                        }
-                    }
+                    //    }
+                    //}
 
                     AddExportHeaderInfo(item);
                 }
@@ -602,7 +604,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         {
                             var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
 
-                            if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(value))
+                            if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value.ToLower()))
                             {
                                 var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
                                 dr[propertyInfo.Name] = mapValue.Value;
@@ -639,28 +641,28 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
                         var val = Convert.ToBoolean(value);
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(val))
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
                         {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == val);
-                            dr[propertyInfo.Name] = mapValue.Value;
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
+                            dr[propertyInfo.Name] = mapValue.Key;
                         }
                         else
                         {
-                            dr[propertyInfo.Name] = val;
+                            dr[propertyInfo.Name] = value;
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
                     {
                         var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
                         var val = Convert.ToBoolean(value);
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(Convert.ToBoolean(val)))
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
                         {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == val);
-                            dr[propertyInfo.Name] = mapValue.Value;
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
+                            dr[propertyInfo.Name] = mapValue.Key;
                         }
                         else
                         {
-                            dr[propertyInfo.Name] = val;
+                            dr[propertyInfo.Name] = value;
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Int32")
@@ -668,14 +670,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
                         var val = Convert.ToInt32(value);
 
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsKey(Convert.ToInt32(val)))
+                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
                         {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == val);
-                            dr[propertyInfo.Name] = int.Parse(mapValue.Value);
+                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
+                            dr[propertyInfo.Name] = mapValue.Key;
                         }
                         else
                         {
-                            dr[propertyInfo.Name] = val;
+                            dr[propertyInfo.Name] = value;
                         }
                     }
                     else if (propertyInfo.PropertyType.GetCSharpTypeName() == "DateTimeOffset")
