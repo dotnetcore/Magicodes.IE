@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.3.8</Version>
+    <Version>2.5.3.9</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -18,6 +18,9 @@
       公众号：麦扣聊技术
       交流QQ群：85318032
 
+      **2021.05.26**
+      - 修复ValueMappingAttribute
+
       **2021.05.10**
       - EXCEL模板导出功能，将单行复制改为多行复制
       - PDF导出内存优化
@@ -29,9 +32,6 @@
       - 支持对导入模板生成，预设值单元格格式
       - 单元格图片导出支持偏移设置
       - 支持多sheet导入SheetIndex的支持
-
-      **2021.04.13**
-      - Excel导入支持列头忽略大小写导入（全局配置：IsIgnoreColumnCase）
 
     </Description>
   </PropertyGroup>

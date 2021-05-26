@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.3.9
+
+**2021.05.26**
+- 修复ValueMappingAttribute[#272](https://github.com/dotnetcore/Magicodes.IE/issues/272)
 
 ## 2.5.3.8
 
