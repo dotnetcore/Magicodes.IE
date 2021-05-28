@@ -52,7 +52,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.Benchmarks", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.AspNetCore", "src\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.ExporterAndImporter.AspNetCore.csproj", "{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +115,7 @@ Global
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_SortFileContentOnSave = True
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
 	EndGlobalSection
 EndGlobal

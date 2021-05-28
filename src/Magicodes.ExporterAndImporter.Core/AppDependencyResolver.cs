@@ -1,11 +1,12 @@
 ﻿#if NETSTANDARD
+
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AppDependencyResolver
     {
@@ -17,7 +18,7 @@ namespace Magicodes.ExporterAndImporter.Core
         public static bool HasInit => _resolver != null;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public static AppDependencyResolver Current
         {
@@ -57,7 +58,7 @@ namespace Magicodes.ExporterAndImporter.Core
         private IServiceProvider _serviceProvider;
 
         ///// <summary>
-        ///// 
+        /////
         ///// </summary>
         ///// <param name="serviceType"></param>
         ///// <returns></returns>
@@ -67,7 +68,7 @@ namespace Magicodes.ExporterAndImporter.Core
         //}
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -82,4 +83,5 @@ namespace Magicodes.ExporterAndImporter.Core
         }
     }
 }
-#endif 
+
+#endif
