@@ -9,12 +9,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: 🔨 Use .NET Core 3.1 SDK
+      - name: 🔨 Use .NET Core 3.1.X SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '3.1.x'
         
-      - name: 🔨 Use .NET 5.1 SDK
+      - name: 🔨 Use .NET 5.0.X SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '5.0.x'
@@ -22,3 +22,5 @@ jobs:
         run: dotnet restore
       - name: Build with dotnet
         run: dotnet build -c Release --no-restore
+      - name: Test with dotnet
+        run: dotnet test 

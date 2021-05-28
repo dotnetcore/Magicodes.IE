@@ -1,0 +1,47 @@
+﻿@using System.Data
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        table tr:nth-child(odd) { background-color: #f1f1f1; }
+
+        table tr:nth-child(even) { background-color: #ffffff; }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center">@Model.Title</h1>
+<h5>自定义模板</h5>
+<table width="90%">
+    <thead>
+    <tr>
+        @foreach (var header in Model.Headers)
+        {
+            <th>@header.DisplayName</th>
+        }
+    </tr>
+    </thead>
+    @{
+        DataTable dt = Model.ToDataTable();
+    }
+    @foreach (DataRow dr in dt.Rows)
+    {
+        <tr>
+            @for (var i = 0; i < dt.Columns.Count; i++)
+            {
+                <td>@dr[i]</td>
+            }
+        </tr>
+    }
+
+</table>
+</body>
+</html>
