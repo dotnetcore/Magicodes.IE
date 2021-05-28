@@ -1,14 +1,14 @@
 ﻿// ======================================================================
-// 
+//
 //           filename : Extension.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-09-11 13:51
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -126,30 +126,39 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                         case 0:
                             generator.Emit(OpCodes.Ldc_I4_0);
                             break;
+
                         case 1:
                             generator.Emit(OpCodes.Ldc_I4_1);
                             break;
+
                         case 2:
                             generator.Emit(OpCodes.Ldc_I4_2);
                             break;
+
                         case 3:
                             generator.Emit(OpCodes.Ldc_I4_3);
                             break;
+
                         case 4:
                             generator.Emit(OpCodes.Ldc_I4_4);
                             break;
+
                         case 5:
                             generator.Emit(OpCodes.Ldc_I4_5);
                             break;
+
                         case 6:
                             generator.Emit(OpCodes.Ldc_I4_6);
                             break;
+
                         case 7:
                             generator.Emit(OpCodes.Ldc_I4_7);
                             break;
+
                         case 8:
                             generator.Emit(OpCodes.Ldc_I4_8);
                             break;
+
                         default:
                             if (i <= 127)
                             {
@@ -174,7 +183,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 generator.Emit(OpCodes.Ret);
                 return (Action<DataRow, T>)dynamicMethod.CreateDelegate(typeof(Action<DataRow, T>));
             }
-
         }
 #else
 
@@ -204,6 +212,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         }
 
 #endif
+
         /// <summary>
         ///     将DataTable转List
         /// </summary>
@@ -232,7 +241,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
             return list;
         }
-
 
         /// <summary>
         /// 将Bytes导出为Excel文件
@@ -274,7 +282,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="fileName"></param>
         public static void CheckExcelFileName(this string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(Resource.FileNameShouldNotBeEmpty, nameof(fileName));
             if (!Path.GetExtension(fileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
@@ -293,6 +301,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 throw new ArgumentException("仅支持导出“.csv”!", nameof(fileName));
             }
         }
+
         /// <summary>
         /// </summary>
         /// <param name="url"></param>
@@ -320,6 +329,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             }
             return path;
         }
+
         /// <summary>
         ///     图片转base64
         /// </summary>
@@ -383,6 +393,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static void ValueMapping(this PropertyInfo propertyInfo, ref Dictionary<string, dynamic> directory)
         {
             #region 处理值映射
+
             var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
             var objects = directory;
             foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
@@ -420,7 +431,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                         directory.Add(string.Empty, null);
             }
 
-            #endregion
+            #endregion 处理值映射
         }
     }
 }

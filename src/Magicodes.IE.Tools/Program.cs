@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace Magicodes.IE.Tools
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Hello Magicodes.IE!");
 
@@ -22,7 +22,6 @@ namespace Magicodes.IE.Tools
                 Console.WriteLine("  https://github.com/dotnetcore/Magicodes.IE");
                 return;
             }
-
         }
     }
 }
