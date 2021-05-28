@@ -64,7 +64,12 @@ namespace Magicodes.ExporterAndImporter.Extensions
             {
                 context.Response.Headers.Add("Content-Disposition", $"attachment;filename={filename}");
                 context.Response.ContentType = contentType;
-                if (result != null) await context.Response.Body.WriteAsync(result, 0, result.Length);
+                if (result != null)
+                {
+                    context.Response.ContentLength = result.Length;
+                    await context.Response.Body.WriteAsync(result, 0, result.Length);
+                    await context.Response.Body.FlushAsync();
+                }
             }
             else
             {
