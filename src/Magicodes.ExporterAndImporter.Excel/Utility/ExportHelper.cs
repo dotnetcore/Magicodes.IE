@@ -408,12 +408,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (!IsExpandoObjectType)
             {
-                var list = ParseData(dataItems);
-                //IsExpandoObjectType = true;
-                if (list.Count()!=0)
-                {
-                    AddDataItems(list);
-                }
+                AddDataItems(ParseData(dataItems));
             }
             else
             {
@@ -570,12 +565,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         /// <param name="dataItems"></param>
         /// <param name="excelRange"></param>
-        protected void AddDataItems(dynamic dataItems, ExcelRangeBase excelRange = null)
+        protected void AddDataItems(IEnumerable<ExpandoObject> dataItems, ExcelRangeBase excelRange = null)
         {
             if (excelRange == null)
                 excelRange = CurrentExcelWorksheet.Cells["A1"];
 
-            if (dataItems == null)
+            if (dataItems == null || !dataItems.Any())
             {
                 return;
             }
@@ -598,6 +593,38 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 //else
                 excelRange.LoadFromDictionaries(dataItems, true, ExcelExporterSettings.TableStyle);
                 //CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+            }
+        }
+
+        /// <summary>
+        ///     添加导出数据
+        /// </summary>
+        /// <param name="dataItems"></param>
+        /// <param name="excelRange"></param>
+        protected void AddDataItems(IEnumerable<T> dataItems, ExcelRangeBase excelRange = null)
+        {
+            if (excelRange == null)
+                excelRange = CurrentExcelWorksheet.Cells["A1"];
+
+            if (dataItems == null || !dataItems.Any())
+            {
+                return;
+            }
+
+            if (ExcelExporterSettings.ExcelOutputType == ExcelOutputTypes.DataTable)
+            {
+                if (IsExpandoObjectType)
+                    excelRange.LoadFromDictionaries((IEnumerable<IDictionary<string, object>>)dataItems, true, ExcelExporterSettings.TableStyle);
+                else
+                {
+                    //如果TableStyle=None则Table不为null
+                    var er = excelRange.LoadFromCollection(dataItems, true, ExcelExporterSettings.TableStyle);
+                    CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+                }
+            }
+            else
+            {
+                excelRange.LoadFromCollection(dataItems, true, ExcelExporterSettings.TableStyle);
             }
         }
 
