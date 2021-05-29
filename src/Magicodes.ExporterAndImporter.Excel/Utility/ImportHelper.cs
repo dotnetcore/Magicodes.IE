@@ -1071,7 +1071,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     continue;
                                 }
                                 else if (propertyInfo.PropertyType.IsEnum
-                                    && (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
+                                    || (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                                          )
                                 {
                                     if (int.TryParse(cellValue, out int result))
