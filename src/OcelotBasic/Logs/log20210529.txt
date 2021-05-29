@@ -1,0 +1,154 @@
+2021-05-29 11:07:13.327 +08:00 [WRN] requestId: 0HM929RDJV2U4:00000001, previousRequestId: no previous request id, message: DownstreamRouteFinderMiddleware setting pipeline errors. IDownstreamRouteFinder returned Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET.
+2021-05-29 11:07:13.382 +08:00 [WRN] requestId: 0HM929RDJV2U4:00000001, previousRequestId: no previous request id, message: Failed to match ReRoute configuration for upstream path: /, verb: GET.
+2021-05-29 11:07:13.385 +08:00 [WRN] requestId: 0HM929RDJV2U4:00000001, previousRequestId: no previous request id, message: Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET. errors found in ResponderMiddleware. Setting error response for request path:/, request method: GET
+2021-05-29 11:07:23.908 +08:00 [WRN] requestId: 0HM929RDJV2U5:00000001, previousRequestId: no previous request id, message: DownstreamRouteFinderMiddleware setting pipeline errors. IDownstreamRouteFinder returned Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET.
+2021-05-29 11:07:23.910 +08:00 [WRN] requestId: 0HM929RDJV2U5:00000001, previousRequestId: no previous request id, message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET.
+2021-05-29 11:07:23.912 +08:00 [WRN] requestId: 0HM929RDJV2U5:00000001, previousRequestId: no previous request id, message: Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET. errors found in ResponderMiddleware. Setting error response for request path:/api/Magicodes/excel, request method: GET
+2021-05-29 11:07:50.491 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000001, previousRequestId: no previous request id, message: DownstreamRouteFinderMiddleware setting pipeline errors. IDownstreamRouteFinder returned Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET.
+2021-05-29 11:07:50.536 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000001, previousRequestId: no previous request id, message: Failed to match ReRoute configuration for upstream path: /, verb: GET.
+2021-05-29 11:07:50.539 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000001, previousRequestId: no previous request id, message: Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /, verb: GET. errors found in ResponderMiddleware. Setting error response for request path:/, request method: GET
+2021-05-29 11:08:01.588 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000003, previousRequestId: no previous request id, message: DownstreamRouteFinderMiddleware setting pipeline errors. IDownstreamRouteFinder returned Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET.
+2021-05-29 11:08:01.589 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000003, previousRequestId: no previous request id, message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET.
+2021-05-29 11:08:01.589 +08:00 [WRN] requestId: 0HM929ROM6T7G:00000003, previousRequestId: no previous request id, message: Error Code: UnableToFindDownstreamRouteError Message: Failed to match ReRoute configuration for upstream path: /api/Magicodes/excel, verb: GET. errors found in ResponderMiddleware. Setting error response for request path:/api/Magicodes/excel, request method: GET
+2021-05-29 11:10:00.520 +08:00 [FTL] Application startup exception
+System.AggregateException: One or more errors occurred. (Unable to start Ocelot, errors are: Downstream Path Template api/{url} doesnt start with forward slash,Upstream Path Template api/{url} doesnt start with forward slash)
+ ---> System.Exception: Unable to start Ocelot, errors are: Downstream Path Template api/{url} doesnt start with forward slash,Upstream Path Template api/{url} doesnt start with forward slash
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.ThrowToStopOcelotStarting(Response config)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.CreateConfiguration(IApplicationBuilder builder)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.UseOcelot(IApplicationBuilder builder, OcelotPipelineConfiguration pipelineConfiguration)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.UseOcelot(IApplicationBuilder builder)
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait()
+   at OcelotBasic.Program.<>c.<Main>b__0_4(IApplicationBuilder app) in C:\Users\hueif\Desktop\Ocelot\samples\OcelotBasic\Program.cs:line 50
+   at Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.<>c__DisplayClass0_0.<Configure>b__0(WebHostBuilderContext _, IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.<>c__DisplayClass2_1.<Configure>b__2(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.DelegateStartup.Configure(IApplicationBuilder app)
+   at Microsoft.AspNetCore.MiddlewareAnalysis.AnalysisStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Mvc.Filters.MiddlewareFilterBuilderStartupFilter.<>c__DisplayClass0_0.<Configure>g__MiddlewareFilterBuilder|0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Hosting.WebHost.BuildApplication()
+2021-05-29 11:10:13.778 +08:00 [FTL] Application startup exception
+System.AggregateException: One or more errors occurred. (Unable to start Ocelot, errors are: Downstream Path Template api/{url} doesnt start with forward slash,Upstream Path Template api/{url} doesnt start with forward slash)
+ ---> System.Exception: Unable to start Ocelot, errors are: Downstream Path Template api/{url} doesnt start with forward slash,Upstream Path Template api/{url} doesnt start with forward slash
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.ThrowToStopOcelotStarting(Response config)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.CreateConfiguration(IApplicationBuilder builder)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.UseOcelot(IApplicationBuilder builder, OcelotPipelineConfiguration pipelineConfiguration)
+   at Ocelot.Middleware.OcelotMiddlewareExtensions.UseOcelot(IApplicationBuilder builder)
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   at System.Threading.Tasks.Task.Wait()
+   at OcelotBasic.Program.<>c.<Main>b__0_4(IApplicationBuilder app) in C:\Users\hueif\Desktop\Ocelot\samples\OcelotBasic\Program.cs:line 50
+   at Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.<>c__DisplayClass0_0.<Configure>b__0(WebHostBuilderContext _, IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.WebHostBuilderExtensions.<>c__DisplayClass2_1.<Configure>b__2(IApplicationBuilder app)
+   at Microsoft.AspNetCore.Hosting.DelegateStartup.Configure(IApplicationBuilder app)
+   at Microsoft.AspNetCore.MiddlewareAnalysis.AnalysisStartupFilter.<>c__DisplayClass0_0.<Configure>b__0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Mvc.Filters.MiddlewareFilterBuilderStartupFilter.<>c__DisplayClass0_0.<Configure>g__MiddlewareFilterBuilder|0(IApplicationBuilder builder)
+   at Microsoft.AspNetCore.Hosting.WebHost.BuildApplication()
+2021-05-29 11:10:31.826 +08:00 [INF] requestId: 0HM929T8O0VB2:00000001, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:31.869 +08:00 [INF] requestId: 0HM929T8O0VB2:00000001, previousRequestId: no previous request id, message: No authentication needed for /
+2021-05-29 11:10:31.872 +08:00 [INF] requestId: 0HM929T8O0VB2:00000001, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:32.036 +08:00 [WRN] requestId: 0HM929T8O0VB2:00000001, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/
+2021-05-29 11:10:35.473 +08:00 [INF] requestId: 0HM929T8O0VB2:00000003, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.475 +08:00 [INF] requestId: 0HM929T8O0VB2:00000003, previousRequestId: no previous request id, message: No authentication needed for /swagger
+2021-05-29 11:10:35.476 +08:00 [INF] requestId: 0HM929T8O0VB2:00000003, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.479 +08:00 [INF] requestId: 0HM929T8O0VB2:00000003, previousRequestId: no previous request id, message: 301 (Moved Permanently) status code, request uri: https://localhost:5002/swagger
+2021-05-29 11:10:35.482 +08:00 [INF] requestId: 0HM929T8O0VB2:00000005, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.483 +08:00 [INF] requestId: 0HM929T8O0VB2:00000005, previousRequestId: no previous request id, message: No authentication needed for /swagger/index.html
+2021-05-29 11:10:35.484 +08:00 [INF] requestId: 0HM929T8O0VB2:00000005, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.486 +08:00 [INF] requestId: 0HM929T8O0VB2:00000005, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/index.html
+2021-05-29 11:10:35.504 +08:00 [INF] requestId: 0HM929T8O0VB2:00000007, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.504 +08:00 [INF] requestId: 0HM929T8O0VB2:00000009, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.504 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000B, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.506 +08:00 [INF] requestId: 0HM929T8O0VB2:00000007, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui.css
+2021-05-29 11:10:35.510 +08:00 [INF] requestId: 0HM929T8O0VB2:00000009, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui-bundle.js
+2021-05-29 11:10:35.511 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000B, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui-standalone-preset.js
+2021-05-29 11:10:35.512 +08:00 [INF] requestId: 0HM929T8O0VB2:00000007, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.513 +08:00 [INF] requestId: 0HM929T8O0VB2:00000009, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.514 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000B, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.519 +08:00 [INF] requestId: 0HM929T8O0VB2:00000007, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/swagger-ui.css
+2021-05-29 11:10:35.522 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000B, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/swagger-ui-standalone-preset.js
+2021-05-29 11:10:35.528 +08:00 [INF] requestId: 0HM929T8O0VB2:00000009, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/swagger-ui-bundle.js
+2021-05-29 11:10:35.884 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000D, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.885 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000D, previousRequestId: no previous request id, message: No authentication needed for /swagger/v1/swagger.json
+2021-05-29 11:10:35.887 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000D, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.892 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000D, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/v1/swagger.json
+2021-05-29 11:10:35.978 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000F, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:10:35.980 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000F, previousRequestId: no previous request id, message: No authentication needed for /swagger/favicon-32x32.png
+2021-05-29 11:10:35.982 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000F, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:10:35.984 +08:00 [INF] requestId: 0HM929T8O0VB2:0000000F, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/swagger/favicon-32x32.png
+2021-05-29 11:10:39.909 +08:00 [INF] requestId: 0HM929T8O0VB2:00000011, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:10:39.912 +08:00 [INF] requestId: 0HM929T8O0VB2:00000011, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:10:39.915 +08:00 [INF] requestId: 0HM929T8O0VB2:00000011, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:10:39.937 +08:00 [INF] requestId: 0HM929T8O0VB2:00000011, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:11:32.598 +08:00 [INF] requestId: 0HM929T8O0VB2:00000013, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:11:32.599 +08:00 [INF] requestId: 0HM929T8O0VB2:00000013, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:11:32.601 +08:00 [INF] requestId: 0HM929T8O0VB2:00000013, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:11:33.162 +08:00 [INF] requestId: 0HM929T8O0VB2:00000013, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:12:58.889 +08:00 [INF] requestId: 0HM929T8O0VB2:00000015, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:12:58.892 +08:00 [INF] requestId: 0HM929T8O0VB2:00000015, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:12:58.894 +08:00 [INF] requestId: 0HM929T8O0VB2:00000015, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:12:59.560 +08:00 [INF] requestId: 0HM929T8O0VB2:00000015, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:13:07.117 +08:00 [INF] requestId: 0HM929T8O0VB2:00000017, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:07.117 +08:00 [INF] requestId: 0HM929T8O0VB2:00000019, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:07.119 +08:00 [INF] requestId: 0HM929T8O0VB2:00000017, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui-bundle.js.map
+2021-05-29 11:13:07.121 +08:00 [INF] requestId: 0HM929T8O0VB2:00000019, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui-standalone-preset.js.map
+2021-05-29 11:13:07.122 +08:00 [INF] requestId: 0HM929T8O0VB2:00000017, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:07.123 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001B, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:07.124 +08:00 [INF] requestId: 0HM929T8O0VB2:00000019, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:07.127 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001B, previousRequestId: no previous request id, message: No authentication needed for /swagger/swagger-ui.css.map
+2021-05-29 11:13:07.131 +08:00 [WRN] requestId: 0HM929T8O0VB2:00000017, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/swagger/swagger-ui-bundle.js.map
+2021-05-29 11:13:07.132 +08:00 [WRN] requestId: 0HM929T8O0VB2:00000019, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/swagger/swagger-ui-standalone-preset.js.map
+2021-05-29 11:13:07.134 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001B, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:07.143 +08:00 [WRN] requestId: 0HM929T8O0VB2:0000001B, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/swagger/swagger-ui.css.map
+2021-05-29 11:13:15.673 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001D, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:15.676 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001D, previousRequestId: no previous request id, message: No authentication needed for //api/Magicodes/excel
+2021-05-29 11:13:15.677 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001D, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:15.680 +08:00 [WRN] requestId: 0HM929T8O0VB2:0000001D, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002//api/Magicodes/excel
+2021-05-29 11:13:19.711 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001F, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:13:19.714 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001F, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:13:19.716 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001F, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:13:19.778 +08:00 [INF] requestId: 0HM929T8O0VB2:0000001F, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:13:19.941 +08:00 [INF] requestId: 0HM929T8O0VB2:00000021, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:19.943 +08:00 [INF] requestId: 0HM929T8O0VB2:00000021, previousRequestId: no previous request id, message: No authentication needed for /favicon.ico
+2021-05-29 11:13:19.944 +08:00 [INF] requestId: 0HM929T8O0VB2:00000021, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:19.947 +08:00 [WRN] requestId: 0HM929T8O0VB2:00000021, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/favicon.ico
+2021-05-29 11:13:36.963 +08:00 [INF] requestId: 0HM929T8O0VB2:00000023, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:13:36.966 +08:00 [INF] requestId: 0HM929T8O0VB2:00000023, previousRequestId: no previous request id, message: No authentication needed for /index
+2021-05-29 11:13:36.968 +08:00 [INF] requestId: 0HM929T8O0VB2:00000023, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:13:37.031 +08:00 [INF] requestId: 0HM929T8O0VB2:00000023, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/index
+2021-05-29 11:13:39.374 +08:00 [INF] requestId: 0HM929T8O0VB2:00000025, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:13:39.377 +08:00 [INF] requestId: 0HM929T8O0VB2:00000025, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:13:39.379 +08:00 [INF] requestId: 0HM929T8O0VB2:00000025, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:13:39.418 +08:00 [INF] requestId: 0HM929T8O0VB2:00000025, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:50:26.187 +08:00 [INF] requestId: 0HM92AJIAED0K:00000001, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:50:26.239 +08:00 [INF] requestId: 0HM92AJIAED0K:00000001, previousRequestId: no previous request id, message: No authentication needed for /
+2021-05-29 11:50:26.244 +08:00 [INF] requestId: 0HM92AJIAED0K:00000001, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:50:26.474 +08:00 [INF] requestId: 0HM92AJIAED0K:00000001, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/
+2021-05-29 11:50:26.682 +08:00 [INF] requestId: 0HM92AJIAED0K:00000003, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:50:26.686 +08:00 [INF] requestId: 0HM92AJIAED0K:00000003, previousRequestId: no previous request id, message: No authentication needed for /favicon.ico
+2021-05-29 11:50:26.687 +08:00 [INF] requestId: 0HM92AJIAED0K:00000003, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:50:26.694 +08:00 [WRN] requestId: 0HM92AJIAED0K:00000003, previousRequestId: no previous request id, message: 404 (Not Found) status code, request uri: https://localhost:5002/favicon.ico
+2021-05-29 11:50:28.820 +08:00 [INF] requestId: 0HM92AJIAED0K:00000005, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:50:28.825 +08:00 [INF] requestId: 0HM92AJIAED0K:00000005, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:50:28.828 +08:00 [INF] requestId: 0HM92AJIAED0K:00000005, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:50:29.419 +08:00 [INF] requestId: 0HM92AJIAED0K:00000005, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:53:06.186 +08:00 [INF] requestId: 0HM92AJIAED0L:00000001, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /{url}
+2021-05-29 11:53:06.189 +08:00 [INF] requestId: 0HM92AJIAED0L:00000001, previousRequestId: no previous request id, message: No authentication needed for /
+2021-05-29 11:53:06.190 +08:00 [INF] requestId: 0HM92AJIAED0L:00000001, previousRequestId: no previous request id, message: /{url} route does not require user to be authorised
+2021-05-29 11:53:06.286 +08:00 [INF] requestId: 0HM92AJIAED0L:00000001, previousRequestId: no previous request id, message: 200 (OK) status code, request uri: https://localhost:5002/
+2021-05-29 11:53:07.437 +08:00 [INF] requestId: 0HM92AJIAED0L:00000003, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:53:07.440 +08:00 [INF] requestId: 0HM92AJIAED0L:00000003, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:53:07.443 +08:00 [INF] requestId: 0HM92AJIAED0L:00000003, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:53:08.074 +08:00 [WRN] requestId: 0HM92AJIAED0L:00000003, previousRequestId: no previous request id, message: 500 (Internal Server Error) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:53:13.436 +08:00 [INF] requestId: 0HM92AJIAED0L:00000005, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:53:13.439 +08:00 [INF] requestId: 0HM92AJIAED0L:00000005, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:53:13.449 +08:00 [INF] requestId: 0HM92AJIAED0L:00000005, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:53:13.492 +08:00 [WRN] requestId: 0HM92AJIAED0L:00000005, previousRequestId: no previous request id, message: 500 (Internal Server Error) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:54:55.000 +08:00 [INF] requestId: 0HM92AJIAED0L:00000007, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:54:55.040 +08:00 [INF] requestId: 0HM92AJIAED0L:00000007, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:54:55.049 +08:00 [INF] requestId: 0HM92AJIAED0L:00000007, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:55:11.435 +08:00 [WRN] requestId: 0HM92AJIAED0L:00000007, previousRequestId: no previous request id, message: 500 (Internal Server Error) status code, request uri: https://localhost:5002/api/Magicodes/excel
+2021-05-29 11:59:48.572 +08:00 [INF] requestId: 0HM92AJIAED0M:00000001, previousRequestId: no previous request id, message: EndpointRateLimiting is not enabled for /api/{url}
+2021-05-29 11:59:48.575 +08:00 [INF] requestId: 0HM92AJIAED0M:00000001, previousRequestId: no previous request id, message: No authentication needed for /api/Magicodes/excel
+2021-05-29 11:59:48.578 +08:00 [INF] requestId: 0HM92AJIAED0M:00000001, previousRequestId: no previous request id, message: /api/{url} route does not require user to be authorised
+2021-05-29 11:59:50.705 +08:00 [WRN] requestId: 0HM92AJIAED0M:00000001, previousRequestId: no previous request id, message: 500 (Internal Server Error) status code, request uri: https://localhost:5002/api/Magicodes/excel

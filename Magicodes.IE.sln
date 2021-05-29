@@ -52,7 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.Benchmarks", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.AspNetCore", "src\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.ExporterAndImporter.AspNetCore.csproj", "{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotBasic", "src\OcelotBasic\OcelotBasic.csproj", "{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +106,10 @@ Global
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{46468401-A16B-448E-A029-F7A95F985031} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 		{39A45037-2DC2-4F6D-81F5-6984062F6366} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{FBA9C497-E29F-4EEE-9C56-BA5C69EEA07A} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
