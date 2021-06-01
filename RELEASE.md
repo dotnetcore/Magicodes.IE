@@ -1,5 +1,23 @@
 # Release Log
 
+## 2.5.3.9
+
+**2021.05.26**
+- 修复ValueMappingAttribute[#272](https://github.com/dotnetcore/Magicodes.IE/issues/272)
+
+## 2.5.3.8
+
+**2021.05.10**
+
+- Excel模板导出功能，将单行复制改为多行复制
+- PDF导出内存优化
+
+## 2.5.3.7
+
+**2021.04.23**
+- 修复导入模板生成，格式错误[#261](https://github.com/dotnetcore/Magicodes.IE/issues/261)
+例如：
+
 ## 2.5.3.6
 
 **2021.04.18**

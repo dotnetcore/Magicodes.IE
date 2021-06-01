@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 using Xunit.Abstractions;
+using System.Globalization;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -26,6 +27,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         private readonly ITestOutputHelper _testOutputHelper;
+
         /// <summary>
         ///    见Issue：https://github.com/dotnetcore/Magicodes.IE/issues/73
         /// </summary>
@@ -55,7 +57,6 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "导出枚举值测试")]
         public async Task Export_EnumText_Test()
         {
-
             IExporter exporter = new ExcelExporter();
 
             var filePath = GetTestFilePath($"{nameof(Export_EnumText_Test)}.xlsx");
@@ -78,7 +79,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 
                 sheet.Cells["B3"].Text.Equals("女");
             }
-
         }
 
         /// <summary>
@@ -126,7 +126,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                             ImageUrl = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "issue131.png")
                         }
                     }
-
                 }, tplPath);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -137,7 +136,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 var pic = ec.Drawings[0] as ExcelPicture;
                 pic.GetPrivateProperty<int>("_height").ShouldBe(120);
                 pic.GetPrivateProperty<int>("_width").ShouldBe(120);
-
             }
         }
 
@@ -180,7 +178,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (importResult.HasError)
             {
                 _testOutputHelper.WriteLine(importResult.Exception?.ToString());
-
             }
             importResult.HasError.ShouldBeFalse();
 
@@ -201,11 +198,22 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.TestDateTimeOffset1.ShouldBe(data[i].TestDateTimeOffset1);
                 item.TestDateTimeOffset2.ShouldBe(data[i].TestDateTimeOffset2);
             }
-
         }
 
+        [Fact(DisplayName = "Resources_Test")]
+        public async Task Resources_Test()
+        {
+            IExcelImporter Importer = new ExcelImporter();
+            var exception = await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                await Importer.Import<Issue236>(filePath: null);
+            });
+            exception.Message.ShouldContain(Resource.FileNameShouldNotBeEmpty);
 
-
-
+            Resource.Culture = new CultureInfo("en");
+            Resource.FileNameShouldNotBeEmpty.ShouldBe("The file name cannot be empty!");
+            Resource.Culture = new CultureInfo("zh-Hans");
+            Resource.FileNameShouldNotBeEmpty.ShouldBe("文件名不能为空！");
+        }
     }
 }

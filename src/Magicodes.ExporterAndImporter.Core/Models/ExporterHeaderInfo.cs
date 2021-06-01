@@ -11,6 +11,7 @@
 // 
 // ======================================================================
 
+using System;
 using System.Collections.Generic;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
@@ -52,6 +53,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
 
         /// <summary>
         /// </summary>
-        public Dictionary<dynamic, string> MappingValues { get; set; } = new Dictionary<dynamic, string>();
+        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
+        //public Dictionary<dynamic, string> MappingValues { get; set; } = new Dictionary<dynamic, string>();
     }
 }
