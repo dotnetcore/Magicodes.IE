@@ -1234,14 +1234,24 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).AddDataItems(DataTable, ExcelRangeBase)
   nameWithType: ExportHelper<T>.AddDataItems(DataTable, ExcelRangeBase)
   nameWithType.vb: ExportHelper(Of T).AddDataItems(DataTable, ExcelRangeBase)
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(System.Object,ExcelRangeBase)
-  name: AddDataItems(Object, ExcelRangeBase)
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_System_Object_ExcelRangeBase_
-  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(System.Object,ExcelRangeBase)
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.AddDataItems(System.Object, ExcelRangeBase)
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).AddDataItems(System.Object, ExcelRangeBase)
-  nameWithType: ExportHelper<T>.AddDataItems(Object, ExcelRangeBase)
-  nameWithType.vb: ExportHelper(Of T).AddDataItems(Object, ExcelRangeBase)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{`0},ExcelRangeBase)
+  name: AddDataItems(IEnumerable<T>, ExcelRangeBase)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_IEnumerable__0__ExcelRangeBase_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{`0},ExcelRangeBase)
+  name.vb: AddDataItems(IEnumerable(Of T), ExcelRangeBase)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.AddDataItems(IEnumerable<T>, ExcelRangeBase)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).AddDataItems(IEnumerable(Of T), ExcelRangeBase)
+  nameWithType: ExportHelper<T>.AddDataItems(IEnumerable<T>, ExcelRangeBase)
+  nameWithType.vb: ExportHelper(Of T).AddDataItems(IEnumerable(Of T), ExcelRangeBase)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{ExpandoObject},ExcelRangeBase)
+  name: AddDataItems(IEnumerable<ExpandoObject>, ExcelRangeBase)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_IEnumerable_ExpandoObject__ExcelRangeBase_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{ExpandoObject},ExcelRangeBase)
+  name.vb: AddDataItems(IEnumerable(Of ExpandoObject), ExcelRangeBase)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.AddDataItems(IEnumerable<ExpandoObject>, ExcelRangeBase)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).AddDataItems(IEnumerable(Of ExpandoObject), ExcelRangeBase)
+  nameWithType: ExportHelper<T>.AddDataItems(IEnumerable<ExpandoObject>, ExcelRangeBase)
+  nameWithType.vb: ExportHelper(Of T).AddDataItems(IEnumerable(Of ExpandoObject), ExcelRangeBase)
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems*
   name: AddDataItems
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_

@@ -110,7 +110,7 @@
   <h5 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class ExportHelper&lt;T&gt;
-    where T : class</code></pre>
+    where T : class, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -567,13 +567,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_System_Object_ExcelRangeBase_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(System.Object,ExcelRangeBase)">AddDataItems(Object, ExcelRangeBase)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_IEnumerable__0__ExcelRangeBase_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{`0},ExcelRangeBase)">AddDataItems(IEnumerable&lt;T&gt;, ExcelRangeBase)</h4>
   <div class="markdown level1 summary"><p>添加导出数据</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected void AddDataItems(dynamic dataItems, ExcelRangeBase excelRange = null)</code></pre>
+    <pre><code class="lang-csharp hljs">protected void AddDataItems(IEnumerable&lt;T&gt; dataItems, ExcelRangeBase excelRange = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -586,7 +586,40 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Object</span></td>
+        <td><span class="xref">IEnumerable</span>&lt;T&gt;</td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">ExcelRangeBase</span></td>
+        <td><span class="parametername">excelRange</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_AddDataItems_IEnumerable_ExpandoObject__ExcelRangeBase_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.AddDataItems(IEnumerable{ExpandoObject},ExcelRangeBase)">AddDataItems(IEnumerable&lt;ExpandoObject&gt;, ExcelRangeBase)</h4>
+  <div class="markdown level1 summary"><p>添加导出数据</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void AddDataItems(IEnumerable&lt;ExpandoObject&gt; dataItems, ExcelRangeBase excelRange = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">ExpandoObject</span>&gt;</td>
         <td><span class="parametername">dataItems</span></td>
         <td></td>
       </tr>
@@ -985,12 +1018,11 @@
   
   <a id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ParseData_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ParseData*"></a>
   <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ParseData_ICollection__0__" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ParseData(ICollection{`0})">ParseData(ICollection&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>数据解析</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual DataTable ParseData(ICollection&lt;T&gt; dataItems)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual IEnumerable&lt;ExpandoObject&gt; ParseData(ICollection&lt;T&gt; dataItems)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1019,7 +1051,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">DataTable</span></td>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">ExpandoObject</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
