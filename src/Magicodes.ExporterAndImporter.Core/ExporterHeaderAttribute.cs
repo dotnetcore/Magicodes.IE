@@ -84,5 +84,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 自动换行
         /// </summary>
         public bool WrapText { get; set; }
+
+        /// <summary>
+        /// Hidden
+        /// </summary>
+        public bool Hidden { get; set; }
     }
 }

@@ -1150,6 +1150,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         col.Style.WrapText = exporterHeader.ExporterHeaderAttribute.WrapText;
                     }
+
+                    col.Style.Hidden = exporterHeader.ExporterHeaderAttribute.Hidden;
                 }
             }
         }

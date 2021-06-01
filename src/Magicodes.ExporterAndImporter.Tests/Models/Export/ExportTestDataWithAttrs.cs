@@ -31,7 +31,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// <summary>
         /// Text2：索引1
         /// </summary>
-        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1)]
+        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1, Hidden = true)]
         public string Text2 { get; set; }
         /// <summary>
         /// Text3:索引2
