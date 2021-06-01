@@ -26,12 +26,12 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// <summary>
         /// Text：索引10
         /// </summary>
-        [ExporterHeader(DisplayName = "加粗文本", IsBold = true, ColumnIndex = 10)]
+        [ExporterHeader(DisplayName = "加粗文本", IsBold = true, ColumnIndex = 10, WrapText = true)]
         public string Text { get; set; }
         /// <summary>
         /// Text2：索引1
         /// </summary>
-        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1)]
+        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1, Hidden = true)]
         public string Text2 { get; set; }
         /// <summary>
         /// Text3:索引2

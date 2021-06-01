@@ -1,5 +1,13 @@
 # Release Log
 
+## 2.5.4.0
+
+**2021.06.01**
+
+- EXCEL支持自动换行属性[#278](https://github.com/dotnetcore/Magicodes.IE/issues/278)
+- EXCEL支持隐藏列属性[#273](https://github.com/dotnetcore/Magicodes.IE/issues/273)
+- EXCEL优化时间优化
+
 ## 2.5.3.9
 
 **2021.05.26**
