@@ -108,6 +108,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             //模板路径
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
                 "DynamicExportTpl.xlsx");
+
+            //var tplPat1h = Path.Combine(Directory.GetCurrentDirectory(), "JSON.json");
+            //var tpl = File.ReadAllText(tplPat1h);
+            //var jobj = JObject.Parse(tpl);
+            ////模板路径
+            //var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "款式信息SPU.xlsx");
             //创建Excel导出对象
             IExportFileByTemplate exporter = new ExcelExporter();
             //导出路径

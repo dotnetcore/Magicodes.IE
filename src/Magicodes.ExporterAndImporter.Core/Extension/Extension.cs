@@ -311,6 +311,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             var wc = new System.Net.WebClient();
+            wc.Proxy = null;
             return new Bitmap(wc.OpenRead(url));
         }
 
