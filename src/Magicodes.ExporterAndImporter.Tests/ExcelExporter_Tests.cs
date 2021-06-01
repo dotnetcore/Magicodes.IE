@@ -76,6 +76,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             foreach (var item in data)
             {
                 item.LongNo = 458752665;
+                item.Text = "测试长度超出单元格的字符串";
             }
 
             var result = await exporter.Export(filePath, data);

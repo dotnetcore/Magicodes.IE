@@ -960,6 +960,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     }
+
+                    if (exporterHeader.ExporterHeaderAttribute.WrapText)
+                    {
+                        col.Style.WrapText = exporterHeader.ExporterHeaderAttribute.WrapText;
+                    }
                 }
             }
         }

@@ -79,8 +79,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 排序
         /// </summary>
         public int ColumnIndex { get; set; } = 10000;
+
+        /// <summary>
+        /// 自动换行
+        /// </summary>
+        public bool WrapText { get; set; }
     }
-
-
-
 }
