@@ -1453,7 +1453,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 #if NET461
             return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
                    excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[1];
+                   excelPackage.Workbook.Worksheets[0];
 #else
             return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
                    excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??

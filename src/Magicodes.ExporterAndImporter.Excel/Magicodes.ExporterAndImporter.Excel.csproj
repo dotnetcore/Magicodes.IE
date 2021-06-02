@@ -6,12 +6,14 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.3" />
-    <PackageReference Include="Magicodes.EPPlus" Version="4.6.4" />
+    <!--<PackageReference Include="Magicodes.EPPlus" Version="4.6.4" />-->
+    <!--<PackageReference Include="Magicodes.EPPlus" Version="4.6.3" />-->
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.6" />
     <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\EPPlus\EPPlus\EPPlus.MultiTarget.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
   </ItemGroup>
 </Project>

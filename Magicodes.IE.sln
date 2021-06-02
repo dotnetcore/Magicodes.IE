@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImport
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPPlus.MultiTarget", "..\..\EPPlus\EPPlus\EPPlus.MultiTarget.csproj", "{D6AF4BDE-F903-41E0-B464-BF8876931FE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6AF4BDE-F903-41E0-B464-BF8876931FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6AF4BDE-F903-41E0-B464-BF8876931FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6AF4BDE-F903-41E0-B464-BF8876931FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6AF4BDE-F903-41E0-B464-BF8876931FE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,7 +121,7 @@ Global
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal

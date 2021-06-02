@@ -75,26 +75,26 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             if (_isSeparateColumn)
             {
-#if NET461
-                helper.CopySheet(1,
-                    2);
-#else
+//#if NET461
                 helper.CopySheet(0,
-                      1);
-#endif
+                    1);
+//#else
+//                helper.CopySheet(0,
+//                      1);
+//#endif
 
                 _isSeparateColumn = false;
             }
 
             if (_isSeparateByRow)
             {
-#if NET461
-                helper.CopyRows(1,
-                    2, _isAppendHeaders);
-#else
+//#if NET461
+//                helper.CopyRows(0,
+//                    1, _isAppendHeaders);
+//#else
                 helper.CopyRows(0,
                       1, _isAppendHeaders);
-#endif
+//#endif
             }
 
             _isSeparateBySheet = false;

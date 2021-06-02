@@ -94,26 +94,26 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "模板导出动态导出测试")]
         public async Task DynamicExportWithJObjectByTemplate_Test()
         {
-            string json = @"{
-              'Company': '雪雁',
-              'Address': '湖南长沙',
-              'Contact': '雪雁',
-              'Tel': '136xxx',
-              'BookInfos': [
-                {'No':'a1','RowNo':1,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'},
-                {'No':'a2','RowNo':2,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'}
-              ]
-            }";
-            var jobj = JObject.Parse(json);
-            //模板路径
-            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "DynamicExportTpl.xlsx");
-
-            //var tplPat1h = Path.Combine(Directory.GetCurrentDirectory(), "JSON.json");
-            //var tpl = File.ReadAllText(tplPat1h);
-            //var jobj = JObject.Parse(tpl);
+            //string json = @"{
+            //  'Company': '雪雁',
+            //  'Address': '湖南长沙',
+            //  'Contact': '雪雁',
+            //  'Tel': '136xxx',
+            //  'BookInfos': [
+            //    {'No':'a1','RowNo':1,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'},
+            //    {'No':'a2','RowNo':2,'Name':'Docker+Kubernetes应用开发与快速上云','EditorInChief':'李文强','PublishingHouse':'机械工业出版社','Price':65,'PurchaseQuantity':10000,'Cover':'https://img9.doubanio.com/view/ark_article_cover/retina/public/135025435.jpg?v=1585121965','Remark':'备注'}
+            //  ]
+            //}";
+            //var jobj = JObject.Parse(json);
             ////模板路径
-            //var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "款式信息SPU.xlsx");
+            //var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+            //    "DynamicExportTpl.xlsx");
+
+            var tplPat1h = Path.Combine(Directory.GetCurrentDirectory(), "JSON.json");
+            var tpl = File.ReadAllText(tplPat1h);
+            var jobj = JObject.Parse(tpl);
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "款式信息SPU.xlsx");
             //创建Excel导出对象
             IExportFileByTemplate exporter = new ExcelExporter();
             //导出路径
