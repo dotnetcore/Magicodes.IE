@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExportingIsOnlySupportedXLSX" xml:space="preserve">
+    <value>仅支持导出“.xlsx”，即不支持Excel97-2003!</value>
+  </data>
+  <data name="FileNameMustBeFilled" xml:space="preserve">
+    <value>文件名必须填写！</value>
+  </data>
   <data name="FileNameShouldNotBeEmpty" xml:space="preserve">
     <value>文件名不能为空！</value>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="OnlySupportExportingCsv" xml:space="preserve">
+    <value>仅支持导出“.csv”!</value>
   </data>
 </root>

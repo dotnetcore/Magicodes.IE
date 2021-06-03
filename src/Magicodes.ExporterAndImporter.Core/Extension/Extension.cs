@@ -285,7 +285,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(Resource.FileNameShouldNotBeEmpty, nameof(fileName));
             if (!Path.GetExtension(fileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException("仅支持导出“.xlsx”，即不支持Excel97-2003!", nameof(fileName));
+                throw new ArgumentException(Resource.ExportingIsOnlySupportedXLSX, nameof(fileName));
             }
         }
 
@@ -295,10 +295,10 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <param name="fileName"></param>
         public static void CheckCsvFileName(this string fileName)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, nameof(fileName));
             if (!Path.GetExtension(fileName).Equals(".csv", StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException("仅支持导出“.csv”!", nameof(fileName));
+                throw new ArgumentException(Resource.OnlySupportExportingCsv, nameof(fileName));
             }
         }
 
@@ -409,8 +409,8 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 case "Boolean":
                 case "Nullable<Boolean>":
                     {
-                        if (!directory.ContainsKey("是")) directory.Add("是", true);
-                        if (!directory.ContainsKey("否")) directory.Add("否", false);
+                        if (!directory.ContainsKey(Resource.Is)) directory.Add(Resource.Is, true);
+                        if (!directory.ContainsKey(Resource.No)) directory.Add(Resource.No, false);
                         break;
                     }
             }
