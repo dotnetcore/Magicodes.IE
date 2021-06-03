@@ -658,44 +658,45 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             propertyInfo.PropertyType.GetNullableUnderlyingType() != null &&
                             propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                         {
-                            var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
-                            if (value != null)
                             {
-                                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-
-                                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value.ToLower()))
+                                var value = (int)type.GetProperty(propertyInfo.Name)?.GetValue(dataItem);
                                 {
-                                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-                                    //dr[propertyInfo.Name] = mapValue.Value;
-                                    ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Value;
-                                }
-                                else
-                                {
-                                    var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
-                                    if (enumDefinitionList == null)
-                                    {
-                                        enumDefinitionList = propertyInfo.PropertyType.GetNullableUnderlyingType()
-                                            .GetEnumDefinitionList();
-                                    }
+                                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
 
-                                    var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
-                                    if (tuple != null)
+                                    if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value))
                                     {
-                                        if (!tuple.Item4.IsNullOrWhiteSpace())
-                                        {
-                                            //dr[propertyInfo.Name] = tuple.Item4;
-                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
-                                        }
-                                        else
-                                        {
-                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
-                                            // dr[propertyInfo.Name] = tuple.Item2;
-                                        }
+                                        var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == value);
+                                        //dr[propertyInfo.Name] = mapValue.Value;
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
                                     }
                                     else
                                     {
-                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
-                                        //dr[propertyInfo.Name] = value;
+                                        var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
+                                        if (enumDefinitionList == null)
+                                        {
+                                            enumDefinitionList = propertyInfo.PropertyType.GetNullableUnderlyingType()
+                                                .GetEnumDefinitionList();
+                                        }
+
+                                        var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value.ToString());
+                                        if (tuple != null)
+                                        {
+                                            if (!tuple.Item4.IsNullOrWhiteSpace())
+                                            {
+                                                //dr[propertyInfo.Name] = tuple.Item4;
+                                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item4;
+                                            }
+                                            else
+                                            {
+                                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = tuple.Item2;
+                                                // dr[propertyInfo.Name] = tuple.Item2;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                                            //dr[propertyInfo.Name] = value;
+                                        }
                                     }
                                 }
                             }
