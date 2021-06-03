@@ -61,11 +61,56 @@ namespace Magicodes.ExporterAndImporter.Core {
         }
         
         /// <summary>
+        ///   查找类似 Exporting &quot;.xlsx &quot;is only supported, that is, Excel97-2003 is not supported! 的本地化字符串。
+        /// </summary>
+        public static string ExportingIsOnlySupportedXLSX {
+            get {
+                return ResourceManager.GetString("ExportingIsOnlySupportedXLSX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Filename must be filled！ 的本地化字符串。
+        /// </summary>
+        public static string FileNameMustBeFilled {
+            get {
+                return ResourceManager.GetString("FileNameMustBeFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 The file name cannot be empty! 的本地化字符串。
         /// </summary>
         public static string FileNameShouldNotBeEmpty {
             get {
                 return ResourceManager.GetString("FileNameShouldNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 is 的本地化字符串。
+        /// </summary>
+        public static string Is {
+            get {
+                return ResourceManager.GetString("Is", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 no 的本地化字符串。
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Only support exporting &quot;.csv &quot;! 的本地化字符串。
+        /// </summary>
+        public static string OnlySupportExportingCsv {
+            get {
+                return ResourceManager.GetString("OnlySupportExportingCsv", resourceCulture);
             }
         }
     }
