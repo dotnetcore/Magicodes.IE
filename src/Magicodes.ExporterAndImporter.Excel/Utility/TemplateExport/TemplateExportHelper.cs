@@ -587,6 +587,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             var alt = string.Empty;
                             var height = 0;
                             var width = 0;
+                            var xOffset = 0;
+                            var yOffset = 0;
                             if (body.Contains("?") && body.Contains("="))
                             {
                                 var arr = body.Split('?');
@@ -606,6 +608,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                 if (!string.IsNullOrWhiteSpace(widthStr))
                                 {
                                     width = int.Parse(widthStr);
+                                }
+
+                                //获取XOffset
+                                var xOffsetStr = values["XOffset"] ?? values["x"];
+                                if (!string.IsNullOrWhiteSpace(xOffsetStr))
+                                {
+                                    xOffset = int.Parse(xOffsetStr);
+                                }
+
+                                //获取YOffset
+                                var yOffsetStr = values["YOffset"] ?? values["y"];
+                                if (!string.IsNullOrWhiteSpace(yOffsetStr))
+                                {
+                                    yOffset = int.Parse(yOffsetStr);
                                 }
 
                                 //获取alt文本
@@ -640,8 +656,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                         cell.Value = string.Empty;
                                         var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
                                         var address = new ExcelAddress(cell.Address);
-
-                                        excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
+                                        ////调整对齐
+                                        excelImage.From.ColumnOff = Pixel2MTU(xOffset);
+                                        excelImage.From.RowOff = Pixel2MTU(yOffset);
+                                        excelImage.From.Column = address.Start.Column - 1;
+                                        excelImage.From.Row = address.Start.Row - 1;
+                                        //excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
                                         excelImage.SetSize(width, height);
                                     }
                                 }
@@ -674,6 +694,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 
             return true;
         }
+
+        internal static int Pixel2MTU(int pixels)
+        {
+            int mtus = pixels * 9525;
+            return mtus;
+        }
+
 
         /// <summary>
         ///     验证并转换模板

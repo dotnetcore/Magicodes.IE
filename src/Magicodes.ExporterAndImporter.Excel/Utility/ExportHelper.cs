@@ -977,7 +977,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
         }
 
-        private void AddImage(int rowIndex, int colIndex, ExcelPicture picture, int yOffset, int xOffset)
+        internal static void AddImage(int rowIndex, int colIndex, ExcelPicture picture, int yOffset, int xOffset)
         {
             if (picture != null)
             {
@@ -989,7 +989,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
         }
 
-        private int Pixel2MTU(int pixels)
+        internal static int Pixel2MTU(int pixels)
         {
             int mtus = pixels * 9525;
             return mtus;
