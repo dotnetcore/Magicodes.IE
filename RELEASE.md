@@ -1,5 +1,13 @@
 # Release Log
 
+## 2.5.4.1
+
+**2021.06.05**
+- EXCEL模板导出支持XOffset和YOffset[#280](https://github.com/dotnetcore/Magicodes.IE/issues/280)
+- EXCEL修复ValueMapping
+- Core工程多语言配置
+- EXCEL优化时间导出
+
 ## 2.5.4.0
 
 **2021.06.01**

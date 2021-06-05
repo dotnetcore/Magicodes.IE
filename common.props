@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.0</Version>
+    <Version>2.5.4.1</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -17,6 +17,11 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+      **2021.06.05**
+      - EXCEL模板导出支持XOffset和YOffset
+      - EXCEL修复ValueMapping
+      - Core工程多语言配置
+      - EXCEL优化时间导出
 
       **2021.06.01**
       - EXCEL支持自动换行属性
