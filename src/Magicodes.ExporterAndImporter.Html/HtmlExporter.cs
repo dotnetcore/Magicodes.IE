@@ -40,8 +40,7 @@ namespace Magicodes.ExporterAndImporter.Html
             {
                 ReferenceResolver = new ExternalAssemblyReferenceResolver(null)
             };
-            var service = RazorEngineService.Create(config);
-            Engine.Razor = service;
+            Engine.Razor = RazorEngineService.Create(config);
         }
 
         /// <summary>
@@ -139,7 +138,6 @@ namespace Magicodes.ExporterAndImporter.Html
         protected string RunCompileTpl(object model, string htmlTemplate = null)
         {
             var htmlTpl = GetHtmlTemplate(htmlTemplate);
-
             return Engine.Razor.RunCompile(htmlTpl, htmlTpl.GetHashCode().ToString(), null, model);
         }
 

@@ -1,42 +1,44 @@
 <Project>
-    <PropertyGroup>
-        <Version>2.5.1.7</Version>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Authors>雪雁</Authors>
-        <Company>湖南心莱信息科技有限公司</Company>
-        <Product>麦扣</Product>
-        <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
-        <PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
-        <Description>
-          导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
-          开源库地址:https://github.com/xin-lai
-          博客地址：http://www.cnblogs.com/codelove/
-          公众号：麦扣聊技术
-          交流QQ群：85318032
+  <PropertyGroup>
+    <Version>2.5.4.1</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>雪雁</Authors>
+    <Company>湖南心莱信息科技有限公司</Company>
+    <Product>麦扣</Product>
+    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+    <PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
+    <Description>
+      Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
+      导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
 
-          **2021.02.20**
-          - 【Nuget】版本更新到2.5.1.7
-          - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
-          - 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
-          **2021.01.31**
-          - 【Nuget】版本更新到2.5.1.6
-          - 部分重构模板导出
-          - Excel模板导出语法解析加强 #211
-          - 修复当表格下面存在变量时，无法渲染的Bug
+      开源库地址:https://github.com/xin-lai
+      博客地址：http://www.cnblogs.com/codelove/
+      公众号：麦扣聊技术
+      交流QQ群：85318032
+      **2021.06.05**
+      - EXCEL模板导出支持XOffset和YOffset
+      - EXCEL修复ValueMapping
+      - Core工程多语言配置
+      - EXCEL优化时间导出
 
-          **2021.01.29**
-          - 【Nuget】版本更新到2.5.1.5
-          - 移除模板导出时的控制台日志输出
+      **2021.06.01**
+      - EXCEL支持自动换行属性
+      - EXCEL支持隐藏列属性
+      - EXCEL优化时间优化
 
-          **2021.01.09**
-          - 【Nuget】版本更新到2.5.1.4
-          - 修复Excel导出列头索引与内容排序不一致问题及单测  [#226](https://github.com/dotnetcore/Magicodes.IE/issues/226)
+      **2021.05.26**
+      - 修复ValueMappingAttribute
 
-        </Description>
-    </PropertyGroup>
-    <PropertyGroup>
-        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    </PropertyGroup>
+      **2021.05.10**
+      - EXCEL模板导出功能，将单行复制改为多行复制
+      - PDF导出内存优化
+
+
+    </Description>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
 </Project>

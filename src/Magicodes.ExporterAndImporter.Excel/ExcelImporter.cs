@@ -19,6 +19,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -36,6 +37,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExportFileInfo> GenerateTemplate<T>(string fileName) where T : class, new()
         {
+            fileName.CheckExcelFileName();
             var isMultipleSheetType = false;
             var tableType = typeof(T);
             List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
@@ -125,6 +127,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             using (var importer = new ImportHelper<T>(filePath, labelingFilePath))
             {
                 return importer.Import();
@@ -155,6 +158,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public bool OutputBussinessErrorData<T>(string filePath, List<DataRowErrorInfo> bussinessErrorDataList, out string msg) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             using (var importer = new ImportHelper<T>(filePath, null))
             {
                 return importer.OutputBussinessErrorData(bussinessErrorDataList, out msg);
@@ -185,6 +189,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
         public async Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(string filePath) where T : class, new()
         {
+            filePath.CheckExcelFileName();
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
@@ -203,14 +208,51 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
                     }
-                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
-                    {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
-                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
                     bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
-                    resultList.Add(importerAttribute.SheetName, result);
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex,sheetProperty.PropertyType, isSaveLabelingError);
+                    resultList.Add(importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(), result);
+                }
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 导入多个Sheet数据
+        /// </summary>
+        /// <typeparam name="T">Excel类</typeparam>
+        /// <param name="stream"></param>
+        /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
+        public async Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(Stream stream) where T : class, new()
+        {
+            var resultList = new Dictionary<string, ImportResult<object>>();
+            var tableType = typeof(T);
+            var sheetProperties = tableType.GetProperties();
+            using (var importer = new ImportMultipleSheetHelper(stream))
+            {
+                for (var i = 0; i < sheetProperties.Length; i++)
+                {
+                    var sheetProperty = sheetProperties[i];
+                    var importerAttribute =
+                        (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
+                    if (importerAttribute == null)
+                    {
+                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
+                    bool isSaveLabelingError = i == sheetProperties.Length - 1;
+                    //最后一个属性才保存标注的错误,避免多次保存
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex, sheetProperty.PropertyType, isSaveLabelingError);
+                    resultList.Add(importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(), result);
                 }
             }
             return resultList;
@@ -227,6 +269,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         public async Task<Dictionary<string, ImportResult<TSheet>>> ImportSameSheets<T, TSheet>(string filePath)
             where T : class, new() where TSheet : class, new()
         {
+            filePath.CheckExcelFileName();
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(nameof(filePath));
@@ -245,13 +288,13 @@ namespace Magicodes.ExporterAndImporter.Excel
                     {
                         throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
                     }
-                    if (string.IsNullOrEmpty(importerAttribute.SheetName))
-                    {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
-                    }
+                    //if (string.IsNullOrEmpty(importerAttribute.SheetName))
+                    //{
+                    //    throw new Exception($"Sheet属性{sheetProperty.Name}的ExcelImporterAttribute特性没有设置SheetName");
+                    //}
                     bool isSaveLabelingError = i == sheetProperties.Length - 1;
                     //最后一个属性才保存标注的错误,避免多次保存
-                    var result = await importer.Import(importerAttribute.SheetName, sheetProperty.PropertyType, isSaveLabelingError);
+                    var result = await importer.Import(importerAttribute.SheetName, importerAttribute.SheetIndex, sheetProperty.PropertyType, isSaveLabelingError);
                     var tResult = new ImportResult<TSheet>();
                     tResult.Data = new List<TSheet>();
                     if (result.Data.Count > 0)
@@ -264,7 +307,10 @@ namespace Magicodes.ExporterAndImporter.Excel
                     tResult.Exception = result.Exception;
                     tResult.RowErrors = result.RowErrors;
                     tResult.TemplateErrors = result.TemplateErrors;
-                    resultList.Add(importerAttribute.SheetName, tResult);
+                    resultList.Add(
+                        importerAttribute.SheetName ??
+                        importerAttribute.SheetIndex.ToString(),
+                        tResult);
                 }
             }
             return resultList;

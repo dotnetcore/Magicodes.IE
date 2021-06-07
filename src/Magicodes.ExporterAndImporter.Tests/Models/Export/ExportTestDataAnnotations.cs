@@ -36,8 +36,8 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [IEIgnoreAttribute]
         public string Ignore { get; set; }
 
-        [ValueMapping("A Test", "A")]
-        [ValueMapping("B Test", "B")]
+        [ValueMapping("A Test", 0)]
+        [ValueMapping("B Test", 1)]
         public MyEmum MyEmum { get; set; }
 
         [ValueMapping("是", true)]

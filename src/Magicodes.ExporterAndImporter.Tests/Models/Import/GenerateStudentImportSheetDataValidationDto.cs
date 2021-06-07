@@ -9,7 +9,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     序号
         /// </summary>
-        [ImporterHeader(Name = "序号", IsInterValidation = true)]
+        [ImporterHeader(Name = "序号", IsInterValidation = true,Format ="@")]
         [Range(minimum: 0, maximum: 20, ErrorMessage = "序号最大为20")]
         public long SerialNumber { get; set; }
 
@@ -49,7 +49,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [Range(minimum: 18, maximum: 20, ErrorMessage = "年龄范围需要在18-20岁哦", ErrorMessageResourceType = typeof(string))]
         public int IgnoreType { get; set; }
 
-        [ImporterHeader(Name = "出生日期", IsInterValidation = true, ShowInputMessage = "输入日期")]
+        [ImporterHeader(Name = "出生日期",IsInterValidation = true, ShowInputMessage = "输入日期")]
         [Range(typeof(DateTime), minimum: "2020-10-20", maximum: "2020-10-24", ErrorMessage = "日期范围超出了哦")]
         public DateTime Birthday { get; set; }
 

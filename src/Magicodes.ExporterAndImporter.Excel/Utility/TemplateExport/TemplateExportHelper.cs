@@ -50,7 +50,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <summary>
         /// 用于缓存表达式
         /// </summary>
-        private Dictionary<string, Lambda> cellWriteFuncs = new Dictionary<string, Lambda>();
+        private readonly Dictionary<string, Lambda> cellWriteFuncs = new Dictionary<string, Lambda>();
 
         /// <summary>
         ///     模板文件路径
@@ -81,6 +81,83 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         ///     表值字典
         /// </summary>
         protected Dictionary<string, List<Dictionary<string, string>>> TableValuesDictionary { get; set; }
+
+        /// <summary>
+        /// 是否是支持的动态类型（JObject、Dictionary（仅支持key为string类型））
+        /// </summary>
+        private bool IsDynamicSupportTypes
+        {
+            get
+            {
+                //TODO:支持DataTable
+                return IsDictionaryType || IsJObjectType || IsExpandoObjectType;
+            }
+        }
+
+        /// <summary>
+        /// 是否是JObject类型
+        /// </summary>
+        public bool IsJObjectType
+        {
+            get
+            {
+                if (isJObjectType.HasValue) return isJObjectType.Value;
+
+                var name = typeof(T).Name;
+                switch (name)
+                {
+                    case "JObject":
+                        isJObjectType = true;
+                        break;
+
+                    default:
+                        isJObjectType = false;
+                        break;
+                }
+                return isJObjectType.Value;
+            }
+        }
+
+        /// <summary>
+        /// 是否是符合要求的字典类型
+        /// </summary>
+        public bool IsDictionaryType
+        {
+            get
+            {
+                if (isDictionaryType.HasValue) return isDictionaryType.Value;
+
+                var name = typeof(T).Name;
+                switch (name)
+                {
+                    case "Dictionary`2":
+                        {
+                            isDictionaryType = typeof(T).GetGenericArguments()[0].Equals(typeof(string));
+                            break;
+                        }
+                    default:
+                        isDictionaryType = false;
+                        break;
+                }
+                return isDictionaryType.Value;
+            }
+        }
+
+        public bool IsExpandoObjectType
+        {
+            get
+            {
+                if (isExpandoObjectType.HasValue) return isExpandoObjectType.Value;
+                isExpandoObjectType = typeof(T).Name == "ExpandoObject";
+                return isExpandoObjectType.Value;
+            }
+        }
+
+        private bool? isJObjectType;
+
+        private bool? isDictionaryType;
+
+        private bool? isExpandoObjectType;
 
         /// <summary>
         ///     根据模板导出Excel
@@ -116,7 +193,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         private void ParseData(ExcelPackage excelPackage)
         {
             var target = new Interpreter();
-            target.SetVariable("data", Data, typeof(T));
+            //.Reference(typeof(System.Linq.Enumerable))
+            //.Reference(typeof(IEnumerable<>))
+            //.Reference(typeof(IDictionary<,>));
+            if (IsExpandoObjectType)
+            {
+                target.SetVariable("data", Data, typeof(IDictionary<string, object>));
+            }
+            else
+                target.SetVariable("data", Data, typeof(T));
 
             //表格渲染参数
             var tbParameters = new[] {
@@ -171,8 +256,26 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 var tableKey = tableGroup.Key;
                 var startRow = 0;
                 //TODO:处理异常“No property or field”
-                var rowCount = target.Eval<int>($"data.{tableKey}.Count");
-                //Console.WriteLine($"正在处理表格【{tableKey}】，行数：{rowCount}。");
+
+                var rowCount = 0;
+                if (IsDictionaryType || IsExpandoObjectType)
+                {
+                    IEnumerable<IDictionary<string, object>> tableData = null;
+                    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
+                    //if (IsExpandoObjectType)
+                    //    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data.{tableKey}");
+
+                    rowCount = tableData.Count();
+                    target.SetVariable(tableKey, tableData, typeof(IEnumerable<IDictionary<string, object>>));
+                }
+                else
+                {
+                    rowCount = target.Eval<int>($"data.{tableKey}.Count");
+                    var tableData = target.Eval<IEnumerable<dynamic>>($"data.{tableKey}");
+                    target.SetVariable(tableKey, tableData);
+                }
+
+
                 var isFirst = true;
                 foreach (var col in tableGroup)
                 {
@@ -197,13 +300,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         //sheet.InsertRow(targetRow, numRowsToInsert, refRow);
                         sheet.InsertRow(targetRow, numRowsToInsert);
                         //EPPlus的问题。修复如果存在合并的单元格，但是在新插入的行无法生效的问题，具体见 https://stackoverflow.com/questions/31853046/epplus-copy-style-to-a-range/34299694#34299694
-                        for (var i = 0; i < numRowsToInsert; i++)
-                        {
-                            sheet.Cells[String.Format("{0}:{0}", refRow)].Copy(sheet.Cells[String.Format("{0}:{0}", targetRow + i)]);
-                            //sheet.Row(refRow).StyleID = sheet.Row(targetRow + i).StyleID;
-                        }
-                    }
 
+                        //逐行复制效率低，改为多行复制
+                        //for (var i = 0; i < numRowsToInsert; i++)
+                        //{
+                        //    sheet.Cells[String.Format("{0}:{0}", refRow)].Copy(sheet.Cells[String.Format("{0}:{0}", targetRow + i)]);
+                        //    //sheet.Row(refRow).StyleID = sheet.Row(targetRow + i).StyleID;
+                        //}
+                        var maxCloumn = sheet.Dimension.End.Column;
+                        RowCopy(sheet, refRow, refRow, rowCount, maxCloumn);
+                    }
                     RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, col, address);
 
                     if (isFirst)
@@ -213,17 +319,44 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 }
 
                 #region 更新单元格
+
                 var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > startRow);
                 foreach (var item in updateCellWriters)
                 {
                     item.RowIndex += rowCount - 1;
                 }
-                #endregion
+
+                #endregion 更新单元格
+
                 //表格渲染完成后更新插入的行数
                 insertRows += rowCount - 1;
             }
+        }
 
-
+        /// <summary>
+        /// 多行复制
+        /// </summary>
+        /// <param name="sheet"></param>
+        /// <param name="startRow">复制前的开始行</param>
+        /// <param name="endRow">复制前的结束行</param>
+        /// <param name="totalRows">总行数</param>
+        /// <param name="maxColumnNum">最大列数</param>
+        private void RowCopy(ExcelWorksheet sheet, int startRow, int endRow, int totalRows, int maxColumnNum)
+        {
+            //rows表示现有的sheet行数
+            int rows = endRow - startRow + 1;
+            if (totalRows > rows * 2)
+            {
+                //行数复制一倍
+                sheet.Cells[startRow, 1, endRow, maxColumnNum].Copy(sheet.Cells[endRow + 1, 1, endRow * 2 - startRow + 1, maxColumnNum]);
+                //再次循环
+                RowCopy(sheet, startRow, endRow * 2 - startRow + 1, totalRows, maxColumnNum);
+            }
+            else
+            {
+                //行数复制需要(需要复制 totalRows - rows)
+                sheet.Cells[startRow, 1, startRow + (totalRows - rows) - 1, maxColumnNum].Copy(sheet.Cells[endRow + 1, 1, startRow + totalRows, maxColumnNum]);
+            }
         }
 
         /// <summary>
@@ -272,7 +405,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 //{{Remark|>>Table}}
                 cellString = cellString.Split('|')[0].Trim() + "}}";
 
-            RenderCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
+            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
         }
 
         /// <summary>
@@ -306,17 +439,26 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         {
             //处理单元格渲染管道
             RenderCellPipeline(target, sheet, ref expresson, cellAddress, cellFunc, parameters, dataVar, invokeParams);
-            
             //如果表达式没有处理，则进行处理
             if (expresson.Contains("{{"))
             {
-                expresson = expresson
+                if (IsDynamicSupportTypes)
+                {
+                    dataVar = dataVar.TrimEnd('.');
+                    expresson = expresson
+                                .Replace("{{", dataVar + "[\"")
+                                .Replace("}}", "\"] + \"");
+                }
+                else
+                {
+                    expresson = expresson
                                 .Replace("{{", dataVar)
                                 .Replace("}}", " + \"");
+                }
 
                 expresson = expresson.StartsWith("\"")
-                    ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
-                    : "\"" + expresson;
+                        ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
+                        : "\"" + expresson;
 
                 expresson = expresson.EndsWith("\"")
                     ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
@@ -325,13 +467,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
 
                 var result = cellFunc.Invoke(invokeParams);
-                sheet.Cells[cellAddress].Value = result;
+                sheet.Cells[cellAddress].Value = IsDynamicSupportTypes ? result?.ToString() : result;
             }
-            else if(!string.IsNullOrWhiteSpace(expresson))
+            else if (!string.IsNullOrWhiteSpace(expresson))
             {
                 sheet.Cells[cellAddress].Value = expresson;
             }
-
         }
 
         /// <summary>
@@ -345,9 +486,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="cellString"></param>
         /// <param name="address"></param>
-        private void RenderCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
+        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
         {
-            var dataVar = "\" + data." + tableKey + "[index].";
+            //var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
+            string dataVar;
+            if (IsDictionaryType || IsExpandoObjectType)
+            {
+                dataVar = ($"\" + {tableKey}.Skip(index).First()");
+            }
+            else if (IsJObjectType)
+            {
+                dataVar = $"\" + data[\"{tableKey}\"][index]";
+            }
+            else
+            {
+                dataVar = $"\" + {tableKey}.Skip(index).First().";
+            }
+
             //渲染一列单元格
             for (var i = 0; i < rowCount; i++)
             {
@@ -432,6 +587,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             var alt = string.Empty;
                             var height = 0;
                             var width = 0;
+                            var xOffset = 0;
+                            var yOffset = 0;
                             if (body.Contains("?") && body.Contains("="))
                             {
                                 var arr = body.Split('?');
@@ -453,6 +610,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                     width = int.Parse(widthStr);
                                 }
 
+                                //获取XOffset
+                                var xOffsetStr = values["XOffset"] ?? values["x"];
+                                if (!string.IsNullOrWhiteSpace(xOffsetStr))
+                                {
+                                    xOffset = int.Parse(xOffsetStr);
+                                }
+
+                                //获取YOffset
+                                var yOffsetStr = values["YOffset"] ?? values["y"];
+                                if (!string.IsNullOrWhiteSpace(yOffsetStr))
+                                {
+                                    yOffset = int.Parse(yOffsetStr);
+                                }
+
                                 //获取alt文本
                                 alt = values["alt"];
                             }
@@ -460,7 +631,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             {
                                 expresson = body;
                             }
-                            expresson = (dataVar + expresson).Trim('\"').Trim().Trim('+');
+                            expresson = (dataVar + (IsDynamicSupportTypes ? ("[\"" + expresson + "\"]") : (expresson))).Trim('\"').Trim().Trim('+');
                             cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
                             //获取图片地址
                             var imageUrl = cellFunc.Invoke(invokeParams)?.ToString();
@@ -485,8 +656,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                         cell.Value = string.Empty;
                                         var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
                                         var address = new ExcelAddress(cell.Address);
-
-                                        excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
+                                        ////调整对齐
+                                        excelImage.From.ColumnOff = Pixel2MTU(xOffset);
+                                        excelImage.From.RowOff = Pixel2MTU(yOffset);
+                                        excelImage.From.Column = address.Start.Column - 1;
+                                        excelImage.From.Row = address.Start.Row - 1;
+                                        //excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
                                         excelImage.SetSize(width, height);
                                     }
                                 }
@@ -498,6 +673,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             expressonStr = expressonStr.Replace(item.Value, string.Empty);
                         }
                         break;
+
                     case "formula":
                         body = Regex.Split(item.Value, "::").Last().TrimEnd('}');
                         if (body.Contains("?") && body.Contains("="))
@@ -510,14 +686,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             expressonStr = expressonStr.Replace(item.Value, string.Empty);
                         }
                         break;
+
                     default:
                         break;
                 }
             }
 
-
             return true;
         }
+
+        internal static int Pixel2MTU(int pixels)
+        {
+            int mtus = pixels * 9525;
+            return mtus;
+        }
+
 
         /// <summary>
         ///     验证并转换模板

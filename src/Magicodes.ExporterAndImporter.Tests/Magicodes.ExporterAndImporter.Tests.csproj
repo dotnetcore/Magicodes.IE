@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2;netcoreapp3.1;net461;net5.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net461;net5.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -24,8 +24,6 @@
     <!--<PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.8.3" />-->
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Shouldly" Version="4.0.3" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
@@ -39,6 +37,10 @@
     <PackageReference Include="Moq" Version="4.14.1" />
     <ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.3" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj" />
@@ -49,10 +51,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="JSON.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\ExporterTest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\Errors\数据错误.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\ExportTemplates\DynamicExportTpl.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\ExportTemplates\Export10000ByTemplate_Test.xlsx">
@@ -112,6 +120,9 @@
     <None Update="TestFiles\Import\单列导入测试.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\合并行.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\图片导入模板非表头非第一行.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -125,6 +136,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\Import\学生基础数据及缴费流水号导入_标注错误.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\Import\Issue225.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\Import\Issue243.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestFiles\Import\学生基础数据导入.csv">
@@ -178,7 +195,8 @@
     <None Update="TestFiles\issue131.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="款式信息SPU.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-
 </Project>
-

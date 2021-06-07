@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>mie</ToolCommandName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.2</Version>
+
+    <Authors>雪雁</Authors>
+    <Product>麦扣</Product>
+    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+    <PackageTags>Magicodes.IE;tool;excel;xlsx;csv;word;pdf;html</PackageTags>
+    <Description>
+      Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
+      导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+
+      开源库地址:https://github.com/xin-lai
+      博客地址：http://www.cnblogs.com/codelove/
+      公众号：麦扣聊技术
+      交流QQ群：85318032
+    </Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
+  </ItemGroup>
+</Project>
