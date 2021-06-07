@@ -878,6 +878,72 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "res/Logo/Logo ALL.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo ALL.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Logo/Logo design.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo design.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Logo/Logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Logo/Logo1.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo1.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Logo/Logo2.png",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "res/Logo/Logo3.jpg",
+      "output": {
+        "resource": {
+          "relative_path": "res/Logo/Logo3.jpg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "res/Magicodes.IE.png",
       "output": {
         "resource": {
