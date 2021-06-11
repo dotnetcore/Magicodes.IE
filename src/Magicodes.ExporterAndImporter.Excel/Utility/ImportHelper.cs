@@ -587,10 +587,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                     else
                     {
-                        isColumnExist = (excelHeaders.ContainsKey(item.Header.Name));
+                        isColumnExist = excelHeaders.ContainsKey(item.Header.Name);
                     }
                     if (!isColumnExist)
                     {
+                        if (item.Header.ColumnIndex > 0)
+                        {
+                            item.IsExist = true;
+                        }
+
                         //仅验证必填字段
                         if (item.IsRequired)
                         {
