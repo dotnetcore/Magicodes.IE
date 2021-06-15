@@ -1,5 +1,11 @@
 # Release Log
 
+## 2.5.4.2
+
+**2021.06.05**
+- Fix ImporterHeader->ColumnIndex
+- Utilize RecyclableMemoryStream instead of "new MemoryStream" all over[#282](https://github.com/dotnetcore/Magicodes.IE/issues/282)
+
 ## 2.5.4.1
 
 **2021.06.05**

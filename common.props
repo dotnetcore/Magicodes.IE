@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.1</Version>
+    <Version>2.5.4.2</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -17,6 +17,10 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+      **2021.06.05**
+      - Fix ImporterHeader->ColumnIndex
+      - Utilize RecyclableMemoryStream instead of "new MemoryStream" all over
+
       **2021.06.05**
       - EXCEL模板导出支持XOffset和YOffset
       - EXCEL修复ValueMapping
