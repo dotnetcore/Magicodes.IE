@@ -879,6 +879,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "ColumnIndex导入测试.xlsx");
             var import = await Importer.Import<ImportTestColumnIndex>(filePath);
             import.HasError.ShouldBeFalse();
+            import.TemplateErrors.Count.ShouldBe(0);
             import.ImporterHeaderInfos.Count.ShouldBe(2);
             import.Data.ElementAt(1).Age = 11;
         }
