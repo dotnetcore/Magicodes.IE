@@ -46,7 +46,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>文件</returns>
         public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new()
         {
-            fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
         }
