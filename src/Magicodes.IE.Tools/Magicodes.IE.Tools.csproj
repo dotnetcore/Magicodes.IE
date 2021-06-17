@@ -8,7 +8,7 @@
     <ToolCommandName>mie</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
 
     <Authors>雪雁</Authors>
     <Product>麦扣</Product>
