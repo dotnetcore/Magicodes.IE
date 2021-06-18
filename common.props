@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.2</Version>
+    <Version>2.5.4.3</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -17,6 +17,11 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+
+      **2021.06.18**
+      - Update ImportTestColumnIndex_Test
+      - Magicodes.EPPlus was upgraded to 4.6.7[#285](https://github.com/dotnetcore/Magicodes.IE/issues/285)
+
       **2021.06.05**
       - Fix ImporterHeader->ColumnIndex
       - Utilize RecyclableMemoryStream instead of "new MemoryStream" all over
@@ -31,14 +36,6 @@
       - EXCEL支持自动换行属性
       - EXCEL支持隐藏列属性
       - EXCEL优化时间优化
-
-      **2021.05.26**
-      - 修复ValueMappingAttribute
-
-      **2021.05.10**
-      - EXCEL模板导出功能，将单行复制改为多行复制
-      - PDF导出内存优化
-
 
     </Description>
   </PropertyGroup>
