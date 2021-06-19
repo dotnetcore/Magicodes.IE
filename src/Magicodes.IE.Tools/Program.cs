@@ -12,8 +12,6 @@ namespace Magicodes.IE.Tools
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello Magicodes.IE!");
-
             if (args.Length == 0)
             {
                 var versionString = Assembly.GetEntryAssembly()
@@ -35,12 +33,16 @@ namespace Magicodes.IE.Tools
                     new ExportTestDataWithPicture
                     {
                         Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/docs/Magicodes.IE.png"
+                    },
+                    new ExportTestDataWithPicture
+                    {
+                        Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/res/wechat.jpg"
                     }
                 };
 
                 var filePath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "test.xlsx");
                 var result = exporter.Export("test.xlsx", data).Result;
-                Console.WriteLine("导出成功！");
+                Console.WriteLine($"导出成功：{filePath}！");
             }
         }
 
