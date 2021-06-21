@@ -25,7 +25,7 @@
 8. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
 9. [联系我们](#联系我们)
 10. [更新历史](./RELEASE.md)
-11. [赞助](#赞助)
+11. [赞助或付费支持](#赞助或付费支持)
 
 ## 概述
 
@@ -323,22 +323,20 @@ public DateTime Time3 { get; set; }
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
 
-## 赞助
+## 赞助或付费支持
 
-### 微信&支付宝
+### 服务内容
 
-<table>
-<tr>
-<td>
-<img align="left" src="https://docs.xin-lai.com/medias/reward/alipay.jpg" width="300"/>
-</td>
-<td>
-<img align="right" src="https://docs.xin-lai.com/medias/reward/wechat.jpg" width="300"/>
-</td>
-</tr>
-</table>
+<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">赞助或付费支持</a></p>
 
-- **我们都是凭着热情业余驱动，一杯咖啡，即可让我们奋勇前行！**
+服务内容如下：
+- 技术支持
+- 使用培训
+- 二次开发支持
+- 需求定制
+- 赞助（Github展示）
+
+**具体收费根据需求评估，所有收入的30%~60%（视具体工作量评估）捐赠给Magicodes.IE项目开源管理委员会以促进项目长期维护和迭代发展。所有收支均全部公开。**
 
 ### Code Contributors
 
