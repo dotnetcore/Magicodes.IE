@@ -327,7 +327,7 @@ public DateTime Time3 { get; set; }
 
 ### 服务内容
 
-<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">赞助或付费支持</a></p>
+<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">点此打开小店</a></p>
 
 服务内容如下：
 - 技术支持
