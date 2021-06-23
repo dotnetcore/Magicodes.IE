@@ -7,6 +7,9 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(Name = "姓名")]
         public string Name { get; set; }
 
+        [ImporterHeader(ColumnIndex = 2)]
+        public string Phone { get; set; }
+
         [ImporterHeader(Name = "年龄", ColumnIndex = 3)]
         public int? Age { get; set; }
     }
