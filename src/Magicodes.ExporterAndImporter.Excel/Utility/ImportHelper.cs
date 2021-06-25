@@ -594,7 +594,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         if (item.Header.ColumnIndex > 0)
                         {
                             item.IsExist = true;
-                            break;
+                            continue;
                         }
 
                         //仅验证必填字段

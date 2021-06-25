@@ -880,8 +880,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             var import = await Importer.Import<ImportTestColumnIndex>(filePath);
             import.HasError.ShouldBeFalse();
             import.TemplateErrors.Count.ShouldBe(0);
-            import.ImporterHeaderInfos.Count.ShouldBe(2);
-            import.Data.ElementAt(1).Age = 11;
+            import.ImporterHeaderInfos.Count.ShouldBe(3);
+            import.Data.ElementAt(0).Age = 11;
         }
 
         [Fact(DisplayName = "合并行数据导入")]
