@@ -1,10 +1,9 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.3</Version>
+    <Version>2.5.4.4</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
@@ -17,6 +16,9 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+
+      **2021.06.25**
+      - Fix only first [ColumnIndex] is valid exception[#289](https://github.com/dotnetcore/Magicodes.IE/issues/289)
 
       **2021.06.18**
       - Update ImportTestColumnIndex_Test
@@ -36,7 +38,6 @@
       - EXCEL支持自动换行属性
       - EXCEL支持隐藏列属性
       - EXCEL优化时间优化
-
     </Description>
   </PropertyGroup>
   <PropertyGroup>

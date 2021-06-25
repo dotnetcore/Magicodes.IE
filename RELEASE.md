@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.4.4
+
+**2021.06.25**
+- Fix only first [ColumnIndex] is valid exception[#289](https://github.com/dotnetcore/Magicodes.IE/issues/289)
+
 ## 2.5.4.3
 
 **2021.06.18**
