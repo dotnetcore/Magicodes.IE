@@ -426,6 +426,33 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "模板导出之对象按实际类型导出测试")]
+        public async Task ShouldUseActualTypeInsteadOfDeclareType_Test()
+        {
+            Object testData = new { subClassName="Test" };
+
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "subClassPropertyTemplate.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ShouldUseActualTypeInsteadOfDeclareType_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath, testData, tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                var cell = sheet.GetValue(3, 1);
+                cell.ToString().ShouldBe("Test");
+            }
+
+        }
+
         #endregion 模板导出
 
     }
