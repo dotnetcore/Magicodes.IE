@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.4.5
+
+**2021.06.29**
+- 合并PR[#295](https://github.com/dotnetcore/Magicodes.IE/pull/295),完善模板导出类型定义的问题
+
 ## 2.5.4.4
 
 **2021.06.25**
