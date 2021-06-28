@@ -201,7 +201,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 target.SetVariable("data", Data, typeof(IDictionary<string, object>));
             }
             else
-                target.SetVariable("data", Data, typeof(T));
+                target.SetVariable("data", Data, Data.GetType());
 
             //表格渲染参数
             var tbParameters = new[] {
