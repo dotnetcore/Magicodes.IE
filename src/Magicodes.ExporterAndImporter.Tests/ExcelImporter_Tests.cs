@@ -19,6 +19,7 @@ using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Newtonsoft.Json;
 using OfficeOpenXml;
+using OfficeOpenXml.DataValidation;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -141,6 +142,45 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);
             File.Exists(filePath).ShouldBeTrue();
+        }
+
+        /// <summary>
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/293
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "#293")]
+        public async Task GenerateTemplateBytesForIssue293_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytesForIssue293_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var temp = await Importer.GenerateTemplateBytes<ImportProductDto>();
+            var mockeSelctItems = new List<string> { "测试一", "测试二", "测试三" };
+            // TODO: 添加真实的下拉数据，添加后， 模板会出问题
+            using (var stream = new MemoryStream(temp))
+            {
+                using (var package = new ExcelPackage(stream))
+                {
+                    var sheet = package.Workbook.Worksheets.FirstOrDefault();
+                    var listSheet = package.Workbook.Worksheets.Add("业务分类");
+                    listSheet.Hidden = eWorkSheetHidden.Hidden;
+                    int rowIndex = 1;
+                    foreach (var item in mockeSelctItems)
+                    {
+                        listSheet.Cells[rowIndex, 1].Value = item;
+                        rowIndex++;
+                    }
+                    var validation = sheet.DataValidations.AddListValidation("A2:A10000");
+                    validation.ShowErrorMessage = false;
+                    validation.ErrorStyle = ExcelDataValidationWarningStyle.warning;
+                    validation.ErrorTitle = "输入得值无效";
+                    validation.Error = "请选择所属分类";
+                    //validation.Formula.ExcelFormula = $"=OFFSET(业务分类!$A$1,MATCH(""&A2&"",业务分类!$A:$A,0)-1,,COUNTIF(业务分类!$A:$A,""&A2&""),)";
+                    validation.Formula.ExcelFormula = $"业务分类!$A$1:$A${rowIndex - 1}";
+                    File.WriteAllBytes(filePath, package.GetAsByteArray());
+                    File.Exists(filePath).ShouldBeTrue();
+                }
+            }
         }
 
         /// <summary>
