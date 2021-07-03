@@ -18,8 +18,6 @@ namespace Magicodes.ExporterAndImporter.Tests
 {
     public class ExcelTemplateExporter_Tests : TestBase
     {
-        #region 模板导出
-
         [Fact(DisplayName = "Excel模板导出教材订购明细样表（含图片）")]
         public async Task ExportByTemplate_Test()
         {
@@ -244,7 +242,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //确保所有的转换均已完成
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
-
         }
 
         /// <summary>
@@ -447,7 +444,65 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        #endregion 模板导出
+        [Fact(DisplayName = "#296")]
+        public async Task Issue296_Test()
+        {
+            string json = @"{
+            'ReportTitle': '测试报告',
+            'BeginDate': '2020/06/24',
+            'EndDate': '2021/06/24',
+            '播放大厅营收报表': [
+              {'EquipName':'一区','放映场次':'100','取消场次':1,'售票数量':'100','入场人数':'100','入场异常':'100'},
+              {'EquipName':'二区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'三区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'四区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'五区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'六区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'七区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'八区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+              {'EquipName':'九区','放映场次':'101','取消场次':12,'售票数量':'101','入场人数':'101','入场异常':'101'},
+            ],
+            '播放大厅能耗情况': [
+              {'EquipName':'一区','放映设备':'100','放映空调':1,'4D设备':'100','能耗异常':'100','冷凝机组':'100','售卖区':'100'},
+              {'EquipName':'s区','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'1区','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'一2区','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'3','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'4','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'5','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'6','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'},
+{'EquipName':'7','放映设备':'100','放映空调':2,'4D设备':'101','能耗异常':'111','冷凝机组':'200','售卖区':'30'}
+            ],
+            '安全情况':[
+              {'EquipName':'火警','时间':'今天','位置':'测试','次数':'100'},
+              {'EquipName':'异常','时间':'今天','位置':'测试','次数':'100'}
+            ],
+            '考勤情况':[
+               {'EquipName':'早班1','出勤':'11','休假':'33','迟到':'55','缺勤':'77','总人数':'1100'},
+               {'EquipName':'早班2','出勤':'22','休假':'44','迟到':'66','缺勤':'88','总人数':'1100'}
+            ]
+          }";
+            var jobj = JObject.Parse(json);
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "ComplexExcel.xlsx");
 
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(Issue296_Test)}.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            //根据模板导出
+            await exporter.ExportByTemplate(filePath, jobj, tplPath);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                //确保所有的转换均已完成
+                sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
+            }
+        }
     }
 }
