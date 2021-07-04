@@ -1,4 +1,5 @@
-﻿using Magicodes.ExporterAndImporter.Core;
+﻿using GenFu;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
@@ -80,7 +81,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export10000ByTemplate_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var books = GenFu.GenFu.ListOf<BookInfo>(10000);
+            var books = A.ListOf<BookInfo>(10000);
             //根据模板导出
             await exporter.ExportByTemplate(filePath,
                 new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null,
@@ -444,7 +445,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName = "#296")]
+        /// <summary>
+        /// 模板导出支持一行多个表格
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/296
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "#296 模板导出支持一行多个表格")]
         public async Task Issue296_Test()
         {
             string json = @"{
@@ -485,7 +491,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var jobj = JObject.Parse(json);
             //模板路径
             var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "ComplexExcel.xlsx");
+                "Issue296.xlsx");
 
             //创建Excel导出对象
             IExportFileByTemplate exporter = new ExcelExporter();

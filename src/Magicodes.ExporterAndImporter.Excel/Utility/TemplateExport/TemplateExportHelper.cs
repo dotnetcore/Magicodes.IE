@@ -251,20 +251,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 .GroupBy(p => p.TableKey);
 
             var insertRows = 0;
+            //支持一行多表格
+            //1）获取所有表格的区域范围（列数行数以及坐标）
+            var tableInfoList = new List<TemplateTableInfo>(tableGroups.Count());
             foreach (var tableGroup in tableGroups)
             {
                 var tableKey = tableGroup.Key;
-                var startRow = 0;
-                //TODO:处理异常“No property or field”
-
                 var rowCount = 0;
                 if (IsDictionaryType || IsExpandoObjectType)
                 {
                     IEnumerable<IDictionary<string, object>> tableData = null;
                     tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
-                    //if (IsExpandoObjectType)
-                    //    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data.{tableKey}");
-
                     rowCount = tableData.Count();
                     target.SetVariable(tableKey, tableData, typeof(IEnumerable<IDictionary<string, object>>));
                 }
@@ -274,62 +271,91 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                     var tableData = target.Eval<IEnumerable<dynamic>>($"data.{tableKey}");
                     target.SetVariable(tableKey, tableData);
                 }
-
-
-                var isFirst = true;
-                foreach (var col in tableGroup)
+                var startCol = tableGroup.OrderBy(p => p.ColIndex).First();
+                var rowStart = startCol.RowIndex;
+                var tableInfo = new TemplateTableInfo()
                 {
-                    var address = new ExcelAddressBase(col.TplAddress);
-                    if (rowCount == 0)
-                    {
-                        sheet.Cells[address.Start.Row, address.Start.Column].Value = string.Empty;
-                        continue;
-                    }
-                    //TODO:支持同一行多个表格
-                    //行数大于1时需要插入行
-                    if (isFirst && rowCount > 1)
-                    {
-                        startRow = address.Start.Row;
-                        //插入行
-                        //插入的目标行号
-                        var targetRow = address.Start.Row + 1 + insertRows;
-                        //插入
-                        var numRowsToInsert = rowCount - 1;
-                        var refRow = address.Start.Row + insertRows;
+                    TableKey = tableKey,
+                    RawRowStart = rowStart,
+                    NewRowStart = rowStart,
+                    RowCount = rowCount,
+                    Writers = tableGroup
+                };
+                tableInfoList.Add(tableInfo);
+            }
 
-                        //sheet.InsertRow(targetRow, numRowsToInsert, refRow);
-                        sheet.InsertRow(targetRow, numRowsToInsert);
-                        //EPPlus的问题。修复如果存在合并的单元格，但是在新插入的行无法生效的问题，具体见 https://stackoverflow.com/questions/31853046/epplus-copy-style-to-a-range/34299694#34299694
+            var rowTableGroups = tableInfoList.GroupBy(p => p.RawRowStart);
+            foreach (var item in rowTableGroups)
+            {
+                //是否为一行多个Table
+                var isManyTable = item.Count() > 1;
+                //一行多Table以最大的为准
+                TemplateTableInfo table = !isManyTable ? item.First() : item.OrderByDescending(p => p.RowCount).First();
 
-                        //逐行复制效率低，改为多行复制
-                        //for (var i = 0; i < numRowsToInsert; i++)
-                        //{
-                        //    sheet.Cells[String.Format("{0}:{0}", refRow)].Copy(sheet.Cells[String.Format("{0}:{0}", targetRow + i)]);
-                        //    //sheet.Row(refRow).StyleID = sheet.Row(targetRow + i).StyleID;
-                        //}
-                        var maxCloumn = sheet.Dimension.End.Column;
-                        RowCopy(sheet, refRow, refRow, rowCount, maxCloumn);
-                    }
-                    RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, col, address);
+                if (table.RowCount == 0)
+                {
+                    continue;
+                }
 
-                    if (isFirst)
+                if (isManyTable)
+                {
+                    foreach (var itemTable in item)
                     {
-                        isFirst = false;
+                        itemTable.NewRowStart += insertRows;
                     }
                 }
+                else
+                    table.NewRowStart += insertRows;
+
+                //2）统一插入行
+                var startRow = table.NewRowStart;
+                //插入行
+                //插入的目标行号
+                var targetRow = table.NewRowStart + 1;
+                //插入
+                var numRowsToInsert = table.RowCount - 1;
+                var refRow = table.NewRowStart;
+
+                if (numRowsToInsert == 0) continue;
+                sheet.InsertRow(targetRow, numRowsToInsert);
+                //EPPlus的问题。修复如果存在合并的单元格，但是在新插入的行无法生效的问题，具体见 https://stackoverflow.com/questions/31853046/epplus-copy-style-to-a-range/34299694#34299694
+
+                var maxCloumn = sheet.Dimension.End.Column;
+                RowCopy(sheet, refRow, refRow, table.RowCount, maxCloumn);
 
                 #region 更新单元格
 
-                var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > startRow);
-                foreach (var item in updateCellWriters)
+                var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > table.RawRowStart);
+                foreach (var writer in updateCellWriters)
                 {
-                    item.RowIndex += rowCount - 1;
+                    writer.RowIndex += table.RowCount - 1;
                 }
 
                 #endregion 更新单元格
 
                 //表格渲染完成后更新插入的行数
-                insertRows += rowCount - 1;
+                insertRows += table.RowCount - 1;
+            }
+
+            //4）渲染表格
+            foreach (var table in tableInfoList)
+            {
+                var tableGroup = table.Writers;
+
+                var tableKey = tableGroup.Key;
+                //TODO:处理异常“No property or field”
+
+                foreach (var col in tableGroup)
+                {
+                    var address = new ExcelAddressBase(col.TplAddress);
+                    if (table.RowCount == 0)
+                    {
+                        sheet.Cells[address.Start.Row, address.Start.Column].Value = string.Empty;
+                        continue;
+                    }
+
+                    RenderTableCells(target, tbParameters, sheet, table.NewRowStart - table.RawRowStart, tableKey, table.RowCount, col, address);
+                }
             }
         }
 
@@ -700,7 +726,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             int mtus = pixels * 9525;
             return mtus;
         }
-
 
         /// <summary>
         ///     验证并转换模板
