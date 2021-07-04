@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.4.6
+
+**2021.07.04**
+- 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
+
 ## 2.5.4.5
 
 **2021.06.29**
