@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "wYs0WR22b8Ty63MRYZaVs68wiUbSOKQCrnkAVOI3DKc="
+          "hash": "tBF68U+zOxiMl5AV2tbRgjEVS3xGhla3Wr8RH6Ui6kE="
         }
       },
       "is_incremental": false,
@@ -296,6 +296,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.html",
+          "hash": "++tE7GBWBuYlOk/l5ai46/5bs7MDAR3kiuUA29KAEaY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.Writer.yml",
       "output": {
         ".html": {
@@ -324,7 +336,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.html",
-          "hash": "uXEbUgdkD7PhJ2Ofu/IOYXwQts+Utyf+bJ6u3VjKTqQ="
+          "hash": "dppDDdDKmRonTDQT5yEbFmpMzLTiF6S/f7dCIGcdJkE="
         }
       },
       "is_incremental": false,
@@ -492,7 +504,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Z/a8omKJD9Wt8ddbgOsFbpzMZ4O+/EHBXe0DbUFEdIM="
+          "hash": "PtaOgVzGxEUlYwKNXpjjgwhtDtkixzCdwZL3suRLgfA="
         }
       },
       "is_incremental": false,
@@ -1239,7 +1251,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 38,
+          "total_file_count": 39,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
