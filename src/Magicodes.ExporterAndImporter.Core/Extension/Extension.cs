@@ -410,7 +410,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 case "Boolean":
                 case "Nullable<Boolean>":
                     {
-                        if (!directory.ContainsKey(Resource.Is)) directory.Add(Resource.Is, true);
+                        if (!directory.ContainsKey(Resource.Yes)) directory.Add(Resource.Yes, true);
                         if (!directory.ContainsKey(Resource.No)) directory.Add(Resource.No, false);
                         break;
                     }

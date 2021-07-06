@@ -71,7 +71,7 @@ namespace Magicodes.ExporterAndImporter.Word
         public async Task<ExportFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
             string htmlTemplate = null) where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, nameof(fileName));
             var exporter = new HtmlExporter();
             var htmlString = await exporter.ExportListByTemplate(dataItems, htmlTemplate);
 
@@ -111,7 +111,7 @@ namespace Magicodes.ExporterAndImporter.Word
         public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate)
             where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, nameof(fileName));
             var result = await ExportBytesByTemplate(data, htmlTemplate);
 
             File.WriteAllBytes(fileName, result);

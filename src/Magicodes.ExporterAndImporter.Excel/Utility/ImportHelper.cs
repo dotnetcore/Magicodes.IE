@@ -311,7 +311,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                         var key = notAllowRepeatCol.Header?.Name ??
                                   notAllowRepeatCol.PropertyName;
-                        var error = $"存在数据重复，请检查！所在行：{errorIndexsStr}。";
+                        var error = $"{Resource.ExistDuplicateData}{errorIndexsStr}。";
                         if (dataRowError.FieldErrors.ContainsKey(key))
                             dataRowError.FieldErrors[key] += Environment.NewLine + error;
                         else
@@ -385,7 +385,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 if (ExcelImporterSettings.IsOnlyErrorRows)
                 {
                     excelPackage = new ExcelPackage();
-                    excelPackage.Workbook.Worksheets.Add("错误数据");
+                    excelPackage.Workbook.Worksheets.Add(Resource.WrongData);
                     worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0]
                         .Cells[1, 1, 1, worksheet.Dimension.Columns]);
                     excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns]
@@ -520,12 +520,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
         private static void CheckImportFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("文件路径不能为空!", nameof(filePath));
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException(Resource.FilePathCannotBeEmpty, nameof(filePath));
 
             //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
             if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("导入文件不存在!");
+                throw new FileNotFoundException(Resource.ImportFileDoesNotExist);
             }
         }
 
@@ -566,7 +566,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ErrorLevel = ErrorLevels.Error,
                             ColumnName = header,
                             RequireColumnName = null,
-                            Message = "列头重复！"
+                            Message = Resource.ColumnHeadRepeat
                         });
 
                     excelHeaders.Add(header, columnIndex);
@@ -605,7 +605,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 ErrorLevel = ErrorLevels.Error,
                                 ColumnName = null,
                                 RequireColumnName = item.Header.Name,
-                                Message = "当前导入模板中未找到此字段！"
+                                Message = Resource.ImportTemplateNotFoundThisField
                             });
                             continue;
                         }
@@ -615,7 +615,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ErrorLevel = ErrorLevels.Warning,
                             ColumnName = null,
                             RequireColumnName = item.Header.Name,
-                            Message = "当前导入模板中未找到此字段！"
+                            Message = Resource.ImportTemplateNotFoundThisField
                         });
                     }
                     else
@@ -634,9 +634,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     ErrorLevel = ErrorLevels.Error,
                     ColumnName = null,
                     RequireColumnName = null,
-                    Message = $"模板出现未知错误：{ex}"
+                    Message = $"{Resource.AnUnknownErrorOccurredInTheTemplate}{ex}"
                 });
-                throw new Exception($"模板出现未知错误：{ex.Message}", ex);
+                throw new Exception($"{Resource.AnUnknownErrorOccurredInTheTemplate}{ex.Message}", ex);
             }
         }
 
@@ -768,7 +768,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             var worksheet =
                 excelPackage.Workbook.Worksheets.Add(typeof(T).GetDisplayName() ??
-                                                     ExcelImporterSettings.SheetName ?? "导入数据");
+                                                     ExcelImporterSettings.SheetName ?? Resource.ImportData);
             if (!ParseHeader()) return;
             //设置列头
             //设置头部描述说明
@@ -1013,7 +1013,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (ExcelImporterSettings.MaxCount != 0
                 && ExcelImporterSettings.MaxCount != int.MaxValue
                 && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex
-                ) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
+                ) throw new ArgumentException($"{Resource.MaximumNumberImportsCannotExceeded}{ExcelImporterSettings.MaxCount}！");
 
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
@@ -1117,7 +1117,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             if (propertyInfo.PropertyType.IsEnum ||
                                     (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum))
                             {
-                                AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
+                                AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.ThereAreNoTemplateDropDownOptions}");
                                 continue;
                             }
 
@@ -1132,7 +1132,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     if (string.IsNullOrWhiteSpace(cellValue))
                                         SetValue(cell, dataItem, propertyInfo, null);
                                     else
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 不合法！");
+                                        AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.Illegal}");
                                     break;
 
                                 case "String":
@@ -1151,7 +1151,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
                                         SetValue(cell, dataItem, propertyInfo, number);
@@ -1168,7 +1168,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -1180,7 +1180,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -1198,7 +1198,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -1210,7 +1210,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!short.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -1228,7 +1228,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!short.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -1240,7 +1240,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1258,7 +1258,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1270,7 +1270,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1288,7 +1288,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1300,7 +1300,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1318,7 +1318,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -1330,7 +1330,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Value} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
                                         try
@@ -1340,7 +1340,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                         }
                                         catch (Exception)
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Value} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
                                     }
@@ -1350,7 +1350,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!DateTimeOffset.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Text} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
 
@@ -1368,7 +1368,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!DateTime.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Text} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
 
@@ -1386,7 +1386,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!DateTimeOffset.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cell.Text} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Text} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
 
@@ -1398,7 +1398,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!Guid.TryParse(cellValue, out var guid))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的Guid格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectGUIDFormat}");
                                             break;
                                         }
 
@@ -1416,7 +1416,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!Guid.TryParse(cellValue, out var guid))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的Guid格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectGUIDFormat}");
                                             break;
                                         }
 
@@ -1501,7 +1501,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExportFileInfo> GenerateTemplate(string fileName = null)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", fileName);
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, fileName);
 
             var fileInfo =
                 ExcelHelper.CreateExcelPackage(fileName, excelPackage => { StructureExcel(excelPackage); });
