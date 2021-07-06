@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnUnknownErrorOccurredInTheTemplate" xml:space="preserve">
+    <value>模板出现未知错误：</value>
+  </data>
+  <data name="AppendMethodMustBeBeforeCurrentMethod" xml:space="preserve">
+    <value>调用当前方法之前，必须先调用Append方法！</value>
+  </data>
+  <data name="ASheetWithTheNameAlreadyExists" xml:space="preserve">
+    <value>已经存在该名字的sheet</value>
+  </data>
+  <data name="ColumnHeadRepeat" xml:space="preserve">
+    <value>列头重复！</value>
+  </data>
+  <data name="DefineTheHeader" xml:space="preserve">
+    <value>请定义表头！</value>
+  </data>
+  <data name="DoNotIgnoreAllTheHeader" xml:space="preserve">
+    <value>请勿忽略全部表头！</value>
+  </data>
+  <data name="ExcelimporterAttributeFeaturesIsNotAnnotated" xml:space="preserve">
+    <value>Sheet属性没有标注ExcelImporterAttribute特性:</value>
+  </data>
+  <data name="ExistDuplicateData" xml:space="preserve">
+    <value>存在数据重复，请检查！所在行：</value>
+  </data>
   <data name="ExportingIsOnlySupportedXLSX" xml:space="preserve">
     <value>仅支持导出“.xlsx”，即不支持Excel97-2003!</value>
+  </data>
+  <data name="ExportResult" xml:space="preserve">
+    <value>导出结果</value>
   </data>
   <data name="FileNameMustBeFilled" xml:space="preserve">
     <value>文件名必须填写！</value>
@@ -126,13 +153,55 @@
   <data name="FileNameShouldNotBeEmpty" xml:space="preserve">
     <value>文件名不能为空！</value>
   </data>
-  <data name="Is" xml:space="preserve">
-    <value>是</value>
+  <data name="FilePathCannotBeEmpty" xml:space="preserve">
+    <value>文件路径不能为空!</value>
+  </data>
+  <data name="Illegal" xml:space="preserve">
+    <value>不合法！</value>
+  </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>导入数据</value>
+  </data>
+  <data name="ImportFileDoesNotExist" xml:space="preserve">
+    <value>导入文件不存在!</value>
+  </data>
+  <data name="ImportTemplateNotFoundThisField" xml:space="preserve">
+    <value>当前导入模板中未找到此字段！</value>
+  </data>
+  <data name="InvalidDataFormat" xml:space="preserve">
+    <value>数据格式无效！</value>
+  </data>
+  <data name="MaximumNumberImportsCannotExceeded" xml:space="preserve">
+    <value>最大允许导入条数不能超过</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>否</value>
   </data>
   <data name="OnlySupportExportingCsv" xml:space="preserve">
     <value>仅支持导出“.csv”!</value>
+  </data>
+  <data name="PleaseFillInTheCorrectDateAndTimeFormat" xml:space="preserve">
+    <value>无效，请填写正确的日期时间格式！</value>
+  </data>
+  <data name="PleaseFillInTheCorrectDecimal" xml:space="preserve">
+    <value>无效，请填写正确的小数！</value>
+  </data>
+  <data name="PleaseFillInTheCorrectGUIDFormat" xml:space="preserve">
+    <value>无效，请填写正确的Guid格式！</value>
+  </data>
+  <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
+    <value>无效，请填写正确的整数数值！</value>
+  </data>
+  <data name="ThereAreNoTemplateDropDownOptions" xml:space="preserve">
+    <value>不存在模板下拉选项中！</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="WrongData" xml:space="preserve">
+    <value>错误数据</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
   </data>
 </root>

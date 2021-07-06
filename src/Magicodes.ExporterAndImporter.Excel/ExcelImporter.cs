@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Core;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -206,7 +207,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
                     if (importerAttribute == null)
                     {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                        throw new Exception($"{Resource.ExcelimporterAttributeFeaturesIsNotAnnotated}{sheetProperty.Name}");
                     }
                     //if (string.IsNullOrEmpty(importerAttribute.SheetName))
                     //{
@@ -242,7 +243,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
                     if (importerAttribute == null)
                     {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                        throw new Exception($"{Resource.ExcelimporterAttributeFeaturesIsNotAnnotated}{sheetProperty.Name}");
                     }
                     //if (string.IsNullOrEmpty(importerAttribute.SheetName))
                     //{
@@ -286,7 +287,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         (sheetProperty.GetCustomAttributes(typeof(ExcelImporterAttribute), true) as ExcelImporterAttribute[])?.FirstOrDefault();
                     if (importerAttribute == null)
                     {
-                        throw new Exception($"Sheet属性{sheetProperty.Name}没有标注ExcelImporterAttribute特性");
+                        throw new Exception($"{Resource.ExcelimporterAttributeFeaturesIsNotAnnotated}{sheetProperty.Name}");
                     }
                     //if (string.IsNullOrEmpty(importerAttribute.SheetName))
                     //{
