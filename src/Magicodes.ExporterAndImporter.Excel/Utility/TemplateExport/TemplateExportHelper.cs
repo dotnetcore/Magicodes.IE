@@ -12,6 +12,7 @@
 // ======================================================================
 
 using DynamicExpresso;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
@@ -169,10 +170,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         {
             if (!string.IsNullOrWhiteSpace(templateFilePath)) TemplateFilePath = templateFilePath;
             if (string.IsNullOrWhiteSpace(TemplateFilePath))
-                throw new ArgumentException("模板文件路径不能为空!", nameof(TemplateFilePath));
+                throw new ArgumentException(Resource.TemplateFilePathCannotBeEmpty, nameof(TemplateFilePath));
             if (callback == null) return;
 
-            Data = data ?? throw new ArgumentException("数据不能为空!", nameof(data));
+            Data = data ?? throw new ArgumentException(Resource.DataCannotBeEmpty, nameof(data));
 
             using (Stream stream = new FileStream(TemplateFilePath, FileMode.Open))
             {
@@ -539,7 +540,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception($"构建表达式时出错：{expresson}。", ex);
+                        throw new Exception($"{Resource.ErrorBuildingExpression}{expresson}。", ex);
                     }
                 }
             }
