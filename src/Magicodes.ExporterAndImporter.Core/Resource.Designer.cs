@@ -97,6 +97,15 @@ namespace Magicodes.ExporterAndImporter.Core {
         }
         
         /// <summary>
+        ///   查找类似 Data cannot be empty! 的本地化字符串。
+        /// </summary>
+        public static string DataCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("DataCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Please define the header! 的本地化字符串。
         /// </summary>
         public static string DefineTheHeader {
@@ -111,6 +120,15 @@ namespace Magicodes.ExporterAndImporter.Core {
         public static string DoNotIgnoreAllTheHeader {
             get {
                 return ResourceManager.GetString("DoNotIgnoreAllTheHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error building expression: 的本地化字符串。
+        /// </summary>
+        public static string ErrorBuildingExpression {
+            get {
+                return ResourceManager.GetString("ErrorBuildingExpression", resourceCulture);
             }
         }
         
@@ -282,6 +300,15 @@ namespace Magicodes.ExporterAndImporter.Core {
         public static string PleaseFillInTheCorrectIntegerValue {
             get {
                 return ResourceManager.GetString("PleaseFillInTheCorrectIntegerValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Template file path cannot be empty! 的本地化字符串。
+        /// </summary>
+        public static string TemplateFilePathCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("TemplateFilePathCannotBeEmpty", resourceCulture);
             }
         }
         

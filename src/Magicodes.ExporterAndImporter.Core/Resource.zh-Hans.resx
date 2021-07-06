@@ -129,11 +129,17 @@
   <data name="ColumnHeadRepeat" xml:space="preserve">
     <value>列头重复！</value>
   </data>
+  <data name="DataCannotBeEmpty" xml:space="preserve">
+    <value>数据不能为空!</value>
+  </data>
   <data name="DefineTheHeader" xml:space="preserve">
     <value>请定义表头！</value>
   </data>
   <data name="DoNotIgnoreAllTheHeader" xml:space="preserve">
     <value>请勿忽略全部表头！</value>
+  </data>
+  <data name="ErrorBuildingExpression" xml:space="preserve">
+    <value>构建表达式时出错：</value>
   </data>
   <data name="ExcelimporterAttributeFeaturesIsNotAnnotated" xml:space="preserve">
     <value>Sheet属性没有标注ExcelImporterAttribute特性:</value>
@@ -191,6 +197,9 @@
   </data>
   <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
     <value>无效，请填写正确的整数数值！</value>
+  </data>
+  <data name="TemplateFilePathCannotBeEmpty" xml:space="preserve">
+    <value>模板文件路径不能为空!</value>
   </data>
   <data name="ThereAreNoTemplateDropDownOptions" xml:space="preserve">
     <value>不存在模板下拉选项中！</value>

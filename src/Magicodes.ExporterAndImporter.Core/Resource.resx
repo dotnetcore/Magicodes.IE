@@ -129,11 +129,17 @@
   <data name="ColumnHeadRepeat" xml:space="preserve">
     <value>Column head repeat！</value>
   </data>
+  <data name="DataCannotBeEmpty" xml:space="preserve">
+    <value>Data cannot be empty!</value>
+  </data>
   <data name="DefineTheHeader" xml:space="preserve">
     <value>Please define the header!</value>
   </data>
   <data name="DoNotIgnoreAllTheHeader" xml:space="preserve">
     <value>Do not ignore all the header!</value>
+  </data>
+  <data name="ErrorBuildingExpression" xml:space="preserve">
+    <value>Error building expression:</value>
   </data>
   <data name="ExcelimporterAttributeFeaturesIsNotAnnotated" xml:space="preserve">
     <value>The Sheet attribute is not marked with the ExcelimporterAttribute attribute:</value>
@@ -192,6 +198,9 @@
   </data>
   <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
     <value>Invalid, please fill in the correct integer value!</value>
+  </data>
+  <data name="TemplateFilePathCannotBeEmpty" xml:space="preserve">
+    <value>Template file path cannot be empty!</value>
   </data>
   <data name="ThereAreNoTemplateDropDownOptions" xml:space="preserve">
     <value>There is no template drop-down option!</value>
