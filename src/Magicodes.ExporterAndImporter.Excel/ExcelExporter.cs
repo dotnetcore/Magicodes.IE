@@ -63,11 +63,11 @@ namespace Magicodes.ExporterAndImporter.Excel
             var helper = this._excelPackage == null ? new ExportHelper<T>(sheetName) : new ExportHelper<T>(_excelPackage, sheetName);
             if (_isSeparateColumn || _isSeparateBySheet || _isSeparateByRow)
             {
-                var name = helper.ExcelExporterSettings?.Name ?? "导出结果";
+                var name = helper.ExcelExporterSettings?.Name ?? Resource.ExportResult;
 
                 if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == name) ?? false)
                 {
-                    throw new ArgumentNullException($"已经存在名字为{name}的sheet");
+                    throw new ArgumentNullException($"{Resource.ASheetWithTheNameAlreadyExists}:{name}");
                 }
             }
 
@@ -112,7 +112,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateColumn = true;
@@ -127,7 +127,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateBySheet = true;
@@ -142,7 +142,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateByRow = true;
@@ -157,12 +157,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             if (!_isSeparateByRow)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用SeparateByRow方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isAppendHeaders = true;
@@ -177,7 +177,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (this._excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             return Task.FromResult(_excelPackage.GetAsByteArray());

@@ -197,9 +197,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 }
 
                 if ((_exporterHeaderList == null || _exporterHeaderList.Count == 0) && !IsDynamicDatableExport &&
-                    !IsExpandoObjectType) throw new ArgumentException("请定义表头！");
+                    !IsExpandoObjectType) throw new ArgumentException(Resource.DefineTheHeader);
                 if (_exporterHeaderList.Count(t => t.ExporterHeaderAttribute.IsIgnore == false) == 0 &&
-                    _exporterHeaderList.Count != 0) throw new ArgumentException("请勿忽略全部表头！");
+                    _exporterHeaderList.Count != 0) throw new ArgumentException(Resource.DoNotIgnoreAllTheHeader);
                 return _exporterHeaderList;
             }
             set => _exporterHeaderList = value;
@@ -546,7 +546,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = ExcelExporterSettings?.Name ?? "导出结果";
+                name = ExcelExporterSettings?.Name ?? Resource.ExportResult;
             }
 
             if (SheetIndex != 0)

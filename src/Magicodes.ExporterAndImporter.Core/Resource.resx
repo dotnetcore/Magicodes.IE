@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnUnknownErrorOccurredInTheTemplate" xml:space="preserve">
+    <value>An unknown error occurred in the template：</value>
+  </data>
+  <data name="AppendMethodMustBeBeforeCurrentMethod" xml:space="preserve">
+    <value>The Append method must be called before the current method can be called!</value>
+  </data>
+  <data name="ASheetWithTheNameAlreadyExists" xml:space="preserve">
+    <value>A sheet with the name already exists</value>
+  </data>
+  <data name="ColumnHeadRepeat" xml:space="preserve">
+    <value>Column head repeat！</value>
+  </data>
+  <data name="DefineTheHeader" xml:space="preserve">
+    <value>Please define the header!</value>
+  </data>
+  <data name="DoNotIgnoreAllTheHeader" xml:space="preserve">
+    <value>Do not ignore all the header!</value>
+  </data>
+  <data name="ExcelimporterAttributeFeaturesIsNotAnnotated" xml:space="preserve">
+    <value>The Sheet attribute is not marked with the ExcelimporterAttribute attribute:</value>
+  </data>
+  <data name="ExistDuplicateData" xml:space="preserve">
+    <value>Data duplication exists, please check! Line：</value>
+  </data>
   <data name="ExportingIsOnlySupportedXLSX" xml:space="preserve">
     <value>Exporting ".xlsx "is only supported, that is, Excel97-2003 is not supported!</value>
+  </data>
+  <data name="ExportResult" xml:space="preserve">
+    <value>Export Result</value>
   </data>
   <data name="FileNameMustBeFilled" xml:space="preserve">
     <value>Filename must be filled！</value>
@@ -127,13 +154,55 @@
     <value>The file name cannot be empty!</value>
     <comment>AppDependencyResolver not initialized. You should initialize it in Startup class</comment>
   </data>
-  <data name="Is" xml:space="preserve">
-    <value>is</value>
+  <data name="FilePathCannotBeEmpty" xml:space="preserve">
+    <value>File path cannot be empty!</value>
+  </data>
+  <data name="Illegal" xml:space="preserve">
+    <value>illegal！</value>
+  </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>Import data</value>
+  </data>
+  <data name="ImportFileDoesNotExist" xml:space="preserve">
+    <value>Import file does not exist!</value>
+  </data>
+  <data name="ImportTemplateNotFoundThisField" xml:space="preserve">
+    <value>This field is not found in the current import template!</value>
+  </data>
+  <data name="InvalidDataFormat" xml:space="preserve">
+    <value>Invalid data format！</value>
+  </data>
+  <data name="MaximumNumberImportsCannotExceeded" xml:space="preserve">
+    <value>The maximum number of allowed imports cannot be exceeded</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>no</value>
   </data>
   <data name="OnlySupportExportingCsv" xml:space="preserve">
     <value>Only support exporting ".csv "!</value>
+  </data>
+  <data name="PleaseFillInTheCorrectDateAndTimeFormat" xml:space="preserve">
+    <value>Invalid, please fill in the correct date and time format!</value>
+  </data>
+  <data name="PleaseFillInTheCorrectDecimal" xml:space="preserve">
+    <value>Invalid, please fill in the correct decimal!</value>
+  </data>
+  <data name="PleaseFillInTheCorrectGUIDFormat" xml:space="preserve">
+    <value>Invalid, please fill in the correct GUID format!</value>
+  </data>
+  <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
+    <value>Invalid, please fill in the correct integer value!</value>
+  </data>
+  <data name="ThereAreNoTemplateDropDownOptions" xml:space="preserve">
+    <value>There is no template drop-down option!</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>value</value>
+  </data>
+  <data name="WrongData" xml:space="preserve">
+    <value>Wrong data</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>yes</value>
   </data>
 </root>
