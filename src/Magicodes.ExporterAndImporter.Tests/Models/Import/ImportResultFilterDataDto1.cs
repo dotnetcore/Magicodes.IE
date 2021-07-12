@@ -1,14 +1,14 @@
 ﻿// ======================================================================
-// 
+//
 //           filename : ImportRowDataErrorDto.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-11-05 20:02
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core;
@@ -42,7 +42,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
                 {
                     var key = items[i].FieldErrors.Keys.ElementAt(j);
                     var value = items[i].FieldErrors[key];
-                    items[i].FieldErrors[key] = value?.Replace("存在数据重复，请检查！所在行：", "Duplicate data exists, please check! Where:");
+                    items[i].FieldErrors[key] = value?.Replace(Resource.ExistDuplicateData, "Duplicate data exists, please check! Where:");
                 }
             }
 
