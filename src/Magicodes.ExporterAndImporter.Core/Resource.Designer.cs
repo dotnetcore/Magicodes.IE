@@ -169,7 +169,7 @@ namespace Magicodes.ExporterAndImporter.Core {
         }
         
         /// <summary>
-        ///   查找类似 Filename must be filled！ 的本地化字符串。
+        ///   查找类似 File name must be filled！ 的本地化字符串。
         /// </summary>
         public static string FileNameMustBeFilled {
             get {
