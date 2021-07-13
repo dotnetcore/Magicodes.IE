@@ -351,7 +351,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}5，6。"));
 
             errorRows = new List<int>()
             {
@@ -359,7 +359,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}8，9，11，13。"));
 
             errorRows = new List<int>()
             {
@@ -367,7 +367,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品型号") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}4，6，8，10，11，13。"));
 
             #endregion 重复错误
 
@@ -477,7 +477,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult.HasError.ShouldBeTrue();
             importResult.Exception.ShouldNotBeNull();
             //默认最大5万
-            importResult.Exception.Message.ShouldContain("最大允许导入条数不能超过");
+            importResult.Exception.Message.ShouldContain(Resource.MaximumNumberImportsCannotExceeded);
 
             if (File.Exists(filePath)) File.Delete(filePath);
             result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(50000));

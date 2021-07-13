@@ -154,7 +154,7 @@
     <value>Export Result</value>
   </data>
   <data name="FileNameMustBeFilled" xml:space="preserve">
-    <value>Filename must be filled！</value>
+    <value>File name must be filled！</value>
   </data>
   <data name="FileNameShouldNotBeEmpty" xml:space="preserve">
     <value>The file name cannot be empty!</value>
