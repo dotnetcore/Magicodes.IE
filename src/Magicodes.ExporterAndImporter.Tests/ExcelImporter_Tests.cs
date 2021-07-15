@@ -620,7 +620,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ImportOnlyErrorRows()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
-            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath);
+            var labelErrorFilePath =
+                Path.Combine(Directory.GetCurrentDirectory(), nameof(ImportOnlyErrorRows) + ".xlsx");
+            if(File.Exists(labelErrorFilePath)) File.Delete(labelErrorFilePath);
+            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath, labelErrorFilePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
@@ -628,9 +631,25 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             import.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("身份证号"));
             import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证号"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 13 && p.FieldErrors.ContainsKey("身份证号"));
 
             import.HasError.ShouldBeTrue();
-            import.RowErrors.Count.ShouldBe(2);
+            import.RowErrors.Count.ShouldBe(3);
+
+            var errorRows = import.Data.Where((x, i) => import.RowErrors.Any(err => err.RowIndex == i + 2)).ToList();
+
+            var labelErrorImport = await Importer.Import<ImportWithOnlyErrorRowsDto>(labelErrorFilePath);
+            labelErrorImport.ShouldNotBeNull();
+            if (labelErrorImport.Exception != null) _testOutputHelper.WriteLine(labelErrorImport.Exception.ToString());
+
+            if (labelErrorImport.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(labelErrorImport.RowErrors));
+
+            labelErrorImport.Data.Count.ShouldBe(3);
+            labelErrorImport.RowErrors.Count.ShouldBe(3);
+            foreach (var errorRow in errorRows)
+            {
+                labelErrorImport.Data.ShouldContain(x => x.Name == errorRow.Name && x.IdCard == errorRow.IdCard);
+            }
         }
 
         /// <summary>

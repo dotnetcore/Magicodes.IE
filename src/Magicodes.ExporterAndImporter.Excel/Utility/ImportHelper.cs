@@ -350,10 +350,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 //TODO:标注模板错误
                 //标注数据错误
-                var excelRangeList = new List<ExcelRange>();
+                var excelRangeList = new List<ExcelRange>{ worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns] };
                 foreach (var item in ImportResult.RowErrors)
                 {
-                    excelRangeList.Add(worksheet.Cells[1, ImporterHeaderInfos.Count]);
                     var gtRows = EmptyRows.Where(r => r > item.RowIndex);
                     var ltRows = EmptyRows.Where(r => r < item.RowIndex);
                     if (gtRows.Any() && ltRows.Any())
@@ -379,16 +378,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             cell.Comment.Author = col.Header.Author;
                         }
                     }
+
+                    excelRangeList.Add(worksheet.Cells[item.RowIndex, 1, item.RowIndex, worksheet.Dimension.Columns]);
                 }
 
                 if (ExcelImporterSettings.IsOnlyErrorRows)
                 {
                     excelPackage = new ExcelPackage();
-                    excelPackage.Workbook.Worksheets.Add("错误数据");
-                    worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns].Copy(excelPackage.Workbook.Worksheets[0]
-                        .Cells[1, 1, 1, worksheet.Dimension.Columns]);
-                    excelRangeList[0].Worksheet.Cells[2, 1, excelRangeList.Count + 1, worksheet.Dimension.Columns]
-                        .Copy(excelPackage.Workbook.Worksheets[0].Cells[2, 1, 2, worksheet.Dimension.Columns]);
+                    excelPackage.Workbook.Worksheets.Add($"{worksheet.Name} 错误数据");
+                    var newWorksheet = excelPackage.Workbook.Worksheets[0];
+                    
+                    for (int i = 0; i < excelRangeList.Count; i++)
+                    {
+                        excelRangeList[i].Copy(newWorksheet.Cells[i + 1, 1, i + 1, worksheet.Dimension.Columns]);
+                    }
                 }
 
                 var ext = Path.GetExtension(FilePath);
