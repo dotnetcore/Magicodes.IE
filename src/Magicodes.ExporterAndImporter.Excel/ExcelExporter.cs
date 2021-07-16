@@ -46,7 +46,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>文件</returns>
         public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new()
         {
-            fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
         }
@@ -63,11 +62,11 @@ namespace Magicodes.ExporterAndImporter.Excel
             var helper = this._excelPackage == null ? new ExportHelper<T>(sheetName) : new ExportHelper<T>(_excelPackage, sheetName);
             if (_isSeparateColumn || _isSeparateBySheet || _isSeparateByRow)
             {
-                var name = helper.ExcelExporterSettings?.Name ?? "导出结果";
+                var name = helper.ExcelExporterSettings?.Name ?? Resource.ExportResult;
 
                 if (this._excelPackage?.Workbook.Worksheets.Any(x => x.Name == name) ?? false)
                 {
-                    throw new ArgumentNullException($"已经存在名字为{name}的sheet");
+                    throw new ArgumentNullException($"{Resource.ASheetWithTheNameAlreadyExists}:{name}");
                 }
             }
 
@@ -75,26 +74,26 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             if (_isSeparateColumn)
             {
-#if NET461
-                helper.CopySheet(1,
-                    2);
-#else
+//#if NET461
                 helper.CopySheet(0,
-                      1);
-#endif
+                    1);
+//#else
+//                helper.CopySheet(0,
+//                      1);
+//#endif
 
                 _isSeparateColumn = false;
             }
 
             if (_isSeparateByRow)
             {
-#if NET461
-                helper.CopyRows(1,
-                    2, _isAppendHeaders);
-#else
+//#if NET461
+//                helper.CopyRows(0,
+//                    1, _isAppendHeaders);
+//#else
                 helper.CopyRows(0,
                       1, _isAppendHeaders);
-#endif
+//#endif
             }
 
             _isSeparateBySheet = false;
@@ -112,7 +111,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateColumn = true;
@@ -127,7 +126,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateBySheet = true;
@@ -142,7 +141,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isSeparateByRow = true;
@@ -157,12 +156,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (_excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             if (!_isSeparateByRow)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用SeparateByRow方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             _isAppendHeaders = true;
@@ -177,7 +176,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             if (this._excelPackage == null)
             {
-                throw new ArgumentNullException("调用当前方法之前，必须先调用Append方法！");
+                throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
 
             return Task.FromResult(_excelPackage.GetAsByteArray());

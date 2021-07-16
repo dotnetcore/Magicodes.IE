@@ -9,24 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.0)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Linq.Expressions;
-using System.Reflection;
-*/
-
-/* 项目“Magicodes.ExporterAndImporter.Excel (netstandard2.1)”的未合并的更改
-在此之前:
-using Magicodes.ExporterAndImporter.Core.Models;
-using OfficeOpenXml;
-在此之后:
-using System.Linq.Expressions;
-using System.Reflection;
-*/
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -52,6 +34,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private ImportMultipleSheetHelper()
         {
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        public ImportMultipleSheetHelper(Stream stream)
+        {
+            _excelStream = stream;
         }
 
         /// <summary>
@@ -140,11 +131,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入模型验证数据
         /// </summary>
         /// <returns></returns>
-        public Task<ImportResult<object>> Import(string sheetName, Type importDataType, bool isSaveLabelingError = true)
+        public Task<ImportResult<object>> Import(string sheetName, int sheetIndex, Type importDataType, bool isSaveLabelingError = true)
         {
             _importDataType = importDataType;
             ImportResult = new ImportResult<object>();
             ExcelImporterSettings.SheetName = sheetName;
+            ExcelImporterSettings.SheetIndex = sheetIndex;
             try
             {
                 if (_excelPackage == null) _excelPackage = new ExcelPackage(_excelStream);
@@ -271,7 +263,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                         var key = notAllowRepeatCol.Header?.Name ??
                                   notAllowRepeatCol.PropertyName;
-                        var error = $"存在数据重复，请检查！所在行：{errorIndexsStr}。";
+                        var error = $"{Resource.ExistDuplicateData}{errorIndexsStr}。";
                         if (dataRowError.FieldErrors.ContainsKey(key))
                             dataRowError.FieldErrors[key] += Environment.NewLine + error;
                         else
@@ -319,7 +311,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
         private static void CheckImportFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("文件路径不能为空!", nameof(filePath));
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException(Resource.FilePathCannotBeEmpty, nameof(filePath));
 
             //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
             //if (!File.Exists(filePath))
@@ -362,7 +354,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ErrorLevel = ErrorLevels.Error,
                             ColumnName = header,
                             RequireColumnName = null,
-                            Message = "列头重复！"
+                            Message = Resource.ColumnHeadRepeat
                         });
 
                     excelHeaders.Add(header, columnIndex);
@@ -379,7 +371,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 ErrorLevel = ErrorLevels.Error,
                                 ColumnName = null,
                                 RequireColumnName = item.Header.Name,
-                                Message = "当前导入模板中未找到此字段！"
+                                Message = Resource.ImportTemplateNotFoundThisField
                             });
                             continue;
                         }
@@ -389,7 +381,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ErrorLevel = ErrorLevels.Warning,
                             ColumnName = null,
                             RequireColumnName = item.Header.Name,
-                            Message = "当前导入模板中未找到此字段！"
+                            Message = Resource.ImportTemplateNotFoundThisField
                         });
                     }
                     else
@@ -407,9 +399,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     ErrorLevel = ErrorLevels.Error,
                     ColumnName = null,
                     RequireColumnName = null,
-                    Message = $"模板出现未知错误：{ex}"
+                    Message = $"{Resource.AnUnknownErrorOccurredInTheTemplate}{ex}"
                 });
-                throw new Exception($"模板出现未知错误：{ex.Message}", ex);
+                throw new Exception($"{Resource.AnUnknownErrorOccurredInTheTemplate}{ex.Message}", ex);
             }
         }
 
@@ -451,40 +443,42 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 #region 处理值映射
 
-                var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
-                foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
-                    !colHeader.MappingValues.ContainsKey(mappingAttribute.Text)))
-                    colHeader.MappingValues.Add(mappingAttribute.Text, mappingAttribute.Value);
+                var colHeaderMappingValues = colHeader.MappingValues;
+                propertyInfo.ValueMapping(ref colHeaderMappingValues);
+                //var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
+                //foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
+                //    !colHeader.MappingValues.ContainsKey(mappingAttribute.Text)))
+                //    colHeader.MappingValues.Add(mappingAttribute.Text, mappingAttribute.Value);
 
-                //如果存在自定义映射，则不会生成默认映射
-                if (mappings.Any()) continue;
+                ////如果存在自定义映射，则不会生成默认映射
+                //if (mappings.Any()) continue;
 
-                //为bool类型生成默认映射
-                switch (propertyInfo.PropertyType.GetCSharpTypeName())
-                {
-                    case "Boolean":
-                    case "Nullable<Boolean>":
-                        {
-                            if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
-                            if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
-                            break;
-                        }
-                }
+                ////为bool类型生成默认映射
+                //switch (propertyInfo.PropertyType.GetCSharpTypeName())
+                //{
+                //    case "Boolean":
+                //    case "Nullable<Boolean>":
+                //        {
+                //            if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
+                //            if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
+                //            break;
+                //        }
+                //}
 
-                var type = propertyInfo.PropertyType;
-                var isNullable = type.IsNullable();
-                if (isNullable) type = type.GetNullableUnderlyingType();
-                //为枚举类型生成默认映射
-                if (type.IsEnum)
-                {
-                    var values = type.GetEnumTextAndValues();
-                    foreach (var value in values.Where(value => !colHeader.MappingValues.ContainsKey(value.Key)))
-                        colHeader.MappingValues.Add(value.Key, value.Value);
+                //var type = propertyInfo.PropertyType;
+                //var isNullable = type.IsNullable();
+                //if (isNullable) type = type.GetNullableUnderlyingType();
+                ////为枚举类型生成默认映射
+                //if (type.IsEnum)
+                //{
+                //    var values = type.GetEnumTextAndValues();
+                //    foreach (var value in values.Where(value => !colHeader.MappingValues.ContainsKey(value.Key)))
+                //        colHeader.MappingValues.Add(value.Key, value.Value);
 
-                    if (isNullable)
-                        if (!colHeader.MappingValues.ContainsKey(string.Empty))
-                            colHeader.MappingValues.Add(string.Empty, null);
-                }
+                //    if (isNullable)
+                //        if (!colHeader.MappingValues.ContainsKey(string.Empty))
+                //            colHeader.MappingValues.Add(string.Empty, null);
+                //}
 
                 #endregion
             }
@@ -544,8 +538,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     case "Boolean":
                     case "Nullable<Boolean>":
                         {
-                            if (!colHeader.MappingValues.ContainsKey("是")) colHeader.MappingValues.Add("是", true);
-                            if (!colHeader.MappingValues.ContainsKey("否")) colHeader.MappingValues.Add("否", false);
+                            if (!colHeader.MappingValues.ContainsKey(Resource.Yes)) colHeader.MappingValues.Add(Resource.Yes, true);
+                            if (!colHeader.MappingValues.ContainsKey(Resource.No)) colHeader.MappingValues.Add(Resource.No, false);
                             break;
                         }
                 }
@@ -633,7 +627,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual void ParseData(ExcelPackage excelPackage)
         {
             var worksheet = GetImportSheet(excelPackage);
-            if (ExcelImporterSettings.MaxCount != int.MaxValue && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex) throw new ArgumentException($"最大允许导入条数不能超过{ExcelImporterSettings.MaxCount}条！");
+
+            //检查导入最大条数限制
+            if (ExcelImporterSettings.MaxCount != 0
+               && ExcelImporterSettings.MaxCount != int.MaxValue
+               && worksheet.Dimension.End.Row > ExcelImporterSettings.MaxCount + ExcelImporterSettings.HeaderRowIndex
+               ) throw new ArgumentException($"{Resource.MaximumNumberImportsCannotExceeded}{ExcelImporterSettings.MaxCount}");
 
             ImportResult.Data = new List<object>();
             var propertyInfos = new List<PropertyInfo>(_importDataType.GetProperties());
@@ -689,7 +688,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             //
                             if (propertyInfo.PropertyType.IsEnum)
                             {
-                                AddRowDataError(rowIndex, col, $"值 {cellValue} 不存在模板下拉选项中");
+                                AddRowDataError(rowIndex, col, $"{Resource.Value}{cellValue} {Resource.ThereAreNoTemplateDropDownOptions}");
                                 continue;
                             }
 
@@ -704,7 +703,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     if (string.IsNullOrWhiteSpace(cellValue))
                                         propertyInfo.SetValue(dataItem, null);
                                     else
-                                        AddRowDataError(rowIndex, col, $"值 {cellValue} 不合法！");
+                                        AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.Illegal}");
                                     break;
                                 case "String":
                                     //TODO:进一步优化
@@ -722,7 +721,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -739,7 +738,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!long.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -750,7 +749,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -767,7 +766,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!int.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -778,7 +777,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!short.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -795,7 +794,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!short.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的整数数值！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectIntegerValue}");
                                             break;
                                         }
 
@@ -806,7 +805,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -823,7 +822,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!decimal.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -834,7 +833,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -851,7 +850,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!double.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -863,7 +862,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -880,7 +879,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!float.TryParse(cellValue, out var number))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的小数！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDecimal}");
                                             break;
                                         }
 
@@ -891,7 +890,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         if (!DateTime.TryParse(cellValue, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
 
@@ -908,7 +907,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!DateTime.TryParse(cellValue, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"值 {cellValue} 无效，请填写正确的日期时间格式！");
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
                                             break;
                                         }
 
@@ -939,13 +938,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage)
         {
 #if NET461
-            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[1];
+            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()]??(
+                 ExcelImporterSettings.SheetName != null?
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex] :
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]);
 #else
-            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[0];
+            return excelPackage.Workbook.Worksheets[_importDataType.GetDisplayName()] ??(
+                 ExcelImporterSettings.SheetName != null?
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex] :
+                 excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]??
+                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetIndex]);
 #endif
         }
 
@@ -1007,7 +1012,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <exception cref="ArgumentException">文件名必须填写! - fileName</exception>
         public Task<ExportFileInfo> GenerateTemplate(string fileName = null)
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", fileName);
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, fileName);
 
             var fileInfo =
                 ExcelHelper.CreateExcelPackage(fileName, excelPackage => { StructureExcel(excelPackage); });

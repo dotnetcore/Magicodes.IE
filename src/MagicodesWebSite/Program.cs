@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using MagicodesWebSite.Extensions;
+using Microsoft.OpenApi.Models;
 
 namespace MagicodesWebSite
 {
@@ -66,11 +68,19 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers();
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Magicodes WebSite API", Version = "v1" });
+                    c.OperationFilter<AddRequiredHeaderParameter>();
+                });
             }
             public void Configure(IApplicationBuilder app)
             {
                 app.UseRouting();
                 app.UseMagiCodesIE();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
@@ -83,12 +93,21 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers(options => options.Filters.Add(typeof(MagicodesFilter)));
+                services.AddRazorPages();
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Magicodes WebSite API", Version = "v1" });
+                    c.OperationFilter<AddRequiredHeaderParameter>();
+                });
             }
             public void Configure(IApplicationBuilder app)
             {
                 app.UseRouting();
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseEndpoints(endpoints =>
                 {
+                    endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
             }

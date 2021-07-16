@@ -1,7 +1,126 @@
 # Release Log
 
-### 2.5.2
+## 2.5.4.6
+
+**2021.07.04**
+- 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
+
+## 2.5.4.5
+
+**2021.06.29**
+- 合并PR[#295](https://github.com/dotnetcore/Magicodes.IE/pull/295),完善模板导出类型定义的问题
+
+## 2.5.4.4
+
+**2021.06.25**
+- Fix only first [ColumnIndex] is valid exception[#289](https://github.com/dotnetcore/Magicodes.IE/issues/289)
+
+## 2.5.4.3
+
+**2021.06.18**
+- Update ImportTestColumnIndex_Test
+- Magicodes.EPPlus was upgraded to 4.6.7[#285](https://github.com/dotnetcore/Magicodes.IE/issues/285)
+
+## 2.5.4.2
+
+**2021.06.05**
+- Fix ImporterHeader->ColumnIndex
+- Utilize RecyclableMemoryStream instead of "new MemoryStream" all over[#282](https://github.com/dotnetcore/Magicodes.IE/issues/282)
+
+## 2.5.4.1
+
+**2021.06.05**
+- EXCEL模板导出支持XOffset和YOffset[#280](https://github.com/dotnetcore/Magicodes.IE/issues/280)
+- EXCEL修复ValueMapping
+- Core工程多语言配置
+- EXCEL优化时间导出
+
+## 2.5.4.0
+
+**2021.06.01**
+
+- EXCEL支持自动换行属性[#278](https://github.com/dotnetcore/Magicodes.IE/issues/278)
+- EXCEL支持隐藏列属性[#273](https://github.com/dotnetcore/Magicodes.IE/issues/273)
+- EXCEL优化时间优化
+
+## 2.5.3.9
+
+**2021.05.26**
+- 修复ValueMappingAttribute[#272](https://github.com/dotnetcore/Magicodes.IE/issues/272)
+
+## 2.5.3.8
+
+**2021.05.10**
+
+- Excel模板导出功能，将单行复制改为多行复制
+- PDF导出内存优化
+
+## 2.5.3.7
+
+**2021.04.23**
+- 修复导入模板生成，格式错误[#261](https://github.com/dotnetcore/Magicodes.IE/issues/261)
+例如：
+
+## 2.5.3.6
+
+**2021.04.18**
+- 支持对导入模板生成，预设值单元格格式[#253](https://github.com/dotnetcore/Magicodes.IE/issues/253)
+例如：
+```
+[ImporterHeader(Name = "序号", Format ="@")]
+```
+- 单元格图片导出支持偏移设置[#250](https://github.com/dotnetcore/Magicodes.IE/issues/250)
+例如：
+```
+**YOffset**：垂直偏移（可进行移动图片）
+**XOffset**：水平偏移（可进行移动图片）
+```
+- 支持多sheet导入SheetIndex的支持[#254](https://github.com/dotnetcore/Magicodes.IE/issues/254)
+例如：
+```
+[ExcelImporter(SheetIndex = 2)]
+```
+
+## 2.5.3.5
+
+**2021.04.13**
+- Excel导入支持列头忽略大小写导入（全局配置：IsIgnoreColumnCase）
+
+## 2.5.3.4
+
+**2021.04.06**
+- Excel导入修复枚举值不在范围时的错误提示
+
+## 2.5.3.3
+
+**2021.04.03**
+- Excel导入逻辑移除5万行的限制，默认不限制导入数量
+
+
+## 2.5.3.2
+
+**2021.03.30**
+- Excel修复OutputBussinessErrorData扩展方法
+- 多Sheet导入对Stream的支持
+
+
+## 2.5.3.1
+
+**2021.03.12**
+
+- Excel模板导出支持使用Dictionary、ExpandoObject完成动态导出
+- 优化模板导出逻辑
+
+## 2.5.3
+
+**2021.03.08**
+
+- Excel模板导出支持使用JSON对象完成动态导出 [#I398DI](https://gitee.com/magicodes/Magicodes.IE/issues/I398DI)
+
+## 2.5.2
+
 **2021.03.05**
+
 - Excel导入支持合并行数据 [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
 ## 2.5.1.8
@@ -9,19 +128,19 @@
 - Input string was not in a correct format.[#241](https://github.com/dotnetcore/Magicodes.IE/issues/241)
 - 使用Stream方式导入xlsx，rowErrors里的rowIndex位置不对[#236](https://github.com/dotnetcore/Magicodes.IE/issues/236)
 
-### 2.5.1.7
+## 2.5.1.7
 **2021.02.20**
 - Excel支持Base64导出 [#219](https://github.com/dotnetcore/Magicodes.IE/issues/219)
 - 修复 [#214](https://github.com/dotnetcore/Magicodes.IE/issues/214)
 
-### 2.5.1.6
+## 2.5.1.6
 
 **2021.01.31**
 - 部分重构模板导出
 - Excel模板导出语法解析加强 [#211](https://github.com/dotnetcore/Magicodes.IE/issues/211)
 - 修复当表格下面存在变量时，无法渲染的Bug
 
-### 2.5.1.5
+## 2.5.1.5
 
 **2021.01.29**
 - 移除模板导出时的控制台日志输出

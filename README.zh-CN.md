@@ -13,6 +13,20 @@
 ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
 
+## 目录
+
+1. [概述](#概述)
+2. [里程碑](#里程碑)
+3. [自动构建](#自动构建)
+4. [Nuget包](#Nuget包)
+5. [注意事项](#注意事项)
+6. [教程](#教程)
+7. [特点](#特点)
+8. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
+9. [联系我们](#联系我们)
+10. [更新历史](./RELEASE.md)
+11. [赞助或付费支持](#赞助或付费支持)
+
 ## 概述
 
 导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
@@ -26,14 +40,14 @@
 
 |  #   |    状态     | 完成时间 |                          里程碑情况                           |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-02-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
 | [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩已完成 |2020-10-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩已完成 |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
 | [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
 | [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
-### Azure DevOps
+## 自动构建
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 - Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
 - Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop)
@@ -42,7 +56,7 @@
 
 具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
-### Nuget
+## Nuget包
 
 #### 稳定版（推荐）
 
@@ -56,38 +70,31 @@
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
-### **注意**
+## **注意事项**
 
 - **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**
 - **如需在Docker中使用，请参阅文档中的《Docker中使用》一节。**
 - **相关功能均已编写单元测试，在使用的过程中可以参考单元测试。**
 
-### **教程**
+## **教程**
 
 1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")  （[点此访问国内文档](https://docs.xin-lai.com/2019/11/26/%E7%BB%84%E4%BB%B6/Magicodes.IE/1.%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AD%A6%E7%94%9F%E6%95%B0%E6%8D%AE/)）**
-
 2. **[基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")  [（点此访问国内文档）](https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/)**
-
 3. **[基础教程之导出Pdf收据](docs/3.基础教程之导出Pdf收据.md "3.基础教程之导出Pdf收据")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/02/25/%E7%BB%84%E4%BB%B6/Magicodes.IE/3.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf/)
-
 4. **[在Docker中使用](docs/4.在Docker中使用.md "4.在Docker中使用")**
-
 5. **[动态导出](docs/5.动态导出.md "5.动态导出")**
-
 6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
 7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
 8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
-
 9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
-
 10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
 11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
-12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
+12. **[Magicodes.IE.AspNetCore之一行代码多格式导出](docs/12.Magicodes.IE.AspNetCore之一行代码多格式导出.md)**
 13. **[性能测试](docs/13.性能测试.md)**
+14. [**Excel合并行导入**](docs/Excel合并行导入.md)
+15. [**Excel模板导出之动态导出**](docs/Excel模板导出之动态导出.md)
 
 **其他教程见下文或单元测试**
-
-**更新历史见下文。**
 
 ## 特点
 
@@ -221,7 +228,7 @@
 - **支持excel多Sheet导入；**
   **![](./res/multipleSheet.png "枚举转数据映射序列")**
 
-- **支持Excel模板导出，并且支持图片渲染**
+- **支持Excel模板导出，JSON动态导出，并且支持图片渲染**
   **![](./res/ExcelTplExport.png "Excel模板导出")**
 
   渲染语法如下所示：
@@ -273,7 +280,7 @@ public DateTime Time3 { get; set; }
 - **Excel导出支持HeaderRowIndex，在ExcelExporterAttribute导出特性类中添加HeaderRowIndex属性，方便导出时去指定从第一行开始导出。**
 
 - **Excel生成导入模板支持内置数据验证**
- 
+
 对于内置数据验证的支持可通过IsInterValidation属性开启，并且需要注意的是仅支持MaxLengthAttribute、 MinLengthAttribute、 StringLengthAttribute、 RangeAttribute支持对内置数据验证的开启操作。 
 ![](./res/dataval1.png "Excel验证")
 ![](./res/dataval2.png "Excel验证")
@@ -282,17 +289,24 @@ public DateTime Time3 { get; set; }
 
 - **Excel导入支持合并行数据** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
-### FAQ
+  ![合并行导入文件](res/image-20210306105147319.png)
 
-[问题列表](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
-
-### **联系我们**
+## **联系我们**
 
 > ##### **订阅号**
 
 **关注“麦扣聊技术”订阅号可以获得最新文章、教程、文档，并且加入微信生态群：**
 
-**![](./res/wechat.jpg "麦扣聊技术")**
+<table>
+<tr>
+<td>
+<img align="left" src="./res/wechat.jpg" width="300"/>
+</td>
+<td>
+<img align="right" src="res/IE_WeChat.png" width="300"/>
+</td>
+</tr>
+</table>
 
 > ##### **QQ群**
 
@@ -309,15 +323,23 @@ public DateTime Time3 { get; set; }
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
 
-### **更新历史**
+## 赞助或付费支持
 
-**[更新历史](RELEASE.md)**
+### 服务内容
 
-## Contributors
+<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">点此打开小店</a></p>
+
+服务内容如下：
+- 技术支持
+- 使用培训
+- 二次开发支持
+- 需求定制
+- 赞助（Github展示）
+
+**具体收费根据需求评估，所有收入的30%~60%（视具体工作量评估）捐赠给Magicodes.IE项目开源管理委员会以促进项目长期维护和迭代发展。所有收支均全部公开。**
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
 <a href="https://github.com/dotnetcore/Magicodes.IE/graphs/contributors"><img src="https://opencollective.com/magicodes/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors

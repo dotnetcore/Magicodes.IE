@@ -1,5 +1,6 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Excel
@@ -36,5 +37,13 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Excel
         public DateTimeOffset TestDateTimeOffset1 { get; set; }
 
         public DateTimeOffset? TestDateTimeOffset2 { get; set; }
+
+        [ImporterHeader(IsIgnore = true)]
+        public List<TestInfo1> List1 { get; set; }
+
+        public class TestInfo1
+        {
+            public int A { get; set; }
+        }
     }
 }

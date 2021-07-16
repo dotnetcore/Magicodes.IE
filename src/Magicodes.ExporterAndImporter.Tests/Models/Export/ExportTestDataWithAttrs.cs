@@ -20,35 +20,18 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    public class DataTableTestExporterHeaderFilter : IExporterHeaderFilter
-    {
-        /// <summary>
-        /// 表头筛选器（修改忽略列）
-        /// </summary>
-        /// <param name="exporterHeaderInfo"></param>
-        /// <returns></returns>
-        public ExporterHeaderInfo Filter(ExporterHeaderInfo exporterHeaderInfo)
-        {
-            if (exporterHeaderInfo.DisplayName.Equals("Number"))
-            {
-                exporterHeaderInfo.DisplayName = "数值";
-            }
-            return exporterHeaderInfo;
-        }
-    }
-
     [ExcelExporter(Name = "测试", TableStyle = TableStyles.Dark10, AutoFitAllColumn = true, AutoFitMaxRows = 5000)]
     public class ExportTestDataWithAttrs
     {
         /// <summary>
         /// Text：索引10
         /// </summary>
-        [ExporterHeader(DisplayName = "加粗文本", IsBold = true, ColumnIndex = 10)]
+        [ExporterHeader(DisplayName = "加粗文本", IsBold = true, ColumnIndex = 10, WrapText = true)]
         public string Text { get; set; }
         /// <summary>
         /// Text2：索引1
         /// </summary>
-        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1)]
+        [ExporterHeader(DisplayName = "普通文本", ColumnIndex = 1, Hidden = true)]
         public string Text2 { get; set; }
         /// <summary>
         /// Text3:索引2

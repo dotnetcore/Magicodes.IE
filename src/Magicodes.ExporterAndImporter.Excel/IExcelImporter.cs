@@ -38,6 +38,14 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="filePath"></param>
         /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
         Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(string filePath) where T : class, new();
+        
+        /// <summary>
+        /// 导入多个Sheet数据
+        /// </summary>
+        /// <typeparam name="T">Excel类</typeparam>
+        /// <param name="stream"></param>
+        /// <returns>返回一个字典，Key为Sheet名，Value为Sheet对应类型的object装箱，使用时做强转</returns>
+        Task<Dictionary<string, ImportResult<object>>> ImportMultipleSheet<T>(Stream stream) where T : class, new();
 
         /// <summary>
         /// 导入多个相同类型的Sheet数据

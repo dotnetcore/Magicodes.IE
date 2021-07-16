@@ -23,7 +23,7 @@ Import and export general library, support Dto import and export, template expor
 
 |  #   |    Status     | Completion time | Milestone situation |
 | :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-02-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
+| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-12-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩Completed  |2020-10-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
 | [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
 | [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
@@ -61,28 +61,19 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 ### **Tutorial**
 
-Sorry, due to limited energy, please help translate.
-
-1. **[基础教程之导入学生数据](docs/1.基础教程之导入学生数据.md "1.基础教程之导入学生数据")**
-
-2. **[基础教程之导出Excel](docs/2.基础教程之导出Excel.md "2.基础教程之导出Excel")  [（点此访问国内文档）](https://docs.xin-lai.com/2020/02/19/%E7%BB%84%E4%BB%B6/Magicodes.IE/2.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAExcel/)**
-
-3. **[基础教程之导出Pdf收据](docs/3.基础教程之导出Pdf收据.md "3.基础教程之导出Pdf收据")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/02/25/%E7%BB%84%E4%BB%B6/Magicodes.IE/3.Magicodes.IE%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B%E4%B9%8B%E5%AF%BC%E5%87%BAPdf/)
-
-4. **[在Docker中使用](docs/4.在Docker中使用.md "4.在Docker中使用")**
-
-5. **[动态导出](docs/5.动态导出.md "5.动态导出")**
-
-6. **[多Sheet导入](docs/6.多Sheet导入.md "6.多Sheet导入")**
-7. **[Csv导入导出](docs/7.Csv导入导出.md "7.Csv导入导出")**
-8. **[Excel图片导入导出](docs/8.Excel图片导入导出.md "8.Excel图片导入导出")** [**(点此访问国内文档)**](https://docs.xin-lai.com/2020/03/16/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/%E4%BD%BF%E7%94%A8Magicodes.IE.Excel%E5%AE%8C%E6%88%90Excel%E5%9B%BE%E7%89%87%E7%9A%84%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AF%BC%E5%87%BA/)
-
-9. **[Excel模板导出之导出教材订购表](docs/9.Excel模板导出之导出教材订购表.md "9.Excel模板导出之导出教材订购表")（[点此访问国内文档](https://docs.xin-lai.com/2020/01/08/%E7%BB%84%E4%BB%B6/Magicodes.IE/7.Excel%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%87%BA%E4%B9%8B%E5%AF%BC%E5%87%BA%E6%95%99%E6%9D%90%E8%AE%A2%E8%B4%AD%E8%A1%A8/)）**
-
-10. **[进阶篇之导入导出筛选器](https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/)**
-11. **[Magicodes.IE之花式导出](https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/)**
-12. **[.NETCore中通过请求头导出多种格式文件](docs/12.NETCore中通过请求头导出多种格式文件.md)**
-13. **[性能测试](docs/13.性能测试.md)**
+1. <a href="docs/1.Basic tutorial of importing student data.md">Basic tutorial of importing student data</a>
+2. <a href="docs/2.Basic tutorial of export Excel.md">Basic tutorial of export Excel</a>
+3. <a href="docs/3.Basic tutorial of export Pdf receipts.md">Basic tutorial of export Pdf receipts</a>
+4. <a href="docs/4.Use in Docker.md">Use in Docker</a>
+5. <a href="docs/5.Dynamic Export.md">Dynamic Export</a>
+6. <a href="docs/6.Import Multi-Sheet Tutorial.md">Import Multi-Sheet Tutorial</a>
+7. <a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a>
+8. <a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a>
+9. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
+12. <a href="docs/12.Exporting multiple formats in NETCore via request headers.md">Exporting multiple formats in NETCore via request headers</a>
+13. <a href="docs/13.Performance Measurement.md">Performance Measurement</a>
+14. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
+15. <a href="docs/Excel template  export - dynamic export.md">Excel template  export - dynamic export</a>
 
 **See below for other tutorials or unit tests**
 
@@ -282,6 +273,8 @@ Support display operations for input prompts:
 ![](./res/dataval3.png "Excel验证")
 
 - **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
+
+ ![合并行导入文件](res/image-20210306105147319.png)
 
 ### FAQ
 

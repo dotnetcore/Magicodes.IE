@@ -7,32 +7,39 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### Expected behaviour
+Tell us what should happen.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+### Actual behaviour
+Tell us what happens instead. Provide a log message if relevant.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### I'm seeing this behaviour on
+_Remove this hint: these checkboxes can be checked like this: [x]_
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+- [ ] Magicodes.IE.Excel
+- [ ] Magicodes.IE.Pdf
+- [ ] Magicodes.IE.Word
+- [ ] Magicodes.IE.Csv
+- [ ] Magicodes.IE.Html
+- [ ] Magicodes.IE.AspNetCore
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+#### package versions
+Example: Magicodes.IE.Excel 2.2.2, Magicodes.IE.Pdf 1.0
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+### So how can we reproduce this?
+_Remove this hint: Pick one of these - use the Preview feature of this editor to get a sense which option we like best_
 
-**Additional context**
-Add any other context about the problem here.
+#### Awesome :star::star::star::star::star:
+Provide a (link to a) minimal demo app showing the faulty behaviour.
+
+#### Sweet :star::star::star::star:
+Provide a concise code sample which can upload attachments.
+
+#### Good :star::star::star:
+Provide your own app and instructions how to reproduce the issue.
+
+#### Meh :star::star:
+Provide a code sample with a bunch of magic parameters which I need to interpolate by guessing to reconstruct the actual runtime code.
+
+#### Worst :poop:
+Say the source code can't be disclosed and refuse to provide any of the above. Expect this issue to be closed by a bunch of angry aliens :alien::alien::alien::alien::alien: that will hunt you down and :fire: your :computer:. You've been warned. :fire_engine:
