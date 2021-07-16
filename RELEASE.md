@@ -1,5 +1,12 @@
 # Release Log
 
+## 2.5.4.7
+
+**2021.07.15**
+- Magicodes.EPPlus回退到4.6.3，以修复格式错乱的问题
+- 修复Excel仅导出错误数据时的Bug[#302](https://github.com/dotnetcore/Magicodes.IE/pull/302)
+- 完善多语言[#298](https://github.com/dotnetcore/Magicodes.IE/pull/298)，以及完善单元测试
+
 ## 2.5.4.6
 
 **2021.07.04**

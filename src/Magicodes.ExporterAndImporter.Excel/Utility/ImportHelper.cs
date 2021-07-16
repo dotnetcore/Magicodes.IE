@@ -383,10 +383,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     excelRangeList.Add(worksheet.Cells[item.RowIndex, 1, item.RowIndex, worksheet.Dimension.Columns]);
                 }
 
+                //仅导出错误数据
                 if (ExcelImporterSettings.IsOnlyErrorRows)
                 {
                     excelPackage = new ExcelPackage();
-                    excelPackage.Workbook.Worksheets.Add($"{worksheet.Name} 错误数据");
+                    excelPackage.Workbook.Worksheets.Add($"{worksheet.Name}-{Resource.WrongData}");
                     var newWorksheet = excelPackage.Workbook.Worksheets[0];
                     
                     for (int i = 0; i < excelRangeList.Count; i++)
