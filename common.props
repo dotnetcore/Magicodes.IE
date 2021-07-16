@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.6</Version>
+    <Version>2.5.4.7</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -16,6 +16,11 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+
+      **2021.07.15**
+      - Magicodes.EPPlus回退到4.6.3，以修复格式错乱的问题
+      - 修复Excel仅导出错误数据时的Bug[#302](https://github.com/dotnetcore/Magicodes.IE/pull/302)
+      - 完善多语言[#298](https://github.com/dotnetcore/Magicodes.IE/pull/298)，以及完善单元测试
 
       **2021.07.04**
       - 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
