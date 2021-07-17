@@ -388,7 +388,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     excelPackage = new ExcelPackage();
                     excelPackage.Workbook.Worksheets.Add($"{worksheet.Name}-{Resource.WrongData}");
-                    var newWorksheet = excelPackage.Workbook.Worksheets[0];
+                    var newWorksheet = GetImportSheet(excelPackage);
                     
                     for (int i = 0; i < excelRangeList.Count; i++)
                     {
@@ -1461,15 +1461,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <returns></returns>
         protected virtual ExcelWorksheet GetImportSheet(ExcelPackage excelPackage)
         {
-#if NET461
             return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[0];
-#else
-            return excelPackage.Workbook.Worksheets[typeof(T).GetDisplayName()] ??
-                   excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
-                   excelPackage.Workbook.Worksheets[0];
-#endif
+                               excelPackage.Workbook.Worksheets[ExcelImporterSettings.SheetName] ??
+                               excelPackage.Workbook.Worksheets[0];
         }
 
         /// <summary>
