@@ -510,5 +510,38 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells[sheet.Dimension.Address].Any(p => p.Text.Contains("{{")).ShouldBeFalse();
             }
         }
+
+        [Fact(DisplayName ="自动换行测试")]
+        public async Task WrapText_Test()
+        {
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "WrapText_Test.xlsx");
+
+            //导出路径
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(WrapText_Test)}.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            //问题：需要双击单元格才恢复原始的格式，2.5.3.9不存在此问题
+            IExportFileByTemplate exporter = new ExcelExporter();
+
+            //导出路径
+            await exporter.ExportByTemplate(filePath, new Object(), tplPath);
+
+            //Magicodes.EPPlus 4.6.3无此问题
+            using (var pck = new ExcelPackage(new FileInfo(tplPath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                //模板中A2自动换行应为True
+                sheet.Cells["A2"].Style.WrapText.ShouldBeTrue();
+
+            }
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["A2"].Style.WrapText.ShouldBeTrue();
+            }
+        }
     }
 }
