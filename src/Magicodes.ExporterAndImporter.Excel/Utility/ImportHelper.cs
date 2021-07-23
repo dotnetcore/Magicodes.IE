@@ -394,7 +394,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         excelRangeList[i].Copy(newWorksheet.Cells[i + 1, 1, i + 1, worksheet.Dimension.Columns]);
                     }
-
                 }
 
                 var ext = Path.GetExtension(FilePath);
@@ -713,6 +712,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 ImporterHeaderInfos.Add(colHeader);
 
                 #region 处理值映射
+
                 var colHeaderMappingValues = colHeader.MappingValues;
                 propertyInfo.ValueMapping(ref colHeaderMappingValues);
                 //var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
@@ -830,7 +830,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     SetFormat(worksheet, ImporterHeaderInfos[i].Header.Format);
                 }
-
             }
 
             worksheet.Cells.AutoFitColumns();
@@ -1045,10 +1044,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         try
                         {
                             //如果是合并行并且值不为NULL，则暂存值
-                            if (cell.Merge && cell.Value == null && dicMergePreValues.ContainsKey(propertyInfo.Name))
+                            if (cell.Merge && cell.Value == null)
                             {
-                                propertyInfo.SetValue(dataItem, dicMergePreValues[propertyInfo.Name]);
-                                continue;
+                                var key = $"{propertyInfo.Name}-{cell.Worksheet.MergedCells[cell.Start.Row, cell.Start.Column]}";
+                                if (dicMergePreValues.ContainsKey(key))
+                                {
+                                    propertyInfo.SetValue(dataItem, dicMergePreValues[key]);
+                                    continue;
+                                }
                             }
 
                             var cellValue = cell.Value?.ToString();
@@ -1448,7 +1451,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (cell.Merge && value != null)
             {
-                dicMergePreValues[propertyInfo.Name] = value;
+                //使用合并单元格的地址作为Key
+                var key = $"{propertyInfo.Name}-{cell.Worksheet.MergedCells[cell.Start.Row, cell.Start.Column]}";
+                dicMergePreValues[key] = value;
             }
             propertyInfo.SetValue(dataItem, value);
         }

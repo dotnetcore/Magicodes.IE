@@ -672,7 +672,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
             var labelErrorFilePath =
                 Path.Combine(Directory.GetCurrentDirectory(), nameof(ImportOnlyErrorRows) + ".xlsx");
-            if(File.Exists(labelErrorFilePath)) File.Delete(labelErrorFilePath);
+            if (File.Exists(labelErrorFilePath)) File.Delete(labelErrorFilePath);
             var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath, labelErrorFilePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
@@ -1039,12 +1039,24 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeFalse();
             import.Data.ShouldNotBeNull();
+
+            import.Data.ElementAt(0).CardNumber.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(0).MonthlyFee.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(0).Flow.ShouldNotBeNullOrEmpty();
+
+            import.Data.ElementAt(1).CardNumber.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).MonthlyFee.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).Flow.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).PaymentDate.ShouldNotBeNull();
+
             import.Data.ElementAt(2).CardNumber.ShouldBeNullOrEmpty();
             import.Data.ElementAt(2).MonthlyFee.ShouldBeNullOrEmpty();
             import.Data.ElementAt(2).Flow.ShouldBeNullOrEmpty();
+
             import.Data.ElementAt(3).CardNumber.ShouldBeNullOrEmpty();
             import.Data.ElementAt(3).MonthlyFee.ShouldBeNullOrEmpty();
             import.Data.ElementAt(3).Flow.ShouldBeNullOrEmpty();
+
             import.Data.Count.ShouldBe(4);
         }
     }
