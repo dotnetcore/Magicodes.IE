@@ -17,6 +17,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
+using Magicodes.ExporterAndImporter.Tests.Models.Import.Issue305;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.DataValidation;
@@ -1021,6 +1022,30 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
+        }
+
+        /// <summary>
+        /// 单元格合并导入
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "单元格合并导入#305")]
+        public async Task CellMergeImport_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Issue305.xlsx");
+            var import = await Importer.Import<ProjectImportDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.ElementAt(2).CardNumber.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(2).MonthlyFee.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(2).Flow.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(3).CardNumber.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(3).MonthlyFee.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(3).Flow.ShouldBeNullOrEmpty();
+            import.Data.Count.ShouldBe(4);
         }
     }
 }

@@ -351,7 +351,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 //TODO:标注模板错误
                 //标注数据错误
-                var excelRangeList = new List<ExcelRange>{ worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns] };
+                var excelRangeList = new List<ExcelRange> { worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns] };
                 foreach (var item in ImportResult.RowErrors)
                 {
                     var gtRows = EmptyRows.Where(r => r > item.RowIndex);
@@ -389,7 +389,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     excelPackage = new ExcelPackage();
                     excelPackage.Workbook.Worksheets.Add($"{worksheet.Name}-{Resource.WrongData}");
                     var newWorksheet = GetImportSheet(excelPackage);
-                    
+
                     for (int i = 0; i < excelRangeList.Count; i++)
                     {
                         excelRangeList[i].Copy(newWorksheet.Cells[i + 1, 1, i + 1, worksheet.Dimension.Columns]);
@@ -1047,8 +1047,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             //如果是合并行并且值不为NULL，则暂存值
                             if (cell.Merge && cell.Value == null && dicMergePreValues.ContainsKey(propertyInfo.Name))
                             {
-                                propertyInfo.SetValue(dataItem,
-                                           dicMergePreValues[propertyInfo.Name]);
+                                propertyInfo.SetValue(dataItem, dicMergePreValues[propertyInfo.Name]);
                                 continue;
                             }
 
