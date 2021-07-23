@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.4.8</Version>
+    <Version>2.5.4.9</Version>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -16,6 +16,9 @@
       博客地址：http://www.cnblogs.com/codelove/
       公众号：麦扣聊技术
       交流QQ群：85318032
+
+      **2021.07.23**
+      - 修复Excel合并行导入在存在空的合并单元格时可能的数据读取错误[#305](https://github.com/dotnetcore/Magicodes.IE/issues/305)
 
       **2021.07.17**
       - Magicodes.EPPlus回退到4.6.6，以修复格式错乱的问题

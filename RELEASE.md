@@ -1,4 +1,8 @@
 # Release Log
+## 2.5.4.9
+
+**2021.07.23**
+- 修复Excel合并行导入在存在空的合并单元格时可能的数据读取错误[#305](https://github.com/dotnetcore/Magicodes.IE/issues/305)
 
 ## 2.5.4.8
 

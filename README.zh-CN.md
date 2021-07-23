@@ -1,6 +1,6 @@
 <img align="right" src="./res/logo.jpg" width="300"/>
 
-# Magicodes.IE | [English](README.en.md)
+# Magicodes.IE | [English](README.md)
 [![Member project of .NET Core Community](https://img.shields.io/badge/member%20project%20of-NCC-9e20c9.svg)](https://github.com/dotnetcore)
 [![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -25,7 +25,7 @@
 8. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
 9. [联系我们](#联系我们)
 10. [更新历史](./RELEASE.md)
-11. [赞助或付费支持](#赞助或付费支持)
+11. [友情赞助](#友情赞助)
 
 ## 概述
 
@@ -323,7 +323,7 @@ public DateTime Time3 { get; set; }
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
 
-## 赞助或付费支持
+## 友情赞助
 
 ### 服务内容
 
