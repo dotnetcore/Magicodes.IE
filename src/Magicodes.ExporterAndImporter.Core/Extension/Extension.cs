@@ -12,6 +12,7 @@
 // ======================================================================
 
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.IE.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;

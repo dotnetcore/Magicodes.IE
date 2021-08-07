@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj" />
   </ItemGroup>
 
 </Project>

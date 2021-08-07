@@ -13,6 +13,7 @@
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
+using Magicodes.IE.Core;
 using Shouldly;
 using System;
 using System.IO;

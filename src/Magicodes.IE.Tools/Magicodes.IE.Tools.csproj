@@ -30,6 +30,6 @@
     <Folder Include="nupkg\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
   </ItemGroup>
 </Project>

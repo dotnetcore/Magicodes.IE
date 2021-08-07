@@ -15,6 +15,7 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.IE.Core;
 using System.Collections.Generic;
 using System.Linq;
 

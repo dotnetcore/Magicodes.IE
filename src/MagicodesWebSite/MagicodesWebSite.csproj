@@ -16,11 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.ExporterAndImporter.AspNetCore.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj" />
-    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.IE.AspNetCore.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel.AspNetCore\Magicodes.IE.Excel.AspNetCore.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.IE.Pdf.csproj" />
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Word\Magicodes.IE.Word.csproj" />
   </ItemGroup>
 
   <ItemGroup>

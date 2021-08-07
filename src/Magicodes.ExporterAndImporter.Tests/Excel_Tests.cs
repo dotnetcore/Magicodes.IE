@@ -16,6 +16,7 @@ using Magicodes.ExporterAndImporter.Tests.Models.Import;
 using Xunit;
 using Xunit.Abstractions;
 using System.Globalization;
+using Magicodes.IE.Core;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
