@@ -203,7 +203,14 @@ https://github.com/dotnetcore/Magicodes.IE
 
 [ASP.NET Core 中的测试控制器逻辑 | Microsoft Docs](https://docs.microsoft.com/zh-cn/aspnet/core/mvc/controllers/testing?view=aspnetcore-5.0&WT.mc_id=DT-MVP-5004079)
 
-写个功能几分钟到十几分钟，码个文档要半天，结束。
+写个功能几分钟到十几分钟，码个文档要半天，就此结束。
+
+**Magicodes.IE：导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。**
+
+- Github：<https://github.com/dotnetcore/Magicodes.IE>
+- 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
+
+**相关库会一直更新，在功能体验上有可能会和本文教程有细微的出入，请以相关具体代码、版本日志、单元测试示例为准。**
 
 
 

@@ -1,5 +1,5 @@
 # Release Log
-## 2.5.5.0
+## 2.5.5.1
 **2021.08.07**
 - 为了简化ASP.NET Core下的Excel导出，对Excel导出进行了进一步的封装
 - 添加`Magicodes.IE.Excel.AspNetCore`工程，添加`XlsxFileResult`的Action Result，支持泛型集合、Bytes数组、Steam直接导出
