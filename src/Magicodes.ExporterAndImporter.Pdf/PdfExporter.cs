@@ -15,6 +15,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
 using System.Text;
 using System.Runtime.InteropServices;
+using Magicodes.IE.Core;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {

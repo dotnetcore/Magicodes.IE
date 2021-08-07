@@ -14,6 +14,7 @@
 using DynamicExpresso;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.IE.Core;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using System;

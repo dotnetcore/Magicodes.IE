@@ -17,6 +17,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
+using Magicodes.IE.Core;
 using Magicodes.ExporterAndImporter.Tests.Models.Import.Issue305;
 using Newtonsoft.Json;
 using OfficeOpenXml;

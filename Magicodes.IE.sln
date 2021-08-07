@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Core", "src\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj", "{ECF7AB74-BE8D-4E61-968E-6DB1E182154F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Core", "src\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj", "{ECF7AB74-BE8D-4E61-968E-6DB1E182154F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Excel", "src\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj", "{EF5FD425-AAD3-4B56-9A84-00CF53347CD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Excel", "src\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj", "{EF5FD425-AAD3-4B56-9A84-00CF53347CD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Tests", "src\Magicodes.ExporterAndImporter.Tests\Magicodes.ExporterAndImporter.Tests.csproj", "{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tests", "src\Magicodes.ExporterAndImporter.Tests\Magicodes.IE.Tests.csproj", "{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7164789B-598A-46A6-BCBE-24CE10F93D53}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,11 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RELEASE.md = RELEASE.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Word", "src\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj", "{87E9EDB5-4699-403A-936C-E3D4C789A4F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Word", "src\Magicodes.ExporterAndImporter.Word\Magicodes.IE.Word.csproj", "{87E9EDB5-4699-403A-936C-E3D4C789A4F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Html", "src\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj", "{46A0C3B6-0B1A-4D3E-9DC0-D60C4C57899E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Html", "src\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj", "{46A0C3B6-0B1A-4D3E-9DC0-D60C4C57899E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.IE.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{400E37A1-6C65-44DF-8D1B-E1BA55BD330F}"
 EndProject
@@ -44,15 +44,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9
 		docs\Magicodes.IE之花式导出.md = docs\Magicodes.IE之花式导出.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.ExporterAndImporter.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.IE.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicodesWebSite", "src\MagicodesWebSite\MagicodesWebSite.csproj", "{46468401-A16B-448E-A029-F7A95F985031}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.Benchmarks", "src\Magicodes.IE.Benchmarks\Magicodes.Benchmarks.csproj", "{39A45037-2DC2-4F6D-81F5-6984062F6366}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.AspNetCore", "src\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.ExporterAndImporter.AspNetCore.csproj", "{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.AspNetCore", "src\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.IE.AspNetCore.csproj", "{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Excel.AspNetCore", "src\Magicodes.ExporterAndImporter.Excel.AspNetCore\Magicodes.IE.Excel.AspNetCore.csproj", "{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +106,10 @@ Global
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

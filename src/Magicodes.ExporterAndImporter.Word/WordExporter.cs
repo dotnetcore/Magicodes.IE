@@ -47,6 +47,7 @@ using HtmlToOpenXml;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
+using Magicodes.IE.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
