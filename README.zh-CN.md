@@ -94,6 +94,7 @@
 13. **[性能测试](docs/13.性能测试.md)**
 14. [**Excel合并行导入**](docs/Excel合并行导入.md)
 15. [**Excel模板导出之动态导出**](docs/Excel模板导出之动态导出.md)
+16. **[Magicodes.IE.Excel.AspNetCore之快速导出Excel（new）](docs/AspNetCore之快速导出Excel.md)**
 
 **其他教程见下文或单元测试**
 
@@ -123,13 +124,13 @@
 - **导入支持截止列设置，如未设置则默认遇到空格截止；**
 - **支持导出HTML、Word、Pdf，支持自定义导出模板；**
   - **导出HTML**
-**![](./res/导出html.png "导出HTML")**
+  **![](./res/导出html.png "导出HTML")**
   - **导出Word**
-**![](./res/导出Word.png "导出Word")**
+  **![](./res/导出Word.png "导出Word")**
   - **导出Pdf，支持设置，具体见更新日志**
-**![](./res/导出Pdf.png "导出Pdf")**
+  **![](./res/导出Pdf.png "导出Pdf")**
   - **导出收据**
-**![](./res/导出收据.png "导出收据.png")**
+  **![](./res/导出收据.png "导出收据.png")**
 - **导入支持重复验证；**
 **![](./res/重复错误.png "重复错误.png")**
 - **支持单个数据模板导出，常用于导出收据、凭据等业务**
@@ -263,7 +264,7 @@
 
 - **支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
-- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容，具体见教程** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
 
 - **支持分栏、分sheet、追加rows导出**
 

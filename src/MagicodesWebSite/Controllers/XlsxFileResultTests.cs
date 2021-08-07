@@ -13,30 +13,46 @@ namespace MagicodesWebSite.Controllers
     [Route("api/[controller]")]
     public class XlsxFileResultTests : ControllerBase
     {
+        /// <summary>
+        /// 使用Byte数组导出Excel文件
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ByBytes")]
         public async Task<ActionResult> ByBytes()
         {
+            //随机生成100条数据
             var list = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             var exporter = new ExcelExporter();
-            var result = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(list);
-            return new XlsxFileResult(result);
+            var bytes = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(list);
+            //使用XlsxFileResult进行导出
+            return new XlsxFileResult(bytes: bytes);
         }
 
+        /// <summary>
+        /// 使用流导出Excel文件
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ByStream")]
         public async Task<ActionResult> ByStream()
         {
+            //随机生成100条数据
             var list = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             var exporter = new ExcelExporter();
             var result = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(list);
             var fs = new MemoryStream(result);
-            return new XlsxFileResult(fs);
+            return new XlsxFileResult(stream: fs, fileDownloadName: "下载文件");
         }
 
+
+        /// <summary>
+        /// 使用泛型集合导出Excel文件
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ByList")]
         public async Task<ActionResult> ByList()
         {
             var list = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
-            return new XlsxFileResult<ExportTestDataWithAttrs>(list);
+            return new XlsxFileResult<ExportTestDataWithAttrs>(data: list);
         }
     }
 }
