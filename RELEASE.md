@@ -10,11 +10,7 @@
 **2021.07.23**
 - 修复Excel合并行导入在存在空的合并单元格时可能的数据读取错误[#305](https://github.com/dotnetcore/Magicodes.IE/issues/305)
 
-## 2.5.5.0
-**2021.08.07**
-- 为了简化ASP.NET Core下的Excel导出，对Excel导出进行了进一步的封装
-- 添加`Magicodes.IE.Excel.AspNetCore`工程，添加`XlsxFileResult`的Action Result，支持泛型集合、Bytes数组、Steam直接导出
-- 修改部分命名和命名空间
+
 
 ## 2.5.4.8
 
