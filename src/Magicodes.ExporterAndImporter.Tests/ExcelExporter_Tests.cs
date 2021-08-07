@@ -17,6 +17,7 @@ using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Extensions;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
+using Magicodes.IE.Core;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
@@ -898,7 +899,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             Func<Task> f = async () => await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
             var exception = await Assert.ThrowsAsync<ArgumentException>(f);
-            exception.Message.ShouldBe("请勿忽略全部表头！");
+            exception.Message.ShouldBe(Resource.DoNotIgnoreAllTheHeader);
         }
     }
 }
