@@ -39,10 +39,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
                         await memoryStream.CopyToAsync(originalResponseBodyStream);
                     }
                 }
-                else
-                {
-                    await _next(context);
-                }
+                await _next(context);
             }
             catch
             {
