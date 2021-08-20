@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup>
     <Version>2.5.5.1</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -35,19 +37,6 @@
       **2021.07.04**
       - 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
 
-      **2021.06.29**
-      - 合并PR[#295](https://github.com/dotnetcore/Magicodes.IE/pull/295),完善模板导出类型定义的问题
-
-      **2021.06.25**
-      - Fix only first [ColumnIndex] is valid exception[#289](https://github.com/dotnetcore/Magicodes.IE/issues/289)
-
-      **2021.06.18**
-      - Update ImportTestColumnIndex_Test
-      - Magicodes.EPPlus was upgraded to 4.6.7[#285](https://github.com/dotnetcore/Magicodes.IE/issues/285)
-
-      **2021.06.05**
-      - Fix ImporterHeader->ColumnIndex
-      - Utilize RecyclableMemoryStream instead of "new MemoryStream" all over
     </Description>
   </PropertyGroup>
   <PropertyGroup>
