@@ -59,7 +59,7 @@ namespace Magicodes.ExporterAndImporter.Word
     /// <summary>
     ///     Word导出
     /// </summary>
-    public class WordExporter : IExportListFileByTemplate, IExportFileByTemplate
+    public class WordExporter : IWordExporter
     {
         /// <summary>
         ///     根据模板导出列表

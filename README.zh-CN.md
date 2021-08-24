@@ -71,6 +71,12 @@
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
+| **Magicodes.IE.Excel.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.Abp)](https://www.nuget.org/packages/Magicodes.IE.Excel.Abp)**   |
+| **Magicodes.IE.Csv.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv.Abp)](https://www.nuget.org/packages/Magicodes.IE.Csv.Abp)**   |
+| **Magicodes.IE.Html.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html.Abp)](https://www.nuget.org/packages/Magicodes.IE.Html.Abp)**   |
+| **Magicodes.IE.Pdf.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf.Abp)](https://www.nuget.org/packages/Magicodes.IE.Pdf.Abp)**   |
+| **Magicodes.IE.Word.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word.Abp)](https://www.nuget.org/packages/Magicodes.IE.Word.Abp)**   |
+
 ## **注意事项**
 
 - **Excel导入不支持“.xls”文件，即不支持Excel97-2003。**
@@ -292,6 +298,8 @@ public DateTime Time3 { get; set; }
 - **Excel导入支持合并行数据** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
   ![合并行导入文件](res/image-20210306105147319.png)
+
+- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
 
 ## **联系我们**
 
