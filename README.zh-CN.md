@@ -70,7 +70,6 @@
 | **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
-
 | **Magicodes.IE.Excel.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.Abp)](https://www.nuget.org/packages/Magicodes.IE.Excel.Abp)**   |
 | **Magicodes.IE.Csv.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv.Abp)](https://www.nuget.org/packages/Magicodes.IE.Csv.Abp)**   |
 | **Magicodes.IE.Html.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html.Abp)](https://www.nuget.org/packages/Magicodes.IE.Html.Abp)**   |
