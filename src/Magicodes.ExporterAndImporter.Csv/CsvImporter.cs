@@ -10,7 +10,7 @@ namespace Magicodes.ExporterAndImporter.Csv
     /// <summary>
     ///     Csv导入
     /// </summary>
-    public class CsvImporter : IImporter
+    public class CsvImporter : ICsvImporter
     {
         /// <summary>
         ///     导出模板
