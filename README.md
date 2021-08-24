@@ -54,6 +54,12 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
 
+| **Magicodes.IE.Excel.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.Abp)](https://www.nuget.org/packages/Magicodes.IE.Excel.Abp)**   |
+| **Magicodes.IE.Csv.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv.Abp)](https://www.nuget.org/packages/Magicodes.IE.Csv.Abp)**   |
+| **Magicodes.IE.Html.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html.Abp)](https://www.nuget.org/packages/Magicodes.IE.Html.Abp)**   |
+| **Magicodes.IE.Pdf.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf.Abp)](https://www.nuget.org/packages/Magicodes.IE.Pdf.Abp)**   |
+| **Magicodes.IE.Word.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word.Abp)](https://www.nuget.org/packages/Magicodes.IE.Word.Abp)**   |
+
 ### **Note**
 
 - Excel import does not support ".xls" files, that is, Excel97-2003 is not supported. 
@@ -276,6 +282,8 @@ Support display operations for input prompts:
 - **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
  ![合并行导入文件](res/image-20210306105147319.png)
+
+- Add packaging for Abp module, see [#318](https://github.com/dotnetcore/Magicodes.IE/issues/318) for details.
 
 ### FAQ
 

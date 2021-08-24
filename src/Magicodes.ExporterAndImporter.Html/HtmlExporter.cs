@@ -28,7 +28,7 @@ namespace Magicodes.ExporterAndImporter.Html
     /// <summary>
     ///     HTML导出
     /// </summary>
-    public partial class HtmlExporter : IExporterByTemplate
+    public partial class HtmlExporter : IHtmlExporter
     {
         /// <summary>
         /// 初始化
