@@ -193,6 +193,18 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(System.String, System.String)
   nameWithType: CsvImporter.Import<T>(String, String)
   nameWithType.vb: CsvImporter.Import(Of T)(String, String)
+- uid: Magicodes.ExporterAndImporter.Csv.ICsvExporter
+  name: ICsvExporter
+  href: api/Magicodes.ExporterAndImporter.Csv.ICsvExporter.html
+  commentId: T:Magicodes.ExporterAndImporter.Csv.ICsvExporter
+  fullName: Magicodes.ExporterAndImporter.Csv.ICsvExporter
+  nameWithType: ICsvExporter
+- uid: Magicodes.ExporterAndImporter.Csv.ICsvImporter
+  name: ICsvImporter
+  href: api/Magicodes.ExporterAndImporter.Csv.ICsvImporter.html
+  commentId: T:Magicodes.ExporterAndImporter.Csv.ICsvImporter
+  fullName: Magicodes.ExporterAndImporter.Csv.ICsvImporter
+  nameWithType: ICsvImporter
 - uid: Magicodes.ExporterAndImporter.Csv.Utility
   name: Magicodes.ExporterAndImporter.Csv.Utility
   href: api/Magicodes.ExporterAndImporter.Csv.Utility.html
@@ -2946,6 +2958,12 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Html.HtmlExporter.RunCompileTpl
   nameWithType: HtmlExporter.RunCompileTpl
+- uid: Magicodes.ExporterAndImporter.Html.IHtmlExporter
+  name: IHtmlExporter
+  href: api/Magicodes.ExporterAndImporter.Html.IHtmlExporter.html
+  commentId: T:Magicodes.ExporterAndImporter.Html.IHtmlExporter
+  fullName: Magicodes.ExporterAndImporter.Html.IHtmlExporter
+  nameWithType: IHtmlExporter
 - uid: Magicodes.ExporterAndImporter.Pdf
   name: Magicodes.ExporterAndImporter.Pdf
   href: api/Magicodes.ExporterAndImporter.Pdf.html
@@ -3213,6 +3231,12 @@ references:
   commentId: N:Magicodes.ExporterAndImporter.Word
   fullName: Magicodes.ExporterAndImporter.Word
   nameWithType: Magicodes.ExporterAndImporter.Word
+- uid: Magicodes.ExporterAndImporter.Word.IWordExporter
+  name: IWordExporter
+  href: api/Magicodes.ExporterAndImporter.Word.IWordExporter.html
+  commentId: T:Magicodes.ExporterAndImporter.Word.IWordExporter
+  fullName: Magicodes.ExporterAndImporter.Word.IWordExporter
+  nameWithType: IWordExporter
 - uid: Magicodes.ExporterAndImporter.Word.Utility
   name: Magicodes.ExporterAndImporter.Word.Utility
   href: api/Magicodes.ExporterAndImporter.Word.Utility.html
