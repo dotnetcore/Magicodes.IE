@@ -1,4 +1,9 @@
 # Release Log
+
+## 2.5.5.2
+**2021.08.24**
+- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
+
 ## 2.5.5.1
 **2021.08.07**
 - 为了简化ASP.NET Core下的Excel导出，对Excel导出进行了进一步的封装
