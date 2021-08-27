@@ -35,6 +35,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  disable.coverage.autogenerate: 'true'
 
 steps:
 - task: UseDotNet@2

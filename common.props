@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.5.2</Version>
+    <Version>2.5.5.3</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
@@ -20,6 +20,9 @@
       公众号：麦扣聊技术
       交流QQ群：85318032
 
+      **2021.08.27**
+      - 修复Append方式导出多个sheet时，发生“Tablename is not unique”错误，具体见[#299](https://github.com/dotnetcore/Magicodes.IE/issues/299)。
+
       **2021.08.24**
       - 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
 
@@ -27,7 +30,6 @@
       - 为了简化ASP.NET Core下的Excel导出，对Excel导出进行了进一步的封装
       - 添加`Magicodes.IE.Excel.AspNetCore`工程，添加`XlsxFileResult`的Action Result，支持泛型集合、Bytes数组、Steam直接导出
       - 修改部分命名和命名空间
-
 
       **2021.07.23**
       - 修复Excel合并行导入在存在空的合并单元格时可能的数据读取错误[#305](https://github.com/dotnetcore/Magicodes.IE/issues/305)
@@ -39,7 +41,6 @@
 
       **2021.07.04**
       - 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
-
     </Description>
   </PropertyGroup>
   <PropertyGroup>

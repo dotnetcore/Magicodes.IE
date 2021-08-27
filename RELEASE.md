@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.5.3
+**2021.08.27**
+- 修复Append方式导出多个sheet时，发生“Tablename is not unique”错误，具体见[#299](https://github.com/dotnetcore/Magicodes.IE/issues/299)。
+
 ## 2.5.5.2
 **2021.08.24**
 - 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
