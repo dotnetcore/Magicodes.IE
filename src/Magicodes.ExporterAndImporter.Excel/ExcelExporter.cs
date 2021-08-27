@@ -75,26 +75,26 @@ namespace Magicodes.ExporterAndImporter.Excel
 
             if (_isSeparateColumn)
             {
-//#if NET461
+                //#if NET461
                 helper.CopySheet(0,
                     1);
-//#else
-//                helper.CopySheet(0,
-//                      1);
-//#endif
+                //#else
+                //                helper.CopySheet(0,
+                //                      1);
+                //#endif
 
                 _isSeparateColumn = false;
             }
 
             if (_isSeparateByRow)
             {
-//#if NET461
-//                helper.CopyRows(0,
-//                    1, _isAppendHeaders);
-//#else
+                //#if NET461
+                //                helper.CopyRows(0,
+                //                    1, _isAppendHeaders);
+                //#else
                 helper.CopyRows(0,
                       1, _isAppendHeaders);
-//#endif
+                //#endif
             }
 
             _isSeparateBySheet = false;
@@ -102,7 +102,6 @@ namespace Magicodes.ExporterAndImporter.Excel
             _isAppendHeaders = false;
             return this;
         }
-
 
         /// <summary>
         ///		分割集合到当前Sheet追加Column
@@ -179,8 +178,9 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
-
-            return Task.FromResult(_excelPackage.GetAsByteArray());
+            var bytes = _excelPackage.GetAsByteArray();
+            Reset();
+            return Task.FromResult(bytes);
         }
 
         /// <summary>
@@ -458,6 +458,13 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
         }
 
-
+        private void Reset()
+        {
+            _excelPackage = null;
+            _isSeparateByRow = false;
+            _isAppendHeaders = false;
+            _isSeparateBySheet = false;
+            _isSeparateColumn = false;
+        }
     }
 }

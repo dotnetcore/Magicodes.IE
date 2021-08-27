@@ -554,6 +554,19 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 pck.Workbook.Worksheets.Count.ShouldBe(2);
             }
+            //#299 https://github.com/dotnetcore/Magicodes.IE/issues/299
+            DeleteFile(filePath);
+            list1 = GenFu.A.ListOf<ExportTestDataWithAttrs>();
+
+            list2 = new List<ExportTestDataWithSplitSheet>();
+            result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            await result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+            }
         }
 
         [Fact(DisplayName = "通过Dto导出表头")]
@@ -634,7 +647,6 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(12);
             }
         }
-
 
         [Fact(DisplayName = "无特性定义导出测试")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
