@@ -558,7 +558,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             list1 = GenFu.A.ListOf<ExportTestDataWithAttrs>();
 
             list2 = new List<ExportTestDataWithSplitSheet>();
-
             result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
             await result.ShouldNotBeNull();
 
