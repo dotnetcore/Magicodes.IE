@@ -18,7 +18,7 @@
 1. [概述](#概述)
 2. [里程碑](#里程碑)
 3. [自动构建](#自动构建)
-4. [Nuget包](#Nuget包)
+4. [Nuget包](#NuGet包)
 5. [注意事项](#注意事项)
 6. [教程](#教程)
 7. [特点](#特点)
@@ -56,12 +56,12 @@
 
 具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
-## Nuget包
+## NuGet包
 
 #### 稳定版（推荐）
 
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
+| **名称** |      **NuGet**      |
+|----------|:-------------|
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
 | **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
 | **Magicodes.IE.Excel.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.Excel.AspNetCore)**   |
