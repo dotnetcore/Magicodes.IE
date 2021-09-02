@@ -1122,8 +1122,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 }
                             }
 
-                            if (propertyInfo.PropertyType.IsEnum ||
-                                    (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum))
+                            if (propertyInfo.PropertyType.IsEnum
+                                || (!propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType()?.IsEnum == true))
                             {
                                 AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.ThereAreNoTemplateDropDownOptions}");
                                 continue;
