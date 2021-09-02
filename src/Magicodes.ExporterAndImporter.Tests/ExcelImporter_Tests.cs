@@ -277,7 +277,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
             result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
             result.Data.ElementAt(1).Name.ShouldBe(null);
+            result.Data.ElementAt(1).Type.ShouldBe(ImporterProductType.Two);
             result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
+            result.Data.ElementAt(2).Type.ShouldBe(null);
 
             result.ImporterHeaderInfos.ShouldNotBeNull();
             result.ImporterHeaderInfos.Count.ShouldBe(17);
