@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.5.4
+**2021.09.02**
+- 修复可为空枚举导入时的验证问题[#322](https://github.com/dotnetcore/Magicodes.IE/issues/322)。
+
 ## 2.5.5.3
 **2021.08.27**
 - 修复Append方式导出多个sheet时，发生“Tablename is not unique”错误，具体见[#299](https://github.com/dotnetcore/Magicodes.IE/issues/299)。
