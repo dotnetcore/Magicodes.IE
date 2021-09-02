@@ -39,12 +39,12 @@ Import and export general library, support Dto import and export, template expor
 
 For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
-### Nuget
+### NuGet
 
 #### Stable version (recommended)
 
-| **Name** | **Nuget** |
-|----------|:-------------:|
+| **Name** | **NuGet** |
+|----------|:-------------|
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
 | **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
 | **Magicodes.IE.Excel.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.Excel.AspNetCore)**   |
@@ -88,7 +88,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 ## Features
 
 - **Need to be used in conjunction with related import and export DTO models, support import and export through DTO and related characteristics. Configure features to control related logic and display results without modifying the logic code;**
-**![](./res/导入Dto.png "导入Dto")**
+**![](./res/导入Dto.png "Import DTO")**
 - **Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:**
   - **Import column header filter (you can dynamically specify the imported column and imported value mapping relationship)**
   - **Export column header filter (can dynamically control the export column, support dynamic export (DataTable))**
@@ -96,35 +96,35 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 - **Export supports text custom filtering or processing;**
 - **Import supports automatic skipping of blank lines in the middle;**
 - **Import supports automatically generate import templates based on DTO, and automatically mark required items;**
-![](./res/自动生成的导入模板.png "自动生成的导入模板")
+![](./res/自动生成的导入模板.png "Generated import template automatically")
 - **Import supports data drop-down selection, currently only supports enumerated types;**
 - **Imported data supports the processing of leading and trailing spaces and intermediate spaces, allowing specific columns to be set;**
 - **Import supports automatic template checking, automatic data verification, unified exception handling, and unified error encapsulation, including exceptions, template errors and row data errors;**
-![](./res/数据错误统一返回.png "数据错误")
+![](./res/数据错误统一返回.png "Data error")
 - **Support import header position setting, the default is 1;**
 - **Support import columns out of order, no need to correspond one to one in order;**
 - **Support to import the specified column index, automatic recognition by default;**
 - **Exporting Excel supports splitting of Sheets, only need to set the value of [MaxRowNumberOnASheet] of the characteristic [ExporterAttribute]. If it is 0, no splitting is required. See unit test for details;**
 - **Support importing into Excel for error marking;**
-![](./res/数据错误.png "数据错误标注")
-![](./res/多个错误.png "多个错误")
+![](./res/数据错误.png "Data error annotation")
+![](./res/多个错误.png "Multiple data errors ")
 - **Import supports cutoff column setting, if not set, blank cutoff will be encountered by default;**
 - **Support exporting HTML, Word, Pdf, support custom export template;**
   -**Export HTML**
-![](./res/导出html.png "导出HTML")
+![](./res/导出html.png "Export HTML")
   -**Export Word**
-![](./res/导出Word.png "导出Word")
+![](./res/导出Word.png "Export Word")
   -**Export Pdf, support settings, see the update log for details**
-![](./res/导出Pdf.png "导出Pdf")
+![](./res/导出Pdf.png "Export PDF")
   -**Export receipt**
-![](./res/导出收据.png "导出收据.png")
+![](./res/导出收据.png "Export receipt")
 - **Import supports repeated verification;**
-![](./res/重复错误.png "重复错误.png")
+![](./res/重复错误.png "Repeated verification")
 - **Support single data template export, often used to export receipts, credentials and other businesses**
 - **Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou ([https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8) ))* *
 - **Support dynamic/ExpandoObject dynamic column export**
 ```csharp
-        [Fact(DisplayName = "DTO导出支持动态类型")]
+        [Fact(DisplayName = "DTO export supports dynamic types")]
         public async Task ExportAsByteArraySupportDynamicType_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -147,12 +147,12 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 - **Support value mapping, support setting value mapping relationship through "ValueMappingAttribute" feature. It is used to generate data validation constraints for import templates and perform data conversion. **
 ```csharp
         /// <summary>
-        ///     性别
+        /// Gender
         /// </summary>
-        [ImporterHeader(Name = "性别")]
-        [Required(ErrorMessage = "性别不能为空")]
-        [ValueMapping(text: "男", 0)]
-        [ValueMapping(text: "女", 1)]
+        [ImporterHeader(Name = "Gender")]
+        [Required(ErrorMessage = "Gender cannot be empty.")]
+        [ValueMapping(text: "Male", 0)]
+        [ValueMapping(text: "Female", 1)]
         public Genders Gender { get; set; }
 ```
 
@@ -161,64 +161,64 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 		```csharp
 			/// <summary>
-			/// 学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
+			/// Student Status
 			/// </summary>
 			public enum StudentStatus
 			{
 				/// <summary>
-				/// 正常
+				/// Normal
 				/// </summary>
 				[Display(Name = "正常")]
 				Normal = 0,
 
 				/// <summary>
-				/// 流失
+				/// Pupils away
 				/// </summary>
 				[Description("流水")]
 				PupilsAway = 1,
 
 				/// <summary>
-				/// 休学
+				/// Suspension
 				/// </summary>
 				[Display(Name = "休学")]
 				Suspension = 2,
 
 				/// <summary>
-				/// 勤工俭学
+				/// Work-study
 				/// </summary>
 				[Display(Name = "勤工俭学")]
 				WorkStudy = 3,
 
 				/// <summary>
-				/// 顶岗实习
+				/// Internships
 				/// </summary>
 				[Display(Name = "顶岗实习")]
 				PostPractice = 4,
 
 				/// <summary>
-				/// 毕业
+				/// Graduate
 				/// </summary>
 				[Display(Name = "毕业")]
 				Graduation = 5,
 
 				/// <summary>
-				/// 参军
+				/// Join the army
 				/// </summary>
 				[Display(Name = "参军")]
 				JoinTheArmy = 6,
 			}
 		```
 
-		![](./res/enum.png "枚举转数据映射序列")
+		![](./res/enum.png "Enumeration to data mapping")
 
 	- **The bool type will generate "yes" and "no" data items by default**
 	- **If custom value mapping has been set, no default options will be generated**
 
 - **Support excel multi-sheet import**
-  **![](./res/multipleSheet.png "枚举转数据映射序列")**
+  **![](./res/multipleSheet.png "Enumeration to data mapping")**
 
 - **Support Excel template export, and support image rendering**
-  **![](./res/ExcelTplExport.png "Excel模板导出")**
+  **![](./res/ExcelTplExport.png "Excel template export")**
 
   The rendering syntax is as follows:
 
@@ -234,7 +234,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
   Custom pipelines will be supported in the future.
 
 - **Support Excel import template to generate annotation**
-  ![](./res/ImportLabel.png "Excel导入标注")
+  ![](./res/ImportLabel.png "Excel import annotations")
 
 - **Support Excel image import and export**
   - Picture import
@@ -272,11 +272,11 @@ public DateTime Time3 { get; set; }
 
 The support for the built-in data validation can be turned on through the IsInterValidation attribute, and it should be noted that only MaxLengthAttribute, MinLengthAttribute, StringLengthAttribute, and RangeAttribute support the opening operation of the built-in data validation.
 
-![](./res/dataval1.png "Excel验证")
-![](./res/dataval2.png "Excel验证")
+![](./res/dataval1.png "Excel verification")
+![](./res/dataval2.png "Excel verification")
 
 Support display operations for input prompts:
-![](./res/dataval3.png "Excel验证")
+![](./res/dataval3.png "Excel verification")
 
 - **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
