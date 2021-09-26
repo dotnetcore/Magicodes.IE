@@ -913,5 +913,46 @@ namespace Magicodes.ExporterAndImporter.Tests
             var exception = await Assert.ThrowsAsync<ArgumentException>(f);
             exception.Message.ShouldBe(Resource.DoNotIgnoreAllTheHeader);
         }
+
+        [Fact(DisplayName = "ValueMapping测试#337")]
+        public async Task ValueMapping_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ValueMapping_Test)}.xlsx");
+            DeleteFile(filePath);
+            var list = new List<Issue337>()
+            {
+                new Issue337()
+                {
+                    Gender ="男",
+                    IsAlumni = true,
+                    Name ="张三"
+                },
+                new Issue337()
+                {
+                    Gender ="男",
+                    IsAlumni = false,
+                    Name ="张三"
+                },
+                new Issue337()
+                {
+                    Gender ="男",
+                    IsAlumni = null,
+                    Name ="张三"
+                },
+            };
+            var result = await exporter.Export(filePath, list);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+
+                sheet.Cells["C2"].Text.ShouldBe("是");
+                sheet.Cells["C3"].Text.ShouldBe("否");
+                sheet.Cells["C4"].Text.ShouldBe("");
+            }
+        }
     }
 }
