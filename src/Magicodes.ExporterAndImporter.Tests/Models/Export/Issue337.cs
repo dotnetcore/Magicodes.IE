@@ -26,5 +26,10 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ValueMapping("否", false)]
         public bool? IsAlumni { get; set; }
 
+        [ExporterHeader(DisplayName = "是否校友2")]
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
+        public bool IsAlumni2 { get; set; }
+
     }
 }
