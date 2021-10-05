@@ -29,10 +29,6 @@
  * Mats Alm   		                Added       		        2011-01-08
  * Jan Källman		    License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.DataValidation.Contracts
 {
@@ -52,7 +48,7 @@ namespace OfficeOpenXml.DataValidation.Contracts
         /// <summary>
         /// Controls how Excel will handle invalid values.
         /// </summary>
-        ExcelDataValidationWarningStyle ErrorStyle{ get; set; }
+        ExcelDataValidationWarningStyle ErrorStyle { get; set; }
         /// <summary>
         /// True if input message should be shown
         /// </summary>

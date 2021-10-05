@@ -29,9 +29,6 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml.Style
@@ -41,9 +38,9 @@ namespace OfficeOpenXml.Style
     /// </summary>
     public sealed class ExcelParagraph : ExcelTextFont
     {
-        public ExcelParagraph(XmlNamespaceManager ns, XmlNode rootNode, string path, string[] schemaNodeOrder) : 
+        public ExcelParagraph(XmlNamespaceManager ns, XmlNode rootNode, string path, string[] schemaNodeOrder) :
             base(ns, rootNode, path + "a:rPr", schemaNodeOrder)
-        { 
+        {
 
         }
         const string TextPath = "../a:t";

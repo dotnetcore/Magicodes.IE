@@ -29,16 +29,12 @@
  * Mats Alm   		                Added       		        2011-01-01
  * Jan Källman		                License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.Utils;
-using System.Xml;
-using System.Text.RegularExpressions;
-using OfficeOpenXml.DataValidation.Formulas.Contracts;
 using OfficeOpenXml.DataValidation.Contracts;
+using OfficeOpenXml.Utils;
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace OfficeOpenXml.DataValidation
 {
@@ -113,7 +109,7 @@ namespace OfficeOpenXml.DataValidation
         private void Init()
         {
             // set schema node order
-            if(ValidationType == ExcelDataValidationType.List)
+            if (ValidationType == ExcelDataValidationType.List)
             {
                 SchemaNodeOrder = new string[]{
                     "type",
@@ -147,7 +143,7 @@ namespace OfficeOpenXml.DataValidation
                     "formula2"
                 };
             }
-            
+
         }
 
         private string CheckAndFixRangeAddress(string address)
@@ -419,7 +415,7 @@ namespace OfficeOpenXml.DataValidation
         {
             var dvAddress = AddressUtility.ParseEntireColumnSelections(address);
             SetXmlNodeString(_sqrefPath, dvAddress);
-            
+
         }
     }
 }

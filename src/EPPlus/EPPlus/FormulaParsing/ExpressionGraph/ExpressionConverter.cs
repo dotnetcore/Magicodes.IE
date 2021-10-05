@@ -29,10 +29,6 @@
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 {
@@ -59,11 +55,11 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
                 case DataType.Decimal:
                     return compileResult.Result is string
                                ? new DecimalExpression(compileResult.Result.ToString())
-                               : new DecimalExpression(((double) compileResult.Result));
+                               : new DecimalExpression(((double)compileResult.Result));
                 case DataType.Boolean:
                     return compileResult.Result is string
                                ? new BooleanExpression(compileResult.Result.ToString())
-                               : new BooleanExpression((bool) compileResult.Result);
+                               : new BooleanExpression((bool)compileResult.Result);
                 //case DataType.Enumerable:
                 //    return 
                 case DataType.ExcelError:
@@ -71,9 +67,9 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
                     return compileResult.Result is string
                         ? new ExcelErrorExpression(compileResult.Result.ToString(),
                             ExcelErrorValue.Parse(compileResult.Result.ToString()))
-                        : new ExcelErrorExpression((ExcelErrorValue) compileResult.Result);
+                        : new ExcelErrorExpression((ExcelErrorValue)compileResult.Result);
                 case DataType.Empty:
-                   return new IntegerExpression(0); //Added JK
+                    return new IntegerExpression(0); //Added JK
                 case DataType.Time:
                 case DataType.Date:
                     return new DecimalExpression((double)compileResult.Result);

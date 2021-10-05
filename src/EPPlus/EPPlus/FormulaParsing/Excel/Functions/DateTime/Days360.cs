@@ -1,9 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
 {
@@ -26,7 +24,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
             if (arguments.Count() > 2)
             {
                 var european = ArgToBool(arguments, 2);
-                if(european) calcType = Days360Calctype.European;
+                if (european) calcType = Days360Calctype.European;
             }
 
             var startYear = dt1.Year;
@@ -45,29 +43,29 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
             {
                 var calendar = new GregorianCalendar();
                 var nDaysInFeb = calendar.IsLeapYear(dt1.Year) ? 29 : 28;
-               
-                 // If the investment is EOM and (Date1 is the last day of February) and (Date2 is the last day of February), then change D2 to 30.
+
+                // If the investment is EOM and (Date1 is the last day of February) and (Date2 is the last day of February), then change D2 to 30.
                 if (startMonth == 2 && startDay == nDaysInFeb && endMonth == 2 && endDay == nDaysInFeb)
                 {
                     endDay = 30;
                 }
-                 // If the investment is EOM and (Date1 is the last day of February), then change D1 to 30.
+                // If the investment is EOM and (Date1 is the last day of February), then change D1 to 30.
                 if (startMonth == 2 && startDay == nDaysInFeb)
                 {
                     startDay = 30;
                 }
-                 // If D2 is 31 and D1 is 30 or 31, then change D2 to 30.
+                // If D2 is 31 and D1 is 30 or 31, then change D2 to 30.
                 if (endDay == 31 && (startDay == 30 || startDay == 31))
                 {
                     endDay = 30;
                 }
-                 // If D1 is 31, then change D1 to 30.
+                // If D1 is 31, then change D1 to 30.
                 if (startDay == 31)
                 {
                     startDay = 30;
                 }
             }
-            var result = (endYear*12*30 + endMonth*30 + endDay) - (startYear*12*30 + startMonth*30 + startDay);
+            var result = (endYear * 12 * 30 + endMonth * 30 + endDay) - (startYear * 12 * 30 + startMonth * 30 + startDay);
             return CreateResult(result, DataType.Integer);
         }
 
@@ -75,7 +73,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
         {
             var startDate = new System.DateTime(dt1.Year, dt1.Month, 1).AddMonths(1);
             var endDate = new System.DateTime(dt2.Year, dt2.Month, 1);
-            return ((endDate.Year - startDate.Year)*12) + (endDate.Month - startDate.Month);
+            return ((endDate.Year - startDate.Year) * 12) + (endDate.Month - startDate.Month);
         }
     }
 }

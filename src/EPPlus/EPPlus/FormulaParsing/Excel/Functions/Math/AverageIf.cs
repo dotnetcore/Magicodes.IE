@@ -22,13 +22,13 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System.Collections.Generic;
-using System.Linq;
 using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using OfficeOpenXml.FormulaParsing.Utilities;
 using OfficeOpenXml.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using Require = OfficeOpenXml.FormulaParsing.Utilities.Require;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math

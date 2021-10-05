@@ -30,10 +30,8 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Drawing;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing
 {
@@ -45,13 +43,13 @@ namespace OfficeOpenXml.Drawing
         //ExcelShape _shp;                
         string _fillPath;
         XmlNode _fillNode;
-        internal ExcelDrawingFill(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string fillPath) : 
+        internal ExcelDrawingFill(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string fillPath) :
             base(nameSpaceManager, topNode)
         {
-          //  _shp=shp;
+            //  _shp=shp;
             _fillPath = fillPath;
             _fillNode = topNode.SelectSingleNode(_fillPath, NameSpaceManager);
-            SchemaNodeOrder = new string[] { "tickLblPos", "spPr", "txPr","dLblPos", "crossAx", "printSettings", "showVal", "prstGeom", "noFill", "solidFill", "blipFill", "gradFill", "noFill", "pattFill", "ln", "prstDash" };
+            SchemaNodeOrder = new string[] { "tickLblPos", "spPr", "txPr", "dLblPos", "crossAx", "printSettings", "showVal", "prstGeom", "noFill", "solidFill", "blipFill", "gradFill", "noFill", "pattFill", "ln", "prstDash" };
             //Setfill node
             if (_fillNode != null)
             {
@@ -77,7 +75,7 @@ namespace OfficeOpenXml.Drawing
                 }
                 else
                 {
-                    _style=GetStyleEnum(_fillTypeNode.Name);
+                    _style = GetStyleEnum(_fillTypeNode.Name);
                 }
                 return _style;
             }
@@ -102,12 +100,12 @@ namespace OfficeOpenXml.Drawing
                 TopNode.RemoveChild(_fillTypeNode);
             }
             CreateNode(_fillPath + "/a:" + GetStyleText(value), false);
-            _fillNode=TopNode.SelectSingleNode(_fillPath + "/a:" + GetStyleText(value), NameSpaceManager);
+            _fillNode = TopNode.SelectSingleNode(_fillPath + "/a:" + GetStyleText(value), NameSpaceManager);
         }
 
         private eFillStyle GetStyleEnum(string name)
         {
-            switch(name)
+            switch (name)
             {
                 case "noFill":
                     return eFillStyle.NoFill;
@@ -135,7 +133,7 @@ namespace OfficeOpenXml.Drawing
                 case eFillStyle.GroupFill:
                     return "grpFill";
                 case eFillStyle.NoFill:
-                    return "noFill";                
+                    return "noFill";
                 case eFillStyle.PatternFill:
                     return "pattFill";
                 default:
@@ -158,7 +156,7 @@ namespace OfficeOpenXml.Drawing
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col,System.Globalization.NumberStyles.AllowHexSpecifier));
+                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
                 }
             }
             set

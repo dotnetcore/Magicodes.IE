@@ -29,10 +29,8 @@
  * Jan Källman		Added		12-APR-2012
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace OfficeOpenXml.VBA
 {

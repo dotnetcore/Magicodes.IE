@@ -29,12 +29,11 @@
  * Jan Källman		Added this class		        2010-01-28
  * Jan Källman		License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Linq;
 using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OfficeOpenXml
 {
@@ -66,14 +65,14 @@ namespace OfficeOpenXml
         public ExcelNamedRange Add(string Name, ExcelRangeBase Range)
         {
             ExcelNamedRange item;
-            if(!ExcelAddressUtil.IsValidName(Name))
+            if (!ExcelAddressUtil.IsValidName(Name))
             {
                 throw (new ArgumentException($"Name {Name} contains invalid characters"));  //Issue 458
             }
             if (Range.IsName)
             {
 
-                item = new ExcelNamedRange(Name, _wb,_ws, _dic.Count);
+                item = new ExcelNamedRange(Name, _wb, _ws, _dic.Count);
             }
             else
             {
@@ -98,7 +97,7 @@ namespace OfficeOpenXml
         /// <returns></returns>
         public ExcelNamedRange AddValue(string Name, object value)
         {
-            var item = new ExcelNamedRange(Name,_wb, _ws, _dic.Count);
+            var item = new ExcelNamedRange(Name, _wb, _ws, _dic.Count);
             item.NameValue = value;
             AddName(Name, item);
             return item;
@@ -115,7 +114,7 @@ namespace OfficeOpenXml
         [Obsolete("Call AddFormula() instead.  See Issue Tracker Id #14687")]
         public ExcelNamedRange AddFormla(string Name, string Formula)
         {
-            return  this.AddFormula(Name, Formula);
+            return this.AddFormula(Name, Formula);
         }
 
         /// <summary>
@@ -140,7 +139,7 @@ namespace OfficeOpenXml
         internal void Insert(int rowFrom, int colFrom, int rows, int cols, Func<ExcelNamedRange, bool> filter)
         {
             var namedRanges = this._list.Where(filter);
-            foreach(var namedRange in namedRanges)
+            foreach (var namedRange in namedRanges)
             {
                 InsertRows(rowFrom, rows, namedRange);
                 InsertColumns(colFrom, cols, namedRange);
@@ -180,7 +179,7 @@ namespace OfficeOpenXml
             {
                 if (colFrom <= namedRange.Start.Column)
                 {
-                    var newAddress = ExcelCellBase.GetAddress(namedRange.Start.Row, namedRange.Start.Column +cols, namedRange.End.Row, namedRange.End.Column + cols);
+                    var newAddress = ExcelCellBase.GetAddress(namedRange.Start.Row, namedRange.Start.Column + cols, namedRange.End.Row, namedRange.End.Column + cols);
                     namedRange.Address = BuildNewAddress(namedRange, newAddress);
                 }
                 else if (colFrom <= namedRange.End.Column && namedRange.End.Column + cols < ExcelPackage.MaxColumns)
@@ -209,12 +208,12 @@ namespace OfficeOpenXml
                 if (rowFrom <= namedRange.Start.Row)
                 {
                     var newAddress = ExcelCellBase.GetAddress(namedRange.Start.Row + rows, namedRange.Start.Column, namedRange.End.Row + rows, namedRange.End.Column);
-                    namedRange.Address = BuildNewAddress(namedRange, newAddress); 
+                    namedRange.Address = BuildNewAddress(namedRange, newAddress);
                 }
-                else if (rowFrom <= namedRange.End.Row && namedRange.End.Row+rows <= ExcelPackage.MaxRows)
+                else if (rowFrom <= namedRange.End.Row && namedRange.End.Row + rows <= ExcelPackage.MaxRows)
                 {
                     var newAddress = ExcelCellBase.GetAddress(namedRange.Start.Row, namedRange.Start.Column, namedRange.End.Row + rows, namedRange.End.Column);
-                    namedRange.Address = BuildNewAddress(namedRange, newAddress); 
+                    namedRange.Address = BuildNewAddress(namedRange, newAddress);
                 }
             }
         }
@@ -225,11 +224,11 @@ namespace OfficeOpenXml
         /// <param name="Name">The name</param>
         public void Remove(string Name)
         {
-            if(_dic.ContainsKey(Name))
+            if (_dic.ContainsKey(Name))
             {
                 var ix = _dic[Name];
 
-                for (int i = ix+1; i < _list.Count; i++)
+                for (int i = ix + 1; i < _list.Count; i++)
                 {
                     _dic.Remove(_list[i].Name);
                     _list[i].Index--;
@@ -307,7 +306,7 @@ namespace OfficeOpenXml
 
         internal void Clear()
         {
-            while(Count>0)
+            while (Count > 0)
             {
                 Remove(_list[0].Name);
             }

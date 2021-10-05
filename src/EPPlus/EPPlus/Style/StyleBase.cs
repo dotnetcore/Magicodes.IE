@@ -29,9 +29,6 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OfficeOpenXml.Style
 {
@@ -151,15 +148,15 @@ namespace OfficeOpenXml.Style
         /// <summary>
         /// Reading order is determined by scanning the text for the first non-whitespace character: if it is a strong right-to-left character, the reading order is right-to-left; otherwise, the reading order left-to-right.
         /// </summary>
-        ContextDependent=0,
+        ContextDependent = 0,
         /// <summary>
         /// Left to Right
         /// </summary>
-        LeftToRight=1,
+        LeftToRight = 1,
         /// <summary>
         /// Right to Left
         /// </summary>
-        RightToLeft=2
+        RightToLeft = 2
     }
     public abstract class StyleBase
     {
@@ -174,8 +171,8 @@ namespace OfficeOpenXml.Style
             _address = Address;
             _positionID = PositionID;
         }
-        internal int Index { get; set;}
-        internal abstract string Id {get;}
+        internal int Index { get; set; }
+        internal abstract string Id { get; }
 
         internal virtual void SetIndex(int index)
         {

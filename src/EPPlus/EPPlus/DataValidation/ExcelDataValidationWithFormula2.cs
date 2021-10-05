@@ -29,10 +29,6 @@
  * Mats Alm   		                Added       		        2011-01-01
  * Jan Källman		                License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.DataValidation.Formulas.Contracts;
 using System.Xml;
 
@@ -53,7 +49,7 @@ namespace OfficeOpenXml.DataValidation
 
         }
 
-         /// <summary>
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="worksheet">Worksheet that owns the validation</param>
@@ -63,7 +59,7 @@ namespace OfficeOpenXml.DataValidation
         internal ExcelDataValidationWithFormula2(ExcelWorksheet worksheet, string address, ExcelDataValidationType validationType, XmlNode itemElementNode)
             : base(worksheet, address, validationType, itemElementNode)
         {
-            
+
         }
 
         /// <summary>

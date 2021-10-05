@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-/*******************************************************************************
+﻿/*******************************************************************************
  * You may amend and distribute as you like, but don't remove this header!
  *
  * EPPlus provides server-side generation of Excel 2007/2010 spreadsheets.
@@ -30,8 +28,6 @@ using System.Collections.Generic;
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
@@ -44,7 +40,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
         public DecimalExpression(string expression)
             : this(expression, false)
         {
-            
+
         }
 
         public DecimalExpression(string expression, bool negate)

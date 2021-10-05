@@ -30,11 +30,9 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Globalization;
 using System.Drawing;
+using System.Globalization;
+using System.Xml;
 
 
 namespace OfficeOpenXml.Drawing.Vml
@@ -71,7 +69,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetStyleProp("width",value.ToString(CultureInfo.InvariantCulture) + "pt");
+                SetStyleProp("width", value.ToString(CultureInfo.InvariantCulture) + "pt");
             }
         }
         /// <summary>
@@ -127,7 +125,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetXmlNodeString("v:imagedata/@o:title",value);
+                SetXmlNodeString("v:imagedata/@o:title", value);
             }
         }
         /// <summary>
@@ -162,9 +160,9 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetXmlNodeString("v:imagedata/@o:relid",value);
+                SetXmlNodeString("v:imagedata/@o:relid", value);
             }
-        }        
+        }
         /// <summary>
         /// Determines whether an image will be displayed in black and white
         /// </summary>
@@ -172,7 +170,7 @@ namespace OfficeOpenXml.Drawing.Vml
         {
             get
             {
-                return GetXmlNodeString("v:imagedata/@bilevel")=="t";
+                return GetXmlNodeString("v:imagedata/@bilevel") == "t";
             }
             set
             {
@@ -193,7 +191,7 @@ namespace OfficeOpenXml.Drawing.Vml
         {
             get
             {
-                return GetXmlNodeString("v:imagedata/@grayscale")=="t";
+                return GetXmlNodeString("v:imagedata/@grayscale") == "t";
             }
             set
             {
@@ -216,7 +214,7 @@ namespace OfficeOpenXml.Drawing.Vml
             get
             {
                 string v = GetXmlNodeString("v:imagedata/@gain");
-                return GetFracDT(v,1);
+                return GetFracDT(v, 1);
             }
             set
             {
@@ -243,7 +241,7 @@ namespace OfficeOpenXml.Drawing.Vml
             get
             {
                 string v = GetXmlNodeString("v:imagedata/@gamma");
-                return GetFracDT(v,0);
+                return GetFracDT(v, 0);
             }
             set
             {

@@ -37,13 +37,9 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Utils;
-using OfficeOpenXml.Packaging.Ionic.Zlib;
-using OfficeOpenXml.FormulaParsing;
 using OfficeOpenXml.Encryption;
 using OfficeOpenXml.Utils.CompundDocument;
-using System.Configuration;
 using OfficeOpenXml.Compatibility;
 using System.Text;
 #if (Core)

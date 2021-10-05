@@ -30,16 +30,14 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Xml;
 namespace OfficeOpenXml.Style.XmlAccess
 {
     /// <summary>
     /// Xml access class for fills
     /// </summary>
-    public class ExcelFillXml : StyleXmlHelper 
+    public class ExcelFillXml : StyleXmlHelper
     {
         internal ExcelFillXml(XmlNamespaceManager nameSpaceManager)
             : base(nameSpaceManager)
@@ -48,7 +46,7 @@ namespace OfficeOpenXml.Style.XmlAccess
             _backgroundColor = new ExcelColorXml(NameSpaceManager);
             _patternColor = new ExcelColorXml(NameSpaceManager);
         }
-        internal ExcelFillXml(XmlNamespaceManager nsm, XmlNode topNode):
+        internal ExcelFillXml(XmlNamespaceManager nsm, XmlNode topNode) :
             base(nsm, topNode)
         {
             PatternType = GetPatternType(GetXmlNodeString(fillPatternTypePath));
@@ -90,7 +88,7 @@ namespace OfficeOpenXml.Style.XmlAccess
             }
             set
             {
-                _fillPatternType=value;
+                _fillPatternType = value;
             }
         }
         protected ExcelColorXml _patternColor = null;
@@ -122,7 +120,7 @@ namespace OfficeOpenXml.Style.XmlAccess
             }
             internal set
             {
-                _backgroundColor=value;
+                _backgroundColor = value;
             }
         }
         #endregion

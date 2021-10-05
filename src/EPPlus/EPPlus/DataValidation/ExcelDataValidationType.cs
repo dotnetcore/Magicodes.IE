@@ -31,9 +31,6 @@
  * Raziq York 		                Added support for Any type  2014-08-08
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.DataValidation
 {

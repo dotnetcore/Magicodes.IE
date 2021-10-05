@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions
 {
@@ -45,5 +43,5 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions
         /// in the Functions collection of this module.
         /// </summary>
         IDictionary<Type, FunctionCompiler> CustomCompilers { get; }
-  }
+    }
 }

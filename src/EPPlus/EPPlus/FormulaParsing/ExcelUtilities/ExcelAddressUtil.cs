@@ -28,11 +28,7 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
 {
@@ -86,7 +82,7 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
                 return false;
             }
 
-            if(ExcelCellBase.IsValidAddress(name))
+            if (ExcelCellBase.IsValidAddress(name))
             {
                 return false;
             }
@@ -107,7 +103,7 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
                 name = "_" + name.Substring(1);
             }
 
-            name=NameInvalidChars.Aggregate(name, (c1, c2) => c1.Replace(c2, '_'));
+            name = NameInvalidChars.Aggregate(name, (c1, c2) => c1.Replace(c2, '_'));
             return name;
         }
     }

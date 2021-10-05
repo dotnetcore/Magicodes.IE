@@ -30,10 +30,7 @@
  * Jan Källman      Added compression support 27-03-2012
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.Utils
 {

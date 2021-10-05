@@ -28,17 +28,13 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
 {
     public class TokenSeparatorProvider : ITokenSeparatorProvider
     {
-       private static readonly Dictionary<string, Token> _tokens;
+        private static readonly Dictionary<string, Token> _tokens;
 
         static TokenSeparatorProvider()
         {

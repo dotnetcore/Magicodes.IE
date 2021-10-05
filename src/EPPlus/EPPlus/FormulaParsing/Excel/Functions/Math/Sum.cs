@@ -22,13 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using OfficeOpenXml.Utils;
-using OfficeOpenXml.FormulaParsing.Exceptions;
+using System.Collections.Generic;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -41,13 +37,13 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             {
                 foreach (var arg in arguments)
                 {
-                    retVal += Calculate(arg, context);                    
+                    retVal += Calculate(arg, context);
                 }
             }
             return CreateResult(retVal, DataType.Decimal);
         }
 
-        
+
         private double Calculate(FunctionArgument arg, ParsingContext context)
         {
             var retVal = 0d;

@@ -6,9 +6,6 @@
     <AssemblyName>EPPlusTest</AssemblyName>    
     <SignAssembly>True</SignAssembly>    
     <AssemblyOriginatorKeyFile>EPPlusTest.snk</AssemblyOriginatorKeyFile>    
-    <AssemblyVersion>4.5.0.0</AssemblyVersion>    
-    <FileVersion>4.5.0.0</FileVersion>    
-    <Version>4.5.0.0</Version>    
     <Description>Package Description</Description>
   </PropertyGroup>
 
@@ -44,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EPPlus\EPPlus.MultiTarget.csproj" />
+    <ProjectReference Include="..\EPPlus\Magicodes.IE.EPPlus.csproj" />
   </ItemGroup>
 
   <ItemGroup>

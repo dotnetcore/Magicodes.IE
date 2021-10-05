@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-01-11
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
 {
@@ -50,8 +48,8 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
                 width = ArgToInt(functionArguments, 4);
                 if (width == 0) return new CompileResult(eErrorType.Ref);
             }
-            var ws = context.Scopes.Current.Address.Worksheet;            
-            var r =context.ExcelDataProvider.GetRange(ws,startRange);
+            var ws = context.Scopes.Current.Address.Worksheet;
+            var r = context.ExcelDataProvider.GetRange(ws, startRange);
             var adr = r.Address;
 
             var fromRow = adr._fromRow + rowOffset;
@@ -60,7 +58,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
             var toCol = (width != 0 ? adr._fromCol + width - 1 : adr._toCol) + colOffset;
 
             var newRange = context.ExcelDataProvider.GetRange(adr.WorkSheet, fromRow, fromCol, toRow, toCol);
-            
+
             return CreateResult(newRange, DataType.Enumerable);
         }
     }

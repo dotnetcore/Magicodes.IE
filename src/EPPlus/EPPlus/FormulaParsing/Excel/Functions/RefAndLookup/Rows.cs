@@ -22,14 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using System.Text.RegularExpressions;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
 {
@@ -38,7 +35,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments, ParsingContext context)
         {
             ValidateArguments(arguments, 1);
-            var r=arguments.ElementAt(0).ValueAsRangeInfo;
+            var r = arguments.ElementAt(0).ValueAsRangeInfo;
             if (r != null)
             {
                 return CreateResult(r.Address._toRow - r.Address._fromRow + 1, DataType.Integer);

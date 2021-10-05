@@ -29,9 +29,6 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 namespace OfficeOpenXml.Style.XmlAccess
 {
@@ -65,7 +62,7 @@ namespace OfficeOpenXml.Style.XmlAccess
                 return Name;
             }
         }
-        int _styleXfId=0;
+        int _styleXfId = 0;
         const string idPath = "@xfId";
         /// <summary>
         /// Named style index
@@ -137,9 +134,9 @@ namespace OfficeOpenXml.Style.XmlAccess
             TopNode = topNode;
             SetXmlNodeString(namePath, _name);
             SetXmlNodeString("@xfId", _styles.CellStyleXfs[StyleXfId].newID.ToString());
-            if (BuildInId>=0) SetXmlNodeString("@builtinId", BuildInId.ToString());
-            if(CustomBuildin) SetXmlNodeBool(customBuiltinPath, true);
-            return TopNode;            
+            if (BuildInId >= 0) SetXmlNodeString("@builtinId", BuildInId.ToString());
+            if (CustomBuildin) SetXmlNodeBool(customBuiltinPath, true);
+            return TopNode;
         }
     }
 }

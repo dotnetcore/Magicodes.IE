@@ -30,11 +30,10 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Vml
 {
@@ -42,7 +41,7 @@ namespace OfficeOpenXml.Drawing.Vml
     {
         internal RangeCollection _drawings;
         internal ExcelVmlDrawingCommentCollection(ExcelPackage pck, ExcelWorksheet ws, Uri uri) :
-            base(pck, ws,uri)
+            base(pck, ws, uri)
         {
             if (uri == null)
             {
@@ -78,27 +77,27 @@ namespace OfficeOpenXml.Drawing.Vml
         }
         private string CreateVmlDrawings()
         {
-            string vml=string.Format("<xml xmlns:v=\"{0}\" xmlns:o=\"{1}\" xmlns:x=\"{2}\">", 
-                ExcelPackage.schemaMicrosoftVml, 
-                ExcelPackage.schemaMicrosoftOffice, 
+            string vml = string.Format("<xml xmlns:v=\"{0}\" xmlns:o=\"{1}\" xmlns:x=\"{2}\">",
+                ExcelPackage.schemaMicrosoftVml,
+                ExcelPackage.schemaMicrosoftOffice,
                 ExcelPackage.schemaMicrosoftExcel);
-            
-             vml+="<o:shapelayout v:ext=\"edit\">";
-             vml+="<o:idmap v:ext=\"edit\" data=\"1\"/>";
-             vml+="</o:shapelayout>";
 
-             vml+="<v:shapetype id=\"_x0000_t202\" coordsize=\"21600,21600\" o:spt=\"202\" path=\"m,l,21600r21600,l21600,xe\">";
-             vml+="<v:stroke joinstyle=\"miter\" />";
-             vml+="<v:path gradientshapeok=\"t\" o:connecttype=\"rect\" />";
-             vml+="</v:shapetype>";
-             vml+= "</xml>";
+            vml += "<o:shapelayout v:ext=\"edit\">";
+            vml += "<o:idmap v:ext=\"edit\" data=\"1\"/>";
+            vml += "</o:shapelayout>";
+
+            vml += "<v:shapetype id=\"_x0000_t202\" coordsize=\"21600,21600\" o:spt=\"202\" path=\"m,l,21600r21600,l21600,xe\">";
+            vml += "<v:stroke joinstyle=\"miter\" />";
+            vml += "<v:path gradientshapeok=\"t\" o:connecttype=\"rect\" />";
+            vml += "</v:shapetype>";
+            vml += "</xml>";
 
             return vml;
         }
         internal ExcelVmlDrawingComment Add(ExcelRangeBase cell)
         {
             XmlNode node = AddDrawing(cell);
-            var draw = new ExcelVmlDrawingComment(node, cell, NameSpaceManager);            
+            var draw = new ExcelVmlDrawingComment(node, cell, NameSpaceManager);
             _drawings.Add(draw);
             return draw;
         }
@@ -125,7 +124,7 @@ namespace OfficeOpenXml.Drawing.Vml
             node.SetAttribute("style", "position:absolute;z-index:1; visibility:hidden");
             //node.SetAttribute("style", "position:absolute; margin-left:59.25pt;margin-top:1.5pt;width:108pt;height:59.25pt;z-index:1; visibility:hidden"); 
             node.SetAttribute("fillcolor", "#ffffe1");
-            node.SetAttribute("insetmode",ExcelPackage.schemaMicrosoftOffice,"auto");
+            node.SetAttribute("insetmode", ExcelPackage.schemaMicrosoftOffice, "auto");
 
             string vml = "<v:fill color2=\"#ffffe1\" />";
             vml += "<v:shadow on=\"t\" color=\"black\" obscured=\"t\" />";

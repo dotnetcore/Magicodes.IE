@@ -11,7 +11,7 @@
     <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EPPlus\EPPlus\EPPlus.MultiTarget.csproj" />
+    <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj" />
   </ItemGroup>
 </Project>

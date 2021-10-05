@@ -29,11 +29,6 @@
  * Mats Alm   		                Added       		        2011-01-08
  * Jan Källman		                License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.Utils;
 using System.Xml;
 
 namespace OfficeOpenXml.DataValidation.Formulas
@@ -61,7 +56,7 @@ namespace OfficeOpenXml.DataValidation.Formulas
         /// <summary>
         /// Typed value
         /// </summary>
-        public T Value 
+        public T Value
         {
             get
             {

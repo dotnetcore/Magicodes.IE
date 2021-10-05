@@ -28,14 +28,13 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2014-01-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
 {
@@ -57,7 +56,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
         public override CompileResult Compile(IEnumerable<Expression> children)
         {
             // 2 is allowed, Excel returns FALSE if false is the outcome of the expression
-            if(children.Count() < 2) throw new ExcelErrorValueException(eErrorType.Value);
+            if (children.Count() < 2) throw new ExcelErrorValueException(eErrorType.Value);
             var args = new List<FunctionArgument>();
             Function.BeforeInvoke(Context);
             var firstChild = children.ElementAt(0);
@@ -68,26 +67,26 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
             {
                 v = ((ExcelDataProvider.INameInfo)v).Value;
             }
-            
+
             if (v is ExcelDataProvider.IRangeInfo)
             {
-                var r=((ExcelDataProvider.IRangeInfo)v);
-                if(r.GetNCells()>1)
+                var r = ((ExcelDataProvider.IRangeInfo)v);
+                if (r.GetNCells() > 1)
                 {
-                    throw(new ArgumentException("Logical can't be more than one cell"));
+                    throw (new ArgumentException("Logical can't be more than one cell"));
                 }
                 v = r.GetOffset(0, 0);
             }
             bool boolVal;
-            if(v is bool)
+            if (v is bool)
             {
                 boolVal = (bool)v;
             }
-            else if(!Utils.ConvertUtil.TryParseBooleanString(v, out boolVal))
+            else if (!Utils.ConvertUtil.TryParseBooleanString(v, out boolVal))
             {
-                if(OfficeOpenXml.Utils.ConvertUtil.IsNumeric(v))
+                if (OfficeOpenXml.Utils.ConvertUtil.IsNumeric(v))
                 {
-                    boolVal = OfficeOpenXml.Utils.ConvertUtil.GetValueDouble(v)!=0;
+                    boolVal = OfficeOpenXml.Utils.ConvertUtil.GetValueDouble(v) != 0;
                 }
                 else
                 {
@@ -95,7 +94,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
                 }
             }
             /****  End Handle names and ranges ****/
-            
+
             args.Add(new FunctionArgument(boolVal));
             if (boolVal)
             {

@@ -30,8 +30,6 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
@@ -67,7 +65,7 @@ namespace OfficeOpenXml.Drawing.Chart
             {
                 if (value < 0 || value > 400)
                 {
-                    throw(new ArgumentOutOfRangeException("Explosion range is 0-400"));
+                    throw (new ArgumentOutOfRangeException("Explosion range is 0-400"));
                 }
                 SetXmlNodeString(explosionPath, value.ToString());
             }
@@ -87,6 +85,6 @@ namespace OfficeOpenXml.Drawing.Chart
                 return _DataLabel;
             }
         }
-       
+
     }
 }

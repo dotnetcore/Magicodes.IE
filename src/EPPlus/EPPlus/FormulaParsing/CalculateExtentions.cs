@@ -29,14 +29,12 @@
  * Jan Källman                      Added                       2012-03-04  
  *******************************************************************************/
 
-using System.Threading;
+using OfficeOpenXml.FormulaParsing;
+using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing;
-using OfficeOpenXml.FormulaParsing.Exceptions;
+using System.Threading;
 
 namespace OfficeOpenXml
 {
@@ -45,7 +43,7 @@ namespace OfficeOpenXml
 
         public static void Calculate(this ExcelWorkbook workbook)
         {
-            Calculate(workbook, new ExcelCalculationOption(){AllowCirculareReferences=false});
+            Calculate(workbook, new ExcelCalculationOption() { AllowCirculareReferences = false });
         }
         public static void Calculate(this ExcelWorkbook workbook, ExcelCalculationOption options)
         {
@@ -61,7 +59,7 @@ namespace OfficeOpenXml
 
             //TODO: Remove when tests are done. Outputs the dc to a text file. 
             //var fileDc = new System.IO.StreamWriter("c:\\temp\\dc.txt");
-                        
+
             //for (int i = 0; i < dc.list.Count; i++)
             //{
             //    fileDc.WriteLine(i.ToString() + "," + dc.list[i].Column.ToString() + "," + dc.list[i].Row.ToString() + "," + (dc.list[i].ws==null ? "" : dc.list[i].ws.Name) + "," + dc.list[i].Formula);
@@ -120,7 +118,7 @@ namespace OfficeOpenXml
             try
             {
                 worksheet.CheckSheetType();
-                if(string.IsNullOrEmpty(Formula.Trim())) return null;
+                if (string.IsNullOrEmpty(Formula.Trim())) return null;
                 Init(worksheet.Workbook);
                 var parser = worksheet.Workbook.FormulaParser;
                 parser.InitNewCalc();
@@ -159,7 +157,7 @@ namespace OfficeOpenXml
                 {
                     throw (fe);
                 }
-                catch(Exception e)
+                catch (Exception)
                 {
                     var error = ExcelErrorValue.Parse(ExcelErrorValue.Values.Value);
                     SetValue(wb, item, error);
@@ -168,7 +166,7 @@ namespace OfficeOpenXml
         }
         private static void Init(ExcelWorkbook workbook)
         {
-            workbook._formulaTokens = new CellStore<List<Token>>();;
+            workbook._formulaTokens = new CellStore<List<Token>>(); ;
             foreach (var ws in workbook.Worksheets)
             {
                 if (!(ws is ExcelChartsheet))

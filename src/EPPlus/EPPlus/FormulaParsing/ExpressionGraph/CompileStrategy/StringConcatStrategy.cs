@@ -28,10 +28,6 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.CompileStrategy
 {
@@ -40,7 +36,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.CompileStrategy
         public StringConcatStrategy(Expression expression)
             : base(expression)
         {
-           
+
         }
 
         public override Expression Compile()

@@ -30,9 +30,7 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
@@ -81,14 +79,14 @@ namespace OfficeOpenXml.Drawing.Chart
             get
             {
                 string marker = GetXmlNodeString(markerPath);
-                if (marker == "" || marker=="none")
+                if (marker == "" || marker == "none")
                 {
                     return eMarkerStyle.None;
                 }
                 else
                 {
                     return (eMarkerStyle)Enum.Parse(typeof(eMarkerStyle), marker, true);
-                }                
+                }
             }
             internal set
             {

@@ -30,11 +30,8 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Xml;
-using System.Drawing;
 
 namespace OfficeOpenXml.Drawing
 {
@@ -70,11 +67,11 @@ namespace OfficeOpenXml.Drawing
     public sealed class ExcelDrawingBorder : XmlHelper
     {
         string _linePath;
-        internal ExcelDrawingBorder(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string linePath) : 
+        internal ExcelDrawingBorder(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string linePath) :
             base(nameSpaceManager, topNode)
         {
-            SchemaNodeOrder = new string[] { "chart","tickLblPos", "spPr", "txPr","crossAx", "printSettings", "showVal", "showCatName", "showSerName", "showPercent", "separator", "showLeaderLines", "noFill", "solidFill", "blipFill", "gradFill", "noFill", "pattFill", "prstDash" };
-            _linePath = linePath;   
+            SchemaNodeOrder = new string[] { "chart", "tickLblPos", "spPr", "txPr", "crossAx", "printSettings", "showVal", "showCatName", "showSerName", "showPercent", "separator", "showLeaderLines", "noFill", "solidFill", "blipFill", "gradFill", "noFill", "pattFill", "prstDash" };
+            _linePath = linePath;
             _lineStylePath = string.Format(_lineStylePath, linePath);
             _lineCapPath = string.Format(_lineCapPath, linePath);
             _lineWidth = string.Format(_lineWidth, linePath);
@@ -146,14 +143,14 @@ namespace OfficeOpenXml.Drawing
         #region "Translate Enum functions"
         private string TranslateLineStyleText(eLineStyle value)
         {
-            string text=value.ToString();
+            string text = value.ToString();
             switch (value)
             {
                 case eLineStyle.Dash:
                 case eLineStyle.Dot:
                 case eLineStyle.DashDot:
                 case eLineStyle.Solid:
-                    return text.Substring(0,1).ToLower(CultureInfo.InvariantCulture) + text.Substring(1,text.Length-1); //First to Lower case.
+                    return text.Substring(0, 1).ToLower(CultureInfo.InvariantCulture) + text.Substring(1, text.Length - 1); //First to Lower case.
                 case eLineStyle.LongDash:
                 case eLineStyle.LongDashDot:
                 case eLineStyle.LongDashDotDot:
@@ -164,7 +161,7 @@ namespace OfficeOpenXml.Drawing
                 case eLineStyle.SystemDot:
                     return "sys" + text.Substring(6, text.Length - 6);
                 default:
-                    throw(new Exception("Invalid Linestyle"));
+                    throw (new Exception("Invalid Linestyle"));
             }
         }
         private eLineStyle TranslateLineStyle(string text)
@@ -215,12 +212,12 @@ namespace OfficeOpenXml.Drawing
         }
         #endregion
 
-        
+
         //public ExcelDrawingFont Font
         //{
         //    get
         //    { 
-            
+
         //    }
         //}
     }

@@ -22,13 +22,10 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-06
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {

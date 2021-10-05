@@ -79,7 +79,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                     builder.Append("        Entry type: directory\n");
                 else
                 {
-                    builder.Append(string.Format("         File type: {0}\n", this._IsText? "text":"binary"))
+                    builder.Append(string.Format("         File type: {0}\n", this._IsText ? "text" : "binary"))
                         .Append(string.Format("       Compression: {0}\n", this.CompressionMethod))
                         .Append(string.Format("        Compressed: 0x{0:X}\n", this.CompressedSize))
                         .Append(string.Format("      Uncompressed: 0x{0:X}\n", this.UncompressedSize))
@@ -89,15 +89,15 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 if (this._RelativeOffsetOfLocalHeader > 0xFFFFFFFF)
                     builder
                         .Append(string.Format("   Relative Offset: 0x{0:X16}\n", this._RelativeOffsetOfLocalHeader));
-                        else
+                else
                     builder
                         .Append(string.Format("   Relative Offset: 0x{0:X8}\n", this._RelativeOffsetOfLocalHeader));
 
-                    builder
-                    .Append(string.Format("         Bit Field: 0x{0:X4}\n", this._BitField))
-                    .Append(string.Format("        Encrypted?: {0}\n", this._sourceIsEncrypted))
-                    .Append(string.Format("          Timeblob: 0x{0:X8}\n", this._TimeBlob))
-                        .Append(string.Format("              Time: {0}\n", Ionic.Zip.SharedUtilities.PackedToDateTime(this._TimeBlob)));
+                builder
+                .Append(string.Format("         Bit Field: 0x{0:X4}\n", this._BitField))
+                .Append(string.Format("        Encrypted?: {0}\n", this._sourceIsEncrypted))
+                .Append(string.Format("          Timeblob: 0x{0:X8}\n", this._TimeBlob))
+                    .Append(string.Format("              Time: {0}\n", Ionic.Zip.SharedUtilities.PackedToDateTime(this._TimeBlob)));
 
                 builder.Append(string.Format("         Is Zip64?: {0}\n", this._InputUsesZip64));
                 if (!string.IsNullOrEmpty(this._Comment))
@@ -184,7 +184,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         ///
         /// <returns>the entry read from the archive.</returns>
         internal static ZipEntry ReadDirEntry(ZipFile zf,
-                                              Dictionary<String,Object> previouslySeen)
+                                              Dictionary<String, Object> previouslySeen)
         {
             System.IO.Stream s = zf.ReadStream;
             System.Text.Encoding expectedEncoding = (zf.AlternateEncodingUsage == ZipOption.Always)
@@ -332,7 +332,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // workitem 12744
             zde.AlternateEncoding = ((zde._BitField & 0x0800) == 0x0800)
                 ? System.Text.Encoding.UTF8
-                :expectedEncoding;
+                : expectedEncoding;
 
             zde.AlternateEncodingUsage = ZipOption.Always;
 

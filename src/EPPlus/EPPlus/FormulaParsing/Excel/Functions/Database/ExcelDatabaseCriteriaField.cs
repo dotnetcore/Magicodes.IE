@@ -22,10 +22,6 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {

@@ -1,9 +1,6 @@
 ﻿using OfficeOpenXml.Utils;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml
@@ -30,15 +27,15 @@ namespace OfficeOpenXml
             {
                 CreateNode("d:protectedRanges");
             }
-            foreach(var pr in _baseList)
+            foreach (var pr in _baseList)
             {
-                if(name.Equals(pr.Name,StringComparison.CurrentCultureIgnoreCase))
+                if (name.Equals(pr.Name, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw (new InvalidOperationException($"A protected range with the namn {name} already exists"));
                 }
             }
             var newNode = TopNode.OwnerDocument.CreateElement("protectedRange", ExcelPackage.schemaMain);
-            TopNode.SelectSingleNode("d:protectedRanges",NameSpaceManager).AppendChild(newNode);
+            TopNode.SelectSingleNode("d:protectedRanges", NameSpaceManager).AppendChild(newNode);
             var item = new ExcelProtectedRange(name, address, base.NameSpaceManager, newNode);
             _baseList.Add(item);
             return item;

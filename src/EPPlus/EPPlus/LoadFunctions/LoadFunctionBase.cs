@@ -1,8 +1,4 @@
 ﻿using OfficeOpenXml.Table;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace OfficeOpenXml.LoadFunctions
 {
@@ -59,7 +55,7 @@ namespace OfficeOpenXml.LoadFunctions
             LoadInternal(values);
             var ws = Range.Worksheet;
             ws.SetRangeValueInner(Range._fromRow, Range._fromCol, Range._fromRow + nRows - 1, Range._fromCol + nCols - 1, values);
-            
+
             //Must have at least 1 row, if header is shown
             if (nRows == 1 && PrintHeaders)
             {

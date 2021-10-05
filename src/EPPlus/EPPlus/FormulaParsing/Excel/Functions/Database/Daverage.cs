@@ -22,24 +22,22 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {
     public class Daverage : DatabaseFunction
     {
-         public Daverage()
-            : this(new RowMatcher())
+        public Daverage()
+           : this(new RowMatcher())
         {
 
         }
 
-         public Daverage(RowMatcher rowMatcher)
-            : base(rowMatcher)
+        public Daverage(RowMatcher rowMatcher)
+           : base(rowMatcher)
         {
 
         }

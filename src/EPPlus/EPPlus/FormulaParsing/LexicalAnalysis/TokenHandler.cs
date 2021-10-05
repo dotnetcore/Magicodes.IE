@@ -70,7 +70,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                 {
                     return;
                 }
-                                              
+
                 if (_context.CurrentTokenHasValue)
                 {
                     if (Regex.IsMatch(_context.CurrentToken, "^\"*$"))
@@ -111,7 +111,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             return result;
         }
 
-        
+
 
         private static bool TokenIsNegator(TokenizerContext context)
         {

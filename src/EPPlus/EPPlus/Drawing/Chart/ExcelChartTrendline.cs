@@ -31,10 +31,8 @@
  *******************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -65,7 +63,7 @@ namespace OfficeOpenXml.Drawing.Chart
                 _serie._chartSeries._chart.IsTypeStacked() ||
                 _serie._chartSeries._chart.IsTypePieDoughnut())
             {
-                throw(new ArgumentException("Trendlines don't apply to 3d-charts, stacked charts, pie charts or doughnut charts"));
+                throw (new ArgumentException("Trendlines don't apply to 3d-charts, stacked charts, pie charts or doughnut charts"));
             }
             ExcelChartTrendline tl;
             XmlNode insertAfter;
@@ -85,7 +83,7 @@ namespace OfficeOpenXml.Drawing.Chart
                     }
                 }
             }
-            var node=_serie.TopNode.OwnerDocument.CreateElement("c","trendline", ExcelPackage.schemaChart);
+            var node = _serie.TopNode.OwnerDocument.CreateElement("c", "trendline", ExcelPackage.schemaChart);
             _serie.TopNode.InsertAfter(node, insertAfter);
 
             tl = new ExcelChartTrendline(_serie.NameSpaceManager, node);
@@ -108,10 +106,10 @@ namespace OfficeOpenXml.Drawing.Chart
     public class ExcelChartTrendline : XmlHelper
     {
         internal ExcelChartTrendline(XmlNamespaceManager namespaceManager, XmlNode topNode) :
-            base(namespaceManager,topNode)
+            base(namespaceManager, topNode)
 
         {
-            SchemaNodeOrder = new string[] { "name", "trendlineType","order","period", "forward","backward","intercept", "dispRSqr", "dispEq", "trendlineLbl" };
+            SchemaNodeOrder = new string[] { "name", "trendlineType", "order", "period", "forward", "backward", "intercept", "dispRSqr", "dispEq", "trendlineLbl" };
         }
         const string TRENDLINEPATH = "c:trendlineType/@val";
         /// <summary>
@@ -119,26 +117,26 @@ namespace OfficeOpenXml.Drawing.Chart
         /// </summary>
         public eTrendLine Type
         {
-           get
-           {
-               switch (GetXmlNodeString(TRENDLINEPATH).ToLower(CultureInfo.InvariantCulture))
-               {
-                   case "exp":
-                       return eTrendLine.Exponential;
-                   case "log":
+            get
+            {
+                switch (GetXmlNodeString(TRENDLINEPATH).ToLower(CultureInfo.InvariantCulture))
+                {
+                    case "exp":
+                        return eTrendLine.Exponential;
+                    case "log":
                         return eTrendLine.Logarithmic;
-                   case "poly":
-                       return eTrendLine.Polynomial;
-                   case "movingavg":
-                       return eTrendLine.MovingAvgerage;
-                   case "power":
-                       return eTrendLine.Power;
-                   default:
-                       return eTrendLine.Linear;
-               }
-           }
-           set
-           {
+                    case "poly":
+                        return eTrendLine.Polynomial;
+                    case "movingavg":
+                        return eTrendLine.MovingAvgerage;
+                    case "power":
+                        return eTrendLine.Power;
+                    default:
+                        return eTrendLine.Linear;
+                }
+            }
+            set
+            {
                 switch (value)
                 {
                     case eTrendLine.Exponential:
@@ -158,11 +156,11 @@ namespace OfficeOpenXml.Drawing.Chart
                     case eTrendLine.Power:
                         SetXmlNodeString(TRENDLINEPATH, "power");
                         break;
-                    default: 
+                    default:
                         SetXmlNodeString(TRENDLINEPATH, "linear");
                         break;
                 }
-           }
+            }
         }
         const string NAMEPATH = "c:name";
         /// <summary>

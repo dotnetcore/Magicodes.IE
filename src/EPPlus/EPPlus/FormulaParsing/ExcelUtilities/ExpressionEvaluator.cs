@@ -28,11 +28,10 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Text.RegularExpressions;
 using OfficeOpenXml.FormulaParsing.Excel.Operators;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.Utils;
+using System;
+using System.Text.RegularExpressions;
 
 namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
 {
@@ -84,7 +83,7 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
             }
             else if (op is DateTime)
             {
-                d = ((DateTime) op).ToOADate();
+                d = ((DateTime)op).ToOADate();
                 return true;
             }
             else if (op != null)
@@ -126,7 +125,7 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
                     bool rightIsDate = DateTime.TryParse(right, out date);
                     if (leftIsNumeric && rightIsNumeric)
                     {
-                         return EvaluateOperator(leftNum, rightNum, op);
+                        return EvaluateOperator(leftNum, rightNum, op);
                     }
                     if (leftIsNumeric && rightIsDate)
                     {

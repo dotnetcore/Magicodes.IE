@@ -30,11 +30,8 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Table.PivotTable
 {
@@ -46,7 +43,7 @@ namespace OfficeOpenXml.Table.PivotTable
         internal ExcelPivotTableFieldGroup(XmlNamespaceManager ns, XmlNode topNode) :
             base(ns, topNode)
         {
-            
+
         }
     }
     /// <summary>
@@ -123,7 +120,7 @@ namespace OfficeOpenXml.Table.PivotTable
             }
             private set
             {
-                SetXmlNodeString(startPath,value.ToString(CultureInfo.InvariantCulture));
+                SetXmlNodeString(startPath, value.ToString(CultureInfo.InvariantCulture));
             }
         }
         const string endPath = "d:fieldGroup/d:rangePr/@endNum";

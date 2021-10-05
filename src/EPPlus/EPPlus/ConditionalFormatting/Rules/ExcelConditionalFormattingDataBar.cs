@@ -28,14 +28,11 @@
  * ******************************************************************************
  * Eyal Seagull        Added       		  2012-04-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Xml;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System;
+using System.Drawing;
 using System.Globalization;
+using System.Xml;
 namespace OfficeOpenXml.ConditionalFormatting
 {
     /// <summary>
@@ -79,15 +76,15 @@ namespace OfficeOpenXml.ConditionalFormatting
               (namespaceManager == null) ? worksheet.NameSpaceManager : namespaceManager)
         {
             var s = SchemaNodeOrder;
-            Array.Resize(ref s, s.Length+2);    //Fixes issue 15429. Append node order instead om overwriting it.
+            Array.Resize(ref s, s.Length + 2);    //Fixes issue 15429. Append node order instead om overwriting it.
             s[s.Length - 2] = "cfvo";
             s[s.Length - 1] = "color";
             SchemaNodeOrder = s;
 
             //Create the <dataBar> node inside the <cfRule> node
-            if (itemElementNode!=null && itemElementNode.HasChildNodes)
+            if (itemElementNode != null && itemElementNode.HasChildNodes)
             {
-                bool high=false;
+                bool high = false;
                 foreach (XmlNode node in itemElementNode.SelectNodes("d:dataBar/d:cfvo", NameSpaceManager))
                 {
                     if (high == false)
@@ -190,7 +187,7 @@ namespace OfficeOpenXml.ConditionalFormatting
         {
         }
         #endregion Constructors
-        private const string _showValuePath="d:dataBar/@showValue";
+        private const string _showValuePath = "d:dataBar/@showValue";
         public bool ShowValue
         {
             get
@@ -222,8 +219,8 @@ namespace OfficeOpenXml.ConditionalFormatting
         {
             get
             {
-                var rgb=GetXmlNodeString(_colorPath);
-                if(!string.IsNullOrEmpty(rgb))
+                var rgb = GetXmlNodeString(_colorPath);
+                if (!string.IsNullOrEmpty(rgb))
                 {
                     return Color.FromArgb(int.Parse(rgb, NumberStyles.HexNumber));
                 }

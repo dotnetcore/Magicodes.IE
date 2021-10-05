@@ -22,11 +22,8 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using System.Collections.Generic;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Text
 {
@@ -52,7 +49,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Text
 
         private string GetLastPart(string text, int startPos, int nCharactersToReplace)
         {
-            int startIx = startPos -1;
+            int startIx = startPos - 1;
             startIx += nCharactersToReplace;
             return text.Substring(startIx, text.Length - startIx);
         }

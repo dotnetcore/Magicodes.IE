@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using System.Xml;
 
 namespace OfficeOpenXml.Style.Dxf
 {
@@ -21,7 +17,7 @@ namespace OfficeOpenXml.Style.Dxf
         public Color? Color { get; set; }
         protected internal override string Id
         {
-            get { return GetAsString(Theme) + "|" + GetAsString(Index) + "|" + GetAsString(Auto) + "|" + GetAsString(Tint) + "|" + GetAsString(Color==null ? "" : ((Color)Color.Value).ToArgb().ToString("x")); }
+            get { return GetAsString(Theme) + "|" + GetAsString(Index) + "|" + GetAsString(Auto) + "|" + GetAsString(Tint) + "|" + GetAsString(Color == null ? "" : ((Color)Color.Value).ToArgb().ToString("x")); }
         }
         protected internal override ExcelDxfColor Clone()
         {

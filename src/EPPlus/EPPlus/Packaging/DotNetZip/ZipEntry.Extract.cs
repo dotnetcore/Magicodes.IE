@@ -612,7 +612,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         private void OnExtractProgress(Int64 bytesWritten, Int64 totalBytesToWrite)
         {
             if (_container.ZipFile != null)
-            _ioOperationCanceled = _container.ZipFile.OnExtractBlock(this, bytesWritten, totalBytesToWrite);
+                _ioOperationCanceled = _container.ZipFile.OnExtractBlock(this, bytesWritten, totalBytesToWrite);
         }
 
 
@@ -795,7 +795,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                     // move file to permanent home
                     string tmpName = targetFileName;
                     string zombie = null;
-                    targetFileName = tmpName.Substring(0,tmpName.Length-4);
+                    targetFileName = tmpName.Substring(0, tmpName.Length - 4);
 
                     if (fileExistsBeforeExtraction)
                     {
@@ -862,7 +862,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
                 OnAfterExtract(baseDir);
 
-                ExitTry: ;
+            ExitTry:;
             }
             catch (Exception)
             {
@@ -978,7 +978,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                         return 1;
 
                     case ExtractExistingFileAction.InvokeExtractProgressEvent:
-                        if (loop>0)
+                        if (loop > 0)
                             throw new ZipException(String.Format("The file {0} already exists.", targetFileName));
                         OnExtractExisting(baseDir);
                         if (_ioOperationCanceled)
@@ -1036,7 +1036,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 // Get a stream that either decrypts or not.
                 _inputDecryptorStream = GetExtractDecryptor(input);
 
-                Stream input3 = GetExtractDecompressor( _inputDecryptorStream );
+                Stream input3 = GetExtractDecompressor(_inputDecryptorStream);
 
                 Int64 bytesWritten = 0;
                 // As we read, we maybe decrypt, and then we maybe decompress. Then we write.
@@ -1208,7 +1208,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         }
 
 
-#region Support methods
+        #region Support methods
 
 
         // workitem 7968
@@ -1396,14 +1396,14 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 // Sometimes the name on the entry starts with a slash.
                 // Rather than unpack to the root of the volume, we're going to
                 // drop the slash and unpack to the specified base directory.
-                string f = this.FileName.Replace("\\","/");
+                string f = this.FileName.Replace("\\", "/");
 
                 // workitem 11772: remove drive letter with separator
                 if (f.IndexOf(':') == 1)
-                    f= f.Substring(2);
+                    f = f.Substring(2);
 
                 if (f.StartsWith("/"))
-                    f= f.Substring(1);
+                    f = f.Substring(1);
 
                 // String.Contains is not available on .NET CF 2.0
 
@@ -1414,7 +1414,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                     outFileName = Path.Combine(basedir, f);
 
                 // workitem 10639
-                outFileName = outFileName.Replace("/","\\");
+                outFileName = outFileName.Replace("/", "\\");
 
                 // check if it is a directory
                 if ((IsDirectory) || (FileName.EndsWith("/")))
@@ -1450,7 +1450,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         }
 
 
-#endregion
+        #endregion
 
     }
 }

@@ -68,7 +68,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         /// this is a 1.)
         /// </summary>
         Skip,
-        
+
         /// <summary>
         /// When an error occurs during zipping, for example a file cannot be opened,
         /// retry the operation that caused the error. Be careful with this option. If

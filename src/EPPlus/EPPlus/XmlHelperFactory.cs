@@ -29,10 +29,6 @@
  * Mats Alm 		    Initial Release		        2011-05-01
  * Jan Källman		    License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml
@@ -41,11 +37,11 @@ namespace OfficeOpenXml
     {
         internal XmlHelperInstance(XmlNamespaceManager namespaceManager)
             : base(namespaceManager)
-        {}
+        { }
 
         internal XmlHelperInstance(XmlNamespaceManager namespaceManager, XmlNode topNode)
             : base(namespaceManager, topNode)
-        {}
+        { }
 
     }
 

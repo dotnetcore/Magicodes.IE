@@ -22,13 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-06
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using OfficeOpenXml.Utils;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {
@@ -39,7 +37,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
         public Dcount()
             : this(new RowMatcher())
         {
-            
+
         }
 
         public Dcount(RowMatcher rowMatcher)
@@ -61,7 +59,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
             {
                 field = ArgToString(arguments, 1).ToLower(CultureInfo.InvariantCulture);
                 criteriaRange = arguments.ElementAt(2).ValueAsRangeInfo.Address.Address;
-            } 
+            }
             var db = new ExcelDatabase(context.ExcelDataProvider, dbAddress);
             var criteria = new ExcelDatabaseCriteria(context.ExcelDataProvider, criteriaRange);
 
@@ -84,7 +82,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
                     else
                     {
                         // no fieldname was supplied, always count matching row.
-                        nHits++;    
+                        nHits++;
                     }
                 }
             }

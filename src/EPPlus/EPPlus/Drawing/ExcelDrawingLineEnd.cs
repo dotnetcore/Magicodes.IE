@@ -57,14 +57,14 @@ namespace OfficeOpenXml.Drawing
     /// <summary>
     /// Properties for drawing line ends
     /// </summary>
-    public sealed class ExcelDrawingLineEnd:XmlHelper
+    public sealed class ExcelDrawingLineEnd : XmlHelper
     {
-         string _linePath;
-        internal ExcelDrawingLineEnd(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string linePath) : 
+        string _linePath;
+        internal ExcelDrawingLineEnd(XmlNamespaceManager nameSpaceManager, XmlNode topNode, string linePath) :
             base(nameSpaceManager, topNode)
         {
             SchemaNodeOrder = new string[] { "headEnd", "tailEnd" };
-            _linePath = linePath;   
+            _linePath = linePath;
         }
         string _headEndStylePath = "xdr:sp/xdr:spPr/a:ln/a:headEnd/@type";
         /// <summary>

@@ -30,9 +30,6 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml.Table.PivotTable
@@ -46,7 +43,7 @@ namespace OfficeOpenXml.Table.PivotTable
         internal ExcelPivotTableFieldItem(XmlNamespaceManager ns, XmlNode topNode, ExcelPivotTableField field) :
             base(ns, topNode)
         {
-           _field = field;
+            _field = field;
         }
         /// <summary>
         /// The text. Unique values only
@@ -59,7 +56,7 @@ namespace OfficeOpenXml.Table.PivotTable
             }
             set
             {
-                if(string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     DeleteNode("@n");
                     return;
@@ -68,7 +65,7 @@ namespace OfficeOpenXml.Table.PivotTable
                 {
                     if (item.Text == value)
                     {
-                        throw(new ArgumentException("Duplicate Text"));
+                        throw (new ArgumentException("Duplicate Text"));
                     }
                 }
                 SetXmlNodeString("@n", value);
@@ -78,7 +75,7 @@ namespace OfficeOpenXml.Table.PivotTable
         {
             get
             {
-                return GetXmlNodeInt("@x"); 
+                return GetXmlNodeInt("@x");
             }
         }
         internal string T

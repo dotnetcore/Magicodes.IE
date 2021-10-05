@@ -28,10 +28,6 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 {
@@ -55,7 +51,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 
         public override CompileResult Compile()
         {
-            var result =  _expressionCompiler.Compile(Children);
+            var result = _expressionCompiler.Compile(Children);
             if (result.IsNumeric && _isNegated)
             {
                 return new CompileResult(result.ResultNumeric * -1, result.DataType);

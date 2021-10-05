@@ -28,11 +28,9 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
 {

@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -49,7 +47,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             {
                 return CreateResult(System.Math.Ceiling(number), DataType.Decimal);
             }
-            else if(number % significance == 0)
+            else if (number % significance == 0)
             {
                 return CreateResult(number, DataType.Decimal);
             }

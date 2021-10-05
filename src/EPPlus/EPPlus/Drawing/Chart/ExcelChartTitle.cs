@@ -29,11 +29,9 @@
  * Jan Källman		Added		2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using OfficeOpenXml.Style;
+using System;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -53,7 +51,7 @@ namespace OfficeOpenXml.Drawing.Chart
                 topNode.InnerXml = "<c:tx><c:rich><a:bodyPr /><a:lstStyle /><a:p><a:pPr><a:defRPr sz=\"1800\" b=\"0\" /></a:pPr><a:r><a:t /></a:r></a:p></c:rich></c:tx><c:layout /><c:overlay val=\"0\" />";
             }
             TopNode = topNode;
-            SchemaNodeOrder = new string[] { "tx","bodyPr", "lstStyle", "layout", "overlay" };
+            SchemaNodeOrder = new string[] { "tx", "bodyPr", "lstStyle", "layout", "overlay" };
         }
         const string titlePath = "c:tx/c:rich/a:p/a:r/a:t";
         /// <summary>
@@ -115,7 +113,7 @@ namespace OfficeOpenXml.Drawing.Chart
                 //    _font = new ExcelTextFont(NameSpaceManager, TopNode, "c:tx/c:rich/a:p/a:r/a:rPr", new string[] { "rPr", "solidFill", "uFill", "latin", "cs", "r", "rPr", "t" });
                 //}
                 //return _font;
-                if (_richText==null || _richText.Count == 0)
+                if (_richText == null || _richText.Count == 0)
                 {
                     RichText.Add("");
                 }
@@ -203,7 +201,7 @@ namespace OfficeOpenXml.Drawing.Chart
         {
             get
             {
-                var i=GetXmlNodeInt("c:tx/c:rich/a:bodyPr/@rot");
+                var i = GetXmlNodeInt("c:tx/c:rich/a:bodyPr/@rot");
                 if (i < 0)
                 {
                     return 360 - (i / 60000);
@@ -216,9 +214,9 @@ namespace OfficeOpenXml.Drawing.Chart
             set
             {
                 int v;
-                if(value <0 || value > 360)
+                if (value < 0 || value > 360)
                 {
-                    throw(new ArgumentOutOfRangeException("Rotation must be between 0 and 360"));
+                    throw (new ArgumentOutOfRangeException("Rotation must be between 0 and 360"));
                 }
 
                 if (value > 180)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OfficeOpenXml.LoadFunctions.Params
+﻿namespace OfficeOpenXml.LoadFunctions.Params
 {
     /// <summary>
     /// Declares how headers should be parsed before they are added to the worksheet

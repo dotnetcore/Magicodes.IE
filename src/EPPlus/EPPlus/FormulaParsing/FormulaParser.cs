@@ -28,21 +28,16 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
+using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+using OfficeOpenXml.FormulaParsing.Exceptions;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
+using OfficeOpenXml.FormulaParsing.Logging;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.FormulaParsing;
-using OfficeOpenXml.FormulaParsing.Excel.Operators;
-using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
-using OfficeOpenXml.FormulaParsing.Excel;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
-using OfficeOpenXml.FormulaParsing.Logging;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using System.Diagnostics;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 
 namespace OfficeOpenXml.FormulaParsing
 {
@@ -54,7 +49,7 @@ namespace OfficeOpenXml.FormulaParsing
         public FormulaParser(ExcelDataProvider excelDataProvider)
             : this(excelDataProvider, ParsingContext.Create())
         {
-           
+
         }
 
         public FormulaParser(ExcelDataProvider excelDataProvider, ParsingContext parsingContext)
@@ -88,7 +83,7 @@ namespace OfficeOpenXml.FormulaParsing
         private IExpressionCompiler _compiler;
 
         public ILexer Lexer { get { return _lexer; } }
-        public IEnumerable<string> FunctionNames { get { return _parsingContext.Configuration.FunctionRepository.FunctionNames; } } 
+        public IEnumerable<string> FunctionNames { get { return _parsingContext.Configuration.FunctionRepository.FunctionNames; } }
 
         internal virtual object Parse(string formula, RangeAddress rangeAddress)
         {
@@ -161,7 +156,7 @@ namespace OfficeOpenXml.FormulaParsing
                         return ExcelErrorValue.Create(eErrorType.Value);
                     }
                 }
-                catch(ExcelErrorValueException ex)
+                catch (ExcelErrorValueException ex)
                 {
                     if (_parsingContext.Debug)
                     {
@@ -176,7 +171,7 @@ namespace OfficeOpenXml.FormulaParsing
         {
             return Parse(formula, _parsingContext.RangeAddressFactory.Create(address));
         }
-        
+
         public virtual object Parse(string formula)
         {
             return Parse(formula, RangeAddress.Empty);
@@ -198,7 +193,7 @@ namespace OfficeOpenXml.FormulaParsing
             }
             else
             {
-                return Parse(f, _parsingContext.RangeAddressFactory.Create(worksheetName,col,row));
+                return Parse(f, _parsingContext.RangeAddressFactory.Create(worksheetName, col, row));
             }
             //var dataItem = _excelDataProvider.GetRangeValues(address).FirstOrDefault();
             //if (dataItem == null /*|| (dataItem.Value == null && dataItem.Formula == null)*/) return null;
@@ -212,7 +207,7 @@ namespace OfficeOpenXml.FormulaParsing
 
         internal void InitNewCalc()
         {
-            if(_excelDataProvider!=null)
+            if (_excelDataProvider != null)
             {
                 _excelDataProvider.Reset();
             }

@@ -28,14 +28,11 @@
  *******************************************************************************
  * Jan Källman		Added		25-Oct-2012
  *******************************************************************************/
+using OfficeOpenXml.Packaging.Ionic.Zip;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Ionic.Zip;
-using System.IO;
 using System.Security;
-using OfficeOpenXml.Packaging.Ionic.Zip;
+using System.Text;
 
 namespace OfficeOpenXml.Packaging
 {

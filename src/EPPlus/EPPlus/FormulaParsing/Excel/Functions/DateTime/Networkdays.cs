@@ -1,9 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime.Workdays;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime.Workdays;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
 {
@@ -21,7 +19,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
             {
                 result = calculator.ReduceWorkdaysWithHolidays(result, functionArguments[2]);
             }
-            
+
             return new CompileResult(result.NumberOfWorkdays, DataType.Integer);
         }
     }

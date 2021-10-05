@@ -29,10 +29,8 @@
  * Jan Källman		Added		10-SEP-2009
  * Jan Källman		License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information

@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
 {
@@ -69,7 +67,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
                 {
                     RangeAddress = arg1.ToString();
                     ArgumentDataType = LookupArgumentDataType.ExcelRange;
-                }  
+                }
             }
             var indexVal = arguments.ElementAt(2);
 
@@ -77,13 +75,13 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
             {
                 var address = new ExcelAddress(indexVal.Value.ToString());
                 var indexObj = context.ExcelDataProvider.GetRangeValue(address.WorkSheet, address._fromRow, address._fromCol);
-                LookupIndex = (int) _argumentParsers.GetParser(DataType.Integer).Parse(indexObj);
+                LookupIndex = (int)_argumentParsers.GetParser(DataType.Integer).Parse(indexObj);
             }
             else
             {
                 LookupIndex = (int)_argumentParsers.GetParser(DataType.Integer).Parse(arguments.ElementAt(2).Value);
             }
-            
+
             if (arguments.Count() > 3)
             {
                 RangeLookup = (bool)_argumentParsers.GetParser(DataType.Boolean).Parse(arguments.ElementAt(3).Value);
@@ -120,6 +118,6 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
 
         public ExcelDataProvider.IRangeInfo RangeInfo { get; private set; }
 
-        public LookupArgumentDataType ArgumentDataType { get; private set; } 
+        public LookupArgumentDataType ArgumentDataType { get; private set; }
     }
 }

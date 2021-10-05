@@ -23,10 +23,8 @@
  * Mats Alm   		                Added		                2015-01-15
  *******************************************************************************/
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
 {
@@ -38,7 +36,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
             var error = arguments.ElementAt(0);
             var isErrorFunc = context.Configuration.FunctionRepository.GetFunction("iserror");
             var isErrorResult = isErrorFunc.Execute(arguments, context);
-            if (!(bool) isErrorResult.Result)
+            if (!(bool)isErrorResult.Result)
             {
                 return CreateResult(ExcelErrorValue.Create(eErrorType.NA), DataType.ExcelError);
             }

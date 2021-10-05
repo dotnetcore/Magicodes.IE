@@ -22,17 +22,14 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-26
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using System.Collections.Generic;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions
 {
     public class CompileResultValidators
     {
-        private readonly Dictionary<DataType, CompileResultValidator> _validators = new Dictionary<DataType, CompileResultValidator>(); 
+        private readonly Dictionary<DataType, CompileResultValidator> _validators = new Dictionary<DataType, CompileResultValidator>();
 
         private CompileResultValidator CreateOrGet(DataType dataType)
         {

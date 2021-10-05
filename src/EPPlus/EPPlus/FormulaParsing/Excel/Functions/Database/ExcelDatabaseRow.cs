@@ -22,11 +22,7 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Operators;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {
@@ -54,7 +50,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
                 return _items[field];
             }
         }
-        
-        
+
+
     }
 }

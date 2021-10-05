@@ -1,30 +1,20 @@
-using OfficeOpenXml.Compatibility;
 using OfficeOpenXml.LoadFunctions;
 using OfficeOpenXml.LoadFunctions.Params;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Common;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 #if !NET35 && !NET40
-using System.Threading.Tasks;
 #endif
 namespace OfficeOpenXml
 {
     public partial class ExcelRangeBase
     {
-        
-        
-        
-        
-        
+
+
+
+
+
         #region LoadFromDictionaries
         /// <summary>
         /// Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.
@@ -166,7 +156,7 @@ namespace OfficeOpenXml
                 PrintHeaders = printHeaders,
                 TableStyle = tableStyle
             };
-            if(keys != null && keys.Any())
+            if (keys != null && keys.Any())
             {
                 param.SetKeys(keys.ToArray());
             }

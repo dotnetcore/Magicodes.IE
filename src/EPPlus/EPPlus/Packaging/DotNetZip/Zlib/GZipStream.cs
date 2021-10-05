@@ -27,9 +27,9 @@
 // ------------------------------------------------------------------
 
 
+using OfficeOpenXml.Utils;
 using System;
 using System.IO;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zlib
 {
@@ -548,7 +548,8 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         virtual public FlushType FlushMode
         {
             get { return (this._baseStream._flushMode); }
-            set {
+            set
+            {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
                 this._baseStream._flushMode = value;
             }
@@ -976,7 +977,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
             using (var ms = RecyclableMemoryStream.GetStream())
             {
                 System.IO.Stream compressor =
-                    new GZipStream( ms, CompressionMode.Compress, CompressionLevel.BestCompression );
+                    new GZipStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
 
                 ZlibBaseStream.CompressBuffer(b, compressor);
                 return ms.ToArray();
@@ -1023,7 +1024,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
             using (var input = new System.IO.MemoryStream(compressed))
             {
                 System.IO.Stream decompressor =
-                    new GZipStream( input, CompressionMode.Decompress );
+                    new GZipStream(input, CompressionMode.Decompress);
 
                 return ZlibBaseStream.UncompressBuffer(compressed, decompressor);
             }

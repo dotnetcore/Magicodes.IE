@@ -31,7 +31,6 @@
  *******************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace OfficeOpenXml.Table.PivotTable
@@ -102,7 +101,7 @@ namespace OfficeOpenXml.Table.PivotTable
             {
                 foreach (var field in _list)
                 {
-                    if (field.Name.Equals(name,StringComparison.OrdinalIgnoreCase))
+                    if (field.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     {
                         return field;
                     }
@@ -150,9 +149,9 @@ namespace OfficeOpenXml.Table.PivotTable
         internal string _topNode;
         internal ExcelPivotTableRowColumnFieldCollection(ExcelPivotTable table, string topNode) :
             base(table)
-	    {
-            _topNode=topNode;
-	    }
+        {
+            _topNode = topNode;
+        }
 
         /// <summary>
         /// Add a new row/column field
@@ -184,7 +183,7 @@ namespace OfficeOpenXml.Table.PivotTable
                 case "rowFields":
                     if (field.IsColumnField || field.IsPageField)
                     {
-                        throw(new Exception("This field is a column or page field. Can't add it to the RowFields collection"));
+                        throw (new Exception("This field is a column or page field. Can't add it to the RowFields collection"));
                     }
                     field.IsRowField = value;
                     field.Axis = ePivotFieldAxis.Row;
@@ -204,13 +203,13 @@ namespace OfficeOpenXml.Table.PivotTable
                     }
                     if (_table.Address._fromRow < 3)
                     {
-                        throw(new Exception(string.Format("A pivot table with page fields must be located above row 3. Currenct location is {0}", _table.Address.Address)));
+                        throw (new Exception(string.Format("A pivot table with page fields must be located above row 3. Currenct location is {0}", _table.Address.Address)));
                     }
                     field.IsPageField = value;
                     field.Axis = ePivotFieldAxis.Page;
                     break;
                 case "dataFields":
-                    
+
                     break;
             }
         }
@@ -220,12 +219,12 @@ namespace OfficeOpenXml.Table.PivotTable
         /// <param name="Field"></param>
         public void Remove(ExcelPivotTableField Field)
         {
-            if(!_list.Contains(Field))
+            if (!_list.Contains(Field))
             {
                 throw new ArgumentException("Field not in collection");
             }
-            SetFlag(Field, false);            
-            _list.Remove(Field);            
+            SetFlag(Field, false);
+            _list.Remove(Field);
         }
         /// <summary>
         /// Remove a field at a specific position
@@ -235,10 +234,10 @@ namespace OfficeOpenXml.Table.PivotTable
         {
             if (Index > -1 && Index < _list.Count)
             {
-                throw(new IndexOutOfRangeException());
+                throw (new IndexOutOfRangeException());
             }
             SetFlag(_list[Index], false);
-            _list.RemoveAt(Index);      
+            _list.RemoveAt(Index);
         }
     }
     /// <summary>
@@ -270,7 +269,7 @@ namespace OfficeOpenXml.Table.PivotTable
             dataFieldsNode.AppendChild(node);
 
             //XmlElement node = field.AppendField(dataFieldsNode, field.Index, "dataField", "fld");
-            field.SetXmlNodeBool("@dataField", true,false);
+            field.SetXmlNodeBool("@dataField", true, false);
 
             var dataField = new ExcelPivotTableDataField(field.NameSpaceManager, node, field);
             ValidateDupName(dataField);
@@ -280,7 +279,7 @@ namespace OfficeOpenXml.Table.PivotTable
         }
         private void ValidateDupName(ExcelPivotTableDataField dataField)
         {
-            if(ExistsDfName(dataField.Field.Name, null))
+            if (ExistsDfName(dataField.Field.Name, null))
             {
                 var index = 2;
                 string name;
@@ -288,7 +287,7 @@ namespace OfficeOpenXml.Table.PivotTable
                 {
                     name = dataField.Field.Name + "_" + index++.ToString();
                 }
-                while (ExistsDfName(name,null));
+                while (ExistsDfName(name, null));
                 dataField.Name = name;
             }
         }

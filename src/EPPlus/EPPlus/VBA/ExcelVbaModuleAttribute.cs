@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace OfficeOpenXml.VBA
+﻿namespace OfficeOpenXml.VBA
 {
     /// <summary>
     /// To determine if the attribute uses double quotes around the value
@@ -13,11 +8,11 @@ namespace OfficeOpenXml.VBA
         /// <summary>
         /// A string
         /// </summary>
-        String=0,
+        String = 0,
         /// <summary>
         /// Not a string
         /// </summary>
-        NonString=1
+        NonString = 1
     }
     public class ExcelVbaModuleAttribute
     {

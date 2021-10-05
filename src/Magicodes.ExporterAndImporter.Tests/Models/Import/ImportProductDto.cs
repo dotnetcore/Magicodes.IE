@@ -20,7 +20,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// <summary>
     /// 测试表头位置
     /// </summary>
-    [Importer(HeaderRowIndex = 2)]
+    [Importer(HeaderRowIndex = 2, IsDisableAllFilter = true)]
     public class ImportProductDto
     {
         /// <summary>

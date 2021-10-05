@@ -29,23 +29,19 @@
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  * Jan Källman                      Replaced Adress validate    2013-03-01
  * *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using OfficeOpenXml.FormulaParsing;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
 {
     public class TokenFactory : ITokenFactory
     {
-        public TokenFactory(IFunctionNameProvider functionRepository, INameValueProvider nameValueProvider, bool r1c1=false)
+        public TokenFactory(IFunctionNameProvider functionRepository, INameValueProvider nameValueProvider, bool r1c1 = false)
             : this(new TokenSeparatorProvider(), nameValueProvider, functionRepository, r1c1)
         {
 
@@ -74,10 +70,10 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             {
                 return tokenSeparator;
             }
-            
+
             var tokenList = tokens.ToList();
             //Address with worksheet-string before  /JK
-            if (token.StartsWith("!") && tokenList[tokenList.Count-1].TokenType == TokenType.String)
+            if (token.StartsWith("!") && tokenList[tokenList.Count - 1].TokenType == TokenType.String)
             {
                 string addr = "";
                 var i = tokenList.Count - 2;
@@ -89,7 +85,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                     }
                     else
                     {
-                        throw(new ArgumentException(string.Format("Invalid formula token sequence near {0}",token)));
+                        throw (new ArgumentException(string.Format("Invalid formula token sequence near {0}", token)));
                     }
                     //Remove the string tokens and content
                     tokenList.RemoveAt(tokenList.Count - 1);
@@ -100,9 +96,9 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                 }
                 else
                 {
-                    throw(new ArgumentException(string.Format("Invalid formula token sequence near {0}",token)));
+                    throw (new ArgumentException(string.Format("Invalid formula token sequence near {0}", token)));
                 }
-                
+
             }
 
             if (tokens.Any() && tokens.Last().TokenType == TokenType.String)
@@ -117,7 +113,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             {
                 return new Token(token, TokenType.Decimal);
             }
-            if(Regex.IsMatch(token, RegexConstants.Integer))
+            if (Regex.IsMatch(token, RegexConstants.Integer))
             {
                 return new Token(token, TokenType.Integer);
             }
@@ -154,10 +150,10 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                 return new Token(token, TokenType.Enumerable);
             }
             var at = OfficeOpenXml.ExcelAddressBase.IsValid(token, _r1c1);
-            if (at==ExcelAddressBase.AddressType.InternalAddress)
+            if (at == ExcelAddressBase.AddressType.InternalAddress)
             {
                 return new Token(token.ToUpper(CultureInfo.InvariantCulture), TokenType.ExcelAddress);
-            } 
+            }
             else if (at == ExcelAddressBase.AddressType.R1C1)
             {
                 return new Token(token.ToUpper(CultureInfo.InvariantCulture), TokenType.ExcelAddressR1C1);

@@ -1,10 +1,7 @@
-﻿using System.Globalization;
-using OfficeOpenXml.Packaging;
+﻿using OfficeOpenXml.Packaging;
 using OfficeOpenXml.Table.PivotTable;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
@@ -19,7 +16,7 @@ namespace OfficeOpenXml.Drawing.Chart
         {
             ShowNegativeBubbles = false;
             BubbleScale = 100;
-            _chartSeries = new ExcelBubbleChartSeries(this, drawings.NameSpaceManager, _chartNode, PivotTableSource!=null);
+            _chartSeries = new ExcelBubbleChartSeries(this, drawings.NameSpaceManager, _chartNode, PivotTableSource != null);
             //SetTypeProperties();
         }
 
@@ -52,9 +49,9 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             set
             {
-                if(value < 0 && value > 300)
+                if (value < 0 && value > 300)
                 {
-                    throw(new ArgumentOutOfRangeException("Bubblescale out of range. 0-300 allowed"));
+                    throw (new ArgumentOutOfRangeException("Bubblescale out of range. 0-300 allowed"));
                 }
                 _chartXmlHelper.SetXmlNodeString(BUBBLESCALE_PATH, value.ToString());
             }

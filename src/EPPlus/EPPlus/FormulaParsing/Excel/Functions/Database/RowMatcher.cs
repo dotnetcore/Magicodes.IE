@@ -22,10 +22,6 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-06
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 using OfficeOpenXml.FormulaParsing.Utilities;
 using OfficeOpenXml.Utils;
@@ -40,7 +36,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
         public RowMatcher()
             : this(new WildCardValueMatcher(), new ExpressionEvaluator())
         {
-            
+
         }
 
         public RowMatcher(WildCardValueMatcher wildCardValueMatcher, ExpressionEvaluator expressionEvaluator)
@@ -58,7 +54,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
                 var crit = c.Value;
                 if (candidate.IsNumeric() && crit.IsNumeric())
                 {
-                    if(System.Math.Abs(ConvertUtil.GetValueDouble(candidate) - ConvertUtil.GetValueDouble(crit)) > double.Epsilon) return false;
+                    if (System.Math.Abs(ConvertUtil.GetValueDouble(candidate) - ConvertUtil.GetValueDouble(crit)) > double.Epsilon) return false;
                 }
                 else
                 {

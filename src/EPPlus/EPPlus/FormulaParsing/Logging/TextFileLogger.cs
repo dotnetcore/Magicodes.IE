@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
 namespace OfficeOpenXml.FormulaParsing.Logging
 {
@@ -67,7 +64,7 @@ namespace OfficeOpenXml.FormulaParsing.Logging
         public void LogCellCounted()
         {
             _count++;
-            if (_count%500 == 0)
+            if (_count % 500 == 0)
             {
                 _sw.WriteLine(Separator);
                 var timeEllapsed = DateTime.Now.Subtract(_startTime);
@@ -79,7 +76,7 @@ namespace OfficeOpenXml.FormulaParsing.Logging
                     _sw.Write(func + "  - " + _funcs[func]);
                     if (_funcPerformance.ContainsKey(func))
                     {
-                        _sw.Write(" - avg: " + _funcPerformance[func]/_funcs[func] + " milliseconds");
+                        _sw.Write(" - avg: " + _funcPerformance[func] / _funcs[func] + " milliseconds");
                     }
                     _sw.WriteLine();
                 }
@@ -109,7 +106,7 @@ namespace OfficeOpenXml.FormulaParsing.Logging
 
         public void Dispose()
         {
-            _sw.Close(); 
+            _sw.Close();
             _sw.Dispose();
         }
     }

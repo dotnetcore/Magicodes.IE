@@ -30,10 +30,7 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using OfficeOpenXml.Style;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -43,60 +40,60 @@ namespace OfficeOpenXml.Drawing.Chart
     public class ExcelChartSurface : XmlHelper
     {
         internal ExcelChartSurface(XmlNamespaceManager ns, XmlNode node)
-           : base(ns,node)
-       {
-           SchemaNodeOrder = new string[] { "thickness", "spPr", "pictureOptions" };
-       }
-       #region "Public properties"
+           : base(ns, node)
+        {
+            SchemaNodeOrder = new string[] { "thickness", "spPr", "pictureOptions" };
+        }
+        #region "Public properties"
         const string THICKNESS_PATH = "c:thickness/@val";
-       /// <summary>
-       /// Show the values 
-       /// </summary>
+        /// <summary>
+        /// Show the values 
+        /// </summary>
         public int Thickness
-       {
-           get
-           {
-               return GetXmlNodeInt(THICKNESS_PATH);
-           }
-           set
-           {
-               if(value < 0 && value > 9)
-               {
-                   throw (new ArgumentOutOfRangeException("Thickness out of range. (0-9)"));
-               }
-               SetXmlNodeString(THICKNESS_PATH, value.ToString());
-           }
-       }
-       ExcelDrawingFill _fill = null;
-       /// <summary>
-       /// Access fill properties
-       /// </summary>
-       public ExcelDrawingFill Fill
-       {
-           get
-           {
-               if (_fill == null)
-               {
-                   _fill = new ExcelDrawingFill(NameSpaceManager, TopNode, "c:spPr");
-               }
-               return _fill;
-           }
-       }
-       ExcelDrawingBorder _border = null;
-       /// <summary>
-       /// Access border properties
-       /// </summary>
-       public ExcelDrawingBorder Border
-       {
-           get
-           {
-               if (_border == null)
-               {
-                   _border = new ExcelDrawingBorder(NameSpaceManager, TopNode, "c:spPr/a:ln");
-               }
-               return _border;
-           }
-       }
-       #endregion
+        {
+            get
+            {
+                return GetXmlNodeInt(THICKNESS_PATH);
+            }
+            set
+            {
+                if (value < 0 && value > 9)
+                {
+                    throw (new ArgumentOutOfRangeException("Thickness out of range. (0-9)"));
+                }
+                SetXmlNodeString(THICKNESS_PATH, value.ToString());
+            }
+        }
+        ExcelDrawingFill _fill = null;
+        /// <summary>
+        /// Access fill properties
+        /// </summary>
+        public ExcelDrawingFill Fill
+        {
+            get
+            {
+                if (_fill == null)
+                {
+                    _fill = new ExcelDrawingFill(NameSpaceManager, TopNode, "c:spPr");
+                }
+                return _fill;
+            }
+        }
+        ExcelDrawingBorder _border = null;
+        /// <summary>
+        /// Access border properties
+        /// </summary>
+        public ExcelDrawingBorder Border
+        {
+            get
+            {
+                if (_border == null)
+                {
+                    _border = new ExcelDrawingBorder(NameSpaceManager, TopNode, "c:spPr/a:ln");
+                }
+                return _border;
+            }
+        }
+        #endregion
     }
 }

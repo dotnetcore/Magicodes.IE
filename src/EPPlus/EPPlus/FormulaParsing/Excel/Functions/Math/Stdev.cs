@@ -22,13 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.Exceptions;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 using MathObj = System.Math;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -47,7 +45,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             if (values.Any())
             {
                 var nValues = values.Count();
-                if(nValues == 1) throw new ExcelErrorValueException(eErrorType.Div0);
+                if (nValues == 1) throw new ExcelErrorValueException(eErrorType.Div0);
                 //Compute the Average       
                 double avg = values.Average();
                 //Perform the Sum of (value-avg)_2_2       
@@ -56,7 +54,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
                 ret = MathObj.Sqrt(Divide(sum, (values.Count() - 1)));
             }
             return ret;
-        } 
+        }
 
     }
 }

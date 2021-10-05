@@ -22,16 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-01-11
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml.XPath;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml.Utils;
-using Require = OfficeOpenXml.FormulaParsing.Utilities.Require;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -44,7 +37,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             ValidateArguments(functionArguments, 2);
             var argRanges = new List<ExcelDataProvider.IRangeInfo>();
             var criterias = new List<string>();
-            for (var ix = 0; ix < 30; ix +=2)
+            for (var ix = 0; ix < 30; ix += 2)
             {
                 if (functionArguments.Length <= ix) break;
                 var rangeInfo = functionArguments[ix].ValueAsRangeInfo;
@@ -59,7 +52,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
                 var indexes = GetMatchIndexes(argRanges[ix], criterias[ix]);
                 matchIndexes = enumerable.Intersect(indexes);
             }
-            
+
             return CreateResult((double)matchIndexes.Count(), DataType.Integer);
         }
     }

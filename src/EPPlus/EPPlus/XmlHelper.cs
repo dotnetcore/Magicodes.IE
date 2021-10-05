@@ -32,15 +32,12 @@
  * Eyal Seagull       Add "DeleteTopNode"        2012-04-13
  *******************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using OfficeOpenXml.Style;
+using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using OfficeOpenXml.Utils;
+using System.Text;
+using System.Xml;
 namespace OfficeOpenXml
 {
     /// <summary>

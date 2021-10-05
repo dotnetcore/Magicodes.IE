@@ -24,11 +24,9 @@
  * Robert J. McKee                  Fix rounding with negative digits parameter 2016-08-10
  *                                  Fix rounding of negative numbers            2016-08-10
  *****************************************************************************************/
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -42,7 +40,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             if (nDigits < 0)
             {
                 nDigits *= -1;
-                return CreateResult(System.Math.Round(number / System.Math.Pow(10, nDigits),0, MidpointRounding.AwayFromZero) * System.Math.Pow(10, nDigits), DataType.Integer); 
+                return CreateResult(System.Math.Round(number / System.Math.Pow(10, nDigits), 0, MidpointRounding.AwayFromZero) * System.Math.Pow(10, nDigits), DataType.Integer);
             }
             return CreateResult(System.Math.Round(number, nDigits, MidpointRounding.AwayFromZero), DataType.Decimal);
         }

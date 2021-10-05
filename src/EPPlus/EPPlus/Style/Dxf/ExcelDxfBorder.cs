@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-
-namespace OfficeOpenXml.Style.Dxf
+﻿namespace OfficeOpenXml.Style.Dxf
 {
     public class ExcelDxfBorderBase : DxfStyleBase<ExcelDxfBorderBase>
     {
         internal ExcelDxfBorderBase(ExcelStyles styles)
             : base(styles)
         {
-            Left=new ExcelDxfBorderItem(_styles);
+            Left = new ExcelDxfBorderItem(_styles);
             Right = new ExcelDxfBorderItem(_styles);
             Top = new ExcelDxfBorderItem(_styles);
             Bottom = new ExcelDxfBorderItem(_styles);
@@ -90,7 +84,7 @@ namespace OfficeOpenXml.Style.Dxf
         }
         protected internal override bool HasValue
         {
-            get 
+            get
             {
                 return Left.HasValue ||
                     Right.HasValue ||
@@ -100,7 +94,7 @@ namespace OfficeOpenXml.Style.Dxf
         }
         protected internal override ExcelDxfBorderBase Clone()
         {
-            return new ExcelDxfBorderBase(_styles) { Bottom = Bottom.Clone(), Top=Top.Clone(), Left=Left.Clone(), Right=Right.Clone() };
+            return new ExcelDxfBorderBase(_styles) { Bottom = Bottom.Clone(), Top = Top.Clone(), Left = Left.Clone(), Right = Right.Clone() };
         }
     }
 }

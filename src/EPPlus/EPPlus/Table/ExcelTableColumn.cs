@@ -29,12 +29,10 @@
  * Jan Källman		Added		30-AUG-2010
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Xml;
 using OfficeOpenXml.Utils;
+using System;
+using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Table
 {
@@ -43,7 +41,7 @@ namespace OfficeOpenXml.Table
     /// </summary>
     public enum RowFunctions
     {
-        Average,        
+        Average,
         Count,
         CountNums,
         Custom,
@@ -70,7 +68,7 @@ namespace OfficeOpenXml.Table
         /// <summary>
         /// The column id
         /// </summary>
-        public int Id 
+        public int Id
         {
             get
             {
@@ -96,7 +94,7 @@ namespace OfficeOpenXml.Table
         {
             get
             {
-                var n=GetXmlNodeString("@name");
+                var n = GetXmlNodeString("@name");
                 if (string.IsNullOrEmpty(n))
                 {
                     if (_tbl.ShowHeader)
@@ -105,7 +103,7 @@ namespace OfficeOpenXml.Table
                     }
                     else
                     {
-                        n = "Column" + (this.Position+1).ToString();
+                        n = "Column" + (this.Position + 1).ToString();
                     }
                 }
                 return n;
@@ -157,7 +155,7 @@ namespace OfficeOpenXml.Table
             {
                 if (value == RowFunctions.Custom)
                 {
-                    throw(new Exception("Use the TotalsRowFormula-property to set a custom table formula"));
+                    throw (new Exception("Use the TotalsRowFormula-property to set a custom table formula"));
                 }
                 string s = value.ToString();
                 s = s.Substring(0, 1).ToLower(CultureInfo.InvariantCulture) + s.Substring(1, s.Length - 1);
@@ -182,7 +180,7 @@ namespace OfficeOpenXml.Table
             set
             {
                 if (value.StartsWith("=")) value = value.Substring(1, value.Length - 1);
-                SetXmlNodeString("@totalsRowFunction", "custom");                
+                SetXmlNodeString("@totalsRowFunction", "custom");
                 SetXmlNodeString(TOTALSROWFORMULA_PATH, value);
                 _tbl.WorkSheet.SetTableTotalFunction(_tbl, this);
             }
@@ -199,15 +197,15 @@ namespace OfficeOpenXml.Table
             }
             set
             {
-                if(_tbl.WorkSheet.Workbook.Styles.NamedStyles.FindIndexByID(value)<0)
+                if (_tbl.WorkSheet.Workbook.Styles.NamedStyles.FindIndexByID(value) < 0)
                 {
-                    throw(new Exception(string.Format("Named style {0} does not exist.",value)));
+                    throw (new Exception(string.Format("Named style {0} does not exist.", value)));
                 }
-                SetXmlNodeString(TopNode, DATACELLSTYLE_PATH, value,true);
-               
-                int fromRow=_tbl.Address._fromRow + (_tbl.ShowHeader?1:0),
-                    toRow=_tbl.Address._toRow - (_tbl.ShowTotal?1:0),
-                    col=_tbl.Address._fromCol+Position;
+                SetXmlNodeString(TopNode, DATACELLSTYLE_PATH, value, true);
+
+                int fromRow = _tbl.Address._fromRow + (_tbl.ShowHeader ? 1 : 0),
+                    toRow = _tbl.Address._toRow - (_tbl.ShowTotal ? 1 : 0),
+                    col = _tbl.Address._fromCol + Position;
 
                 if (fromRow <= toRow)
                 {
@@ -215,26 +213,26 @@ namespace OfficeOpenXml.Table
                 }
             }
         }
-  		const string CALCULATEDCOLUMNFORMULA_PATH = "d:calculatedColumnFormula";
- 		/// <summary>
- 		/// Sets a calculated column Formula.
- 		/// Be carefull with this property since it is not validated. 
- 		/// <example>
- 		/// tbl.Columns[9].CalculatedColumnFormula = string.Format("SUM(MyDataTable[[#This Row],[{0}]])",tbl.Columns[9].Name);
- 		/// </example>
- 		/// </summary>
- 		public string CalculatedColumnFormula
- 		{
- 			get
- 			{
- 				return GetXmlNodeString(CALCULATEDCOLUMNFORMULA_PATH);
- 			}
- 			set
- 			{
- 				if (value.StartsWith("=")) value = value.Substring(1, value.Length - 1);
- 				SetXmlNodeString(CALCULATEDCOLUMNFORMULA_PATH, value);
- 			}
- 		}
+        const string CALCULATEDCOLUMNFORMULA_PATH = "d:calculatedColumnFormula";
+        /// <summary>
+        /// Sets a calculated column Formula.
+        /// Be carefull with this property since it is not validated. 
+        /// <example>
+        /// tbl.Columns[9].CalculatedColumnFormula = string.Format("SUM(MyDataTable[[#This Row],[{0}]])",tbl.Columns[9].Name);
+        /// </example>
+        /// </summary>
+        public string CalculatedColumnFormula
+        {
+            get
+            {
+                return GetXmlNodeString(CALCULATEDCOLUMNFORMULA_PATH);
+            }
+            set
+            {
+                if (value.StartsWith("=")) value = value.Substring(1, value.Length - 1);
+                SetXmlNodeString(CALCULATEDCOLUMNFORMULA_PATH, value);
+            }
+        }
 
     }
 }

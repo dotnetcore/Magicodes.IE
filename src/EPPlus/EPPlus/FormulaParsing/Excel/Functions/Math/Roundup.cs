@@ -22,11 +22,8 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2014-01-06
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using System.Collections.Generic;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -37,7 +34,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             ValidateArguments(arguments, 2);
             var number = ArgToDecimal(arguments, 0);
             var nDigits = ArgToInt(arguments, 1);
-            double result = (number >= 0) 
+            double result = (number >= 0)
                 ? System.Math.Ceiling(number * System.Math.Pow(10, nDigits)) / System.Math.Pow(10, nDigits)
                 : System.Math.Floor(number * System.Math.Pow(10, nDigits)) / System.Math.Pow(10, nDigits);
             return CreateResult(result, DataType.Decimal);

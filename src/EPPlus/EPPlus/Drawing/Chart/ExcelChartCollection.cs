@@ -31,8 +31,6 @@
  *******************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -65,7 +63,7 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             else if (ExcelChart.IsType3D(chartType) || _list[0].IsType3D())
             {
-                throw(new InvalidOperationException("3D charts can not be combined with other charttypes"));
+                throw (new InvalidOperationException("3D charts can not be combined with other charttypes"));
             }
 
             var prependingChartNode = _list[_list.Count - 1].TopNode;
@@ -104,5 +102,5 @@ namespace OfficeOpenXml.Drawing.Chart
         }
 
 
-}
+    }
 }

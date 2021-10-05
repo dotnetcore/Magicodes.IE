@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Xml;
-
-namespace OfficeOpenXml.Style.Dxf
+﻿namespace OfficeOpenXml.Style.Dxf
 {
     public class ExcelDxfFill : DxfStyleBase<ExcelDxfFill>
     {
@@ -42,7 +35,7 @@ namespace OfficeOpenXml.Style.Dxf
 
         protected internal override bool HasValue
         {
-            get 
+            get
             {
                 return PatternType != null ||
                     PatternColor.HasValue ||
@@ -51,7 +44,7 @@ namespace OfficeOpenXml.Style.Dxf
         }
         protected internal override ExcelDxfFill Clone()
         {
-            return new ExcelDxfFill(_styles) {PatternType=PatternType, PatternColor=PatternColor.Clone(), BackgroundColor=BackgroundColor.Clone()};
+            return new ExcelDxfFill(_styles) { PatternType = PatternType, PatternColor = PatternColor.Clone(), BackgroundColor = BackgroundColor.Clone() };
         }
     }
 }

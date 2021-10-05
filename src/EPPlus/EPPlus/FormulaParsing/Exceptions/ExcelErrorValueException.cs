@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.Exceptions
 {
@@ -13,11 +10,11 @@ namespace OfficeOpenXml.FormulaParsing.Exceptions
     /// <seealso cref="ExcelErrorValue"/>
     public class ExcelErrorValueException : Exception
     {
-        
+
         public ExcelErrorValueException(ExcelErrorValue error)
             : this(error.ToString(), error)
         {
-            
+
         }
 
         public ExcelErrorValueException(string message, ExcelErrorValue error)
@@ -29,7 +26,7 @@ namespace OfficeOpenXml.FormulaParsing.Exceptions
         public ExcelErrorValueException(eErrorType errorType)
             : this(ExcelErrorValue.Create(errorType))
         {
-            
+
         }
 
         /// <summary>

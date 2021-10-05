@@ -1,32 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0;</TargetFrameworks>
-    <AssemblyVersion>4.6.7.0</AssemblyVersion>
-    <FileVersion>4.6.7.0</FileVersion>
-    <Version>4.6.7</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/xin-lai/</PackageProjectUrl>
-    <Authors>Magicodes</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
-    <Product>Magicodes.EPPlus</Product>
-    <Description>Create advanced Excel spreadsheets using .NET</Description>
-    <AssemblyName>Magicodes.EPPlus</AssemblyName>
-    <RootNamespace>EPPlus</RootNamespace>
-    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
-    <PackageTags>Excel ooxml</PackageTags>
-    <Copyright>Magicodes 2021</Copyright>
-    <PackageReleaseNotes>
-      # EPPlus 4.6.7
-      Update https://github.com/dotnetcore/Magicodes.IE/issues/285
-      # EPPlus 4.6.6
-      Utilize RecyclableMemoryStream instead of "new MemoryStream" all over
-      # EPPlus 4.6.5
-      性能优化
-      # EPPlus 4.6.4
-      Fix Image export is slow
-    </PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>OpenOfficeXml.snk</AssemblyOriginatorKeyFile>
     <NeutralLanguage />
@@ -38,14 +14,6 @@
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1'">
     <DefineConstants>Core</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net35'">
-    <DefineConstants>NET35;NETFULL</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40'">
-    <DefineConstants>NET40;NETFULL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='AnyCPU'">
@@ -73,30 +41,6 @@
     <Compile Remove="Packaging\DotNetZip\ZipFile.SaveSelfExtractor.cs" />
   </ItemGroup>
 
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net35'">
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40'">
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
     <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />

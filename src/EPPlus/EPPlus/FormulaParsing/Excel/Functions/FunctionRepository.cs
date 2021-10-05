@@ -22,15 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml.FormulaParsing.Exceptions;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions
 {
@@ -42,7 +38,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions
         private Dictionary<Type, FunctionCompiler> _customCompilers = new Dictionary<Type, FunctionCompiler>();
 
         private Dictionary<string, ExcelFunction> _functions = new Dictionary<string, ExcelFunction>(StringComparer.Ordinal);
-        
+
         /// <summary>
         /// Gets a <see cref="Dictionary{Type, FunctionCompiler}" /> of custom <see cref="FunctionCompiler"/>s.
         /// </summary>
@@ -76,13 +72,13 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions
             }
             foreach (var key in module.CustomCompilers.Keys)
             {
-              this.CustomCompilers[key] = module.CustomCompilers[key];
+                this.CustomCompilers[key] = module.CustomCompilers[key];
             }
         }
 
         public virtual ExcelFunction GetFunction(string name)
         {
-            if(!_functions.ContainsKey(name.ToLower(CultureInfo.InvariantCulture)))
+            if (!_functions.ContainsKey(name.ToLower(CultureInfo.InvariantCulture)))
             {
                 //throw new InvalidOperationException("Non supported function: " + name);
                 //throw new ExcelErrorValueException("Non supported function: " + name, ExcelErrorValue.Create(eErrorType.Name));

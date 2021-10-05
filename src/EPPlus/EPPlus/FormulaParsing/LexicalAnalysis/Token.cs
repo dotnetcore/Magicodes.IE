@@ -28,10 +28,6 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
 {
@@ -53,13 +49,13 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
         }
 
         public bool IsNegated { get; private set; }
-        
+
         public void Negate()
         {
 
             if (
-                TokenType == TokenType.Decimal 
-                || 
+                TokenType == TokenType.Decimal
+                ||
                 TokenType == TokenType.Integer
                 ||
                 TokenType == TokenType.ExcelAddress)

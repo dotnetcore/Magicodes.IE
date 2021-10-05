@@ -29,10 +29,8 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 using OfficeOpenXml.Style.XmlAccess;
+using System;
 
 namespace OfficeOpenXml.Style
 {
@@ -59,7 +57,7 @@ namespace OfficeOpenXml.Style
             Numberformat = new ExcelNumberFormat(styles, ChangedEvent, PositionID, Address, xfs.NumberFormatId);
             Font = new ExcelFont(styles, ChangedEvent, PositionID, Address, xfs.FontId);
             Fill = new ExcelFill(styles, ChangedEvent, PositionID, Address, xfs.FillId);
-            Border = new Border(styles, ChangedEvent, PositionID, Address, xfs.BorderId); 
+            Border = new Border(styles, ChangedEvent, PositionID, Address, xfs.BorderId);
         }
         /// <summary>
         /// Numberformat
@@ -158,9 +156,9 @@ namespace OfficeOpenXml.Style
             }
             set
             {
-                if (value <0 || value > 250)
+                if (value < 0 || value > 250)
                 {
-                    throw(new ArgumentOutOfRangeException("Indent must be between 0 and 250"));
+                    throw (new ArgumentOutOfRangeException("Indent must be between 0 and 250"));
                 }
                 _ChangedEvent(this, new StyleChangeEventArgs(eStyleClass.Style, eStyleProperty.Indent, value, _positionID, _address));
             }
@@ -233,7 +231,7 @@ namespace OfficeOpenXml.Style
         /// <summary>
         /// The index in the style collection
         /// </summary>
-        public int XfId 
+        public int XfId
         {
             get
             {
@@ -256,9 +254,9 @@ namespace OfficeOpenXml.Style
         }
         internal override string Id
         {
-            get 
-            { 
-                return Numberformat.Id + "|" + Font.Id + "|" + Fill.Id + "|" + Border.Id + "|" + VerticalAlignment + "|" + HorizontalAlignment + "|" + WrapText.ToString() + "|" + ReadingOrder.ToString() + "|" + XfId.ToString() + "|" + QuotePrefix.ToString(); 
+            get
+            {
+                return Numberformat.Id + "|" + Font.Id + "|" + Fill.Id + "|" + Border.Id + "|" + VerticalAlignment + "|" + HorizontalAlignment + "|" + WrapText.ToString() + "|" + ReadingOrder.ToString() + "|" + XfId.ToString() + "|" + QuotePrefix.ToString();
             }
         }
 

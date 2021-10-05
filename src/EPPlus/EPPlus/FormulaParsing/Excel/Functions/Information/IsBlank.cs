@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
 {
@@ -42,8 +40,8 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
             foreach (var arg in arguments)
             {
                 if (arg.Value is ExcelDataProvider.IRangeInfo)
-                {                    
-                    var r=(ExcelDataProvider.IRangeInfo)arg.Value;
+                {
+                    var r = (ExcelDataProvider.IRangeInfo)arg.Value;
                     if (r.GetValue(r.Address._fromRow, r.Address._fromCol) != null)
                     {
                         result = false;

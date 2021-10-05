@@ -25,9 +25,9 @@
 //
 // ------------------------------------------------------------------
 
+using OfficeOpenXml.Utils;
 using System;
 using System.IO;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zlib
 {
@@ -546,7 +546,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>the number of bytes read</returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+            if (_disposed) throw new ObjectDisposedException("ZlibStream");
             return _baseStream.Read(buffer, offset, count);
         }
 
@@ -608,7 +608,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <param name="count">the number of bytes to write.</param>
         public override void Write(byte[] buffer, int offset, int count)
         {
-                if (_disposed) throw new ObjectDisposedException("ZlibStream");
+            if (_disposed) throw new ObjectDisposedException("ZlibStream");
             _baseStream.Write(buffer, offset, count);
         }
         #endregion
@@ -665,7 +665,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
             using (var ms = RecyclableMemoryStream.GetStream())
             {
                 Stream compressor =
-                    new ZlibStream( ms, CompressionMode.Compress, CompressionLevel.BestCompression );
+                    new ZlibStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
 
                 ZlibBaseStream.CompressBuffer(b, compressor);
                 return ms.ToArray();
@@ -714,7 +714,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
             using (var input = RecyclableMemoryStream.GetStream(compressed))
             {
                 Stream decompressor =
-                    new ZlibStream( input, CompressionMode.Decompress );
+                    new ZlibStream(input, CompressionMode.Decompress);
 
                 return ZlibBaseStream.UncompressBuffer(compressed, decompressor);
             }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-
-namespace OfficeOpenXml.Style.Dxf
+﻿namespace OfficeOpenXml.Style.Dxf
 {
     public class ExcelDxfNumberFormat : DxfStyleBase<ExcelDxfNumberFormat>
     {
@@ -12,7 +6,7 @@ namespace OfficeOpenXml.Style.Dxf
         {
 
         }
-        int _numFmtID=int.MinValue;
+        int _numFmtID = int.MinValue;
         /// <summary>
         /// Id for number format
         /// 
@@ -47,8 +41,8 @@ namespace OfficeOpenXml.Style.Dxf
         /// 48  ##0.0E+0 
         /// 49  @
         /// </summary>            
-        public int NumFmtID 
-        { 
+        public int NumFmtID
+        {
             get
             {
                 return _numFmtID;
@@ -58,9 +52,9 @@ namespace OfficeOpenXml.Style.Dxf
                 _numFmtID = value;
             }
         }
-        string _format="";
+        string _format = "";
         public string Format
-        { 
+        {
             get
             {
                 return _format;
@@ -92,9 +86,9 @@ namespace OfficeOpenXml.Style.Dxf
         }
         protected internal override bool HasValue
         {
-            get 
-            { 
-                return !string.IsNullOrEmpty(Format); 
+            get
+            {
+                return !string.IsNullOrEmpty(Format);
             }
         }
         protected internal override ExcelDxfNumberFormat Clone()

@@ -28,9 +28,7 @@
  * ******************************************************************************
  * Jan Källman		    Added       		        2017-11-02
  *******************************************************************************/
- using System;
-using System.Collections.Generic;
-using System.Text;
+using System;
 using System.Reflection;
 namespace OfficeOpenXml.Compatibility
 {

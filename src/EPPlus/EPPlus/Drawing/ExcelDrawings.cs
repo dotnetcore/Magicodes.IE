@@ -28,17 +28,15 @@
  * Jan Källman		                Initial Release		        2009-12-22
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Collections;
-using System.IO;
-using System.Drawing;
-using System.Linq;
 using OfficeOpenXml.Drawing.Chart;
 using OfficeOpenXml.Table.PivotTable;
 using OfficeOpenXml.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Xml;
 namespace OfficeOpenXml.Drawing
 {
     /// <summary>

@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2018-07-17
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Finance
 {
@@ -46,7 +44,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Finance
             var result = (futureValue + presentValue * System.Math.Pow(rate + 1, nPer)) * rate
                       /
                    ((payEndOfPeriod ? rate + 1 : 1) * (1 - System.Math.Pow(rate + 1, nPer)));
-       
+
 
             return CreateResult(result, DataType.Decimal);
         }

@@ -29,16 +29,13 @@
  * Jan Källman		Added this class		        2010-01-28
  * Jan Källman		License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OfficeOpenXml
 {
     /// <summary>
     /// A named range. 
     /// </summary>
-    public sealed class ExcelNamedRange : ExcelRangeBase 
+    public sealed class ExcelNamedRange : ExcelRangeBase
     {
         ExcelWorksheet _sheet;
         /// <summary>
@@ -49,7 +46,7 @@ namespace OfficeOpenXml
         /// <param name="sheet">Sheet where the address points</param>
         /// <param name="address">The address</param>
         /// <param name="index">The index in the collection</param>
-        public ExcelNamedRange(string name, ExcelWorksheet nameSheet , ExcelWorksheet sheet, string address, int index) :
+        public ExcelNamedRange(string name, ExcelWorksheet nameSheet, ExcelWorksheet sheet, string address, int index) :
             base(sheet, address)
         {
             Name = name;
@@ -57,7 +54,7 @@ namespace OfficeOpenXml
             Index = index;
 
         }
-        internal ExcelNamedRange(string name,ExcelWorkbook wb, ExcelWorksheet nameSheet, int index) :
+        internal ExcelNamedRange(string name, ExcelWorkbook wb, ExcelWorksheet nameSheet, int index) :
             base(wb, nameSheet, name, true)
         {
             Name = name;
@@ -86,7 +83,7 @@ namespace OfficeOpenXml
                 }
                 else
                 {
-                    return _sheet.PositionID-_workbook._package._worksheetAdd;
+                    return _sheet.PositionID - _workbook._package._worksheetAdd;
                 }
             }
         }

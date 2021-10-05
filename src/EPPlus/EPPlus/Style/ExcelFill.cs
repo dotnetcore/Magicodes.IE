@@ -29,11 +29,6 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using OfficeOpenXml.Style.XmlAccess;
-using System.Globalization;
 
 namespace OfficeOpenXml.Style
 {
@@ -100,19 +95,19 @@ namespace OfficeOpenXml.Style
                     if (_gradient != null) _gradient = null;
                 }
                 return _backgroundColor;
-                
+
             }
         }
-        ExcelGradientFill _gradient=null;
+        ExcelGradientFill _gradient = null;
         /// <summary>
         /// Access to properties for gradient fill.
         /// </summary>
-        public ExcelGradientFill Gradient 
+        public ExcelGradientFill Gradient
         {
             get
             {
                 if (_gradient == null)
-                {                    
+                {
                     _gradient = new ExcelGradientFill(_styles, _ChangedEvent, _positionID, _address, Index);
                     _backgroundColor = null;
                     _patternColor = null;

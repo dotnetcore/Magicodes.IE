@@ -28,11 +28,6 @@
  * ******************************************************************************
  * Raziq York   		            Added       		        2014-08-08
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.DataValidation.Formulas.Contracts;
 
 namespace OfficeOpenXml.DataValidation.Contracts
 {

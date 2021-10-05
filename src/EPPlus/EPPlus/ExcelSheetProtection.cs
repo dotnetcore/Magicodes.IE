@@ -29,13 +29,8 @@
  * Jan Källman		    Initial Release		        2010-03-14
  * Jan Källman		    License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Security.Cryptography;
-using OfficeOpenXml.Utils;
 using OfficeOpenXml.Encryption;
+using System.Xml;
 
 namespace OfficeOpenXml
 {
@@ -46,12 +41,12 @@ namespace OfficeOpenXml
     /// </summary>
     public sealed class ExcelSheetProtection : XmlHelper
     {
-        internal ExcelSheetProtection (XmlNamespaceManager nsm, XmlNode topNode,ExcelWorksheet ws) :
+        internal ExcelSheetProtection(XmlNamespaceManager nsm, XmlNode topNode, ExcelWorksheet ws) :
             base(nsm, topNode)
         {
             SchemaNodeOrder = ws.SchemaNodeOrder;
-        }        
-        private const string _isProtectedPath="d:sheetProtection/@sheet";
+        }
+        private const string _isProtectedPath = "d:sheetProtection/@sheet";
         /// <summary>
         /// If the worksheet is protected.
         /// </summary>
@@ -104,8 +99,8 @@ namespace OfficeOpenXml
             {
                 SetXmlNodeBool(_allowSelectUnlockedCellsPath, !value, false);
             }
-        }        
-        private const string _allowObjectPath="d:sheetProtection/@objects";
+        }
+        private const string _allowObjectPath = "d:sheetProtection/@objects";
         /// <summary>
         /// Allow users to edit objects
         /// </summary>
@@ -120,7 +115,7 @@ namespace OfficeOpenXml
                 SetXmlNodeBool(_allowObjectPath, !value, false);
             }
         }
-        private const string _allowScenariosPath="d:sheetProtection/@scenarios";
+        private const string _allowScenariosPath = "d:sheetProtection/@scenarios";
         /// <summary>
         /// Allow users to edit senarios
         /// </summary>
@@ -135,11 +130,11 @@ namespace OfficeOpenXml
                 SetXmlNodeBool(_allowScenariosPath, !value, false);
             }
         }
-        private const string _allowFormatCellsPath="d:sheetProtection/@formatCells";
+        private const string _allowFormatCellsPath = "d:sheetProtection/@formatCells";
         /// <summary>
         /// Allow users to format cells
         /// </summary>
-        public bool AllowFormatCells 
+        public bool AllowFormatCells
         {
             get
             {
@@ -147,7 +142,7 @@ namespace OfficeOpenXml
             }
             set
             {
-                SetXmlNodeBool(_allowFormatCellsPath, !value, true );
+                SetXmlNodeBool(_allowFormatCellsPath, !value, true);
             }
         }
         private const string _allowFormatColumnsPath = "d:sheetProtection/@formatColumns";

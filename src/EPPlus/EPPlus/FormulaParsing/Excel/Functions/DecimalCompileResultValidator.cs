@@ -22,10 +22,6 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-26
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.Utils;
 

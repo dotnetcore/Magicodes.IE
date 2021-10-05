@@ -29,15 +29,13 @@
  * Mats Alm   		                Added       		        2011-01-08
  * Jan Källman		    License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
+using OfficeOpenXml.DataValidation.Formulas.Contracts;
+using OfficeOpenXml.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml;
-using OfficeOpenXml.Utils;
-using OfficeOpenXml.DataValidation.Formulas.Contracts;
-using System.Text.RegularExpressions;
-using System.Collections;
 
 namespace OfficeOpenXml.DataValidation.Formulas
 {
@@ -187,7 +185,7 @@ namespace OfficeOpenXml.DataValidation.Formulas
                 if (@value.StartsWith("\"") && @value.EndsWith("\""))
                 {
                     @value = @value.TrimStart('"').TrimEnd('"');
-                    var items = @value.Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
+                    var items = @value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var item in items)
                     {
                         Values.Add(item);
@@ -220,7 +218,7 @@ namespace OfficeOpenXml.DataValidation.Formulas
             private set;
         }
 
-        protected override string  GetValueAsString()
+        protected override string GetValueAsString()
         {
             var sb = new StringBuilder();
             foreach (var val in Values)

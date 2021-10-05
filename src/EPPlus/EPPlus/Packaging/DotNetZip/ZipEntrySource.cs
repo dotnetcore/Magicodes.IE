@@ -48,22 +48,22 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         /// The ZipEntry was instantiated by reading a zipfile.
         /// </summary>
         ZipFile,
-        
+
         /// <summary>
         /// The content for the ZipEntry will be or was provided by the WriteDelegate.
         /// </summary>
         WriteDelegate,
-        
+
         /// <summary>
         /// The content for the ZipEntry will be obtained from the stream dispensed by the <c>OpenDelegate</c>.
         /// The entry was instantiated via <see cref="Ionic.Zip.ZipFile.AddEntry(string,OpenDelegate,CloseDelegate)"/>.
         /// </summary>
         JitStream,
-        
+
         /// <summary>
         /// The content for the ZipEntry will be or was obtained from a <c>ZipOutputStream</c>.
         /// </summary>
         ZipOutputStream,
     }
-    
+
 }

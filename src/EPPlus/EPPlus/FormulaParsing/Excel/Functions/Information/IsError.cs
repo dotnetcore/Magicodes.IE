@@ -22,12 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
 {
@@ -55,7 +52,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Information
                     {
                         return CreateResult(true, DataType.Boolean);
                     }
-                }                
+                }
             }
             return CreateResult(false, DataType.Boolean);
         }

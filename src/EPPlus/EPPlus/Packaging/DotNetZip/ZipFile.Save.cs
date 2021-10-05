@@ -25,10 +25,10 @@
 //
 
 
-using System;
-using System.IO;
-using System.Collections.Generic;
 using OfficeOpenXml.Utils;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zip
 {
@@ -54,7 +54,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         {
             bool done = false;
             int nRetries = 3;
-            for (int i=0; i < nRetries && !done; i++)
+            for (int i = 0; i < nRetries && !done; i++)
             {
                 try
                 {
@@ -64,7 +64,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 catch (System.UnauthorizedAccessException)
                 {
                     Console.WriteLine("************************************************** Retry delete.");
-                    System.Threading.Thread.Sleep(200+i*200);
+                    System.Threading.Thread.Sleep(200 + i * 200);
                 }
             }
         }
@@ -187,7 +187,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
                 var zss = WriteStream as ZipSegmentedStream;
 
-                _numberOfSegmentsForMostRecentSave = (zss!=null)
+                _numberOfSegmentsForMostRecentSave = (zss != null)
                     ? zss.CurrentSegment
                     : 1;
 
@@ -211,7 +211,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
                 // do the rename as necessary
                 if (_name != null &&
-                    (_temporaryFileName!=null || zss != null))
+                    (_temporaryFileName != null || zss != null))
                 {
                     // _temporaryFileName may remain null if we are writing to a stream.
                     // only close the stream if there is a file behind it.
@@ -333,7 +333,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
         private static void NotifyEntriesSaveComplete(ICollection<ZipEntry> c)
         {
-            foreach (ZipEntry e in  c)
+            foreach (ZipEntry e in c)
             {
                 e.NotifySaveComplete();
             }
@@ -712,7 +712,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
                 // The assumption is the central directory is never split across
                 // segment boundaries.
 
-                UInt16 thisSegment = (UInt16) zss.ComputeSegment(a2.Length);
+                UInt16 thisSegment = (UInt16)zss.ComputeSegment(a2.Length);
                 int i = 4;
                 // number of this disk
                 Array.Copy(BitConverter.GetBytes(thisSegment), 0, a2, i, 2);
@@ -748,7 +748,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             if (t == null) return e;
 
             var bytes = e.GetBytes(t);
-            var t2 = e.GetString(bytes,0,bytes.Length);
+            var t2 = e.GetString(bytes, 0, bytes.Length);
             if (t2.Equals(t)) return e;
             return container.AlternateEncoding;
         }
@@ -779,7 +779,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // signature
             byte[] sig = BitConverter.GetBytes(ZipConstants.EndOfCentralDirectorySignature);
             Array.Copy(sig, 0, bytes, i, 4);
-            i+=4;
+            i += 4;
 
             // number of this disk
             // (this number may change later)
@@ -879,7 +879,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // signature
             byte[] sig = BitConverter.GetBytes(ZipConstants.Zip64EndOfCentralDirectoryRecordSignature);
             Array.Copy(sig, 0, bytes, i, 4);
-            i+=4;
+            i += 4;
 
             // There is a possibility to include "Extensible" data in the zip64
             // end-of-central-dir record.  I cannot figure out what it might be used to
@@ -923,14 +923,14 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // signature
             sig = BitConverter.GetBytes(ZipConstants.Zip64EndOfCentralDirectoryLocatorSignature);
             Array.Copy(sig, 0, bytes, i, 4);
-            i+=4;
+            i += 4;
 
             // offset 60
             // number of the disk with the start of the zip64 eocd
             // (this will change later)  (it will?)
-            uint x2 = (numSegments==0)?0:(uint)(numSegments-1);
+            uint x2 = (numSegments == 0) ? 0 : (uint)(numSegments - 1);
             Array.Copy(BitConverter.GetBytes(x2), 0, bytes, i, 4);
-            i+=4;
+            i += 4;
 
             // offset 64
             // relative offset of the zip64 eocd
@@ -941,7 +941,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // total number of disks
             // (this will change later)
             Array.Copy(BitConverter.GetBytes(numSegments), 0, bytes, i, 4);
-            i+=4;
+            i += 4;
 
             return bytes;
         }

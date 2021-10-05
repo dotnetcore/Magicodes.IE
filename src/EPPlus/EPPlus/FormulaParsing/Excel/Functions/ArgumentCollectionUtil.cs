@@ -30,8 +30,6 @@
  *******************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions
 {
@@ -47,7 +45,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions
         }
 
         public ArgumentCollectionUtil(
-            DoubleEnumerableArgConverter doubleEnumerableArgConverter, 
+            DoubleEnumerableArgConverter doubleEnumerableArgConverter,
             ObjectEnumerableArgConverter objectEnumerableArgConverter)
         {
             _doubleEnumerableArgConverter = doubleEnumerableArgConverter;

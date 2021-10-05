@@ -28,11 +28,8 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.Excel.Functions;
+using System.Collections.Generic;
 //using OfficeOpenXml.FormulaParsing.Excel.Functions;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
@@ -40,7 +37,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
     public class Lexer : ILexer
     {
         public Lexer(FunctionRepository functionRepository, INameValueProvider nameValueProvider)
-            :this(new SourceCodeTokenizer(functionRepository, nameValueProvider), new SyntacticAnalyzer())
+            : this(new SourceCodeTokenizer(functionRepository, nameValueProvider), new SyntacticAnalyzer())
         {
 
         }

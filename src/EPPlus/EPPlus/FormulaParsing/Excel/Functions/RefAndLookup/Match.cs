@@ -22,12 +22,10 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
 {
@@ -51,7 +49,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
             ValidateArguments(arguments, 2);
 
             var searchedValue = arguments.ElementAt(0).Value;
-            var address =  ArgToAddress(arguments,1, context); 
+            var address = ArgToAddress(arguments, 1, context);
             var rangeAddressFactory = new RangeAddressFactory(context.ExcelDataProvider);
             var rangeAddress = rangeAddressFactory.Create(address);
             var matchType = GetMatchType(arguments);

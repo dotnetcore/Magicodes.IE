@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+﻿using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using OfficeOpenXml.FormulaParsing.Utilities;
 using OfficeOpenXml.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using Require = OfficeOpenXml.FormulaParsing.Utilities.Require;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
@@ -63,9 +61,9 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             }
             else if (range.Value is IEnumerable<FunctionArgument>)
             {
-                foreach (var arg in (IEnumerable<FunctionArgument>) range.Value)
+                foreach (var arg in (IEnumerable<FunctionArgument>)range.Value)
                 {
-                    if(Evaluate(arg.Value, criteria))
+                    if (Evaluate(arg.Value, criteria))
                     {
                         result++;
                     }

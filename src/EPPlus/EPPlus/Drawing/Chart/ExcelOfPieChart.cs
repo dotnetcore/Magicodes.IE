@@ -29,12 +29,10 @@
  * Jan Källman		Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using OfficeOpenXml.Table.PivotTable;
+using System;
 using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -51,7 +49,7 @@ namespace OfficeOpenXml.Drawing.Chart
         internal ExcelOfPieChart(ExcelDrawings drawings, XmlNode node, eChartType type, bool isPivot) :
             base(drawings, node, type, isPivot)
         {
-                SetTypeProperties();
+            SetTypeProperties();
         }
         internal ExcelOfPieChart(ExcelDrawings drawings, XmlNode node, eChartType type, ExcelChart topChart, ExcelPivotTable PivotTableSource) :
             base(drawings, node, type, topChart, PivotTableSource)
@@ -117,7 +115,7 @@ namespace OfficeOpenXml.Drawing.Chart
         {
             if (name == "ofPieChart")
             {
-                if (OfPieType==ePieType.Bar)
+                if (OfPieType == ePieType.Bar)
                 {
                     return eChartType.BarOfPie;
                 }

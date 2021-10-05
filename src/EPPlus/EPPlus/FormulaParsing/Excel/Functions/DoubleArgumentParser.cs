@@ -22,14 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
-using OfficeOpenXml.FormulaParsing.Utilities;
 using OfficeOpenXml.FormulaParsing.Exceptions;
-using util=OfficeOpenXml.Utils;
+using OfficeOpenXml.FormulaParsing.Utilities;
+using System.Globalization;
+using System.Linq;
+using util = OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions
 {
@@ -40,7 +37,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions
             Require.That(obj).Named("argument").IsNotNull();
             if (obj is ExcelDataProvider.IRangeInfo)
             {
-                var r=((ExcelDataProvider.IRangeInfo)obj).FirstOrDefault();
+                var r = ((ExcelDataProvider.IRangeInfo)obj).FirstOrDefault();
                 return r == null ? 0 : r.ValueDouble;
             }
             if (obj is double) return obj;

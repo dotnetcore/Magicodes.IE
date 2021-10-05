@@ -28,23 +28,17 @@
  * ******************************************************************************
  * Eyal Seagull    Conditional Formatting Adaption    2012-04-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using OfficeOpenXml.ConditionalFormatting;
 using System.Drawing;
 
 namespace OfficeOpenXml.ConditionalFormatting.Contracts
 {
-	/// <summary>
-	/// IExcelConditionalFormattingDataBar
-	/// </summary>
-	public interface IExcelConditionalFormattingDataBarGroup
+    /// <summary>
+    /// IExcelConditionalFormattingDataBar
+    /// </summary>
+    public interface IExcelConditionalFormattingDataBarGroup
         : IExcelConditionalFormattingRule
-	{
-		#region Public Properties
+    {
+        #region Public Properties
         /// <summary>
         /// ShowValue
         /// </summary>
@@ -52,7 +46,7 @@ namespace OfficeOpenXml.ConditionalFormatting.Contracts
         /// <summary>
         /// Databar Low Value
         /// </summary>
-        ExcelConditionalFormattingIconDataBarValue LowValue { get;  }
+        ExcelConditionalFormattingIconDataBarValue LowValue { get; }
 
         /// <summary>
         /// Databar High Value
@@ -61,7 +55,7 @@ namespace OfficeOpenXml.ConditionalFormatting.Contracts
         /// <summary>
         /// The color of the databar
         /// </summary>
-        Color Color { get; set;}
+        Color Color { get; set; }
         #endregion Public Properties
-	}
+    }
 }

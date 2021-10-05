@@ -16,16 +16,12 @@
  *******************************************************************************
  * Mats Alm Added		                2016-12-27
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExcelUtilities;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
+using OfficeOpenXml.Style.XmlAccess;
+using OfficeOpenXml.Utils;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
-using OfficeOpenXml.Utils;
-using OfficeOpenXml.Style.XmlAccess;
 
 namespace OfficeOpenXml.FormulaParsing
 {
@@ -168,7 +164,7 @@ namespace OfficeOpenXml.FormulaParsing
             {
                 return this;
             }
-            
+
             public ExcelAddressBase Address
             {
                 get { return _address; }
@@ -218,7 +214,7 @@ namespace OfficeOpenXml.FormulaParsing
 
             public string Formula
             {
-                get 
+                get
                 {
                     return _ws.GetFormula(_values.Row, _values.Column);
                 }
@@ -228,7 +224,7 @@ namespace OfficeOpenXml.FormulaParsing
             {
                 get { return _values.Value._value; }
             }
-            
+
             public double ValueDouble
             {
                 get { return ConvertUtil.GetValueDouble(_values.Value._value, true); }
@@ -239,12 +235,12 @@ namespace OfficeOpenXml.FormulaParsing
             }
             public bool IsHiddenRow
             {
-                get 
-                { 
-                    var row=_ws.GetValueInner(_values.Row, 0) as RowInternal;
-                    if(row != null)
+                get
+                {
+                    var row = _ws.GetValueInner(_values.Row, 0) as RowInternal;
+                    if (row != null)
                     {
-                        return row.Hidden || row.Height==0;
+                        return row.Hidden || row.Height == 0;
                     }
                     else
                     {
@@ -260,7 +256,7 @@ namespace OfficeOpenXml.FormulaParsing
 
             public IList<Token> Tokens
             {
-                get 
+                get
                 {
                     return _ws._formulaTokens.GetValue(_values.Row, _values.Column);
                 }
@@ -280,7 +276,7 @@ namespace OfficeOpenXml.FormulaParsing
         private readonly ExcelPackage _package;
         private ExcelWorksheet _currentWorksheet;
         private RangeAddressFactory _rangeAddressFactory;
-        private Dictionary<ulong, INameInfo> _names=new Dictionary<ulong,INameInfo>();
+        private Dictionary<ulong, INameInfo> _names = new Dictionary<ulong, INameInfo>();
 
         public EpplusExcelDataProvider(ExcelPackage package)
         {
@@ -291,7 +287,7 @@ namespace OfficeOpenXml.FormulaParsing
 
         public override ExcelNamedRangeCollection GetWorksheetNames(string worksheet)
         {
-            var ws=_package.Workbook.Worksheets[worksheet];
+            var ws = _package.Workbook.Worksheets[worksheet];
             if (ws != null)
             {
                 return ws.Names;
@@ -346,18 +342,18 @@ namespace OfficeOpenXml.FormulaParsing
             //Convert the Table-style Address to an A1C1 address
             addr.SetRCFromTable(_package, addr);
             var a = new ExcelAddress(addr._fromRow, addr._fromCol, addr._toRow, addr._toCol);
-            a._ws = addr._ws;            
+            a._ws = addr._ws;
             return a;
         }
 
         public override INameInfo GetName(string worksheet, string name)
         {
             ExcelNamedRange nameItem;
-            ulong id;            
+            ulong id;
             ExcelWorksheet ws;
             if (string.IsNullOrEmpty(worksheet))
             {
-                if(_package._workbook.Names.ContainsKey(name))
+                if (_package._workbook.Names.ContainsKey(name))
                 {
                     nameItem = _package._workbook.Names[name];
                 }
@@ -370,7 +366,7 @@ namespace OfficeOpenXml.FormulaParsing
             else
             {
                 ws = _package._workbook.Worksheets[worksheet];
-                if (ws !=null && ws.Names.ContainsKey(name))
+                if (ws != null && ws.Names.ContainsKey(name))
                 {
                     nameItem = ws.Names[name];
                 }
@@ -395,7 +391,7 @@ namespace OfficeOpenXml.FormulaParsing
                 {
                     Id = id,
                     Name = name,
-                    Worksheet = nameItem.Worksheet==null ? nameItem._ws : nameItem.Worksheet.Name, 
+                    Worksheet = nameItem.Worksheet == null ? nameItem._ws : nameItem.Worksheet.Name,
                     Formula = nameItem.Formula
                 };
                 if (nameItem._fromRow > 0)
@@ -450,8 +446,8 @@ namespace OfficeOpenXml.FormulaParsing
             {
                 address = _package.Workbook.Worksheets[worksheet].Dimension.End;
             }
-            catch{}
-            
+            catch { }
+
             return address;
         }
 
@@ -471,13 +467,13 @@ namespace OfficeOpenXml.FormulaParsing
         {
             if (!string.IsNullOrEmpty(worksheetName))
             {
-                _currentWorksheet = _package.Workbook.Worksheets[worksheetName];    
+                _currentWorksheet = _package.Workbook.Worksheets[worksheetName];
             }
             else
             {
-                _currentWorksheet = _package.Workbook.Worksheets.First(); 
+                _currentWorksheet = _package.Workbook.Worksheets.First();
             }
-            
+
         }
 
         //public override void SetCellValue(string address, object value)
@@ -519,20 +515,20 @@ namespace OfficeOpenXml.FormulaParsing
         public override string GetFormat(object value, string format)
         {
             var styles = _package.Workbook.Styles;
-            ExcelNumberFormatXml.ExcelFormatTranslator ft=null;
-            foreach(var f in styles.NumberFormats)
+            ExcelNumberFormatXml.ExcelFormatTranslator ft = null;
+            foreach (var f in styles.NumberFormats)
             {
-                if(f.Format==format)
+                if (f.Format == format)
                 {
-                    ft=f.FormatTranslator;
+                    ft = f.FormatTranslator;
                     break;
                 }
             }
-            if(ft==null)
+            if (ft == null)
             {
-                ft=new ExcelNumberFormatXml.ExcelFormatTranslator(format, -1);
+                ft = new ExcelNumberFormatXml.ExcelFormatTranslator(format, -1);
             }
-            return ExcelRangeBase.FormatValue(value, ft,format, ft.NetFormat);
+            return ExcelRangeBase.FormatValue(value, ft, format, ft.NetFormat);
         }
         public override List<LexicalAnalysis.Token> GetRangeFormulaTokens(string worksheetName, int row, int column)
         {
@@ -541,7 +537,7 @@ namespace OfficeOpenXml.FormulaParsing
 
         public override bool IsRowHidden(string worksheetName, int row)
         {
-            var b = _package.Workbook.Worksheets[worksheetName].Row(row).Height == 0 || 
+            var b = _package.Workbook.Worksheets[worksheetName].Row(row).Height == 0 ||
                     _package.Workbook.Worksheets[worksheetName].Row(row).Hidden;
 
             return b;
@@ -558,4 +554,3 @@ namespace OfficeOpenXml.FormulaParsing
         //}
     }
 }
-    

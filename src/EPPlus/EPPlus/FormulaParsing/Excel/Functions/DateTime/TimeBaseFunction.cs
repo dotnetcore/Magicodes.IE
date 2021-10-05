@@ -22,11 +22,7 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
 {
@@ -57,7 +53,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
 
         protected double SecondsInADay
         {
-            get{ return 24 * 60 * 60; }
+            get { return 24 * 60 * 60; }
         }
 
         protected double GetTimeSerialNumber(double seconds)

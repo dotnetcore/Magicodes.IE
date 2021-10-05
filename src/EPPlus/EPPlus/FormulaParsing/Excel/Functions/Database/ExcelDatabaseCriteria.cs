@@ -22,13 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-06
  *******************************************************************************/
-using System;
+using OfficeOpenXml.Utils;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {
@@ -39,7 +35,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
         private readonly int _toCol;
         private readonly string _worksheet;
         private readonly int _fieldRow;
-        private readonly Dictionary<ExcelDatabaseCriteriaField, object> _criterias = new Dictionary<ExcelDatabaseCriteriaField, object>(); 
+        private readonly Dictionary<ExcelDatabaseCriteriaField, object> _criterias = new Dictionary<ExcelDatabaseCriteriaField, object>();
 
         public ExcelDatabaseCriteria(ExcelDataProvider dataProvider, string range)
         {
@@ -60,14 +56,14 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
                 var val = _dataProvider.GetCellValue(_worksheet, _fieldRow + 1, x);
                 if (fieldObj != null && val != null)
                 {
-                    if(fieldObj is string)
-                    { 
+                    if (fieldObj is string)
+                    {
                         var field = new ExcelDatabaseCriteriaField(fieldObj.ToString().ToLower(CultureInfo.InvariantCulture));
                         _criterias.Add(field, val);
                     }
                     else if (ConvertUtil.IsNumeric(fieldObj))
                     {
-                        var field = new ExcelDatabaseCriteriaField((int) fieldObj);
+                        var field = new ExcelDatabaseCriteriaField((int)fieldObj);
                         _criterias.Add(field, val);
                     }
 

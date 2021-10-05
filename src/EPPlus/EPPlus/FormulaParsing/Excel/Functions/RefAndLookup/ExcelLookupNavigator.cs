@@ -22,11 +22,6 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Utilities;
 using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
@@ -119,7 +114,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
                 row += Arguments.LookupIndex - 1;
                 col += Arguments.LookupOffset;
             }
-            return ParsingContext.ExcelDataProvider.GetCellValue(_rangeAddress.Worksheet, row, col); 
+            return ParsingContext.ExcelDataProvider.GetCellValue(_rangeAddress.Worksheet, row, col);
         }
     }
 }

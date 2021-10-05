@@ -28,13 +28,9 @@
  * ******************************************************************************
  * Eyal Seagull        Added       		  2012-04-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Xml;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System;
+using System.Xml;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
@@ -101,7 +97,7 @@ namespace OfficeOpenXml.ConditionalFormatting
                 int pos = 1;
                 foreach (XmlNode node in itemElementNode.SelectNodes("d:iconSet/d:cfvo", NameSpaceManager))
                 {
-                    if(pos==1)
+                    if (pos == 1)
                     {
                         Icon1 = new ExcelConditionalFormattingIconDataBarValue(
                                 type,

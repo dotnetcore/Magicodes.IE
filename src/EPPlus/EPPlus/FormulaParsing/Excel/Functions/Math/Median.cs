@@ -26,7 +26,6 @@ using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -45,8 +44,8 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             }
             else
             {
-                var startIndex = arr.Length/2 - 1;
-                result = (arr[startIndex] + arr[startIndex + 1])/2d;
+                var startIndex = arr.Length / 2 - 1;
+                result = (arr[startIndex] + arr[startIndex + 1]) / 2d;
             }
             return CreateResult(result, DataType.Decimal);
         }

@@ -1,11 +1,8 @@
 ﻿using OfficeOpenXml.Style;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using System.Xml;
 using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Sparkline
 {
@@ -14,9 +11,9 @@ namespace OfficeOpenXml.Sparkline
     /// </summary>
     public class ExcelSparklineColor : XmlHelper, IColor
     {
-        internal ExcelSparklineColor(XmlNamespaceManager ns , XmlNode node) : base(ns, node)
+        internal ExcelSparklineColor(XmlNamespaceManager ns, XmlNode node) : base(ns, node)
         {
-            
+
         }
         /// <summary>
         /// Indexed color
@@ -30,7 +27,7 @@ namespace OfficeOpenXml.Sparkline
                 {
                     throw (new ArgumentOutOfRangeException("Index out of range"));
                 }
-                    
+
                 SetXmlNodeString("@indexed", value.ToString(CultureInfo.InvariantCulture));
             }
         }
@@ -46,7 +43,7 @@ namespace OfficeOpenXml.Sparkline
                 SetXmlNodeString("@rgb", value);
             }
         }
-        
+
 
         public string Theme => GetXmlNodeString("@theme");
 
@@ -55,7 +52,7 @@ namespace OfficeOpenXml.Sparkline
         /// </summary>
         public decimal Tint
         {
-            get=> GetXmlNodeDecimal("@tint");
+            get => GetXmlNodeDecimal("@tint");
             set
             {
                 if (value > 1 || value < -1)

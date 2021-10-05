@@ -30,11 +30,9 @@
  * Jan Källman		                License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Globalization;
 using System.Linq;
+using System.Xml;
 
 namespace OfficeOpenXml
 {
@@ -61,107 +59,107 @@ namespace OfficeOpenXml
         /// <summary>
         /// Letter paper (8.5 in. by 11 in.)
         /// </summary>
-        Letter= 1,      
+        Letter = 1,
         /// <summary>
         /// Letter small paper (8.5 in. by 11 in.)
         /// </summary>
-        LetterSmall=2,  
+        LetterSmall = 2,
         /// <summary>
         /// // Tabloid paper (11 in. by 17 in.)
         /// </summary>
-        Tabloid=3,      
+        Tabloid = 3,
         /// <summary>
         /// Ledger paper (17 in. by 11 in.)
         /// </summary>
-        Ledger=4,       
+        Ledger = 4,
         /// <summary>
         /// Legal paper (8.5 in. by 14 in.)
         /// </summary>
-        Legal=5,         
+        Legal = 5,
         /// <summary>
         /// Statement paper (5.5 in. by 8.5 in.)
         /// </summary>
-        Statement=6,    
+        Statement = 6,
         /// <summary>
         /// Executive paper (7.25 in. by 10.5 in.)
         /// </summary>
-        Executive=7,     
+        Executive = 7,
         /// <summary>
         /// A3 paper (297 mm by 420 mm)
         /// </summary>
-        A3=8,           
+        A3 = 8,
         /// <summary>
         /// A4 paper (210 mm by 297 mm)
         /// </summary>
-        A4=9,            
+        A4 = 9,
         /// <summary>
         /// A4 small paper (210 mm by 297 mm)
         /// </summary>
-        A4Small=10,      
+        A4Small = 10,
         /// <summary>
         /// A5 paper (148 mm by 210 mm)
         /// </summary>
-        A5=11,           
+        A5 = 11,
         /// <summary>
         /// B4 paper (250 mm by 353 mm)
         /// </summary>
-        B4=12,            
+        B4 = 12,
         /// <summary>
         /// B5 paper (176 mm by 250 mm)
         /// </summary>
-        B5=13,            
+        B5 = 13,
         /// <summary>
         /// Folio paper (8.5 in. by 13 in.)
         /// </summary>
-        Folio=14,         
+        Folio = 14,
         /// <summary>
         /// Quarto paper (215 mm by 275 mm)
         /// </summary>
-        Quarto=15,        
+        Quarto = 15,
         /// <summary>
         /// Standard paper (10 in. by 14 in.)
         /// </summary>
-        Standard10_14=16, 
+        Standard10_14 = 16,
         /// <summary>
         /// Standard paper (11 in. by 17 in.)
         /// </summary>
-        Standard11_17=17,  
+        Standard11_17 = 17,
         /// <summary>
         /// Note paper (8.5 in. by 11 in.)
         /// </summary>
-        Note=18,           
+        Note = 18,
         /// <summary>
         /// #9 envelope (3.875 in. by 8.875 in.)
         /// </summary>
-        Envelope9=19,      
+        Envelope9 = 19,
         /// <summary>
         /// #10 envelope (4.125 in. by 9.5 in.)
         /// </summary>
-        Envelope10=20,     
+        Envelope10 = 20,
         /// <summary>
         /// #11 envelope (4.5 in. by 10.375 in.)
         /// </summary>
-        Envelope11=21,     
+        Envelope11 = 21,
         /// <summary>
         /// #12 envelope (4.75 in. by 11 in.)
         /// </summary>
-        Envelope12=22,     
+        Envelope12 = 22,
         /// <summary>
         /// #14 envelope (5 in. by 11.5 in.)
         /// </summary>
-        Envelope14=23,     
+        Envelope14 = 23,
         /// <summary>
         /// C paper (17 in. by 22 in.)
         /// </summary>
-        C=24,              
+        C = 24,
         /// <summary>
         /// D paper (22 in. by 34 in.)
         /// </summary>
-        D=25,               
+        D = 25,
         /// <summary>
         /// E paper (34 in. by 44 in.)
         /// </summary>
-        E=26,               
+        E = 26,
         /// <summary>
         /// DL envelope (110 mm by 220 mm)
         /// </summary>
@@ -173,39 +171,39 @@ namespace OfficeOpenXml
         /// <summary>
         /// C3 envelope (324 mm by 458 mm)
         /// </summary>
-        C3Envelope = 29, 
+        C3Envelope = 29,
         /// <summary>
         /// C4 envelope (229 mm by 324 mm)
         /// </summary>
-        C4Envelope = 30, 
+        C4Envelope = 30,
         /// <summary>
         /// C6 envelope (114 mm by 162 mm)
         /// </summary>
-        C6Envelope = 31, 
+        C6Envelope = 31,
         /// <summary>
         /// C65 envelope (114 mm by 229 mm)
         /// </summary>
-        C65Envelope = 32, 
+        C65Envelope = 32,
         /// <summary>
         /// B4 envelope (250 mm by 353 mm)
         /// </summary>
-        B4Envelope= 33, 
+        B4Envelope = 33,
         /// <summary>
         /// B5 envelope (176 mm by 250 mm)
         /// </summary>
-        B5Envelope= 34, 
+        B5Envelope = 34,
         /// <summary>
         /// B6 envelope (176 mm by 125 mm)
         /// </summary>
-        B6Envelope = 35, 
+        B6Envelope = 35,
         /// <summary>
         /// Italy envelope (110 mm by 230 mm)
         /// </summary>
-        ItalyEnvelope = 36, 
+        ItalyEnvelope = 36,
         /// <summary>
         /// Monarch envelope (3.875 in. by 7.5 in.).
         /// </summary>
-        MonarchEnvelope = 37, 
+        MonarchEnvelope = 37,
         /// <summary>
         /// 6 3/4 envelope (3.625 in. by 6.5 in.)
         /// </summary>
@@ -213,111 +211,111 @@ namespace OfficeOpenXml
         /// <summary>
         /// US standard fanfold (14.875 in. by 11 in.)
         /// </summary>
-        USStandard=39, 
+        USStandard = 39,
         /// <summary>
         /// German standard fanfold (8.5 in. by 12 in.)
         /// </summary>
-        GermanStandard=40, 
+        GermanStandard = 40,
         /// <summary>
         /// German legal fanfold (8.5 in. by 13 in.)
         /// </summary>
-        GermanLegal=41, 
+        GermanLegal = 41,
         /// <summary>
         /// ISO B4 (250 mm by 353 mm)
         /// </summary>
-        ISOB4=42,
+        ISOB4 = 42,
         /// <summary>
         ///  Japanese double postcard (200 mm by 148 mm)
         /// </summary>
-        JapaneseDoublePostcard=43,
+        JapaneseDoublePostcard = 43,
         /// <summary>
         /// Standard paper (9 in. by 11 in.)
         /// </summary>
-        Standard9=44, 
+        Standard9 = 44,
         /// <summary>
         /// Standard paper (10 in. by 11 in.)
         /// </summary>
-        Standard10=45, 
+        Standard10 = 45,
         /// <summary>
         /// Standard paper (15 in. by 11 in.)
         /// </summary>
-        Standard15=46, 
+        Standard15 = 46,
         /// <summary>
         /// Invite envelope (220 mm by 220 mm)
         /// </summary>
-        InviteEnvelope = 47, 
+        InviteEnvelope = 47,
         /// <summary>
         /// Letter extra paper (9.275 in. by 12 in.)
         /// </summary>
-        LetterExtra=50,
+        LetterExtra = 50,
         /// <summary>
         /// Legal extra paper (9.275 in. by 15 in.)
         /// </summary>
-        LegalExtra=51, 
+        LegalExtra = 51,
         /// <summary>
         /// Tabloid extra paper (11.69 in. by 18 in.)
         /// </summary>
-        TabloidExtra=52,
+        TabloidExtra = 52,
         /// <summary>
         /// A4 extra paper (236 mm by 322 mm)
         /// </summary>
-        A4Extra=53, 
+        A4Extra = 53,
         /// <summary>
         /// Letter transverse paper (8.275 in. by 11 in.)
         /// </summary>
-        LetterTransverse=54, 
+        LetterTransverse = 54,
         /// <summary>
         /// A4 transverse paper (210 mm by 297 mm)
         /// </summary>
-        A4Transverse=55, 
+        A4Transverse = 55,
         /// <summary>
         /// Letter extra transverse paper (9.275 in. by 12 in.)
         /// </summary>
-        LetterExtraTransverse=56, 
+        LetterExtraTransverse = 56,
         /// <summary>
         /// SuperA/SuperA/A4 paper (227 mm by 356 mm)
         /// </summary>
-        SuperA=57, 
+        SuperA = 57,
         /// <summary>
         /// SuperB/SuperB/A3 paper (305 mm by 487 mm)
         /// </summary>
-        SuperB=58, 
+        SuperB = 58,
         /// <summary>
         /// Letter plus paper (8.5 in. by 12.69 in.)
         /// </summary>
-        LetterPlus=59, 
+        LetterPlus = 59,
         /// <summary>
         /// A4 plus paper (210 mm by 330 mm)
         /// </summary>
-        A4Plus=60, 
+        A4Plus = 60,
         /// <summary>
         /// A5 transverse paper (148 mm by 210 mm)
         /// </summary>
-        A5Transverse=61, 
+        A5Transverse = 61,
         /// <summary>
         /// JIS B5 transverse paper (182 mm by 257 mm)
         /// </summary>
-        JISB5Transverse=62, 
+        JISB5Transverse = 62,
         /// <summary>
         /// A3 extra paper (322 mm by 445 mm)
         /// </summary>
-        A3Extra=63, 
+        A3Extra = 63,
         /// <summary>
         /// A5 extra paper (174 mm by 235 mm)
         /// </summary>
-        A5Extra=64, 
+        A5Extra = 64,
         /// <summary>
         /// ISO B5 extra paper (201 mm by 276 mm)
         /// </summary>
-        ISOB5=65, 
+        ISOB5 = 65,
         /// <summary>
         /// A2 paper (420 mm by 594 mm)
         /// </summary>
-        A2=66, 
+        A2 = 66,
         /// <summary>
         /// A3 transverse paper (297 mm by 420 mm)
         /// </summary>
-        A3Transverse=67, 
+        A3Transverse = 67,
         /// <summary>
         /// A3 extra transverse paper (322 mm by 445 mm*/
         /// </summary>
@@ -347,7 +345,7 @@ namespace OfficeOpenXml
         ExcelWorksheet _ws;
         bool _marginsCreated = false;
 
-        internal ExcelPrinterSettings(XmlNamespaceManager ns, XmlNode topNode,ExcelWorksheet ws) :
+        internal ExcelPrinterSettings(XmlNamespaceManager ns, XmlNode topNode, ExcelWorksheet ws) :
             base(ns, topNode)
         {
             _ws = ws;
@@ -357,7 +355,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Left margin in inches
         /// </summary>
-        public decimal LeftMargin 
+        public decimal LeftMargin
         {
             get
             {
@@ -365,15 +363,15 @@ namespace OfficeOpenXml
             }
             set
             {
-               CreateMargins();
-               SetXmlNodeString(_leftMarginPath, value.ToString(CultureInfo.InvariantCulture));
+                CreateMargins();
+                SetXmlNodeString(_leftMarginPath, value.ToString(CultureInfo.InvariantCulture));
             }
         }
         const string _rightMarginPath = "d:pageMargins/@right";
         /// <summary>
         /// Right margin in inches
         /// </summary>
-        public decimal RightMargin 
+        public decimal RightMargin
         {
             get
             {
@@ -389,7 +387,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Top margin in inches
         /// </summary>
-        public decimal TopMargin 
+        public decimal TopMargin
         {
             get
             {
@@ -405,7 +403,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Bottom margin in inches
         /// </summary>
-        public decimal BottomMargin 
+        public decimal BottomMargin
         {
             get
             {
@@ -421,7 +419,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Header margin in inches
         /// </summary>
-        public decimal HeaderMargin 
+        public decimal HeaderMargin
         {
             get
             {
@@ -437,7 +435,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Footer margin in inches
         /// </summary>
-        public decimal FooterMargin 
+        public decimal FooterMargin
         {
             get
             {
@@ -616,7 +614,7 @@ namespace OfficeOpenXml
                 if (_ws.Names.ContainsKey("_xlnm.Print_Titles"))
                 {
                     ExcelRangeBase r = _ws.Names["_xlnm.Print_Titles"] as ExcelRangeBase;
-                    
+
                     if (r.Start.Row == 1 && r.End.Row == ExcelPackage.MaxRows)
                     {
                         return new ExcelAddress(r.FirstAddress);
@@ -638,7 +636,7 @@ namespace OfficeOpenXml
             set
             {
                 //Must span entire rows
-                if (!(value.Start.Row == 1 && value.End.Row== ExcelPackage.MaxRows))
+                if (!(value.Start.Row == 1 && value.End.Row == ExcelPackage.MaxRows))
                 {
                     throw new InvalidOperationException("Address must span rows only (for ex. Address=\"1:1\" for the first row).");
                 }
@@ -668,7 +666,7 @@ namespace OfficeOpenXml
         /// The printarea.
         /// Null if no print area is set.
         /// </summary>
-        public ExcelRangeBase PrintArea 
+        public ExcelRangeBase PrintArea
         {
             get
             {
@@ -742,7 +740,7 @@ namespace OfficeOpenXml
                 SetXmlNodeBool(_verticalCenteredPath, value, false);
             }
         }
-        const string _pageOrderPath = "d:pageSetup/@pageOrder";        
+        const string _pageOrderPath = "d:pageSetup/@pageOrder";
         /// <summary>
         /// Specifies printed page order
         /// </summary>
@@ -805,7 +803,7 @@ namespace OfficeOpenXml
         /// <summary>
         /// Paper size 
         /// </summary>
-        public ePaperSize PaperSize 
+        public ePaperSize PaperSize
         {
             get
             {
@@ -817,7 +815,7 @@ namespace OfficeOpenXml
                 else
                 {
                     return ePaperSize.Letter;
-                    
+
                 }
             }
             set
@@ -830,9 +828,9 @@ namespace OfficeOpenXml
         /// </summary>
         private void CreateMargins()
         {
-            if (_marginsCreated==false && TopNode.SelectSingleNode(_leftMarginPath, NameSpaceManager) == null) 
+            if (_marginsCreated == false && TopNode.SelectSingleNode(_leftMarginPath, NameSpaceManager) == null)
             {
-                _marginsCreated=true;
+                _marginsCreated = true;
                 LeftMargin = 0.7087M;
                 RightMargin = 0.7087M;
                 TopMargin = 0.7480M;

@@ -30,19 +30,13 @@
  * Jan Källman      Added compression support 27-03-2012
  * Jan Källman      Native support for compound documents 2017-04-10
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.InteropServices;
-using comTypes = System.Runtime.InteropServices.ComTypes;
 using System.IO;
-using System.Security;
 
 namespace OfficeOpenXml.Utils.CompundDocument
 {
     internal class CompoundDocument
-    {        
+    {
         internal class StoragePart
         {
             public StoragePart()
@@ -84,7 +78,7 @@ namespace OfficeOpenXml.Utils.CompundDocument
             var b = File.ReadAllBytes(fi.FullName);
             Read(b);
         }
-        internal void Read(byte[] doc) 
+        internal void Read(byte[] doc)
         {
             Read(RecyclableMemoryStream.GetStream(doc));
         }
@@ -99,15 +93,15 @@ namespace OfficeOpenXml.Utils.CompundDocument
 
         private void GetStorageAndStreams(StoragePart storage, CompoundDocumentItem parent)
         {
-            foreach(var item in parent.Children)
+            foreach (var item in parent.Children)
             {
-                if(item.ObjectType==1)      //Substorage
+                if (item.ObjectType == 1)      //Substorage
                 {
                     var part = new StoragePart();
                     storage.SubStorage.Add(item.Name, part);
                     GetStorageAndStreams(part, item);
                 }
-                else if(item.ObjectType==2) //Stream
+                else if (item.ObjectType == 2) //Stream
                 {
                     storage.DataStreams.Add(item.Name, item.Stream);
                 }
@@ -122,7 +116,7 @@ namespace OfficeOpenXml.Utils.CompundDocument
 
         private void WriteStorageAndStreams(StoragePart storage, CompoundDocumentItem parent)
         {
-            foreach(var item in storage.SubStorage)
+            foreach (var item in storage.SubStorage)
             {
                 var c = new CompoundDocumentItem() { Name = item.Key, ObjectType = 1, Stream = null, StreamSize = 0, Parent = parent };
                 parent.Children.Add(c);

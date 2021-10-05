@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
 {
@@ -42,7 +40,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime
         {
             ValidateArguments(arguments, 1);
             var firstArg = arguments.ElementAt(0).Value.ToString();
-            if(arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
+            if (arguments.Count() == 1 && TimeStringParser.CanParse(firstArg))
             {
                 var result = TimeStringParser.Parse(firstArg);
                 return new CompileResult(result, DataType.Time);

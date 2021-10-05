@@ -28,153 +28,148 @@
  * ******************************************************************************
  * Eyal Seagull        Added       		  2012-04-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Xml;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System.Xml;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
-  /// <summary>
-  /// ExcelConditionalFormattingThreeIconSet
-  /// </summary>
-  public class ExcelConditionalFormattingFiveIconSet
+    /// <summary>
+    /// ExcelConditionalFormattingThreeIconSet
+    /// </summary>
+    public class ExcelConditionalFormattingFiveIconSet
     : ExcelConditionalFormattingIconSetBase<eExcelconditionalFormatting5IconsSetType>, IExcelConditionalFormattingFiveIconSet
-  {
-    /****************************************************************************************/
-
-    #region Private Properties
-
-    #endregion Private Properties
-
-    /****************************************************************************************/
-
-    #region Constructors
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="priority"></param>
-    /// <param name="address"></param>
-    /// <param name="worksheet"></param>
-    /// <param name="itemElementNode"></param>
-    /// <param name="namespaceManager"></param>
-    internal ExcelConditionalFormattingFiveIconSet(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet,
-      XmlNode itemElementNode,
-      XmlNamespaceManager namespaceManager)
-      : base(
-        eExcelConditionalFormattingRuleType.FiveIconSet,
-        address,
-        priority,
-        worksheet,
-        itemElementNode,
-        (namespaceManager == null) ? worksheet.NameSpaceManager : namespaceManager)
     {
-        if (itemElementNode != null && itemElementNode.HasChildNodes)
+        /****************************************************************************************/
+
+        #region Private Properties
+
+        #endregion Private Properties
+
+        /****************************************************************************************/
+
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="address"></param>
+        /// <param name="worksheet"></param>
+        /// <param name="itemElementNode"></param>
+        /// <param name="namespaceManager"></param>
+        internal ExcelConditionalFormattingFiveIconSet(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet,
+          XmlNode itemElementNode,
+          XmlNamespaceManager namespaceManager)
+          : base(
+            eExcelConditionalFormattingRuleType.FiveIconSet,
+            address,
+            priority,
+            worksheet,
+            itemElementNode,
+            (namespaceManager == null) ? worksheet.NameSpaceManager : namespaceManager)
         {
-            XmlNode iconNode4 = TopNode.SelectSingleNode("d:iconSet/d:cfvo[position()=4]", NameSpaceManager);
-            Icon4 = new ExcelConditionalFormattingIconDataBarValue(
-                    eExcelConditionalFormattingRuleType.FiveIconSet,
-                    address,
-                    worksheet,
-                    iconNode4,
-                    namespaceManager);
-            
-            XmlNode iconNode5 = TopNode.SelectSingleNode("d:iconSet/d:cfvo[position()=5]", NameSpaceManager);
-            Icon5 = new ExcelConditionalFormattingIconDataBarValue(
-                    eExcelConditionalFormattingRuleType.FiveIconSet,
-                    address,
-                    worksheet,
-                    iconNode5,
-                    namespaceManager);
+            if (itemElementNode != null && itemElementNode.HasChildNodes)
+            {
+                XmlNode iconNode4 = TopNode.SelectSingleNode("d:iconSet/d:cfvo[position()=4]", NameSpaceManager);
+                Icon4 = new ExcelConditionalFormattingIconDataBarValue(
+                        eExcelConditionalFormattingRuleType.FiveIconSet,
+                        address,
+                        worksheet,
+                        iconNode4,
+                        namespaceManager);
+
+                XmlNode iconNode5 = TopNode.SelectSingleNode("d:iconSet/d:cfvo[position()=5]", NameSpaceManager);
+                Icon5 = new ExcelConditionalFormattingIconDataBarValue(
+                        eExcelConditionalFormattingRuleType.FiveIconSet,
+                        address,
+                        worksheet,
+                        iconNode5,
+                        namespaceManager);
+            }
+            else
+            {
+                XmlNode iconSetNode = TopNode.SelectSingleNode("d:iconSet", NameSpaceManager);
+                var iconNode4 = iconSetNode.OwnerDocument.CreateElement(ExcelConditionalFormattingConstants.Paths.Cfvo, ExcelPackage.schemaMain);
+                iconSetNode.AppendChild(iconNode4);
+
+                Icon4 = new ExcelConditionalFormattingIconDataBarValue(eExcelConditionalFormattingValueObjectType.Percent,
+                        60,
+                        "",
+                        eExcelConditionalFormattingRuleType.ThreeIconSet,
+                        address,
+                        priority,
+                        worksheet,
+                        iconNode4,
+                        namespaceManager);
+
+                var iconNode5 = iconSetNode.OwnerDocument.CreateElement(ExcelConditionalFormattingConstants.Paths.Cfvo, ExcelPackage.schemaMain);
+                iconSetNode.AppendChild(iconNode5);
+
+                Icon5 = new ExcelConditionalFormattingIconDataBarValue(eExcelConditionalFormattingValueObjectType.Percent,
+                        80,
+                        "",
+                        eExcelConditionalFormattingRuleType.ThreeIconSet,
+                        address,
+                        priority,
+                        worksheet,
+                        iconNode5,
+                        namespaceManager);
+            }
         }
-        else
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="address"></param>
+        /// <param name="worksheet"></param>
+        /// <param name="itemElementNode"></param>
+        internal ExcelConditionalFormattingFiveIconSet(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet,
+          XmlNode itemElementNode)
+          : this(
+            address,
+            priority,
+            worksheet,
+            itemElementNode,
+            null)
         {
-            XmlNode iconSetNode = TopNode.SelectSingleNode("d:iconSet", NameSpaceManager);
-            var iconNode4 = iconSetNode.OwnerDocument.CreateElement(ExcelConditionalFormattingConstants.Paths.Cfvo, ExcelPackage.schemaMain);
-            iconSetNode.AppendChild(iconNode4);
+        }
 
-            Icon4 = new ExcelConditionalFormattingIconDataBarValue(eExcelConditionalFormattingValueObjectType.Percent,
-                    60,
-                    "",
-                    eExcelConditionalFormattingRuleType.ThreeIconSet,
-                    address,
-                    priority,
-                    worksheet,
-                    iconNode4,
-                    namespaceManager);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="address"></param>
+        /// <param name="worksheet"></param>
+        internal ExcelConditionalFormattingFiveIconSet(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet)
+          : this(
+            address,
+            priority,
+            worksheet,
+            null,
+            null)
+        {
+        }
+        #endregion Constructors
 
-            var iconNode5 = iconSetNode.OwnerDocument.CreateElement(ExcelConditionalFormattingConstants.Paths.Cfvo, ExcelPackage.schemaMain);
-            iconSetNode.AppendChild(iconNode5);
+        public ExcelConditionalFormattingIconDataBarValue Icon5
+        {
+            get;
+            internal set;
+        }
 
-            Icon5 = new ExcelConditionalFormattingIconDataBarValue(eExcelConditionalFormattingValueObjectType.Percent,
-                    80,
-                    "",
-                    eExcelConditionalFormattingRuleType.ThreeIconSet,
-                    address,
-                    priority,
-                    worksheet,
-                    iconNode5,
-                    namespaceManager);
+        public ExcelConditionalFormattingIconDataBarValue Icon4
+        {
+            get;
+            internal set;
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="priority"></param>
-    /// <param name="address"></param>
-    /// <param name="worksheet"></param>
-    /// <param name="itemElementNode"></param>
-    internal ExcelConditionalFormattingFiveIconSet(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet,
-      XmlNode itemElementNode)
-      : this(
-        address,
-        priority,
-        worksheet,
-        itemElementNode,
-        null)
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="priority"></param>
-    /// <param name="address"></param>
-    /// <param name="worksheet"></param>
-    internal ExcelConditionalFormattingFiveIconSet(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet)
-      : this(
-        address,
-        priority,
-        worksheet,
-        null,
-        null)
-    {
-    }
-    #endregion Constructors
-
-    public ExcelConditionalFormattingIconDataBarValue Icon5
-    {
-        get;
-        internal set;
-    }
-
-    public ExcelConditionalFormattingIconDataBarValue Icon4
-    {
-        get;
-        internal set;
-    }
-  }
-  }
+}

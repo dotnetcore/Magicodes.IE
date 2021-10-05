@@ -51,10 +51,9 @@
  * Jan Källman		    License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
-using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
+using System.Collections.Generic;
+namespace OfficeOpenXml
 {
     /// <summary>
     /// This is the store for all Rows, Columns and Cells.
@@ -69,10 +68,10 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
                 RangeID = cellId;
             }
             internal IndexItem(ulong cellId, int listPointer)
-	        {
+            {
                 RangeID = cellId;
-                ListPointer=listPointer;
-	        }
+                ListPointer = listPointer;
+            }
             internal ulong RangeID;
             internal int ListPointer;
         }
@@ -91,13 +90,13 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
         }
         IndexItem[] _cellIndex;
         List<IRangeID> _cells;
-        static readonly Compare _comparer=new Compare(); 
+        static readonly Compare _comparer = new Compare();
         /// <summary>
         /// Creates a new collection
         /// </summary>
         /// <param name="cells">The Cells. This list must be sorted</param>
         internal RangeCollection(List<IRangeID> cells)
-        {   
+        {
             _cells = cells;
             InitSize(_cells);
             for (int i = 0; i < _cells.Count; i++)
@@ -208,7 +207,7 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
         {
             int index = IndexOf(rowID);
             if (index < 0) index = ~index; //No match found invert to get start cell
-            ulong rowAdd=(((ulong)rows) << 29);
+            ulong rowAdd = (((ulong)rows) << 29);
             for (int i = index; i < _cells.Count; i++)
             {
                 _cellIndex[i].RangeID += rowAdd;
@@ -248,7 +247,7 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
         {
             throw (new Exception("Working on it..."));
         }
-        internal void DeleteColumn(ulong ColumnID,int columns)
+        internal void DeleteColumn(ulong ColumnID, int columns)
         {
             throw (new Exception("Working on it..."));
         }
@@ -306,7 +305,7 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
         int _ix = -1;
         object IEnumerator.Current
         {
-            get 
+            get
             {
                 return _cells[_cellIndex[_ix].ListPointer];
             }
@@ -314,8 +313,8 @@ using OfficeOpenXml.Drawing.Vml;namespace OfficeOpenXml
 
         bool IEnumerator.MoveNext()
         {
-           _ix++;
-           return _ix < _cells.Count;
+            _ix++;
+            return _ix < _cells.Count;
         }
 
         void IEnumerator.Reset()

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -13,7 +11,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
             ValidateArguments(arguments, 2);
             var args = arguments.ElementAt(0);
             var index = ArgToInt(arguments, 1) - 1;
-            var values = ArgsToDoubleEnumerable(new List<FunctionArgument> {args}, context);
+            var values = ArgsToDoubleEnumerable(new List<FunctionArgument> { args }, context);
             ThrowExcelErrorValueExceptionIf(() => index < 0 || index >= values.Count(), eErrorType.Num);
             var result = values.OrderByDescending(x => x).ElementAt(index);
             return CreateResult(result, DataType.Decimal);

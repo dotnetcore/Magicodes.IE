@@ -65,7 +65,6 @@
 
 
 using System;
-using Interop=System.Runtime.InteropServices;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zlib
 {
@@ -80,10 +79,10 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
     /// href="http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE</see>.
     /// </remarks>
     //[Interop.GuidAttribute("ebc25cf6-9120-4283-b972-0e5520d0000D")]
-//    [Interop.ComVisible(true)]
-//#if !NETCF    
-//    [Interop.ClassInterface(Interop.ClassInterfaceType.AutoDispatch)]
-//#endif
+    //    [Interop.ComVisible(true)]
+    //#if !NETCF    
+    //    [Interop.ClassInterface(Interop.ClassInterfaceType.AutoDispatch)]
+    //#endif
     sealed public class ZlibCodec
     {
         /// <summary>
@@ -257,7 +256,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// <returns>Z_OK if all goes well.</returns>
         public int InitializeInflate(int windowBits)
         {
-            this.WindowBits = windowBits;            
+            this.WindowBits = windowBits;
             return InitializeInflate(windowBits, true);
         }
 
@@ -676,10 +675,10 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
 
             Array.Copy(dstate.pending, dstate.nextPending, OutputBuffer, NextOut, len);
 
-            NextOut             += len;
-            dstate.nextPending  += len;
-            TotalBytesOut       += len;
-            AvailableBytesOut   -= len;
+            NextOut += len;
+            dstate.nextPending += len;
+            TotalBytesOut += len;
+            AvailableBytesOut -= len;
             dstate.pendingCount -= len;
             if (dstate.pendingCount == 0)
             {

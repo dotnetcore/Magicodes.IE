@@ -22,10 +22,6 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-01-11
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MathObj = System.Math;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math

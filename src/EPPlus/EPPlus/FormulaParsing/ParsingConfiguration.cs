@@ -16,14 +16,9 @@
  *******************************************************************************
  * Mats Alm Added		                2016-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
-using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using OfficeOpenXml.FormulaParsing.Excel.Functions;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using OfficeOpenXml.FormulaParsing.Logging;
 using OfficeOpenXml.FormulaParsing.Utilities;
 
@@ -37,11 +32,11 @@ namespace OfficeOpenXml.FormulaParsing
 
         public IExpressionGraphBuilder GraphBuilder { get; private set; }
 
-        public IExpressionCompiler ExpressionCompiler{ get; private set; }
+        public IExpressionCompiler ExpressionCompiler { get; private set; }
 
-        public FunctionRepository FunctionRepository{ get; private set; }
+        public FunctionRepository FunctionRepository { get; private set; }
 
-        private ParsingConfiguration() 
+        private ParsingConfiguration()
         {
             FunctionRepository = FunctionRepository.Create();
         }

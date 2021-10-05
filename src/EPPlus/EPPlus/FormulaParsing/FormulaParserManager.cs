@@ -28,14 +28,13 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
+using OfficeOpenXml.FormulaParsing.Logging;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.Logging;
-using OfficeOpenXml.FormulaParsing.Utilities;
 namespace OfficeOpenXml.FormulaParsing
 {
     /// <summary>
@@ -115,7 +114,7 @@ namespace OfficeOpenXml.FormulaParsing
                 }
             });
             return functions;
-        } 
+        }
 
         /// <summary>
         /// Parses the supplied <paramref name="formula"/> and returns the result.

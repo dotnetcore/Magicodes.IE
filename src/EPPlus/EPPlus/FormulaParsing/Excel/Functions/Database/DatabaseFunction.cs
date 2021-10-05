@@ -22,12 +22,10 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
-using System;
+using OfficeOpenXml.Utils;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.Utils;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
 {
@@ -38,7 +36,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Database
         public DatabaseFunction()
             : this(new RowMatcher())
         {
-            
+
         }
 
         public DatabaseFunction(RowMatcher rowMatcher)

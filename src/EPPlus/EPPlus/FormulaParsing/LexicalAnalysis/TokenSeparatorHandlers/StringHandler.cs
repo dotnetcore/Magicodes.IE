@@ -28,10 +28,6 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2015-12-28
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis.TokenSeparatorHandlers
 {
@@ -39,8 +35,8 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis.TokenSeparatorHandlers
     {
         public override bool Handle(char c, Token tokenSeparator, TokenizerContext context, ITokenIndexProvider tokenIndexProvider)
         {
-            if(context.IsInString)
-            { 
+            if (context.IsInString)
+            {
                 if (IsDoubleQuote(tokenSeparator, tokenIndexProvider.Index, context))
                 {
                     tokenIndexProvider.MoveIndexPointerForward();

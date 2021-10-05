@@ -30,8 +30,6 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OfficeOpenXml
 {
@@ -65,7 +63,7 @@ namespace OfficeOpenXml
         ///<param name="address">The address</param>
         public ExcelCellAddress(string address)
         {
-            this.Address = address; 
+            this.Address = address;
         }
         /// <summary>
         /// Row
@@ -83,7 +81,7 @@ namespace OfficeOpenXml
                     throw new ArgumentOutOfRangeException("value", "Row cannot be less than 1.");
                 }
                 this._row = value;
-                if(_column>0) 
+                if (_column > 0)
                     _address = ExcelCellBase.GetAddress(_row, _column);
                 else
                     _address = "#REF!";

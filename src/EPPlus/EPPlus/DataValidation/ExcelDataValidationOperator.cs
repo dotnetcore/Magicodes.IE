@@ -29,10 +29,6 @@
  * Mats Alm   		                Added       		        2011-01-01
  * Jan Källman		                License changed GPL-->LGPL  2011-12-27
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.DataValidation
 {
@@ -48,6 +44,6 @@ namespace OfficeOpenXml.DataValidation
         lessThan = 4,
         lessThanOrEqual = 5,
         notBetween = 1,
-        notEqual= 3
+        notEqual = 3
     }
 }

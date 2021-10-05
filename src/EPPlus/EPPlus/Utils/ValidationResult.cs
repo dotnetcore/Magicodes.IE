@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.Utils
 {
@@ -10,7 +7,7 @@ namespace OfficeOpenXml.Utils
         public ValidationResult(bool result)
             : this(result, null)
         {
-            
+
         }
 
         public ValidationResult(bool result, string errorMessage)
@@ -24,7 +21,7 @@ namespace OfficeOpenXml.Utils
 
         private void Throw()
         {
-            if(string.IsNullOrEmpty(_errorMessage))
+            if (string.IsNullOrEmpty(_errorMessage))
             {
                 throw new InvalidOperationException();
             }

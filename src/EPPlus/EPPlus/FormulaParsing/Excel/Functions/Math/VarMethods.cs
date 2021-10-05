@@ -22,11 +22,9 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Exceptions;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
@@ -62,7 +60,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
         {
             double avg = args.Select(x => (double)x).Average();
             double d = args.Aggregate(0.0, (total, next) => total += System.Math.Pow(next - avg, 2));
-            return Divide(d, args.Count()); 
+            return Divide(d, args.Count());
         }
     }
 }

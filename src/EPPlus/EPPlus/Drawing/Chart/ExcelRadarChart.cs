@@ -29,12 +29,10 @@
  * Jan Källman		Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Xml;
 using OfficeOpenXml.Table.PivotTable;
+using System;
+using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -67,9 +65,9 @@ namespace OfficeOpenXml.Drawing.Chart
             {
                 RadarStyle = eRadarStyle.Filled;
             }
-            else if  (ChartType == eChartType.RadarMarkers)
+            else if (ChartType == eChartType.RadarMarkers)
             {
-                RadarStyle =  eRadarStyle.Marker;
+                RadarStyle = eRadarStyle.Marker;
             }
             else
             {
@@ -85,7 +83,7 @@ namespace OfficeOpenXml.Drawing.Chart
         {
             get
             {
-                var v=_chartXmlHelper.GetXmlNodeString(STYLE_PATH);
+                var v = _chartXmlHelper.GetXmlNodeString(STYLE_PATH);
                 if (string.IsNullOrEmpty(v))
                 {
                     return eRadarStyle.Standard;

@@ -28,13 +28,10 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
 namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
 {
     public class SourceCodeTokenizer : ISourceCodeTokenizer
@@ -49,7 +46,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
         }
 
 
-        public SourceCodeTokenizer(IFunctionNameProvider functionRepository, INameValueProvider nameValueProvider, bool r1c1=false)
+        public SourceCodeTokenizer(IFunctionNameProvider functionRepository, INameValueProvider nameValueProvider, bool r1c1 = false)
             : this(new TokenFactory(functionRepository, nameValueProvider, r1c1), new TokenSeparatorProvider())
         {
 
@@ -78,7 +75,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             var context = new TokenizerContext(input);
             var handler = new TokenHandler(context, _tokenFactory, _separatorProvider);
             handler.Worksheet = worksheet;
-            while(handler.HasMore())
+            while (handler.HasMore())
             {
                 handler.Next();
             }
@@ -92,19 +89,19 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             return context.Result;
         }
 
-        
 
 
-        private static void CleanupTokens(TokenizerContext context, IDictionary<string, Token>  tokens)
+
+        private static void CleanupTokens(TokenizerContext context, IDictionary<string, Token> tokens)
         {
             for (int i = 0; i < context.Result.Count; i++)
             {
-                var token=context.Result[i];
+                var token = context.Result[i];
                 if (token.TokenType == TokenType.Unrecognized)
                 {
                     if (i < context.Result.Count - 1)
                     {
-                        if (context.Result[i+1].TokenType == TokenType.OpeningParenthesis)
+                        if (context.Result[i + 1].TokenType == TokenType.OpeningParenthesis)
                         {
                             token.TokenType = TokenType.Function;
                         }
@@ -118,7 +115,8 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                         token.TokenType = TokenType.NameValue;
                     }
                 }
-                else if(token.TokenType == TokenType.WorksheetName){
+                else if (token.TokenType == TokenType.WorksheetName)
+                {
                     // use this and the following three tokens
                     token.TokenType = context.Result[i + 3].TokenType;
                     var sb = new StringBuilder();
@@ -128,7 +126,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                         token.TokenType = TokenType.InvalidReference;
                         nToRemove = context.Result.Count - i - 1;
                     }
-                    else if(context.Result[i + 3].TokenType != TokenType.ExcelAddress &&
+                    else if (context.Result[i + 3].TokenType != TokenType.ExcelAddress &&
                             context.Result[i + 3].TokenType != TokenType.ExcelAddressR1C1)
                     {
                         token.TokenType = TokenType.InvalidReference;
@@ -142,17 +140,17 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                         }
                     }
                     token.Value = sb.ToString();
-                    for(var ix = 0; ix < nToRemove; ix++)
+                    for (var ix = 0; ix < nToRemove; ix++)
                     {
                         context.Result.RemoveAt(i + 1);
                     }
                 }
                 // Clean up leading '+' along with the following operator combinations: ++, --, +-, -+
                 else if ((token.TokenType == TokenType.Operator || token.TokenType == TokenType.Negator) && i < context.Result.Count - 1 &&
-                         (token.Value=="+" || token.Value=="-"))
+                         (token.Value == "+" || token.Value == "-"))
                 {
                     //Remove '+' from start of formula and formula arguments
-                    if (token.Value == "+" && (i == 0 || context.Result[i - 1].TokenType  == TokenType.OpeningParenthesis || context.Result[i - 1].TokenType == TokenType.Comma))
+                    if (token.Value == "+" && (i == 0 || context.Result[i - 1].TokenType == TokenType.OpeningParenthesis || context.Result[i - 1].TokenType == TokenType.Comma))
                     {
                         context.Result.RemoveAt(i);
                         SetNegatorOperator(context, i, tokens);
@@ -164,7 +162,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                     if (nextToken.TokenType == TokenType.Operator || nextToken.TokenType == TokenType.Negator)
                     {
                         // Remove leading '+' from operator combinations
-                        if (token.Value == "+" && (nextToken.Value=="+" || nextToken.Value == "-"))
+                        if (token.Value == "+" && (nextToken.Value == "+" || nextToken.Value == "-"))
                         {
                             context.Result.RemoveAt(i);
                             SetNegatorOperator(context, i, tokens);
@@ -173,7 +171,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
                         // Remove trailing '+' from a negator operation
                         else if (token.Value == "-" && nextToken.Value == "+")
                         {
-                            context.Result.RemoveAt(i+1);
+                            context.Result.RemoveAt(i + 1);
                             SetNegatorOperator(context, i, tokens);
                             i--;
                         }
@@ -189,7 +187,7 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             }
         }
 
-        private static void SetNegatorOperator(TokenizerContext context, int i, IDictionary<string, Token>  tokens)
+        private static void SetNegatorOperator(TokenizerContext context, int i, IDictionary<string, Token> tokens)
         {
             if (context.Result[i].Value == "-" && i > 0 && (context.Result[i].TokenType == TokenType.Operator || context.Result[i].TokenType == TokenType.Negator))
             {

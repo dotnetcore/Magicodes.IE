@@ -28,18 +28,14 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OfficeOpenXml.FormulaParsing.Utilities;
 
 namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
 {
     public class ExcelAddressInfo
     {
-        private ExcelAddressInfo(string address) 
-        {   
+        private ExcelAddressInfo(string address)
+        {
             var addressOnSheet = address;
             Worksheet = string.Empty;
             if (address.Contains("!"))
@@ -77,12 +73,12 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
             }
         }
 
-        public bool IsMultipleCells 
-        { 
-            get 
-            { 
-                return !string.IsNullOrEmpty(EndCell); 
-            } 
+        public bool IsMultipleCells
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(EndCell);
+            }
         }
 
         public string StartCell { get; private set; }

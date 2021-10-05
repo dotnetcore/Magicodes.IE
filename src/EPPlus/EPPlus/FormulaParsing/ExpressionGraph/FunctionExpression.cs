@@ -28,16 +28,9 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
-using OfficeOpenXml.Utils;
+using System.Linq;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 {
@@ -109,7 +102,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
                 }
                 return new CompileResult(e.ErrorValue, DataType.ExcelError);
             }
-            
+
         }
 
         public override Expression PrepareForNextChild()

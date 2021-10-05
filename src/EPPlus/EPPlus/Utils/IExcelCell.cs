@@ -30,15 +30,13 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OfficeOpenXml.Style
 {
     internal interface IExcelCell
     {
         #region "public properties"
-        object Value {get;set;}
+        object Value { get; set; }
         string StyleName { get; }
         int StyleID { get; set; }
         ExcelStyle Style { get; }

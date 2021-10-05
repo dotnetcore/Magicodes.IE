@@ -22,14 +22,11 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2013-12-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using OfficeOpenXml.FormulaParsing.Utilities;
-using OfficeOpenXml.FormulaParsing.ExcelUtilities;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
 using static OfficeOpenXml.FormulaParsing.EpplusExcelDataProvider;
 
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
@@ -91,7 +88,7 @@ namespace OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup
                 lookupIndex = (address2.FromRow - address1.FromRow) + 1;
                 lookupOffset = address2.FromCol - address1.FromCol;
             }
-            var lookupArgs = new LookupArguments(searchedValue, firstAddress, lookupIndex, lookupOffset,  true, arguments.ElementAt(1).ValueAsRangeInfo);
+            var lookupArgs = new LookupArguments(searchedValue, firstAddress, lookupIndex, lookupOffset, true, arguments.ElementAt(1).ValueAsRangeInfo);
             var navigator = LookupNavigatorFactory.Create(lookupDirection, lookupArgs, context);
             return Lookup(navigator, lookupArgs);
         }

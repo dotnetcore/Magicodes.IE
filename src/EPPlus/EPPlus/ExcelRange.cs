@@ -30,10 +30,6 @@
  * Jan Källman		    License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
-using OfficeOpenXml.Style;
-using System.Data;
 namespace OfficeOpenXml
 {
     /// <summary>
@@ -42,7 +38,7 @@ namespace OfficeOpenXml
     public class ExcelRange : ExcelRangeBase
     {
         #region "Constructors"
-        internal ExcelRange(ExcelWorksheet sheet) : 
+        internal ExcelRange(ExcelWorksheet sheet) :
             base(sheet)
         {
 
@@ -96,7 +92,7 @@ namespace OfficeOpenXml
             int ixStart = address.IndexOf('[');
             if (ixStart == 0) //External Address
             {
-                int ixEnd = address.IndexOf(']',ixStart+1);
+                int ixEnd = address.IndexOf(']', ixStart + 1);
                 if (ixStart >= 0 & ixEnd >= 0)
                 {
                     var external = address.Substring(ixStart + 1, ixEnd - 1);

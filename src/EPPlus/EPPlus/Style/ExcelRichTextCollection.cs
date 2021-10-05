@@ -29,13 +29,12 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Drawing;
-using System.Globalization;
 
 namespace OfficeOpenXml.Style
 {
@@ -45,7 +44,7 @@ namespace OfficeOpenXml.Style
     public class ExcelRichTextCollection : XmlHelper, IEnumerable<ExcelRichText>
     {
         List<ExcelRichText> _list = new List<ExcelRichText>();
-        ExcelRangeBase _cells=null;
+        ExcelRangeBase _cells = null;
         internal ExcelRichTextCollection(XmlNamespaceManager ns, XmlNode topNode) :
             base(ns, topNode)
         {
@@ -54,7 +53,7 @@ namespace OfficeOpenXml.Style
             {
                 foreach (XmlNode n in nl)
                 {
-                    _list.Add(new ExcelRichText(ns, n,this));
+                    _list.Add(new ExcelRichText(ns, n, this));
                 }
             }
         }
@@ -62,7 +61,7 @@ namespace OfficeOpenXml.Style
             this(ns, topNode)
         {
             _cells = cells;
-        }        
+        }
         /// <summary>
         /// Collection containing the richtext objects
         /// </summary>
@@ -72,8 +71,8 @@ namespace OfficeOpenXml.Style
         {
             get
             {
-                var item=_list[Index];
-                if(_cells!=null) item.SetCallback(UpdateCells);
+                var item = _list[Index];
+                if (_cells != null) item.SetCallback(UpdateCells);
                 return item;
             }
         }
@@ -214,7 +213,7 @@ namespace OfficeOpenXml.Style
         {
             TopNode.RemoveChild(_list[Index].TopNode);
             _list.RemoveAt(Index);
-            if (_cells != null && _list.Count==0) _cells.IsRichText = false;
+            if (_cells != null && _list.Count == 0) _cells.IsRichText = false;
         }
         /// <summary>
         /// Removes an item
@@ -230,7 +229,7 @@ namespace OfficeOpenXml.Style
         //{
         //    _list.Insert(index, item);
         //}
-        
+
         /// <summary>
         /// The text
         /// </summary>
@@ -238,7 +237,7 @@ namespace OfficeOpenXml.Style
         {
             get
             {
-                StringBuilder sb=new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 foreach (var item in _list)
                 {
                     sb.Append(item.Text);

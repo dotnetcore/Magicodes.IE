@@ -28,10 +28,7 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 {
@@ -65,7 +62,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
             var result = new List<object>();
             foreach (var childExpression in Children)
             {
-                result.Add(_expressionCompiler.Compile(new List<Expression>{ childExpression }).Result);
+                result.Add(_expressionCompiler.Compile(new List<Expression> { childExpression }).Result);
             }
             return new CompileResult(result, DataType.Enumerable);
         }

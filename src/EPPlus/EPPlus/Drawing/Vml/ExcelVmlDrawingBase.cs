@@ -30,11 +30,7 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
-using System.Globalization;
-using System.Drawing;
 
 namespace OfficeOpenXml.Drawing.Vml
 {
@@ -79,8 +75,8 @@ namespace OfficeOpenXml.Drawing.Vml
             base(ns, topNode)
         {
             SchemaNodeOrder = new string[] { "fill", "stroke", "shadow", "path", "textbox", "ClientData", "MoveWithCells", "SizeWithCells", "Anchor", "Locked", "AutoFill", "LockText", "TextHAlign", "TextVAlign", "Row", "Column", "Visible" };
-        }   
-        public string Id 
+        }
+        public string Id
         {
             get
             {
@@ -88,7 +84,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                SetXmlNodeString("@id",value);
+                SetXmlNodeString("@id", value);
             }
         }
         /// <summary>
@@ -108,31 +104,31 @@ namespace OfficeOpenXml.Drawing.Vml
         #region "Style Handling methods"
         protected bool GetStyle(string style, string key, out string value)
         {
-            string[]styles = style.Split(';');
-            foreach(string s in styles)
+            string[] styles = style.Split(';');
+            foreach (string s in styles)
             {
                 if (s.IndexOf(':') > 0)
                 {
                     string[] split = s.Split(':');
                     if (split[0] == key)
                     {
-                        value=split[1];
+                        value = split[1];
                         return true;
                     }
                 }
                 else if (s == key)
                 {
-                    value="";
+                    value = "";
                     return true;
                 }
             }
-            value="";
+            value = "";
             return false;
         }
         protected string SetStyle(string style, string key, string value)
         {
             string[] styles = style.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            string newStyle="";
+            string newStyle = "";
             bool changed = false;
             foreach (string s in styles)
             {

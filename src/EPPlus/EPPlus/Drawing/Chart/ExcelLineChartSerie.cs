@@ -30,11 +30,9 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Xml;
 using System.Drawing;
+using System.Globalization;
+using System.Xml;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -195,7 +193,7 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             set
             {
-                SetXmlNodeString(LINEWIDTH_PATH, (( int )(12700 * value)).ToString(), true);
+                SetXmlNodeString(LINEWIDTH_PATH, ((int)(12700 * value)).ToString(), true);
             }
         }
         //marker line color

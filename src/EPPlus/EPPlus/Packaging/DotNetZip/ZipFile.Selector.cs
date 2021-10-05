@@ -32,11 +32,11 @@
 // ------------------------------------------------------------------
 
 
-using System;
-using System.IO;
-using System.Collections.Generic;
 using OfficeOpenXml.Packaging.Ionic.Zip;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zip
 {

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OfficeOpenXml.FormulaParsing.Excel.Functions;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
 {
@@ -15,7 +12,7 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
             : base(function, context)
         {
             Require.That(function).Named("function").IsNotNull();
-          
+
         }
 
         public override CompileResult Compile(IEnumerable<Expression> children)
@@ -34,9 +31,9 @@ namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
                 }
                 else
                 {
-                    args.Add(new FunctionArgument(result.Result)); 
+                    args.Add(new FunctionArgument(result.Result));
                 }
-                
+
             }
             catch (ExcelErrorValueException)
             {

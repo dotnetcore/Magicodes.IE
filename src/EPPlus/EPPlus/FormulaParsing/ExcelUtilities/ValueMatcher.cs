@@ -29,9 +29,6 @@
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
 {
@@ -52,7 +49,7 @@ namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
             {
                 return CompareStringToString(o1.ToString().ToLower(), o2.ToString().ToLower());
             }
-            else if( o1.GetType() == typeof(string))
+            else if (o1.GetType() == typeof(string))
             {
                 return CompareStringToObject(o1.ToString(), o2);
             }

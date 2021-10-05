@@ -28,67 +28,62 @@
  * ******************************************************************************
  * Eyal Seagull        Added       		  2012-04-03
  *******************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Xml;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
+using System.Xml;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
-  /// <summary>
-  /// ExcelConditionalFormattingThreeColorScale
-  /// </summary>
-  public class ExcelConditionalFormattingThreeColorScale
+    /// <summary>
+    /// ExcelConditionalFormattingThreeColorScale
+    /// </summary>
+    public class ExcelConditionalFormattingThreeColorScale
     : ExcelConditionalFormattingRule,
     IExcelConditionalFormattingThreeColorScale
-  {
-    /****************************************************************************************/
-
-    #region Private Properties
-    /// <summary>
-    /// Private Low Value
-    /// </summary>
-    private ExcelConditionalFormattingColorScaleValue _lowValue;
-
-    /// <summary>
-    /// Private Middle Value
-    /// </summary>
-    private ExcelConditionalFormattingColorScaleValue _middleValue;
-
-    /// <summary>
-    /// Private High Value
-    /// </summary>
-    private ExcelConditionalFormattingColorScaleValue _highValue;
-    #endregion Private Properties
-
-    /****************************************************************************************/
-
-    #region Constructors
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="address"></param>
-    /// <param name="priority"></param>
-     /// <param name="worksheet"></param>
-    /// <param name="itemElementNode"></param>
-    /// <param name="namespaceManager"></param>
-    internal ExcelConditionalFormattingThreeColorScale(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet,
-      XmlNode itemElementNode,
-      XmlNamespaceManager namespaceManager)
-      : base(
-        eExcelConditionalFormattingRuleType.ThreeColorScale,
-        address,
-        priority,
-        worksheet,
-        itemElementNode,
-        (namespaceManager == null) ? worksheet.NameSpaceManager : namespaceManager)
     {
+        /****************************************************************************************/
+
+        #region Private Properties
+        /// <summary>
+        /// Private Low Value
+        /// </summary>
+        private ExcelConditionalFormattingColorScaleValue _lowValue;
+
+        /// <summary>
+        /// Private Middle Value
+        /// </summary>
+        private ExcelConditionalFormattingColorScaleValue _middleValue;
+
+        /// <summary>
+        /// Private High Value
+        /// </summary>
+        private ExcelConditionalFormattingColorScaleValue _highValue;
+        #endregion Private Properties
+
+        /****************************************************************************************/
+
+        #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="priority"></param>
+        /// <param name="worksheet"></param>
+        /// <param name="itemElementNode"></param>
+        /// <param name="namespaceManager"></param>
+        internal ExcelConditionalFormattingThreeColorScale(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet,
+          XmlNode itemElementNode,
+          XmlNamespaceManager namespaceManager)
+          : base(
+            eExcelConditionalFormattingRuleType.ThreeColorScale,
+            address,
+            priority,
+            worksheet,
+            itemElementNode,
+            (namespaceManager == null) ? worksheet.NameSpaceManager : namespaceManager)
+        {
             if (itemElementNode == null)
             {
                 // Create the <colorScale> node inside the <cfRule> node
@@ -131,80 +126,80 @@ namespace OfficeOpenXml.ConditionalFormatting
                   worksheet,
                   NameSpaceManager);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="address"></param>
+        /// <param name="worksheet"></param>
+        /// <param name="itemElementNode"></param>
+        internal ExcelConditionalFormattingThreeColorScale(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet,
+          XmlNode itemElementNode)
+          : this(
+            address,
+            priority,
+            worksheet,
+            itemElementNode,
+            null)
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="priority"></param>
+        /// <param name="address"></param>
+        /// <param name="worksheet"></param>
+        internal ExcelConditionalFormattingThreeColorScale(
+          ExcelAddress address,
+          int priority,
+          ExcelWorksheet worksheet)
+          : this(
+            address,
+            priority,
+            worksheet,
+            null,
+            null)
+        {
+        }
+        #endregion Constructors
+
+        /****************************************************************************************/
+
+        #region Public Properties
+        /// <summary>
+        /// Low Value for Three Color Scale Object Value
+        /// </summary>
+        public ExcelConditionalFormattingColorScaleValue LowValue
+        {
+            get { return _lowValue; }
+            set { _lowValue = value; }
+        }
+
+        /// <summary>
+        /// Middle Value for Three Color Scale Object Value
+        /// </summary>
+        public ExcelConditionalFormattingColorScaleValue MiddleValue
+        {
+            get { return _middleValue; }
+            set { _middleValue = value; }
+        }
+
+        /// <summary>
+        /// High Value for Three Color Scale Object Value
+        /// </summary>
+        public ExcelConditionalFormattingColorScaleValue HighValue
+        {
+            get { return _highValue; }
+            set { _highValue = value; }
+        }
+        #endregion Public Properties
+
+        /****************************************************************************************/
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="priority"></param>
-    /// <param name="address"></param>
-    /// <param name="worksheet"></param>
-    /// <param name="itemElementNode"></param>
-    internal ExcelConditionalFormattingThreeColorScale(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet,
-      XmlNode itemElementNode)
-      : this(
-        address,
-        priority,
-        worksheet,
-        itemElementNode,
-        null)
-    {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="priority"></param>
-    /// <param name="address"></param>
-    /// <param name="worksheet"></param>
-    internal ExcelConditionalFormattingThreeColorScale(
-      ExcelAddress address,
-      int priority,
-      ExcelWorksheet worksheet)
-      : this(
-        address,
-        priority,
-        worksheet,
-        null,
-        null)
-    {
-    }
-    #endregion Constructors
-
-    /****************************************************************************************/
-
-    #region Public Properties
-    /// <summary>
-    /// Low Value for Three Color Scale Object Value
-    /// </summary>
-    public ExcelConditionalFormattingColorScaleValue LowValue
-    {
-      get { return _lowValue; }
-      set { _lowValue = value; }
-    }
-
-    /// <summary>
-    /// Middle Value for Three Color Scale Object Value
-    /// </summary>
-    public ExcelConditionalFormattingColorScaleValue MiddleValue
-    {
-      get { return _middleValue; }
-      set { _middleValue = value; }
-    }
-
-    /// <summary>
-    /// High Value for Three Color Scale Object Value
-    /// </summary>
-    public ExcelConditionalFormattingColorScaleValue HighValue
-    {
-      get { return _highValue; }
-      set { _highValue = value; }
-    }
-    #endregion Public Properties
-
-    /****************************************************************************************/
-  }
 }
