@@ -74,7 +74,8 @@ namespace OfficeOpenXml.FormulaParsing.LexicalAnalysis
             {
                 return tokenSeparator;
             }
-            var tokenList = (IList<Token>)tokens;
+            
+            var tokenList = tokens.ToList();
             //Address with worksheet-string before  /JK
             if (token.StartsWith("!") && tokenList[tokenList.Count-1].TokenType == TokenType.String)
             {

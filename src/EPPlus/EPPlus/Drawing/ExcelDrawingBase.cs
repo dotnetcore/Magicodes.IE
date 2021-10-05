@@ -10,12 +10,13 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
+
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
  * See the GNU Lesser General Public License for more details.
  *
- * The GNU Lesser General Public License can be viewed at http://www.opensource.org/licenses/lgpl-license.phpOfficeOpenXml.Drawing.ExcelDrawing.GetPixelTop()
+ * The GNU Lesser General Public License can be viewed at http://www.opensource.org/licenses/lgpl-license.php
  * If you unfamiliar with this license or have questions about it, here is an http://www.gnu.org/licenses/gpl-faq.html
  *
  * All code and executables are provided "as is" with no warranty either express or implied. 
@@ -187,8 +188,6 @@ namespace OfficeOpenXml.Drawing
         public const int EMU_PER_PIXEL = 9525;
         protected internal int _width = int.MinValue, _height = int.MinValue, _top = int.MinValue, _left = int.MinValue;
         bool _doNotAdjust = false;
-        static Dictionary<int, double> _textHeights = new Dictionary<int, double>();
-  
         internal ExcelDrawing(ExcelDrawings drawings, XmlNode node, string nameXPath) :
             base(drawings.NameSpaceManager, node)
         {
@@ -438,12 +437,6 @@ namespace OfficeOpenXml.Drawing
             }
         }
         #region "Internal sizing functions"
-        static Dictionary<int, double> _rowHeights = new Dictionary<int, double>();
-        internal static void ResetWidthRowCache()
-        {
-            _rowHeights = new Dictionary<int, double>();
-        }
-
         internal int GetPixelLeft()
         {
             ExcelWorksheet ws = _drawings.Worksheet;
@@ -459,16 +452,11 @@ namespace OfficeOpenXml.Drawing
         }
         internal int GetPixelTop()
         {
-            //ExcelWorksheet ws = _drawings.Worksheet;
+            ExcelWorksheet ws = _drawings.Worksheet;
             int pix = 0;
             for (int row = 0; row < From.Row; row++)
             {
-                //pix += (int)(GetRowHeight(row + 1) / 0.75);
-                if (!_rowHeights.ContainsKey(row))
-                {
-                    _rowHeights.Add(row, GetRowHeight(row + 1));
-                }
-                pix += (int)(_rowHeights[row] / 0.75);
+                pix += (int)(GetRowHeight(row + 1) / 0.75);
             }
             pix += From.RowOff / EMU_PER_PIXEL;
             return pix;
@@ -537,7 +525,6 @@ namespace OfficeOpenXml.Drawing
             }
         }
 
-
         private double GetRowHeightFromCellFonts(int row, ExcelWorksheet ws)
         {
             var dh = ws.DefaultRowHeight;
@@ -551,17 +538,7 @@ namespace OfficeOpenXml.Drawing
                 {
                     var xfs = styles.CellXfs[cse.Value._styleId];
                     var f = styles.Fonts[xfs.FontId];
-                    double rh;
-                    if (_textHeights.ContainsKey(cse.Value._styleId))
-                    {
-                        rh = _textHeights[cse.Value._styleId];
-                    }
-                    else
-                    {
-                        rh = ExcelFontXml.GetFontHeight(f.Name, f.Size) * 0.75;
-                        _textHeights.Add(cse.Value._styleId, rh);
-                    }
-
+                    var rh = ExcelFontXml.GetFontHeight(f.Name, f.Size) * 0.75;
                     if (rh > height)
                     {
                         height = rh;
@@ -635,10 +612,6 @@ namespace OfficeOpenXml.Drawing
         }
         internal void SetPixelHeight(int pixels, float dpi)
         {
-            if (dpi == 0)
-            {
-                return;
-            }
             _doNotAdjust = true;
             ExcelWorksheet ws = _drawings.Worksheet;
             //decimal mdw = ws.Workbook.MaxFontWidth;
@@ -662,21 +635,13 @@ namespace OfficeOpenXml.Drawing
                 To.RowOff = prevPixOff * EMU_PER_PIXEL;
             }
             _doNotAdjust = false;
-
-
         }
         internal void SetPixelWidth(int pixels)
         {
             SetPixelWidth(pixels, STANDARD_DPI);
         }
-
         internal void SetPixelWidth(int pixels, float dpi)
         {
-            if (dpi == 0)
-            {
-                return;
-            }
-            //TODO https://github.com/dotnetcore/Magicodes.IE/issues/285 由于JPG文件问题，暂且将dpi0的情况下不处理
             _doNotAdjust = true;
             ExcelWorksheet ws = _drawings.Worksheet;
             decimal mdw = ws.Workbook.MaxFontWidth;
@@ -696,7 +661,6 @@ namespace OfficeOpenXml.Drawing
             To.ColumnOff = prevPixOff * EMU_PER_PIXEL;
             _doNotAdjust = false;
         }
-
         #endregion
         #region "Public sizing functions"
         /// <summary>

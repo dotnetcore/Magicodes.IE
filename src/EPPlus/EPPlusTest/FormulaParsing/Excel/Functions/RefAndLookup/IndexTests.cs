@@ -33,7 +33,7 @@ namespace EPPlusTest.FormulaParsing.Excel.Functions.RefAndLookup
         [TestMethod]
         public void Index_Should_Return_Value_By_Index()
         {
-            var func = new Index();
+            var func = new OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup.Index();
             var result = func.Execute(
                 FunctionsHelper.CreateArgs(
                     FunctionsHelper.CreateArgs(1, 2, 5),

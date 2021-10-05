@@ -544,7 +544,7 @@ namespace EPPlusTest
             });
 
         }
-        [Ignore]
+        //[Ignore]
         [TestMethod]
         public void Issue15188()
         {
@@ -2394,8 +2394,8 @@ namespace EPPlusTest
             {
                 var ws = package.Workbook.Worksheets.Add("TextBug");
                 ws.Cells["A1"].Value = new DateTime(2019, 3, 7);
-                ws.Cells["A1"].Style.Numberformat.Format = "mm-dd-yy";
-
+                ws.Cells["A1"].Style.Numberformat.Format = "yyyy-MM-dd";
+                
                 Assert.AreEqual("2019-03-07", ws.Cells["A1"].Text);
             }
         }
