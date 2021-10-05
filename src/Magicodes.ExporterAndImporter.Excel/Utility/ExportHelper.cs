@@ -703,40 +703,56 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             }
                         }
                     }
-                    else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
-                    {
-                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-                        var val = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem).ToString();
-                        bool value = Convert.ToBoolean(val);
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value))
-                        {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value.ToString() == value.ToString());
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
-                        }
-                        else
-                        {
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
-                        }
-                    }
-                    else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
-                    {
-                        var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-                        var value = Convert.ToBoolean(type.GetProperty(propertyInfo.Name)?.GetValue(dataItem));
-
-                        if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value.ToString()))
-                        {
-                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value.to == value.ToString());
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
-                        }
-                        else
-                        {
-                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
-                        }
-                    }
                     else
                     {
-                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)
+                        var cSharpTypeName = propertyInfo.PropertyType.GetCSharpTypeName();
+                        switch (cSharpTypeName)
+                        {
+                            case "Boolean":
+                                {
+                                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                                    var val = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem).ToString();
+                                    bool value = Convert.ToBoolean(val);
+                                    if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value))
+                                    {
+                                        var mapValue = col.MappingValues.FirstOrDefault(f => f.Value.ToString() == value.ToString());
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
+                                    }
+                                    else
+                                    {
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                                    }
+                                }
+                                break;
+                            case "Nullable<Boolean>":
+                                {
+                                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                                    var objValue = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem);
+                                    if (objValue == null)
+                                    {
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = null;
+                                    }
+                                    else
+                                    {
+                                        var boolValue = (bool?)(objValue);
+                                        if (boolValue.HasValue && col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(boolValue))
+                                        {
+                                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == boolValue);
+                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
+                                        }
+                                        else
+                                        {
+                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = objValue;
+                                        }
+
+                                    }
+                                }
+                                break;
+                            default:
+                                ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)
                             ?.GetValue(dataItem)?.ToString();
+                                break;
+                        }
                     }
                 }
 
