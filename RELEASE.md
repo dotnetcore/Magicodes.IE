@@ -1,5 +1,9 @@
 # Release Log
 
+## 2.5.6.0
+**2021.10.05**
+- 合并Magicodes.EPPlus到Magicodes.IE，修复所有单元测试并修复部分Bug
+
 ## 2.5.5.4
 **2021.09.02**
 - 修复可为空枚举导入时的验证问题[#322](https://github.com/dotnetcore/Magicodes.IE/issues/322)。
