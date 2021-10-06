@@ -759,7 +759,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         /// <summary>
-        /// 重复标注测试,,想已有标注的模板再次插入标注会报错
+        /// 重复标注测试,向已有标注的模板再次插入标注会报错
         /// </summary>
         /// <returns></returns>
         [Fact(DisplayName = "重复标注测试")]

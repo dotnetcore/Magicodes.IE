@@ -1,4 +1,7 @@
 # Release Log
+## 2.5.6.1
+**2021.10.06**
+- 修复 [#337](https://github.com/dotnetcore/Magicodes.IE/issues/377)，bool?类型导出的映射问题
 
 ## 2.5.6.0
 **2021.10.05**
