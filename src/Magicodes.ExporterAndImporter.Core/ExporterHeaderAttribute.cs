@@ -13,6 +13,10 @@
 
 using System;
 
+#if !NETSTANDARD2_0
+using System.Drawing;
+#endif
+
 namespace Magicodes.ExporterAndImporter.Core
 {
 
@@ -89,5 +93,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// Hidden
         /// </summary>
         public bool Hidden { get; set; }
+
+        /// <summary>
+        /// 字体颜色
+        /// </summary>
+        public KnownColor FontColor { get; set; }
     }
 }
