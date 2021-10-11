@@ -960,5 +960,20 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells["C4"].Text.ShouldBe("");
             }
         }
+
+        [Fact(DisplayName = "单元格字体颜色设置数据导出测试")]
+        public async Task AttrExportWithColFontColorData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithColFontColorData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColFontColor>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
     }
 }
