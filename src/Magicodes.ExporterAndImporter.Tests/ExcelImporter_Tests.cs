@@ -771,7 +771,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-            import.HasError.ShouldBeFalse();
+            import.HasError.ShouldBeTrue();
             import.Data.ShouldNotBeNull();
             import.Data.Count.ShouldBe(16);
 
