@@ -750,7 +750,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 break;
                             default:
                                 ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)
-                            ?.GetValue(dataItem)?.ToString();
+                            ?.GetValue(dataItem);
                                 break;
                         }
                     }
