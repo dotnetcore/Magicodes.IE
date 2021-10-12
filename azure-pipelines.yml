@@ -45,17 +45,12 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '3.0.x'
-
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
     version: '3.1.x'
 
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '3.1.x'
+    version: '2.2.x'
 
 
 # - task: DotNetCoreCLI@2
