@@ -974,6 +974,16 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                //红色
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe("FFFF0000");
+
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe(sheet.Cells["B2"].Style.Font.Color.Rgb);
+            }
         }
     }
 }
