@@ -1,10 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Excel.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MagicodesWebSite.Controllers
@@ -49,7 +46,7 @@ namespace MagicodesWebSite.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("ByList")]
-        public async Task<ActionResult> ByList()
+        public ActionResult ByList()
         {
             var list = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             return new XlsxFileResult<ExportTestDataWithAttrs>(data: list);
