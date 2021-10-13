@@ -1,4 +1,10 @@
 # Release Log
+
+## 2.5.6.2
+**2021.10.13**
+- 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
+- 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
+
 ## 2.5.6.1
 **2021.10.06**
 - 修复 [#337](https://github.com/dotnetcore/Magicodes.IE/issues/377)，bool?类型导出的映射问题
@@ -17,7 +23,7 @@
 
 ## 2.5.5.2
 **2021.08.24**
-- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
+- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)342。
 
 ## 2.5.5.1
 **2021.08.07**
