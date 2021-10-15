@@ -17,8 +17,11 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
+using Magicodes.IE.Core;
+using Magicodes.ExporterAndImporter.Tests.Models.Import.Issue305;
 using Newtonsoft.Json;
 using OfficeOpenXml;
+using OfficeOpenXml.DataValidation;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -144,6 +147,45 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         /// <summary>
+        /// https://github.com/dotnetcore/Magicodes.IE/issues/293
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "#293")]
+        public async Task GenerateTemplateBytesForIssue293_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(GenerateTemplateBytesForIssue293_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var temp = await Importer.GenerateTemplateBytes<ImportProductDto>();
+            var mockeSelctItems = new List<string> { "测试一", "测试二", "测试三" };
+            // TODO: 添加真实的下拉数据，添加后， 模板会出问题
+            using (var stream = new MemoryStream(temp))
+            {
+                using (var package = new ExcelPackage(stream))
+                {
+                    var sheet = package.Workbook.Worksheets.FirstOrDefault();
+                    var listSheet = package.Workbook.Worksheets.Add("业务分类");
+                    listSheet.Hidden = eWorkSheetHidden.Hidden;
+                    int rowIndex = 1;
+                    foreach (var item in mockeSelctItems)
+                    {
+                        listSheet.Cells[rowIndex, 1].Value = item;
+                        rowIndex++;
+                    }
+                    var validation = sheet.DataValidations.AddListValidation("A2:A10000");
+                    validation.ShowErrorMessage = false;
+                    validation.ErrorStyle = ExcelDataValidationWarningStyle.warning;
+                    validation.ErrorTitle = "输入得值无效";
+                    validation.Error = "请选择所属分类";
+                    //validation.Formula.ExcelFormula = $"=OFFSET(业务分类!$A$1,MATCH(""&A2&"",业务分类!$A:$A,0)-1,,COUNTIF(业务分类!$A:$A,""&A2&""),)";
+                    validation.Formula.ExcelFormula = $"业务分类!$A$1:$A${rowIndex - 1}";
+                    File.WriteAllBytes(filePath, package.GetAsByteArray());
+                    File.Exists(filePath).ShouldBeTrue();
+                }
+            }
+        }
+
+        /// <summary>
         /// 测试：
         /// 表头行位置设置
         /// 导入逻辑测试
@@ -235,7 +277,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.Data.ElementAt(0).ProductIdTest1.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576352"));
             result.Data.ElementAt(0).ProductIdTest2.ShouldBe(Guid.Parse("C2EE3694-959A-4A87-BC8C-4003F6576357"));
             result.Data.ElementAt(1).Name.ShouldBe(null);
+            result.Data.ElementAt(1).Type.ShouldBe(ImporterProductType.Two);
             result.Data.ElementAt(2).Name.ShouldBe("左侧空格测试");
+            result.Data.ElementAt(2).Type.ShouldBe(null);
 
             result.ImporterHeaderInfos.ShouldNotBeNull();
             result.ImporterHeaderInfos.Count.ShouldBe(17);
@@ -351,7 +395,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：5，6。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}5，6。"));
 
             errorRows = new List<int>()
             {
@@ -359,7 +403,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：8，9，11，13。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}8，9，11，13。"));
 
             errorRows = new List<int>()
             {
@@ -367,7 +411,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             };
             result.RowErrors.ShouldContain(p =>
                 errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品型号") &&
-                p.FieldErrors.Values.Contains("存在数据重复，请检查！所在行：4，6，8，10，11，13。"));
+                p.FieldErrors.Values.Contains($"{Resource.ExistDuplicateData}4，6，8，10，11，13。"));
 
             #endregion 重复错误
 
@@ -378,31 +422,32 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.Count.ShouldBe(1);
         }
 
-        [Fact(DisplayName = "结果筛选器测试")]
-        public async Task ImportResultFilter_Test()
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
-            var labelingFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ImportResultFilter_Test)}.xlsx");
-            var result = await Importer.Import<ImportResultFilterDataDto1>(filePath, labelingFilePath);
-            File.Exists(labelingFilePath).ShouldBeTrue();
-            result.ShouldNotBeNull();
-            result.HasError.ShouldBeTrue();
-            result.Exception.ShouldBeNull();
-            result.ImporterHeaderInfos.ShouldNotBeNull();
-            result.ImporterHeaderInfos.Count.ShouldBeGreaterThan(0);
+        //[Fact(DisplayName = "结果筛选器测试")]
+        //public async Task ImportResultFilter_Test()
+        //{
+        //    Importer = new ExcelImporter();
+        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Errors", "数据错误.xlsx");
+        //    var labelingFilePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ImportResultFilter_Test)}.xlsx");
+        //    var result = await Importer.Import<ImportResultFilterDataDto1>(filePath, labelingFilePath);
+        //    File.Exists(labelingFilePath).ShouldBeTrue();
+        //    result.ShouldNotBeNull();
+        //    result.HasError.ShouldBeTrue();
+        //    result.Exception.ShouldBeNull();
+        //    result.ImporterHeaderInfos.ShouldNotBeNull();
+        //    result.ImporterHeaderInfos.Count.ShouldBeGreaterThan(0);
 
-            result.TemplateErrors.Count.ShouldBe(0);
+        //    result.TemplateErrors.Count.ShouldBe(0);
 
-            var errorRows = new List<int>()
-            {
-                5,6
-            };
-            result.RowErrors.ShouldContain(p =>
-                errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
-                p.FieldErrors.Values.Contains("Duplicate data exists, please check! Where:5，6。"));
+        //    var errorRows = new List<int>()
+        //    {
+        //        5,6
+        //    };
+        //    result.RowErrors.ShouldContain(p =>
+        //        errorRows.Contains(p.RowIndex) && p.FieldErrors.ContainsKey("产品代码") &&
+        //        p.FieldErrors.Values.Contains("Duplicate data exists, please check! Where:5，6。"));
 
-            //TODO:检查标注
-        }
+        //    //TODO:检查标注
+        //}
 
         [Fact(DisplayName = "学生基础数据导入")]
         public async Task StudentInfoImporter_Test()
@@ -477,7 +522,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult.HasError.ShouldBeTrue();
             importResult.Exception.ShouldNotBeNull();
             //默认最大5万
-            importResult.Exception.Message.ShouldContain("最大允许导入条数不能超过");
+            importResult.Exception.Message.ShouldContain(Resource.MaximumNumberImportsCannotExceeded);
 
             if (File.Exists(filePath)) File.Delete(filePath);
             result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(50000));
@@ -546,7 +591,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "导入列头筛选器测试带头部描述")]
+        [Fact(DisplayName = "自定义校验后写入错误数据验证注释")]
         public async Task ImportFailureData()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
@@ -629,7 +674,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ImportOnlyErrorRows()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
-            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath);
+            var labelErrorFilePath =
+                Path.Combine(Directory.GetCurrentDirectory(), nameof(ImportOnlyErrorRows) + ".xlsx");
+            if (File.Exists(labelErrorFilePath)) File.Delete(labelErrorFilePath);
+            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(filePath, labelErrorFilePath);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
@@ -637,9 +685,25 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             import.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("身份证号"));
             import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证号"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 13 && p.FieldErrors.ContainsKey("身份证号"));
 
             import.HasError.ShouldBeTrue();
-            import.RowErrors.Count.ShouldBe(2);
+            import.RowErrors.Count.ShouldBe(3);
+
+            var errorRows = import.Data.Where((x, i) => import.RowErrors.Any(err => err.RowIndex == i + 2)).ToList();
+
+            var labelErrorImport = await Importer.Import<ImportWithOnlyErrorRowsDto>(labelErrorFilePath);
+            labelErrorImport.ShouldNotBeNull();
+            if (labelErrorImport.Exception != null) _testOutputHelper.WriteLine(labelErrorImport.Exception.ToString());
+
+            if (labelErrorImport.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(labelErrorImport.RowErrors));
+
+            labelErrorImport.Data.Count.ShouldBe(3);
+            labelErrorImport.RowErrors.Count.ShouldBe(3);
+            foreach (var errorRow in errorRows)
+            {
+                labelErrorImport.Data.ShouldContain(x => x.Name == errorRow.Name && x.IdCard == errorRow.IdCard);
+            }
         }
 
         /// <summary>
@@ -692,37 +756,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeTrue();
             import.Data.ShouldNotBeNull();
-        }
-
-        /// <summary>
-        /// 重复标注测试,,想已有标注的模板再次插入标注会报错
-        /// </summary>
-        /// <returns></returns>
-        [Fact(DisplayName = "重复标注测试")]
-        public async Task StudentInfoWithCommentImporter_Test()
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头_.xlsx");
-            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
-            import.ShouldNotBeNull();
-            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
-
-            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-            import.HasError.ShouldBeFalse();
-            import.Data.ShouldNotBeNull();
-            import.Data.Count.ShouldBe(16);
-
-            //检查值映射
-            for (int i = 0; i < import.Data.Count; i++)
-            {
-                if (i < 5)
-                {
-                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
-                }
-                else
-                {
-                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
-                }
-            }
         }
 
         /// <summary>
@@ -879,7 +912,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "ColumnIndex导入测试.xlsx");
             var import = await Importer.Import<ImportTestColumnIndex>(filePath);
             import.HasError.ShouldBeFalse();
-            import.ImporterHeaderInfos.Count.ShouldBe(2);
+            import.TemplateErrors.Count.ShouldBe(0);
+            import.ImporterHeaderInfos.Count.ShouldBe(3);
+            import.Data.ElementAt(0).Age = 11;
         }
 
         [Fact(DisplayName = "合并行数据导入")]
@@ -960,6 +995,42 @@ namespace Magicodes.ExporterAndImporter.Tests
                     import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
                 }
             }
+        }
+
+        /// <summary>
+        /// 单元格合并导入
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "单元格合并导入#305")]
+        public async Task CellMergeImport_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Issue305.xlsx");
+            var import = await Importer.Import<ProjectImportDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+
+            import.Data.ElementAt(0).CardNumber.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(0).MonthlyFee.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(0).Flow.ShouldNotBeNullOrEmpty();
+
+            import.Data.ElementAt(1).CardNumber.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).MonthlyFee.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).Flow.ShouldNotBeNullOrEmpty();
+            import.Data.ElementAt(1).PaymentDate.ShouldNotBeNull();
+
+            import.Data.ElementAt(2).CardNumber.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(2).MonthlyFee.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(2).Flow.ShouldBeNullOrEmpty();
+
+            import.Data.ElementAt(3).CardNumber.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(3).MonthlyFee.ShouldBeNullOrEmpty();
+            import.Data.ElementAt(3).Flow.ShouldBeNullOrEmpty();
+
+            import.Data.Count.ShouldBe(4);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CsvHelper;
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
+using Magicodes.IE.Core;
 using System;
 using System.Globalization;
 using System.IO;
@@ -127,7 +129,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <exception cref="ArgumentException">文件路径不能为空! - filePath</exception>
         private static void CheckImportFile(string filePath)
         {
-            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("文件路径不能为空!", nameof(filePath));
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException(Resource.FilePathCannotBeEmpty, nameof(filePath));
 
             //TODO:在Docker容器中存在文件路径找不到问题，暂时先注释掉
             //if (!File.Exists(filePath))

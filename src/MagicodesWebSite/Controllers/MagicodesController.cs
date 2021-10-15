@@ -1,7 +1,10 @@
 ﻿using Magicodes.ExporterAndImporter.Attributes;
+using Magicodes.ExporterAndImporter.Excel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Magicodes.ExporterAndImporter.Excel.AspNetCore;
 
 namespace MagicodesWebSite.Controllers
 {

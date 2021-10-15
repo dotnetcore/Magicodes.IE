@@ -1,6 +1,6 @@
 <img align="right" src="./res/logo.jpg" width="300"/>
 
-# Magicodes.IE | [English](README.en.md)
+# Magicodes.IE | [English](README.md)
 [![Member project of .NET Core Community](https://img.shields.io/badge/member%20project%20of-NCC-9e20c9.svg)](https://github.com/dotnetcore)
 [![nuget](https://img.shields.io/nuget/v/Magicodes.IE.Core.svg?style=flat-square)](https://www.nuget.org/packages/Magicodes.IE.Core) 
 [![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -18,14 +18,14 @@
 1. [概述](#概述)
 2. [里程碑](#里程碑)
 3. [自动构建](#自动构建)
-4. [Nuget包](#Nuget包)
+4. [Nuget包](#NuGet包)
 5. [注意事项](#注意事项)
 6. [教程](#教程)
 7. [特点](#特点)
 8. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
 9. [联系我们](#联系我们)
 10. [更新历史](./RELEASE.md)
-11. [赞助](#赞助)
+11. [友情赞助](#友情赞助)
 
 ## 概述
 
@@ -56,19 +56,26 @@
 
 具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
-## Nuget包
+## NuGet包
 
 #### 稳定版（推荐）
 
-| **名称** |      **Nuget**      |
-|----------|:-------------:|
+| **名称** |      **NuGet**      |
+|----------|:-------------|
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
 | **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
+| **Magicodes.IE.Excel.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.Excel.AspNetCore)**   |
 | **Magicodes.IE.Pdf** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf)](https://www.nuget.org/packages/Magicodes.IE.Pdf)**   |
 | **Magicodes.IE.Word** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word)](https://www.nuget.org/packages/Magicodes.IE.Word)**   |
 | **Magicodes.IE.Html** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html)](https://www.nuget.org/packages/Magicodes.IE.Html)**   |
 | **Magicodes.IE.Csv** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv)](https://www.nuget.org/packages/Magicodes.IE.Csv)**   |
 | **Magicodes.IE.AspNetCore** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.AspNetCore)](https://www.nuget.org/packages/Magicodes.IE.AspNetCore)**   |
+| **Magicodes.IE.EPPlus** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.EPPlus)](https://www.nuget.org/packages/Magicodes.IE.EPPlus)**   |
+| **Magicodes.IE.Excel.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.Abp)](https://www.nuget.org/packages/Magicodes.IE.Excel.Abp)**   |
+| **Magicodes.IE.Csv.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Csv.Abp)](https://www.nuget.org/packages/Magicodes.IE.Csv.Abp)**   |
+| **Magicodes.IE.Html.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html.Abp)](https://www.nuget.org/packages/Magicodes.IE.Html.Abp)**   |
+| **Magicodes.IE.Pdf.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf.Abp)](https://www.nuget.org/packages/Magicodes.IE.Pdf.Abp)**   |
+| **Magicodes.IE.Word.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word.Abp)](https://www.nuget.org/packages/Magicodes.IE.Word.Abp)**   |
 
 ## **注意事项**
 
@@ -93,6 +100,7 @@
 13. **[性能测试](docs/13.性能测试.md)**
 14. [**Excel合并行导入**](docs/Excel合并行导入.md)
 15. [**Excel模板导出之动态导出**](docs/Excel模板导出之动态导出.md)
+16. **[Magicodes.IE.Excel.AspNetCore之快速导出Excel（new）](docs/AspNetCore之快速导出Excel.md)**
 
 **其他教程见下文或单元测试**
 
@@ -122,13 +130,13 @@
 - **导入支持截止列设置，如未设置则默认遇到空格截止；**
 - **支持导出HTML、Word、Pdf，支持自定义导出模板；**
   - **导出HTML**
-**![](./res/导出html.png "导出HTML")**
+  **![](./res/导出html.png "导出HTML")**
   - **导出Word**
-**![](./res/导出Word.png "导出Word")**
+  **![](./res/导出Word.png "导出Word")**
   - **导出Pdf，支持设置，具体见更新日志**
-**![](./res/导出Pdf.png "导出Pdf")**
+  **![](./res/导出Pdf.png "导出Pdf")**
   - **导出收据**
-**![](./res/导出收据.png "导出收据.png")**
+  **![](./res/导出收据.png "导出收据.png")**
 - **导入支持重复验证；**
 **![](./res/重复错误.png "重复错误.png")**
 - **支持单个数据模板导出，常用于导出收据、凭据等业务**
@@ -262,7 +270,7 @@
 
 - **支持使用System.ComponentModel.DataAnnotations命名空间下的部分特性来控制导入导出**  [#63](https://github.com/dotnetcore/Magicodes.IE/issues/63)
 
-- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
+- **支持在ASP.NET Core Web API 中使用自定义格式化程序导出Excel、Pdf、Csv等内容，具体见教程** [#64](https://github.com/dotnetcore/Magicodes.IE/issues/64)
 
 - **支持分栏、分sheet、追加rows导出**
 
@@ -290,6 +298,8 @@ public DateTime Time3 { get; set; }
 - **Excel导入支持合并行数据** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
   ![合并行导入文件](res/image-20210306105147319.png)
+
+- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
 
 ## **联系我们**
 
@@ -323,22 +333,20 @@ public DateTime Time3 { get; set; }
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
 
-## 赞助
+## 友情赞助
 
-### 微信&支付宝
+### 服务内容
 
-<table>
-<tr>
-<td>
-<img align="left" src="https://docs.xin-lai.com/medias/reward/alipay.jpg" width="300"/>
-</td>
-<td>
-<img align="right" src="https://docs.xin-lai.com/medias/reward/wechat.jpg" width="300"/>
-</td>
-</tr>
-</table>
+<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">点此打开小店</a></p>
 
-- **我们都是凭着热情业余驱动，一杯咖啡，即可让我们奋勇前行！**
+服务内容如下：
+- 技术支持
+- 使用培训
+- 二次开发支持
+- 需求定制
+- 赞助（Github展示）
+
+**具体收费根据需求评估，所有收入的30%~60%（视具体工作量评估）捐赠给Magicodes.IE项目开源管理委员会以促进项目长期维护和迭代发展。所有收支均全部公开。**
 
 ### Code Contributors
 

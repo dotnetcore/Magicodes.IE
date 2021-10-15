@@ -15,6 +15,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Html;
 using System.Text;
 using System.Runtime.InteropServices;
+using Magicodes.IE.Core;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
@@ -70,7 +71,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         public async Task<ExportFileInfo> ExportListByTemplate<T>(string fileName, ICollection<T> dataItems,
             string htmlTemplate = null) where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, nameof(fileName));
 
             var exporterAttribute = GetExporterAttribute<T>();
             var htmlString = await HtmlExporter.ExportListByTemplate(dataItems, htmlTemplate);
@@ -91,7 +92,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         public async Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data, string htmlTemplate)
             where T : class
         {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("文件名必须填写!", nameof(fileName));
+            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException(Resource.FileNameMustBeFilled, nameof(fileName));
 
             var exporterAttribute = GetExporterAttribute<T>();
             var htmlString = await HtmlExporter.ExportByTemplate(data, htmlTemplate);

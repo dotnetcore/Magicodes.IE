@@ -10,8 +10,10 @@
 //           Blog：http://www.cnblogs.com/codelove/
 //
 // ======================================================================
+using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Magicodes.ExporterAndImporter.Word;
+using Magicodes.IE.Core;
 using Shouldly;
 using System;
 using System.IO;
@@ -42,7 +44,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var exporter = new WordExporter();
             var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
                  GenFu.GenFu.ListOf<ExportTestData>(), tpl));
-            ex.Message.ShouldContain("文件名必须填写");
+            ex.Message.ShouldContain(Resource.FileNameMustBeFilled);
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordByTemplate_Test) + ".docx");
             if (File.Exists(filePath)) File.Delete(filePath);
@@ -61,7 +63,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var exporter = new WordExporter();
             var ex = await Assert.ThrowsAnyAsync<ArgumentException>(async () => await exporter.ExportListByTemplate(null,
                  GenFu.GenFu.ListOf<ExportTestData>(), tpl));
-            ex.Message.ShouldContain("文件名必须填写");
+            ex.Message.ShouldContain(Resource.FileNameMustBeFilled);
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportWordBytesByTemplate_Test) + ".docx");
             if (File.Exists(filePath)) File.Delete(filePath);
@@ -141,6 +143,5 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
             File.Exists(filePath).ShouldBeTrue();
         }
-
     }
 }

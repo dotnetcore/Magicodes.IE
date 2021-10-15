@@ -1,10 +1,11 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.3.9</Version>
+    <Version>2.5.6.2</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
@@ -15,24 +16,22 @@
 
       开源库地址:https://github.com/xin-lai
       博客地址：http://www.cnblogs.com/codelove/
+      更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
       公众号：麦扣聊技术
       交流QQ群：85318032
 
-      **2021.05.26**
-      - 修复ValueMappingAttribute
+      **2021.10.13**
+      - 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
+      - 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
 
-      **2021.05.10**
-      - EXCEL模板导出功能，将单行复制改为多行复制
-      - PDF导出内存优化
+      **2021.10.06**
+      - 修复 [#337](https://github.com/dotnetcore/Magicodes.IE/issues/377)，bool?类型导出的映射问题
 
-      **2021.04.23**
-      - 修复生成模板，格式错误问题
+      **2021.10.05**
+      - 合并Magicodes.EPPlus到Magicodes.IE，修复所有单元测试并修复部分Bug
 
-      **2021.04.18**
-      - 支持对导入模板生成，预设值单元格格式
-      - 单元格图片导出支持偏移设置
-      - 支持多sheet导入SheetIndex的支持
-
+      **2021.09.02**
+      - 修复可为空枚举导入时的验证问题[#322](https://github.com/dotnetcore/Magicodes.IE/issues/322)。
     </Description>
   </PropertyGroup>
   <PropertyGroup>

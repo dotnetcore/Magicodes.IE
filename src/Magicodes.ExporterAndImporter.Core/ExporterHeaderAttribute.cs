@@ -13,6 +13,10 @@
 
 using System;
 
+#if !NETSTANDARD2_0
+using System.Drawing;
+#endif
+
 namespace Magicodes.ExporterAndImporter.Core
 {
 
@@ -79,8 +83,20 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 排序
         /// </summary>
         public int ColumnIndex { get; set; } = 10000;
+
+        /// <summary>
+        /// 自动换行
+        /// </summary>
+        public bool WrapText { get; set; }
+
+        /// <summary>
+        /// Hidden
+        /// </summary>
+        public bool Hidden { get; set; }
+
+        /// <summary>
+        /// 字体颜色
+        /// </summary>
+        public KnownColor FontColor { get; set; }
     }
-
-
-
 }

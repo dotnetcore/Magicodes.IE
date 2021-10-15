@@ -1,5 +1,93 @@
 # Release Log
 
+## 2.5.6.2
+**2021.10.13**
+- 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
+- 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
+
+## 2.5.6.1
+**2021.10.06**
+- 修复 [#337](https://github.com/dotnetcore/Magicodes.IE/issues/377)，bool?类型导出的映射问题
+
+## 2.5.6.0
+**2021.10.05**
+- 合并Magicodes.EPPlus到Magicodes.IE，修复所有单元测试并修复部分Bug
+
+## 2.5.5.4
+**2021.09.02**
+- 修复可为空枚举导入时的验证问题[#322](https://github.com/dotnetcore/Magicodes.IE/issues/322)。
+
+## 2.5.5.3
+**2021.08.27**
+- 修复Append方式导出多个sheet时，发生“Tablename is not unique”错误，具体见[#299](https://github.com/dotnetcore/Magicodes.IE/issues/299)。
+
+## 2.5.5.2
+**2021.08.24**
+- 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)342。
+
+## 2.5.5.1
+**2021.08.07**
+- 为了简化ASP.NET Core下的Excel导出，对Excel导出进行了进一步的封装
+- 添加`Magicodes.IE.Excel.AspNetCore`工程，添加`XlsxFileResult`的Action Result，支持泛型集合、Bytes数组、Steam直接导出
+- 修改部分命名和命名空间
+
+## 2.5.4.9
+
+**2021.07.23**
+- 修复Excel合并行导入在存在空的合并单元格时可能的数据读取错误[#305](https://github.com/dotnetcore/Magicodes.IE/issues/305)
+
+
+
+## 2.5.4.8
+
+**2021.07.15**
+- Magicodes.EPPlus回退到4.6.6，以修复格式错乱的问题
+- 修复Excel仅导出错误数据时的Bug[#302](https://github.com/dotnetcore/Magicodes.IE/pull/302)
+- 完善多语言[#298](https://github.com/dotnetcore/Magicodes.IE/pull/298)，以及完善单元测试
+
+## 2.5.4.6
+
+**2021.07.04**
+- 模板导出支持一行多个表格[#296](https://github.com/dotnetcore/Magicodes.IE/issues/296)
+
+## 2.5.4.5
+
+**2021.06.29**
+- 合并PR[#295](https://github.com/dotnetcore/Magicodes.IE/pull/295),完善模板导出类型定义的问题
+
+## 2.5.4.4
+
+**2021.06.25**
+- Fix only first [ColumnIndex] is valid exception[#289](https://github.com/dotnetcore/Magicodes.IE/issues/289)
+
+## 2.5.4.3
+
+**2021.06.18**
+- Update ImportTestColumnIndex_Test
+- Magicodes.EPPlus was upgraded to 4.6.7[#285](https://github.com/dotnetcore/Magicodes.IE/issues/285)
+
+## 2.5.4.2
+
+**2021.06.05**
+- Fix ImporterHeader->ColumnIndex
+- Utilize RecyclableMemoryStream instead of "new MemoryStream" all over[#282](https://github.com/dotnetcore/Magicodes.IE/issues/282)
+
+## 2.5.4.1
+
+**2021.06.05**
+- EXCEL模板导出支持XOffset和YOffset[#280](https://github.com/dotnetcore/Magicodes.IE/issues/280)
+- EXCEL修复ValueMapping
+- Core工程多语言配置
+- EXCEL优化时间导出
+
+## 2.5.4.0
+
+**2021.06.01**
+
+- EXCEL支持自动换行属性[#278](https://github.com/dotnetcore/Magicodes.IE/issues/278)
+- EXCEL支持隐藏列属性[#273](https://github.com/dotnetcore/Magicodes.IE/issues/273)
+- EXCEL优化时间优化
+
 ## 2.5.3.9
 
 **2021.05.26**

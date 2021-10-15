@@ -3,12 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    
+
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>mie</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.1</Version>
+    <Version>0.0.4</Version>
 
     <Authors>雪雁</Authors>
     <Product>麦扣</Product>
@@ -29,5 +29,7 @@
   <ItemGroup>
     <Folder Include="nupkg\" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
+  </ItemGroup>
 </Project>
