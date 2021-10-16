@@ -511,7 +511,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        [Fact(DisplayName ="自动换行测试")]
+        [Fact(DisplayName = "自动换行测试#304")]
         public async Task WrapText_Test()
         {
             //模板路径
@@ -528,7 +528,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             //导出路径
             await exporter.ExportByTemplate(filePath, new Object(), tplPath);
 
-            //Magicodes.EPPlus 4.6.3无此问题
             using (var pck = new ExcelPackage(new FileInfo(tplPath)))
             {
                 var sheet = pck.Workbook.Worksheets.First();
