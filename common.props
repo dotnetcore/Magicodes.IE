@@ -38,4 +38,7 @@
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CS1591;CS1573</NoWarn>
+  </PropertyGroup>
 </Project>
