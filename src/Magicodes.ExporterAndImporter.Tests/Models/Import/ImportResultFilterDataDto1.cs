@@ -31,40 +31,48 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <returns></returns>
         public ImportResult<T> Filter<T>(ImportResult<T> importResult) where T : class, new()
         {
-            var errorRows = new List<int>()
+            switch (typeof(T).Name)
             {
-                5,6
-            };
-            var items = importResult.RowErrors.Where(p => errorRows.Contains(p.RowIndex)).ToList();
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                for (int j = 0; j < items[i].FieldErrors.Keys.Count; j++)
-                {
-                    var key = items[i].FieldErrors.Keys.ElementAt(j);
-                    var value = items[i].FieldErrors[key];
-                    items[i].FieldErrors[key] = value?.Replace(Resource.ExistDuplicateData, "Duplicate data exists, please check! Where:");
-                }
-            }
-
-            foreach (var item in importResult.Data)
-            {
-                //判断两个列是否重复，如果重复则提示 https://github.com/dotnetcore/Magicodes.IE/issues/144
-                if (item is ImportResultFilterDataDto1 item1 && item1.Code == item1.Name)
-                {
-                    items.Add(new DataRowErrorInfo()
+                case "DIImportResultFilterDataDto1":
                     {
-                        RowIndex = 2, //请按照正确的行号去填写
-                        FieldErrors = new Dictionary<string, string>()
+                        var errorRows = new List<int>()
                         {
-                            {"产品名称","Code和Name重复"}
+                            5,6
+                        };
+                        var items = importResult.RowErrors.Where(p => errorRows.Contains(p.RowIndex)).ToList();
+
+                        for (int i = 0; i < items.Count; i++)
+                        {
+                            for (int j = 0; j < items[i].FieldErrors.Keys.Count; j++)
+                            {
+                                var key = items[i].FieldErrors.Keys.ElementAt(j);
+                                var value = items[i].FieldErrors[key];
+                                items[i].FieldErrors[key] = value?.Replace(Resource.ExistDuplicateData, "Duplicate data exists, please check! Where:");
+                            }
                         }
-                    });
-                }
+
+                        foreach (var item in importResult.Data)
+                        {
+                            //判断两个列是否重复，如果重复则提示 https://github.com/dotnetcore/Magicodes.IE/issues/144
+                            if (item is ImportResultFilterDataDto1 item1 && item1.Code == item1.Name)
+                            {
+                                items.Add(new DataRowErrorInfo()
+                                {
+                                    RowIndex = 2, //请按照正确的行号去填写
+                                    FieldErrors = new Dictionary<string, string>()
+                                        {
+                                            {"产品名称","Code和Name重复"}
+                                        }
+                                });
+                            }
+                        }
+                        importResult.RowErrors = items;
+                    }
+                    break;
+
+                default:
+                    break;
             }
-
-            importResult.RowErrors = items;
-
             return importResult;
         }
     }

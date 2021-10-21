@@ -591,7 +591,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         /// 场景说明 使用导入方法且 导入数据验证无问题后 进行业务判断出现错误,手动将错误的数据标记在原来导入的Excel中
         /// </summary>
         /// <returns></returns>
-        [Fact(DisplayName = "导入列头筛选器测试带头部描述")]
+        [Fact(DisplayName = "自定义校验后写入错误数据验证注释")]
         public async Task ImportFailureData()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头.xlsx");
@@ -756,37 +756,6 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             import.HasError.ShouldBeTrue();
             import.Data.ShouldNotBeNull();
-        }
-
-        /// <summary>
-        /// 重复标注测试,向已有标注的模板再次插入标注会报错
-        /// </summary>
-        /// <returns></returns>
-        [Fact(DisplayName = "重复标注测试")]
-        public async Task StudentInfoWithCommentImporter_Test()
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "学生基础数据导入带描述头_.xlsx");
-            var import = await Importer.Import<ImportStudentDtoWithSheetDesc>(filePath);
-            import.ShouldNotBeNull();
-            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
-
-            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
-            import.HasError.ShouldBeFalse();
-            import.Data.ShouldNotBeNull();
-            import.Data.Count.ShouldBe(16);
-
-            //检查值映射
-            for (int i = 0; i < import.Data.Count; i++)
-            {
-                if (i < 5)
-                {
-                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Man);
-                }
-                else
-                {
-                    import.Data.ElementAt(i).Gender.ShouldBe(Genders.Female);
-                }
-            }
         }
 
         /// <summary>

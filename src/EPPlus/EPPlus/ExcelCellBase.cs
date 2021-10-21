@@ -130,8 +130,6 @@ namespace OfficeOpenXml
         /// <param name="part">the value to be translated</param>
         /// <param name="row"></param>
         /// <param name="col"></param>
-        /// <param name="rowIncr"></param>
-        /// <param name="colIncr"></param>
         /// <returns></returns>
         private static string ToR1C1(string part, int row, int col)
         {
@@ -188,8 +186,6 @@ namespace OfficeOpenXml
         /// <param name="part"></param>
         /// <param name="row"></param>
         /// <param name="col"></param> 
-        /// <param name="rowIncr"></param>
-        /// <param name="colIncr"></param>
         /// <returns></returns>
         private static string ToAbs(string part, int row, int col)
         {

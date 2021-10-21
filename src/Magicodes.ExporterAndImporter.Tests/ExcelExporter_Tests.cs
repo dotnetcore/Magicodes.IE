@@ -961,6 +961,39 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        
+        
+        [Fact(DisplayName = "导出日期格式化#331")]
+        public async Task DateTimeExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+        
+            var filePath = GetTestFilePath($"{nameof(Issue331)}.xlsx");
+        
+            DeleteFile(filePath);
+        
+            var data = GenFu.GenFu.ListOf<Issue331>(100);
+
+            var datetime = new DateTime(2021, 10, 12, 14, 14, 14);
+            data[0].Time4 = null;
+            data[0].Time1 = datetime;
+            data[0].Time2 = datetime;
+            data[0].Time5 = datetime;
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.First().Cells["A2"].Text.ShouldBe("2021-10-12 14:14:14");
+                pck.Workbook.Worksheets.First().Cells["B2"].Text.ShouldBe("2021-10-12");
+                pck.Workbook.Worksheets.First().Cells["D2"].Text.ShouldBe("");
+                pck.Workbook.Worksheets.First().Cells["E2"].Text.ShouldBe("14:14:14");
+            }
+            
+        }
+        
+
+
         [Fact(DisplayName = "单元格字体颜色设置数据导出测试")]
         public async Task AttrExportWithColFontColorData_Test()
         {
@@ -974,6 +1007,17 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                //红色
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe("FFFF0000");
+
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe(sheet.Cells["B2"].Style.Font.Color.Rgb);
+            }
         }
+
     }
 }

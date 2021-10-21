@@ -1,8 +1,9 @@
 <Project>
   <PropertyGroup>
-    <Version>2.5.6.1</Version>
+    <Version>2.5.6.2</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -20,6 +21,10 @@
       公众号：麦扣聊技术
       交流QQ群：85318032
 
+      **2021.10.13**
+      - 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
+      - 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
+
       **2021.10.06**
       - 修复 [#337](https://github.com/dotnetcore/Magicodes.IE/issues/377)，bool?类型导出的映射问题
 
@@ -28,15 +33,12 @@
 
       **2021.09.02**
       - 修复可为空枚举导入时的验证问题[#322](https://github.com/dotnetcore/Magicodes.IE/issues/322)。
-
-      **2021.08.27**
-      - 修复Append方式导出多个sheet时，发生“Tablename is not unique”错误，具体见[#299](https://github.com/dotnetcore/Magicodes.IE/issues/299)。
-
-      **2021.08.24**
-      - 添加对Abp模块的包装，具体见[#318](https://github.com/dotnetcore/Magicodes.IE/issues/318)。
     </Description>
   </PropertyGroup>
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CS1591;CS1573</NoWarn>
   </PropertyGroup>
 </Project>
