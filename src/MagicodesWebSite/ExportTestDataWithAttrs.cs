@@ -36,6 +36,18 @@ namespace MagicodesWebSite
         public DateTime Time4 { get; set; }
 
         /// <summary>
+        /// 时间测试
+        /// </summary>
+        [ExporterHeader(DisplayName = "日期5", Format = "yyyy-MM-dd")]
+        public DateTimeOffset Time5 { get; set; }
+
+        /// <summary>
+        /// 时间测试
+        /// </summary>
+        [ExporterHeader(DisplayName = "日期6", Format = "yyyy-MM-dd")]
+        public DateTimeOffset? Time6 { get { return DateTimeOffset.Now; } }
+
+        /// <summary>
         /// 长数值测试
         /// </summary>
         [ExporterHeader(DisplayName = "长数值", Format = "#,##0")]

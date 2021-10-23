@@ -3,6 +3,7 @@
     <Version>2.5.6.3</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <Authors>雪雁</Authors>
@@ -37,5 +38,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CS1591;CS1573</NoWarn>
   </PropertyGroup>
 </Project>

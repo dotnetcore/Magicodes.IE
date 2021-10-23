@@ -748,6 +748,46 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                 }
                                 break;
+                            case "DateTimeOffset":
+                                {
+                                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                                    var val = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem).ToString();
+                                    DateTime value = DateTimeOffset.Parse(val).ConvertToDateTime();
+                                    if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value))
+                                    {
+                                        var mapValue = col.MappingValues.FirstOrDefault(f => f.Value.ToString() == value.ToString());
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
+                                    }
+                                    else
+                                    {
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = value;
+                                    }
+                                }
+                                break;
+                            case "Nullable<DateTimeOffset>":
+                                {
+                                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
+                                    var objValue = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem);
+                                    if (objValue == null)
+                                    {
+                                        ((IDictionary<string, object>)obj)[propertyInfo.Name] = null;
+                                    }
+                                    else
+                                    {
+                                        var dateValue = ((DateTimeOffset?)(objValue)).ConvertToDateTime();
+                                        if (dateValue.HasValue && col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(dateValue))
+                                        {
+                                            var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == dateValue);
+                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = mapValue.Key;
+                                        }
+                                        else
+                                        {
+                                            ((IDictionary<string, object>)obj)[propertyInfo.Name] = dateValue;
+                                        }
+
+                                    }
+                                }
+                                break;
                             default:
                                 ((IDictionary<string, object>)obj)[propertyInfo.Name] = type.GetProperty(propertyInfo.Name)
                             ?.GetValue(dataItem);

@@ -156,7 +156,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Tables.Count.ShouldBe(1);
 
                 var tb = sheet.Tables.First();
-                tb.Columns.Count.ShouldBe(9);
+                tb.Columns.Count.ShouldBe(11);
                 tb.Columns.First().Name.ShouldBe("加粗文本");
             }
         }
