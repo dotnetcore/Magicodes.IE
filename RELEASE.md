@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.5.6.3
+**2021.10.23**
+- 导出日期格式化支持'DateTimeOffset'类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
+- 修改Magicodes.IE.EPPlus的包依赖PR[#351](https://github.com/dotnetcore/Magicodes.IE/pull/351)
+
 ## 2.5.6.2
 **2021.10.13**
 - 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
