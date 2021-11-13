@@ -61,7 +61,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
-            return Task.FromResult(helper.GetCsvExportAsByteArray<T>(dataItems));
+            return Task.FromResult(helper.GetCsvExportAsByteArray(dataItems));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new()
         {
             var helper = new ExportHelper<T>();
-            return Task.FromResult(helper.GetCsvExportHeaderAsByteArray<T>());
+            return Task.FromResult(helper.GetCsvExportHeaderAsByteArray());
         }
     }
 }

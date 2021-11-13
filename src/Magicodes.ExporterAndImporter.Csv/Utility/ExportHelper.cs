@@ -66,9 +66,8 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <summary>
         ///     导出表头
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public byte[] GetCsvExportHeaderAsByteArray<T>() where T : class
+        public byte[] GetCsvExportHeaderAsByteArray()
         {
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
@@ -104,10 +103,9 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <summary>
         ///     导出Csv
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public byte[] GetCsvExportAsByteArray<T>(DataTable dataItems) where T : class
+        public byte[] GetCsvExportAsByteArray(DataTable dataItems)
         {
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))

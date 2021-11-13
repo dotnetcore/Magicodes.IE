@@ -25,7 +25,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 
 #if NETSTANDARD2_1
-using System.Reflection;
 using System.Reflection.Emit;
 #endif
 
