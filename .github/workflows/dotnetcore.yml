@@ -23,7 +23,13 @@ jobs:
       - name: 🔨 Use .NET 5.0.X SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '5.x'
+
+      - name: 🔨 Use .NET 6.X SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.x'
+
       - name: Restore with dotnet
         run: dotnet restore
       - name: Build with dotnet
