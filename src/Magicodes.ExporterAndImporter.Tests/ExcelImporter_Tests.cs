@@ -1032,5 +1032,18 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             import.Data.Count.ShouldBe(4);
         }
+
+        [Fact(DisplayName = "Issue353-时间验证测试")]
+        public async Task Issue353_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Issue353.xlsx");
+            var import = await Importer.Import<Issue353Dto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(2);
+        }
     }
 }
