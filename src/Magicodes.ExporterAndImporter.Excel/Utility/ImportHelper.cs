@@ -1354,6 +1354,46 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     break;
 
+                                case "TimeSpan":
+                                    {
+                                        if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
+                                        {
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectTimeSpanFormat}");
+                                            break;
+                                        }
+                                        try
+                                        {
+                                            var ts = TimeSpan.Parse(cellValue);
+                                            SetValue(cell, dataItem, propertyInfo, ts);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectTimeSpanFormat}");
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Nullable<TimeSpan>":
+                                    {
+                                        if (string.IsNullOrWhiteSpace(cell.Text))
+                                        {
+                                            SetValue(cell, dataItem, propertyInfo, null);
+                                            break;
+                                        }
+                                        try
+                                        {
+                                            var ts = TimeSpan.Parse(cellValue);
+                                            SetValue(cell, dataItem, propertyInfo, ts);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectTimeSpanFormat}");
+                                            break;
+                                        }
+                                    }
+                                    break;
+
                                 case "DateTimeOffset":
                                     {
                                         if (!DateTimeOffset.TryParse(cell.Text, out var date))

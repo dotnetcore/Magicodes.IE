@@ -199,6 +199,9 @@
   <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
     <value>Invalid, please fill in the correct integer value!</value>
   </data>
+  <data name="PleaseFillInTheCorrectTimeSpanFormat" xml:space="preserve">
+    <value>Invalid, please fill in the correct timespan format!</value>
+  </data>
   <data name="TemplateFilePathCannotBeEmpty" xml:space="preserve">
     <value>Template file path cannot be empty!</value>
   </data>

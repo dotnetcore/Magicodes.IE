@@ -31,6 +31,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using Magicodes.IE.Tests.Models.Import;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -1032,5 +1033,36 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             import.Data.Count.ShouldBe(4);
         }
+
+        [Fact]
+        public async Task TimeSpan_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", nameof(TimeSpan_Test) + ".xlsx");
+            var import = await Importer.Import<TimeSpanDto>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(1);
+            for (int i = 0; i < import.Data.Count; i++)
+            {
+                var item = import.Data.ElementAt(i);
+                if (i == 0)
+                {
+                    item.TimeSpan1.ShouldBe(TimeSpan.Parse("1"));
+                    item.TimeSpan2.ShouldBe(item.TimeSpan1);
+                }
+                if (i == 1)
+                {
+                    item.TimeSpan1.ShouldBe(TimeSpan.Parse("2"));
+                    item.TimeSpan2.ShouldBeNull();
+                }
+                if (i == 3)
+                {
+                    item.TimeSpan1.ShouldBe(TimeSpan.Parse("6:12"));
+                    item.TimeSpan2.ShouldBe(item.TimeSpan1);
+                }
+            }
+        }
+
     }
 }

@@ -198,6 +198,9 @@
   <data name="PleaseFillInTheCorrectIntegerValue" xml:space="preserve">
     <value>无效，请填写正确的整数数值！</value>
   </data>
+  <data name="PleaseFillInTheCorrectTimeSpanFormat" xml:space="preserve">
+    <value>无效，请填写正确的时间跨度格式！</value>
+  </data>
   <data name="TemplateFilePathCannotBeEmpty" xml:space="preserve">
     <value>模板文件路径不能为空!</value>
   </data>
