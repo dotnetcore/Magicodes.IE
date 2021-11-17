@@ -1045,5 +1045,17 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
             import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称字数不能超过3");
         }
+
+        [Fact(DisplayName = "RequiredIf")]
+        public async Task RequiredIf_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "requiredif.xlsx");
+            var import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
+
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(1);
+            import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
+            import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
+        }
     }
 }
