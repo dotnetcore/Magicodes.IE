@@ -880,7 +880,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             var range = propertyInfo.GetAttribute<RangeAttribute>();
             var minLength = propertyInfo.GetAttribute<MinLengthAttribute>();
             var maxLength = propertyInfo.GetAttribute<MaxLengthAttribute>();
-            var stringLength = propertyInfo.GetAttribute<StringLengthAttribute>();
+            var stringLength = propertyInfo.GetAttribute<DynamicStringLengthAttribute>()
+                ?? propertyInfo.GetAttribute<StringLengthAttribute>();
             if (range != null)
             {
                 errorMsg = range.ErrorMessage;
