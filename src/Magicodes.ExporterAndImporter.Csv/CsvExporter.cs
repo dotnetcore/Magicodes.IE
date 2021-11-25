@@ -73,7 +73,8 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <exception cref="NotImplementedException"></exception>
         public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
         {
-            throw new NotImplementedException();
+            var helper = new ExportHelper<typeOf(Type)>();
+            return Task.FromResult(helper.GetCsvExportAsByteArray<T>(dataItems));
         }
 
         /// <summary>
