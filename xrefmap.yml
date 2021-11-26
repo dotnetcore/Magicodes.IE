@@ -245,15 +245,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).ExportHelper
   nameWithType: ExportHelper<T>.ExportHelper
   nameWithType.vb: ExportHelper(Of T).ExportHelper
-- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0})
-  name: GetCsvExportAsByteArray(ICollection<T>)
-  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_ICollection__0__
-  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0})
-  name.vb: GetCsvExportAsByteArray(ICollection(Of T))
-  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportAsByteArray(ICollection<T>)
-  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportAsByteArray(ICollection(Of T))
-  nameWithType: ExportHelper<T>.GetCsvExportAsByteArray(ICollection<T>)
-  nameWithType.vb: ExportHelper(Of T).GetCsvExportAsByteArray(ICollection(Of T))
+- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0},System.String)
+  name: GetCsvExportAsByteArray(ICollection<T>, String)
+  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_ICollection__0__System_String_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0},System.String)
+  name.vb: GetCsvExportAsByteArray(ICollection(Of T), String)
+  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportAsByteArray(ICollection<T>, System.String)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportAsByteArray(ICollection(Of T), System.String)
+  nameWithType: ExportHelper<T>.GetCsvExportAsByteArray(ICollection<T>, String)
+  nameWithType.vb: ExportHelper(Of T).GetCsvExportAsByteArray(ICollection(Of T), String)
 - uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray*
   name: GetCsvExportAsByteArray
   href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_
@@ -263,15 +263,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportAsByteArray
   nameWithType: ExportHelper<T>.GetCsvExportAsByteArray
   nameWithType.vb: ExportHelper(Of T).GetCsvExportAsByteArray
-- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable)
-  name: GetCsvExportAsByteArray<T>(DataTable)
-  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray__1_DataTable_
-  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable)
-  name.vb: GetCsvExportAsByteArray(Of T)(DataTable)
-  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportAsByteArray<T>(DataTable)
-  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportAsByteArray(Of T)(DataTable)
-  nameWithType: ExportHelper<T>.GetCsvExportAsByteArray<T>(DataTable)
-  nameWithType.vb: ExportHelper(Of T).GetCsvExportAsByteArray(Of T)(DataTable)
+- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable,System.String)
+  name: GetCsvExportAsByteArray<T>(DataTable, String)
+  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray__1_DataTable_System_String_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable,System.String)
+  name.vb: GetCsvExportAsByteArray(Of T)(DataTable, String)
+  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportAsByteArray<T>(DataTable, System.String)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportAsByteArray(Of T)(DataTable, System.String)
+  nameWithType: ExportHelper<T>.GetCsvExportAsByteArray<T>(DataTable, String)
+  nameWithType.vb: ExportHelper(Of T).GetCsvExportAsByteArray(Of T)(DataTable, String)
 - uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray*
   name: GetCsvExportHeaderAsByteArray
   href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray_
@@ -281,15 +281,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportHeaderAsByteArray
   nameWithType: ExportHelper<T>.GetCsvExportHeaderAsByteArray
   nameWithType.vb: ExportHelper(Of T).GetCsvExportHeaderAsByteArray
-- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1
-  name: GetCsvExportHeaderAsByteArray<T>()
-  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray__1
-  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1
-  name.vb: GetCsvExportHeaderAsByteArray(Of T)()
-  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportHeaderAsByteArray<T>()
-  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportHeaderAsByteArray(Of T)()
-  nameWithType: ExportHelper<T>.GetCsvExportHeaderAsByteArray<T>()
-  nameWithType.vb: ExportHelper(Of T).GetCsvExportHeaderAsByteArray(Of T)()
+- uid: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1(System.String)
+  name: GetCsvExportHeaderAsByteArray<T>(String)
+  href: api/Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray__1_System_String_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1(System.String)
+  name.vb: GetCsvExportHeaderAsByteArray(Of T)(String)
+  fullName: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper<T>.GetCsvExportHeaderAsByteArray<T>(System.String)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper(Of T).GetCsvExportHeaderAsByteArray(Of T)(System.String)
+  nameWithType: ExportHelper<T>.GetCsvExportHeaderAsByteArray<T>(String)
+  nameWithType.vb: ExportHelper(Of T).GetCsvExportHeaderAsByteArray(Of T)(String)
 - uid: Magicodes.ExporterAndImporter.Csv.Utility.ImportHelper`1
   name: ImportHelper<T>
   href: api/Magicodes.ExporterAndImporter.Csv.Utility.ImportHelper-1.html

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ExportHelper&lt;T&gt;
    ">
-    <meta name="generator" content="docfx 2.58.4.0">
+    <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -171,13 +171,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_ICollection__0__" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0})">GetCsvExportAsByteArray(ICollection&lt;T&gt;)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_ICollection__0__System_String_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray(ICollection{`0},System.String)">GetCsvExportAsByteArray(ICollection&lt;T&gt;, String)</h4>
   <div class="markdown level1 summary"><p>导出Csv</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportAsByteArray(ICollection&lt;T&gt; dataItems = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportAsByteArray(ICollection&lt;T&gt; dataItems = null, string delimiter = &quot;&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,6 +192,11 @@
       <tr>
         <td><span class="xref">ICollection</span>&lt;T&gt;</td>
         <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">delimiter</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -214,13 +219,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray__1_DataTable_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable)">GetCsvExportAsByteArray&lt;T&gt;(DataTable)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportAsByteArray__1_DataTable_System_String_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportAsByteArray``1(DataTable,System.String)">GetCsvExportAsByteArray&lt;T&gt;(DataTable, String)</h4>
   <div class="markdown level1 summary"><p>导出Csv</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportAsByteArray&lt;T&gt;(DataTable dataItems)
+    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportAsByteArray&lt;T&gt;(DataTable dataItems, string delimiter = &quot;&quot;)
     where T : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -236,6 +241,11 @@
       <tr>
         <td><span class="xref">DataTable</span></td>
         <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">delimiter</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -273,15 +283,32 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray__1" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1">GetCsvExportHeaderAsByteArray&lt;T&gt;()</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Csv_Utility_ExportHelper_1_GetCsvExportHeaderAsByteArray__1_System_String_" data-uid="Magicodes.ExporterAndImporter.Csv.Utility.ExportHelper`1.GetCsvExportHeaderAsByteArray``1(System.String)">GetCsvExportHeaderAsByteArray&lt;T&gt;(String)</h4>
   <div class="markdown level1 summary"><p>导出表头</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportHeaderAsByteArray&lt;T&gt;()
+    <pre><code class="lang-csharp hljs">public byte[] GetCsvExportHeaderAsByteArray&lt;T&gt;(string delimiter = &quot;&quot;)
     where T : class</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">delimiter</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
