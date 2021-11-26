@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.HasHeaderRecord = true;
 
-                if(!string.IsNullOrWhiteSpacedelimiter
+                if(!string.IsNullOrWhiteSpace(delimiter))
                     csv.Configuration.Delimiter = delimiter;
 
                 if (_type == null)
@@ -71,15 +71,15 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         ///     导出表头
         /// </summary>
         /// <returns></returns>
-        public byte[] GetCsvExportHeaderAsByteArray<T>(string delimiter = "") where T : class
+        public byte[] GetCsvExportHeaderAsByteArray(string delimiter = "")
         {
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.HasHeaderRecord = true;
-                
-                if(!string.IsNullOrWhiteSpacedelimiter
+
+                if (!string.IsNullOrWhiteSpace(delimiter))
                     csv.Configuration.Delimiter = delimiter;
 
                 #region header 
@@ -113,7 +113,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// </summary>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public byte[] GetCsvExportAsByteArray<T>(DataTable dataItems, string delimiter = "") where T : class
+        public byte[] GetCsvExportAsByteArray(DataTable dataItems, string delimiter = "")
         {
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
@@ -121,8 +121,8 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 csv.Configuration.HasHeaderRecord = true;
-                
-                if(!string.IsNullOrWhiteSpacedelimiter
+
+                if (!string.IsNullOrWhiteSpace(delimiter))
                     csv.Configuration.Delimiter = delimiter;
 
                 //#region header 
