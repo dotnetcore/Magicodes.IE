@@ -1,8 +1,55 @@
 # Release Log
 
+## 2.6.0
+**2021.11.28**
+
+- 添加两个动态验证特性（见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)）：
+
+  - 添加特性`DynamicStringLengthAttribute`,以便支持动态配置字符串长度验证。使用参考：
+
+  ```csharp
+  public class DynamicStringLengthImportDto
+  {
+      [ImporterHeader(Name = "名称")]
+      [Required(ErrorMessage = "名称不能为空")]
+      [DynamicStringLength(typeof(DynamicStringLengthImportDtoConsts), nameof(DynamicStringLengthImportDtoConsts.MaxNameLength), ErrorMessage = "名称字数不能超过{1}")]
+      public string Name { get; set; }
+  }
+  
+  public static class DynamicStringLengthImportDtoConsts
+  {
+      public static int MaxNameLength { get; set; } = 3;
+  }
+  ```
+
+  - 添加特性`RequiredIfAttribute`，以支持动态开启必填验证。使用参考：
+
+  ```csharp
+  public class RequiredIfAttributeImportDto
+  {
+      [ImporterHeader(Name = "名称是否必填")]
+      [Required(ErrorMessage = "名称是否必填不能为空")]
+      [ValueMapping("是", true)]
+      [ValueMapping("否", false)]
+      public bool IsNameRequired { get; set; }
+  
+      [ImporterHeader(Name = "名称")]
+      [RequiredIf("IsNameRequired", "True", ErrorMessage = "名称不能为空")]
+      [MaxLength(10, ErrorMessage = "名称字数超出最大值：10")]
+      public string Name { get; set; }
+  }
+  ```
+
+- CSV添加对分隔符的配置，具体见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)
+
+- Excel导入添加对`TimeSpan`类型的支持，使用参考`TimeSpan_Test`
+
+- 初步添加对.NET6的适配
+
 ## 2.5.6.3
 **2021.10.23**
-- 导出日期格式化支持'DateTimeOffset'类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
+
+- 导出日期格式化支持`DateTimeOffset`类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
 - 修改Magicodes.IE.EPPlus的包依赖PR[#351](https://github.com/dotnetcore/Magicodes.IE/pull/351)
 
 ## 2.5.6.2
@@ -221,7 +268,7 @@
   - 支持数据验证
     - 支持MaxLengthAttribute、MinLengthAttribute、StringLengthAttribute、RangeAttribute
   - 支持输入提示 
-To fix The Mapping Values of The total length of a Data Validation list always exceed 255 characters (# 196) (https://github.com/dotnetcore/Magicodes.IE/issues/196)
+  To fix The Mapping Values of The total length of a Data Validation list always exceed 255 characters (# 196) (https://github.com/dotnetcore/Magicodes.IE/issues/196)
 - Excel export List data type errors, and formatting issues.[#191](https://github.com/dotnetcore/Magicodes.IE/issues/191) [193] (https://github.com/dotnetcore/Magicodes.IE/issues/193)
 - 导入Excel对Enum类型匹配值映射时，忽略值前后空格
 - fix MappingValues The total length of a DataValidation list cannot exceed 255 characters [#196](https://github.com/dotnetcore/Magicodes.IE/issues/196)
