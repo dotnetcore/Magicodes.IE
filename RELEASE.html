@@ -62,10 +62,55 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="260">2.6.0</h2>
+<p><strong>2021.11.28</strong></p>
+<ul>
+<li><p>添加两个动态验证特性（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/359">#319 by Afonsof91</a>）：</p>
+<ul>
+<li>添加特性<code>DynamicStringLengthAttribute</code>,以便支持动态配置字符串长度验证。使用参考：</li>
+</ul>
+<pre><code class="lang-csharp">public class DynamicStringLengthImportDto
+{
+    [ImporterHeader(Name = &quot;名称&quot;)]
+    [Required(ErrorMessage = &quot;名称不能为空&quot;)]
+    [DynamicStringLength(typeof(DynamicStringLengthImportDtoConsts), nameof(DynamicStringLengthImportDtoConsts.MaxNameLength), ErrorMessage = &quot;名称字数不能超过{1}&quot;)]
+    public string Name { get; set; }
+}
+
+public static class DynamicStringLengthImportDtoConsts
+{
+    public static int MaxNameLength { get; set; } = 3;
+}
+</code></pre>
+<ul>
+<li>添加特性<code>RequiredIfAttribute</code>，以支持动态开启必填验证。使用参考：</li>
+</ul>
+<pre><code class="lang-csharp">public class RequiredIfAttributeImportDto
+{
+    [ImporterHeader(Name = &quot;名称是否必填&quot;)]
+    [Required(ErrorMessage = &quot;名称是否必填不能为空&quot;)]
+    [ValueMapping(&quot;是&quot;, true)]
+    [ValueMapping(&quot;否&quot;, false)]
+    public bool IsNameRequired { get; set; }
+
+    [ImporterHeader(Name = &quot;名称&quot;)]
+    [RequiredIf(&quot;IsNameRequired&quot;, &quot;True&quot;, ErrorMessage = &quot;名称不能为空&quot;)]
+    [MaxLength(10, ErrorMessage = &quot;名称字数超出最大值：10&quot;)]
+    public string Name { get; set; }
+}
+</code></pre>
+</li>
+<li><p>CSV添加对分隔符的配置，具体见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/359">#319 by Afonsof91</a></p>
+</li>
+<li><p>Excel导入添加对<code>TimeSpan</code>类型的支持，使用参考<code>TimeSpan_Test</code></p>
+</li>
+<li><p>初步添加对.NET6的适配</p>
+</li>
+</ul>
 <h2 id="2563">2.5.6.3</h2>
 <p><strong>2021.10.23</strong></p>
 <ul>
-<li>导出日期格式化支持'DateTimeOffset'类型，具体见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/349">#349</a>，感谢<a href="https://github.com/YaChengMu">YaChengMu</a></li>
+<li>导出日期格式化支持<code>DateTimeOffset</code>类型，具体见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/349">#349</a>，感谢<a href="https://github.com/YaChengMu">YaChengMu</a></li>
 <li>修改Magicodes.IE.EPPlus的包依赖PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/351">#351</a></li>
 </ul>
 <h2 id="2562">2.5.6.2</h2>
