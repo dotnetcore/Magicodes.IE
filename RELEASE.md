@@ -40,7 +40,7 @@
   }
   ```
 
-- CSV添加对分隔符的配置，具体见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)
+- CSV添加对分隔符的配置，具体见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/319)
 
 - Excel导入添加对`TimeSpan`类型的支持，使用参考`TimeSpan_Test`
 
