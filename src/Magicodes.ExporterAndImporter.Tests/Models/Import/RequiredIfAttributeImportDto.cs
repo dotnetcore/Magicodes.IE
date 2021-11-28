@@ -11,6 +11,8 @@ namespace Magicodes.IE.Tests.Models.Import
     {
         [ImporterHeader(Name = "名称是否必填")]
         [Required(ErrorMessage = "名称是否必填不能为空")]
+        [ValueMapping("是", true)]
+        [ValueMapping("否", false)]
         public bool IsNameRequired { get; set; }
 
         [ImporterHeader(Name = "名称")]

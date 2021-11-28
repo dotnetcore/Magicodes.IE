@@ -32,6 +32,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using Magicodes.IE.Tests.Models.Import;
+using System.Globalization;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -1081,8 +1082,19 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "RequiredIf")]
         public async Task RequiredIf_Test()
         {
+            
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "requiredif.xlsx");
             var import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
+
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(1);
+            import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
+            import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
+
+            //其他语言下测试
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", false);
+            Resource.Culture = new CultureInfo("en", false);
+            import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
 
             import.HasError.ShouldBeTrue();
             import.RowErrors.Count.ShouldBe(1);
