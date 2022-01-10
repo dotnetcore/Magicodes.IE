@@ -1,35 +1,62 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Core", "src\Magicodes.ExporterAndImporter.Core\Magicodes.ExporterAndImporter.Core.csproj", "{ECF7AB74-BE8D-4E61-968E-6DB1E182154F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Core", "src\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj", "{ECF7AB74-BE8D-4E61-968E-6DB1E182154F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Excel", "src\Magicodes.ExporterAndImporter.Excel\Magicodes.ExporterAndImporter.Excel.csproj", "{EF5FD425-AAD3-4B56-9A84-00CF53347CD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Excel", "src\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj", "{EF5FD425-AAD3-4B56-9A84-00CF53347CD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Tests", "src\Magicodes.ExporterAndImporter.Tests\Magicodes.ExporterAndImporter.Tests.csproj", "{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tests", "src\Magicodes.ExporterAndImporter.Tests\Magicodes.IE.Tests.csproj", "{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7164789B-598A-46A6-BCBE-24CE10F93D53}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
 		common.props = common.props
+		.github\workflows\docfx.yml = .github\workflows\docfx.yml
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
 		README.md = README.md
+		README.zh-CN.md = README.zh-CN.md
+		RELEASE.md = RELEASE.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Word", "src\Magicodes.ExporterAndImporter.Word\Magicodes.ExporterAndImporter.Word.csproj", "{87E9EDB5-4699-403A-936C-E3D4C789A4F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Word", "src\Magicodes.ExporterAndImporter.Word\Magicodes.IE.Word.csproj", "{87E9EDB5-4699-403A-936C-E3D4C789A4F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Html", "src\Magicodes.ExporterAndImporter.Html\Magicodes.ExporterAndImporter.Html.csproj", "{46A0C3B6-0B1A-4D3E-9DC0-D60C4C57899E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Html", "src\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj", "{46A0C3B6-0B1A-4D3E-9DC0-D60C4C57899E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.ExporterAndImporter.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.ExporterAndImporter.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Pdf", "src\Magicodes.ExporterAndImporter.Pdf\Magicodes.IE.Pdf.csproj", "{2C04A330-72C6-48F5-8218-3E9CF65B8777}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{400E37A1-6C65-44DF-8D1B-E1BA55BD330F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{7275AADE-9045-459D-B1C4-4A155C858681}"
-	ProjectSection(SolutionItems) = preProject
-		docs\1.基础教程之导入学生数据.md = docs\1.基础教程之导入学生数据.md
-		docs\2.基础教程之导出Excel.md = docs\2.基础教程之导出Excel.md
-		docs\7.Excel模板导出之导出教材订购表.md = docs\7.Excel模板导出之导出教材订购表.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Csv", "src\Magicodes.ExporterAndImporter.Csv\Magicodes.IE.Csv.csproj", "{7E64798D-31CD-4416-8885-2D3462999B1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicodesWebSite", "src\MagicodesWebSite\MagicodesWebSite.csproj", "{46468401-A16B-448E-A029-F7A95F985031}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.Benchmarks", "src\Magicodes.IE.Benchmarks\Magicodes.Benchmarks.csproj", "{39A45037-2DC2-4F6D-81F5-6984062F6366}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.AspNetCore", "src\Magicodes.ExporterAndImporter.AspNetCore\Magicodes.IE.AspNetCore.csproj", "{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Tools", "src\Magicodes.IE.Tools\Magicodes.IE.Tools.csproj", "{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Excel.AspNetCore", "src\Magicodes.ExporterAndImporter.Excel.AspNetCore\Magicodes.IE.Excel.AspNetCore.csproj", "{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abp", "Abp", "{C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Excel.Abp", "src\Magicodes.IE.Excel.Abp\Magicodes.IE.Excel.Abp.csproj", "{778B828B-FAB9-4A6B-8B0E-C286694D1C02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Pdf.Abp", "src\Magicodes.IE.Pdf.Abp\Magicodes.IE.Pdf.Abp.csproj", "{C34A6EC7-2701-4744-AD99-B35EB17BE0BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Csv.Abp", "src\Magicodes.IE.Csv.Abp\Magicodes.IE.Csv.Abp.csproj", "{2274A563-A12C-4978-9CFE-20A5F7818C38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Html.Abp", "src\Magicodes.IE.Html.Abp\Magicodes.IE.Html.Abp.csproj", "{70D8AF4F-521B-45AD-857C-AC0476538C9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Word.Abp", "src\Magicodes.IE.Word.Abp\Magicodes.IE.Word.Abp.csproj", "{C87851D2-869A-42D0-9750-14A79AC71A1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPPlus", "EPPlus", "{3C510281-8FE5-43C3-B5B6-2386EE836234}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.EPPlus", "src\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj", "{19A27D71-AF9A-4536-BF1C-8AD794F379DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPPlusTest", "src\EPPlus\EPPlusTest\EPPlusTest.csproj", "{B44800CB-5C50-4D64-AD9A-BE7077EA666E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,14 +88,77 @@ Global
 		{2C04A330-72C6-48F5-8218-3E9CF65B8777}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C04A330-72C6-48F5-8218-3E9CF65B8777}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C04A330-72C6-48F5-8218-3E9CF65B8777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E64798D-31CD-4416-8885-2D3462999B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E64798D-31CD-4416-8885-2D3462999B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E64798D-31CD-4416-8885-2D3462999B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E64798D-31CD-4416-8885-2D3462999B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46468401-A16B-448E-A029-F7A95F985031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46468401-A16B-448E-A029-F7A95F985031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46468401-A16B-448E-A029-F7A95F985031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46468401-A16B-448E-A029-F7A95F985031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39A45037-2DC2-4F6D-81F5-6984062F6366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEB9E5A0-1F7C-4E2D-B665-BF9331C50E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E5FBB20-CFFB-4783-9E55-7FB2507B6C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778B828B-FAB9-4A6B-8B0E-C286694D1C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778B828B-FAB9-4A6B-8B0E-C286694D1C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778B828B-FAB9-4A6B-8B0E-C286694D1C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778B828B-FAB9-4A6B-8B0E-C286694D1C02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C34A6EC7-2701-4744-AD99-B35EB17BE0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C34A6EC7-2701-4744-AD99-B35EB17BE0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C34A6EC7-2701-4744-AD99-B35EB17BE0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C34A6EC7-2701-4744-AD99-B35EB17BE0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2274A563-A12C-4978-9CFE-20A5F7818C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2274A563-A12C-4978-9CFE-20A5F7818C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2274A563-A12C-4978-9CFE-20A5F7818C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2274A563-A12C-4978-9CFE-20A5F7818C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D8AF4F-521B-45AD-857C-AC0476538C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D8AF4F-521B-45AD-857C-AC0476538C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D8AF4F-521B-45AD-857C-AC0476538C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D8AF4F-521B-45AD-857C-AC0476538C9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87851D2-869A-42D0-9750-14A79AC71A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87851D2-869A-42D0-9750-14A79AC71A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87851D2-869A-42D0-9750-14A79AC71A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87851D2-869A-42D0-9750-14A79AC71A1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A27D71-AF9A-4536-BF1C-8AD794F379DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A27D71-AF9A-4536-BF1C-8AD794F379DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A27D71-AF9A-4536-BF1C-8AD794F379DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A27D71-AF9A-4536-BF1C-8AD794F379DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4D9DF60B-EA10-4C01-A3E0-8BE3249CB712} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{46468401-A16B-448E-A029-F7A95F985031} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{39A45037-2DC2-4F6D-81F5-6984062F6366} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{E0EFA4FE-E3F2-4BCA-82F4-C05E06DB6402} = {400E37A1-6C65-44DF-8D1B-E1BA55BD330F}
+		{778B828B-FAB9-4A6B-8B0E-C286694D1C02} = {C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}
+		{C34A6EC7-2701-4744-AD99-B35EB17BE0BA} = {C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}
+		{2274A563-A12C-4978-9CFE-20A5F7818C38} = {C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}
+		{70D8AF4F-521B-45AD-857C-AC0476538C9C} = {C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}
+		{C87851D2-869A-42D0-9750-14A79AC71A1B} = {C51DA59B-9F64-4AD0-B3CE-38CD18D01B10}
+		{19A27D71-AF9A-4536-BF1C-8AD794F379DA} = {3C510281-8FE5-43C3-B5B6-2386EE836234}
+		{B44800CB-5C50-4D64-AD9A-BE7077EA666E} = {3C510281-8FE5-43C3-B5B6-2386EE836234}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal

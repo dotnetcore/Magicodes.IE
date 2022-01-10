@@ -11,9 +11,10 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core.Extension;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -32,7 +33,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
 
             foreach (var propertyInfo in typeof(TData).GetProperties())
             {
-                var exporterHeader = propertyInfo.PropertyType.GetAttribute<ExporterHeaderAttribute>() ??
+                var exporterHeader = propertyInfo.GetAttribute<ExporterHeaderAttribute>() ??
                                      new ExporterHeaderAttribute
                                      {
                                          DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name
@@ -64,6 +65,45 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         {
             return Datas.ToDataTable();
         }
+    }
+    /// <summary>
+    /// </summary>
+    public class ExportDocumentInfo
+    {
+        /// <summary>
+        /// </summary>
+        public ExportDocumentInfo(object data, Type type)
+        {
+            Headers = new List<ExporterHeaderAttribute>();
+            Data = data;
+            Title = type.GetAttribute<ExporterAttribute>()?.Name ?? type.Name;
+
+            foreach (var propertyInfo in type.GetProperties())
+            {
+                var exporterHeader = propertyInfo.PropertyType.GetAttribute<ExporterHeaderAttribute>() ??
+                                     new ExporterHeaderAttribute
+                                     {
+                                         DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name
+                                     };
+                Headers.Add(exporterHeader);
+            }
+        }
+
+
+        /// <summary>
+        ///     文档标题
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        ///     头部信息
+        /// </summary>
+        public IList<ExporterHeaderAttribute> Headers { get; set; }
+
+        /// <summary>
+        ///     数据
+        /// </summary>
+        public object Data { get; set; }
     }
 
     /// <summary>

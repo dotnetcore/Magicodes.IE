@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\common.props"></Import>
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <PackageId>Magicodes.IE.AspNetCore</PackageId>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+  <ItemGroup>
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.IE.Pdf.csproj" />
+		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Word\Magicodes.IE.Word.csproj" />
+	</ItemGroup>
+
+</Project>

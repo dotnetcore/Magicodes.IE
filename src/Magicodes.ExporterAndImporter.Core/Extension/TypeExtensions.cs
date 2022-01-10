@@ -11,12 +11,17 @@
 // 
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core.Filters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+#if NETSTANDARD
+using System.Runtime.Loader;
+using Microsoft.Extensions.DependencyModel;
+#endif
 using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Core.Extension
@@ -34,20 +39,33 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static string GetDisplayName(this ICustomAttributeProvider customAttributeProvider, bool inherit = false)
         {
-            string displayName = null;
             var displayAttribute = customAttributeProvider.GetAttribute<DisplayAttribute>();
+            string displayName;
             if (displayAttribute != null)
             {
                 displayName = displayAttribute.Name;
             }
             else
             {
-                var displayNameAttribute = customAttributeProvider.GetAttribute<DisplayNameAttribute>();
-                if (displayNameAttribute != null)
-                    displayName = displayNameAttribute.DisplayName;
+                displayName = customAttributeProvider.GetAttribute<DisplayNameAttribute>()?.DisplayName;
             }
-
             return displayName;
+        }
+
+        /// <summary>
+        ///     获取Format
+        /// </summary>
+        /// <param name="customAttributeProvider"></param>
+        /// <returns></returns>
+        public static string GetDisplayFormat(this ICustomAttributeProvider customAttributeProvider)
+        {
+            var formatAttribute = customAttributeProvider.GetAttribute<DisplayFormatAttribute>();
+            string displayFormat = string.Empty;
+            if (formatAttribute != null)
+            {
+                displayFormat = formatAttribute.DataFormatString;
+            }
+            return displayFormat;
         }
 
         /// <summary>
@@ -73,9 +91,9 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static string GetTypeDisplayOrDescription(this ICustomAttributeProvider customAttributeProvider,
             bool inherit = false)
         {
-            var dispaly = customAttributeProvider.GetDescription(inherit);
-            if (dispaly.IsNullOrWhiteSpace()) dispaly = customAttributeProvider.GetDisplayName(inherit);
-            return dispaly ?? string.Empty;
+            var displayDescription = customAttributeProvider.GetDescription(inherit);
+            if (displayDescription.IsNullOrWhiteSpace()) displayDescription = customAttributeProvider.GetDisplayName(inherit);
+            return displayDescription ?? string.Empty;
         }
 
 
@@ -162,7 +180,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         ///     获取枚举定义列表
         /// </summary>
         /// <returns>返回枚举列表元组（名称、值、显示名、描述）</returns>
-        public static List<Tuple<string, int, string, string>> GetEnumDefinitionList(this Type type)
+        public static IEnumerable<Tuple<string, int, string, string>> GetEnumDefinitionList(this Type type)
         {
             var list = new List<Tuple<string, int, string, string>>();
             var attrType = type;
@@ -245,8 +263,126 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             sb.Append("<");
             sb.Append(string.Join(", ", type.GetGenericArguments()
                 .Select(t => t.GetCSharpTypeName())));
+
             sb.Append(">");
             return sb.ToString();
+        }
+
+        /// <summary>
+        ///     实例化依赖
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object[] CreateType(this Type type)
+        {
+            //Get the first
+            var constructorInfo = type.GetConstructors().FirstOrDefault();
+            var parameterInfos = constructorInfo?.GetParameters();
+            var objects = new List<object>();
+            //GetAssemblies need to add conditional screening
+            //var getAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            List<Type> types = new List<Type>();
+            foreach (var item in GetAllAssemblies())
+            {
+                try
+                {
+                    foreach (var typeItem in item.GetTypes())
+                    {
+                        types.Add(typeItem);
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+
+            }
+            foreach (var item in parameterInfos)
+            {
+                var t = types.FirstOrDefault(x => x.GetInterfaces().Any(a => a.Name == item.ParameterType.Name));
+                var obj = Activator.CreateInstance(t, CreateType(t));
+                objects.Add(obj);
+            }
+            return objects.ToArray();
+        }
+
+        /// <summary>
+        /// 获取项目程序集,排除所有的系统程序集(Microsoft.***、System.***等)、Nuget包
+        /// </summary>
+        /// <returns></returns>
+        public static IList<Assembly> GetAllAssemblies()
+        {
+#if NETSTANDARD
+            var list = new List<Assembly>();
+            var deps = DependencyContext.Default;
+            //var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");
+            foreach (var lib in deps.CompileLibraries)
+            {
+                try
+                {
+                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName(lib.Name));
+                    list.Add(assembly);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+            return list;
+#else
+            return AppDomain.CurrentDomain.GetAssemblies();
+#endif
+
+        }
+
+        /// <summary>
+        ///     获取私有属性值
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <param name="propertyname"></param>
+        /// <returns></returns>
+        public static T GetPrivateProperty<T>(this object instance, string propertyname)
+        {
+            Type type = instance.GetType().BaseType;
+            FieldInfo[] finfos = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            var field = finfos.FirstOrDefault(f => f.Name == propertyname);
+            return (T)field.GetValue(instance);
+        }
+
+        /// <summary>
+        /// 获取筛选器
+        /// </summary>
+        /// <typeparam name="TFilter"></typeparam>
+        /// <param name="filterType"></param>
+        /// <param name="isDisableAllFilter"></param>
+        /// <returns></returns>
+        public static TFilter GetFilter<TFilter>(this Type filterType, bool isDisableAllFilter) where TFilter : IFilter
+        {
+            TFilter filter = default;
+
+            if (!isDisableAllFilter)
+            {
+#if NETSTANDARD
+                //判断容器中是否已注册
+                if (AppDependencyResolver.HasInit)
+                {
+                    filter = AppDependencyResolver.Current.GetService<TFilter>();
+                }
+                else if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
+                {
+                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                }
+
+#else
+                if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
+                {
+                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true,
+                        System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                }
+#endif
+            }
+            return filter;
         }
     }
 }

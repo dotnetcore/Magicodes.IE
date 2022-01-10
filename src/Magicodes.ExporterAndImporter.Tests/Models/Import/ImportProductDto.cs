@@ -1,27 +1,26 @@
 ﻿// ======================================================================
-// 
+//
 //           filename : ImportProductDto.cs
 //           description :
-// 
+//
 //           created by 雪雁 at  2019-11-05 20:02
 //           文档官网：https://docs.xin-lai.com
 //           公众号教程：麦扣聊技术
 //           QQ群：85318032（编程交流）
 //           Blog：http://www.cnblogs.com/codelove/
-// 
+//
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
 using System;
 using System.ComponentModel.DataAnnotations;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Import
 {
     /// <summary>
     /// 测试表头位置
     /// </summary>
-    [Importer(HeaderRowIndex = 2)]
+    [Importer(HeaderRowIndex = 2, IsDisableAllFilter = true)]
     public class ImportProductDto
     {
         /// <summary>
@@ -40,6 +39,13 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         public string Code { get; set; }
 
         /// <summary>
+        ///  测试GUID
+        /// </summary>
+        public Guid ProductIdTest1 { get; set; }
+
+        public Guid? ProductIdTest2 { get; set; }
+
+        /// <summary>
         ///     产品条码
         /// </summary>
         [ImporterHeader(Name = "产品条码", FixAllSpace = true)]
@@ -50,7 +56,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// <summary>
         ///     客户Id
         /// </summary>
-        [ImporterHeader(Name = "客户代码")]
+        [ImporterHeader(Name = "客户代码", ColumnIndex = 6)]
         public long ClientId { get; set; }
 
         /// <summary>
@@ -94,7 +100,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         ///     类型
         /// </summary>
         [ImporterHeader(Name = "类型")]
-        public ImporterProductType Type { get; set; }
+        public ImporterProductType? Type { get; set; }
 
         /// <summary>
         ///     是否行
@@ -102,7 +108,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         [ImporterHeader(Name = "是否行")]
         public bool IsOk { get; set; }
 
-        [ImporterHeader(Name = "公式测试")] public DateTime FormulaTest { get; set; }
+        [ImporterHeader(Name = "公式测试", Format = "yyyy-MM-dd")] public DateTime FormulaTest { get; set; }
 
         /// <summary>
         ///     身份证

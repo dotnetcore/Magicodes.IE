@@ -11,8 +11,8 @@
 // 
 // ======================================================================
 
-using System.Collections.Generic;
 using Magicodes.ExporterAndImporter.Core;
+using System.Collections.Generic;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {

@@ -11,8 +11,13 @@
 // 
 // ======================================================================
 
-using System.Text;
+#if NET461
+using TuesPechkin;
+using System.Drawing.Printing;
+using static TuesPechkin.GlobalSettings;
+#else
 using DinkToPdf;
+#endif
 using Magicodes.ExporterAndImporter.Core;
 
 namespace Magicodes.ExporterAndImporter.Pdf
@@ -22,10 +27,17 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public class PdfExporterAttribute : ExporterAttribute
     {
+#if !NET461
         /// <summary>
         ///     方向
         /// </summary>
         public Orientation Orientation { get; set; } = Orientation.Landscape;
+#else
+        /// <summary>
+        ///     方向
+        /// </summary>
+        public PaperOrientation Orientation { get; set; } = PaperOrientation.Landscape;
+#endif
 
         /// <summary>
         ///     纸张类型（默认A4，必须）
@@ -35,12 +47,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <summary>
         ///     是否启用分页数
         /// </summary>
-        public bool? IsEnablePagesCount { get; set; }
-
-        /// <summary>
-        ///     编码，默认UTF8
-        /// </summary>
-        public Encoding Encoding { get; set; } = Encoding.UTF8;
+        public bool IsEnablePagesCount { get; set; }
 
         /// <summary>
         ///     是否输出HTML模板
@@ -56,5 +63,15 @@ namespace Magicodes.ExporterAndImporter.Pdf
         ///     底部设置
         /// </summary>
         public FooterSettings FooterSettings { get; set; }
+
+        /// <summary>
+        ///     边距设置
+        /// </summary>
+        public MarginSettings MarginSettings { get; set; }
+
+        /// <summary>
+        ///     纸张大小（仅在PaperKind=custom下生效）
+        /// </summary>
+        public PechkinPaperSize PaperSize { get; set; }
     }
 }

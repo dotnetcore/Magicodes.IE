@@ -16,8 +16,7 @@ using System;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
-
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property)]
     public class ExcelImporterAttribute : ImporterAttribute
     {
         /// <summary>
@@ -25,6 +24,21 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     为空则自动获取第一个
         /// </summary>
         public string SheetName { get; set; }
+
+        /// <summary>
+        ///     指定Sheet下标（获取指定Sheet下标）
+        /// </summary>
+        /// <remarks>
+        ///     在.NET Core+包括.NET5框架中下标从0开始，否则从 1 
+        /// </remarks>
+        public int SheetIndex { get; set; } =
+#if NET461
+            1
+#else
+            0
+#endif
+            ;
+
 
         /// <summary>
         ///     截止读取的列数（从1开始，如果已设置，则将支持空行以及特殊列）
@@ -35,5 +49,20 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     是否标注错误（默认为true）
         /// </summary>
         public bool IsLabelingError { get; set; } = true;
+
+        /// <summary>
+        /// Sheet顶部导入描述
+        /// </summary>
+        public string ImportDescription { get; set; }
+
+        /// <summary>
+        /// Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)
+        /// </summary>
+        public double DescriptionHeight { get; set; } = 13.5;
+
+        /// <summary>
+        ///     是否仅导出错误数据
+        /// </summary>
+        public bool IsOnlyErrorRows { get; set; }
     }
 }

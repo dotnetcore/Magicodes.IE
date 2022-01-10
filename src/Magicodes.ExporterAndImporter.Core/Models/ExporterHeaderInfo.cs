@@ -11,6 +11,9 @@
 // 
 // ======================================================================
 
+using System;
+using System.Collections.Generic;
+
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
     /// <summary>
@@ -34,6 +37,11 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         public ExporterHeaderAttribute ExporterHeaderAttribute { get; set; }
 
         /// <summary>
+        ///     图片属性
+        /// </summary>
+        public ExportImageFieldAttribute ExportImageFieldAttribute { get; set; }
+
+        /// <summary>
         ///     C#数据类型
         /// </summary>
         public string CsTypeName { get; set; }
@@ -42,5 +50,10 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     最终显示的列名
         /// </summary>
         public string DisplayName { set; get; }
+
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
+        //public Dictionary<dynamic, string> MappingValues { get; set; } = new Dictionary<dynamic, string>();
     }
 }

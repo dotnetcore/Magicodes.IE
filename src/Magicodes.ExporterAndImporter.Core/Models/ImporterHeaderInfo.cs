@@ -12,7 +12,7 @@
 // ======================================================================
 
 using System.Collections.Generic;
-using Magicodes.ExporterAndImporter.Core;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -34,7 +34,11 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         ///     列属性
         /// </summary>
-        public ImporterHeaderAttribute ExporterHeader { get; set; }
+        public ImporterHeaderAttribute Header { get; set; }
+        /// <summary>
+        ///     图属性
+        /// </summary>
+        public ImportImageFieldAttribute ImportImageFieldAttribute { get; set; }
 
         /// <summary>
         /// </summary>
@@ -44,5 +48,10 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     是否存在
         /// </summary>
         public bool IsExist { get; set; }
+
+        /// <summary>
+        ///     属性信息
+        /// </summary>
+        public PropertyInfo PropertyInfo { get; set; }
     }
 }

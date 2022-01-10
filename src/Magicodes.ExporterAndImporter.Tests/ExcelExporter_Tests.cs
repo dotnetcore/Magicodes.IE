@@ -1,41 +1,49 @@
 // ======================================================================
-// 
+//
 //           filename : ExcelExporter_Tests.cs
 //           description :
-// 
-//           created by Ñ©Ñã at  2019-09-11 13:51
-//           ÎÄµµ¹ÙÍø£ºhttps://docs.xin-lai.com
-//           ¹«ÖÚºÅ½Ì³Ì£ºÂó¿ÛÁÄ¼¼Êõ
-//           QQÈº£º85318032£¨±à³Ì½»Á÷£©
-//           Blog£ºhttp://www.cnblogs.com/codelove/
-// 
+//
+//           created by é›ªé› at  2019-09-11 13:51
+//           æ–‡æ¡£å®˜ç½‘ï¼šhttps://docs.xin-lai.com
+//           å…¬ä¼—å·æ•™ç¨‹ï¼šéº¦æ‰£èŠæŠ€æœ¯
+//           QQç¾¤ï¼š85318032ï¼ˆç¼–ç¨‹äº¤æµï¼‰
+//           Blogï¼šhttp://www.cnblogs.com/codelove/
+//
 // ======================================================================
 
+using Magicodes.ExporterAndImporter.Core;
+using Magicodes.ExporterAndImporter.Core.Extension;
+using Magicodes.ExporterAndImporter.Excel;
+using Magicodes.ExporterAndImporter.Tests.Extensions;
+using Magicodes.ExporterAndImporter.Tests.Models.Export;
+using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
+using Magicodes.IE.Core;
+using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
+using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Magicodes.ExporterAndImporter.Core;
-using Magicodes.ExporterAndImporter.Excel;
-using Magicodes.ExporterAndImporter.Tests.Models.Export;
-using OfficeOpenXml;
-using Shouldly;
 using Xunit;
-using Magicodes.ExporterAndImporter.Core.Extension;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
     public class ExcelExporter_Tests : TestBase
     {
         /// <summary>
-        ///     ½«entitiesÖ±½Ó×ª³ÉDataTable
+        ///     å°†entitiesç›´æ¥è½¬æˆDataTable
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
-        /// <param name="entities">entity¼¯ºÏ</param>
-        /// <returns>½«EntityµÄÖµ×ªÎªDataTable</returns>
+        /// <param name="entities">entityé›†åˆ</param>
+        /// <returns>å°†Entityçš„å€¼è½¬ä¸ºDataTable</returns>
         private static DataTable EntityToDataTable<T>(DataTable dt, IEnumerable<T> entities)
         {
             if (!entities.Any()) return dt;
@@ -56,7 +64,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             return dt;
         }
 
-        [Fact(DisplayName = "DTOÌØĞÔµ¼³ö£¨²âÊÔ¸ñÊ½»¯£©")]
+        [Fact(DisplayName = "DTOç‰¹æ€§å¯¼å‡ºï¼ˆæµ‹è¯•æ ¼å¼åŒ–ä»¥åŠåˆ—å¤´ç´¢å¼•ï¼‰")]
         public async Task AttrsExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -68,10 +76,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             var data = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(100);
             foreach (var item in data)
             {
-                item.LongNo = 45875266524;
+                item.LongNo = 458752665;
+                item.Text = "æµ‹è¯•é•¿åº¦è¶…å‡ºå•å…ƒæ ¼çš„å­—ç¬¦ä¸²";
             }
-            var result = await exporter.Export(filePath, data);
 
+            var result = await exporter.Export(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -79,20 +88,57 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Cells[sheet.Dimension.Address].Rows.ShouldBe(101);
+                sheet.Cells["A2"].Text.ShouldBe(data[0].Text2);
 
-                //[ExporterHeader(DisplayName = "ÈÕÆÚ1", Format = "yyyy-MM-dd")]
+                //[ExporterHeader(DisplayName = "æ—¥æœŸ1", Format = "yyyy-MM-dd")]
                 sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
 
-                //[ExporterHeader(DisplayName = "ÈÕÆÚ2", Format = "yyyy-MM-dd HH:mm:ss")]
+                //[ExporterHeader(DisplayName = "æ—¥æœŸ2", Format = "yyyy-MM-dd HH:mm:ss")]
                 sheet.Cells["F2"].Text.Equals(DateTime.Parse(sheet.Cells["F2"].Text).ToString("yyyy-MM-dd HH:mm:ss"));
 
-                //Ä¬ÈÏDateTime
+                //é»˜è®¤DateTime
                 sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
 
+                //å•å…ƒæ ¼å®½åº¦æµ‹è¯•
+                sheet.Column(7).Width.ShouldBe(100);
+
+                sheet.Tables.Count.ShouldBe(1);
+
+                var tb = sheet.Tables.First();
+                tb.Columns.Count.ShouldBe(9);
+                tb.Columns.First().Name.ShouldBe("æ™®é€šæ–‡æœ¬");
+
+                sheet.Tables.First();
+                tb.Columns.Count.ShouldBe(9);
+                tb.Columns[2].Name.ShouldBe("åŠ ç²—æ–‡æœ¬");
             }
         }
 
-        [Fact(DisplayName = "¿ÕÊı¾İµ¼³ö")]
+        [Fact(DisplayName = "å¯¼å‡ºå­—æ®µé¡ºåºæµ‹è¯•")]
+        public async Task ExportByColumnIndex_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportByColumnIndex_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<Issue179>(100);
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Tables.Count.ShouldBe(1);
+
+                var tb = sheet.Tables.First();
+                tb.Columns.Count.ShouldBe(typeof(Issue179).GetProperties().Where(p => !p.GetAttribute<ExporterHeaderAttribute>().IsIgnore).Count());
+                tb.Columns.First().Name.ShouldBe("å‘˜å·¥å§“å");
+                tb.Columns[1].Name.ShouldBe("æ–™å·");
+            }
+        }
+
+        [Fact(DisplayName = "ç©ºæ•°æ®å¯¼å‡º")]
         public async Task AttrsExportWithNoData_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -109,11 +155,60 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
-                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(1);
             }
         }
 
-        [Fact(DisplayName = "Êı¾İ²ğ·Ö¶àSheetµ¼³ö")]
+        [Fact(DisplayName = "å…¨å±€å±…ä¸­æ•°æ®å¯¼å‡ºæµ‹è¯•")]
+        public async Task AttrExportWithAutoCenterData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithAutoCenterData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithAutoCenter>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(26);
+                pck.Workbook.Worksheets.First()
+                    .Cells[1, 1, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
+                pck.Workbook.Worksheets.First()
+                    .Cells[2, 2, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
+            }
+        }
+
+        [Fact(DisplayName = "å±…ä¸­æ•°æ®å¯¼å‡ºæµ‹è¯•")]
+        public async Task AttrExportWithColAutoCenterData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithAutoCenterData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColAutoCenter>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(26);
+                pck.Workbook.Worksheets.First()
+                    .Cells[1, 1, 10, 2].Style.HorizontalAlignment.ShouldBe(ExcelHorizontalAlignment.Center);
+            }
+        }
+
+        [Fact(DisplayName = "æ•°æ®æ‹†åˆ†å¤šSheetå¯¼å‡º")]
         public async Task SplitData_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -129,11 +224,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª3
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º3
                 pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //¼ì²éºöÂÔÁĞ
-                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("ÊıÖµ");
-                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows.ShouldBe(101);
+                //æ£€æŸ¥å¿½ç•¥åˆ—
+                pck.Workbook.Worksheets.First().Cells["C1"].Value.ShouldBe("æ•°å€¼");
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(101);
             }
 
             filePath = GetTestFilePath($"{nameof(SplitData_Test)}-2.xlsx");
@@ -146,9 +242,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª3
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º3
                 pck.Workbook.Worksheets.Count.ShouldBe(3);
-                //Çë²»ÒªÊ¹ÓÃË÷Òı£¨NET461ºÍ.NET CoreµÄSheetË÷ÒıÖµ²»Ò»ÖÂ£©
+                //è¯·ä¸è¦ä½¿ç”¨ç´¢å¼•ï¼ˆNET461å’Œ.NET Coreçš„Sheetç´¢å¼•å€¼ä¸ä¸€è‡´ï¼‰
                 var lastSheet = pck.Workbook.Worksheets.Last();
                 lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(100);
             }
@@ -163,20 +259,22 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÑéÖ¤SheetÊıÊÇ·ñÎª4
+                //éªŒè¯Sheetæ•°æ˜¯å¦ä¸º4
                 pck.Workbook.Worksheets.Count.ShouldBe(4);
-                //Çë²»ÒªÊ¹ÓÃË÷Òı£¨NET461ºÍ.NET CoreµÄSheetË÷ÒıÖµ²»Ò»ÖÂ£©
+                //è¯·ä¸è¦ä½¿ç”¨ç´¢å¼•ï¼ˆNET461å’Œ.NET Coreçš„Sheetç´¢å¼•å€¼ä¸ä¸€è‡´ï¼‰
                 var lastSheet = pck.Workbook.Worksheets.Last();
                 lastSheet.Cells[lastSheet.Dimension.Address].Rows.ShouldBe(3);
             }
         }
 
-        [Fact(DisplayName = "Í·²¿É¸Ñ¡Æ÷²âÊÔ")]
+        [Fact(DisplayName = "å¤´éƒ¨ç­›é€‰å™¨æµ‹è¯•")]
         public async Task ExporterHeaderFilter_Test()
         {
             IExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
-            #region Í¨¹ıÉ¸Ñ¡Æ÷ĞŞ¸ÄÁĞÃû
+
+            #region é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹åˆ—å
+
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var data1 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData1>();
@@ -186,14 +284,16 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Cells["D1"].Value.ShouldBe("name");
                 sheet.Dimension.Columns.ShouldBe(4);
             }
-            #endregion
 
-            #region Í¨¹ıÉ¸Ñ¡Æ÷ĞŞ¸ÄºöÂÔÁĞ
+            #endregion é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹åˆ—å
+
+            #region é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹å¿½ç•¥åˆ—
+
             if (File.Exists(filePath)) File.Delete(filePath);
             var data2 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData2>();
             result = await exporter.Export(filePath, data2);
@@ -202,15 +302,15 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Dimension.Columns.ShouldBe(5);
             }
-            #endregion
 
+            #endregion é€šè¿‡ç­›é€‰å™¨ä¿®æ”¹å¿½ç•¥åˆ—
         }
 
-        [Fact(DisplayName = "DataTable½áºÏDTOµ¼³öExcel")]
+        [Fact(DisplayName = "DataTableç»“åˆDTOå¯¼å‡ºExcel")]
         public async Task DynamicExport_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -224,46 +324,120 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Dimension.Columns.ShouldBe(9);
             }
         }
 
-        [Fact(DisplayName = "DataTableµ¼³öExcel£¨ÎŞĞè¶¨ÒåÀà£¬Ö§³ÖÁĞÉ¸Ñ¡Æ÷ºÍ±í²ğ·Ö£©")]
-        public async Task DynamicDataTableExport_Test()
+        [Fact(DisplayName = "DataTableç»“åˆDTOè‡ªå®šä¹‰è¡Œå¼€å§‹ä½ç½®å¯¼å‡ºExcel")]
+        public async Task DynamicExportCustomRowStartIndex_Test()
         {
             IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExportCustomRowStartIndex_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrsCustomRowStartIndex>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.Export<ExportTestDataWithAttrsCustomRowStartIndex>(filePath, dt);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+                sheet.Dimension.Rows.ShouldBe(1005);
+            }
+        }
+
+        [Fact(DisplayName = "DataTableç»“åˆDTOç±»å‹å¯¼å‡ºByteArray Excel")]
+        public async Task DynamicExport_ByteArray_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(dt);
+            result.ShouldNotBeNull();
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+            }
+        }
+
+        [Fact(DisplayName = "DataTableç»“åˆTypeç±»å‹å¯¼å‡ºByteArray Excel")]
+        public async Task DynamicExportByType_ByteArray_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicExport_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
+            var dt = exportDatas.ToDataTable();
+            var result = await exporter.ExportAsByteArray(dt, typeof(ExportTestDataWithAttrs));
+            result.ShouldNotBeNull();
+            using (var file = File.OpenWrite(filePath))
+            {
+                file.Write(result, 0, result.Length);
+            }
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Dimension.Columns.ShouldBe(9);
+            }
+        }
+
+        [Fact(DisplayName = "DataTableå¯¼å‡ºExcelï¼ˆæ— éœ€å®šä¹‰ç±»ï¼Œæ”¯æŒåˆ—ç­›é€‰å™¨å’Œè¡¨æ‹†åˆ†ï¼‰")]
+        public async Task DynamicDataTableExport_Test()
+        {
+            IExcelExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DynamicDataTableExport_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(50);
             var dt = new DataTable();
-            //´´½¨´øÁĞÃûºÍÀàĞÍÃûµÄÁĞ
+            //åˆ›å»ºå¸¦åˆ—åå’Œç±»å‹åçš„åˆ—
             dt.Columns.Add("Text", Type.GetType("System.String"));
             dt.Columns.Add("Name", Type.GetType("System.String"));
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
-            //¼Ó¸öÉ¸Ñ¡Æ÷µ¼³ö
+            //åŠ ä¸ªç­›é€‰å™¨å¯¼å‡º
             var result = await exporter.Export(filePath, dt, new DataTableTestExporterHeaderFilter(), 10);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÅĞ¶ÏSheet²ğ·Ö
+                //åˆ¤æ–­Sheetæ‹†åˆ†
                 pck.Workbook.Worksheets.Count.ShouldBe(5);
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["C1"].Value.ShouldBe("ÊıÖµ");
+                sheet.Cells["C1"].Value.ShouldBe("æ•°å€¼");
                 sheet.Dimension.Columns.ShouldBe(3);
             }
         }
 
-        [Fact(DisplayName = "´óÁ¿Êı¾İµ¼³öExcel")]
-        public async Task Export_Test()
+#if DEBUG
+
+        [Fact(DisplayName = "å¤§é‡æ•°æ®å¯¼å‡ºExcel", Skip = "æœ¬åœ°Debugæ¨¡å¼ä¸‹è·³è¿‡ï¼Œå¤ªè´¹æ—¶")]
+#else
+        [Fact(DisplayName = "å¤§é‡æ•°æ®å¯¼å‡ºExcel")]
+#endif
+        public async Task Export100000Data_Test()
         {
             IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export_Test) + ".xlsx");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export100000Data_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
@@ -271,7 +445,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "DTOµ¼³ö")]
+        [Fact(DisplayName = "DTOå¯¼å‡º")]
         public async Task ExportAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -287,7 +461,115 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
-        [Fact(DisplayName = "Í¨¹ıDtoµ¼³ö±íÍ·")]
+        [Fact(DisplayName = "DTOå¯¼å‡ºæ”¯æŒåŠ¨æ€ç±»å‹")]
+        public async Task ExportAsByteArraySupportDynamicType_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportAsByteArraySupportDynamicType_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var source = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+            string fields = "text,number,name";
+            var shapedData = source.ShapeData(fields) as ICollection<ExpandoObject>;
+
+            var result = await exporter.ExportAsByteArray<ExpandoObject>(shapedData);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            File.WriteAllBytes(filePath, result);
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "å¯¼å‡ºåˆ†å‰²å½“å‰Sheetè¿½åŠ Column")]
+        public async Task ExprotSeparateByColumn_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByColumn_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = await exporter.Append(list1).SeparateByColumn().Append(list2)
+                .SeparateByColumn()
+                .Append(list2).ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+            }
+        }
+
+        [Fact(DisplayName = "å¤šä¸ªsheetå¯¼å‡º")]
+        public async Task ExportMutiCollection_Test()
+        {
+            var exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportMutiCollection_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = exporter.Append(list1, "sheet1").SeparateBySheet().Append(list2).ExportAppendData(filePath);
+
+            await result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+                pck.Workbook.Worksheets.First().Name
+                    .ShouldBe("sheet1");
+                pck.Workbook.Worksheets.Last().Name
+                    .ShouldBe(typeof(ExportTestDataWithSplitSheet).GetAttribute<ExcelExporterAttribute>().Name);
+            }
+        }
+
+        [Fact(DisplayName = "å¤šä¸ªsheetå¯¼å‡ºï¼ˆç©ºæ•°æ®ï¼‰")]
+        public async Task ExportMutiCollectionWithEmpty_Test()
+        {
+            var exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportMutiCollectionWithEmpty_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = new List<ExportTestDataWithAttrs>();
+
+            var list2 = new List<ExportTestDataWithSplitSheet>();
+
+            var result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            await result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+            }
+            //#299 https://github.com/dotnetcore/Magicodes.IE/issues/299
+            DeleteFile(filePath);
+            list1 = GenFu.A.ListOf<ExportTestDataWithAttrs>();
+
+            list2 = new List<ExportTestDataWithSplitSheet>();
+            result = exporter.Append(list1).SeparateBySheet().Append(list2).ExportAppendData(filePath);
+            await result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(2);
+            }
+        }
+
+        [Fact(DisplayName = "é€šè¿‡Dtoå¯¼å‡ºè¡¨å¤´")]
         public async Task ExportHeaderAsByteArray_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -304,17 +586,17 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Name.ShouldBe("²âÊÔ");
+                sheet.Name.ShouldBe("æµ‹è¯•");
                 sheet.Dimension.Columns.ShouldBe(9);
             }
         }
 
-        [Fact(DisplayName = "Í¨¹ı¶¯Ì¬´«Öµµ¼³ö±íÍ·")]
+        [Fact(DisplayName = "é€šè¿‡åŠ¨æ€ä¼ å€¼å¯¼å‡ºè¡¨å¤´")]
         public async Task ExportHeaderAsByteArrayWithItems_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExcelExporter exporter = new ExcelExporter();
 
             var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArrayWithItems_Test)}.xlsx");
 
@@ -328,24 +610,29 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //¼ì²é×ª»»½á¹û
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
                 var sheet = pck.Workbook.Worksheets.First();
                 sheet.Name.ShouldBe(sheetName);
                 sheet.Dimension.Columns.ShouldBe(arr.Length);
             }
         }
 
-        [Fact(DisplayName = "´óÊı¾İ¶¯Ì¬ÁĞµ¼³öExcel", Skip = "Ê±¼äÌ«³¤£¬Ä¬ÈÏÌø¹ı")]
+#if DEBUG
+
+        [Fact(DisplayName = "å¤§æ•°æ®åŠ¨æ€åˆ—å¯¼å‡ºExcel", Skip = "æœ¬åœ°Debugæ¨¡å¼ä¸‹è·³è¿‡ï¼Œå¤ªè´¹æ—¶")]
+#else
+        [Fact(DisplayName = "å¤§æ•°æ®åŠ¨æ€åˆ—å¯¼å‡ºExcel")]
+#endif
         public async Task LargeDataDynamicExport_Test()
         {
-            IExporter exporter = new ExcelExporter();
+            IExcelExporter exporter = new ExcelExporter();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(LargeDataDynamicExport_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1200000);
 
             var dt = new DataTable();
-            //´´½¨´øÁĞÃûºÍÀàĞÍÃûµÄÁĞ
+            //åˆ›å»ºå¸¦åˆ—åå’Œç±»å‹åçš„åˆ—
             dt.Columns.Add("Text", Type.GetType("System.String"));
             dt.Columns.Add("Name", Type.GetType("System.String"));
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
@@ -356,60 +643,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
-                //ÅĞ¶ÏSheet²ğ·Ö
+                //åˆ¤æ–­Sheetæ‹†åˆ†
                 pck.Workbook.Worksheets.Count.ShouldBe(12);
             }
         }
 
-        [Fact(DisplayName = "ExcelÄ£°åµ¼³ö½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í")]
-        public async Task ExportByTemplate_Test()
-        {
-            //Ä£°åÂ·¾¶
-            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "2020Äê´º¼¾½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í.xlsx");
-            //´´½¨Excelµ¼³ö¶ÔÏó
-            IExportFileByTemplate exporter = new ExcelExporter();
-            //µ¼³öÂ·¾¶
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Test) + ".xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-            //¸ù¾İÄ£°åµ¼³ö
-            await exporter.ExportByTemplate(filePath,
-                new TextbookOrderInfo("ºşÄÏĞÄÀ³ĞÅÏ¢¿Æ¼¼ÓĞÏŞ¹«Ë¾", "ºşÄÏ³¤É³ÔÀÂ´Çø", "Ñ©Ñã", "1367197xxxx", null, DateTime.Now.ToLongDateString(),
-                    new List<BookInfo>()
-                    {
-                        new BookInfo(1, "0000000001", "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", null, "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, "±¸×¢"),
-                        new BookInfo(2, "0000000002", "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, null),
-                        new BookInfo(3, null, "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100, "±¸×¢")
-                    }),
-                tplPath);
-        }
-
-        [Fact(DisplayName = "ExcelÄ£°å´óÁ¿µ¼³ö")]
-        public async Task ExportByTemplate_Large_Test()
-        {
-            //µ¼³ö5000ÌõÊı¾İ²»³¬¹ı1Ãë
-            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
-                "2020Äê´º¼¾½Ì²Ä¶©¹ºÃ÷Ï¸Ñù±í.xlsx");
-            IExportFileByTemplate exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Large_Test) + ".xlsx");
-            if (File.Exists(filePath)) File.Delete(filePath);
-
-            var books = new List<BookInfo>();
-            for (int i = 0; i < 5000; i++)
-            {
-                books.Add(new BookInfo(i + 1, "000000000" + i, "¡¶XX´ÓÈëÃÅµ½·ÅÆú¡·", "ÕÅÈı", "»úĞµ¹¤Òµ³ö°æÉç", "3.14", 100 + i, "±¸×¢"));
-            }
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            await exporter.ExportByTemplate(filePath, new TextbookOrderInfo("ºşÄÏĞÄÀ³ĞÅÏ¢¿Æ¼¼ÓĞÏŞ¹«Ë¾", "ºşÄÏ³¤É³ÔÀÂ´Çø", "Ñ©Ñã", "1367197xxxx", "Ñ©Ñã", DateTime.Now.ToLongDateString(), books), tplPath);
-            stopwatch.Stop();
-            //Ö´ĞĞÊ±¼ä²»µÃ³¬¹ı1Ãë£¨ÊÜÊµ¼ÊÖ´ĞĞ»úÆ÷ĞÔÄÜÓ°Ïì£©,ÔÚ²âÊÔ¹ÜÀíÆ÷ÖĞÔËĞĞÆÕ±éĞ¡ÓÚ400ms
-            stopwatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo(1000);
-
-        }
-
-        [Fact(DisplayName = "ÎŞÌØĞÔ¶¨Òåµ¼³ö²âÊÔ")]
+        [Fact(DisplayName = "æ— ç‰¹æ€§å®šä¹‰å¯¼å‡ºæµ‹è¯•")]
         public async Task ExportTestDataWithoutExcelExporter_Test()
         {
             IExporter exporter = new ExcelExporter();
@@ -421,5 +660,364 @@ namespace Magicodes.ExporterAndImporter.Tests
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
+
+        #region å›¾ç‰‡å¯¼å‡º
+
+        [Fact(DisplayName = "Excelå¯¼å‡ºå›¾ç‰‡æµ‹è¯•")]
+        public async Task ExportPicture_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Test)}.xlsx");
+            DeleteFile(filePath);
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(5);
+            var url = Path.Combine("TestFiles", "ExporterTest.png");
+            for (var i = 0; i < data.Count; i++)
+            {
+                var item = data[i];
+                item.Img1 = url;
+                if (i == 4)
+                    item.Img = null;
+                else
+                    item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
+            }
+
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
+                var sheet = pck.Workbook.Worksheets.First();
+                //éªŒè¯Alt
+                sheet.Cells["G6"].Value.ShouldBe("404");
+                //éªŒè¯å›¾ç‰‡
+                sheet.Drawings.Count.ShouldBe(9);
+                foreach (ExcelPicture item in sheet.Drawings)
+                {
+                    //æ£€æŸ¥å›¾ç‰‡ä½ç½®
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
+                    item.ShouldNotBeNull();
+                }
+
+                //sheet.Tables.Count.ShouldBe(1);
+            }
+        }
+
+        [Fact(DisplayName = "Excelå¯¼å‡ºå›¾ç‰‡æµ‹è¯•è‡ªå®šä¹‰å¼€å§‹è¡Œä½ç½®")]
+        public async Task ExportPictureCustomRowStartIndex_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPictureCustomRowStartIndex_Test)}.xlsx");
+            DeleteFile(filePath);
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPictureCustomRowStatIndex>(5);
+            var url = Path.Combine("TestFiles", "ExporterTest.png");
+            for (var i = 0; i < data.Count; i++)
+            {
+                var item = data[i];
+                item.Img1 = url;
+                if (i == 4)
+                    item.Img = null;
+                else
+                    item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
+            }
+
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //æ£€æŸ¥è½¬æ¢ç»“æœ
+                var sheet = pck.Workbook.Worksheets.First();
+                //éªŒè¯Alt
+                sheet.Cells["G9"].Value.ShouldBe("404");
+                //éªŒè¯å›¾ç‰‡
+                sheet.Drawings.Count.ShouldBe(9);
+                foreach (ExcelPicture item in sheet.Drawings)
+                {
+                    //æ£€æŸ¥å›¾ç‰‡ä½ç½®
+                    new[] { 2, 6 }.ShouldContain(item.From.Column);
+                    item.ShouldNotBeNull();
+                }
+                sheet.Dimension.Start.Row.ShouldBe(4);
+                sheet.Dimension.Rows.ShouldBe(6);
+                //sheet.Tables.Count.ShouldBe(1);
+            }
+        }
+
+        #endregion å›¾ç‰‡å¯¼å‡º
+
+        [Fact(DisplayName = "æ•°æ®æ³¨è§£å¯¼å‡ºæµ‹è¯•")]
+        public async Task ExportTestDataAnnotations_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportTestDataAnnotations_Test)}.xlsx");
+            DeleteFile(filePath);
+            var data = GenFu.GenFu.ListOf<ExportTestDataAnnotations>();
+
+            data[0].Number = null;
+            var result = await exporter.Export(filePath,
+                data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+
+                sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
+
+                sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
+                new List<string> { "æ˜¯", "å¦" }.ShouldContain(sheet.Cells["G2"].Text);
+                sheet.Tables.Count.ShouldBe(1);
+                var tb = sheet.Tables.First();
+
+                var enums = typeof(MyEmum).GetEnumDefinitionList();
+                var list = new List<string>();
+                foreach (var (item1, item2, item3, item4) in enums)
+                {
+                    list.Add(item1);
+                    list.Add(item2.ToString());
+                    list.Add(item3);
+                    list.Add(item4);
+                }
+                list.Add("A Test");
+                list.Add("B Test");
+                list.ShouldContain(sheet.Cells["E2"].Text);
+
+                tb.Columns[0].Name.ShouldBe("Customåˆ—1");
+                tb.Columns[1].Name.ShouldBe("åˆ—2");
+                tb.Columns.Count.ShouldBe(9);
+            }
+        }
+
+        [Fact(DisplayName = "æ ·å¼é”™è¯¯æµ‹è¯•")]
+        public async Task TenExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(TenExport_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<GalleryLineExportModel>(100);
+
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+        }
+
+        [Fact(DisplayName = "å¯¼å‡ºåˆ†å‰²å½“å‰Sheetè¿½åŠ Rows")]
+        public async Task ExprotSeparateByRows_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByRows_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = await exporter.Append(list1).SeparateByRow().Append(list2)
+                .ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var ec = pck.Workbook.Worksheets.First();
+                ec.Dimension.Rows.ShouldBe(57);
+            }
+        }
+
+        [Fact(DisplayName = "å¯¼å‡ºåˆ†å‰²å½“å‰Sheetè¿½åŠ Rowså’Œheaders")]
+        public async Task ExprotSeparateByRowsAndHeaders_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExprotSeparateByRowsAndHeaders_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list1 = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>();
+
+            var list2 = GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(30);
+
+            var result = await exporter.Append(list1).SeparateByRow().AppendHeaders().Append(list2)
+                .ExportAppendData(filePath);
+
+            result.ShouldNotBeNull();
+
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var ec = pck.Workbook.Worksheets.First();
+                ec.Dimension.Rows.ShouldBe(58);
+            }
+        }
+
+        /// <summary>
+        /// #140 https://github.com/dotnetcore/Magicodes.IE/issues/140
+        /// èº«ä»½è¯å¯¼å‡ºæ–‡æœ¬æ ¼å¼æµ‹è¯•
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "èº«ä»½è¯å¯¼å‡ºæ–‡æœ¬æ ¼å¼æµ‹è¯•")]
+        public async Task Issue140_IdCardExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(Issue140_IdCardExport_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var list = new List<Issue140_IdCardExportDto>()
+            {
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+                new Issue140_IdCardExportDto()
+                {
+                    IdCard = "430626111111111111"
+                },
+            };
+            var result = await exporter.Export(filePath, list);
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells[pck.Workbook.Worksheets.First().Dimension.Address].Rows
+                    .ShouldBe(list.Count + 1);
+                pck.Workbook.Worksheets.First().Cells["A2"].Text.ShouldBe(list[0].IdCard);
+            }
+        }
+
+        [Fact(DisplayName = "å¿½ç•¥æ‰€æœ‰åˆ—è¿›è¡Œå¯¼å‡ºæµ‹è¯•")]
+        public async Task ItThrowsIfIgnoresAllColumnsExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ItThrowsIfIgnoresAllColumnsExport_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            Func<Task> f = async () => await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
+            var exception = await Assert.ThrowsAsync<ArgumentException>(f);
+            exception.Message.ShouldBe(Resource.DoNotIgnoreAllTheHeader);
+        }
+
+        [Fact(DisplayName = "ValueMappingæµ‹è¯•#337")]
+        public async Task ValueMapping_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ValueMapping_Test)}.xlsx");
+            DeleteFile(filePath);
+            var list = new List<Issue337>()
+            {
+                new Issue337()
+                {
+                    Gender ="ç”·",
+                    IsAlumni = true,
+                    Name ="å¼ ä¸‰",
+                    IsAlumni2 = true,
+                },
+                new Issue337()
+                {
+                    Gender ="ç”·",
+                    IsAlumni = false,
+                    Name ="å¼ ä¸‰",
+                    IsAlumni2 = true,
+                },
+                new Issue337()
+                {
+                    Gender ="ç”·",
+                    IsAlumni = null,
+                    Name ="å¼ ä¸‰",
+                    IsAlumni2 = false,
+                },
+            };
+            var result = await exporter.Export(filePath, list);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["D2"].Text.ShouldBe("æ˜¯");
+                sheet.Cells["D3"].Text.ShouldBe("æ˜¯");
+                sheet.Cells["D4"].Text.ShouldBe("å¦");
+
+                sheet.Cells["C2"].Text.ShouldBe("æ˜¯");
+                sheet.Cells["C3"].Text.ShouldBe("å¦");
+                sheet.Cells["C4"].Text.ShouldBe("");
+            }
+        }
+
+        
+        
+        [Fact(DisplayName = "å¯¼å‡ºæ—¥æœŸæ ¼å¼åŒ–#331")]
+        public async Task DateTimeExport_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+        
+            var filePath = GetTestFilePath($"{nameof(Issue331)}.xlsx");
+        
+            DeleteFile(filePath);
+        
+            var data = GenFu.GenFu.ListOf<Issue331>(100);
+
+            var datetime = new DateTime(2021, 10, 12, 14, 14, 14);
+            data[0].Time4 = null;
+            data[0].Time1 = datetime;
+            data[0].Time2 = datetime;
+            data[0].Time5 = datetime;
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.First().Cells["A2"].Text.ShouldBe("2021-10-12 14:14:14");
+                pck.Workbook.Worksheets.First().Cells["B2"].Text.ShouldBe("2021-10-12");
+                pck.Workbook.Worksheets.First().Cells["D2"].Text.ShouldBe("");
+                pck.Workbook.Worksheets.First().Cells["E2"].Text.ShouldBe("14:14:14");
+            }
+            
+        }
+        
+
+
+        [Fact(DisplayName = "å•å…ƒæ ¼å­—ä½“é¢œè‰²è®¾ç½®æ•°æ®å¯¼å‡ºæµ‹è¯•")]
+        public async Task AttrExportWithColFontColorData_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithColFontColorData_Test)}.xlsx");
+
+            DeleteFile(filePath);
+
+            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColFontColor>());
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                //çº¢è‰²
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe("FFFF0000");
+
+                sheet.Cells["B1"].Style.Font.Color.Rgb.ShouldBe(sheet.Cells["B2"].Style.Font.Color.Rgb);
+            }
+        }
+
     }
 }

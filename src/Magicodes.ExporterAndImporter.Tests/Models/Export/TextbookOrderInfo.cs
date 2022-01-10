@@ -1,6 +1,4 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -39,12 +37,14 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         /// </summary>
         public string Time { get; }
 
+        public string ImageUrl { get; set; }
+
         /// <summary>
         /// 教材信息列表
         /// </summary>
         public List<BookInfo> BookInfos { get; }
 
-        public TextbookOrderInfo(string company, string address, string contact, string tel, string watchmaker, string time, List<BookInfo> bookInfo)
+        public TextbookOrderInfo(string company, string address, string contact, string tel, string watchmaker, string time, string imageUrl, List<BookInfo> bookInfo)
         {
             Company = company;
             Address = address;
@@ -52,6 +52,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
             Tel = tel;
             Watchmaker = watchmaker;
             Time = time;
+            ImageUrl = imageUrl;
             BookInfos = bookInfo;
         }
     }

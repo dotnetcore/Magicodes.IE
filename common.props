@@ -1,22 +1,46 @@
 <Project>
   <PropertyGroup>
-    <Version>2.0.0-beta1</Version>
+    <Version>2.6.0</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <!--<TargetFramework>netstandard2.0</TargetFramework>-->
     <Authors>雪雁</Authors>
-    <Company>湖南心莱信息科技有限公司</Company>
     <Product>麦扣</Product>
     <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+    <PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
     <Description>
-      导入导出通用库，通过导入导出DTO模型来控制导入和导出，支持Excel、Word、Pdf和Html。
-      开源库地址:https://github.com/xin-lai
-      博客地址：http://www.cnblogs.com/codelove/
-      交流QQ群：85318032
-    </Description>
+		Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
+		导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+
+		开源库地址:https://github.com/xin-lai
+		博客地址：http://www.cnblogs.com/codelove/
+		更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
+		公众号：麦扣聊技术
+		交流QQ群：85318032
+
+		**2021.11.28**
+		- 添加两个动态验证特性（见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)），DynamicStringLengthAttribute及RequiredIfAttribute
+		- CSV添加对分隔符的配置，具体见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/319)
+		- Excel导入添加对`TimeSpan`类型的支持，使用参考`TimeSpan_Test`
+		- 初步添加对.NET6的适配
+
+		**2021.10.23**
+		- 导出日期格式化支持'DateTimeOffset'类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
+		- 修改Magicodes.IE.EPPlus的包依赖PR[#351](https://github.com/dotnetcore/Magicodes.IE/pull/351)
+
+		**2021.10.13**
+		- 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
+		- 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
+
+	</Description>
   </PropertyGroup>
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;CS1591;CS1573</NoWarn>
   </PropertyGroup>
 </Project>

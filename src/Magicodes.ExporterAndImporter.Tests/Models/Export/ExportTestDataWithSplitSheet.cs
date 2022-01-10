@@ -13,11 +13,12 @@
 
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
+using OfficeOpenXml.Table;
 using System;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
-    [ExcelExporter(Name = "测试", TableStyle = "Light10", AutoFitAllColumn = true, MaxRowNumberOnASheet = 100)]
+    [ExcelExporter(Name = "测试2", TableStyle = TableStyles.None, AutoFitAllColumn = true, MaxRowNumberOnASheet = 100)]
     public class ExportTestDataWithSplitSheet
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]

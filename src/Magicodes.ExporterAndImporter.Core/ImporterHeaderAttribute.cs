@@ -47,6 +47,11 @@ namespace Magicodes.ExporterAndImporter.Core
         public bool FixAllSpace { get; set; }
 
         /// <summary>
+        ///     格式化（仅用于模板生成）
+        /// </summary>
+        public string Format { get; set; }
+
+        /// <summary>
         ///     列索引，如果为0则自动计算
         /// </summary>
         public int ColumnIndex { get; set; }
@@ -60,5 +65,17 @@ namespace Magicodes.ExporterAndImporter.Core
         ///     是否忽略
         /// </summary>
         public bool IsIgnore { get; set; }
+
+        /// <summary>
+        ///     是否启用Excel数据验证
+        /// <remarks>对于Excel数据验证，仅用于生成导入模板特性中，作为限制用户对Excel模板数据的约束性</remarks>
+        /// </summary>
+        public bool IsInterValidation { get; set; }
+
+        /// <summary>
+        ///    选定单元格时，显示输入的信息
+        /// <remarks>仅在IsInterValidation启用的情况下</remarks>
+        /// </summary>
+        public string ShowInputMessage { get; set; }
     }
 }

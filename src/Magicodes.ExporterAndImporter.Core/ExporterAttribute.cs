@@ -42,14 +42,14 @@ namespace Magicodes.ExporterAndImporter.Core
         public int MaxRowNumberOnASheet { get; set; } = 0;
 
         /// <summary>
-        ///     表格样式风格
-        /// </summary>
-        public string TableStyle { get; set; } = "Medium10";
-
-        /// <summary>
         ///     自适应所有列
         /// </summary>
         public bool AutoFitAllColumn { get; set; }
+
+        /// <summary>
+        ///     数据超过此行之后不启用自适应，默认关闭
+        /// </summary>
+        public int AutoFitMaxRows { get; set; }
 
         /// <summary>
         ///     作者
@@ -60,5 +60,10 @@ namespace Magicodes.ExporterAndImporter.Core
         /// 头部筛选器
         /// </summary>
         public Type ExporterHeaderFilter { get; set; }
+
+        /// <summary>
+        /// 是否禁用所有筛选器
+        /// </summary>
+        public bool IsDisableAllFilter { get; set; }
     }
 }
