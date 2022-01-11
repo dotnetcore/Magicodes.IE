@@ -309,6 +309,35 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.Data.Count.ShouldBe(20);
         }
 
+
+        [Fact(DisplayName = "导入结果回调函数测试")]
+        public async Task ImportResultCallBack_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "缴费流水导入模板.xlsx");
+            var import = await Importer.Import<ImportPaymentLogDto>(filePath, (importResult) =>
+            {
+                int rowNum = 2;//首行数据对应Excel中的行号
+                foreach (var importPaymentLogDto in importResult.Data)
+                {
+                    if (importPaymentLogDto.Amount > 5000)
+                    {
+                        var dataRowError = new DataRowErrorInfo();
+                        dataRowError.RowIndex = rowNum;
+                        dataRowError.FieldErrors.Add("Amount", "金额不能大于5000");
+                        importResult.RowErrors.Add(dataRowError);
+                    }
+                    rowNum++;
+                }
+                return importResult;
+            });
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("金额不能大于5000"));
+            import.Exception.ShouldBeNull();
+            import.Data.Count.ShouldBe(20);
+        }
+
+
         [Fact(DisplayName = "必填项检测")]
         public void IsRequired_Test()
         {
