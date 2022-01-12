@@ -145,7 +145,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     导入模型验证数据
         /// </summary>
         /// <returns></returns>
-        public Task<ImportResult<T>> Import(string filePath = null)
+        public Task<ImportResult<T>> Import(string filePath = null, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null)
         {
             if (!string.IsNullOrWhiteSpace(filePath)) FilePath = filePath;
             ImportResult = new ImportResult<T>();
@@ -215,6 +215,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         }
 
                         #endregion 执行结果筛选器
+
+
+                        #region 执行结果回调 zhenhua.shen 2022.1.7
+                        if (importResultCallback != null)
+                        {
+                            ImportResult = importResultCallback(ImportResult);
+                        }
+                        #endregion
 
                         //生成Excel错误标注
                         LabelingError(excelPackage);

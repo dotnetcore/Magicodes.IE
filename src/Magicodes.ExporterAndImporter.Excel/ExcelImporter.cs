@@ -126,15 +126,30 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="filePath"></param>
         /// <param name="labelingFilePath"></param>
+        /// <param name="importResultCallback"></param>
         /// <returns></returns>
-        public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new()
+        public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new()
         {
             filePath.CheckExcelFileName();
             using (var importer = new ImportHelper<T>(filePath, labelingFilePath))
             {
-                return importer.Import();
+                return importer.Import(importResultCallback:importResultCallback);
             }
         }
+
+
+        /// <summary>
+        ///     导入
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <param name="importResultCallback"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(string filePath, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new()
+        {
+            return Import<T>(filePath, importResultCallback: importResultCallback);
+        }
+
 
         /// <summary>
         ///     导入

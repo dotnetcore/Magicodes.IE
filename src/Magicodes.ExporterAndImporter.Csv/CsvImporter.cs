@@ -2,6 +2,7 @@
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Csv.Utility;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -38,6 +39,7 @@ namespace Magicodes.ExporterAndImporter.Csv
                 return importer.GenerateTemplateByte();
             }
         }
+
         /// <summary>
         ///     导入
         /// </summary>
@@ -45,13 +47,26 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <param name="filePath"></param>
         /// <param name="labelingFilePath"></param>
         /// <returns></returns>
-        public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null) where T : class, new()
+        public Task<ImportResult<T>> Import<T>(string filePath, string labelingFilePath = null, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new()
         {
             using (var importer = new ImportHelper<T>(filePath))
             {
                 return importer.Import();
             }
         }
+
+        /// <summary>
+        ///     导入
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <param name="importResultCallback"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(string filePath, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new()
+        {
+            return Import<T>(filePath, importResultCallback: importResultCallback);
+        }
+
 
         /// <summary>
         ///     导入
