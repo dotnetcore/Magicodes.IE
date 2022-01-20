@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.0</Version>
+    <Version>2.6.1</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
@@ -20,6 +20,10 @@
 		更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
 		公众号：麦扣聊技术
 		交流QQ群：85318032
+
+
+		**2021.11.28**
+		- 修复未及时回收问题
 
 		**2021.11.28**
 		- 添加两个动态验证特性（见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)），DynamicStringLengthAttribute及RequiredIfAttribute
