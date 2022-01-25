@@ -38,6 +38,10 @@ namespace Magicodes.ExporterAndImporter.Core.Models
                                      {
                                          DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name
                                      };
+                if (string.IsNullOrEmpty(exporterHeader.DisplayName))
+                {
+                    exporterHeader.DisplayName = propertyInfo.GetDisplayName() ?? propertyInfo.Name;
+                }
                 Headers.Add(exporterHeader);
             }
         }
