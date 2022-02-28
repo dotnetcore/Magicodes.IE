@@ -11,14 +11,8 @@
 // 
 // ======================================================================
 
-#if NET461
-using TuesPechkin;
-using System.Drawing.Printing;
-using static TuesPechkin.GlobalSettings;
-#else
-using DinkToPdf;
-#endif
 using Magicodes.ExporterAndImporter.Core;
+using WkHtmlToPdfDotNet;
 
 namespace Magicodes.ExporterAndImporter.Pdf
 {
@@ -27,17 +21,10 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public class PdfExporterAttribute : ExporterAttribute
     {
-#if !NET461
         /// <summary>
         ///     方向
         /// </summary>
         public Orientation Orientation { get; set; } = Orientation.Landscape;
-#else
-        /// <summary>
-        ///     方向
-        /// </summary>
-        public PaperOrientation Orientation { get; set; } = PaperOrientation.Landscape;
-#endif
 
         /// <summary>
         ///     纸张类型（默认A4，必须）

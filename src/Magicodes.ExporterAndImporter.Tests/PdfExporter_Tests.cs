@@ -15,16 +15,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-#if NET461
-using TuesPechkin;
-using System.Drawing.Printing;
-using static TuesPechkin.GlobalSettings;
-#else
-using DinkToPdf;
-#endif
 using Magicodes.ExporterAndImporter.Pdf;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
 using Shouldly;
+using WkHtmlToPdfDotNet;
 using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
@@ -321,9 +315,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                 {
                     PaperKind = PaperKind.A4,
                     IsEnablePagesCount = true,
-#if NETCOREAPP
                     HeaderSettings = new HeaderSettings() { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
-#endif
                 }, tpl);
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))

@@ -12,16 +12,10 @@
 // ======================================================================
 
 using System.ComponentModel.DataAnnotations;
-#if NET461
-using TuesPechkin;
-using System.Drawing.Printing;
-using static TuesPechkin.GlobalSettings;
-#else
-using DinkToPdf;
-#endif
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Pdf;
+using WkHtmlToPdfDotNet;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -31,11 +25,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     /// </summary>
     [ExcelExporter(Name = "通用导出测试", Author = "雪雁", AutoFitMaxRows = 5000)]
     [ExcelImporter(MaxCount = 50000)]
-#if !NET461
     [PdfExporter(Orientation = Orientation.Landscape, PaperKind = PaperKind.A4, IsWriteHtml = true, IsEnablePagesCount = false)]
-#else
-    [PdfExporter(Orientation = PaperOrientation.Landscape, PaperKind = PaperKind.A4)]
-#endif
     public class ExportTestData
     {
         /// <summary>

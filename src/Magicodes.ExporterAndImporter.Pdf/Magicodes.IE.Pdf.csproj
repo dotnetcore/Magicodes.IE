@@ -5,26 +5,29 @@
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1;</TargetFrameworks>
     <PackageId>Magicodes.IE.Pdf</PackageId>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <PackageReference Include="TuesPechkin" Version="2.1.1" />
     <PackageReference Include="TuesPechkin.Wkhtmltox.AnyCPU" Version="0.12.4.1" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Haukcode.DinkToPdf" Version="1.1.2" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
-    <PackageReference Include="Haukcode.DinkToPdf" Version="1.1.2" />
+  </ItemGroup>-->
+  <ItemGroup>
+	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.71" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
   </ItemGroup>
-
   <ItemGroup>
+    <None Remove="C:\Users\XinLai\.nuget\packages\haukcode.wkhtmltopdfdotnet\1.5.71\build\..\runtimes\win-x64\native\wkhtmltox.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="C:\Users\XinLai\.nuget\packages\haukcode.wkhtmltopdfdotnet\1.5.71\build\..\runtimes\win-x86\native\wkhtmltox.dll" />
+  </ItemGroup>
+
+  <!--<ItemGroup>
     <None Include="runtimes/linux-x64/native/wkhtmltox.so">
       <Pack>true</Pack>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <PackagePath>runtimes/linux-x64/native/wkhtmltox.so</PackagePath>
     </None>
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>

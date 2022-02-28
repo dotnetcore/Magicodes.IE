@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Reflection;
-#if NET461
-using TuesPechkin;
-using System.Drawing.Printing;
-#else
-using DinkToPdf;
-#endif
+using WkHtmlToPdfDotNet;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Core.Models;
@@ -26,39 +21,25 @@ namespace Magicodes.ExporterAndImporter.Pdf
     {
         private readonly Lazy<HtmlExporter> _htmlExporter;
         private HtmlExporter HtmlExporter => _htmlExporter.Value;
-#if NET461
-
-        private static readonly IConverter PdfConverter = new ThreadSafeConverter(new PdfToolset(
-            new WinAnyCPUEmbeddedDeployment(
-                new TempFolderDeployment())));
-
-        public PdfExporter()
-        {
-            _htmlExporter = new Lazy<HtmlExporter>();
-        }
-
-#else
         private static readonly SynchronizedConverter PdfConverter = new SynchronizedConverter(new PdfTools());
         public PdfExporter()
         {
-            var context = new CustomAssemblyLoadContext();
+            //var context = new CustomAssemblyLoadContext();
             // Check the platform and load the appropriate Library
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var wkHtmlToPdfPath = Path.Combine(appPath, "runtimes", "linux-x64", "native", "wkhtmltox.so");
-                if (!File.Exists(wkHtmlToPdfPath))
-                {
-                    wkHtmlToPdfPath = Path.Combine(appPath, "wkhtmltox.so");
-                }
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            //{
+            //    var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //    var wkHtmlToPdfPath = Path.Combine(appPath, "runtimes", "linux-x64", "native", "wkhtmltox.so");
+            //    if (!File.Exists(wkHtmlToPdfPath))
+            //    {
+            //        wkHtmlToPdfPath = Path.Combine(appPath, "wkhtmltox.so");
+            //    }
 
-                context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
-            }
+            //    context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+            //}
 
             _htmlExporter = new Lazy<HtmlExporter>();
         }
-
-#endif
 
         /// <summary>
         ///     根据模板导出列表
@@ -136,14 +117,9 @@ namespace Magicodes.ExporterAndImporter.Pdf
         {
             var objSettings = new ObjectSettings
             {
-#if !NET461
                 HtmlContent = htmlString,
                 Encoding = Encoding.UTF8,
                 PagesCount = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
-#else
-                HtmlText = htmlString,
-                CountPages = pdfExporterAttribute.IsEnablePagesCount ? true : (bool?)null,
-#endif
                 WebSettings = { DefaultEncoding = Encoding.UTF8.BodyName },
             };
             if (pdfExporterAttribute.HeaderSettings != null)
@@ -159,25 +135,19 @@ namespace Magicodes.ExporterAndImporter.Pdf
                     PaperSize = pdfExporterAttribute.PaperKind == PaperKind.Custom
                     ? pdfExporterAttribute.PaperSize : pdfExporterAttribute.PaperKind,
                     Orientation = pdfExporterAttribute.Orientation,
-#if !NET461
-                    //Out = fileName,
                     ColorMode = ColorMode.Color,
-#else
-                    ProduceOutline = true,
-#endif
                     DocumentTitle = pdfExporterAttribute.Name
                 },
                 Objects =
                 {
                     objSettings
-    }
+                }
             };
 
             if (pdfExporterAttribute.MarginSettings != null)
             {
                 htmlToPdfDocument.GlobalSettings.Margins = pdfExporterAttribute.MarginSettings;
             }
-
 
             var result = PdfConverter.Convert(htmlToPdfDocument);
             return Task.FromResult(result);
