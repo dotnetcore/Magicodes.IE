@@ -44,7 +44,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var tableType = typeof(T);
             List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
             var sheetProperties = tableType.GetProperties()
-                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000);
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
 
             for (var i = 0; i < sheetProperties.Length; i++)
             {
@@ -88,7 +88,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var tableType = typeof(T);
             List<PropertyInfo> sheetPropertyList = new List<PropertyInfo>();
             var sheetProperties = tableType.GetProperties()
-                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000);
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
 
             for (var i = 0; i < sheetProperties.Length; i++)
             {
