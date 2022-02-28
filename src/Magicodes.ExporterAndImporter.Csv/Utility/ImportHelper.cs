@@ -98,7 +98,9 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             {
                 csv.Configuration.HasHeaderRecord = true;
                 #region header 
-                var properties = typeof(T).GetProperties();
+                var properties = typeof(T).GetProperties()
+                    .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
+                    .ToArray();
                 foreach (var prop in properties)
                 {
                     var name = prop.Name;

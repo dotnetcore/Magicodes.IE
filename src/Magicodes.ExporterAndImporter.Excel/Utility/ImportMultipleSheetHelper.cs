@@ -414,7 +414,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual bool ParseImporterHeader()
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
-            var objProperties = _importDataType.GetProperties();
+            var objProperties = _importDataType.GetProperties()
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
+                .ToArray();
             if (objProperties.Length == 0) return false;
 
             foreach (var propertyInfo in objProperties)
@@ -495,7 +497,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual bool ParseImporterHeader(Type sheetType)
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
-            var objProperties = sheetType.GetProperties();
+            var objProperties = sheetType.GetProperties()
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
+                .ToArray();
             if (objProperties.Length == 0) return false;
 
             foreach (var propertyInfo in objProperties)
