@@ -92,15 +92,16 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <returns></returns>
         public Task<byte[]> GenerateTemplateByte()
         {
+            var properties = typeof(T).GetProperties()
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
+                .ToArray();
+
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.HasHeaderRecord = true;
-                #region header 
-                var properties = typeof(T).GetProperties()
-                    .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
-                    .ToArray();
+                #region header
                 foreach (var prop in properties)
                 {
                     var name = prop.Name;
