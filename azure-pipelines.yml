@@ -41,7 +41,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.x'
+    version: '5.x'
 
 #  不再进行多框架全面测试
 #- task: UseDotNet@2
