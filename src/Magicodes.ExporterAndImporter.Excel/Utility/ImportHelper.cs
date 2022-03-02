@@ -661,7 +661,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual bool ParseHeader()
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
-            var objProperties = typeof(T).GetProperties();
+            var objProperties = typeof(T).GetProperties()
+                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
+                .ToArray();
+            
             if (objProperties.Length == 0) return false;
 
             foreach (var propertyInfo in objProperties)
