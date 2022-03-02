@@ -1,5 +1,45 @@
 # Release Log
 
+## 2.6.2
+**2022.03.02**
+
+- Excel导入时增加回调函数，方便增加自定义验证（见PR[#369](https://github.com/dotnetcore/Magicodes.IE/pull/369)）：
+
+```csharp
+        [Fact(DisplayName = "导入结果回调函数测试")]
+        public async Task ImportResultCallBack_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "缴费流水导入模板.xlsx");
+            var import = await Importer.Import<ImportPaymentLogDto>(filePath, (importResult) =>
+            {
+                int rowNum = 2;//首行数据对应Excel中的行号
+                foreach (var importPaymentLogDto in importResult.Data)
+                {
+                    if (importPaymentLogDto.Amount > 5000)
+                    {
+                        var dataRowError = new DataRowErrorInfo();
+                        dataRowError.RowIndex = rowNum;
+                        dataRowError.FieldErrors.Add("Amount", "金额不能大于5000");
+                        importResult.RowErrors.Add(dataRowError);
+                    }
+                    rowNum++;
+                }
+                return importResult;
+            });
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("金额不能大于5000"));
+            import.Exception.ShouldBeNull();
+            import.Data.Count.ShouldBe(20);
+        }
+```
+
+- 优化获取DisplayName的逻辑（见PR[#372](https://github.com/dotnetcore/Magicodes.IE/pull/372)）
+
+- 导出CSV支持ColumnIndex（见PR[#381](https://github.com/dotnetcore/Magicodes.IE/pull/381)）
+
+- 优化Pdf导出逻辑，统一各平台导出代码
+
 ## 2.6.1
 
 - 修复内存未及时回收

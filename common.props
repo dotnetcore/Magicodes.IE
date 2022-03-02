@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.1</Version>
+    <Version>2.6.2</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
@@ -21,6 +21,11 @@
 		公众号：麦扣聊技术
 		交流QQ群：85318032
 
+		**2022.03.02**
+		- Excel导入时增加回调函数，方便增加自定义验证
+		- 优化获取DisplayName的逻辑
+		- 导出CSV支持ColumnIndex
+		- 优化Pdf导出逻辑，统一各平台导出代码
 
 		**2021.11.28**
 		- 修复未及时回收问题
@@ -34,11 +39,6 @@
 		**2021.10.23**
 		- 导出日期格式化支持'DateTimeOffset'类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
 		- 修改Magicodes.IE.EPPlus的包依赖PR[#351](https://github.com/dotnetcore/Magicodes.IE/pull/351)
-
-		**2021.10.13**
-		- 支持自定义列字体颜色，具体见PR[#342](https://github.com/dotnetcore/Magicodes.IE/pull/342)，感谢[xiangxiren](https://github.com/xiangxiren)
-		- 修复日期格式化的问题，具体见PR[#344](https://github.com/dotnetcore/Magicodes.IE/pull/344)，感谢[ccccccmd](https://github.com/ccccccmd)
-
 	</Description>
   </PropertyGroup>
   <PropertyGroup>
