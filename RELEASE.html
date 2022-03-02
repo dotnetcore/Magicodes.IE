@@ -8,7 +8,7 @@
     <title>Release Log </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Release Log ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.0.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -62,6 +62,46 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="262">2.6.2</h2>
+<p><strong>2022.03.02</strong></p>
+<ul>
+<li>Excel导入时增加回调函数，方便增加自定义验证（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/369">#369</a>）：</li>
+</ul>
+<pre><code class="lang-csharp">        [Fact(DisplayName = &quot;导入结果回调函数测试&quot;)]
+        public async Task ImportResultCallBack_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), &quot;TestFiles&quot;, &quot;Import&quot;, &quot;缴费流水导入模板.xlsx&quot;);
+            var import = await Importer.Import&lt;ImportPaymentLogDto&gt;(filePath, (importResult) =&gt;
+            {
+                int rowNum = 2;//首行数据对应Excel中的行号
+                foreach (var importPaymentLogDto in importResult.Data)
+                {
+                    if (importPaymentLogDto.Amount &gt; 5000)
+                    {
+                        var dataRowError = new DataRowErrorInfo();
+                        dataRowError.RowIndex = rowNum;
+                        dataRowError.FieldErrors.Add(&quot;Amount&quot;, &quot;金额不能大于5000&quot;);
+                        importResult.RowErrors.Add(dataRowError);
+                    }
+                    rowNum++;
+                }
+                return importResult;
+            });
+            import.ShouldNotBeNull();
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.ShouldContain(p =&gt; p.RowIndex == 3 &amp;&amp; p.FieldErrors.ContainsKey(&quot;金额不能大于5000&quot;));
+            import.Exception.ShouldBeNull();
+            import.Data.Count.ShouldBe(20);
+        }
+</code></pre>
+<ul>
+<li><p>优化获取DisplayName的逻辑（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/372">#372</a>）</p>
+</li>
+<li><p>导出CSV支持ColumnIndex（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/381">#381</a>）</p>
+</li>
+<li><p>优化Pdf导出逻辑，统一各平台导出代码</p>
+</li>
+</ul>
 <h2 id="261">2.6.1</h2>
 <ul>
 <li>修复内存未及时回收</li>

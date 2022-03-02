@@ -184,15 +184,24 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(Stream)
   nameWithType: CsvImporter.Import<T>(Stream)
   nameWithType.vb: CsvImporter.Import(Of T)(Stream)
-- uid: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,System.String)
-  name: Import<T>(String, String)
-  href: api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html#Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_System_String_System_String_
-  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,System.String)
-  name.vb: Import(Of T)(String, String)
-  fullName: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import<T>(System.String, System.String)
-  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(System.String, System.String)
-  nameWithType: CsvImporter.Import<T>(String, String)
-  nameWithType.vb: CsvImporter.Import(Of T)(String, String)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name: Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html#Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_System_String_Func_ImportResult___0__ImportResult___0___
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name.vb: Import(Of T)(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import<T>(System.String, Func<ImportResult<T>, ImportResult<T>>)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(System.String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  nameWithType: CsvImporter.Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
+  nameWithType.vb: CsvImporter.Import(Of T)(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+- uid: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name: Import<T>(String, String, Func<ImportResult<T>, ImportResult<T>>)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html#Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_System_String_System_String_Func_ImportResult___0__ImportResult___0___
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name.vb: Import(Of T)(String, String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import<T>(System.String, System.String, Func<ImportResult<T>, ImportResult<T>>)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(System.String, System.String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  nameWithType: CsvImporter.Import<T>(String, String, Func<ImportResult<T>, ImportResult<T>>)
+  nameWithType.vb: CsvImporter.Import(Of T)(String, String, Func(Of ImportResult(Of T), ImportResult(Of T)))
 - uid: Magicodes.ExporterAndImporter.Csv.ICsvExporter
   name: ICsvExporter
   href: api/Magicodes.ExporterAndImporter.Csv.ICsvExporter.html
@@ -756,15 +765,24 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(Stream)
   nameWithType: ExcelImporter.Import<T>(Stream)
   nameWithType.vb: ExcelImporter.Import(Of T)(Stream)
-- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String)
-  name: Import<T>(String, String)
-  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_System_String_
-  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String)
-  name.vb: Import(Of T)(String, String)
-  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import<T>(System.String, System.String)
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(System.String, System.String)
-  nameWithType: ExcelImporter.Import<T>(String, String)
-  nameWithType.vb: ExcelImporter.Import(Of T)(String, String)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name: Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_Func_ImportResult___0__ImportResult___0___
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name.vb: Import(Of T)(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import<T>(System.String, Func<ImportResult<T>, ImportResult<T>>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(System.String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  nameWithType: ExcelImporter.Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
+  nameWithType.vb: ExcelImporter.Import(Of T)(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name: Import<T>(String, String, Func<ImportResult<T>, ImportResult<T>>)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_System_String_Func_ImportResult___0__ImportResult___0___
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String,Func{ImportResult{``0},ImportResult{``0}})
+  name.vb: Import(Of T)(String, String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import<T>(System.String, System.String, Func<ImportResult<T>, ImportResult<T>>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(System.String, System.String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  nameWithType: ExcelImporter.Import<T>(String, String, Func<ImportResult<T>, ImportResult<T>>)
+  nameWithType.vb: ExcelImporter.Import(Of T)(String, String, Func(Of ImportResult(Of T), ImportResult(Of T)))
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.ImportMultipleSheet*
   name: ImportMultipleSheet
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_ImportMultipleSheet_
@@ -1869,14 +1887,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).GetImportSheet
   nameWithType: ImportHelper<T>.GetImportSheet
   nameWithType.vb: ImportHelper(Of T).GetImportSheet
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String)
-  name: Import(String)
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_System_String_
-  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String)
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.Import(System.String)
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).Import(System.String)
-  nameWithType: ImportHelper<T>.Import(String)
-  nameWithType.vb: ImportHelper(Of T).Import(String)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String,Func{ImportResult{`0},ImportResult{`0}})
+  name: Import(String, Func<ImportResult<T>, ImportResult<T>>)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_System_String_Func_ImportResult__0__ImportResult__0___
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String,Func{ImportResult{`0},ImportResult{`0}})
+  name.vb: Import(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.Import(System.String, Func<ImportResult<T>, ImportResult<T>>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).Import(System.String, Func(Of ImportResult(Of T), ImportResult(Of T)))
+  nameWithType: ImportHelper<T>.Import(String, Func<ImportResult<T>, ImportResult<T>>)
+  nameWithType.vb: ImportHelper(Of T).Import(String, Func(Of ImportResult(Of T), ImportResult(Of T)))
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import*
   name: Import
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_

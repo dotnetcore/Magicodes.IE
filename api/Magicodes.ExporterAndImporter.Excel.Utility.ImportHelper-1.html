@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImportHelper&lt;T&gt;
    ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -461,13 +461,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_System_String_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String)">Import(String)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_Import_System_String_Func_ImportResult__0__ImportResult__0___" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.Import(System.String,Func{ImportResult{`0},ImportResult{`0}})">Import(String, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>导入模型验证数据</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import(string filePath = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import(string filePath = null, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt; importResultCallback = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -482,6 +482,11 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">filePath</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">ImportResult</span>&lt;T&gt;, <span class="xref">ImportResult</span>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">importResultCallback</span></td>
         <td></td>
       </tr>
     </tbody>

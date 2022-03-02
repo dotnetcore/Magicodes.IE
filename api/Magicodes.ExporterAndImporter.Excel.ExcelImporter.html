@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ExcelImporter
    ">
-    <meta name="generator" content="docfx 2.58.9.0">
+    <meta name="generator" content="docfx 2.59.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -114,7 +114,7 @@
   <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ExcelImporter : IExcelImporter, IImporter</code></pre>
+    <pre><code class="lang-csharp hljs">public class ExcelImporter : IExcelImporter</code></pre>
   </div>
   <h3 id="methods">Methods
   </h3>
@@ -282,13 +282,77 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_System_String_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String)">Import&lt;T&gt;(String, String)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_Func_ImportResult___0__ImportResult___0___" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})">Import&lt;T&gt;(String, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>导入</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import&lt;T&gt;(string filePath, string labelingFilePath = null)
+    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import&lt;T&gt;(string filePath, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt; importResultCallback = null)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">filePath</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">ImportResult</span>&lt;T&gt;, <span class="xref">ImportResult</span>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">importResultCallback</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">ImportResult</span>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_System_String_Func_ImportResult___0__ImportResult___0___" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,System.String,Func{ImportResult{``0},ImportResult{``0}})">Import&lt;T&gt;(String, String, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>导入</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import&lt;T&gt;(string filePath, string labelingFilePath = null, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt; importResultCallback = null)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -309,6 +373,11 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">labelingFilePath</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">ImportResult</span>&lt;T&gt;, <span class="xref">ImportResult</span>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">importResultCallback</span></td>
         <td></td>
       </tr>
     </tbody>
