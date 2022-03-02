@@ -25,7 +25,6 @@ using OfficeOpenXml.Style;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Dynamic;
@@ -36,7 +35,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class ExcelExporter_Tests : TestBase
+    public partial class ExcelExporter_Tests : TestBase
     {
         /// <summary>
         ///     将entities直接转成DataTable
@@ -1019,5 +1018,22 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "导出列名获取测试#366")]
+        public async Task DisplayName_GET_Test()
+        {
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(DisplayName_GET_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<DisplayName_GET_TestDto>(100);
+            var result = await exporter.Export(filePath, data);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                pck.Workbook.Worksheets.First().Cells["A1"].Text.ShouldBe("备注");
+            }
+        }
     }
 }
