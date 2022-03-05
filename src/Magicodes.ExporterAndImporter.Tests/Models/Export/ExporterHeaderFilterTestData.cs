@@ -71,7 +71,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         public string Name { get; set; }
     }
 
-    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10)]
+    [ExcelExporter(Name = "测试", TableStyle = TableStyles.Light10, ExporterHeaderFilter = typeof(TestExporterHeaderFilter1))]
     public class DIExporterHeaderFilterTestData1
     {
         [ExporterHeader(DisplayName = "加粗文本", IsBold = true)]
