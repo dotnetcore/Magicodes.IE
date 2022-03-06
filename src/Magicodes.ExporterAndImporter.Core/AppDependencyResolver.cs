@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -75,6 +76,16 @@ namespace Magicodes.ExporterAndImporter.Core
         public T GetService<T>()
         {
             return _serviceProvider.GetService<T>();
+        }
+
+        /// <summary>
+        /// 从<see cref="IServiceProvider"/>中获取类型为<typeparamref name="T"/>枚举数
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IEnumerable<T> GetServices<T>()
+        {
+            return _serviceProvider.GetServices<T>();
         }
 
         private AppDependencyResolver(IServiceProvider serviceProvider)

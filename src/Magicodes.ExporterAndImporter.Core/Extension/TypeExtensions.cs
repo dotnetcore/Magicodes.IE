@@ -367,7 +367,10 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 //判断容器中是否已注册
                 if (AppDependencyResolver.HasInit)
                 {
-                    filter = AppDependencyResolver.Current.GetService<TFilter>();
+                    //filter = AppDependencyResolver.Current.GetService<TFilter>();
+                    // 获取符合所需类型的过滤接口
+                    var filters = AppDependencyResolver.Current.GetServices<TFilter>();
+                    filter = filters.FirstOrDefault(p => p.GetType() == filterType);
                 }
                 else if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
                 {

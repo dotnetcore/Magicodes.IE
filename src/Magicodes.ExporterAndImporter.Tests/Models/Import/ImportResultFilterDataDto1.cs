@@ -95,7 +95,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         public string Code { get; set; }
     }
 
-    [ExcelImporter(IsLabelingError = true)]
+    [ExcelImporter(IsLabelingError = true, ImportResultFilter = typeof(ImportResultFilterTest))]
     public class DIImportResultFilterDataDto1
     {
         /// <summary>
