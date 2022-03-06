@@ -62,6 +62,22 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="263">2.6.3</h2>
+<p><strong>2022.03.06</strong></p>
+<ul>
+<li>完善筛选器注册机制，在指定了特性ImportHeaderFilter、ExporterHeaderFilter等值后，筛选器将匹配对于的类型（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/384">#384</a>），如不指定则作为全局筛选器。如下述代码，注入了多个同类型的筛选器，通过指定了ImportHeaderFilter限制了此Dto仅使用ImportHeaderFilterB：</li>
+</ul>
+<pre><code class="lang-csharp">    builder.Services.AddTransient&lt;IImportHeaderFilter, ImportHeaderFilterA&gt;();
+    builder.Services.AddTransient&lt;IImportHeaderFilter, ImportHeaderFilterB&gt;();
+    builder.Services.AddTransient&lt;IImportHeaderFilter, ImportHeaderFilterC&gt;();
+
+    [ExcelImporter(ImportHeaderFilter = typeof(ImportHeaderFilterB))]
+    public class ImportExcelTemplateDto
+    {
+        [ImporterHeader(Name = &quot;TypeName&quot;)]
+        public string? Name { get; set; }
+    }
+</code></pre>
 <h2 id="262">2.6.2</h2>
 <p><strong>2022.03.02</strong></p>
 <ul>
