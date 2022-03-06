@@ -1214,11 +1214,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     if (exporterHeader.ExporterHeaderAttribute.FontColor != 0)
                     {
-#if NETSTANDARD2_0
                         col.Style.Font.Color.SetColor(Color.FromName(exporterHeader.ExporterHeaderAttribute.FontColor.ToString()));
-#else
-                        col.Style.Font.Color.SetColor(Color.FromKnownColor(exporterHeader.ExporterHeaderAttribute.FontColor));
-#endif
                     }
                 }
             }

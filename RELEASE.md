@@ -1,5 +1,24 @@
 # Release Log
 
+## 2.6.3
+**2022.03.06**
+
+- 完善筛选器注册机制，在指定了特性ImportHeaderFilter、ExporterHeaderFilter等值后，筛选器将匹配对于的类型（见PR[#384](https://github.com/dotnetcore/Magicodes.IE/pull/384)），如不指定则作为全局筛选器。如下述代码，注入了多个同类型的筛选器，通过指定了ImportHeaderFilter限制了此Dto仅使用ImportHeaderFilterB：
+```csharp
+    builder.Services.AddTransient<IImportHeaderFilter, ImportHeaderFilterA>();
+    builder.Services.AddTransient<IImportHeaderFilter, ImportHeaderFilterB>();
+    builder.Services.AddTransient<IImportHeaderFilter, ImportHeaderFilterC>();
+
+    [ExcelImporter(ImportHeaderFilter = typeof(ImportHeaderFilterB))]
+    public class ImportExcelTemplateDto
+    {
+        [ImporterHeader(Name = "TypeName")]
+        public string? Name { get; set; }
+    }
+```
+    
+
+
 ## 2.6.2
 **2022.03.02**
 

@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.2</Version>
+    <Version>2.6.3</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
@@ -20,6 +20,9 @@
 		更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
 		公众号：麦扣聊技术
 		交流QQ群：85318032
+
+		**2022.03.06**
+		- 完善筛选器注册机制，在指定了特性ImportHeaderFilter、ExporterHeaderFilter等值后，筛选器将匹配对于的类型，如不指定则作为全局筛选器。
 
 		**2022.03.02**
 		- Excel导入时增加回调函数，方便增加自定义验证

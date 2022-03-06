@@ -363,27 +363,17 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
 
             if (!isDisableAllFilter)
             {
-#if NETSTANDARD
                 //判断容器中是否已注册
                 if (AppDependencyResolver.HasInit)
                 {
-                    //filter = AppDependencyResolver.Current.GetService<TFilter>();
                     // 获取符合所需类型的过滤接口
                     var filters = AppDependencyResolver.Current.GetServices<TFilter>();
-                    filter = filters.FirstOrDefault(p => p.GetType() == filterType);
+                    filter = filterType == null ? filters.FirstOrDefault() : filters.FirstOrDefault(p => p.GetType() == filterType);
                 }
                 else if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
                 {
-                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
+                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true, BindingFlags.Default, null, filterType.CreateType(), null, null);
                 }
-
-#else
-                if (filterType != null && typeof(TFilter).IsAssignableFrom(filterType))
-                {
-                    filter = (TFilter)filterType.Assembly.CreateInstance(filterType.FullName, true,
-                        System.Reflection.BindingFlags.Default, null, filterType.CreateType(), null, null);
-                }
-#endif
             }
             return filter;
         }
