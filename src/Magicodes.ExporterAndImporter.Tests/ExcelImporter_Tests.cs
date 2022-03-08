@@ -128,7 +128,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Column(15).Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
+                sheet.Column(11).Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
             }
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
