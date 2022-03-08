@@ -323,7 +323,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     {
                         var dataRowError = new DataRowErrorInfo();
                         dataRowError.RowIndex = rowNum;
-                        dataRowError.FieldErrors.Add("Amount", "金额不能大于5000");
+                        dataRowError.FieldErrors.Add("金额", "金额不能大于5000");
                         importResult.RowErrors.Add(dataRowError);
                     }
                     rowNum++;
@@ -332,7 +332,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             });
             import.ShouldNotBeNull();
             import.HasError.ShouldBeTrue();
-            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("金额不能大于5000"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.Values.Contains("金额不能大于5000"));
             import.Exception.ShouldBeNull();
             import.Data.Count.ShouldBe(20);
         }
