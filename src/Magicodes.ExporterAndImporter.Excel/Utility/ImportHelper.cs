@@ -662,9 +662,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
             // var objProperties = typeof(T).GetProperties();
-            var objProperties = typeof(T).GetProperties()
-                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
-                .ToArray();
+            var objProperties = typeof(T).GetSortedPropertyInfos();
 
             if (objProperties.Length == 0) return false;
 

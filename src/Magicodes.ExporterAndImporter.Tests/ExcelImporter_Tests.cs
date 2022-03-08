@@ -938,15 +938,33 @@ namespace Magicodes.ExporterAndImporter.Tests
             importResult.HasError.ShouldBeFalse();
         }
 
-        [Fact(DisplayName = "ColumnIndex测试")]
+        [Fact(DisplayName = "ColumnIndex导入测试")]
         public async Task ImportTestColumnIndex_Test()
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "ColumnIndex导入测试.xlsx");
             var import = await Importer.Import<ImportTestColumnIndex>(filePath);
             import.HasError.ShouldBeFalse();
             import.TemplateErrors.Count.ShouldBe(0);
-            import.ImporterHeaderInfos.Count.ShouldBe(3);
+            import.ImporterHeaderInfos.Count.ShouldBe(5);
             import.Data.ElementAt(0).Age = 11;
+            import.Data.ElementAt(0).ColumnIndexZeroTest = "aaa";
+            import.Data.ElementAt(0).ColumnIndexZeroTest2 = "AAA";
+        }
+
+        [Fact(DisplayName = "ColumnIndex导入模板生成测试")]
+        public async Task ColumnIndexGenerateImportTemplate_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ColumnIndexGenerateImportTemplate_Test) + ".xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+
+            var result = await Importer.GenerateTemplate<ImportTestColumnIndex>(filePath);
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells[1,2].Value.ShouldBe("Phone");
+            }
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
         }
 
         [Fact(DisplayName = "合并行数据导入")]
