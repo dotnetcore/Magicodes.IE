@@ -75,9 +75,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         /// <returns></returns>
         public byte[] GetCsvExportHeaderAsByteArray(string delimiter = "")
         {
-            var properties = typeof(T).GetProperties()
-                .OrderBy(p => p.GetAttribute<ImporterHeaderAttribute>()?.ColumnIndex ?? 10000)
-                .ToArray();
+            var properties = typeof(T).GetSortedPropertyInfos();
 
             using (var ms = new MemoryStream())
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
