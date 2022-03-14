@@ -18,7 +18,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果");
+        Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果", bool saveWithXSSFWorkbook = true);
 
         /// <summary>
         ///     导出
@@ -39,7 +39,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
-            int maxRowNumberOnASheet = 1000000);
+            int maxRowNumberOnASheet = 1000000, bool saveWithXSSFWorkbook = true);
 
 
         /// <summary>

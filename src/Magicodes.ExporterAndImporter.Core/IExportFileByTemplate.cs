@@ -48,6 +48,6 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="template"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        Task<byte[]> ExportBytesByTemplate(object data, string template, Type type);
+        Task<byte[]> ExportBytesByTemplate(object data, string template, Type type );
     }
 }

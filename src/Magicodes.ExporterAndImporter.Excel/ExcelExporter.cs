@@ -18,6 +18,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using Magicodes.ExporterAndImporter.Excel.Utility;
 using Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport;
 using Magicodes.IE.Core;
+using NPOI.XSSF.UserModel;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -200,7 +201,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
+        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, bool saveWithXSSFWorkbook=true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -220,14 +221,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
         }
@@ -252,7 +253,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new()
+        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems, bool saveWithXSSFWorkbook=true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -268,14 +269,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
         }
@@ -286,7 +287,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="type"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
+        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type, bool saveWithXSSFWorkbook=true)
         {
             var helper = new ExportHelper<DataTable>(type);
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -303,14 +304,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
         }
@@ -321,7 +322,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
         /// <returns></returns>
-        public Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果")
+        public Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果", bool saveWithXSSFWorkbook=true)
         {
             var helper = new ExportHelper<DataTable>();
             var headerList = new List<ExporterHeaderInfo>();
@@ -344,7 +345,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             helper.AddExporterHeaderInfoList(headerList);
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
             }
         }
 
@@ -353,12 +354,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new()
+        public Task<byte[]> ExportHeaderAsByteArray<T>(T type, bool saveWithXSSFWorkbook=true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
             }
         }
 
@@ -427,7 +428,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="maxRowNumberOnASheet"></param>
         /// <returns></returns>
         public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
-            int maxRowNumberOnASheet = 1000000)
+            int maxRowNumberOnASheet = 1000000, bool saveWithXSSFWorkbook = true)
         {
             var helper = new ExportHelper<DataTable>();
             helper.ExcelExporterSettings.MaxRowNumberOnASheet = maxRowNumberOnASheet;
@@ -446,14 +447,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return Task.FromResult(SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray(), saveWithXSSFWorkbook));
                 }
             }
         }
@@ -465,6 +466,27 @@ namespace Magicodes.ExporterAndImporter.Excel
             _isAppendHeaders = false;
             _isSeparateBySheet = false;
             _isSeparateColumn = false;
+        } 
+
+        private byte[] SaveToExcelWithXSSFWorkbook(byte[] data, bool saveWithXSSFWorkbook)
+        {
+            if (saveWithXSSFWorkbook)
+            {
+
+                //for excel compability
+                var stream = new MemoryStream(data);
+                XSSFWorkbook wb = new XSSFWorkbook(stream);
+
+                MemoryStream ms = new MemoryStream();
+                wb.Write(ms);
+
+                return ms.ToArray();
+
+            }
+            else
+            {
+                return data;
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="dataItems">数据</param>
         /// <param name="type">类型</param>
         /// <returns></returns>
-        Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type);
+        Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type, bool saveWithXSSFWorkbook = true);
 
         /// <summary>
         ///     导出
@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new();
+        Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, bool saveWithXSSFWorkbook = true) where T : class, new();
 
         /// <summary>
         ///     导出
@@ -60,13 +60,13 @@ namespace Magicodes.ExporterAndImporter.Core
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new();
+        Task<byte[]> ExportAsByteArray<T>(DataTable dataItems, bool saveWithXSSFWorkbook = true) where T : class, new();
 
         /// <summary>
         ///     导出表头
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new();
+        Task<byte[]> ExportHeaderAsByteArray<T>(T type, bool saveWithXSSFWorkbook = true) where T : class, new();
     }
 }

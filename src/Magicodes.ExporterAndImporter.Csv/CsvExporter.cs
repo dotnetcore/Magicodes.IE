@@ -46,7 +46,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems">数据列</param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
+        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems, bool saveWithXSSFWorkbook = true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportAsByteArray(dataItems));
@@ -58,7 +58,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new()
+        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems, bool saveWithXSSFWorkbook = true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportAsByteArray(dataItems, null));
@@ -71,7 +71,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <param name="type"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
+        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type, bool saveWithXSSFWorkbook = true)
         {
             throw new NotImplementedException();
         }
@@ -82,7 +82,7 @@ namespace Magicodes.ExporterAndImporter.Csv
         /// <typeparam name="T"></typeparam>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new()
+        public Task<byte[]> ExportHeaderAsByteArray<T>(T type, bool saveWithXSSFWorkbook = true) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportHeaderAsByteArray());
