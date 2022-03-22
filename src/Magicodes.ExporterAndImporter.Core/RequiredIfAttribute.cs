@@ -22,7 +22,7 @@ namespace Magicodes.IE.Core
         {
             var dependentValue = context.ObjectInstance.GetType().GetProperty(PropertyName).GetValue(context.ObjectInstance, null);
 
-            if (dependentValue.ToString() == DesiredValue.ToString())
+            if (dependentValue == null && dependentValue.ToString() == DesiredValue.ToString())
             {
                 if (!_innerAttribute.IsValid(value))
                 {
