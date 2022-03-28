@@ -58,6 +58,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.EPPlus", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPPlusTest", "src\EPPlus\EPPlusTest\EPPlusTest.csproj", "{B44800CB-5C50-4D64-AD9A-BE7077EA666E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magicodes.IE.Excel.NPOI", "src\Magicodes.IE.Excel.NPOI\Magicodes.IE.Excel.NPOI.csproj", "{1B0F12D3-C689-4085-8868-C214A733A6FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +142,10 @@ Global
 		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B44800CB-5C50-4D64-AD9A-BE7077EA666E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0F12D3-C689-4085-8868-C214A733A6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0F12D3-C689-4085-8868-C214A733A6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0F12D3-C689-4085-8868-C214A733A6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0F12D3-C689-4085-8868-C214A733A6FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,7 +164,7 @@ Global
 		{B44800CB-5C50-4D64-AD9A-BE7077EA666E} = {3C510281-8FE5-43C3-B5B6-2386EE836234}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
 		RESX_SortFileContentOnSave = True
+		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
 	EndGlobalSection
 EndGlobal
