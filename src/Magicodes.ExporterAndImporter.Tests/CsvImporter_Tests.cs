@@ -1,6 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Csv;
 using Magicodes.ExporterAndImporter.Tests.Models.Import;
+using Magicodes.IE.Tests.Models.Import;
 using Newtonsoft.Json;
 using Shouldly;
 using System.IO;
@@ -130,5 +131,18 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
+        [Fact(DisplayName = "#393")]
+        public async Task Issue393_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "2022-04-02.csv");
+            var import = await Importer.Import<Issue393>(filePath);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+            import.HasError.ShouldBeFalse();
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBe(10);
+        }
     }
 }
