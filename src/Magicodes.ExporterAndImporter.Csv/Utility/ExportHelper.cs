@@ -45,18 +45,18 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.HasHeaderRecord = true;
+                csv.Context.Configuration.HasHeaderRecord = true;
 
                 if(!string.IsNullOrWhiteSpace(delimiter))
-                    csv.Configuration.Delimiter = delimiter;
+                    csv.Context.Configuration.Delimiter = delimiter;
 
                 if (_type == null)
                 {
-                    csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                    csv.Context.RegisterClassMap<AutoMap<T>>();
                 }
                 else
                 {
-                    csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                    csv.Context.RegisterClassMap<AutoMap<T>>();
                 }
 
                 if (dataItems != null && dataItems.Count > 0)
@@ -81,10 +81,10 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.HasHeaderRecord = true;
+                csv.Context.Configuration.HasHeaderRecord = true;
 
                 if (!string.IsNullOrWhiteSpace(delimiter))
-                    csv.Configuration.Delimiter = delimiter;
+                    csv.Context.Configuration.Delimiter = delimiter;
 
                 #region header
 
@@ -123,11 +123,11 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.RegisterClassMap<AutoMap<T>>();
-                csv.Configuration.HasHeaderRecord = true;
+                csv.Context.RegisterClassMap<AutoMap<T>>();
+                csv.Context.Configuration.HasHeaderRecord = true;
 
                 if (!string.IsNullOrWhiteSpace(delimiter))
-                    csv.Configuration.Delimiter = delimiter;
+                    csv.Context.Configuration.Delimiter = delimiter;
 
                 //#region header 
                 //var properties = typeof(T).GetProperties();

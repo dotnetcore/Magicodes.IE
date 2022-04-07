@@ -98,7 +98,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
+                csv.Context.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
                 var exportDatas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
                 exportDatas.Count.ShouldBe(0);
 
@@ -132,7 +132,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var reader = new StreamReader(filePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
+                csv.Context.RegisterClassMap<AutoMap<ExportTestDataWithAttrs>>();
                 var datas = csv.GetRecords<ExportTestDataWithAttrs>().ToList();
                 datas.Count.ShouldBe(100);
             }

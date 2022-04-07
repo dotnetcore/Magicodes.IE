@@ -131,9 +131,10 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         }
 
-        [Fact(DisplayName = "#393")]
+        [Fact(DisplayName = "#393-ASCII编码问题")]
         public async Task Issue393_Test()
         {
+            //注意：关于ASCII文件编码的csv文件，需要将文件进行编码转换后才能导入，暂不考虑自动转码
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "2022-04-02.csv");
             var import = await Importer.Import<Issue393>(filePath);
             import.ShouldNotBeNull();

@@ -67,10 +67,10 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
                     Stream = new FileStream(FilePath, FileMode.Open);
                 }
 
-                using (var reader = new System.IO.StreamReader(Stream))
+                using (var reader = new StreamReader(Stream))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    csv.Configuration.RegisterClassMap<AutoMap<T>>();
+                    csv.Context.RegisterClassMap<AutoMap<T>>();
                     var result = csv.GetRecords<T>();
                     ImportResult.Data = result.ToList();
                     return Task.FromResult(ImportResult);
@@ -98,7 +98,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
             using (var writer = new StreamWriter(ms, Encoding.UTF8))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.HasHeaderRecord = true;
+                csv.Context.Configuration.HasHeaderRecord = true;
                 #region header
                 foreach (var prop in properties)
                 {
