@@ -312,7 +312,15 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             var wc = new System.Net.WebClient();
             wc.Proxy = null;
-            return new Bitmap(wc.OpenRead(url));
+            var image = new Bitmap(wc.OpenRead(url));
+
+            if (image.HorizontalResolution == 0 && image.VerticalResolution == 0)
+            {
+                var gImage = Graphics.FromImage(image);
+                image.SetResolution(gImage.DpiX, gImage.DpiY);
+            }
+
+            return image;
         }
 
         /// <summary>

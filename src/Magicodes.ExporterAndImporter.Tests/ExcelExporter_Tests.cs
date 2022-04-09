@@ -1019,5 +1019,29 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "Linux环境时导出JPG图片到Excel的测试", Timeout = 10000)]
+        public async Task ExportWithJPG_Test()
+        {
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "zero-DPI.Jpeg");
+            dynamic data = new ExpandoObject();
+            data.Datas = new List<ExpandoObject>() { };
+            dynamic row = new ExpandoObject();
+            row.Name = "好名字";
+            row.ImagePath = imagePath;
+            data.Datas.Add(row);
+
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "ZeroDPI.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = GetTestFilePath($"{nameof(ExportWithJPG_Test)}.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //根据模板导出
+            await Task.Run(async () =>
+            {
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+            });
+        }
     }
 }
