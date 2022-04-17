@@ -1111,7 +1111,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 if (col.ImportImageFieldAttribute != null)
                                 {
                                     var excelPicture = GetImage(worksheet, cell.Start.Row, cell.Start.Column);
-
+                                    if (excelPicture == null)
+                                    {
+                                        continue;
+                                    }
                                     var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);
                                     var value = string.Empty;
 

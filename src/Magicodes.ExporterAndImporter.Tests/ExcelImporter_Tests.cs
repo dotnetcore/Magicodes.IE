@@ -33,6 +33,7 @@ using Xunit;
 using Xunit.Abstractions;
 using Magicodes.IE.Tests.Models.Import;
 using System.Globalization;
+using System.Drawing;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -847,22 +848,63 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             foreach (var item in import.Data)
             {
-                File.Exists(item.Img).ShouldBeTrue();
+                if (item.Img != null)
+                    File.Exists(item.Img).ShouldBeTrue();
                 File.Exists(item.Img1).ShouldBeTrue();
             }
 
+            import.Data.ElementAt(3).Img.ShouldBeNullOrEmpty();
+
             //添加严格校验，防止图片位置错误等问题
-            var image1 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
-            var image2 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
-            var image3 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
-            var image4 = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
-            new FileInfo(import.Data.ElementAt(0).Img1).Length.ShouldBe(image1.Length);
-            new FileInfo(import.Data.ElementAt(0).Img).Length.ShouldBe(image2.Length);
-            new FileInfo(import.Data.ElementAt(1).Img1).Length.ShouldBe(image3.Length);
-            new FileInfo(import.Data.ElementAt(1).Img).Length.ShouldBe(image4.Length);
-            new FileInfo(import.Data.ElementAt(2).Img).Length.ShouldBe(image1.Length);
-            new FileInfo(import.Data.ElementAt(2).Img1).Length.ShouldBe(image1.Length);
+            var png1 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
+            var png2 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
+            var png3 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
+            var png4 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
+
+            IsSameImg(new Bitmap(import.Data.ElementAt(0).Img1), png1).ShouldBeTrue();
+            IsSameImg(new Bitmap(import.Data.ElementAt(0).Img), png2).ShouldBeTrue();
+
+            IsSameImg(new Bitmap(import.Data.ElementAt(1).Img1), png3).ShouldBeTrue();
+            IsSameImg(new Bitmap(import.Data.ElementAt(1).Img), png4).ShouldBeTrue();
+
+            IsSameImg(new Bitmap(import.Data.ElementAt(2).Img1), png1).ShouldBeTrue();
+            IsSameImg(new Bitmap(import.Data.ElementAt(2).Img), png1).ShouldBeTrue();
         }
+
+        /// <summary>
+        /// 判断图片是否一致
+        /// </summary>
+        /// <param name="bitmapSource">图片一</param>
+        /// <param name="bitmapTarget">图片二</param>
+        /// <returns>是否一致</returns>
+        public static bool IsSameImg(Bitmap bitmapSource, Bitmap bitmapTarget)
+        {
+            int countSame = 0;
+            int countDifferent = 0;
+            for (int i = 0; i < bitmapTarget.Width; i++)
+            {
+                for (int j = 0; j < bitmapTarget.Height; j++)
+                {
+                    if (bitmapSource.GetPixel(i, j).Equals(bitmapTarget.GetPixel(i, j)))
+                    {
+                        countSame++;
+                    }
+                    else
+                    {
+                        countDifferent++;//不同之处，如果为0 则说明两张图片一样
+                    }
+                }
+            }
+            if (countDifferent == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         [Fact(DisplayName = "导入图片测试头部非第一行")]
         public async Task ImportPictureHeaderNotFirstRow_Test()
@@ -961,7 +1003,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
             {
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells[1,2].Value.ShouldBe("Phone");
+                sheet.Cells[1, 2].Value.ShouldBe("Phone");
             }
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -1129,7 +1171,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "RequiredIf")]
         public async Task RequiredIf_Test()
         {
-            
+
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "requiredif.xlsx");
             var import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
 
