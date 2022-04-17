@@ -8,7 +8,7 @@
     <title>Release Log </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Release Log ">
-    <meta name="generator" content="docfx 2.59.0.0">
+    <meta name="generator" content="docfx 2.59.2.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -62,6 +62,22 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="264">2.6.4</h2>
+<p><strong>2022.04.17</strong></p>
+<ul>
+<li><p>优化了ColumnIndex在生成模板时的实现，增加了ColumnIndex的单测（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/385">#385</a>）。</p>
+</li>
+<li><p>添加了NPOI的独立扩展包——Magicodes.IE.Excel.NPOI，以便于后续给用户提供更多的支持。目前仅提供了 SaveToExcelWithXSSFWorkbook 扩展方法。</p>
+</li>
+<li><p>修复RequiredIfAttribute的Bug。</p>
+</li>
+<li><p>修复导出JPG图片在Linux环境下可能引起的无限循环的问题（见PR<a href="https://github.com/dotnetcore/Magicodes.IE/pull/396">#396</a>）。</p>
+</li>
+<li><p>Excel图片导入时，图片列支持为空。</p>
+</li>
+<li><p>更新CsvHelper到最新版本，并修改相关代码。</p>
+</li>
+</ul>
 <h2 id="263">2.6.3</h2>
 <p><strong>2022.03.06</strong></p>
 <ul>
