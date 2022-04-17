@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.3</Version>
+    <Version>2.6.4</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
@@ -21,6 +21,14 @@
 		公众号：麦扣聊技术
 		交流QQ群：85318032
 
+		**2022.04.17**
+		- 优化了ColumnIndex在生成模板时的实现，增加了ColumnIndex的单测（见PR[#385](https://github.com/dotnetcore/Magicodes.IE/pull/385)）。
+		- 添加了NPOI的独立扩展包——Magicodes.IE.Excel.NPOI，以便于后续给用户提供更多的支持。目前仅提供了 SaveToExcelWithXSSFWorkbook 扩展方法。
+		- 修复RequiredIfAttribute的Bug。
+		- 修复导出JPG图片在Linux环境下可能引起的无限循环的问题（见PR[#396](https://github.com/dotnetcore/Magicodes.IE/pull/396)）。
+		- Excel图片导入时，图片列支持为空。
+		- 更新CsvHelper到最新版本，并修改相关代码。
+		
 		**2022.03.06**
 		- 完善筛选器注册机制，在指定了特性ImportHeaderFilter、ExporterHeaderFilter等值后，筛选器将匹配对于的类型，如不指定则作为全局筛选器。
 
@@ -29,19 +37,6 @@
 		- 优化获取DisplayName的逻辑
 		- 导出CSV支持ColumnIndex
 		- 优化Pdf导出逻辑，统一各平台导出代码
-
-		**2021.11.28**
-		- 修复未及时回收问题
-
-		**2021.11.28**
-		- 添加两个动态验证特性（见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/359)），DynamicStringLengthAttribute及RequiredIfAttribute
-		- CSV添加对分隔符的配置，具体见PR[#319 by Afonsof91](https://github.com/dotnetcore/Magicodes.IE/pull/319)
-		- Excel导入添加对`TimeSpan`类型的支持，使用参考`TimeSpan_Test`
-		- 初步添加对.NET6的适配
-
-		**2021.10.23**
-		- 导出日期格式化支持'DateTimeOffset'类型，具体见PR[#349](https://github.com/dotnetcore/Magicodes.IE/pull/349)，感谢[YaChengMu](https://github.com/YaChengMu)
-		- 修改Magicodes.IE.EPPlus的包依赖PR[#351](https://github.com/dotnetcore/Magicodes.IE/pull/351)
 	</Description>
   </PropertyGroup>
   <PropertyGroup>

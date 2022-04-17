@@ -1,5 +1,20 @@
 # Release Log
 
+## 2.6.4
+**2022.04.17**
+
+- 优化了ColumnIndex在生成模板时的实现，增加了ColumnIndex的单测（见PR[#385](https://github.com/dotnetcore/Magicodes.IE/pull/385)）。
+
+- 添加了NPOI的独立扩展包——Magicodes.IE.Excel.NPOI，以便于后续给用户提供更多的支持。目前仅提供了 SaveToExcelWithXSSFWorkbook 扩展方法。
+
+- 修复RequiredIfAttribute的Bug。
+
+- 修复导出JPG图片在Linux环境下可能引起的无限循环的问题（见PR[#396](https://github.com/dotnetcore/Magicodes.IE/pull/396)）。
+
+- Excel图片导入时，图片列支持为空。
+
+- 更新CsvHelper到最新版本，并修改相关代码。
+
 ## 2.6.3
 **2022.03.06**
 
