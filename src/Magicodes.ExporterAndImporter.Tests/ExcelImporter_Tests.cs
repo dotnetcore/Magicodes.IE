@@ -944,7 +944,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
             foreach (var item in import.Data)
             {
-                File.Exists(item.Img).ShouldBeTrue();
+                if (item.Img != null)
+                    File.Exists(item.Img).ShouldBeTrue();
                 item.Img1.ShouldNotBeNull();
             }
         }
