@@ -495,7 +495,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
 
                 var result = cellFunc.Invoke(invokeParams);
-                sheet.Cells[cellAddress].Value = IsDynamicSupportTypes ? result?.ToString() : result;
+                sheet.Cells[cellAddress].Value = result;
             }
             else if (!string.IsNullOrWhiteSpace(expresson))
             {
