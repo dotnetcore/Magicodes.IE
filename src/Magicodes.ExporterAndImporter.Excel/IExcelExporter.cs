@@ -1,6 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -12,6 +13,47 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// </summary>
     public interface IExcelExporter : IExporter, IExportFileByTemplate
     {
+        /// <summary>
+        /// 导出字节
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportAsByteArrayWithXSSFWorkbook<T>(DataTable dataItems) where T : class, new();
+
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportAsByteArrayWithXSSFWorkbook<T>(ICollection<T> dataItems) where T : class, new();
+
+
+        /// <summary>
+        /// 导出字节
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportAsByteArrayWithXSSFWorkbook(DataTable dataItems, Type type);
+
+
+        /// <summary>
+        ///     导出excel表头
+        /// </summary>
+        /// <param name="items">表头数组</param>
+        /// <param name="sheetName">工作簿名称</param>
+        /// <returns></returns>
+        Task<byte[]> ExportHeaderAsByteArrayWithXSSFWorkbook(string[] items, string sheetName = "导出结果");
+
+
+        /// <summary>
+        ///     导出Excel表头
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportHeaderAsByteArrayWithXSSFWorkbook<T>(T type) where T : class, new();
+
         /// <summary>
         ///     导出表头
         /// </summary>

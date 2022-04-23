@@ -617,6 +617,31 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
+        [Fact(DisplayName = "通过动态传值导出表头 XSSFWorkbook")]
+        public async Task ExportHeaderAsByteArrayWithXSSFWorkbookWithItems_Test()
+        {
+            IExcelExporter exporter = new ExcelExporter();
+
+            var filePath = GetTestFilePath($"{nameof(ExportHeaderAsByteArrayWithItems_Test)}.xlsx");
+
+            DeleteFile(filePath);
+            var arr = new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" };
+            var sheetName = "Test";
+            var result = await exporter.ExportHeaderAsByteArrayWithXSSFWorkbook(arr, sheetName);
+            result.ShouldNotBeNull();
+            result.Length.ShouldBeGreaterThan(0);
+            result.ToExcelExportFileInfo(filePath);
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                //检查转换结果
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Name.ShouldBe(sheetName);
+                sheet.Dimension.Columns.ShouldBe(arr.Length);
+            }
+        }
+
+
 #if DEBUG
 
         [Fact(DisplayName = "大数据动态列导出Excel", Skip = "本地Debug模式下跳过，太费时")]

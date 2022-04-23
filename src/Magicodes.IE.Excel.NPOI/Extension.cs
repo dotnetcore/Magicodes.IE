@@ -1,7 +1,7 @@
 ﻿using NPOI.XSSF.UserModel;
 using System.IO;
 
-namespace Magicodes.IE.Excel.NPOI
+namespace Magicodes.ExporterAndImporter.Excel.NPOI
 {
     /// <summary>
     ///     扩展类
