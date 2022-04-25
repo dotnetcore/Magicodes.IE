@@ -310,17 +310,19 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         {
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
                 System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-            var wc = new System.Net.WebClient();
-            wc.Proxy = null;
-            var image = new Bitmap(wc.OpenRead(url));
-
-            if (image.HorizontalResolution == 0 && image.VerticalResolution == 0)
+            using (var wc = new System.Net.WebClient())
             {
-                var gImage = Graphics.FromImage(image);
-                image.SetResolution(gImage.DpiX, gImage.DpiY);
+                wc.Proxy = null;
+                var image = new Bitmap(wc.OpenRead(url));
+                if (image.HorizontalResolution == 0 && image.VerticalResolution == 0)
+                {
+                    using (var gImage = Graphics.FromImage(image))
+                    {
+                        image.SetResolution(gImage.DpiX, gImage.DpiY);
+                    }
+                }
+                return image;
             }
-
-            return image;
         }
 
         /// <summary>
