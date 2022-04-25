@@ -1,6 +1,7 @@
 ﻿using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Filters;
 using Magicodes.ExporterAndImporter.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -11,7 +12,18 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// Excel导出程序
     /// </summary>
     public interface IExcelExporter : IExporter, IExportFileByTemplate
-    {
+    { 
+
+        /// <summary>
+        ///     导出excel表头
+        /// </summary>
+        /// <param name="items">表头数组</param>
+        /// <param name="sheetName">工作簿名称</param>
+        /// <returns></returns>
+        Task<byte[]> ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = "导出结果");
+
+         
+
         /// <summary>
         ///     导出表头
         /// </summary>
@@ -30,6 +42,18 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>文件</returns>
         Task<ExportFileInfo> Export(string fileName, DataTable dataItems,
             IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);
+
+        /// <summary>
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="dataItems">数据</param>
+        /// <param name="exporterHeaderFilter">表头筛选器</param>
+        /// <param name="maxRowNumberOnASheet">一个Sheet最大允许的行数，设置了之后将输出多个Sheet</param>
+        /// <returns>文件</returns>
+        Task<ExportFileInfo> ExportWithXSSFWorkbook(string fileName, DataTable dataItems,
+            IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);        
+        
 
         /// <summary>
         ///     导出
