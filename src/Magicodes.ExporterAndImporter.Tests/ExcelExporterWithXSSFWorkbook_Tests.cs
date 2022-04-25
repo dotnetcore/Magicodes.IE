@@ -36,7 +36,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
-    public class ExcelExporter_Tests : TestBase
+    public class ExcelExporterWithXSSFWorkbook_Tests : TestBase
     {
         /// <summary>
         ///     将entities直接转成DataTable
@@ -79,8 +79,8 @@ namespace Magicodes.ExporterAndImporter.Tests
                 item.LongNo = 458752665;
                 item.Text = "测试长度超出单元格的字符串";
             }
-
-            var result = await exporter.Export(filePath, data);
+            
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -122,7 +122,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
 
             var data = GenFu.GenFu.ListOf<Issue179>(100);
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -148,7 +148,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
 
             var data = new List<ExportTestDataWithAttrs>();
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -169,7 +169,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithAutoCenter>());
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, GenFu.GenFu.ListOf<ExportTestDataWithAutoCenter>());
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -194,7 +194,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColAutoCenter>());
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColAutoCenter>());
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -217,7 +217,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath,
+            var result = await exporter.ExportWithXSSFWorkbook(filePath,
                 GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(300));
 
             result.ShouldNotBeNull();
@@ -235,7 +235,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             filePath = GetTestFilePath($"{nameof(SplitData_Test)}-2.xlsx");
             DeleteFile(filePath);
 
-            result = await exporter.Export(filePath,
+            result = await exporter.ExportWithXSSFWorkbook(filePath,
                 GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(299));
 
             result.ShouldNotBeNull();
@@ -252,7 +252,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             filePath = GetTestFilePath($"{nameof(SplitData_Test)}-3.xlsx");
             DeleteFile(filePath);
 
-            result = await exporter.Export(filePath,
+            result = await exporter.ExportWithXSSFWorkbook(filePath,
                 GenFu.GenFu.ListOf<ExportTestDataWithSplitSheet>(302));
 
             result.ShouldNotBeNull();
@@ -278,7 +278,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (File.Exists(filePath)) File.Delete(filePath);
 
             var data1 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData1>();
-            var result = await exporter.Export(filePath, data1);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data1);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
@@ -296,7 +296,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             if (File.Exists(filePath)) File.Delete(filePath);
             var data2 = GenFu.GenFu.ListOf<ExporterHeaderFilterTestData2>();
-            result = await exporter.Export(filePath, data2);
+            result = await exporter.ExportWithXSSFWorkbook(filePath, data2);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
@@ -319,7 +319,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.Export<ExportTestDataWithAttrs>(filePath, dt);
+            var result = await exporter.ExportWithXSSFWorkbook<ExportTestDataWithAttrs>(filePath, dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -339,7 +339,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrsCustomRowStartIndex>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.Export<ExportTestDataWithAttrsCustomRowStartIndex>(filePath, dt);
+            var result = await exporter.ExportWithXSSFWorkbook<ExportTestDataWithAttrsCustomRowStartIndex>(filePath, dt);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -360,7 +360,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.ExportAsByteArray<ExportTestDataWithAttrs>(dt);
+            var result = await exporter.ExportWithXSSFWorkbookAsByteArray<ExportTestDataWithAttrs>(dt);
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))
             {
@@ -384,7 +384,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var exportDatas = GenFu.GenFu.ListOf<ExportTestDataWithAttrs>(1000);
             var dt = exportDatas.ToDataTable();
-            var result = await exporter.ExportAsByteArray(dt, typeof(ExportTestDataWithAttrs));
+            var result = await exporter.ExportWithXSSFWorkbookAsByteArray(dt, typeof(ExportTestDataWithAttrs));
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))
             {
@@ -414,7 +414,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
             //加个筛选器导出
-            var result = await exporter.Export(filePath, dt, new DataTableTestExporterHeaderFilter(), 10);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, dt, new DataTableTestExporterHeaderFilter(), 10);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -440,7 +440,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(Export100000Data_Test) + ".xlsx");
             if (File.Exists(filePath)) File.Delete(filePath);
 
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, GenFu.GenFu.ListOf<ExportTestData>(100000));
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -454,7 +454,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
+            var result = await exporter.ExportWithXSSFWorkbookAsByteArray(GenFu.GenFu.ListOf<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);
@@ -473,7 +473,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             string fields = "text,number,name";
             var shapedData = source.ShapeData(fields) as ICollection<ExpandoObject>;
 
-            var result = await exporter.ExportAsByteArray<ExpandoObject>(shapedData);
+            var result = await exporter.ExportWithXSSFWorkbookAsByteArray<ExpandoObject>(shapedData);
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             File.WriteAllBytes(filePath, result);
@@ -578,7 +578,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.ExportHeaderAsByteArray(GenFu.GenFu.New<ExportTestDataWithAttrs>());
+            var result = await exporter.ExportHeaderWithXSSFWorkbookAsByteArray(GenFu.GenFu.New<ExportTestDataWithAttrs>());
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             result.ToExcelExportFileInfo(filePath);
@@ -603,7 +603,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             DeleteFile(filePath);
             var arr = new[] { "Name1", "Name2", "Name3", "Name4", "Name5", "Name6" };
             var sheetName = "Test";
-            var result = await exporter.ExportHeaderAsByteArray(arr, sheetName);
+            var result = await exporter.ExportWithXSSFWorkbookHeaderAsByteArray(arr, sheetName);
             result.ShouldNotBeNull();
             result.Length.ShouldBeGreaterThan(0);
             result.ToExcelExportFileInfo(filePath);
@@ -638,7 +638,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             dt.Columns.Add("Number", Type.GetType("System.Decimal"));
             dt = EntityToDataTable(dt, exportDatas);
 
-            var result = await exporter.Export(filePath, dt, maxRowNumberOnASheet: 100000);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, dt, maxRowNumberOnASheet: 100000);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -655,7 +655,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = GetTestFilePath($"{nameof(ExportTestDataWithoutExcelExporter_Test)}.xlsx");
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath,
+            var result = await exporter.ExportWithXSSFWorkbook(filePath,
                 GenFu.GenFu.ListOf<ExportTestDataWithoutExcelExporter>());
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -681,7 +681,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
             }
 
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
@@ -722,7 +722,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     item.Img = "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png";
             }
 
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
 
@@ -757,7 +757,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var data = GenFu.GenFu.ListOf<ExportTestDataAnnotations>();
 
             data[0].Number = null;
-            var result = await exporter.Export(filePath,
+            var result = await exporter.ExportWithXSSFWorkbook(filePath,
                 data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -803,7 +803,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var data = GenFu.GenFu.ListOf<GalleryLineExportModel>(100);
 
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
         }
@@ -889,7 +889,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     IdCard = "430626111111111111"
                 },
             };
-            var result = await exporter.Export(filePath, list);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, list);
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
@@ -909,7 +909,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             var filePath = GetTestFilePath($"{nameof(ItThrowsIfIgnoresAllColumnsExport_Test)}.xlsx");
             DeleteFile(filePath);
 
-            Func<Task> f = async () => await exporter.ExportAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
+            Func<Task> f = async () => await exporter.ExportWithXSSFWorkbookAsByteArray(GenFu.GenFu.ListOf<ExportTestIgnoreAllColumns>());
             var exception = await Assert.ThrowsAsync<ArgumentException>(f);
             exception.Message.ShouldBe(Resource.DoNotIgnoreAllTheHeader);
         }
@@ -944,7 +944,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                     IsAlumni2 = false,
                 },
             };
-            var result = await exporter.Export(filePath, list);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, list);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -979,7 +979,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             data[0].Time1 = datetime;
             data[0].Time2 = datetime;
             data[0].Time5 = datetime;
-            var result = await exporter.Export(filePath, data);
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, data);
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();
             using (var pck = new ExcelPackage(new FileInfo(filePath)))
@@ -1003,7 +1003,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             DeleteFile(filePath);
 
-            var result = await exporter.Export(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColFontColor>());
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, GenFu.GenFu.ListOf<ExportTestDataWithColFontColor>());
 
             result.ShouldNotBeNull();
             File.Exists(filePath).ShouldBeTrue();

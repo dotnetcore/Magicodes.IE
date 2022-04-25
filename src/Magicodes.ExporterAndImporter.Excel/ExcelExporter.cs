@@ -52,6 +52,18 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
+        ///     导出Excel with XSSFWorkbook
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="dataItems">数据列</param>
+        /// <returns>文件</returns>
+        public async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, ICollection<T> dataItems) where T : class, new()
+        {
+            var bytes = await ExportWithXSSFWorkbookAsByteArray(dataItems);
+            return bytes.ToExcelExportFileInfo(fileName);
+        }
+
+        /// <summary>
         /// append collectioin to context
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -237,7 +249,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArrayWithXSSFWorkbook<T>(ICollection<T> dataItems) where T : class, new()
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -284,40 +296,20 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
-        /// 导出字节
+        /// 导出DataTable With XSSFWorkbook
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArrayWithXSSFWorkbook<T>(DataTable dataItems) where T : class, new()
+        public async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, DataTable dataItems) where T : class, new()
         {
-            var helper = new ExportHelper<T>();
-            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
-                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
-            {
-                using (helper.CurrentExcelPackage)
-                {
-                    var ds = dataItems.SplitDataTable(helper.ExcelExporterSettings.MaxRowNumberOnASheet);
-                    var sheetCount = ds.Tables.Count;
-                    for (int i = 0; i < sheetCount; i++)
-                    {
-                        var sheetDataItems = ds.Tables[i];
-                        helper.AddExcelWorksheet();
-                        helper.Export(sheetDataItems);
-                    }
-
-
-                    return Task.FromResult( NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()) );
-                }
-            }
-            else
-            {
-                using (var ep = helper.Export(dataItems))
-                {
-                    return Task.FromResult(ep.GetAsByteArray());
-                }
-            }
+            fileName.CheckExcelFileName();
+            var bytes = await ExportAsByteArray<T>(dataItems);
+            bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);
+            return bytes.ToExcelExportFileInfo(fileName);
         }
+         
 
         /// <summary>
         /// 导出字节
@@ -353,13 +345,48 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
         }
 
+
+        /// <summary>
+        /// 导出字节 With XSSFWorkbook
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataItems"></param>
+        /// <returns></returns>
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(DataTable dataItems) where T : class, new()
+        {
+            var helper = new ExportHelper<T>();
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            {
+                using (helper.CurrentExcelPackage)
+                {
+                    var ds = dataItems.SplitDataTable(helper.ExcelExporterSettings.MaxRowNumberOnASheet);
+                    var sheetCount = ds.Tables.Count;
+                    for (int i = 0; i < sheetCount; i++)
+                    {
+                        var sheetDataItems = ds.Tables[i];
+                        helper.AddExcelWorksheet();
+                        helper.Export(sheetDataItems);
+                    }
+                    return Task.FromResult( NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
+                }
+            }
+            else
+            {
+                using (var ep = helper.Export(dataItems))
+                {
+                    return Task.FromResult(ep.GetAsByteArray());
+                }
+            }
+        }
+
         /// <summary>
         /// 导出字节
         /// </summary>
         /// <param name="type"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArrayWithXSSFWorkbook(DataTable dataItems, Type type)
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)
         {
             var helper = new ExportHelper<DataTable>(type);
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -424,12 +451,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         }
 
         /// <summary>
-        ///     导出excel表头
+        ///     导出excel表头 With XSSFWorkbook
         /// </summary>
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
         /// <returns></returns>
-        public Task<byte[]> ExportHeaderAsByteArrayWithXSSFWorkbook(string[] items, string sheetName = "导出结果")
+        public Task<byte[]> ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = "导出结果")
         {
             var helper = new ExportHelper<DataTable>();
             var headerList = new List<ExporterHeaderInfo>();
@@ -494,7 +521,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportHeaderAsByteArrayWithXSSFWorkbook<T>(T type) where T : class, new()
+        public Task<byte[]> ExportHeaderWithXSSFWorkbookAsByteArray<T>(T type) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
@@ -516,7 +543,6 @@ namespace Magicodes.ExporterAndImporter.Excel
                 return Task.FromResult(ep.GetAsByteArray());
             }
         }
-
 
         /// <summary>
         ///     根据模板导出
@@ -575,6 +601,16 @@ namespace Magicodes.ExporterAndImporter.Excel
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
+        public async Task<ExportFileInfo> ExportWithXSSFWorkbook(string fileName, DataTable dataItems,
+          IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
+        {
+            fileName.CheckExcelFileName();
+            var bytes = await ExportAsByteArray(dataItems, exporterHeaderFilter, maxRowNumberOnASheet);
+            bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);
+
+            return bytes.ToExcelExportFileInfo(fileName);
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -614,6 +650,45 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dataItems"></param>
+        /// <param name="exporterHeaderFilter"></param>
+        /// <param name="maxRowNumberOnASheet"></param>
+        /// <returns></returns>
+        public Task<byte[]> ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
+            int maxRowNumberOnASheet = 1000000)
+        {
+            var helper = new ExportHelper<DataTable>();
+            helper.ExcelExporterSettings.MaxRowNumberOnASheet = maxRowNumberOnASheet;
+            helper.SetExporterHeaderFilter(exporterHeaderFilter);
+
+            if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
+                dataItems.Rows.Count > helper.ExcelExporterSettings.MaxRowNumberOnASheet)
+            {
+                using (helper.CurrentExcelPackage)
+                {
+                    var ds = dataItems.SplitDataTable(helper.ExcelExporterSettings.MaxRowNumberOnASheet);
+                    var sheetCount = ds.Tables.Count;
+                    for (int i = 0; i < sheetCount; i++)
+                    {
+                        var sheetDataItems = ds.Tables[i];
+                        helper.AddExcelWorksheet();
+                        helper.Export(sheetDataItems);
+                    }
+                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                }
+            }
+            else
+            {
+                using (var ep = helper.Export(dataItems))
+                {
+                    return Task.FromResult(ep.GetAsByteArray());
+                }
+            }
+        }
+
         private void Reset()
         {
             _excelPackage = null;
@@ -622,5 +697,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             _isSeparateBySheet = false;
             _isSeparateColumn = false;
         }
+         
+         
     }
 }

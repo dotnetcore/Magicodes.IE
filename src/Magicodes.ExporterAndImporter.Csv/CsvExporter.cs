@@ -87,5 +87,35 @@ namespace Magicodes.ExporterAndImporter.Csv
             var helper = new ExportHelper<T>();
             return Task.FromResult(helper.GetCsvExportHeaderAsByteArray());
         }
+
+        public Task<byte[]> ExportHeaderWithXSSFWorkbookAsByteArray<T>(T type) where T : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, ICollection<T> dataItems) where T : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, DataTable dataItems) where T : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(DataTable dataItems) where T : class, new()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
