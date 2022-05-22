@@ -9,6 +9,5 @@
 		<PackageReference Include="NPOI" Version="2.5.5" />
 		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj" />
 		<!--TODO::peel off Epplus-->
-		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
 	</ItemGroup>
 </Project>

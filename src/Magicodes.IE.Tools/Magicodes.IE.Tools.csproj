@@ -7,7 +7,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>mie</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>0.0.4</Version>
 
     <Authors>雪雁</Authors>
@@ -24,6 +24,7 @@
       公众号：麦扣聊技术
       交流QQ群：85318032
     </Description>
+    <IsPublishable>False</IsPublishable>
   </PropertyGroup>
 
   <ItemGroup>

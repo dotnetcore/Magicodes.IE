@@ -33,6 +33,14 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type);
 
         /// <summary>
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <param name="type">类型</param>
+        /// <returns></returns>
+        Task<byte[]> ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type);
+
+        /// <summary>
         ///     导出
         /// </summary>
         /// <param name="fileName">文件名称</param>
@@ -41,11 +49,26 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new();
 
         /// <summary>
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件</returns>
+        Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, ICollection<T> dataItems) where T : class, new();
+
+        /// <summary>
         ///     导出
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new();
+
+        /// <summary>
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T> dataItems) where T : class, new();
 
         /// <summary>
         ///     导出
@@ -56,6 +79,14 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class, new();
 
         /// <summary>
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件</returns>
+        Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, DataTable dataItems) where T : class, new();
+
+        /// <summary>
         ///     导出
         /// </summary>
         /// <param name="dataItems">数据</param>
@@ -63,10 +94,25 @@ namespace Magicodes.ExporterAndImporter.Core
         Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new();
 
         /// <summary>
-        ///     导出表头
+        ///     导出 With XSSFWorkbook
+        /// </summary>
+        /// <param name="dataItems">数据</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(DataTable dataItems) where T : class, new();
+
+        /// <summary>
+        ///     导出表头 
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new();
+
+        /// <summary>
+        ///     导出表头 With XSSFWorkbook
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <returns>文件二进制数组</returns>
+        Task<byte[]> ExportHeaderWithXSSFWorkbookAsByteArray<T>(T type) where T : class, new();
+
     }
 }
