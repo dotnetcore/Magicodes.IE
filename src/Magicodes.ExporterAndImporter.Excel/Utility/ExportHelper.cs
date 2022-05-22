@@ -660,7 +660,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                         {
                             {
-                                var value = (int)type.GetProperty(propertyInfo.Name)?.GetValue(dataItem);
+                                var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem).GetHashCode();
                                 {
                                     var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
 

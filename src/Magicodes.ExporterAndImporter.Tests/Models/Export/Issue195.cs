@@ -12,7 +12,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
         [ExporterHeader(DisplayName = "性别")]
         public Sex Sex { get; set; }
     }
-    enum Sex
+    enum Sex : byte
     {
         /// <summary>
         /// 男
