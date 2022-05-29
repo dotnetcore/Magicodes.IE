@@ -67,6 +67,8 @@ namespace Magicodes.ExporterAndImporter.Tests
             var data = GenFu.GenFu.ListOf<Issue195>(100);
             data[0].Sex = Sex.boy;
             data[1].Sex = Sex.girl;
+            data[0].NullableSex = NullableSex.boy;
+            data[1].NullableSex = NullableSex.girl;
             var result = await exporter.Export(filePath, data);
 
             result.ShouldNotBeNull();

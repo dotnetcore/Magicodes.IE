@@ -640,7 +640,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 dynamic obj = new ExpandoObject();
                 foreach (var propertyInfo in properties)
                 {
-                    if (propertyInfo.PropertyType.IsEnum)
+                    if (propertyInfo.PropertyType.IsEnum|| 
+                        (propertyInfo.PropertyType.GetNullableUnderlyingType()?.IsEnum).HasValue)
                     {
                         //var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
                         //var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
@@ -660,7 +661,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
                         {
                             {
-                                var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem).GetHashCode();
+                                var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.GetHashCode();
                                 {
                                     var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
 

@@ -2,9 +2,9 @@
   "solution": {
     "path": "Magicodes.IE.sln",
     "projects": [
-        "src\\Magicodes.ExporterAndImporter.Excel\\Magicodes.IE.Excel.csproj",
-        "src\\Magicodes.ExporterAndImporter.Core\\Magicodes.IE.Core.csproj",
-        "src\\Magicodes.ExporterAndImporter.Tests\\Magicodes.IE.Tests.csproj",
+      "src\\Magicodes.ExporterAndImporter.Core\\Magicodes.IE.Core.csproj",
+      "src\\Magicodes.ExporterAndImporter.Excel\\Magicodes.IE.Excel.csproj",
+      "src\\Magicodes.ExporterAndImporter.Tests\\Magicodes.IE.Tests.csproj"
     ]
   }
 }
