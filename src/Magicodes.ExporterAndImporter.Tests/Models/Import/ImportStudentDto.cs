@@ -199,7 +199,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
     /// <summary>
     ///     学生状态 正常、流失、休学、勤工俭学、顶岗实习、毕业、参军
     /// </summary>
-    public enum StudentStatus
+    public enum StudentStatus:byte
     {
         /// <summary>
         ///     正常
