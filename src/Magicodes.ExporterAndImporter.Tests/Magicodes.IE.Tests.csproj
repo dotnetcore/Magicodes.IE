@@ -135,6 +135,9 @@
     <None Update="TestFiles\Import\dynamic_stringlength.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestFiles\Import\LinkTest.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestFiles\Import\TimeSpan_Test.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

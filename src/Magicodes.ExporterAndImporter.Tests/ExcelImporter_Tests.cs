@@ -1191,5 +1191,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
             import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
         }
+
+        [Fact(DisplayName = "#377-链接导入问题")]
+        public async Task Issue377_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "LinkTest.xlsx");
+            var import = await Importer.Import<Issue377>(filePath);
+
+            import.HasError.ShouldBeFalse();
+            import.Data.Count.ShouldBe(3);
+        }
     }
 }
