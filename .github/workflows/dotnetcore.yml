@@ -32,5 +32,5 @@ jobs:
       - name: Build with dotnet
         run: dotnet build -c Release --no-restore
       - name: Test with dotnet
-        run: dotnet test 
+        run: apt-get install libgdiplus &  dotnet test
 
