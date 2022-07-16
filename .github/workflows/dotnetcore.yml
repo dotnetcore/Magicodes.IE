@@ -3,13 +3,13 @@ name: .NET Core
 on: [push]
 
 jobs:
-  build:
+  windows-latest:
     name: windows-latest
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: 🔨 Use .NET 6.X SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2.1.0
         with:
           dotnet-version: '6.x'
       - name: Restore with dotnet
@@ -18,3 +18,19 @@ jobs:
         run: dotnet build -c Release --no-restore
       - name: Test with dotnet
         run: dotnet test 
+  ubuntu-latest:
+    name: ubuntu-latest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 🔨 Use .NET 6.X SDK
+        uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '6.x'
+      - name: Restore with dotnet
+        run: dotnet restore
+      - name: Build with dotnet
+        run: dotnet build -c Release --no-restore
+      - name: Test with dotnet
+        run: dotnet test 
+
