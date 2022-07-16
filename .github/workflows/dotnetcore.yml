@@ -4,32 +4,14 @@ on: [push]
 
 jobs:
   build:
-
+    name: windows-latest
     runs-on: windows-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      #- name: 🔨 Use .NET Core 2.2.X SDK
-      #  uses: actions/setup-dotnet@v1
-      #  with:
-      #    dotnet-version: '2.2.x'
-          
-      #- name: 🔨 Use .NET Core 3.1.X SDK
-      #  uses: actions/setup-dotnet@v1
-      #  with:
-      #    dotnet-version: '3.1.x'
-        
-      #- name: 🔨 Use .NET 5.0.X SDK
-      #  uses: actions/setup-dotnet@v1
-      #  with:
-      #    dotnet-version: '5.x'
-
       - name: 🔨 Use .NET 6.X SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.x'
-
       - name: Restore with dotnet
         run: dotnet restore
       - name: Build with dotnet
