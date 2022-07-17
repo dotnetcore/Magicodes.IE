@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.4</Version>
+    <Version>2.6.5-beta1</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
@@ -21,22 +21,6 @@
 		公众号：麦扣聊技术
 		交流QQ群：85318032
 
-		**2022.04.17**
-		- 优化了ColumnIndex在生成模板时的实现，增加了ColumnIndex的单测（见PR[#385](https://github.com/dotnetcore/Magicodes.IE/pull/385)）。
-		- 添加了NPOI的独立扩展包——Magicodes.IE.Excel.NPOI，以便于后续给用户提供更多的支持。目前仅提供了 SaveToExcelWithXSSFWorkbook 扩展方法。
-		- 修复RequiredIfAttribute的Bug。
-		- 修复导出JPG图片在Linux环境下可能引起的无限循环的问题（见PR[#396](https://github.com/dotnetcore/Magicodes.IE/pull/396)）。
-		- Excel图片导入时，图片列支持为空。
-		- 更新CsvHelper到最新版本，并修改相关代码。
-		
-		**2022.03.06**
-		- 完善筛选器注册机制，在指定了特性ImportHeaderFilter、ExporterHeaderFilter等值后，筛选器将匹配对于的类型，如不指定则作为全局筛选器。
-
-		**2022.03.02**
-		- Excel导入时增加回调函数，方便增加自定义验证
-		- 优化获取DisplayName的逻辑
-		- 导出CSV支持ColumnIndex
-		- 优化Pdf导出逻辑，统一各平台导出代码
 	</Description>
   </PropertyGroup>
   <PropertyGroup>

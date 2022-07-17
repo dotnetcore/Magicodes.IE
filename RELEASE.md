@@ -1,5 +1,14 @@
 # Release Log
 
+## 2.6.5-beta1
+**2022.07.17**
+
+- 【修复】如果为动态类型导出，如datatable/dynamic/proxy等，会将原始数据转成字符串。
+- fix: 修复没有正确释放Graphics对象的问题 （见PR[#401](https://github.com/dotnetcore/Magicodes.IE/pull/401)）
+- feat(module: excel): Export of the byte type Enum value is allowed （见PR[#367](https://github.com/dotnetcore/Magicodes.IE/pull/367)）
+- feat(module: excel): The export can be of Nullable Enum type （见PR[#398](https://github.com/dotnetcore/Magicodes.IE/pull/398)）
+- fix(module: Excel): Excel ParseData
+
 ## 2.6.4
 **2022.04.17**
 
