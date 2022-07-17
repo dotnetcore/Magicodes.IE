@@ -3,25 +3,39 @@ name: .NET Core
 on: [push]
 
 jobs:
-  windows-latest:
-    name: windows-latest
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 6.X SDK
-        uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '6.x'
-      - name: Restore with dotnet
-        run: dotnet restore
-      - name: Build with dotnet
-        run: dotnet build -c Release --no-restore
-      - name: Test with dotnet
-        run: dotnet test 
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '5.0.x'    
+      - uses: actions/checkout@v2
+      - name: 🔨 Use .NET 6.X SDK
+        uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '6.x'
+      - name: Install libgdiplus
+        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev
+#       - name: t
+#         run: sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
+#       - name: t1
+#         run: sudo apt-get update && sudo apt-get install -y fontconfig
+      - name: Install libjpeg62
+        run: sudo apt-get install libjpeg62
+      - name: Restore with dotnet
+        run: dotnet restore
+      - name: Build with dotnet
+        run: dotnet build -c Release --no-restore
+      - name: Test with dotnet
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
+  windows-latest:
+    name: windows-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '5.0.x'    
       - uses: actions/checkout@v2
       - name: 🔨 Use .NET 6.X SDK
         uses: actions/setup-dotnet@v2.1.0
@@ -32,5 +46,22 @@ jobs:
       - name: Build with dotnet
         run: dotnet build -c Release --no-restore
       - name: Test with dotnet
-        run: dotnet test
-
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
+  macOS-latest:
+    name: macOS-latest
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '5.0.x'    
+      - uses: actions/checkout@v2
+      - name: 🔨 Use .NET 6.X SDK
+        uses: actions/setup-dotnet@v2.1.0
+        with:
+          dotnet-version: '6.x'
+      - name: Restore with dotnet
+        run: dotnet restore
+      - name: Build with dotnet
+        run: dotnet build -c Release --no-restore
+      - name: Test with dotnet
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
