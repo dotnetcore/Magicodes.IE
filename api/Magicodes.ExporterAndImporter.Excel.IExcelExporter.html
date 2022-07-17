@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IExcelExporter
    ">
-    <meta name="generator" content="docfx 2.59.2.0">
+    <meta name="generator" content="docfx 2.59.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -388,6 +388,119 @@ export excel after append all collectioins</p>
         <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
         <td><p>文件二进制数组</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbook_" data-uid="Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbook_System_String_DataTable_IExporterHeaderFilter_System_Int32_" data-uid="Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)">ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)</h4>
+  <div class="markdown level1 summary"><p>导出 With XSSFWorkbook</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>文件名称</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td><p>数据</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IExporterHeaderFilter</span></td>
+        <td><span class="parametername">exporterHeaderFilter</span></td>
+        <td><p>表头筛选器</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxRowNumberOnASheet</span></td>
+        <td><p>一个Sheet最大允许的行数，设置了之后将输出多个Sheet</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">ExportFileInfo</span>&gt;</td>
+        <td><p>文件</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_System_String___System_String_" data-uid="Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)">ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)</h4>
+  <div class="markdown level1 summary"><p>导出excel表头</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;byte[]&gt; ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>表头数组</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">sheetName</span></td>
+        <td><p>工作簿名称</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>

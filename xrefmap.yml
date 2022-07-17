@@ -111,6 +111,78 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderAsByteArray(Of T)(T)
   nameWithType: CsvExporter.ExportHeaderAsByteArray<T>(T)
   nameWithType.vb: CsvExporter.ExportHeaderAsByteArray(Of T)(T)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray*
+  name: ExportHeaderWithXSSFWorkbookAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportHeaderWithXSSFWorkbookAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+  nameWithType: CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray``1(``0)
+  name: ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportHeaderWithXSSFWorkbookAsByteArray__1___0_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray``1(``0)
+  name.vb: ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+  nameWithType: CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  nameWithType.vb: CsvExporter.ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook*
+  name: ExportWithXSSFWorkbook
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbook_
+  commentId: Overload:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook
+  nameWithType: CsvExporter.ExportWithXSSFWorkbook
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook``1(System.String,DataTable)
+  name: ExportWithXSSFWorkbook<T>(String, DataTable)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbook__1_System_String_DataTable_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook``1(System.String,DataTable)
+  name.vb: ExportWithXSSFWorkbook(Of T)(String, DataTable)
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook<T>(System.String, DataTable)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook(Of T)(System.String, DataTable)
+  nameWithType: CsvExporter.ExportWithXSSFWorkbook<T>(String, DataTable)
+  nameWithType.vb: CsvExporter.ExportWithXSSFWorkbook(Of T)(String, DataTable)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook``1(System.String,ICollection{``0})
+  name: ExportWithXSSFWorkbook<T>(String, ICollection<T>)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbook__1_System_String_ICollection___0__
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook``1(System.String,ICollection{``0})
+  name.vb: ExportWithXSSFWorkbook(Of T)(String, ICollection(Of T))
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook<T>(System.String, ICollection<T>)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbook(Of T)(System.String, ICollection(Of T))
+  nameWithType: CsvExporter.ExportWithXSSFWorkbook<T>(String, ICollection<T>)
+  nameWithType.vb: CsvExporter.ExportWithXSSFWorkbook(Of T)(String, ICollection(Of T))
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray(DataTable,Type)
+  name: ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbookAsByteArray_DataTable_Type_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray(DataTable,Type)
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+  nameWithType: CsvExporter.ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray*
+  name: ExportWithXSSFWorkbookAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbookAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray
+  nameWithType: CsvExporter.ExportWithXSSFWorkbookAsByteArray
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray``1(DataTable)
+  name: ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbookAsByteArray__1_DataTable_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray``1(DataTable)
+  name.vb: ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+  nameWithType: CsvExporter.ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  nameWithType.vb: CsvExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray``1(ICollection{``0})
+  name: ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvExporter.html#Magicodes_ExporterAndImporter_Csv_CsvExporter_ExportWithXSSFWorkbookAsByteArray__1_ICollection___0__
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray``1(ICollection{``0})
+  name.vb: ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
+  nameWithType: CsvExporter.ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  nameWithType.vb: CsvExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
 - uid: Magicodes.ExporterAndImporter.Csv.CsvHelperEnumConverter
   name: CsvHelperEnumConverter
   href: api/Magicodes.ExporterAndImporter.Csv.CsvHelperEnumConverter.html
@@ -614,6 +686,106 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderAsByteArray(Of T)(T)
   nameWithType: ExcelExporter.ExportHeaderAsByteArray<T>(T)
   nameWithType.vb: ExcelExporter.ExportHeaderAsByteArray(Of T)(T)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray*
+  name: ExportHeaderWithXSSFWorkbookAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportHeaderWithXSSFWorkbookAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+  nameWithType: ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray``1(``0)
+  name: ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportHeaderWithXSSFWorkbookAsByteArray__1___0_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray``1(``0)
+  name.vb: ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+  nameWithType: ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray<T>(T)
+  nameWithType.vb: ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray(Of T)(T)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(DataTable,IExporterHeaderFilter,System.Int32)
+  name: ExportWithXSSFWorkbook(DataTable, IExporterHeaderFilter, Int32)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_DataTable_IExporterHeaderFilter_System_Int32_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(DataTable,IExporterHeaderFilter,System.Int32)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(DataTable, IExporterHeaderFilter, System.Int32)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbook(DataTable, IExporterHeaderFilter, Int32)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)
+  name: ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_System_String_DataTable_IExporterHeaderFilter_System_Int32_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(System.String, DataTable, IExporterHeaderFilter, System.Int32)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook*
+  name: ExportWithXSSFWorkbook
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbook
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,DataTable)
+  name: ExportWithXSSFWorkbook<T>(String, DataTable)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook__1_System_String_DataTable_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,DataTable)
+  name.vb: ExportWithXSSFWorkbook(Of T)(String, DataTable)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook<T>(System.String, DataTable)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(Of T)(System.String, DataTable)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbook<T>(String, DataTable)
+  nameWithType.vb: ExcelExporter.ExportWithXSSFWorkbook(Of T)(String, DataTable)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,ICollection{``0})
+  name: ExportWithXSSFWorkbook<T>(String, ICollection<T>)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook__1_System_String_ICollection___0__
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,ICollection{``0})
+  name.vb: ExportWithXSSFWorkbook(Of T)(String, ICollection(Of T))
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook<T>(System.String, ICollection<T>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(Of T)(System.String, ICollection(Of T))
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbook<T>(String, ICollection<T>)
+  nameWithType.vb: ExcelExporter.ExportWithXSSFWorkbook(Of T)(String, ICollection(Of T))
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(DataTable,Type)
+  name: ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_DataTable_Type_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(DataTable,Type)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookAsByteArray(DataTable, Type)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray*
+  name: ExportWithXSSFWorkbookAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookAsByteArray
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(DataTable)
+  name: ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray__1_DataTable_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(DataTable)
+  name.vb: ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookAsByteArray<T>(DataTable)
+  nameWithType.vb: ExcelExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(DataTable)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(ICollection{``0})
+  name: ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray__1_ICollection___0__
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(ICollection{``0})
+  name.vb: ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T>)
+  nameWithType.vb: ExcelExporter.ExportWithXSSFWorkbookAsByteArray(Of T)(ICollection(Of T))
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)
+  name: ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_System_String___System_String_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)
+  name.vb: ExportWithXSSFWorkbookHeaderAsByteArray(String(), String)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[], System.String)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String(), System.String)
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)
+  nameWithType.vb: ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(String(), String)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray*
+  name: ExportWithXSSFWorkbookHeaderAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
+  nameWithType: ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.SeparateByColumn
   name: SeparateByColumn()
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_SeparateByColumn
@@ -1054,6 +1226,35 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportHeaderAsByteArray
   nameWithType: IExcelExporter.ExportHeaderAsByteArray
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)
+  name: ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbook_System_String_DataTable_IExporterHeaderFilter_System_Int32_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook(System.String, DataTable, IExporterHeaderFilter, System.Int32)
+  nameWithType: IExcelExporter.ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook*
+  name: ExportWithXSSFWorkbook
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbook_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbook
+  nameWithType: IExcelExporter.ExportWithXSSFWorkbook
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)
+  name: ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_System_String___System_String_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)
+  name.vb: ExportWithXSSFWorkbookHeaderAsByteArray(String(), String)
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[], System.String)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String(), System.String)
+  nameWithType: IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)
+  nameWithType.vb: IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(String(), String)
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray*
+  name: ExportWithXSSFWorkbookHeaderAsByteArray
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
+  nameWithType: IExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray
 - uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.SeparateByColumn
   name: SeparateByColumn()
   href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_SeparateByColumn

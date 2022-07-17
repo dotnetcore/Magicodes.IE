@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ExcelExporter
    ">
-    <meta name="generator" content="docfx 2.59.2.0">
+    <meta name="generator" content="docfx 2.59.3.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -81,7 +81,7 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">ExcelExporter</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Magicodes.ExporterAndImporter.Excel.IExcelExporter.html">IExcelExporter</a></div>
     <div><span class="xref">IExporter</span></div>
@@ -981,6 +981,525 @@
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportHeaderWithXSSFWorkbookAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportHeaderWithXSSFWorkbookAsByteArray__1___0_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportHeaderWithXSSFWorkbookAsByteArray``1(``0)">ExportHeaderWithXSSFWorkbookAsByteArray&lt;T&gt;(T)</h4>
+  <div class="markdown level1 summary"><p>导出Excel表头</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportHeaderWithXSSFWorkbookAsByteArray&lt;T&gt;(T type)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>类型</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td><p>文件二进制数组</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_DataTable_IExporterHeaderFilter_System_Int32_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(DataTable,IExporterHeaderFilter,System.Int32)">ExportWithXSSFWorkbook(DataTable, IExporterHeaderFilter, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IExporterHeaderFilter</span></td>
+        <td><span class="parametername">exporterHeaderFilter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxRowNumberOnASheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_System_String_DataTable_IExporterHeaderFilter_System_Int32_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook(System.String,DataTable,IExporterHeaderFilter,System.Int32)">ExportWithXSSFWorkbook(String, DataTable, IExporterHeaderFilter, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fileName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IExporterHeaderFilter</span></td>
+        <td><span class="parametername">exporterHeaderFilter</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxRowNumberOnASheet</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">ExportFileInfo</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook__1_System_String_DataTable_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,DataTable)">ExportWithXSSFWorkbook&lt;T&gt;(String, DataTable)</h4>
+  <div class="markdown level1 summary"><p>导出DataTable With XSSFWorkbook</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, DataTable dataItems)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fileName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">ExportFileInfo</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbook__1_System_String_ICollection___0__" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbook``1(System.String,ICollection{``0})">ExportWithXSSFWorkbook&lt;T&gt;(String, ICollection&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>导出Excel with XSSFWorkbook</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, ICollection&lt;T&gt; dataItems)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">fileName</span></td>
+        <td><p>文件名</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;T&gt;</td>
+        <td><span class="parametername">dataItems</span></td>
+        <td><p>数据列</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">ExportFileInfo</span>&gt;</td>
+        <td><p>文件</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_DataTable_Type_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray(DataTable,Type)">ExportWithXSSFWorkbookAsByteArray(DataTable, Type)</h4>
+  <div class="markdown level1 summary"><p>导出字节</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray__1_DataTable_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(DataTable)">ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(DataTable)</h4>
+  <div class="markdown level1 summary"><p>导出字节 With XSSFWorkbook</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(DataTable dataItems)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DataTable</span></td>
+        <td><span class="parametername">dataItems</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookAsByteArray__1_ICollection___0__" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookAsByteArray``1(ICollection{``0})">ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(ICollection&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>导出Excel</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(ICollection&lt;T&gt; dataItems)
+    where T : class, new()</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ICollection</span>&lt;T&gt;</td>
+        <td><span class="parametername">dataItems</span></td>
+        <td><p>数据</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
+        <td><p>文件二进制数组</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportWithXSSFWorkbookHeaderAsByteArray_System_String___System_String_" data-uid="Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportWithXSSFWorkbookHeaderAsByteArray(System.String[],System.String)">ExportWithXSSFWorkbookHeaderAsByteArray(String[], String)</h4>
+  <div class="markdown level1 summary"><p>导出excel表头 With XSSFWorkbook</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">items</span></td>
+        <td><p>表头数组</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">sheetName</span></td>
+        <td><p>工作簿名称</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<span class="xref">System.Byte</span>[]&gt;</td>
         <td></td>
       </tr>
     </tbody>
