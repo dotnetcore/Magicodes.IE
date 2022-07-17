@@ -34,6 +34,7 @@ using Xunit.Abstractions;
 using Magicodes.IE.Tests.Models.Import;
 using System.Globalization;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -854,21 +855,23 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
 
             import.Data.ElementAt(3).Img.ShouldBeNullOrEmpty();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                //添加严格校验，防止图片位置错误等问题
+                var png1 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
+                var png2 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
+                var png3 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
+                var png4 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
 
-            //添加严格校验，防止图片位置错误等问题
-            var png1 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
-            var png2 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
-            var png3 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
-            var png4 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
+                IsSameImg(new Bitmap(import.Data.ElementAt(0).Img1), png1).ShouldBeTrue();
+                IsSameImg(new Bitmap(import.Data.ElementAt(0).Img), png2).ShouldBeTrue();
 
-            IsSameImg(new Bitmap(import.Data.ElementAt(0).Img1), png1).ShouldBeTrue();
-            IsSameImg(new Bitmap(import.Data.ElementAt(0).Img), png2).ShouldBeTrue();
+                IsSameImg(new Bitmap(import.Data.ElementAt(1).Img1), png3).ShouldBeTrue();
+                IsSameImg(new Bitmap(import.Data.ElementAt(1).Img), png4).ShouldBeTrue();
 
-            IsSameImg(new Bitmap(import.Data.ElementAt(1).Img1), png3).ShouldBeTrue();
-            IsSameImg(new Bitmap(import.Data.ElementAt(1).Img), png4).ShouldBeTrue();
-
-            IsSameImg(new Bitmap(import.Data.ElementAt(2).Img1), png1).ShouldBeTrue();
-            IsSameImg(new Bitmap(import.Data.ElementAt(2).Img), png1).ShouldBeTrue();
+                IsSameImg(new Bitmap(import.Data.ElementAt(2).Img1), png1).ShouldBeTrue();
+                IsSameImg(new Bitmap(import.Data.ElementAt(2).Img), png1).ShouldBeTrue();
+            }
         }
 
         /// <summary>
