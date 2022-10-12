@@ -1,5 +1,12 @@
 # Release Log
 
+## 2.6.6
+**2022.10.12**
+
+- ExporterHeaderFilter支持修改列索引，以支持动态排序，需设置ExporterHeaderAttribute.ColumnIndex属性（注意不应修改Index属性），值范围为0~10000。设置错误会自动调整到相近的边界值。
+- 提供ExporterHeadersFilter筛选器，以支持批量修改列头。
+- 重构、优化列排序代码。
+
 ## 2.6.5-beta1
 **2022.07.17**
 

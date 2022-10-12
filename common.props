@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>2.6.5-beta1</Version>
+    <Version>2.6.6</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn>
