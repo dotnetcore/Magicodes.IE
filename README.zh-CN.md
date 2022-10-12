@@ -16,16 +16,15 @@
 ## 目录
 
 1. [概述](#概述)
-2. [里程碑](#里程碑)
-3. [自动构建](#自动构建)
-4. [Nuget包](#NuGet包)
-5. [注意事项](#注意事项)
-6. [教程](#教程)
-7. [特点](#特点)
-8. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
-9. [联系我们](#联系我们)
-10. [更新历史](./RELEASE.md)
-11. [友情赞助](#友情赞助)
+2. [自动构建](#自动构建)
+3. [Nuget包](#NuGet包)
+4. [注意事项](#注意事项)
+5. [教程](#教程)
+6. [特点](#特点)
+7. [FAQ](https://github.com/dotnetcore/Magicodes.IE/issues?q=label%3Aquestion)
+8. [联系我们](#联系我们)
+9. [更新历史](./RELEASE.md)
+10. [友情赞助](#友情赞助)
 
 ## 概述
 
@@ -35,17 +34,6 @@
 - 码云（手动同步，不维护）：<https://gitee.com/magicodes/Magicodes.IE>
 
 **![总体说明](./docs/Magicodes.IE.png)**
-
-## 里程碑
-
-|  #   |    状态     | 完成时间 |                          里程碑情况                           |
-| :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0) | ☕进行中 |2021-12-31| [待办](https://github.com/dotnetcore/Magicodes.IE/milestone/3) |
-| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩已完成 |2020-10-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
-| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩已完成 |2020-09-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
-| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩已完成 |2020-06-30| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩已完成 |2020-04-31| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
-| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩已完成 |2020-03-15| [已完成](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
 
 ## 自动构建
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
@@ -110,9 +98,10 @@
 - **需配合相关导入导出的DTO模型使用，支持通过DTO以及相关特性控制导入导出。配置特性即可控制相关逻辑和显示结果，无需修改逻辑代码；**
 **![](./res/导入Dto.png "导入Dto")**
 - **支持各种筛选器，支持依赖注入，以便支持多语言、动态控制列展示等场景，具体使用见单元测试：**
-  - **导入列头筛选器（可动态指定导入列、导入的值映射关系）**
-  - **导出列头筛选器（可动态控制导出列，支持动态导出（DataTable））**
-  - **导入结果筛选器（可修改标注文件）**
+  - **导入列头筛选器【IImportHeaderFilter】（可动态指定导入列、导入的值映射关系）**
+  - **导出列头筛选器【IImportHeaderFilter】（可动态控制导出列，支持动态导出（DataTable））**
+  - **导出列头集合筛选器【IImportHeadersFilter】（可动态控制导出列，支持动态导出（DataTable））**
+  - **导入结果筛选器【IImportResultFilter】（可修改标注文件）**
 - **导出支持文本自定义过滤或处理；**
 - **导入支持中间空行自动跳过；**
 - **导入支持自动根据 DTO 生成导入模板,针对必填项将自动标注；**

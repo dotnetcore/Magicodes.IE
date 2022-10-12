@@ -19,17 +19,6 @@ Import and export general library, support Dto import and export, template expor
 
 **![General description](./docs/Magicodes.IE.en.png)**
 
-## Milestone
-
-|  #   |    Status     | Completion time | Milestone situation |
-| :--: | :-----------: | :------: | :----------------------------------------------------------: |
-| [3.0](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | ☕In progress |2021-12-31| [To Do](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
-| [2.5](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5) | 🚩Completed  |2020-10-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/7) |
-| [2.4](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4) | 🚩Completed |2020-09-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/6) |
-| [2.3](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3) | 🚩Completed |2020-06-30| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/5) |
-| [2.2](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2) | 🚩Completed |2020-04-31| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/4) |
-| [2.1](https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1) | 🚩Completed |2020-03-15| [Completed](https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1) |
-
 ### Azure DevOps
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 - Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
@@ -92,9 +81,10 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 - **Need to be used in conjunction with related import and export DTO models, support import and export through DTO and related characteristics. Configure features to control related logic and display results without modifying the logic code;**
 **![](./res/导入Dto.png "Import DTO")**
 - **Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:**
-  - **Import column header filter (you can dynamically specify the imported column and imported value mapping relationship)**
-  - **Export column header filter (can dynamically control the export column, support dynamic export (DataTable))**
-  - **Import result filter (can modify annotation file)**
+  - **Import column header filter <IImportHeaderFilter>(you can dynamically specify the imported column and imported value mapping relationship)**
+  - **Export column header filter <IImportHeaderFilter>(can dynamically control the export column, support dynamic export (DataTable))**
+  - **Export column headers filter <IImportHeadersFilter>(can dynamically control the export column, support dynamic export (DataTable))**
+  - **Import result filter <IImportResultFilter>(can modify annotation file)**
 - **Export supports text custom filtering or processing;**
 - **Import supports automatic skipping of blank lines in the middle;**
 - **Import supports automatically generate import templates based on DTO, and automatically mark required items;**

@@ -345,6 +345,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     };
                     AddExportHeaderInfo(item);
                 }
+                //执行列头（集合）筛选器
+                if (ExporterHeadersFilter != null)
+                {
+                    _exporterHeaderList = ExporterHeadersFilter.Filter(_exporterHeaderList);
+                }
+                ReorderHeaders();
             }
             else if (IsExpandoObjectType)
             {
@@ -430,14 +436,19 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     AddExportHeaderInfo(item);
                 }
             }
-            
-            //执行列头筛选器
+
+            //执行列头（集合）筛选器
             if (ExporterHeadersFilter != null)
             {
                 _exporterHeaderList = ExporterHeadersFilter.Filter(_exporterHeaderList);
             }
 
-            #region 排序
+            ReorderHeaders();
+        }
+
+        private void ReorderHeaders()
+        {
+            //TODO:判断是否需要重排
             //修改列位置
             var maxIndex = _exporterHeaderList.Count - 1;
             for (int i = 0; i < _exporterHeaderList.Count; i++)
@@ -465,8 +476,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             {
                 var item = _exporterHeaderList[i];
                 item.Index = i + 1;
-            } 
-            #endregion
+            }
         }
 
         /// <summary>
