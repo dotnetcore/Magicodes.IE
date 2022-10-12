@@ -75,7 +75,6 @@
 <h2 id="目录">目录</h2>
 <ol>
 <li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
-<li><a href="#%E9%87%8C%E7%A8%8B%E7%A2%91">里程碑</a></li>
 <li><a href="#%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA">自动构建</a></li>
 <li><a href="#NuGet%E5%8C%85">Nuget包</a></li>
 <li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
@@ -93,55 +92,6 @@
 <li>码云（手动同步，不维护）：<a href="https://gitee.com/magicodes/Magicodes.IE">https://gitee.com/magicodes/Magicodes.IE</a></li>
 </ul>
 <p><strong><img src="./docs/Magicodes.IE.png" alt="总体说明"></strong></p>
-<h2 id="里程碑">里程碑</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">#</th>
-<th style="text-align: center;">状态</th>
-<th style="text-align: center;">完成时间</th>
-<th style="text-align: center;">里程碑情况</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A3.0">3.0</a></td>
-<td style="text-align: center;">☕进行中</td>
-<td style="text-align: center;">2021-12-31</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/3">待办</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5">2.5</a></td>
-<td style="text-align: center;">🚩已完成</td>
-<td style="text-align: center;">2020-10-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/7">已完成</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4">2.4</a></td>
-<td style="text-align: center;">🚩已完成</td>
-<td style="text-align: center;">2020-09-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/6">已完成</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3">2.3</a></td>
-<td style="text-align: center;">🚩已完成</td>
-<td style="text-align: center;">2020-06-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/5">已完成</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2">2.2</a></td>
-<td style="text-align: center;">🚩已完成</td>
-<td style="text-align: center;">2020-04-31</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/4">已完成</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1">2.1</a></td>
-<td style="text-align: center;">🚩已完成</td>
-<td style="text-align: center;">2020-03-15</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1">已完成</a></td>
-</tr>
-</tbody>
-</table>
 <h2 id="自动构建">自动构建</h2>
 <ul>
 <li>Build Status：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&amp;branchName=master"><img src="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master" alt="Build Status"></a></li>
@@ -255,9 +205,10 @@
 <strong><img src="res/%E5%AF%BC%E5%85%A5Dto.png" alt="" title="导入Dto"></strong></li>
 <li><strong>支持各种筛选器，支持依赖注入，以便支持多语言、动态控制列展示等场景，具体使用见单元测试：</strong>
 <ul>
-<li><strong>导入列头筛选器（可动态指定导入列、导入的值映射关系）</strong></li>
-<li><strong>导出列头筛选器（可动态控制导出列，支持动态导出（DataTable））</strong></li>
-<li><strong>导入结果筛选器（可修改标注文件）</strong></li>
+<li><strong>导入列头筛选器【IImportHeaderFilter】（可动态指定导入列、导入的值映射关系）</strong></li>
+<li><strong>导出列头筛选器【IImportHeaderFilter】（可动态控制导出列，支持动态导出（DataTable））</strong></li>
+<li><strong>导出列头集合筛选器【IImportHeadersFilter】（可动态控制导出列，支持动态导出（DataTable））</strong></li>
+<li><strong>导入结果筛选器【IImportResultFilter】（可修改标注文件）</strong></li>
 </ul>
 </li>
 <li><strong>导出支持文本自定义过滤或处理；</strong></li>

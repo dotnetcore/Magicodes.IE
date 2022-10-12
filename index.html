@@ -75,55 +75,6 @@
 <h2 id="overview">Overview</h2>
 <p>Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.</p>
 <p><strong><img src="./docs/Magicodes.IE.en.png" alt="General description"></strong></p>
-<h2 id="milestone">Milestone</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">#</th>
-<th style="text-align: center;">Status</th>
-<th style="text-align: center;">Completion time</th>
-<th style="text-align: center;">Milestone situation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5">3.0</a></td>
-<td style="text-align: center;">☕In progress</td>
-<td style="text-align: center;">2021-12-31</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/7">To Do</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.5">2.5</a></td>
-<td style="text-align: center;">🚩Completed</td>
-<td style="text-align: center;">2020-10-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/7">Completed</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.4">2.4</a></td>
-<td style="text-align: center;">🚩Completed</td>
-<td style="text-align: center;">2020-09-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/6">Completed</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.3">2.3</a></td>
-<td style="text-align: center;">🚩Completed</td>
-<td style="text-align: center;">2020-06-30</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/5">Completed</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.2">2.2</a></td>
-<td style="text-align: center;">🚩Completed</td>
-<td style="text-align: center;">2020-04-31</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/4">Completed</a></td>
-</tr>
-<tr>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/issues?q=+is%3Aissue+milestone%3A2.1">2.1</a></td>
-<td style="text-align: center;">🚩Completed</td>
-<td style="text-align: center;">2020-03-15</td>
-<td style="text-align: center;"><a href="https://github.com/dotnetcore/Magicodes.IE/milestone/2?closed=1">Completed</a></td>
-</tr>
-</tbody>
-</table>
 <h3 id="azure-devops">Azure DevOps</h3>
 <ul>
 <li>Build Status：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&amp;branchName=master"><img src="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master" alt="Build Status"></a></li>
@@ -235,9 +186,10 @@
 <strong><img src="res/%E5%AF%BC%E5%85%A5Dto.png" alt="" title="Import DTO"></strong></li>
 <li><strong>Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:</strong>
 <ul>
-<li><strong>Import column header filter (you can dynamically specify the imported column and imported value mapping relationship)</strong></li>
-<li><strong>Export column header filter (can dynamically control the export column, support dynamic export (DataTable))</strong></li>
-<li><strong>Import result filter (can modify annotation file)</strong></li>
+<li><strong>Import column header filter <iimportheaderfilter>(you can dynamically specify the imported column and imported value mapping relationship)</iimportheaderfilter></strong></li>
+<li><strong>Export column header filter <iimportheaderfilter>(can dynamically control the export column, support dynamic export (DataTable))</iimportheaderfilter></strong></li>
+<li><strong>Export column headers filter <iimportheadersfilter>(can dynamically control the export column, support dynamic export (DataTable))</iimportheadersfilter></strong></li>
+<li><strong>Import result filter <iimportresultfilter>(can modify annotation file)</iimportresultfilter></strong></li>
 </ul>
 </li>
 <li><strong>Export supports text custom filtering or processing;</strong></li>
