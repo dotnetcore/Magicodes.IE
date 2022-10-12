@@ -111,8 +111,10 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task ExporterHeaderFilter_Test()
         {
             IExporter exporter = new ExcelExporter();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
 
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(DIFilter_Tests));
+            Directory.CreateDirectory(filePath);
+            filePath = Path.Combine(filePath, $"{nameof(ExporterHeaderFilter_Test)}.xlsx");
             #region 通过筛选器修改列名
 
             if (File.Exists(filePath)) File.Delete(filePath);
@@ -126,8 +128,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 //检查转换结果
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["D1"].Value.ShouldBe("name");
+                sheet.Cells["A1"].Text.ShouldBe("标题");
+                sheet.Cells["C1"].Value.ShouldBe("数值");
+                sheet.Cells["D1"].Text.ShouldBe("name");
                 sheet.Dimension.Columns.ShouldBe(4);
+
+                
             }
 
             #endregion 通过筛选器修改列名
@@ -144,6 +150,9 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             var descriptorToRemove3 = services.FirstOrDefault(d => d.ServiceType == typeof(IExporterHeaderFilter));
             services.Remove(descriptorToRemove3);
+
+            var descriptorToRemove4 = services.FirstOrDefault(d => d.ServiceType == typeof(IExporterHeadersFilter));
+            services.Remove(descriptorToRemove4);
 
             AppDependencyResolver.Current.Dispose();
         }

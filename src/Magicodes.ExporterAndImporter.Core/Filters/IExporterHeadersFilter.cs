@@ -12,6 +12,6 @@ namespace Magicodes.ExporterAndImporter.Core.Filters
         /// 过滤列头（集合）（可以在此处理列名、是否隐藏等）
         /// </summary>
         /// <returns></returns>
-        IList<ExporterHeaderInfo> Filter(IList<ExporterHeaderInfo> exporterHeaderInfo);
+        IList<ExporterHeaderInfo> Filter(IList<ExporterHeaderInfo> exporterHeaderInfos);
     }
 }

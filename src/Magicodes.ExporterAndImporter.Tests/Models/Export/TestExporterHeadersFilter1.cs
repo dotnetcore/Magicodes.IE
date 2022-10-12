@@ -19,9 +19,17 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     public class TestExporterHeadersFilter1 : IExporterHeadersFilter
     {
-        public IList<ExporterHeaderInfo> Filter(IList<ExporterHeaderInfo> exporterHeaderInfo)
+        public IList<ExporterHeaderInfo> Filter(IList<ExporterHeaderInfo> exporterHeaderInfos)
         {
-            return exporterHeaderInfo;
+            foreach (var item in exporterHeaderInfos)
+            {
+                if (item.PropertyName == "Text2")
+                {
+                    item.DisplayName = "标题";
+                    item.ExporterHeaderAttribute.ColumnIndex = -1;//排到第一列
+                }
+            }
+            return exporterHeaderInfos;
         }
     }
 }

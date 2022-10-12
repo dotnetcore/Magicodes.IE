@@ -253,23 +253,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected bool IsExpandoObjectType { get; set; }
 
-        ///// <summary>
-        ///// 获得经过排序的属性
-        ///// </summary>
-        //protected virtual List<PropertyInfo> SortedProperties
-        //{
-        //    get
-        //    {
-        //        return ExporterHeaderList
-        //            ?.OrderBy(p => p.Index)
-        //            .Select(p => p.PropertyInfo)
-        //            ?.ToList();
-        //        //var type = _type ?? typeof(T);
-        //        //var objProperties = type.GetProperties()
-        //        //    .OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToList();
-        //        //return objProperties;
-        //    }
-        //}
         #endregion
 
         #region 导出
@@ -470,7 +453,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     //如果索引设置超出当前列数，则插入最后一列
                     if (index > maxIndex)
                         index = maxIndex;
-                    if (item.ExporterHeaderAttribute.ColumnIndex >= 0)
+                    if (index >= 0)
                     {
                         _exporterHeaderList.RemoveAt(i);
                         _exporterHeaderList.Insert(index, item);
@@ -865,167 +848,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 yield return obj;
             }
-            //list.Add(obj);
-            // return list;
         }
-
-        ///// <summary>
-        /////     数据解析
-        ///// </summary>
-        ///// <param name="dataItems"></param>
-        //protected virtual DataTable ParseData(ICollection<T> dataItems)
-        //{
-        //    var type = typeof(T);
-        //    var properties = SortedProperties;
-        //    DataTable dt = new DataTable();
-        //    foreach (var propertyInfo in properties)
-        //    {
-        //        if (propertyInfo.PropertyType.IsEnum ||
-        //            propertyInfo.PropertyType == typeof(bool) ||
-        //            propertyInfo.PropertyType == typeof(bool?) ||
-        //            (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum))
-        //        {
-        //            dt.Columns.Add(propertyInfo.Name);
-        //        }
-        //        else if (propertyInfo.PropertyType.IsNullable())
-        //        {
-        //            dt.Columns.Add(propertyInfo.Name,
-        //                 propertyInfo.PropertyType.GetGenericArguments()[0]);
-        //        }
-        //        else
-        //        {
-        //            dt.Columns.Add(propertyInfo.Name, propertyInfo.PropertyType);
-        //        }
-        //    }
-
-        //    foreach (var dataItem in dataItems)
-        //    {
-        //        var dr = dt.NewRow();
-        //        foreach (var propertyInfo in properties)
-        //        {
-        //            var value = type.GetProperty(propertyInfo.Name)?.GetValue(dataItem)?.ToString();
-        //            if (
-        //                propertyInfo.PropertyType.IsEnum ||
-        //                propertyInfo.PropertyType.GetNullableUnderlyingType() != null &&
-        //                propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
-        //            {
-        //                if (value != null)
-        //                {
-        //                    var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-
-        //                    if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(value.ToLower()))
-        //                    {
-        //                        var mapValue = col.MappingValues.FirstOrDefault(f => f.Key == value);
-        //                        dr[propertyInfo.Name] = mapValue.Value;
-        //                    }
-        //                    else
-        //                    {
-        //                        var enumDefinitionList = propertyInfo.PropertyType.GetEnumDefinitionList();
-        //                        if (enumDefinitionList == null)
-        //                        {
-        //                            enumDefinitionList = propertyInfo.PropertyType.GetNullableUnderlyingType()
-        //                                .GetEnumDefinitionList();
-        //                        }
-
-        //                        var tuple = enumDefinitionList.FirstOrDefault(f => f.Item1 == value);
-        //                        if (tuple != null)
-        //                        {
-        //                            if (!tuple.Item4.IsNullOrWhiteSpace())
-        //                            {
-        //                                dr[propertyInfo.Name] = tuple.Item4;
-        //                            }
-        //                            else
-        //                            {
-        //                                dr[propertyInfo.Name] = tuple.Item2;
-        //                            }
-        //                        }
-        //                        else
-        //                        {
-        //                            dr[propertyInfo.Name] = value;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Boolean")
-        //            {
-        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-        //                var val = Convert.ToBoolean(value);
-        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
-        //                {
-        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
-        //                    dr[propertyInfo.Name] = mapValue.Key;
-        //                }
-        //                else
-        //                {
-        //                    dr[propertyInfo.Name] = value;
-        //                }
-        //            }
-        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<Boolean>")
-        //            {
-        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-        //                var val = Convert.ToBoolean(value);
-        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
-        //                {
-        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
-        //                    dr[propertyInfo.Name] = mapValue.Key;
-        //                }
-        //                else
-        //                {
-        //                    dr[propertyInfo.Name] = value;
-        //                }
-        //            }
-        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Int32")
-        //            {
-        //                var col = ExporterHeaderList.First(a => a.PropertyName == propertyInfo.Name);
-        //                var val = Convert.ToInt32(value);
-
-        //                if (col.MappingValues.Count > 0 && col.MappingValues.ContainsValue(val))
-        //                {
-        //                    var mapValue = col.MappingValues.FirstOrDefault(f => f.Value == val);
-        //                    dr[propertyInfo.Name] = mapValue.Key;
-        //                }
-        //                else
-        //                {
-        //                    dr[propertyInfo.Name] = value;
-        //                }
-        //            }
-        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "DateTimeOffset")
-        //            {
-        //                dr[propertyInfo.Name]
-        //                    = DateTimeOffset.Parse(
-        //                        value);
-        //            }
-        //            else if (propertyInfo.PropertyType.GetCSharpTypeName() == "Nullable<DateTimeOffset>")
-        //            {
-        //                if (string.IsNullOrWhiteSpace(value))
-        //                {
-        //                    dr[propertyInfo.Name] = DBNull.Value;
-        //                    break;
-        //                }
-
-        //                if (DateTimeOffset.TryParse(value, out var date))
-        //                {
-        //                    dr[propertyInfo.Name] = date;
-        //                    break;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (value != null)
-        //                {
-        //                    dr[propertyInfo.Name]
-        //                        = value;
-        //                }
-        //                else
-        //                {
-        //                    dr[propertyInfo.Name] = DBNull.Value;
-        //                }
-        //            }
-        //        }
-        //        dt.Rows.Add(dr);
-        //    }
-        //    return dt;
-        //} 
 
         /// <summary>
         /// 
