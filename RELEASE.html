@@ -8,7 +8,7 @@
     <title>Release Log </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Release Log ">
-    <meta name="generator" content="docfx 2.59.3.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -62,6 +62,13 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="266">2.6.6</h2>
+<p><strong>2022.10.12</strong></p>
+<ul>
+<li>ExporterHeaderFilter支持修改列索引，以支持动态排序，需设置ExporterHeaderAttribute.ColumnIndex属性（注意不应修改Index属性），值范围为0~10000。设置错误会自动调整到相近的边界值。</li>
+<li>提供ExporterHeadersFilter筛选器，以支持批量修改列头。</li>
+<li>重构、优化列排序代码。</li>
+</ul>
 <h2 id="265-beta1">2.6.5-beta1</h2>
 <p><strong>2022.07.17</strong></p>
 <ul>

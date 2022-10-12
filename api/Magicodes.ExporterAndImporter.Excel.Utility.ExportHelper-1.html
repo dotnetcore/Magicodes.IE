@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ExportHelper&lt;T&gt;
    ">
-    <meta name="generator" content="docfx 2.59.3.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -409,7 +409,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected List&lt;ExporterHeaderInfo&gt; ExporterHeaderList { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected IList&lt;ExporterHeaderInfo&gt; ExporterHeaderList { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -421,7 +421,33 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">ExporterHeaderInfo</span>&gt;</td>
+        <td><span class="xref">IList</span>&lt;<span class="xref">ExporterHeaderInfo</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ExporterHeadersFilter_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ExporterHeadersFilter" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter">ExporterHeadersFilter</h4>
+  <div class="markdown level1 summary"><p>表头（集合）筛选器</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IExporterHeadersFilter ExporterHeadersFilter { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IExporterHeadersFilter</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -500,32 +526,6 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_SortedProperties_" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_SortedProperties" data-uid="Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties">SortedProperties</h4>
-  <div class="markdown level1 summary"><p>获得经过排序的属性</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual List&lt;PropertyInfo&gt; SortedProperties { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">List</span>&lt;<span class="xref">System.Reflection.PropertyInfo</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>

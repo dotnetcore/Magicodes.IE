@@ -1789,6 +1789,23 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).ExporterHeaderList
   nameWithType: ExportHelper<T>.ExporterHeaderList
   nameWithType.vb: ExportHelper(Of T).ExporterHeaderList
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter
+  name: ExporterHeadersFilter
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ExporterHeadersFilter
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.ExporterHeadersFilter
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).ExporterHeadersFilter
+  nameWithType: ExportHelper<T>.ExporterHeadersFilter
+  nameWithType.vb: ExportHelper(Of T).ExporterHeadersFilter
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter*
+  name: ExporterHeadersFilter
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ExporterHeadersFilter_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersFilter
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.ExporterHeadersFilter
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).ExporterHeadersFilter
+  nameWithType: ExportHelper<T>.ExporterHeadersFilter
+  nameWithType.vb: ExportHelper(Of T).ExporterHeadersFilter
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.ExporterHeadersString
   name: ExporterHeadersString
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_ExporterHeadersString
@@ -1918,23 +1935,6 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).SheetIndex
   nameWithType: ExportHelper<T>.SheetIndex
   nameWithType.vb: ExportHelper(Of T).SheetIndex
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties
-  name: SortedProperties
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_SortedProperties
-  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.SortedProperties
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).SortedProperties
-  nameWithType: ExportHelper<T>.SortedProperties
-  nameWithType.vb: ExportHelper(Of T).SortedProperties
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties*
-  name: SortedProperties
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ExportHelper_1_SortedProperties_
-  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper`1.SortedProperties
-  isSpec: "True"
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper<T>.SortedProperties
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper(Of T).SortedProperties
-  nameWithType: ExportHelper<T>.SortedProperties
-  nameWithType.vb: ExportHelper(Of T).SortedProperties
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1
   name: ImportHelper<T>
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html
