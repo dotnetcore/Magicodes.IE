@@ -37,9 +37,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             services.AddSingleton<IImportResultFilter, ImportResultFilterTest>();
             services.AddSingleton<IImportHeaderFilter, ImportHeaderFilterTest>();
             services.AddSingleton<IExporterHeaderFilter, TestExporterHeaderFilter1>();
+            services.AddSingleton<IExporterHeadersFilter, TestExporterHeadersFilter1>();
             var serviceProvider = services.BuildServiceProvider();
             AppDependencyResolver.Init(serviceProvider);
-            _testOutputHelper.WriteLine("DIFilter_Tests");
         }
 
         [Fact()]

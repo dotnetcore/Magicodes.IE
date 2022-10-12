@@ -23,15 +23,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
     /// 导出辅助类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ExportHelper<T> where T : class, new()
+    public partial class ExportHelper<T> where T : class, new()
     {
         private ExcelExporterAttribute _excelExporterAttribute;
         private ExcelWorksheet _excelWorksheet;
         private ExcelPackage _excelPackage;
-        private List<ExporterHeaderInfo> _exporterHeaderList;
+        private IList<ExporterHeaderInfo> _exporterHeaderList;
         private Type _type;
         private string _sheetName;
 
+        #region 构造函数
         /// <summary>
         /// 
         /// </summary>
@@ -78,8 +79,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             _sheetName = sheetName;
         }
+        #endregion
 
-
+        #region 属性
         /// <summary>
         ///     导出设置
         /// </summary>
@@ -109,6 +111,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 //ExcelOutputType = 
                                 AutoFitMaxRows = exporterAttribute.AutoFitMaxRows,
                                 ExporterHeaderFilter = exporterAttribute.ExporterHeaderFilter,
+                                ExporterHeadersFilter = exporterAttribute.ExporterHeadersFilter,
                                 FontSize = exporterAttribute.FontSize,
                                 HeaderFontSize = exporterAttribute.HeaderFontSize,
                                 MaxRowNumberOnASheet = exporterAttribute.MaxRowNumberOnASheet,
@@ -126,6 +129,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     ExporterHeaderFilter =
                         GetFilter<IExporterHeaderFilter>(_excelExporterAttribute.ExporterHeaderFilter);
+                    ExporterHeadersFilter =
+                        GetFilter<IExporterHeadersFilter>(_excelExporterAttribute.ExporterHeadersFilter);
 
                     #endregion
                 }
@@ -188,7 +193,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         /// 表头列表
         /// </summary>
-        protected List<ExporterHeaderInfo> ExporterHeaderList
+        protected IList<ExporterHeaderInfo> ExporterHeaderList
         {
             get
             {
@@ -234,6 +239,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected IExporterHeaderFilter ExporterHeaderFilter { get; set; }
 
         /// <summary>
+        /// 表头（集合）筛选器
+        /// </summary>
+        protected IExporterHeadersFilter ExporterHeadersFilter { get; set; }
+
+        /// <summary>
         /// 是否为动态DataTable导出
         /// </summary>
         protected bool IsDynamicDatableExport { get; set; }
@@ -243,6 +253,75 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// </summary>
         protected bool IsExpandoObjectType { get; set; }
 
+        ///// <summary>
+        ///// 获得经过排序的属性
+        ///// </summary>
+        //protected virtual List<PropertyInfo> SortedProperties
+        //{
+        //    get
+        //    {
+        //        return ExporterHeaderList
+        //            ?.OrderBy(p => p.Index)
+        //            .Select(p => p.PropertyInfo)
+        //            ?.ToList();
+        //        //var type = _type ?? typeof(T);
+        //        //var objProperties = type.GetProperties()
+        //        //    .OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToList();
+        //        //return objProperties;
+        //    }
+        //}
+        #endregion
+
+        #region 导出
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        /// <returns>文件</returns>
+        public virtual ExcelPackage Export(ICollection<T> dataItems)
+        {
+            if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
+
+            //TODO:先获取列头
+            if (!IsExpandoObjectType)
+            {
+                AddDataItems(ParseData(dataItems));
+            }
+            else
+            {
+                AddDataItems(dataItems);
+            }
+
+            //仅当存在图片表头才渲染图片
+            if (ExporterHeaderList.Any(p => p.ExportImageFieldAttribute != null))
+            {
+                AddPictures(dataItems.Count);
+            }
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
+            return AddHeaderAndStyles();
+        }
+
+        /// <summary>
+        ///     导出Excel
+        /// </summary>
+        public ExcelPackage Export(DataTable dataItems)
+        {
+            if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport)
+            {
+                GetExporterHeaderInfoList(dataItems);
+            }
+
+            AddDataItems(dataItems);
+            SetSkipRows();
+            //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
+            //AddPictures(dataItems.Rows.Count);
+
+            DisableAutoFitWhenDataRowsIsLarge(dataItems.Rows.Count);
+            return AddHeaderAndStyles();
+        }
+        #endregion
+
+        #region 表头相关操作
         /// <summary>
         /// 添加导出表头
         /// </summary>
@@ -252,18 +331,14 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             _exporterHeaderList = exporterHeaderInfos;
         }
 
+
         /// <summary>
-        /// 获得经过排序的属性
+        ///     导出Excel空表头
         /// </summary>
-        protected virtual List<PropertyInfo> SortedProperties
+        /// <returns>文件</returns>
+        public virtual ExcelPackage ExportHeaders()
         {
-            get
-            {
-                var type = _type ?? typeof(T);
-                var objProperties = type.GetProperties()
-                    .OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToList();
-                return objProperties;
-            }
+            return AddHeaderAndStyles();
         }
 
         /// <summary>
@@ -307,26 +382,23 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             }
             else if (!IsDynamicDatableExport)
             {
-                //var type = _type ?? typeof(T);
-                //#179 GetProperties方法不按特定顺序（如字母顺序或声明顺序）返回属性，因此此处支持按ColumnIndex排序返回
-                //var objProperties = type.GetProperties().OrderBy(p => p.GetAttribute<ExporterHeaderAttribute>()?.ColumnIndex ?? 10000).ToArray();
-                var objProperties = SortedProperties;
+                var type = _type ?? typeof(T);
+                var objProperties = type.GetProperties().ToList();
                 if (objProperties.Count == 0)
                     return;
                 for (var i = 0; i < objProperties.Count; i++)
                 {
-
+                    var exporterHeaderAttribute = (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
+                                ExporterHeaderAttribute[])?.FirstOrDefault() ??
+                            new ExporterHeaderAttribute(objProperties[i].GetDisplayName() ?? objProperties[i].Name);
                     var item = new ExporterHeaderInfo
                     {
                         Index = i + 1,
                         PropertyName = objProperties[i].Name,
-                        ExporterHeaderAttribute =
-                            (objProperties[i].GetCustomAttributes(typeof(ExporterHeaderAttribute), true) as
-                                ExporterHeaderAttribute[])?.FirstOrDefault() ??
-                            new ExporterHeaderAttribute(objProperties[i].GetDisplayName() ?? objProperties[i].Name),
+                        ExporterHeaderAttribute = exporterHeaderAttribute,
                         CsTypeName = objProperties[i].PropertyType.GetCSharpTypeName(),
-                        ExportImageFieldAttribute = objProperties[i].GetAttribute<ExportImageFieldAttribute>(true)
-
+                        ExportImageFieldAttribute = objProperties[i].GetAttribute<ExportImageFieldAttribute>(true),
+                        PropertyInfo = objProperties[i],
                     };
 
                     //设置列显示名
@@ -375,6 +447,43 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     AddExportHeaderInfo(item);
                 }
             }
+            
+            //执行列头筛选器
+            if (ExporterHeadersFilter != null)
+            {
+                _exporterHeaderList = ExporterHeadersFilter.Filter(_exporterHeaderList);
+            }
+
+            #region 排序
+            //修改列位置
+            var maxIndex = _exporterHeaderList.Count - 1;
+            for (int i = 0; i < _exporterHeaderList.Count; i++)
+            {
+                var item = _exporterHeaderList[i];
+                //10000及以上属于无效索引
+                if (item.ExporterHeaderAttribute?.ColumnIndex < 10000)
+                {
+                    var index = item.ExporterHeaderAttribute.ColumnIndex;
+                    //如果索引小于0，则设置为0
+                    if (index < 0)
+                        index = 0;
+                    //如果索引设置超出当前列数，则插入最后一列
+                    if (index > maxIndex)
+                        index = maxIndex;
+                    if (item.ExporterHeaderAttribute.ColumnIndex >= 0)
+                    {
+                        _exporterHeaderList.RemoveAt(i);
+                        _exporterHeaderList.Insert(index, item);
+                    }
+                }
+            }
+            //重新编排序号
+            for (int i = 0; i < _exporterHeaderList.Count; i++)
+            {
+                var item = _exporterHeaderList[i];
+                item.Index = i + 1;
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -402,31 +511,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         }
 
         /// <summary>
-        ///     导出Excel
+        /// 添加表头、样式以及忽略列、格式处理
         /// </summary>
-        /// <returns>文件</returns>
-        public virtual ExcelPackage Export(ICollection<T> dataItems)
+        /// <returns></returns>
+        private ExcelPackage AddHeaderAndStyles()
         {
-            if (!IsExpandoObjectType)
+            AddHeader();
+
+            if (ExcelExporterSettings.AutoFitAllColumn)
             {
-                AddDataItems(ParseData(dataItems));
-            }
-            else
-            {
-                AddDataItems(dataItems);
+                CurrentExcelWorksheet.Cells[CurrentExcelWorksheet.Dimension.Address].AutoFitColumns();
             }
 
-            // 为了传入dataItems，在这里提前调用一下
-            if (_exporterHeaderList == null) GetExporterHeaderInfoList(null, dataItems);
-            //仅当存在图片表头才渲染图片
-            if (ExporterHeaderList.Any(p => p.ExportImageFieldAttribute != null))
-            {
-                AddPictures(dataItems.Count);
-            }
-
-            DisableAutoFitWhenDataRowsIsLarge(dataItems.Count);
-            return AddHeaderAndStyles();
+            AddStyle();
+            DeleteIgnoreColumns();
+            //以便支持导出多Sheet
+            SheetIndex++;
+            SetSkipRows();
+            return CurrentExcelPackage;
         }
+        #endregion
+
+
+        #region Sheet、Row相关操作
 
         /// <summary>
         ///     复制Sheet
@@ -444,6 +551,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             _excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
         }
+
 
         /// <summary>
         ///     复制Rows
@@ -469,74 +577,6 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             _excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
         }
 
-
-        /// <summary>
-        ///     导出Excel空表头
-        /// </summary>
-        /// <returns>文件</returns>
-        public virtual ExcelPackage ExportHeaders()
-        {
-            return AddHeaderAndStyles();
-        }
-
-        /// <summary>
-        /// 添加表头、样式以及忽略列、格式处理
-        /// </summary>
-        /// <returns></returns>
-        private ExcelPackage AddHeaderAndStyles()
-        {
-            AddHeader();
-
-            if (ExcelExporterSettings.AutoFitAllColumn)
-            {
-                CurrentExcelWorksheet.Cells[CurrentExcelWorksheet.Dimension.Address].AutoFitColumns();
-            }
-
-            AddStyle();
-            DeleteIgnoreColumns();
-            //以便支持导出多Sheet
-            SheetIndex++;
-            SetSkipRows();
-            return CurrentExcelPackage;
-        }
-
-        /// <summary>
-        ///     导出Excel
-        /// </summary>
-        public ExcelPackage Export(DataTable dataItems)
-        {
-            if ((ExporterHeaderList == null || ExporterHeaderList.Count == 0) && IsDynamicDatableExport)
-            {
-                GetExporterHeaderInfoList(dataItems);
-            }
-
-            AddDataItems(dataItems);
-            SetSkipRows();
-            //TODO:动态导出暂不考虑支持图片导出，后续可以考虑通过约定实现
-            //AddPictures(dataItems.Rows.Count);
-
-            DisableAutoFitWhenDataRowsIsLarge(dataItems.Rows.Count);
-            return AddHeaderAndStyles();
-        }
-
-        /// <summary>
-        /// 在数据达到设置值时禁用自适应列
-        /// </summary>
-        /// <param name="count"></param>
-        private void DisableAutoFitWhenDataRowsIsLarge(int count)
-        {
-            //如果已经设置了AutoFitMaxRows并且当前数据超过此设置，则关闭自适应列的配置
-            if (ExcelExporterSettings.AutoFitMaxRows != 0 && count > ExcelExporterSettings.AutoFitMaxRows)
-            {
-                ExcelExporterSettings.AutoFitAllColumn = false;
-                foreach (var item in ExporterHeaderList)
-                {
-                    if (item.ExporterHeaderAttribute != null)
-                        item.ExporterHeaderAttribute.IsAutoFit = false;
-                }
-            }
-        }
-
         /// <summary>
         /// 添加Sheet
         /// 支持同一个数据拆成多个Sheet
@@ -560,7 +600,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ExcelWorksheets.Add(_excelWorksheet);
             return _excelWorksheet;
         }
+        #endregion
 
+
+
+        /// <summary>
+        /// 在数据达到设置值时禁用自适应列
+        /// </summary>
+        /// <param name="count"></param>
+        private void DisableAutoFitWhenDataRowsIsLarge(int count)
+        {
+            //如果已经设置了AutoFitMaxRows并且当前数据超过此设置，则关闭自适应列的配置
+            if (ExcelExporterSettings.AutoFitMaxRows != 0 && count > ExcelExporterSettings.AutoFitMaxRows)
+            {
+                ExcelExporterSettings.AutoFitAllColumn = false;
+                foreach (var item in ExporterHeaderList)
+                {
+                    if (item.ExporterHeaderAttribute != null)
+                        item.ExporterHeaderAttribute.IsAutoFit = false;
+                }
+            }
+        }
+
+        #region 数据处理
         /// <summary>
         ///     添加导出数据
         /// </summary>
@@ -632,7 +694,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         protected virtual IEnumerable<ExpandoObject> ParseData(ICollection<T> dataItems)
         {
             var type = typeof(T);
-            var properties = SortedProperties;
+            var properties = ExporterHeaderList
+                    ?.OrderBy(p => p.Index)
+                    .Select(p => p.PropertyInfo)
+                    ?.ToList();
             //IEnumerable<ExpandoObject> list = new List<ExpandoObject>();
 
             foreach (var dataItem in dataItems)
@@ -960,8 +1025,31 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         //        dt.Rows.Add(dr);
         //    }
         //    return dt;
-        //}
+        //} 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataTable"></param>
+        /// <param name="excelRange"></param>
+        protected void AddDataItems(DataTable dataTable, ExcelRangeBase excelRange = null)
+        {
+            if (excelRange == null)
+                excelRange = CurrentExcelWorksheet.Cells["A1"];
+
+            if (dataTable == null || dataTable.Rows.Count == 0)
+                return;
+
+            var tbStyle = ExcelExporterSettings.TableStyle;
+            //if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
+            //    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
+
+            var er = excelRange.LoadFromDataTable(dataTable, true, tbStyle);
+            CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
+        }
+        #endregion
+
+        #region 图片处理
         /// <summary>
         ///     添加图片
         /// </summary>
@@ -1056,28 +1144,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             int mtus = pixels * 9525;
             return mtus;
         }
+        #endregion
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataTable"></param>
-        /// <param name="excelRange"></param>
-        protected void AddDataItems(DataTable dataTable, ExcelRangeBase excelRange = null)
-        {
-            if (excelRange == null)
-                excelRange = CurrentExcelWorksheet.Cells["A1"];
 
-            if (dataTable == null || dataTable.Rows.Count == 0)
-                return;
-
-            var tbStyle = ExcelExporterSettings.TableStyle;
-            //if (!ExcelExporterSettings.TableStyle.IsNullOrWhiteSpace())
-            //    tbStyle = (TableStyles)Enum.Parse(typeof(TableStyles), ExcelExporterSettings.TableStyle);
-
-            var er = excelRange.LoadFromDataTable(dataTable, true, tbStyle);
-            CurrentExcelTable = CurrentExcelWorksheet.Tables.GetFromRange(er);
-        }
 
         /// <summary>
         ///设置x行开始追加内容

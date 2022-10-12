@@ -13,6 +13,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Core.Models
 {
@@ -22,7 +23,8 @@ namespace Magicodes.ExporterAndImporter.Core.Models
     public class ExporterHeaderInfo
     {
         /// <summary>
-        ///     列索引
+        ///     列索引（自动）
+        ///     如需排序，请设置ExporterHeaderAttribute.ColumnIndex 属性
         /// </summary>
         public int Index { get; set; }
 
@@ -30,6 +32,8 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         ///     列名称
         /// </summary>
         public string PropertyName { get; set; }
+
+        public PropertyInfo PropertyInfo { get; set; }
 
         /// <summary>
         ///     列属性
@@ -54,6 +58,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// <summary>
         /// </summary>
         public Dictionary<string, dynamic> MappingValues { get; set; } = new Dictionary<string, dynamic>();
+
         //public Dictionary<dynamic, string> MappingValues { get; set; } = new Dictionary<dynamic, string>();
     }
 }

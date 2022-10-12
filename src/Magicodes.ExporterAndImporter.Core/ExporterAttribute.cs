@@ -57,9 +57,14 @@ namespace Magicodes.ExporterAndImporter.Core
         public string Author { get; set; }
 
         /// <summary>
-        /// 头部筛选器
+        /// 列头筛选器
         /// </summary>
         public Type ExporterHeaderFilter { get; set; }
+
+        /// <summary>
+        /// 列头（集合）筛选器
+        /// </summary>
+        public Type ExporterHeadersFilter { get; set; }
 
         /// <summary>
         /// 是否禁用所有筛选器

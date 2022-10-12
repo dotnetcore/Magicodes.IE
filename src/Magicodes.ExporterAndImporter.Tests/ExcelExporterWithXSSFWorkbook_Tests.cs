@@ -100,17 +100,14 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
 
                 //单元格宽度测试
-                sheet.Column(7).Width.ShouldBe(100);
+                sheet.Column(sheet.Cells.First(p => p.Text == "Time3").End.Column).Width.ShouldBe(100);
 
                 sheet.Tables.Count.ShouldBe(1);
 
                 var tb = sheet.Tables.First();
                 tb.Columns.Count.ShouldBe(9);
                 tb.Columns.First().Name.ShouldBe("普通文本");
-
-                sheet.Tables.First();
-                tb.Columns.Count.ShouldBe(9);
-                tb.Columns[2].Name.ShouldBe("加粗文本");
+                tb.Columns[tb.Columns.Count - 1].Name.ShouldBe("加粗文本");
             }
         }
 
