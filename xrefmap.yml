@@ -652,6 +652,15 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate
   nameWithType: ExcelExporter.ExportBytesByTemplate
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate``1(``0,Stream)
+  name: ExportBytesByTemplate<T>(T, Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportBytesByTemplate__1___0_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate``1(``0,Stream)
+  name.vb: ExportBytesByTemplate(Of T)(T, Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate<T>(T, Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate(Of T)(T, Stream)
+  nameWithType: ExcelExporter.ExportBytesByTemplate<T>(T, Stream)
+  nameWithType.vb: ExcelExporter.ExportBytesByTemplate(Of T)(T, Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelExporter.ExportBytesByTemplate``1(``0,System.String)
   name: ExportBytesByTemplate<T>(T, String)
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html#Magicodes_ExporterAndImporter_Excel_ExcelExporter_ExportBytesByTemplate__1___0_System_String_
@@ -1210,6 +1219,22 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportAsByteArray
   nameWithType: IExcelExporter.ExportAsByteArray
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate*
+  name: ExportBytesByTemplate
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportBytesByTemplate_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate
+  nameWithType: IExcelExporter.ExportBytesByTemplate
+- uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate``1(``0,Stream)
+  name: ExportBytesByTemplate<T>(T, Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportBytesByTemplate__1___0_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate``1(``0,Stream)
+  name.vb: ExportBytesByTemplate(Of T)(T, Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate<T>(T, Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportBytesByTemplate(Of T)(T, Stream)
+  nameWithType: IExcelExporter.ExportBytesByTemplate<T>(T, Stream)
+  nameWithType.vb: IExcelExporter.ExportBytesByTemplate(Of T)(T, Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.IExcelExporter.ExportHeaderAsByteArray(System.String[],System.String)
   name: ExportHeaderAsByteArray(String[], String)
   href: api/Magicodes.ExporterAndImporter.Excel.IExcelExporter.html#Magicodes_ExporterAndImporter_Excel_IExcelExporter_ExportHeaderAsByteArray_System_String___System_String_
@@ -2629,6 +2654,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).Dispose
   nameWithType: TemplateExportHelper<T>.Dispose
   nameWithType.vb: TemplateExportHelper(Of T).Dispose
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Export(Stream,`0,Action{ExcelPackage})
+  name: Export(Stream, T, Action<ExcelPackage>)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_Export_Stream__0_Action_ExcelPackage__
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Export(Stream,`0,Action{ExcelPackage})
+  name.vb: Export(Stream, T, Action(Of ExcelPackage))
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.Export(Stream, T, Action<ExcelPackage>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).Export(Stream, T, Action(Of ExcelPackage))
+  nameWithType: TemplateExportHelper<T>.Export(Stream, T, Action<ExcelPackage>)
+  nameWithType.vb: TemplateExportHelper(Of T).Export(Stream, T, Action(Of ExcelPackage))
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Export(System.String,`0,Action{ExcelPackage})
   name: Export(String, T, Action<ExcelPackage>)
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_Export_System_String__0_Action_ExcelPackage__
