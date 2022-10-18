@@ -4,6 +4,7 @@ using Magicodes.ExporterAndImporter.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Magicodes.ExporterAndImporter.Excel
@@ -108,5 +109,14 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <returns></returns>
         Task<byte[]> ExportAppendDataAsByteArray();
+
+        /// <summary>
+        ///     根据模板文件流导出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="templateStream"></param>
+        /// <returns></returns>
+        Task<byte[]> ExportBytesByTemplate<T>(T data, Stream templateStream) where T : class;
     }
 }

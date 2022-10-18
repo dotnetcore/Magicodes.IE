@@ -269,7 +269,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()) );
+                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
                 }
             }
             else
@@ -309,7 +309,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);
             return bytes.ToExcelExportFileInfo(fileName);
         }
-         
+
 
         /// <summary>
         /// 导出字节
@@ -368,7 +368,7 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult( NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
+                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
                 }
             }
             else
@@ -697,7 +697,17 @@ namespace Magicodes.ExporterAndImporter.Excel
             _isSeparateBySheet = false;
             _isSeparateColumn = false;
         }
-         
-         
+
+        public Task<byte[]> ExportBytesByTemplate<T>(T data, Stream templateStream) where T : class
+        {
+            using (var helper = new TemplateExportHelper<T>())
+            {
+                using (var sr = new MemoryStream())
+                {
+                    helper.Export(templateStream, data, (package) => { package.SaveAs(sr); });
+                    return Task.FromResult(sr.ToArray());
+                }
+            }
+        }
     }
 }

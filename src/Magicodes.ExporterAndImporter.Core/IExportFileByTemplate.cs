@@ -34,7 +34,7 @@ namespace Magicodes.ExporterAndImporter.Core
             string template) where T : class;
 
         /// <summary>
-        ///     根据模板导出到载荷
+        ///     根据模板导出
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>

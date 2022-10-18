@@ -172,21 +172,30 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             if (!string.IsNullOrWhiteSpace(templateFilePath)) TemplateFilePath = templateFilePath;
             if (string.IsNullOrWhiteSpace(TemplateFilePath))
                 throw new ArgumentException(Resource.TemplateFilePathCannotBeEmpty, nameof(TemplateFilePath));
-            if (callback == null) return;
-
-            Data = data ?? throw new ArgumentException(Resource.DataCannotBeEmpty, nameof(data));
-
             using (Stream stream = new FileStream(TemplateFilePath, FileMode.Open))
             {
-                using (var excelPackage = new ExcelPackage(stream))
-                {
-                    ParseTemplateFile(excelPackage);
-
-                    ParseData(excelPackage);
-                    callback.Invoke(excelPackage);
-                }
+                Export(stream, data, callback);
             }
         }
+
+        /// <summary>
+        ///     根据模板导出Excel
+        /// </summary>
+        /// <param name="templateStream">模板文件流</param>
+        /// <param name="data"></param>
+        /// <param name="callback"></param>
+        /// <exception cref="ArgumentException">完成导出后执行的操作，默认导出无操作</exception>
+        public void Export(Stream templateStream, T data, Action<ExcelPackage> callback)
+        {
+            Data = data ?? throw new ArgumentException(Resource.DataCannotBeEmpty, nameof(data));
+            using (var excelPackage = new ExcelPackage(templateStream))
+            {
+                ParseTemplateFile(excelPackage);
+                ParseData(excelPackage);
+                callback?.Invoke(excelPackage);
+            }
+        }
+
 
         /// <summary>
         /// 处理数据
