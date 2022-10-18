@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.6.8
+**2022.10.18**
+
+-  Excel模板导出添加API，以支持通过文件流模板：Task<byte[]> ExportBytesByTemplate<T>(T data, Stream templateStream)
+
 ## 2.6.7
 **2022.10.12**
 
