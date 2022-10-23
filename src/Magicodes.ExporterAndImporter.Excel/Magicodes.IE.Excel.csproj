@@ -8,7 +8,6 @@
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.3" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.6" />
-    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />
