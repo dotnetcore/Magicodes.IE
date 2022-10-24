@@ -33,8 +33,9 @@ using Xunit;
 using Xunit.Abstractions;
 using Magicodes.IE.Tests.Models.Import;
 using System.Globalization;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Runtime.InteropServices;
+using Codeuctivity.ImageSharpCompare;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
@@ -858,56 +859,21 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 //添加严格校验，防止图片位置错误等问题
-                var png1 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg"));
-                var png2 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg"));
-                var png3 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg"));
-                var png4 = new Bitmap(Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg"));
+                var png1 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "1.Jpeg");
+                var png2 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "3.Jpeg");
+                var png3 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "4.Jpeg");
+                var png4 = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Images", "2.Jpeg");
 
-                IsSameImg(new Bitmap(import.Data.ElementAt(0).Img1), png1).ShouldBeTrue();
-                IsSameImg(new Bitmap(import.Data.ElementAt(0).Img), png2).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(0).Img1, png1).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(0).Img, png2).ShouldBeTrue();
 
-                IsSameImg(new Bitmap(import.Data.ElementAt(1).Img1), png3).ShouldBeTrue();
-                IsSameImg(new Bitmap(import.Data.ElementAt(1).Img), png4).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(1).Img1, png3).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(1).Img, png4).ShouldBeTrue();
 
-                IsSameImg(new Bitmap(import.Data.ElementAt(2).Img1), png1).ShouldBeTrue();
-                IsSameImg(new Bitmap(import.Data.ElementAt(2).Img), png1).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(2).Img1, png1).ShouldBeTrue();
+                ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(2).Img, png1).ShouldBeTrue();
             }
         }
-
-        /// <summary>
-        /// 判断图片是否一致
-        /// </summary>
-        /// <param name="bitmapSource">图片一</param>
-        /// <param name="bitmapTarget">图片二</param>
-        /// <returns>是否一致</returns>
-        public static bool IsSameImg(Bitmap bitmapSource, Bitmap bitmapTarget)
-        {
-            int countSame = 0;
-            int countDifferent = 0;
-            for (int i = 0; i < bitmapTarget.Width; i++)
-            {
-                for (int j = 0; j < bitmapTarget.Height; j++)
-                {
-                    if (bitmapSource.GetPixel(i, j).Equals(bitmapTarget.GetPixel(i, j)))
-                    {
-                        countSame++;
-                    }
-                    else
-                    {
-                        countDifferent++;//不同之处，如果为0 则说明两张图片一样
-                    }
-                }
-            }
-            if (countDifferent == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
 
         [Fact(DisplayName = "导入图片测试头部非第一行")]
         public async Task ImportPictureHeaderNotFirstRow_Test()

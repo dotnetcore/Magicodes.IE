@@ -29,13 +29,14 @@
  * Jan Källman		Added		10-SEP-2009
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using OfficeOpenXml.Compatibility;
 using OfficeOpenXml.Drawing;
-using OfficeOpenXml.Utils;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Xml;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 
 namespace OfficeOpenXml
 {
@@ -45,6 +46,7 @@ namespace OfficeOpenXml
     public class ExcelBackgroundImage : XmlHelper
     {
         ExcelWorksheet _workSheet;
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,97 +60,84 @@ namespace OfficeOpenXml
         }
 
         const string BACKGROUNDPIC_PATH = "d:picture/@r:id";
+
         /// <summary>
         /// The background image of the worksheet. 
         /// The image will be saved internally as a jpg.
         /// </summary>
-        public Image Image
+        public Image Image { get; private set; }
+
+        internal IImageFormat ImageFormat { get; private set; }
+
+        public void SetImage(byte[] imageBytes = null)
         {
-            get
+            DeletePrevImage();
+            if (imageBytes == null)
             {
-                string relID = GetXmlNodeString(BACKGROUNDPIC_PATH);
-                if (!string.IsNullOrEmpty(relID))
-                {
-                    var rel = _workSheet.Part.GetRelationship(relID);
-                    var imagePart = _workSheet.Part.Package.GetPart(UriHelper.ResolvePartUri(rel.SourceUri, rel.TargetUri));
-                    return Image.FromStream(imagePart.GetStream());
-                }
-                return null;
+                DeleteAllNode(BACKGROUNDPIC_PATH);
+                return;
             }
-            set
-            {
-                DeletePrevImage();
-                if (value == null)
-                {
-                    DeleteAllNode(BACKGROUNDPIC_PATH);
-                }
-                else
-                {
-#if (Core)
-                    var img = ImageCompat.GetImageAsByteArray(value);
-#else
-                    ImageConverter ic = new ImageConverter();
-                    byte[] img = (byte[])ic.ConvertTo(value, typeof(byte[]));
-#endif
-                    var ii = _workSheet.Workbook._package.AddImage(img);
-                    var rel = _workSheet.Part.CreateRelationship(ii.Uri, Packaging.TargetMode.Internal, ExcelPackage.schemaRelationships + "/image");
-                    SetXmlNodeString(BACKGROUNDPIC_PATH, rel.Id);
-                }
-            }
+
+            Image = Image.Load(imageBytes, out var imageFormat);
+            ImageFormat = imageFormat;
+            var imageInfo = _workSheet.Workbook._package.AddImage(imageBytes);
+            var rel = _workSheet.Part.CreateRelationship(imageInfo.Uri, Packaging.TargetMode.Internal,
+                ExcelPackage.schemaRelationships + "/image");
+            SetXmlNodeString(BACKGROUNDPIC_PATH, rel.Id);
         }
+
         /// <summary>
         /// Set the picture from an image file. 
         /// The image file will be saved as a blob, so make sure Excel supports the image format.
         /// </summary>
-        /// <param name="PictureFile">The image file.</param>
-        public void SetFromFile(FileInfo PictureFile)
+        /// <param name="pictureFile">The image file.</param>
+        public void SetFromFile(FileInfo pictureFile)
         {
             DeletePrevImage();
 
-            Image img;
-            byte[] fileBytes;
             try
             {
-                fileBytes = File.ReadAllBytes(PictureFile.FullName);
-                img = Image.FromFile(PictureFile.FullName);
+                var fileBytes = File.ReadAllBytes(pictureFile.FullName);
+                Image.Load(fileBytes, out var format);
+                string contentType = format.DefaultMimeType;
+                var imageUri = XmlHelper.GetNewUri(_workSheet._package.Package,
+                    "/xl/media/" +
+                    pictureFile.Name.Substring(0, pictureFile.Name.Length - pictureFile.Extension.Length) + "{0}" +
+                    pictureFile.Extension);
+
+                var ii = _workSheet.Workbook._package.AddImage(fileBytes, imageUri, contentType);
+
+
+                if (_workSheet.Part.Package.PartExists(imageUri) &&
+                    ii.RefCount == 1) //The file exists with another content, overwrite it.
+                {
+                    //Remove the part if it exists
+                    _workSheet.Part.Package.DeletePart(imageUri);
+                }
+
+                var imagePart = _workSheet.Part.Package.CreatePart(imageUri, contentType, CompressionLevel.None);
+                //Save the picture to package.
+
+                var stream = imagePart.GetStream(FileMode.Create, FileAccess.Write);
+                stream.Write(fileBytes, 0, fileBytes.Length);
+
+                var rel = _workSheet.Part.CreateRelationship(imageUri, Packaging.TargetMode.Internal,
+                    ExcelPackage.schemaRelationships + "/image");
+                SetXmlNodeString(BACKGROUNDPIC_PATH, rel.Id);
             }
             catch (Exception ex)
             {
                 throw (new InvalidDataException("File is not a supported image-file or is corrupt", ex));
             }
-
-            string contentType = ExcelPicture.GetContentType(PictureFile.Extension);
-            var imageURI = XmlHelper.GetNewUri(_workSheet._package.Package, "/xl/media/" + PictureFile.Name.Substring(0, PictureFile.Name.Length - PictureFile.Extension.Length) + "{0}" + PictureFile.Extension);
-
-            var ii = _workSheet.Workbook._package.AddImage(fileBytes, imageURI, contentType);
-
-
-            if (_workSheet.Part.Package.PartExists(imageURI) && ii.RefCount == 1) //The file exists with another content, overwrite it.
-            {
-                //Remove the part if it exists
-                _workSheet.Part.Package.DeletePart(imageURI);
-            }
-
-            var imagePart = _workSheet.Part.Package.CreatePart(imageURI, contentType, CompressionLevel.None);
-            //Save the picture to package.
-
-            var strm = imagePart.GetStream(FileMode.Create, FileAccess.Write);
-            strm.Write(fileBytes, 0, fileBytes.Length);
-
-            var rel = _workSheet.Part.CreateRelationship(imageURI, Packaging.TargetMode.Internal, ExcelPackage.schemaRelationships + "/image");
-            SetXmlNodeString(BACKGROUNDPIC_PATH, rel.Id);
         }
+
         private void DeletePrevImage()
         {
             var relID = GetXmlNodeString(BACKGROUNDPIC_PATH);
             if (relID != "")
             {
-#if (Core)
-                var img = ImageCompat.GetImageAsByteArray(Image);
-#else
-                var ic = new ImageConverter();
-                byte[] img = (byte[])ic.ConvertTo(Image, typeof(byte[]));
-#endif
+                var img = ImageCompat.GetImageAsByteArray(Image, ImageFormat);
+
                 var ii = _workSheet.Workbook._package.GetImageInfo(img);
 
                 //Delete the relation
@@ -162,7 +151,6 @@ namespace OfficeOpenXml
                         _workSheet.Part.Package.DeletePart(ii.Uri);
                     }
                 }
-
             }
         }
     }

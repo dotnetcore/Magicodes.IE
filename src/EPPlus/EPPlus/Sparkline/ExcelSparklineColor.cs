@@ -1,8 +1,8 @@
 ﻿using OfficeOpenXml.Style;
 using System;
-using System.Drawing;
 using System.Globalization;
 using System.Xml;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Sparkline
 {
@@ -69,7 +69,7 @@ namespace OfficeOpenXml.Sparkline
         /// <param name="color">The color</param>
         public void SetColor(Color color)
         {
-            Rgb = color.ToArgb().ToString("X");
+            Rgb = color.ToHex();
         }
     }
 }

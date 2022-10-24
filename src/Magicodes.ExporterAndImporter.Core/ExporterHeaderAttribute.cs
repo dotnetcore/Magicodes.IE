@@ -12,10 +12,7 @@
 // ======================================================================
 
 using System;
-
-#if !NETSTANDARD2_0
-using System.Drawing;
-#endif
+using SixLabors.ImageSharp;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -97,6 +94,6 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <summary>
         /// 字体颜色
         /// </summary>
-        public KnownColor FontColor { get; set; }
+        public Color FontColor { get; set; } // todo: SixLabors.ImageSharp.Color can not use in named attribute argument
     }
 }

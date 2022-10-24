@@ -30,9 +30,10 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using SixLabors.ImageSharp;
 
 
 namespace OfficeOpenXml.Drawing.Vml
@@ -139,12 +140,10 @@ namespace OfficeOpenXml.Drawing.Vml
                 if (pck.PartExists(ImageUri))
                 {
                     var part = pck.GetPart(ImageUri);
-                    return Image.FromStream(part.GetStream());
+                    return Image.Load(part.GetStream());
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
         }
         internal Uri ImageUri

@@ -30,7 +30,7 @@
  *******************************************************************************/
 using OfficeOpenXml.Utils;
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
 

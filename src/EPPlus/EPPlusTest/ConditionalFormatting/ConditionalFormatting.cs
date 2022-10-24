@@ -7,7 +7,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.ConditionalFormatting;
 using System.IO;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
-using System.Drawing;
+using SixLabors.ImageSharp;
 
 namespace EPPlusTest
 {

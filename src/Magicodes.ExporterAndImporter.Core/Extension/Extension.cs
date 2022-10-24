@@ -17,12 +17,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 #if NETSTANDARD2_1
 using System.Reflection.Emit;
@@ -300,85 +297,6 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             {
                 throw new ArgumentException(Resource.OnlySupportExportingCsv, nameof(fileName));
             }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public static Bitmap GetBitmapByUrl(string url)
-        {
-            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
-            using (var wc = new System.Net.WebClient())
-            {
-                wc.Proxy = null;
-                var image = new Bitmap(wc.OpenRead(url));
-                if (image.HorizontalResolution == 0 && image.VerticalResolution == 0)
-                {
-                    using (var gImage = Graphics.FromImage(image))
-                    {
-                        image.SetResolution(gImage.DpiX, gImage.DpiY);
-                    }
-                }
-                return image;
-            }
-        }
-
-        /// <summary>
-        /// 保存图片
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="path">path</param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static string Save(this Image image, string path, ImageFormat format)
-        {
-            using (var img = image)
-            {
-                img.Save(path, format);
-            }
-            return path;
-        }
-
-        /// <summary>
-        ///     图片转base64
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static string ToBase64String(this Image image, ImageFormat format)
-        {
-            using (var ms = new MemoryStream())
-            {
-                image.Save(ms, format);
-                var arr = new byte[ms.Length];
-                ms.Position = 0;
-                ms.Read(arr, 0, (int)ms.Length);
-                ms.Close();
-                return Convert.ToBase64String(arr);
-            }
-        }
-
-        /// <summary>
-        ///     base64转Bitmap
-        /// </summary>
-        /// <param name="base64String"></param>
-        /// <returns></returns>
-        public static Bitmap Base64StringToBitmap(this string base64String)
-        {
-            var bitmapData = Convert.FromBase64String(s: FixBase64ForImage(Image: base64String));
-            var streamBitmap = new MemoryStream(buffer: bitmapData);
-            var bitmap = new Bitmap(original: (Bitmap)Image.FromStream(stream: streamBitmap));
-            return bitmap;
-        }
-
-        private static string FixBase64ForImage(string Image)
-        {
-            var sbText = new System.Text.StringBuilder(Image, Image.Length);
-            sbText.Replace("\r\n", string.Empty);
-            sbText.Replace(" ", string.Empty);
-            return sbText.ToString();
         }
 
         /// <summary>

@@ -30,9 +30,11 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Style
 {
@@ -160,17 +162,18 @@ namespace OfficeOpenXml.Style
                 string col = GetXmlNodeString(_underLineColorPath);
                 if (col == "")
                 {
-                    return Color.Empty;
+                    return Color.Transparent;
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
+                    var argb32 = new Argb32(uint.Parse(col, NumberStyles.AllowHexSpecifier));
+                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
             }
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_underLineColorPath, value.ToArgb().ToString("X").Substring(2, 6));
+                SetXmlNodeString(_underLineColorPath, value.ToHex().Substring(2, 6));
             }
         }
         string _italicPath = "@i";
@@ -220,17 +223,18 @@ namespace OfficeOpenXml.Style
                 string col = GetXmlNodeString(_colorPath);
                 if (col == "")
                 {
-                    return Color.Empty;
+                    return Color.Transparent;
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
+                    var argb32 = new Argb32(uint.Parse(col, NumberStyles.AllowHexSpecifier));
+                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
             }
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_colorPath, value.ToArgb().ToString("X").Substring(2, 6));
+                SetXmlNodeString(_colorPath, value.ToHex().Substring(2, 6));
             }
         }
         #region "Translate methods"
@@ -287,18 +291,19 @@ namespace OfficeOpenXml.Style
         }
         #endregion
         /// <summary>
-        /// Set the font style from a font object
+        /// Set the font style from a textRun object
         /// </summary>
-        /// <param name="Font"></param>
-        public void SetFromFont(Font Font)
+        /// <param name="textRun"></param>
+        public void SetFromTextRun(TextRun textRun)
         {
-            LatinFont = Font.Name;
-            ComplexFont = Font.Name;
-            Size = Font.Size;
-            if (Font.Bold) Bold = Font.Bold;
-            if (Font.Italic) Italic = Font.Italic;
-            if (Font.Underline) UnderLine = eUnderLineType.Single;
-            if (Font.Strikeout) Strike = eStrikeType.Single;
+            var font = textRun.Font;
+            LatinFont = font.Name;
+            ComplexFont = font.Name;
+            Size = font.Size;
+            if (font.IsBold) Bold = font.IsBold;
+            if (font.IsItalic) Italic = font.IsItalic;
+            if ((textRun.TextDecorations & TextDecorations.Underline) != 0) UnderLine = eUnderLineType.Single;
+            if ((textRun.TextDecorations & TextDecorations.Strikeout) != 0) Strike = eStrikeType.Single;
         }
     }
 }

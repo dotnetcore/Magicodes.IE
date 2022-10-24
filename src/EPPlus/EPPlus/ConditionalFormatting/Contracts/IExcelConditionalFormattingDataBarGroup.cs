@@ -28,7 +28,7 @@
  * ******************************************************************************
  * Eyal Seagull    Conditional Formatting Adaption    2012-04-03
  *******************************************************************************/
-using System.Drawing;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.ConditionalFormatting.Contracts
 {

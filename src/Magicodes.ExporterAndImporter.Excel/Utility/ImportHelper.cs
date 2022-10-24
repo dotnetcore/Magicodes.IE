@@ -24,13 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
-using DateTime = System.DateTime;
+using Magicodes.IE.Excel.Images;
+using SixLabors.ImageSharp;
+using ImageExtensions = Magicodes.IE.Excel.Images.ImageExtensions;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -1122,11 +1123,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)
                                     {
                                         case ImportImageTo.TempFolder:
-                                            value = Extension.Save(excelPicture?.Image, path, excelPicture.ImageFormat);
+                                            value = excelPicture.Image.SaveTo(path);
                                             break;
 
                                         case ImportImageTo.Base64:
-                                            value = excelPicture.Image.ToBase64String(excelPicture.ImageFormat);
+                                            value = ImageExtensions.ToBase64String(excelPicture.Image, excelPicture.ImageFormat);
                                             break;
 
                                         default:

@@ -30,9 +30,10 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing.Vml
 {
@@ -165,25 +166,25 @@ namespace OfficeOpenXml.Drawing.Vml
                 string col = GetXmlNodeString(BACKGROUNDCOLOR_PATH);
                 if (col == "")
                 {
-                    return Color.FromArgb(0xff, 0xff, 0xe1);
+                    return Color.FromRgb(0xff, 0xff, 0xe1);
                 }
                 else
                 {
                     if (col.StartsWith("#")) col = col.Substring(1, col.Length - 1);
-                    int res;
-                    if (int.TryParse(col, System.Globalization.NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out res))
+                    if (uint.TryParse(col, System.Globalization.NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var res))
                     {
-                        return Color.FromArgb(res);
+                        var argb32 = new Argb32(res);
+                        return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                     }
                     else
                     {
-                        return Color.Empty;
+                        return Color.Transparent;
                     }
                 }
             }
             set
             {
-                string color = "#" + value.ToArgb().ToString("X").Substring(2, 6);
+                string color = "#" + value.ToHex().Substring(2, 6);
                 SetXmlNodeString(BACKGROUNDCOLOR_PATH, color);
                 //SetXmlNode(BACKGROUNDCOLOR2_PATH, color);
             }
@@ -251,20 +252,21 @@ namespace OfficeOpenXml.Drawing.Vml
                 else
                 {
                     if (col.StartsWith("#")) col = col.Substring(1, col.Length - 1);
-                    int res;
-                    if (int.TryParse(col, System.Globalization.NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out res))
+                    if (uint.TryParse(col, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var res))
                     {
-                        return Color.FromArgb(res);
+                        var argb32 = new Argb32(res);
+
+                        return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                     }
                     else
                     {
-                        return Color.Empty;
+                        return Color.Transparent;
                     }
                 }
             }
             set
             {
-                string color = "#" + value.ToArgb().ToString("X").Substring(2, 6);
+                string color = "#" + value.ToHex().Substring(2, 6);
                 SetXmlNodeString(LINECOLOR_PATH, color);
             }
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -1905,8 +1905,8 @@ namespace EPPlusTest
             {
                 ExcelWorkbook wb = package.Workbook;
                 ExcelWorksheet sh = wb.Worksheets[1];
-                System.Drawing.Image img_ = System.Drawing.Image.FromFile(@"C:\temp\img\background.gif");
-                ExcelPicture pic = sh.Drawings.AddPicture("logo", img_);
+                Image img_ = Image.Load(@"C:\temp\img\background.gif", out var format);
+                ExcelPicture pic = sh.Drawings.AddPicture("logo", img_, format);
                 pic.SetPosition(1, 1);
 
                 package.SaveAs(outputFile);
@@ -2046,8 +2046,8 @@ namespace EPPlusTest
                 int row = 1;
                 foreach (var f in Directory.EnumerateFiles(@"c:\temp\addin_temp\Addin\img\open_icon_library-full\icons\ico\16x16\actions\"))
                 {
-                    var b = new Bitmap(f);
-                    var pic = ws.Drawings.AddPicture($"Image{(row + 1) / 2}", b);
+                    var b = Image.Load(f, out var format);
+                    var pic = ws.Drawings.AddPicture($"Image{(row + 1) / 2}", b, format);
                     pic.SetPosition(row, 0, 0, 0);
                     row += 2;
                 }

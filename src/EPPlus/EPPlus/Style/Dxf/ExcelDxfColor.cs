@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Style.Dxf
 {
@@ -17,7 +17,7 @@ namespace OfficeOpenXml.Style.Dxf
         public Color? Color { get; set; }
         protected internal override string Id
         {
-            get { return GetAsString(Theme) + "|" + GetAsString(Index) + "|" + GetAsString(Auto) + "|" + GetAsString(Tint) + "|" + GetAsString(Color == null ? "" : ((Color)Color.Value).ToArgb().ToString("x")); }
+            get { return GetAsString(Theme) + "|" + GetAsString(Index) + "|" + GetAsString(Auto) + "|" + GetAsString(Tint) + "|" + GetAsString(Color == null ? "" : ((Color)Color.Value).ToHex()); }
         }
         protected internal override ExcelDxfColor Clone()
         {

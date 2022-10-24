@@ -12,6 +12,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj" />
-    <ProjectReference Include="..\Magicodes.IE.Excel.NPOI\Magicodes.IE.Excel.NPOI.csproj" />
+    <!--<ProjectReference Include="..\Magicodes.IE.Excel.NPOI\Magicodes.IE.Excel.NPOI.csproj" />-->
   </ItemGroup>
 </Project>

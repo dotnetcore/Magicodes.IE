@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -199,7 +199,7 @@ namespace EPPlusTest
                 worksheet.Cells[1026, 2].Value = "B";
                 var range = worksheet.Row(1026);
                 range.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 0));
+                range.Style.Fill.BackgroundColor.SetColor(Color.FromRgb(255, 255, 0));
 
                 // Act - This should shift the whole row 1026 down 1
                 worksheet.InsertRow(1024, 1);
