@@ -35,6 +35,7 @@ using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Style
@@ -309,7 +310,7 @@ namespace OfficeOpenXml.Style
             set
             {
                 _collection.ConvertRichtext();
-                SetXmlNodeString(COLOR_PATH, value.ToHex()/*.Substring(2, 6)*/);
+                SetXmlNodeString(COLOR_PATH, value.ToArgbHex()/*.Substring(2, 6)*/);
                 if (_callback != null) _callback();
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System;
 using System.Net;
+using Magicodes.IE.Core;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 
@@ -8,6 +9,15 @@ namespace Magicodes.IE.Excel.Images
 {
     internal static class ImageExtensions
     {
+        public static Color ToColor(this KnownColor knownColor)
+        {
+            if (knownColor != KnownColor.Empty)
+            {
+                return Color.Parse(knownColor.ToString("G"));
+            }
+            return new Color();
+        }
+
         public static string SaveTo(this Image image, string path)
         {
             image.Save(path);

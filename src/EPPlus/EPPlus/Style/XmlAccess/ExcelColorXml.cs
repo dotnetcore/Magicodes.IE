@@ -32,6 +32,7 @@
 using System;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Style.XmlAccess
@@ -173,7 +174,7 @@ namespace OfficeOpenXml.Style.XmlAccess
         public void SetColor(Color color)
         {
             Clear();
-            _rgb = color.ToHex();
+            _rgb = color.ToArgbHex();
         }
 
         internal ExcelColorXml Copy()

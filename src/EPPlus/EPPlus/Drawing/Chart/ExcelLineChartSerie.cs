@@ -33,6 +33,7 @@ using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing.Chart
@@ -128,13 +129,12 @@ namespace OfficeOpenXml.Drawing.Chart
                 }
                 else
                 {
-                    var argb32 = new Argb32(Convert.ToUInt32(color, 16));
-                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                    return Color.ParseHex(color);
                 }
             }
             set
             {
-                SetXmlNodeString(LINECOLOR_PATH, value.ToHex().Substring(2), true);
+                SetXmlNodeString(LINECOLOR_PATH, value.ToArgbHex().Substring(2), true);
             }
         }
         string MARKERSIZE_PATH = "c:marker/c:size/@val";
@@ -219,13 +219,12 @@ namespace OfficeOpenXml.Drawing.Chart
                 }
                 else
                 {
-                    var argb32 = new Argb32(Convert.ToUInt32(color, 16));
-                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                    return Color.ParseHex(color);
                 }
             }
             set
             {
-                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToHex().Substring(2), true);
+                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToArgbHex()/*.Substring(2)*/, true);
             }
         }
 

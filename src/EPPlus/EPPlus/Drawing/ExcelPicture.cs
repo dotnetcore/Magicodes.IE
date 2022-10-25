@@ -59,7 +59,6 @@ namespace OfficeOpenXml.Drawing
                 UriPic = UriHelper.ResolvePartUri(drawings.UriDrawing, RelPic.TargetUri);
 
                 Part = drawings.Part.Package.GetPart(UriPic);
-                FileInfo f = new FileInfo(UriPic.OriginalString);
                 Image = Image.Load(Part.GetStream(), out var format);
                 ImageFormat = format;
                 byte[] iby = ImageCompat.GetImageAsByteArray(Image, format);
@@ -72,14 +71,7 @@ namespace OfficeOpenXml.Drawing
                 if (!string.IsNullOrEmpty(relID))
                 {
                     HypRel = drawings.Part.GetRelationship(relID);
-                    if (HypRel.TargetUri.IsAbsoluteUri)
-                    {
-                        _hyperlink = new ExcelHyperLink(HypRel.TargetUri.AbsoluteUri);
-                    }
-                    else
-                    {
-                        _hyperlink = new ExcelHyperLink(HypRel.TargetUri.OriginalString, UriKind.Relative);
-                    }
+                    _hyperlink = HypRel.TargetUri.IsAbsoluteUri ? new ExcelHyperLink(HypRel.TargetUri.AbsoluteUri) : new ExcelHyperLink(HypRel.TargetUri.OriginalString, UriKind.Relative);
 
                     ((ExcelHyperLink)_hyperlink).ToolTip =
                         GetXmlNodeString("xdr:pic/xdr:nvPicPr/xdr:cNvPr/a:hlinkClick/@tooltip");

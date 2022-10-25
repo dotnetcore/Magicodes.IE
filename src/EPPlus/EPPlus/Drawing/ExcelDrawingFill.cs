@@ -33,6 +33,7 @@ using System;
 using System.Globalization;
 using SixLabors.ImageSharp;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing
@@ -174,7 +175,7 @@ namespace OfficeOpenXml.Drawing
                 }
                 CreateNode(_fillPath, false);
                 //fix ArgumentOutOfRangeException for Fill colors for solid fills with an alpha-value from zero (100% transparency)
-                SetXmlNodeString(_fillPath + ColorPath, value.ToHex().Substring(2));
+                SetXmlNodeString(_fillPath + ColorPath, value.ToArgbHex());
             }
         }
         const string alphaPath = "/a:solidFill/a:srgbClr/a:alpha/@val";

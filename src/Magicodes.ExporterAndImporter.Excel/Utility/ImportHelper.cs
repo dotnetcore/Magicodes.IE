@@ -1117,7 +1117,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     {
                                         continue;
                                     }
-                                    var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat);
+                                    var path = Path.Combine(col.ImportImageFieldAttribute.ImageDirectory, Guid.NewGuid() + "." + excelPicture.ImageFormat.FileExtensions.First());
                                     var value = string.Empty;
 
                                     switch (col.ImportImageFieldAttribute.ImportImageTo)

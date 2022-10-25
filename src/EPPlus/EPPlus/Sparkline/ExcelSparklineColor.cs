@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Sparkline
@@ -69,7 +70,7 @@ namespace OfficeOpenXml.Sparkline
         /// <param name="color">The color</param>
         public void SetColor(Color color)
         {
-            Rgb = color.ToHex();
+            Rgb = color.ToArgbHex();
         }
     }
 }

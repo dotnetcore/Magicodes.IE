@@ -33,6 +33,7 @@ using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.ConditionalFormatting
@@ -231,7 +232,7 @@ namespace OfficeOpenXml.ConditionalFormatting
             }
             set
             {
-                SetXmlNodeString(_colorPath, value.ToHex());
+                SetXmlNodeString(_colorPath, value.ToArgbHex());
             }
         }
     }

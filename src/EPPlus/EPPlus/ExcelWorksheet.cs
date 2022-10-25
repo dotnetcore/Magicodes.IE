@@ -53,6 +53,7 @@ using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml
@@ -760,13 +761,12 @@ namespace OfficeOpenXml
                 }
                 else
                 {
-                    var argb32 = new Argb32(Convert.ToUInt32(col, 16));
-                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                    return Color.ParseHex(col);
                 }
             }
             set
             {
-                SetXmlNodeString(tabColorPath, value.ToHex());
+                SetXmlNodeString(tabColorPath, value.ToArgbHex());
             }
         }
         const string codeModuleNamePath = "d:sheetPr/@codeName";

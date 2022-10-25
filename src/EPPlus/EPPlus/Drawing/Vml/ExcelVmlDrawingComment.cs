@@ -33,6 +33,7 @@ using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing.Vml
@@ -173,8 +174,7 @@ namespace OfficeOpenXml.Drawing.Vml
                     if (col.StartsWith("#")) col = col.Substring(1, col.Length - 1);
                     if (uint.TryParse(col, System.Globalization.NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var res))
                     {
-                        var argb32 = new Argb32(res);
-                        return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                        return Color.ParseHex(col);
                     }
                     else
                     {
@@ -184,7 +184,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                string color = "#" + value.ToHex().Substring(2, 6);
+                string color = "#" + value.ToArgbHex()/*.Substring(2)*/;
                 SetXmlNodeString(BACKGROUNDCOLOR_PATH, color);
                 //SetXmlNode(BACKGROUNDCOLOR2_PATH, color);
             }
@@ -254,9 +254,7 @@ namespace OfficeOpenXml.Drawing.Vml
                     if (col.StartsWith("#")) col = col.Substring(1, col.Length - 1);
                     if (uint.TryParse(col, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out var res))
                     {
-                        var argb32 = new Argb32(res);
-
-                        return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                        return Color.ParseHex(col);
                     }
                     else
                     {
@@ -266,7 +264,7 @@ namespace OfficeOpenXml.Drawing.Vml
             }
             set
             {
-                string color = "#" + value.ToHex().Substring(2, 6);
+                string color = "#" + value.ToArgbHex()/*.Substring(2)*/;
                 SetXmlNodeString(LINECOLOR_PATH, color);
             }
         }

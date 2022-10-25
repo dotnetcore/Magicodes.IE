@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing.Chart
@@ -151,8 +152,7 @@ namespace OfficeOpenXml.Drawing.Chart
                 }
                 else
                 {
-                    var argb32 = new Argb32(Convert.ToUInt32(color, 16));
-                    Color c = Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
+                    Color c = Color.ParseHex(color);
                     int a = getAlphaChannel(LINECOLOR_PATH);
                     if (a != 255)
                     {
@@ -163,7 +163,7 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             set
             {
-                SetXmlNodeString(LINECOLOR_PATH, value.ToHex().Substring(2), true);
+                SetXmlNodeString(LINECOLOR_PATH, value.ToArgbHex()/*.Substring(2)*/, true);
                 setAlphaChannel(value, LINECOLOR_PATH);
             }
         }
@@ -232,7 +232,7 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             set
             {
-                SetXmlNodeString(MARKERCOLOR_PATH, value.ToHex().Substring(2), true); //.Substring(2) => cut alpha value
+                SetXmlNodeString(MARKERCOLOR_PATH, value.ToArgbHex()/*.Substring(2)*/, true); //.Substring(2) => cut alpha value
                 setAlphaChannel(value, MARKERCOLOR_PATH);
             }
         }
@@ -297,7 +297,7 @@ namespace OfficeOpenXml.Drawing.Chart
             }
             set
             {
-                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToHex().Substring(2), true);
+                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToArgbHex()/*.Substring(2)*/, true);
                 setAlphaChannel(value, MARKERLINECOLOR_PATH);
             }
         }

@@ -33,6 +33,7 @@ using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -173,7 +174,7 @@ namespace OfficeOpenXml.Style
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_underLineColorPath, value.ToHex().Substring(2, 6));
+                SetXmlNodeString(_underLineColorPath, value.ToArgbHex()/*.Substring(2)*/);
             }
         }
         string _italicPath = "@i";
@@ -234,7 +235,7 @@ namespace OfficeOpenXml.Style
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_colorPath, value.ToHex().Substring(2, 6));
+                SetXmlNodeString(_colorPath, value.ToArgbHex()/*.Substring(2)*/);
             }
         }
         #region "Translate methods"
