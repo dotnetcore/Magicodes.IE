@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "iDy8uK1dQHip1eMpxcN/9fbWGZDLUmpyQCDWHbtxKAE="
+          "hash": "k3nGua2oTtimdk0H812R/9KtfzL6t+oLz1EaL6YL/bI="
         }
       },
       "is_incremental": false,
@@ -547,12 +547,36 @@
       "version": ""
     },
     {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.html",
+          "hash": "CuFcNGxzk0a3b/PU6x+M/QZz2epm4/NMJc8qPALBRGs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.IE.Excel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.IE.Excel.html",
+          "hash": "k8tSHya5WXr3lSzG2oLEHS4LkjqCrAbeePiweVzHPWo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "0yNvJKHHiWPQp04NKlIKA1u5oH/MJFIVC0vJLba9YM0="
+          "hash": "rX3K56qbNtUOrVq/33uDn/y2cIWDs3LCo59wjFxZ2qk="
         }
       },
       "is_incremental": false,
@@ -1299,7 +1323,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 43,
+          "total_file_count": 45,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

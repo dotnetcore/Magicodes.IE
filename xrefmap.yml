@@ -3577,3 +3577,28 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Word.WordExporter.ExportListBytesByTemplate(Of T)(ICollection(Of T), System.String)
   nameWithType: WordExporter.ExportListBytesByTemplate<T>(ICollection<T>, String)
   nameWithType.vb: WordExporter.ExportListBytesByTemplate(Of T)(ICollection(Of T), String)
+- uid: Magicodes.IE.Excel
+  name: Magicodes.IE.Excel
+  href: api/Magicodes.IE.Excel.html
+  commentId: N:Magicodes.IE.Excel
+  fullName: Magicodes.IE.Excel
+  nameWithType: Magicodes.IE.Excel
+- uid: Magicodes.IE.Excel.ValueConditionalFormattingAttribute
+  name: ValueConditionalFormattingAttribute
+  href: api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.html
+  commentId: T:Magicodes.IE.Excel.ValueConditionalFormattingAttribute
+  fullName: Magicodes.IE.Excel.ValueConditionalFormattingAttribute
+  nameWithType: ValueConditionalFormattingAttribute
+- uid: Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value
+  name: Value
+  href: api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.html#Magicodes_IE_Excel_ValueConditionalFormattingAttribute_Value
+  commentId: P:Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value
+  fullName: Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value
+  nameWithType: ValueConditionalFormattingAttribute.Value
+- uid: Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value*
+  name: Value
+  href: api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.html#Magicodes_IE_Excel_ValueConditionalFormattingAttribute_Value_
+  commentId: Overload:Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.ValueConditionalFormattingAttribute.Value
+  nameWithType: ValueConditionalFormattingAttribute.Value
