@@ -72,6 +72,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 IsDynamicDatableExport = true;
             }
 
+            if (typeof(ExpandoObject).Equals(typeof(T)))
+            {
+                IsExpandoObjectType = true;
+            }
+
             if (existExcelPackage != null)
             {
                 this._excelPackage = existExcelPackage;

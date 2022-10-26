@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.6.9
+**2022.10.26**
+
+-  fix: 动态数据源导出到多个sheet的问题 （见[#449](https://github.com/dotnetcore/Magicodes.IE/issues/449)）
+
 ## 2.6.8
 **2022.10.18**
 
