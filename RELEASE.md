@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.7.0-beta
+**2022.10.27**
+
+-  使用SixLabors.ImageSharp替代System.Drawing，感谢linch90 （见pr[#454](https://github.com/dotnetcore/Magicodes.IE/pull/454)）
+
 ## 2.6.9
 **2022.10.26**
 
