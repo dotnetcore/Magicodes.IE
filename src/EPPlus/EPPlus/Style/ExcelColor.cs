@@ -31,7 +31,8 @@
  *******************************************************************************/
 using OfficeOpenXml.Style.XmlAccess;
 using System;
-using System.Drawing;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.Style
 {
@@ -110,7 +111,7 @@ namespace OfficeOpenXml.Style
         /// <param name="color">The color</param>
         public void SetColor(Color color)
         {
-            Rgb = color.ToArgb().ToString("X");
+            Rgb = color.ToArgbHex();
         }
         /// <summary>
         /// Set the color of the object

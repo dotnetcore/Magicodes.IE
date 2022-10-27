@@ -30,9 +30,11 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing.Chart
 {
@@ -127,12 +129,12 @@ namespace OfficeOpenXml.Drawing.Chart
                 }
                 else
                 {
-                    return Color.FromArgb(Convert.ToInt32(color, 16));
+                    return Color.ParseHex(color);
                 }
             }
             set
             {
-                SetXmlNodeString(LINECOLOR_PATH, value.ToArgb().ToString("X").Substring(2), true);
+                SetXmlNodeString(LINECOLOR_PATH, value.ToArgbHex().Substring(2), true);
             }
         }
         string MARKERSIZE_PATH = "c:marker/c:size/@val";
@@ -217,12 +219,12 @@ namespace OfficeOpenXml.Drawing.Chart
                 }
                 else
                 {
-                    return Color.FromArgb(Convert.ToInt32(color, 16));
+                    return Color.ParseHex(color);
                 }
             }
             set
             {
-                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToArgb().ToString("X").Substring(2), true);
+                SetXmlNodeString(MARKERLINECOLOR_PATH, value.ToArgbHex()/*.Substring(2)*/, true);
             }
         }
 

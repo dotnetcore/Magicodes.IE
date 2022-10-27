@@ -10,12 +10,13 @@ using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using Magicodes.IE.Excel.Images;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility
 {
@@ -911,23 +912,24 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             try
                             {
                                 cell.Value = string.Empty;
-                                Bitmap bitmap;
+                                Image image;
+                                IImageFormat format;
                                 if (url.IsBase64StringValid())
                                 {
-                                    bitmap = url.Base64StringToBitmap();
+                                    image = url.Base64StringToImage(out format);
                                 }
                                 else
                                 {
-                                    bitmap = Extension.GetBitmapByUrl(url);
+                                    image = url.GetImageByUrl(out format);
                                 }
 
-                                if (bitmap == null)
+                                if (image == null)
                                 {
                                     cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
                                 }
                                 else
                                 {
-                                    using (ExcelPicture pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap))
+                                    using (ExcelPicture pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), image, format))
                                     {
                                         AddImage((rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0)),
                                             colIndex - ignoreCount, pic, ExporterHeaderList[colIndex].ExportImageFieldAttribute.YOffset, ExporterHeaderList[colIndex].ExportImageFieldAttribute.XOffset);
@@ -1122,9 +1124,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                     col.Hidden = exporterHeader.ExporterHeaderAttribute.Hidden;
 
-                    if (exporterHeader.ExporterHeaderAttribute.FontColor != 0)
+                    if (exporterHeader.ExporterHeaderAttribute.FontColor != KnownColor.Empty)
                     {
-                        col.Style.Font.Color.SetColor(Color.FromName(exporterHeader.ExporterHeaderAttribute.FontColor.ToString()));
+                        col.Style.Font.Color.SetColor(exporterHeader.ExporterHeaderAttribute.FontColor.ToColor());
                     }
                 }
             }

@@ -45,7 +45,7 @@ using OfficeOpenXml.Table.PivotTable;
 using OfficeOpenXml.Utils;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -53,6 +53,8 @@ using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml
 {
@@ -755,16 +757,16 @@ namespace OfficeOpenXml
                 string col = GetXmlNodeString(tabColorPath);
                 if (col == "")
                 {
-                    return Color.Empty;
+                    return Color.Transparent;
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
+                    return Color.ParseHex(col);
                 }
             }
             set
             {
-                SetXmlNodeString(tabColorPath, value.ToArgb().ToString("X"));
+                SetXmlNodeString(tabColorPath, value.ToArgbHex());
             }
         }
         const string codeModuleNamePath = "d:sheetPr/@codeName";

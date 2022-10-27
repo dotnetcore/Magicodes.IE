@@ -30,7 +30,7 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
 namespace OfficeOpenXml.Style.XmlAccess
@@ -690,7 +690,7 @@ namespace OfficeOpenXml.Style.XmlAccess
             {
                 fill = new ExcelGradientFillXml(Fill.NameSpaceManager);
                 fill.GradientColor1.SetColor(Color.White);
-                fill.GradientColor2.SetColor(Color.FromArgb(79, 129, 189));
+                fill.GradientColor2.SetColor(Color.FromRgb(79, 129, 189));
                 fill.Type = ExcelFillGradientType.Linear;
                 fill.Degree = 90;
                 fill.Top = double.NaN;

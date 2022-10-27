@@ -32,9 +32,11 @@
  * Richard Tallent					Remove VertAlign node if no alignment specified		2012-10-31
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Style
 {
@@ -297,17 +299,18 @@ namespace OfficeOpenXml.Style
                 string col = GetXmlNodeString(COLOR_PATH);
                 if (col == "")
                 {
-                    return Color.Empty;
+                    return Color.Transparent;
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
+                    var argb32 = new Argb32(uint.Parse(col, NumberStyles.AllowHexSpecifier));
+                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
             }
             set
             {
                 _collection.ConvertRichtext();
-                SetXmlNodeString(COLOR_PATH, value.ToArgb().ToString("X")/*.Substring(2, 6)*/);
+                SetXmlNodeString(COLOR_PATH, value.ToArgbHex()/*.Substring(2, 6)*/);
                 if (_callback != null) _callback();
             }
         }

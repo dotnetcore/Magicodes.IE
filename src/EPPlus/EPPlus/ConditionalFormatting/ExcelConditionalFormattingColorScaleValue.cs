@@ -30,9 +30,10 @@
  *******************************************************************************/
 using OfficeOpenXml.Utils;
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
@@ -423,7 +424,7 @@ namespace OfficeOpenXml.ConditionalFormatting
                 CreateNodeByOrdem(
                     eExcelConditionalFormattingValueObjectNodeType.Color,
                     ExcelConditionalFormattingConstants.Paths.RgbAttribute,
-                    value.ToArgb().ToString("x"));
+                    value.ToArgbHex());
             }
         }
 

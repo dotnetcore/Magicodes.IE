@@ -30,8 +30,11 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using System.Globalization;
+using SixLabors.ImageSharp;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Drawing
 {
@@ -152,11 +155,12 @@ namespace OfficeOpenXml.Drawing
                 string col = GetXmlNodeString(_fillPath + ColorPath);
                 if (col == "")
                 {
-                    return Color.FromArgb(79, 129, 189);
+                    return Color.FromRgb(79, 129, 189);
                 }
                 else
                 {
-                    return Color.FromArgb(int.Parse(col, System.Globalization.NumberStyles.AllowHexSpecifier));
+                    var argb32 = new Argb32(uint.Parse(col, NumberStyles.AllowHexSpecifier));
+                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
             }
             set
@@ -171,7 +175,7 @@ namespace OfficeOpenXml.Drawing
                 }
                 CreateNode(_fillPath, false);
                 //fix ArgumentOutOfRangeException for Fill colors for solid fills with an alpha-value from zero (100% transparency)
-                SetXmlNodeString(_fillPath + ColorPath, value.ToArgb().ToString("X8").Substring(2));
+                SetXmlNodeString(_fillPath + ColorPath, value.ToArgbHex());
             }
         }
         const string alphaPath = "/a:solidFill/a:srgbClr/a:alpha/@val";
@@ -189,7 +193,7 @@ namespace OfficeOpenXml.Drawing
                 if (_fillTypeNode == null)
                 {
                     _style = eFillStyle.SolidFill;
-                    Color = Color.FromArgb(79, 129, 189);   //Set a Default color
+                    Color = Color.FromRgb(79, 129, 189);   //Set a Default color
                 }
                 else if (_style != eFillStyle.SolidFill)
                 {

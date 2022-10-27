@@ -1,36 +1,18 @@
 ﻿using OfficeOpenXml.Utils;
-using System.Drawing;
-using System.Drawing.Imaging;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 
 namespace OfficeOpenXml.Compatibility
 {
     internal class ImageCompat
     {
-        internal static byte[] GetImageAsByteArray(Image image)
+        internal static byte[] GetImageAsByteArray(Image image, IImageFormat format)
         {
-            var ms = RecyclableMemoryStream.GetStream();
-            if (image.RawFormat.Guid == ImageFormat.Gif.Guid)
+            using (var ms = RecyclableMemoryStream.GetStream())
             {
-                image.Save(ms, ImageFormat.Gif);
+                image.Save(ms, format);
+                return ms.ToArray();
             }
-            else if (image.RawFormat.Guid == ImageFormat.Bmp.Guid)
-            {
-                image.Save(ms, ImageFormat.Bmp);
-            }
-            else if (image.RawFormat.Guid == ImageFormat.Png.Guid)
-            {
-                image.Save(ms, ImageFormat.Png);
-            }
-            else if (image.RawFormat.Guid == ImageFormat.Tiff.Guid)
-            {
-                image.Save(ms, ImageFormat.Tiff);
-            }
-            else
-            {
-                image.Save(ms, ImageFormat.Jpeg);
-            }
-
-            return ms.ToArray();
         }
     }
 }

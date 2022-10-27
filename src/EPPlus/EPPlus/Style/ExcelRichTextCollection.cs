@@ -29,12 +29,14 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using System.Collections.Generic;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.Style
 {
@@ -45,6 +47,7 @@ namespace OfficeOpenXml.Style
     {
         List<ExcelRichText> _list = new List<ExcelRichText>();
         ExcelRangeBase _cells = null;
+
         internal ExcelRichTextCollection(XmlNamespaceManager ns, XmlNode topNode) :
             base(ns, topNode)
         {
@@ -57,11 +60,13 @@ namespace OfficeOpenXml.Style
                 }
             }
         }
+
         internal ExcelRichTextCollection(XmlNamespaceManager ns, XmlNode topNode, ExcelRangeBase cells) :
             this(ns, topNode)
         {
             _cells = cells;
         }
+
         /// <summary>
         /// Collection containing the richtext objects
         /// </summary>
@@ -76,16 +81,15 @@ namespace OfficeOpenXml.Style
                 return item;
             }
         }
+
         /// <summary>
         /// Items in the list
         /// </summary>
         public int Count
         {
-            get
-            {
-                return _list.Count;
-            }
+            get { return _list.Count; }
         }
+
         /// <summary>
         /// Add a rich text string
         /// </summary>
@@ -114,6 +118,7 @@ namespace OfficeOpenXml.Style
             {
                 doc = TopNode.OwnerDocument;
             }
+
             var node = doc.CreateElement("d", "r", ExcelPackage.schemaMain);
             if (index < _list.Count)
             {
@@ -123,13 +128,14 @@ namespace OfficeOpenXml.Style
             {
                 TopNode.AppendChild(node);
             }
+
             var rt = new ExcelRichText(NameSpaceManager, node, this);
             if (_list.Count > 0)
             {
                 ExcelRichText prevItem = _list[index < _list.Count ? index : _list.Count - 1];
                 rt.FontName = prevItem.FontName;
                 rt.Size = prevItem.Size;
-                if (prevItem.Color.IsEmpty)
+                if (prevItem.Color.Equals(Color.Transparent))
                 {
                     rt.Color = Color.Black;
                 }
@@ -137,6 +143,7 @@ namespace OfficeOpenXml.Style
                 {
                     rt.Color = prevItem.Color;
                 }
+
                 rt.PreserveSpace = rt.PreserveSpace;
                 rt.Bold = prevItem.Bold;
                 rt.Italic = prevItem.Italic;
@@ -156,6 +163,7 @@ namespace OfficeOpenXml.Style
                 rt.Italic = style.Font.Italic;
                 _cells.IsRichText = true;
             }
+
             rt.Text = text;
             rt.PreserveSpace = true;
             if (_cells != null)
@@ -163,6 +171,7 @@ namespace OfficeOpenXml.Style
                 rt.SetCallback(UpdateCells);
                 UpdateCells();
             }
+
             _list.Insert(index, rt);
             return rt;
         }
@@ -171,12 +180,14 @@ namespace OfficeOpenXml.Style
         {
             if (_cells == null) return;
             var isRt = _cells.Worksheet._flags.GetFlagValue(_cells._fromRow, _cells._fromCol, CellFlags.RichText);
+            uint hex;
             if (Count == 1 && isRt == false)
             {
                 _cells.Worksheet._flags.SetFlagValue(_cells._fromRow, _cells._fromCol, true, CellFlags.RichText);
                 var s = _cells.Worksheet.GetStyleInner(_cells._fromRow, _cells._fromCol);
                 //var fnt = cell.Style.Font;
-                var fnt = _cells.Worksheet.Workbook.Styles.GetStyleObject(s, _cells.Worksheet.PositionID, ExcelAddressBase.GetAddress(_cells._fromRow, _cells._fromCol)).Font;
+                var fnt = _cells.Worksheet.Workbook.Styles.GetStyleObject(s, _cells.Worksheet.PositionID,
+                    ExcelAddressBase.GetAddress(_cells._fromRow, _cells._fromCol)).Font;
                 this[0].PreserveSpace = true;
                 this[0].Bold = fnt.Bold;
                 this[0].FontName = fnt.Name;
@@ -184,17 +195,19 @@ namespace OfficeOpenXml.Style
                 this[0].Size = fnt.Size;
                 this[0].UnderLine = fnt.UnderLine;
 
-                int hex;
-                if (fnt.Color.Rgb != "" && int.TryParse(fnt.Color.Rgb, NumberStyles.HexNumber, null, out hex))
+                if (fnt.Color.Rgb != "" && uint.TryParse(fnt.Color.Rgb, NumberStyles.HexNumber, null, out hex))
                 {
-                    this[0].Color = Color.FromArgb(hex);
+                    var argb32 = new Argb32(hex);
+                    this[0].Color = Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
             }
         }
+
         internal void UpdateCells()
         {
             _cells.SetValueRichText(TopNode.InnerXml);
         }
+
         /// <summary>
         /// Clear the collection
         /// </summary>
@@ -205,6 +218,7 @@ namespace OfficeOpenXml.Style
             UpdateCells();
             if (_cells != null) _cells.IsRichText = false;
         }
+
         /// <summary>
         /// Removes an item at the specific index
         /// </summary>
@@ -215,6 +229,7 @@ namespace OfficeOpenXml.Style
             _list.RemoveAt(Index);
             if (_cells != null && _list.Count == 0) _cells.IsRichText = false;
         }
+
         /// <summary>
         /// Removes an item
         /// </summary>
@@ -242,6 +257,7 @@ namespace OfficeOpenXml.Style
                 {
                     sb.Append(item.Text);
                 }
+
                 return sb.ToString();
             }
             set
@@ -260,11 +276,16 @@ namespace OfficeOpenXml.Style
                 }
             }
         }
+
         #region IEnumerable<ExcelRichText> Members
 
         IEnumerator<ExcelRichText> IEnumerable<ExcelRichText>.GetEnumerator()
         {
-            return _list.Select(x => { x.SetCallback(UpdateCells); return x; }).GetEnumerator();
+            return _list.Select(x =>
+            {
+                x.SetCallback(UpdateCells);
+                return x;
+            }).GetEnumerator();
         }
 
         #endregion
@@ -273,7 +294,11 @@ namespace OfficeOpenXml.Style
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _list.Select(x => { x.SetCallback(UpdateCells); return x; }).GetEnumerator();
+            return _list.Select(x =>
+            {
+                x.SetCallback(UpdateCells);
+                return x;
+            }).GetEnumerator();
         }
 
         #endregion

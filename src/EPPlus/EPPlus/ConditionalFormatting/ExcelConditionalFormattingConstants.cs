@@ -28,7 +28,7 @@
  * ******************************************************************************
  * Eyal Seagull    Conditional Formatting Adaption    2012-04-03
  *******************************************************************************/
-using System.Drawing;
+using SixLabors.ImageSharp;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
@@ -272,9 +272,9 @@ namespace OfficeOpenXml.ConditionalFormatting
         #region Colors
         internal class Colors
         {
-            internal static readonly Color CfvoLowValue = Color.FromArgb(0xFF, 0xF8, 0x69, 0x6B);
-            internal static readonly Color CfvoMiddleValue = Color.FromArgb(0xFF, 0xFF, 0xEB, 0x84);
-            internal static readonly Color CfvoHighValue = Color.FromArgb(0xFF, 0x63, 0xBE, 0x7B);
+            internal static readonly Color CfvoLowValue = Color.FromRgba(0xF8, 0x69, 0x6B, 0xFF);
+            internal static readonly Color CfvoMiddleValue = Color.FromRgba(0xFF, 0xEB, 0x84, 0xFF);
+            internal static readonly Color CfvoHighValue = Color.FromRgba(0x63, 0xBE, 0x7B, 0xFF);
         }
         #endregion Colors
     }

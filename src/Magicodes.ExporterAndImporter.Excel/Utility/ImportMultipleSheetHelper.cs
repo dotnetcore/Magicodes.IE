@@ -6,10 +6,9 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -294,7 +293,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
                         var cell = worksheet.Cells[item.RowIndex, col.Header.ColumnIndex];
-                        cell.Style.Font.Color.SetColor(Color.Red);
+                        cell.Style.Font.Color.SetColor(SixLabors.ImageSharp.Color.Red);
                         cell.Style.Font.Bold = true;
                         cell.AddComment(string.Join(",", field.Value), col.Header.Author);
                     }
@@ -596,7 +595,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                             ImporterHeaderInfos[i].Header.Author);
                     //如果必填，则列头标红
                     if (ImporterHeaderInfos[i].IsRequired)
-                        worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(Color.Red);
+                        worksheet.Cells[importerAttribute.HeaderRowIndex, i + 1].Style.Font.Color.SetColor(SixLabors.ImageSharp.Color.Red);
 
                     if (ImporterHeaderInfos[i].MappingValues.Count > 0)
                     {
@@ -619,7 +618,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 worksheet.Cells[worksheet.Dimension.Address].Style.Border.Top.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[worksheet.Dimension.Address].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[worksheet.Dimension.Address].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(Color.DarkSeaGreen);
+                worksheet.Cells[worksheet.Dimension.Address].Style.Fill.BackgroundColor.SetColor(SixLabors.ImageSharp.Color.DarkSeaGreen);
             }
         }
 

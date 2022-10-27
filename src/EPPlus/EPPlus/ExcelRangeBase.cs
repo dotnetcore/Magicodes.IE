@@ -43,7 +43,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -51,6 +51,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using SixLabors.Fonts;
 
 namespace OfficeOpenXml
 {
@@ -851,25 +852,12 @@ namespace OfficeOpenXml
             var nf = styles.Fonts[styles.CellXfs[0].FontId];
             var fs = FontStyle.Regular;
             if (nf.Bold) fs |= FontStyle.Bold;
-            if (nf.UnderLine) fs |= FontStyle.Underline;
             if (nf.Italic) fs |= FontStyle.Italic;
-            if (nf.Strike) fs |= FontStyle.Strikeout;
-            var nfont = new Font(nf.Name, nf.Size, fs);
+            var td = TextDecorations.None;
+            if (nf.UnderLine) td |= TextDecorations.Underline;
+            if (nf.Strike) td |= TextDecorations.Strikeout;
 
             var normalSize = Convert.ToSingle(ExcelWorkbook.GetWidthPixels(nf.Name, nf.Size));
-
-            Graphics g;
-            try
-            {
-                //Check for missing GDI+, then use WPF istead.
-                var b = new Bitmap(1, 1);
-                g = Graphics.FromImage(b);
-                g.PageUnit = GraphicsUnit.Pixel;
-            }
-            catch
-            {
-                return;
-            }
 
             foreach (var cell in this)
             {
@@ -877,29 +865,29 @@ namespace OfficeOpenXml
                     continue;
 
                 if (cell.Merge == true || cell.Style.WrapText) continue;
-                var fntID = styles.CellXfs[cell.StyleID].FontId;
+                var fntId = styles.CellXfs[cell.StyleID].FontId;
                 Font f;
-                if (fontCache.ContainsKey(fntID))
+                if (fontCache.ContainsKey(fntId))
                 {
-                    f = fontCache[fntID];
+                    f = fontCache[fntId];
                 }
                 else
                 {
-                    var fnt = styles.Fonts[fntID];
+                    var fnt = styles.Fonts[fntId];
                     fs = FontStyle.Regular;
                     if (fnt.Bold) fs |= FontStyle.Bold;
-                    if (fnt.UnderLine) fs |= FontStyle.Underline;
-                    if (fnt.Italic) fs |= FontStyle.Italic;
-                    if (fnt.Strike) fs |= FontStyle.Strikeout;
-                    f = new Font(fnt.Name, fnt.Size, fs);
-
-                    fontCache.Add(fntID, f);
+                    if (fnt.Italic) fs |= FontStyle.Italic; 
+                    td = TextDecorations.None;
+                    if (fnt.UnderLine) td |= TextDecorations.Underline;
+                    if (fnt.Strike) td |= TextDecorations.Strikeout;
+                    f = SystemFonts.CreateFont(fnt.Name, CultureInfo.CurrentCulture, fnt.Size, fs);
+                    fontCache.Add(fntId, f);
                 }
                 var ind = styles.CellXfs[cell.StyleID].Indent;
                 var textForWidth = cell.TextForWidth;
                 var t = textForWidth + (ind > 0 && !string.IsNullOrEmpty(textForWidth) ? new string('_', ind) : "");
                 if (t.Length > 32000) t = t.Substring(0, 32000); //Issue
-                var size = g.MeasureString(t, f, 10000, StringFormat.GenericDefault);
+                var size = TextMeasurer.Measure(t, new TextOptions(f));
 
                 double width;
                 double r = styles.CellXfs[cell.StyleID].TextRotation;

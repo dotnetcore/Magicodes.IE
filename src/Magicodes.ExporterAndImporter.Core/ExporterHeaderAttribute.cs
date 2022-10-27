@@ -12,10 +12,8 @@
 // ======================================================================
 
 using System;
-
-#if !NETSTANDARD2_0
-using System.Drawing;
-#endif
+using Magicodes.IE.Core;
+using SixLabors.ImageSharp;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -96,6 +94,8 @@ namespace Magicodes.ExporterAndImporter.Core
 
         /// <summary>
         /// 字体颜色
+        /// No KnownColor Enum in SixLabors
+        /// This one is diff from System.Drawing
         /// </summary>
         public KnownColor FontColor { get; set; }
     }

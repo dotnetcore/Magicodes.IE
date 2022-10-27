@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Drawing;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using OfficeOpenXml.Drawing.Chart;
 using OfficeOpenXml.Drawing.Vml;
 using OfficeOpenXml.Style;
@@ -16,6 +16,7 @@ using OfficeOpenXml.Table;
 using System.Threading;
 using System.Globalization;
 using System.Threading.Tasks;
+using SixLabors.Fonts;
 
 namespace EPPlusTest
 {
@@ -455,8 +456,11 @@ namespace EPPlusTest
             ws.Cells["Z24"].Value = "Text6";
 
             // add autofilter
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
+            var image = Image.Load(stream, out var format);
             ws.Cells["U19:X24"].AutoFilter = true;
-            ExcelPicture pic = ws.Drawings.AddPicture("Pic1", Properties.Resources.Test1);
+            ExcelPicture pic = ws.Drawings.AddPicture("Pic1", image, format);
             pic.SetPosition(150, 140);
 
             ws.Cells["A30"].Value = "Text orientation 45";
@@ -1129,8 +1133,10 @@ namespace EPPlusTest
 
             ExcelHyperLink hl = new ExcelHyperLink("http://epplus.codeplex.com");
             hl.ToolTip = "Screen Tip";
-
-            ws.Drawings.AddPicture("Pic URI", Properties.Resources.Test1, hl);
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
+            var image = Image.Load(stream, out var format);
+            ws.Drawings.AddPicture("Pic URI", image, format, hl);
         }
         [TestMethod]
         public void PivotTableTest()
@@ -1884,7 +1890,11 @@ namespace EPPlusTest
             using (ExcelRange r = ws.Cells["A1:F1"])
             {
                 r.Merge = true;
-                r.Style.Font.SetFromFont(new Font("Arial", 18, FontStyle.Italic));
+                r.Style.Font.SetFromTextRun(
+                    new TextRun
+                    {
+                        Font = SystemFonts.CreateFont("Arial", CultureInfo.CurrentCulture, 18, FontStyle.Italic)
+                    });
                 r.Style.Font.Color.SetColor(Color.DarkRed);
                 r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
                 //r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -2249,10 +2259,16 @@ namespace EPPlusTest
         public void SetBackground()
         {
             var ws = _pck.Workbook.Worksheets.Add("backimg");
-
-            ws.BackgroundImage.Image = Properties.Resources.Test1;
-            ws = _pck.Workbook.Worksheets.Add("backimg2");
-            ws.BackgroundImage.SetFromFile(new FileInfo(Path.Combine(_clipartPath, "Vector Drawing.wmf")));
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
+            using (var ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                ws.BackgroundImage.SetImage(ms.ToArray());
+                ws = _pck.Workbook.Worksheets.Add("backimg2");
+                ws.BackgroundImage.SetFromFile(new FileInfo(Path.Combine(_clipartPath, "Vector Drawing.wmf")));
+            }
+           
         }
         //[Ignore]
         [TestMethod]
@@ -2261,7 +2277,10 @@ namespace EPPlusTest
 
             var ws = _pck.Workbook.Worksheets.Add("HeaderImage");
             ws.HeaderFooter.OddHeader.CenteredText = "Before ";
-            var img = ws.HeaderFooter.OddHeader.InsertPicture(Properties.Resources.Test1, PictureAlignment.Centered);
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
+            var image = Image.Load(stream, out var format);
+            var img = ws.HeaderFooter.OddHeader.InsertPicture(image, format, PictureAlignment.Centered);
             img.Title = "Renamed Image";
             //img.GrayScale = true;
             //img.BiLevel = true;
@@ -2304,7 +2323,11 @@ namespace EPPlusTest
 
             var secondNamedStyle = _pck.Workbook.Styles.CreateNamedStyle("first", firstNamedStyle.Style).Style;
             secondNamedStyle.Font.Bold = true;
-            secondNamedStyle.Font.SetFromFont(new Font("Arial Black", 8));
+            secondNamedStyle.Font.SetFromTextRun(
+                new TextRun
+                {
+                    Font = SystemFonts.CreateFont("Arial Black", CultureInfo.CurrentCulture, 8)
+                });
             secondNamedStyle.Border.Bottom.Style = ExcelBorderStyle.Medium;
             secondNamedStyle.Border.Left.Style = ExcelBorderStyle.Medium;
 

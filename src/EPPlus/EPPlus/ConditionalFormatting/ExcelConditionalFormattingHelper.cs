@@ -30,11 +30,12 @@
  *******************************************************************************/
 using OfficeOpenXml.Utils;
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace OfficeOpenXml.ConditionalFormatting
 {
@@ -77,7 +78,8 @@ namespace OfficeOpenXml.ConditionalFormatting
         {
             try
             {
-                return Color.FromArgb(Int32.Parse(colorCode.Replace("#", ""), NumberStyles.HexNumber));
+                var rgba32 = new Rgba32(uint.Parse(colorCode.Replace("#", ""), NumberStyles.HexNumber));
+                return Color.FromRgba(rgba32.R, rgba32.G, rgba32.B, rgba32.A);
             }
             catch
             {

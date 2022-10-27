@@ -30,9 +30,11 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using SixLabors.Fonts;
+
 namespace OfficeOpenXml.Style.XmlAccess
 {
     /// <summary>
@@ -267,15 +269,14 @@ namespace OfficeOpenXml.Style.XmlAccess
                 _verticalAlign = value;
             }
         }
-        public void SetFromFont(System.Drawing.Font Font)
+        public void SetFromTextRun(TextRun textRun)
         {
-            Name = Font.Name;
-            //Family=fnt.FontFamily.;
-            Size = (int)Font.Size;
-            Strike = Font.Strikeout;
-            Bold = Font.Bold;
-            UnderLine = Font.Underline;
-            Italic = Font.Italic;
+            var font = textRun.Font;
+            Size = font.Size;
+            Bold = font.IsBold;
+            Italic = font.IsItalic;
+            UnderLine = (textRun.TextDecorations & TextDecorations.Underline) != 0;
+            Strike = (textRun.TextDecorations & TextDecorations.Strikeout) != 0;
         }
         public static float GetFontHeight(string name, float size)
         {

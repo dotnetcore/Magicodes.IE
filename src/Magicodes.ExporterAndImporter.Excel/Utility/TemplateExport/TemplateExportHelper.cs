@@ -23,6 +23,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Magicodes.IE.Excel.Images;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -681,17 +682,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             {
                                 try
                                 {
-                                    var bitmap = Extension.GetBitmapByUrl(imageUrl);
-                                    if (bitmap == null)
+                                    var image = imageUrl.GetImageByUrl(out var format);
+                                    if (image == null)
                                     {
                                         cell.Value = alt;
                                     }
                                     else
                                     {
-                                        if (height == default) height = bitmap.Height;
-                                        if (width == default) width = bitmap.Width;
+                                        if (height == default) height = image.Height;
+                                        if (width == default) width = image.Width;
                                         cell.Value = string.Empty;
-                                        var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), bitmap);
+                                        var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), image, format);
                                         var address = new ExcelAddress(cell.Address);
                                         ////调整对齐
                                         excelImage.From.ColumnOff = Pixel2MTU(xOffset);

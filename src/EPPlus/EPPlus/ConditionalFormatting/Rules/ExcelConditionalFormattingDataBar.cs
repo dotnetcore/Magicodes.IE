@@ -30,9 +30,12 @@
  *******************************************************************************/
 using OfficeOpenXml.ConditionalFormatting.Contracts;
 using System;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
+using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.ImageSharp.PixelFormats;
+
 namespace OfficeOpenXml.ConditionalFormatting
 {
     /// <summary>
@@ -222,13 +225,14 @@ namespace OfficeOpenXml.ConditionalFormatting
                 var rgb = GetXmlNodeString(_colorPath);
                 if (!string.IsNullOrEmpty(rgb))
                 {
-                    return Color.FromArgb(int.Parse(rgb, NumberStyles.HexNumber));
+                    var argb32 = new Argb32(Convert.ToUInt32(rgb, 16));
+                    return Color.FromRgba(argb32.R, argb32.G, argb32.B, argb32.A);
                 }
                 return Color.White;
             }
             set
             {
-                SetXmlNodeString(_colorPath, value.ToArgb().ToString("X"));
+                SetXmlNodeString(_colorPath, value.ToArgbHex());
             }
         }
     }
