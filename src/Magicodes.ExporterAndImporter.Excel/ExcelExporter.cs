@@ -269,7 +269,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
+                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    //return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray())); // todo: use interface, not import NPOI directly
                 }
             }
             else
@@ -306,7 +307,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray<T>(dataItems);
-            bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);
+            //bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes); // todo: use interface, not import NPOI directly
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
@@ -368,7 +369,8 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
+                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    //return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray())); // todo: use interface, not import NPOI directly
                 }
             }
             else
@@ -402,7 +404,9 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray()));
+
+                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    //return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(helper.CurrentExcelPackage.GetAsByteArray())); // todo: use interface, not import NPOI directly
                 }
             }
             else
@@ -478,7 +482,8 @@ namespace Magicodes.ExporterAndImporter.Excel
             helper.AddExporterHeaderInfoList(headerList);
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray()));
+                return Task.FromResult(ep.GetAsByteArray());
+                //return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray())); // todo: use interface, not import NPOI directly
             }
         }
 
@@ -525,7 +530,8 @@ namespace Magicodes.ExporterAndImporter.Excel
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray()));  // 
+                return Task.FromResult(ep.GetAsByteArray());
+                //return Task.FromResult(NPOI.Extension.SaveToExcelWithXSSFWorkbook(ep.GetAsByteArray()));  // 
             }
         }
 
@@ -605,7 +611,8 @@ namespace Magicodes.ExporterAndImporter.Excel
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray(dataItems, exporterHeaderFilter, maxRowNumberOnASheet);
-            bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);
+            //bytes = NPOI.Extension.SaveToExcelWithXSSFWorkbook(bytes);  // todo: use interface, not import NPOI directly
+
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
