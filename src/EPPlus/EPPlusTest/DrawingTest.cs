@@ -8,8 +8,8 @@ using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Drawing.Chart;
 using OfficeOpenXml.Style;
-using SixLabors.Fonts;
 using SixLabors.ImageSharp;
+using SkiaSharp;
 
 namespace EPPlusTest
 {
@@ -293,11 +293,9 @@ namespace EPPlusTest
             ser.DataLabel.Fill.Color = Color.BlueViolet;
             ser.DataLabel.Font.Color = Color.White;
             ser.DataLabel.Font.Italic = true;
-            ser.DataLabel.Font.SetFromTextRun(
-                new TextRun
-                {
-                    Font = SystemFonts.CreateFont("bookman old style", CultureInfo.CurrentCulture, 8)
-                });
+            using var skFontTypeface = SKTypeface.FromFamilyName("bookman old style");
+            using var font = new SKFont(skFontTypeface, 8f);
+            ser.DataLabel.Font.SetFromFont(font);
             Assert.IsTrue(chrt.ChartType == eChartType.XYScatterSmoothNoMarkers, "Invalid Charttype");
             chrt.Series[0].Header = "Test serie";
             chrt = ws.Drawings.AddChart("ScatterChart2", eChartType.XYScatterSmooth) as ExcelScatterChart;
@@ -621,12 +619,9 @@ namespace EPPlusTest
             rt = (ws.Drawings["shape2"] as ExcelShape).RichText.Add("\r\nAdded formated richtext");
             rt.Bold = true;
             rt.Color = Color.DarkGoldenrod;
-            rt.SetFromTextRun(
-                new TextRun
-                {
-                    Font = SystemFonts.CreateFont("Times new roman", CultureInfo.CurrentCulture, 18),
-                    TextDecorations = TextDecorations.Underline
-                });
+            using var skFontTypeface = SKTypeface.FromFamilyName("Times new roman");
+            using var font = new SKFont(skFontTypeface, 18f);
+            rt.SetFromFont(font);
             rt.UnderLineColor = Color.Green;
 
 

@@ -29,11 +29,10 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+using SkiaSharp;
 using System;
-using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
-using SixLabors.Fonts;
 
 namespace OfficeOpenXml.Style.XmlAccess
 {
@@ -269,14 +268,14 @@ namespace OfficeOpenXml.Style.XmlAccess
                 _verticalAlign = value;
             }
         }
-        public void SetFromTextRun(TextRun textRun)
+        public void SetFromFont(SKFont font)
         {
-            var font = textRun.Font;
+            Name = font.Typeface.FamilyName;
             Size = font.Size;
-            Bold = font.IsBold;
-            Italic = font.IsItalic;
-            UnderLine = (textRun.TextDecorations & TextDecorations.Underline) != 0;
-            Strike = (textRun.TextDecorations & TextDecorations.Strikeout) != 0;
+            Bold = font.Typeface.IsBold;
+            Italic = font.Typeface.IsItalic;
+            UnderLine = font.Metrics.UnderlineThickness != null;
+            Strike = font.Metrics.StrikeoutThickness != null;
         }
         public static float GetFontHeight(string name, float size)
         {
