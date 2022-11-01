@@ -31,7 +31,8 @@
  *******************************************************************************/
 
 using System;
-using SkiaSharp;
+using SixLabors.ImageSharp;
+using SixLabors.Fonts;
 
 namespace OfficeOpenXml.Style
 {
@@ -206,15 +207,15 @@ namespace OfficeOpenXml.Style
         /// <summary>
         /// Set the font from a Font object
         /// </summary>
-        /// <param name="font"></param>
-        public void SetFromFont(SKFont font)
+        /// <param name="textRun"></param>
+        public void SetFromTextRun(TextRun textRun)
         {
-            Name = font.Typeface.FamilyName;
+            var font = textRun.Font;
             Size = font.Size;
-            Bold = font.Typeface.IsBold;
-            Italic = font.Typeface.IsItalic;
-            UnderLine = font.Metrics.UnderlineThickness != null;
-            Strike = font.Metrics.StrikeoutThickness != null;
+            Bold = font.IsBold;
+            Italic = font.IsItalic;
+            UnderLine = (textRun.TextDecorations & TextDecorations.Underline) != 0;
+            Strike = (textRun.TextDecorations & TextDecorations.Strikeout) != 0;
         }
 
         internal override string Id
