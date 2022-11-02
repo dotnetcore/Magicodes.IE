@@ -29,14 +29,13 @@
  * Jan Källman		                Initial Release		        2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-
 using System;
 using SixLabors.ImageSharp;
 using System.Globalization;
 using System.Xml;
 using Magicodes.IE.EPPlus.SixLabors;
+using SixLabors.Fonts;
 using SixLabors.ImageSharp.PixelFormats;
-using SkiaSharp;
 
 namespace OfficeOpenXml.Style
 {
@@ -64,7 +63,6 @@ namespace OfficeOpenXml.Style
         WavyHeavy,
         Words
     }
-
     /// <summary>
     /// Type of font strike
     /// </summary>
@@ -74,7 +72,6 @@ namespace OfficeOpenXml.Style
         No,
         Single
     }
-
     /// <summary>
     /// Used by Rich-text and Paragraphs.
     /// </summary>
@@ -82,9 +79,7 @@ namespace OfficeOpenXml.Style
     {
         string _path;
         XmlNode _rootNode;
-
-        internal ExcelTextFont(XmlNamespaceManager namespaceManager, XmlNode rootNode, string path,
-            string[] schemaNodeOrder)
+        internal ExcelTextFont(XmlNamespaceManager namespaceManager, XmlNode rootNode, string path, string[] schemaNodeOrder)
             : base(namespaceManager, rootNode)
         {
             SchemaNodeOrder = schemaNodeOrder;
@@ -97,15 +92,15 @@ namespace OfficeOpenXml.Style
                     TopNode = node;
                 }
             }
-
             _path = path;
         }
-
         string _fontLatinPath = "a:latin/@typeface";
-
         public string LatinFont
         {
-            get { return GetXmlNodeString(_fontLatinPath); }
+            get
+            {
+                return GetXmlNodeString(_fontLatinPath);
+            }
             set
             {
                 CreateTopNode();
@@ -121,45 +116,46 @@ namespace OfficeOpenXml.Style
                 TopNode = _rootNode.SelectSingleNode(_path, NameSpaceManager);
             }
         }
-
         string _fontCsPath = "a:cs/@typeface";
-
         public string ComplexFont
         {
-            get { return GetXmlNodeString(_fontCsPath); }
+            get
+            {
+                return GetXmlNodeString(_fontCsPath);
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_fontCsPath, value);
             }
         }
-
         string _boldPath = "@b";
-
         public bool Bold
         {
-            get { return GetXmlNodeBool(_boldPath); }
+            get
+            {
+                return GetXmlNodeBool(_boldPath);
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_boldPath, value ? "1" : "0");
             }
         }
-
         string _underLinePath = "@u";
-
         public eUnderLineType UnderLine
         {
-            get { return TranslateUnderline(GetXmlNodeString(_underLinePath)); }
+            get
+            {
+                return TranslateUnderline(GetXmlNodeString(_underLinePath));
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_underLinePath, TranslateUnderlineText(value));
             }
         }
-
         string _underLineColorPath = "a:uFill/a:solidFill/a:srgbClr/@val";
-
         public Color UnderLineColor
         {
             get
@@ -178,48 +174,49 @@ namespace OfficeOpenXml.Style
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_underLineColorPath, value.ToArgbHex() /*.Substring(2)*/);
+                SetXmlNodeString(_underLineColorPath, value.ToArgbHex()/*.Substring(2)*/);
             }
         }
-
         string _italicPath = "@i";
-
         public bool Italic
         {
-            get { return GetXmlNodeBool(_italicPath); }
+            get
+            {
+                return GetXmlNodeBool(_italicPath);
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_italicPath, value ? "1" : "0");
             }
         }
-
         string _strikePath = "@strike";
-
         public eStrikeType Strike
         {
-            get { return TranslateStrike(GetXmlNodeString(_strikePath)); }
+            get
+            {
+                return TranslateStrike(GetXmlNodeString(_strikePath));
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_strikePath, TranslateStrikeText(value));
             }
         }
-
         string _sizePath = "@sz";
-
         public float Size
         {
-            get { return GetXmlNodeInt(_sizePath) / 100; }
+            get
+            {
+                return GetXmlNodeInt(_sizePath) / 100;
+            }
             set
             {
                 CreateTopNode();
                 SetXmlNodeString(_sizePath, ((int)(value * 100)).ToString());
             }
         }
-
         string _colorPath = "a:solidFill/a:srgbClr/@val";
-
         public Color Color
         {
             get
@@ -238,12 +235,10 @@ namespace OfficeOpenXml.Style
             set
             {
                 CreateTopNode();
-                SetXmlNodeString(_colorPath, value.ToArgbHex() /*.Substring(2)*/);
+                SetXmlNodeString(_colorPath, value.ToArgbHex()/*.Substring(2)*/);
             }
         }
-
         #region "Translate methods"
-
         private eUnderLineType TranslateUnderline(string text)
         {
             switch (text)
@@ -258,7 +253,6 @@ namespace OfficeOpenXml.Style
                     return (eUnderLineType)Enum.Parse(typeof(eUnderLineType), text);
             }
         }
-
         private string TranslateUnderlineText(eUnderLineType value)
         {
             switch (value)
@@ -272,7 +266,6 @@ namespace OfficeOpenXml.Style
                     return ret.Substring(0, 1).ToLower(CultureInfo.InvariantCulture) + ret.Substring(1, ret.Length - 1);
             }
         }
-
         private eStrikeType TranslateStrike(string text)
         {
             switch (text)
@@ -285,7 +278,6 @@ namespace OfficeOpenXml.Style
                     return eStrikeType.No;
             }
         }
-
         private string TranslateStrikeText(eStrikeType value)
         {
             switch (value)
@@ -298,22 +290,21 @@ namespace OfficeOpenXml.Style
                     return "noStrike";
             }
         }
-
         #endregion
-
         /// <summary>
-        /// Set the font style from a font object
+        /// Set the font style from a textRun object
         /// </summary>
-        /// <param name="font"></param>
-        public void SetFromFont(SKFont font)
+        /// <param name="textRun"></param>
+        public void SetFromTextRun(TextRun textRun)
         {
-            LatinFont = font.Typeface.FamilyName;
-            ComplexFont = font.Typeface.FamilyName;
+            var font = textRun.Font;
+            LatinFont = font.Name;
+            ComplexFont = font.Name;
             Size = font.Size;
-            if (font.Typeface.IsBold) Bold = font.Typeface.IsBold;
-            if (font.Typeface.IsItalic) Italic = font.Typeface.IsItalic;
-            if(font.Metrics.UnderlineThickness != null) UnderLine = eUnderLineType.Single;
-            if(font.Metrics.StrikeoutThickness != null) Strike = eStrikeType.Single;
+            if (font.IsBold) Bold = font.IsBold;
+            if (font.IsItalic) Italic = font.IsItalic;
+            if ((textRun.TextDecorations & TextDecorations.Underline) != 0) UnderLine = eUnderLineType.Single;
+            if ((textRun.TextDecorations & TextDecorations.Strikeout) != 0) Strike = eStrikeType.Single;
         }
     }
 }
