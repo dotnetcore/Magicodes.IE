@@ -653,7 +653,11 @@ namespace OfficeOpenXml
 
                         StringBuilder xml = new StringBuilder("<styleSheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\">");
                         xml.Append("<numFmts />");
-                        xml.Append("<fonts count=\"1\"><font><sz val=\"11\" /><name val=\"Calibri\" /></font></fonts>");
+                        xml.Append("<fonts count=\"2\">");
+                        xml.Append("<font><sz val=\"11\" /><name val=\"Calibri\" /></font>");
+                        xml.Append("<font><sz val=\"11\" /><name val=\"FangSong\" /></font>"); 
+                        // As the System.Drawing.Graphics is a GDI+, no matter SixLabors or SkiaSharp, always give inconsistent text measuring result in Calibri font. Use a FangSong instead.
+                        xml.Append("</fonts>");
                         xml.Append("<fills><fill><patternFill patternType=\"none\" /></fill><fill><patternFill patternType=\"gray125\" /></fill></fills>");
                         xml.Append("<borders><border><left /><right /><top /><bottom /><diagonal /></border></borders>");
                         xml.Append("<cellStyleXfs count=\"1\"><xf numFmtId=\"0\" fontId=\"0\" /></cellStyleXfs>");

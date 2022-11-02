@@ -4,6 +4,7 @@ using System.Net;
 using Magicodes.IE.Core;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Metadata;
 
 namespace Magicodes.IE.Excel.Images
 {
@@ -48,7 +49,13 @@ namespace Magicodes.IE.Excel.Images
             using (var wc = new WebClient())
             {
                 wc.Proxy = null;
-                return Image.Load(wc.OpenRead(url), out format);
+                var image = Image.Load(wc.OpenRead(url), out format);
+                if (image.Metadata.HorizontalResolution == 0 && image.Metadata.VerticalResolution == 0)
+                {
+                    image.Metadata.HorizontalResolution = ImageMetadata.DefaultHorizontalResolution;
+                    image.Metadata.VerticalResolution = ImageMetadata.DefaultVerticalResolution;
+                }
+                return image;
             }
         }
 

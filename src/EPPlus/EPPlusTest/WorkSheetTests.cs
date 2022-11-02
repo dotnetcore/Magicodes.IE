@@ -16,7 +16,7 @@ using OfficeOpenXml.Table;
 using System.Threading;
 using System.Globalization;
 using System.Threading.Tasks;
-using SixLabors.Fonts;
+using SkiaSharp;
 
 namespace EPPlusTest
 {
@@ -1890,11 +1890,9 @@ namespace EPPlusTest
             using (ExcelRange r = ws.Cells["A1:F1"])
             {
                 r.Merge = true;
-                r.Style.Font.SetFromTextRun(
-                    new TextRun
-                    {
-                        Font = SystemFonts.CreateFont("Arial", CultureInfo.CurrentCulture, 18, FontStyle.Italic)
-                    });
+                using var skFontTypeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Italic);
+                using var font = new SKFont(skFontTypeface, 18f);
+                r.Style.Font.SetFromFont(font);
                 r.Style.Font.Color.SetColor(Color.DarkRed);
                 r.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.CenterContinuous;
                 //r.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
@@ -2323,11 +2321,9 @@ namespace EPPlusTest
 
             var secondNamedStyle = _pck.Workbook.Styles.CreateNamedStyle("first", firstNamedStyle.Style).Style;
             secondNamedStyle.Font.Bold = true;
-            secondNamedStyle.Font.SetFromTextRun(
-                new TextRun
-                {
-                    Font = SystemFonts.CreateFont("Arial Black", CultureInfo.CurrentCulture, 8)
-                });
+            using var skFontTypeface = SKTypeface.FromFamilyName("Arial Black");
+            using var font = new SKFont(skFontTypeface, 8f);
+            secondNamedStyle.Font.SetFromFont(font);
             secondNamedStyle.Border.Bottom.Style = ExcelBorderStyle.Medium;
             secondNamedStyle.Border.Left.Style = ExcelBorderStyle.Medium;
 
