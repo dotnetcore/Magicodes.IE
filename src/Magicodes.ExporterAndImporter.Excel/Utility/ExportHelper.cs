@@ -1124,9 +1124,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                     col.Hidden = exporterHeader.ExporterHeaderAttribute.Hidden;
 
-                    if (exporterHeader.ExporterHeaderAttribute.FontColor != KnownColor.Empty)
+                    if (exporterHeader.ExporterHeaderAttribute.FontColor != null)
                     {
-                        col.Style.Font.Color.SetColor(exporterHeader.ExporterHeaderAttribute.FontColor.ToColor());
+                        col.Style.Font.Color.SetColor(exporterHeader.ExporterHeaderAttribute.FontColor.Value);
                     }
                 }
             }

@@ -26,7 +26,7 @@ namespace Magicodes.ExporterAndImporter.Core
     {
         /// <inheritdoc />
         public ExporterHeaderAttribute(string displayName = null, float fontSize = 11, string format = null,
-            bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false, int width = 0)
+            bool isBold = true, bool isAutoFit = true, bool autoCenterColumn = false, int width = 0, KnownColor fontColor = KnownColor.Empty)
         {
             DisplayName = displayName;
             FontSize = fontSize;
@@ -35,6 +35,10 @@ namespace Magicodes.ExporterAndImporter.Core
             IsAutoFit = isAutoFit;
             AutoCenterColumn = autoCenterColumn;
             Width = width;
+            if (fontColor != KnownColor.Empty)
+            {
+                FontColor = Color.Parse(fontColor.ToString("G"));
+            }
         }
 
         /// <summary>
@@ -94,9 +98,7 @@ namespace Magicodes.ExporterAndImporter.Core
 
         /// <summary>
         /// 字体颜色
-        /// No KnownColor Enum in SixLabors
-        /// This one is diff from System.Drawing
         /// </summary>
-        public KnownColor FontColor { get; set; }
+        public Color? FontColor { get; set; }
     }
 }
