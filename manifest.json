@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "yWeCa8fo70SgfKGOfiORLAmXJES/nYzI9rwoShh+8cE="
+          "hash": "lM4BJytmN+YGr9b41wTe9k5Ht4bw8Sc6hSbW7TeZ51U="
         }
       },
       "is_incremental": false,
@@ -156,7 +156,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelExporter.html",
-          "hash": "79qGuAQCYR8lPMg+UIa1QFu7d6/GUxc2U+aEMUqdu4I="
+          "hash": "QtDGZ9a4OsOxeED6FuIEo4EbyPEl7/mmWSjv3hK9Zbk="
         }
       },
       "is_incremental": false,
@@ -180,7 +180,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html",
-          "hash": "Tq5bndGxU8klW4f1cAVayGRfO38N/T0xSADu3UbdK5E="
+          "hash": "IZ/axrMX3Q3AxsnCXzZqEUu0lty0HlmUxEQFdCrLqcg="
         }
       },
       "is_incremental": false,

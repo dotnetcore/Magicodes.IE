@@ -128,7 +128,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExcelExporter Append&lt;T&gt;(ICollection&lt;T&gt; dataItems, string sheetName = null)
+    <pre><code class="lang-csharp hljs">public virtual ExcelExporter Append&lt;T&gt;(ICollection&lt;T&gt; dataItems, string sheetName = null)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -192,7 +192,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExcelExporter AppendHeaders()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ExcelExporter AppendHeaders()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -217,7 +217,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; Export(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -275,7 +275,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; Export&lt;T&gt;(string fileName, DataTable dataItems)
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; Export&lt;T&gt;(string fileName, DataTable dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -339,7 +339,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; Export&lt;T&gt;(string fileName, ICollection&lt;T&gt; dataItems)
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; Export&lt;T&gt;(string fileName, ICollection&lt;T&gt; dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -406,7 +406,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportAppendData(string fileName)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; ExportAppendData(string fileName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -449,7 +449,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportAppendDataAsByteArray()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportAppendDataAsByteArray()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -474,7 +474,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -527,7 +527,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportAsByteArray(DataTable dataItems, Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportAsByteArray(DataTable dataItems, Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -575,7 +575,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportAsByteArray&lt;T&gt;(DataTable dataItems)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportAsByteArray&lt;T&gt;(DataTable dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -634,7 +634,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportAsByteArray&lt;T&gt;(ICollection&lt;T&gt; dataItems)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportAsByteArray&lt;T&gt;(ICollection&lt;T&gt; dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -695,7 +695,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ExportFileInfo&gt; ExportByTemplate&lt;T&gt;(string fileName, T data, string template)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;ExportFileInfo&gt; ExportByTemplate&lt;T&gt;(string fileName, T data, string template)
     where T : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -765,7 +765,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportBytesByTemplate(object data, string template, Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportBytesByTemplate(object data, string template, Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -817,7 +817,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportBytesByTemplate&lt;T&gt;(T data, Stream templateStream)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportBytesByTemplate&lt;T&gt;(T data, Stream templateStream)
     where T : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -881,7 +881,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportBytesByTemplate&lt;T&gt;(T data, string template)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportBytesByTemplate&lt;T&gt;(T data, string template)
     where T : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -946,7 +946,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -996,7 +996,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportHeaderAsByteArray&lt;T&gt;(T type)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportHeaderAsByteArray&lt;T&gt;(T type)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1057,7 +1057,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportHeaderWithXSSFWorkbookAsByteArray&lt;T&gt;(T type)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportHeaderWithXSSFWorkbookAsByteArray&lt;T&gt;(T type)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1117,7 +1117,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1169,7 +1169,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook(string fileName, DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1227,7 +1227,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, DataTable dataItems)
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, DataTable dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1291,7 +1291,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, ICollection&lt;T&gt; dataItems)
+    <pre><code class="lang-csharp hljs">public virtual async Task&lt;ExportFileInfo&gt; ExportWithXSSFWorkbook&lt;T&gt;(string fileName, ICollection&lt;T&gt; dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1358,7 +1358,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1406,7 +1406,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(DataTable dataItems)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(DataTable dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1465,7 +1465,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(ICollection&lt;T&gt; dataItems)
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportWithXSSFWorkbookAsByteArray&lt;T&gt;(ICollection&lt;T&gt; dataItems)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1526,7 +1526,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;byte[]&gt; ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;byte[]&gt; ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = &quot;&#23548;&#20986;&#32467;&#26524;&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1576,7 +1576,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExcelExporter SeparateByColumn()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ExcelExporter SeparateByColumn()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1602,7 +1602,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExcelExporter SeparateByRow()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ExcelExporter SeparateByRow()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1628,7 +1628,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExcelExporter SeparateBySheet()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual ExcelExporter SeparateBySheet()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
