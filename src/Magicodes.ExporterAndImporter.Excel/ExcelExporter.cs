@@ -45,7 +45,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new()
+        public virtual async Task<ExportFileInfo> Export<T>(string fileName, ICollection<T> dataItems) where T : class, new()
         {
             var bytes = await ExportAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
@@ -57,7 +57,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName">文件名</param>
         /// <param name="dataItems">数据列</param>
         /// <returns>文件</returns>
-        public async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, ICollection<T> dataItems) where T : class, new()
+        public virtual async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, ICollection<T> dataItems) where T : class, new()
         {
             var bytes = await ExportWithXSSFWorkbookAsByteArray(dataItems);
             return bytes.ToExcelExportFileInfo(fileName);
@@ -70,7 +70,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="dataItems"></param>
         /// <param name="sheetName"></param>
         /// <returns></returns>
-        public ExcelExporter Append<T>(ICollection<T> dataItems, string sheetName = null) where T : class, new()
+        public virtual ExcelExporter Append<T>(ICollection<T> dataItems, string sheetName = null) where T : class, new()
         {
             var helper = this._excelPackage == null ? new ExportHelper<T>(sheetName) : new ExportHelper<T>(_excelPackage, sheetName);
             if (_isSeparateColumn || _isSeparateBySheet || _isSeparateByRow)
@@ -119,7 +119,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///		分割集合到当前Sheet追加Column
         /// </summary>
         /// <returns></returns>
-        public ExcelExporter SeparateByColumn()
+        public virtual ExcelExporter SeparateByColumn()
         {
             if (_excelPackage == null)
             {
@@ -134,7 +134,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     分割多出多个sheet
         /// </summary>
         /// <returns></returns>
-        public ExcelExporter SeparateBySheet()
+        public virtual ExcelExporter SeparateBySheet()
         {
             if (_excelPackage == null)
             {
@@ -149,7 +149,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     追加rows到当前sheet
         /// </summary>
         /// <returns></returns>
-        public ExcelExporter SeparateByRow()
+        public virtual ExcelExporter SeparateByRow()
         {
             if (_excelPackage == null)
             {
@@ -164,7 +164,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     追加表头
         /// </summary>
         /// <returns></returns>
-        public ExcelExporter AppendHeaders()
+        public virtual ExcelExporter AppendHeaders()
         {
             if (_excelPackage == null)
             {
@@ -184,7 +184,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// 导出所有的追加数据
         /// </summary>
         /// <returns></returns>
-        public Task<byte[]> ExportAppendDataAsByteArray()
+        public virtual Task<byte[]> ExportAppendDataAsByteArray()
         {
             if (this._excelPackage == null)
             {
@@ -200,7 +200,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public async Task<ExportFileInfo> ExportAppendData(string fileName)
+        public virtual async Task<ExportFileInfo> ExportAppendData(string fileName)
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAppendDataAsByteArray();
@@ -212,7 +212,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
+        public virtual Task<byte[]> ExportAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -249,7 +249,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="dataItems">数据</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
+        public virtual Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(ICollection<T> dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -288,7 +288,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public async Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class, new()
+        public virtual async Task<ExportFileInfo> Export<T>(string fileName, DataTable dataItems) where T : class, new()
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray<T>(dataItems);
@@ -302,7 +302,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="fileName"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, DataTable dataItems) where T : class, new()
+        public virtual async Task<ExportFileInfo> ExportWithXSSFWorkbook<T>(string fileName, DataTable dataItems) where T : class, new()
         {
             fileName.CheckExcelFileName();
             var bytes = await ExportAsByteArray<T>(dataItems);
@@ -316,7 +316,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new()
+        public virtual Task<byte[]> ExportAsByteArray<T>(DataTable dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -351,7 +351,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(DataTable dataItems) where T : class, new()
+        public virtual Task<byte[]> ExportWithXSSFWorkbookAsByteArray<T>(DataTable dataItems) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -385,7 +385,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="type"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)
+        public virtual Task<byte[]> ExportWithXSSFWorkbookAsByteArray(DataTable dataItems, Type type)
         {
             var helper = new ExportHelper<DataTable>(type);
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -419,7 +419,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="type"></param>
         /// <param name="dataItems"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
+        public virtual Task<byte[]> ExportAsByteArray(DataTable dataItems, Type type)
         {
             var helper = new ExportHelper<DataTable>(type);
             if (helper.ExcelExporterSettings.MaxRowNumberOnASheet > 0 &&
@@ -454,7 +454,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
         /// <returns></returns>
-        public Task<byte[]> ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = "导出结果")
+        public virtual Task<byte[]> ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = "导出结果")
         {
             var helper = new ExportHelper<DataTable>();
             var headerList = new List<ExporterHeaderInfo>();
@@ -487,7 +487,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="items">表头数组</param>
         /// <param name="sheetName">工作簿名称</param>
         /// <returns></returns>
-        public Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果")
+        public virtual Task<byte[]> ExportHeaderAsByteArray(string[] items, string sheetName = "导出结果")
         {
             var helper = new ExportHelper<DataTable>();
             var headerList = new List<ExporterHeaderInfo>();
@@ -519,7 +519,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportHeaderWithXSSFWorkbookAsByteArray<T>(T type) where T : class, new()
+        public virtual Task<byte[]> ExportHeaderWithXSSFWorkbookAsByteArray<T>(T type) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
@@ -533,7 +533,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// </summary>
         /// <param name="type">类型</param>
         /// <returns>文件二进制数组</returns>
-        public Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new()
+        public virtual Task<byte[]> ExportHeaderAsByteArray<T>(T type) where T : class, new()
         {
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
@@ -550,7 +550,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="data"></param>
         /// <param name="template">HTML模板或模板路径</param>
         /// <returns></returns>
-        public Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data, string template) where T : class
+        public virtual Task<ExportFileInfo> ExportByTemplate<T>(string fileName, T data, string template) where T : class
         {
             using (var helper = new TemplateExportHelper<T>())
             {
@@ -567,7 +567,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <param name="template">HTML模板或模板路径</param>
-        public Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class
+        public virtual Task<byte[]> ExportBytesByTemplate<T>(T data, string template) where T : class
         {
             using (var helper = new TemplateExportHelper<T>())
             {
@@ -586,12 +586,12 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="template"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
+        public virtual Task<byte[]> ExportBytesByTemplate(object data, string template, Type type)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ExportFileInfo> Export(string fileName, DataTable dataItems,
+        public virtual async Task<ExportFileInfo> Export(string fileName, DataTable dataItems,
             IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
         {
             fileName.CheckExcelFileName();
@@ -599,7 +599,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             return bytes.ToExcelExportFileInfo(fileName);
         }
 
-        public async Task<ExportFileInfo> ExportWithXSSFWorkbook(string fileName, DataTable dataItems,
+        public virtual async Task<ExportFileInfo> ExportWithXSSFWorkbook(string fileName, DataTable dataItems,
           IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000)
         {
             fileName.CheckExcelFileName();
@@ -614,7 +614,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaderFilter"></param>
         /// <param name="maxRowNumberOnASheet"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
+        public virtual Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
             int maxRowNumberOnASheet = 1000000)
         {
             var helper = new ExportHelper<DataTable>();
@@ -653,7 +653,7 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="exporterHeaderFilter"></param>
         /// <param name="maxRowNumberOnASheet"></param>
         /// <returns></returns>
-        public Task<byte[]> ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
+        public virtual Task<byte[]> ExportWithXSSFWorkbook(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
             int maxRowNumberOnASheet = 1000000)
         {
             var helper = new ExportHelper<DataTable>();
@@ -694,7 +694,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             _isSeparateColumn = false;
         }
 
-        public Task<byte[]> ExportBytesByTemplate<T>(T data, Stream templateStream) where T : class
+        public virtual Task<byte[]> ExportBytesByTemplate<T>(T data, Stream templateStream) where T : class
         {
             using (var helper = new TemplateExportHelper<T>())
             {

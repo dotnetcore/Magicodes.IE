@@ -1,11 +1,12 @@
 # Release Log
 
 ## 2.7.0
-**2022.11.04**
+**2022.11.07**
 
 - 使用SkiaSharp替代SixLabors.ImageSharp
 - 移除SixLabors.Fonts
 - 感谢linch90的大力支持（具体见pr[#462](https://github.com/dotnetcore/Magicodes.IE/pull/462)） 
+- 部分方法改为虚方法
 
 ## 2.7.0-beta
 **2022.10.27**
