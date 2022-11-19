@@ -32,11 +32,13 @@ namespace Magicodes.IE.Tools
                 {
                     new ExportTestDataWithPicture
                     {
-                        Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/docs/Magicodes.IE.png"
+                        Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/docs/Magicodes.IE.png",
+                        Text="张三"
                     },
                     new ExportTestDataWithPicture
                     {
-                        Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/res/wechat.jpg"
+                        Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/res/wechat.jpg",
+                        Text="李四"
                     }
                 };
 
@@ -44,6 +46,7 @@ namespace Magicodes.IE.Tools
                 var result = exporter.Export("test.xlsx", data).Result;
                 Console.WriteLine($"导出成功：{filePath}！");
             }
+            Console.ReadLine();
         }
 
         [ExcelExporter(Name = "测试")]
@@ -52,6 +55,8 @@ namespace Magicodes.IE.Tools
             [ExportImageField(Width = 50, Height = 120, Alt = "404")]
             [ExporterHeader(DisplayName = "图", IsAutoFit = false)]
             public string Img { get; set; }
+
+            public string Text { get; set; }
         }
     }
 }
