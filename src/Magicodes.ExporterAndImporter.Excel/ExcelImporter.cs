@@ -159,7 +159,19 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns></returns>
         public virtual Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new()
         {
-            using (var importer = new ImportHelper<T>(stream))
+            return Import<T>(stream, default);
+        }
+
+        /// <summary>
+        /// 导入模型验证数据并返回错误标注Stream
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="labelingFileStream"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(Stream stream, Stream labelingFileStream) where T : class, new()
+        {
+            using (var importer = new ImportHelper<T>(stream, labelingFileStream))
             {
                 return importer.Import();
             }
@@ -360,5 +372,6 @@ namespace Magicodes.ExporterAndImporter.Excel
             }
             return false;
         }
+
     }
 }

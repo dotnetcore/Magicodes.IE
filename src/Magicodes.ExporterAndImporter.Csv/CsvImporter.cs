@@ -81,5 +81,20 @@ namespace Magicodes.ExporterAndImporter.Csv
                 return importer.Import();
             }
         }
+
+        /// <summary>
+        /// 貌似无用
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="labelingFileStream"></param>
+        /// <returns></returns>
+        public Task<ImportResult<T>> Import<T>(Stream stream, Stream labelingFileStream) where T : class, new()
+        {
+            using (var importer = new ImportHelper<T>(stream))
+            {
+                return importer.Import();
+            }
+        }
     }
 }

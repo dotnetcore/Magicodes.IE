@@ -742,6 +742,45 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         /// <summary>
+        ///     仅导出错误列测试流返回
+        /// </summary>
+        /// <returns></returns>
+        [Fact(DisplayName = "仅导出错误列测试流返回")]
+        public async Task ImportOnlyErrorRowsByStream()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
+            using var errorStream = new MemoryStream();
+            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(new FileStream(filePath, FileMode.Open), errorStream);
+            import.ShouldNotBeNull();
+            if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
+
+            if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
+
+            import.RowErrors.ShouldContain(p => p.RowIndex == 2 && p.FieldErrors.ContainsKey("身份证号"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 3 && p.FieldErrors.ContainsKey("身份证号"));
+            import.RowErrors.ShouldContain(p => p.RowIndex == 13 && p.FieldErrors.ContainsKey("身份证号"));
+
+            import.HasError.ShouldBeTrue();
+            import.RowErrors.Count.ShouldBe(3);
+
+            var errorRows = import.Data.Where((x, i) => import.RowErrors.Any(err => err.RowIndex == i + 2)).ToList();
+
+            errorStream.Seek(0, SeekOrigin.Begin);
+            var labelErrorImport = await Importer.Import<ImportWithOnlyErrorRowsDto>(errorStream);
+            labelErrorImport.ShouldNotBeNull();
+            if (labelErrorImport.Exception != null) _testOutputHelper.WriteLine(labelErrorImport.Exception.ToString());
+
+            if (labelErrorImport.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(labelErrorImport.RowErrors));
+
+            labelErrorImport.Data.Count.ShouldBe(3);
+            labelErrorImport.RowErrors.Count.ShouldBe(3);
+            foreach (var errorRow in errorRows)
+            {
+                labelErrorImport.Data.ShouldContain(x => x.Name == errorRow.Name && x.IdCard == errorRow.IdCard);
+            }
+        }
+
+        /// <summary>
         /// 管轴导入测试 测试能否手动新增错误信息
         /// </summary>
         /// <returns></returns>
