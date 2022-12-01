@@ -256,6 +256,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(Stream)
   nameWithType: CsvImporter.Import<T>(Stream)
   nameWithType.vb: CsvImporter.Import(Of T)(Stream)
+- uid: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(Stream,Stream)
+  name: Import<T>(Stream, Stream)
+  href: api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html#Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_Stream_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(Stream,Stream)
+  name.vb: Import(Of T)(Stream, Stream)
+  fullName: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import<T>(Stream, Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import(Of T)(Stream, Stream)
+  nameWithType: CsvImporter.Import<T>(Stream, Stream)
+  nameWithType.vb: CsvImporter.Import(Of T)(Stream, Stream)
 - uid: Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
   name: Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
   href: api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html#Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_System_String_Func_ImportResult___0__ImportResult___0___
@@ -946,6 +955,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(Stream)
   nameWithType: ExcelImporter.Import<T>(Stream)
   nameWithType.vb: ExcelImporter.Import(Of T)(Stream)
+- uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(Stream,Stream)
+  name: Import<T>(Stream, Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_Stream_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(Stream,Stream)
+  name.vb: Import(Of T)(Stream, Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import<T>(Stream, Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import(Of T)(Stream, Stream)
+  nameWithType: ExcelImporter.Import<T>(Stream, Stream)
+  nameWithType.vb: ExcelImporter.Import(Of T)(Stream, Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.ExcelImporter.Import``1(System.String,Func{ImportResult{``0},ImportResult{``0}})
   name: Import<T>(String, Func<ImportResult<T>, ImportResult<T>>)
   href: api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html#Magicodes_ExporterAndImporter_Excel_ExcelImporter_Import__1_System_String_Func_ImportResult___0__ImportResult___0___
@@ -1969,14 +1987,14 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T)
   nameWithType: ImportHelper<T>
   nameWithType.vb: ImportHelper(Of T)
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.#ctor(Stream)
-  name: ImportHelper(Stream)
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1__ctor_Stream_
-  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.#ctor(Stream)
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.ImportHelper(Stream)
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ImportHelper(Stream)
-  nameWithType: ImportHelper<T>.ImportHelper(Stream)
-  nameWithType.vb: ImportHelper(Of T).ImportHelper(Stream)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.#ctor(Stream,Stream)
+  name: ImportHelper(Stream, Stream)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1__ctor_Stream_Stream_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.#ctor(Stream,Stream)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.ImportHelper(Stream, Stream)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ImportHelper(Stream, Stream)
+  nameWithType: ImportHelper<T>.ImportHelper(Stream, Stream)
+  nameWithType.vb: ImportHelper(Of T).ImportHelper(Stream, Stream)
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.#ctor(System.String,System.String)
   name: ImportHelper(String, String)
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1__ctor_System_String_System_String_
@@ -2165,6 +2183,23 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).LabelingFilePath
   nameWithType: ImportHelper<T>.LabelingFilePath
   nameWithType.vb: ImportHelper(Of T).LabelingFilePath
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.LabelingFileStream
+  name: LabelingFileStream
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_LabelingFileStream
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.LabelingFileStream
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.LabelingFileStream
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).LabelingFileStream
+  nameWithType: ImportHelper<T>.LabelingFileStream
+  nameWithType.vb: ImportHelper(Of T).LabelingFileStream
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.LabelingFileStream*
+  name: LabelingFileStream
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_LabelingFileStream_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.LabelingFileStream
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.LabelingFileStream
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).LabelingFileStream
+  nameWithType: ImportHelper<T>.LabelingFileStream
+  nameWithType.vb: ImportHelper(Of T).LabelingFileStream
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.OutputBussinessErrorData(List{DataRowErrorInfo},System.String@)
   name: OutputBussinessErrorData(List<DataRowErrorInfo>, out String)
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_OutputBussinessErrorData_List_DataRowErrorInfo__System_String__

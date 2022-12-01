@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "lM4BJytmN+YGr9b41wTe9k5Ht4bw8Sc6hSbW7TeZ51U="
+          "hash": "CkXPXdUFJ8Nv4yEdW+M4uLisnMjT8zWpSQvUyG3gRd0="
         }
       },
       "is_incremental": false,
@@ -72,7 +72,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html",
-          "hash": "0aVIS6SHZUfzZhA9kgbv1HpaM4OyWq+S7PLeKC6ZjuM="
+          "hash": "cPDl3wAefoJ038AAcZth9z3TjBPJ8yz8R9kOZQokPdk="
         }
       },
       "is_incremental": false,
@@ -180,7 +180,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.ExcelImporter.html",
-          "hash": "IZ/axrMX3Q3AxsnCXzZqEUu0lty0HlmUxEQFdCrLqcg="
+          "hash": "1+79D2nCI8hWja25IstCklV7hHqqBX5AlSLs8xlx/zE="
         }
       },
       "is_incremental": false,
@@ -276,7 +276,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html",
-          "hash": "tCXpm3mt5COZ5DTrGP0KETnll+B+h8wEZ5XvGFVrr3M="
+          "hash": "nvj9uhvNwgeJMlDIiaNiS1At/QRmObNu5bGAdRiGkUI="
         }
       },
       "is_incremental": false,
