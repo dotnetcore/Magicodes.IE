@@ -11,10 +11,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'    
       - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 6.X SDK
+      - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '6.x'
+          dotnet-version: '7.x'
       - name: Install libgdiplus
         run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev
 #       - name: t
@@ -37,10 +37,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'    
       - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 6.X SDK
+      - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '6.x'
+          dotnet-version: '7.x'
       - name: Restore with dotnet
         run: dotnet restore
       - name: Build with dotnet
@@ -55,10 +55,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'    
       - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 6.X SDK
+      - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '6.x'
+          dotnet-version: '7.x'
       - name: Restore with dotnet
         run: dotnet restore
       - name: Build with dotnet
