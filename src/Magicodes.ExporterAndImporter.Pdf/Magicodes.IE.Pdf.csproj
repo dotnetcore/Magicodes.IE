@@ -15,12 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="C:\Users\XinLai\.nuget\packages\haukcode.wkhtmltopdfdotnet\1.5.71\build\..\runtimes\win-x64\native\wkhtmltox.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="C:\Users\XinLai\.nuget\packages\haukcode.wkhtmltopdfdotnet\1.5.71\build\..\runtimes\win-x86\native\wkhtmltox.dll" />
-  </ItemGroup>
 
   <!--<ItemGroup>
     <None Include="runtimes/linux-x64/native/wkhtmltox.so">
