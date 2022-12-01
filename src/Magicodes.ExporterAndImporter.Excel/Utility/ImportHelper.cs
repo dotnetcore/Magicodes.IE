@@ -57,9 +57,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <summary>
         /// </summary>
         /// <param name="stream"></param>
-        public ImportHelper(Stream stream)
+        public ImportHelper(Stream stream, Stream labelingFileStream)
         {
             Stream = stream;
+            LabelingFileStream = labelingFileStream;
         }
 
         /// <summary>
@@ -108,6 +109,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     标注文件路径
         /// </summary>
         public string LabelingFilePath { get; }
+        public Stream LabelingFileStream { get; set; }
 
         /// <summary>
         ///     导入结果
@@ -339,8 +341,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         /// <param name="excelPackage"></param>
         internal virtual void LabelingError(ExcelPackage excelPackage)
         {
-            //如果源路径为空则不允许生成标注文件
-            if (string.IsNullOrWhiteSpace(FilePath))
+            //如果源路径为空且标注流也为空则不允许生成标注文件
+            if (string.IsNullOrWhiteSpace(FilePath) && LabelingFileStream == null)
             {
                 return;
             }
@@ -405,12 +407,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                         excelRangeList[i].Copy(newWorksheet.Cells[i + 1, 1, i + 1, worksheet.Dimension.Columns]);
                     }
                 }
-
-                var ext = Path.GetExtension(FilePath);
-                var filePath = string.IsNullOrWhiteSpace(LabelingFilePath)
-                    ? FilePath.Replace(ext, "_" + ext)
-                    : LabelingFilePath;
-                excelPackage.SaveAs(new FileInfo(filePath));
+                if (LabelingFileStream == null)
+                {
+                    var ext = Path.GetExtension(FilePath);
+                    var filePath = string.IsNullOrWhiteSpace(LabelingFilePath)
+                        ? FilePath.Replace(ext, "_" + ext)
+                        : LabelingFilePath;
+                    excelPackage.SaveAs(new FileInfo(filePath));
+                    return;
+                }
+                excelPackage.SaveAs(LabelingFileStream);
             }
         }
 

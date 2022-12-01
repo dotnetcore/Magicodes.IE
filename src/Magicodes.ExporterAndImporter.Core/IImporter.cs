@@ -66,5 +66,14 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="stream">文件流</param>
         /// <returns></returns>
         Task<ImportResult<T>> Import<T>(Stream stream) where T : class, new();
+
+        /// <summary>
+        /// 导入模型验证数据并返回错误标注Stream
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stream"></param>
+        /// <param name="labelingFileStream"></param>
+        /// <returns></returns>
+        Task<ImportResult<T>> Import<T>(Stream stream,Stream labelingFileStream) where T : class, new();
     }
 }
