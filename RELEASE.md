@@ -1,9 +1,15 @@
 # Release Log
 
+## 2.7.1
+**2022.12.01**
+
+- Magicodes.IE.EPPlus默认添加SkiaSharp.NativeAssets.Linux.NoDependencies包，以便于在Linux环境下使用
+- 导入验证支持将错误数据通过Stream的方式返回，感谢sampsonye （见pr[#466](https://github.com/dotnetcore/Magicodes.IE/pull/466)）
+
 ## 2.7.0
 **2022.11.07**
 
-- 使用SkiaSharp替代SixLabors.ImageSharp
+- 添加SkiaSharp
 - 移除SixLabors.Fonts
 - 感谢linch90的大力支持（具体见pr[#462](https://github.com/dotnetcore/Magicodes.IE/pull/462)） 
 - 部分方法改为虚方法
