@@ -9,7 +9,10 @@ jobs:
     steps:
       - uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '5.0.x'    
+          dotnet-version: '5.0.x'
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
       - uses: actions/checkout@v2
       - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
@@ -35,7 +38,10 @@ jobs:
     steps:
       - uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '5.0.x'    
+          dotnet-version: '5.0.x'
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
       - uses: actions/checkout@v2
       - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
@@ -53,7 +59,10 @@ jobs:
     steps:
       - uses: actions/setup-dotnet@v2.1.0
         with:
-          dotnet-version: '5.0.x'    
+          dotnet-version: '5.0.x'
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
       - uses: actions/checkout@v2
       - name: 🔨 Use .NET 7.X SDK
         uses: actions/setup-dotnet@v2.1.0
