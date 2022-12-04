@@ -102,6 +102,11 @@ namespace Magicodes.ExporterAndImporter.Tests
                 //单元格宽度测试
                 sheet.Column(sheet.Cells.First(p => p.Text == "Time3").End.Column).Width.ShouldBe(100);
 
+                sheet.Cells["I1"].Style.Font.Size.ShouldBe(18);
+                sheet.Cells["I2"].Style.Font.Size.ShouldBe(12);
+                sheet.Cells["A2"].Style.Font.Size.ShouldBe(12);
+                sheet.Cells["A1"].Style.Font.Size.ShouldBe(11);
+
                 sheet.Tables.Count.ShouldBe(1);
 
                 var tb = sheet.Tables.First();
