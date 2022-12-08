@@ -33,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OfficeOpenXml.Packaging
 {
@@ -93,6 +94,21 @@ namespace OfficeOpenXml.Packaging
             os.PutNextEntry(fileName);
             byte[] b = Encoding.UTF8.GetBytes(xml.ToString());
             os.Write(b, 0, b.Length);
+        }
+
+        internal ValueTask WriteZipAsync(ZipOutputStream os, string fileName)
+        {
+            StringBuilder xml = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">");
+            foreach (var rel in _rels.Values)
+            {
+                xml.AppendFormat("<Relationship Id=\"{0}\" Type=\"{1}\" Target=\"{2}\"{3}/>", SecurityElement.Escape(rel.Id), rel.RelationshipType, SecurityElement.Escape(rel.TargetUri.OriginalString), rel.TargetMode == TargetMode.External ? " TargetMode=\"External\"" : "");
+            }
+            xml.Append("</Relationships>");
+
+            os.PutNextEntry(fileName);
+            byte[] b = Encoding.UTF8.GetBytes(xml.ToString());
+            os.WriteAsync(b, 0, b.Length);
+            return default;
         }
 
         public int Count

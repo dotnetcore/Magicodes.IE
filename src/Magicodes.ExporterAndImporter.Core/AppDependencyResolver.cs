@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD
+﻿#if NETSTANDARD||NETCOREAPP
 
 using Microsoft.Extensions.DependencyInjection;
 using System;

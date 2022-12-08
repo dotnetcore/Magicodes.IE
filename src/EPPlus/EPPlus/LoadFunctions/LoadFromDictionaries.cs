@@ -41,7 +41,7 @@ namespace OfficeOpenXml.LoadFunctions
         {
 
             int col = 0, row = 0;
-            if (PrintHeaders && _keys.Count() > 0)
+            if (PrintHeaders && _keys.Any())
             {
                 foreach (var key in _keys)
                 {
