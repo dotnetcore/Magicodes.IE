@@ -55,6 +55,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
+using Collections.Pooled;
 
 namespace OfficeOpenXml
 {
@@ -96,7 +97,7 @@ namespace OfficeOpenXml
     /// <summary>
     /// Represents an Excel Chartsheet and provides access to its properties and methods
     /// </summary>
-    public class ExcelChartsheet : ExcelWorksheet
+    public sealed class ExcelChartsheet : ExcelWorksheet
     {
         //ExcelDrawings draws;
         public ExcelChartsheet(XmlNamespaceManager ns, ExcelPackage pck, string relID, Uri uriWorksheet, string sheetName, int sheetID, int positionID, eWorkSheetHidden hidden, eChartType chartType, ExcelPivotTable pivotTableSource) :
@@ -3154,47 +3155,49 @@ namespace OfficeOpenXml
                 if (tbl.ShowHeader || tbl.ShowTotal)
                 {
                     int colNum = tbl.Address._fromCol;
-                    var colVal = new HashSet<string>();
-                    foreach (var col in tbl.Columns)
+                    using (var colVal = new PooledSet<string>())
                     {
-                        string n = col.Name.ToLowerInvariant();
-                        if (tbl.ShowHeader)
+                        foreach (var col in tbl.Columns)
                         {
-                            n = tbl.WorkSheet.GetValue<string>(tbl.Address._fromRow,
-                                tbl.Address._fromCol + col.Position);
-                            if (string.IsNullOrEmpty(n))
+                            string n = col.Name.ToLowerInvariant();
+                            if (tbl.ShowHeader)
                             {
-                                n = col.Name.ToLowerInvariant();
-                                SetValueInner(tbl.Address._fromRow, colNum, ConvertUtil.ExcelDecodeString(col.Name));
+                                n = tbl.WorkSheet.GetValue<string>(tbl.Address._fromRow,
+                                    tbl.Address._fromCol + col.Position);
+                                if (string.IsNullOrEmpty(n))
+                                {
+                                    n = col.Name.ToLowerInvariant();
+                                    SetValueInner(tbl.Address._fromRow, colNum, ConvertUtil.ExcelDecodeString(col.Name));
+                                }
+                                else
+                                {
+                                    col.Name = n;
+                                }
                             }
                             else
                             {
-                                col.Name = n;
+                                n = col.Name.ToLowerInvariant();
                             }
-                        }
-                        else
-                        {
-                            n = col.Name.ToLowerInvariant();
-                        }
 
-                        if (colVal.Contains(n))
-                        {
-                            throw (new InvalidDataException(string.Format("Table {0} Column {1} does not have a unique name.", tbl.Name, col.Name)));
-                        }
-                        colVal.Add(n);
-                        if (!string.IsNullOrEmpty(col.CalculatedColumnFormula))
-                        {
-                            int fromRow = tbl.ShowHeader ? tbl.Address._fromRow + 1 : tbl.Address._fromRow;
-                            int toRow = tbl.ShowTotal ? tbl.Address._toRow - 1 : tbl.Address._toRow;
-                            string r1c1Formula = ExcelCellBase.TranslateToR1C1(col.CalculatedColumnFormula, fromRow, colNum);
-                            bool needsTranslation = r1c1Formula != col.CalculatedColumnFormula;
-
-                            for (int row = fromRow; row <= toRow; row++)
+                            if (colVal.Contains(n))
                             {
-                                SetFormula(row, colNum, needsTranslation ? ExcelCellBase.TranslateFromR1C1(r1c1Formula, row, colNum) : r1c1Formula);
+                                throw (new InvalidDataException(string.Format("Table {0} Column {1} does not have a unique name.", tbl.Name, col.Name)));
                             }
+                            colVal.Add(n);
+                            if (!string.IsNullOrEmpty(col.CalculatedColumnFormula))
+                            {
+                                int fromRow = tbl.ShowHeader ? tbl.Address._fromRow + 1 : tbl.Address._fromRow;
+                                int toRow = tbl.ShowTotal ? tbl.Address._toRow - 1 : tbl.Address._toRow;
+                                string r1c1Formula = ExcelCellBase.TranslateToR1C1(col.CalculatedColumnFormula, fromRow, colNum);
+                                bool needsTranslation = r1c1Formula != col.CalculatedColumnFormula;
+
+                                for (int row = fromRow; row <= toRow; row++)
+                                {
+                                    SetFormula(row, colNum, needsTranslation ? ExcelCellBase.TranslateFromR1C1(r1c1Formula, row, colNum) : r1c1Formula);
+                                }
+                            }
+                            colNum++;
                         }
-                        colNum++;
                     }
                 }
                 if (tbl.Part == null)
@@ -3361,23 +3364,25 @@ namespace OfficeOpenXml
                     int ix = 0;
                     if (fields != null)
                     {
-                        var flds = new HashSet<string>();
-                        foreach (XmlElement node in fields)
+                        using (var flds = new PooledSet<string>())
                         {
-                            if (ix >= pt.CacheDefinition.SourceRange.Columns) break;
-                            var fldName = node.GetAttribute("name");                        //Fixes issue 15295 dup name error
-                            if (string.IsNullOrEmpty(fldName))
+                            foreach (XmlElement node in fields)
                             {
-                                fldName = (t == null
-                                    ? pt.CacheDefinition.SourceRange.Offset(0, ix++, 1, 1).Value.ToString()
-                                    : t.Columns[ix++].Name);
+                                if (ix >= pt.CacheDefinition.SourceRange.Columns) break;
+                                var fldName = node.GetAttribute("name");                        //Fixes issue 15295 dup name error
+                                if (string.IsNullOrEmpty(fldName))
+                                {
+                                    fldName = (t == null
+                                        ? pt.CacheDefinition.SourceRange.Offset(0, ix++, 1, 1).Value.ToString()
+                                        : t.Columns[ix++].Name);
+                                }
+                                if (flds.Contains(fldName))
+                                {
+                                    fldName = GetNewName(flds, fldName);
+                                }
+                                flds.Add(fldName);
+                                node.SetAttribute("name", fldName);
                             }
-                            if (flds.Contains(fldName))
-                            {
-                                fldName = GetNewName(flds, fldName);
-                            }
-                            flds.Add(fldName);
-                            node.SetAttribute("name", fldName);
                         }
                         foreach (var df in pt.DataFields)
                         {
@@ -3409,7 +3414,7 @@ namespace OfficeOpenXml
             }
         }
 
-        private string GetNewName(HashSet<string> flds, string fldName)
+        private string GetNewName(PooledSet<string> flds, string fldName)
         {
             int ix = 2;
             while (flds.Contains(fldName + ix.ToString(CultureInfo.InvariantCulture)))
@@ -4516,7 +4521,7 @@ namespace OfficeOpenXml
             _values.SetValueSpecial(row, col, _setValueInnerUpdateDelegate, value);
         }
         private static CellStore<ExcelCoreValue>.SetValueDelegate _setValueInnerUpdateDelegate = SetValueInnerUpdate;
-        private static void SetValueInnerUpdate(List<ExcelCoreValue> list, int index, object value)
+        private static void SetValueInnerUpdate(PooledList<ExcelCoreValue> list, int index, object value)
         {
             list[index] = new ExcelCoreValue { _value = value, _styleId = list[index]._styleId };
         }
@@ -4530,7 +4535,7 @@ namespace OfficeOpenXml
         {
             _values.SetValueSpecial(row, col, (CellStore<ExcelCoreValue>.SetValueDelegate)SetStyleInnerUpdate, styleId);
         }
-        void SetStyleInnerUpdate(List<ExcelCoreValue> list, int index, object styleId)
+        void SetStyleInnerUpdate(PooledList<ExcelCoreValue> list, int index, object styleId)
         {
             list[index] = new ExcelCoreValue { _value = list[index]._value, _styleId = (int)styleId };
         }
@@ -4548,7 +4553,7 @@ namespace OfficeOpenXml
             var rowBound = values.GetUpperBound(0);
             var colBound = values.GetUpperBound(1);
             _values.SetRangeValueSpecial(fromRow, fromColumn, toRow, toColumn,
-                (List<ExcelCoreValue> list, int index, int row, int column, object value) =>
+                (PooledList<ExcelCoreValue> list, int index, int row, int column, object value) =>
                 {
                     object val = null;
                     if (rowBound >= row - fromRow && colBound >= column - fromColumn)

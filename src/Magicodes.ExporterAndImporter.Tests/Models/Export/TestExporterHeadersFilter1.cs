@@ -21,6 +21,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     {
         public IList<ExporterHeaderInfo> Filter(IList<ExporterHeaderInfo> exporterHeaderInfos)
         {
+            IList<ExporterHeaderInfo> filtered = new List<ExporterHeaderInfo>();
             foreach (var item in exporterHeaderInfos)
             {
                 if (item.PropertyName == "Text2")

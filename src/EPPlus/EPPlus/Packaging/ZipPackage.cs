@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 namespace OfficeOpenXml.Packaging
 {
@@ -306,6 +307,43 @@ namespace OfficeOpenXml.Packaging
             os.Dispose();
 
             //return ms;
+        }
+
+        internal async Task SaveAsync(Stream stream)
+        {
+            var enc = Encoding.UTF8;
+            ZipOutputStream os = new ZipOutputStream(stream, true);
+            os.CompressionLevel = (OfficeOpenXml.Packaging.Ionic.Zlib.CompressionLevel)_compression;
+            /**** ContentType****/
+            var entry = os.PutNextEntry("[Content_Types].xml");
+            byte[] b = enc.GetBytes(GetContentTypeXml());
+            //await os.WriteAsync(b, 0, b.Length);
+            os.Write(b, 0, b.Length);
+            /**** Top Rels ****/
+            await _rels.WriteZipAsync(os, $"_rels/.rels");
+            //  await _rels.WriteZipAsync(os, $"_rels/.rels");
+            ZipPackagePart ssPart = null;
+            foreach (var part in Parts.Values)
+            {
+                if (part.ContentType != ExcelPackage.contentTypeSharedString)
+                {
+                    part.WriteZip(os);
+                }
+                else
+                {
+                    ssPart = part;
+                }
+            }
+            //Shared strings must be saved after all worksheets. The ss dictionary is populated when that workheets are saved (to get the best performance).
+            if (ssPart != null)
+            {
+                ssPart.WriteZip(os);
+            }
+            //await os.FlushAsync();
+            os.Close();
+            os.Dispose();
+
+            //   return Task.CompletedTask;
         }
 
         private string GetContentTypeXml()
