@@ -83,7 +83,7 @@ steps:
       -reports:"**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml"
       -targetdir:"$(System.DefaultWorkingDirectory)\coveragereport"
       -reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges
-      -assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-Magicodes.IE.EPPlus*;-MagicodesWebSite*"
+      -assemblyfilters:"-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-Magicodes.IE.EPPlus*;-MagicodesWebSite*"
 
       ls TestResults
     failOnStderr: true
