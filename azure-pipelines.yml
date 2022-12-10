@@ -79,7 +79,11 @@ steps:
       #执行单元测试
       dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
       dotnet tool install -g dotnet-reportgenerator-globaltool
-      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-Magicodes.IE.EPPlus*;-MagicodesWebSite*"
+      reportgenerator 
+      -reports:"**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml"
+      -targetdir:"$(System.DefaultWorkingDirectory)\coveragereport"
+      -reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges
+      -assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-Magicodes.IE.EPPlus*;-MagicodesWebSite*"
     failOnStderr: true
   continueOnError: true
 
