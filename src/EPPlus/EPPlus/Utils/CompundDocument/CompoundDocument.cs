@@ -35,7 +35,7 @@ using System.IO;
 
 namespace OfficeOpenXml.Utils.CompundDocument
 {
-    internal class CompoundDocument
+    internal sealed class CompoundDocument
     {
         internal class StoragePart
         {

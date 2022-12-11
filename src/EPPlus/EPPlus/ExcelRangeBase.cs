@@ -31,6 +31,7 @@
  * Eyal Seagull		    Conditional Formatting      2012-04-03
  *******************************************************************************/
 
+using Collections.Pooled;
 using OfficeOpenXml.Compatibility;
 using OfficeOpenXml.ConditionalFormatting;
 using OfficeOpenXml.DataValidation;
@@ -2075,7 +2076,7 @@ namespace OfficeOpenXml
 
             _worksheet._values.SetRangeValueSpecial(_fromRow, _fromCol, _fromRow + rowArray.Count - 1,
                 _fromCol + Table.Columns.Count - 1,
-                (List<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
+                (PooledList<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
                 {
                     rowIx -= _fromRow;
                     columnIx -= _fromCol;
@@ -2116,7 +2117,7 @@ namespace OfficeOpenXml
             if (rowArray.Count == 0) return null; //Issue #57
             _worksheet._values.SetRangeValueSpecial(_fromRow, _fromCol, _fromRow + rowArray.Count - 1,
                 _fromCol + maxColumn - 1,
-                (List<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
+                (PooledList<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
                 {
                     rowIx -= _fromRow;
                     columnIx -= _fromCol;
@@ -2459,7 +2460,7 @@ namespace OfficeOpenXml
 
             // flush
             _worksheet._values.SetRangeValueSpecial(_fromRow, _fromCol, _fromRow + values.Length - 1, _fromCol + maxCol,
-                (List<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
+                (PooledList<ExcelCoreValue> list, int index, int rowIx, int columnIx, object value) =>
                 {
                     rowIx -= _fromRow;
                     columnIx -= _fromCol;
@@ -3340,7 +3341,7 @@ namespace OfficeOpenXml
             return l;
         }
 
-        private static void SortSetValue(List<ExcelCoreValue> list, int index, object value)
+        private static void SortSetValue(PooledList<ExcelCoreValue> list, int index, object value)
         {
             var v = (ExcelCoreValue)value;
             list[index] = new ExcelCoreValue { _value = v._value, _styleId = v._styleId };
