@@ -1058,9 +1058,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
 
 
-                    var size = ExcelExporterSettings?.HeaderFontSize ?? exporterHeaderAttribute.FontSize;
-                    if (size.HasValue)
-                        colCell.Style.Font.Size = size.Value;
+
                 }
             }
         }
@@ -1128,6 +1126,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     {
                         col.Style.Font.Color.SetColor(exporterHeader.ExporterHeaderAttribute.FontColor.Value);
                     }
+                }
+                if (ExcelExporterSettings.FontSize != 0)
+                {
+                    col.Style.Font.Size = ExcelExporterSettings.FontSize;
+                }
+
+                var headerSize = ExcelExporterSettings.HeaderFontSize;
+                if (headerSize == 0 && exporterHeader.ExporterHeaderAttribute != null)
+                    headerSize = exporterHeader.ExporterHeaderAttribute.FontSize;
+
+                if (headerSize != 0)
+                {
+                    var headerCell = CurrentExcelWorksheet.Cells[1, exporterHeader.Index];
+                    headerCell.Style.Font.Size = headerSize;
                 }
             }
         }

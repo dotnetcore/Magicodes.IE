@@ -22,9 +22,11 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Magicodes.ExporterAndImporter.Excel
 {
@@ -190,9 +192,9 @@ namespace Magicodes.ExporterAndImporter.Excel
             {
                 throw new ArgumentNullException(Resource.AppendMethodMustBeBeforeCurrentMethod);
             }
-            var bytes = _excelPackage.GetAsByteArray();
+            var bytes = _excelPackage.GetAsByteArrayAsync();
             Reset();
-            return Task.FromResult(bytes);
+            return bytes;
         }
 
         /// <summary>
@@ -232,14 +234,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -269,14 +271,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -332,14 +334,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -367,14 +369,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -401,14 +403,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -436,14 +438,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.Export(sheetDataItems);
                     }
 
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -477,7 +479,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             helper.AddExporterHeaderInfoList(headerList);
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return ep.GetAsByteArrayAsync();
             }
         }
 
@@ -510,7 +512,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             helper.AddExporterHeaderInfoList(headerList);
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return ep.GetAsByteArrayAsync();
             }
         }
 
@@ -524,7 +526,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return ep.GetAsByteArrayAsync();
             }
         }
 
@@ -538,7 +540,7 @@ namespace Magicodes.ExporterAndImporter.Excel
             var helper = new ExportHelper<T>();
             using (var ep = helper.ExportHeaders())
             {
-                return Task.FromResult(ep.GetAsByteArray());
+                return ep.GetAsByteArrayAsync();
             }
         }
 
@@ -634,14 +636,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }
@@ -673,14 +675,14 @@ namespace Magicodes.ExporterAndImporter.Excel
                         helper.AddExcelWorksheet();
                         helper.Export(sheetDataItems);
                     }
-                    return Task.FromResult(helper.CurrentExcelPackage.GetAsByteArray());
+                    return helper.CurrentExcelPackage.GetAsByteArrayAsync();
                 }
             }
             else
             {
                 using (var ep = helper.Export(dataItems))
                 {
-                    return Task.FromResult(ep.GetAsByteArray());
+                    return ep.GetAsByteArrayAsync();
                 }
             }
         }

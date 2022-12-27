@@ -1,10 +1,15 @@
 # Release Log
 
-## 2.7.2
+## 2.7.3
 **2022.12.27**
 
 - 更新Haukcode.WkHtmlToPdfDotNet到1.5.86
 - tagetFrameworks移除net461
+
+## 2.7.2
+**2022.12.04**
+
+- 修复FontSize的Bug
 
 ## 2.7.1
 **2022.12.01**

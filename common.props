@@ -15,18 +15,24 @@
 		Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
 		导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
 
-		开源库地址:https://github.com/xin-lai
-		博客地址：http://www.cnblogs.com/codelove/
-		更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
-		公众号：麦扣聊技术
-		交流QQ群：85318032
+			开源库地址:https://github.com/xin-lai
+			博客地址：http://www.cnblogs.com/codelove/
+			更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
+			公众号：麦扣聊技术
+			交流QQ群：85318032
 
-	</Description>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <NoWarn>1701;1702;CS1591;CS1573</NoWarn>
-  </PropertyGroup>
+		</Description>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>1701;1702;CS1591;CS1573</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>

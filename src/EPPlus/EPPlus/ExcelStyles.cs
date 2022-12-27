@@ -29,6 +29,7 @@
  * Jan Källman		    Initial Release		        2009-10-01
  * Jan Källman		    License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
+using Collections.Pooled;
 using OfficeOpenXml.ConditionalFormatting;
 using OfficeOpenXml.Style;
 using OfficeOpenXml.Style.Dxf;
@@ -422,7 +423,7 @@ namespace OfficeOpenXml
                 var rowCache = new Dictionary<int, int>(address.End.Row - address.Start.Row + 1);
                 var colCache = new Dictionary<int, ExcelCoreValue>(address.End.Column - address.Start.Column + 1);
                 ws._values.SetRangeValueSpecial(address.Start.Row, address.Start.Column, address.End.Row, address.End.Column,
-                    (List<ExcelCoreValue> list, int index, int row, int column, object args) =>
+                    (PooledList<ExcelCoreValue> list, int index, int row, int column, object args) =>
                     {
                         // Optimized GetStyleID
                         var s = list[index]._styleId;

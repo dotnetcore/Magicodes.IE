@@ -750,7 +750,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "过滤学生基础数据导入.xlsx");
             using var errorStream = new MemoryStream();
-            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(new FileStream(filePath, FileMode.Open), errorStream);
+            var fs = new FileStream(filePath, FileMode.Open);
+            var import = await Importer.Import<ImportWithOnlyErrorRowsDto>(fs, errorStream);
             import.ShouldNotBeNull();
             if (import.Exception != null) _testOutputHelper.WriteLine(import.Exception.ToString());
 
