@@ -1,18 +1,19 @@
 <Project>
-	<PropertyGroup>
-		<Version>2.7.2</Version>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<NoWarn>1591</NoWarn>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Authors>雪雁</Authors>
-		<Product>麦扣</Product>
-		<PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
-		<PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
-		<Description>
-			Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
-			导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
+  <PropertyGroup>
+    <Version>2.7.3</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>雪雁</Authors>
+    <Product>麦扣</Product>
+    <PackageProjectUrl>https://docs.xin-lai.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+    <PackageTags>Magicodes.IE;excel;xlsx;csv;word;pdf;html</PackageTags>
+    <Description>
+		Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
+		导入导出通用库，支持Dto导入导出、模板导出、花式导出以及动态导出，支持Excel、Csv、Word、Pdf和Html。
 
 			开源库地址:https://github.com/xin-lai
 			博客地址：http://www.cnblogs.com/codelove/

@@ -33,7 +33,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="FakeItEasy" Version="7.2.0" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
 		<PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
