@@ -1438,8 +1438,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                                         if (!DateTime.TryParse(cell.Text, out var date))
                                         {
-                                            AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Text} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
-                                            break;
+                                            if (cell.Value is DateTime value)
+                                            {
+                                                date = value;
+                                            }
+                                            else
+                                            {
+                                                AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Text} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
+                                                break;
+                                            }
                                         }
 
                                         SetValue(cell, dataItem, propertyInfo, date);
