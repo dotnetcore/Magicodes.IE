@@ -1,5 +1,10 @@
 # Release Log
 
+## 2.7.4
+**2022.12.30**
+
+- Fix DateTime cell convert to Nullable<DateTime>，见pr [#475](https://github.com/dotnetcore/Magicodes.IE/pull/475)。
+
 ## 2.7.3
 **2022.12.27**
 
