@@ -42,7 +42,6 @@
 // ------------------------------------------------------------------
 //
 
-using Collections.Pooled;
 using Ionic.Zip;
 using OfficeOpenXml.Packaging.Ionic.Zlib;
 using System;
@@ -350,7 +349,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             CompressionLevel = OfficeOpenXml.Packaging.Ionic.Zlib.CompressionLevel.Default;
             CompressionMethod = OfficeOpenXml.Packaging.Ionic.Zip.CompressionMethod.Deflate;
             _encryption = EncryptionAlgorithm.None;
-            _entriesWritten = new PooledDictionary<String, ZipEntry>(StringComparer.Ordinal);
+            _entriesWritten = new Dictionary<String, ZipEntry>(StringComparer.Ordinal);
             _zip64 = Zip64Option.Never;
             _leaveUnderlyingStreamOpen = leaveOpen;
             Strategy = Ionic.Zlib.CompressionStrategy.Default;
@@ -1500,7 +1499,6 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
             if (disposing) // not called from finalizer
             {
-                _entriesWritten.Dispose(); 
                 // handle pending exceptions
                 if (!_exceptionPending)
                 {
@@ -1618,7 +1616,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         private Stream _outputStream;
         private ZipEntry _currentEntry;
         internal Zip64Option _zip64;
-        private PooledDictionary<String, ZipEntry> _entriesWritten;
+        private Dictionary<String, ZipEntry> _entriesWritten;
         private int _entryCount;
         private ZipOption _alternateEncodingUsage = ZipOption.Never;
 #if (Core)
