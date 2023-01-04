@@ -452,17 +452,22 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ReorderHeaders();
         }
 
+        /// <summary>
+        /// 表头重新排序
+        /// </summary>
         private void ReorderHeaders()
         {
-            //TODO:判断是否需要重排
-            //修改列位置
-            var maxIndex = _exporterHeaderList.Count - 1;
-            for (int i = 0; i < _exporterHeaderList.Count; i++)
+            if (_exporterHeaderList.Any(p => p.ExporterHeaderAttribute?.ColumnIndex >= 0 && p.ExporterHeaderAttribute?.ColumnIndex < 10000))
             {
-                var item = _exporterHeaderList[i];
-                //10000及以上属于无效索引
-                if (item.ExporterHeaderAttribute?.ColumnIndex < 10000)
+                //列索引从小到大先进行排序和处理，以防插入前面导致索引不对
+                _exporterHeaderList = _exporterHeaderList.OrderBy(p => p.ExporterHeaderAttribute?.ColumnIndex ?? 10000).ToList();
+                //修改列位置
+                var maxIndex = _exporterHeaderList.Count - 1;
+                var todoOrderHeaders = new List<ExporterHeaderInfo>();
+                //将存在指定列索引的列筛出来，并进行索引修正（防止误赋值）
+                foreach (var item in _exporterHeaderList.Where(p => p.ExporterHeaderAttribute?.ColumnIndex >= 0 && p.ExporterHeaderAttribute?.ColumnIndex < 10000))
                 {
+                    //10000及以上属于无效索引
                     var index = item.ExporterHeaderAttribute.ColumnIndex;
                     //如果索引小于0，则设置为0
                     if (index < 0)
@@ -470,18 +475,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     //如果索引设置超出当前列数，则插入最后一列
                     if (index > maxIndex)
                         index = maxIndex;
-                    if (index >= 0)
-                    {
-                        _exporterHeaderList.RemoveAt(i);
-                        _exporterHeaderList.Insert(index, item);
-                    }
+                    item.ExporterHeaderAttribute.ColumnIndex = index;
+                    todoOrderHeaders.Add(item);
                 }
-            }
-            //重新编排序号
-            for (int i = 0; i < _exporterHeaderList.Count; i++)
-            {
-                var item = _exporterHeaderList[i];
-                item.Index = i + 1;
+                //移动位置
+                foreach (var item in todoOrderHeaders)
+                {
+                    _exporterHeaderList.Remove(item);
+                    _exporterHeaderList.Insert(item.ExporterHeaderAttribute.ColumnIndex, item);
+                }
+                //重新编排序号
+                for (int i = 0; i < _exporterHeaderList.Count; i++)
+                {
+                    var item = _exporterHeaderList[i];
+                    item.Index = i + 1;
+                }
             }
         }
 
