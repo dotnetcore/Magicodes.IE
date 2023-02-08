@@ -376,7 +376,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                     foreach (var field in item.FieldErrors)
                     {
-                        var col = ImporterHeaderInfos.First(p => p.Header.Name == field.Key);
+                        var col = ImporterHeaderInfos.FirstOrDefault(p => p.Header.Name == field.Key);
+                        if (col == null)
+                        {
+                            throw new Exception($"'{field.Key}'.The column name does not exist!");
+                        }
                         var cell = worksheet.Cells[item.RowIndex, col.Header.ColumnIndex];
                         cell.Style.Font.Color.SetColor(Color.Red);
                         cell.Style.Font.Bold = true;
