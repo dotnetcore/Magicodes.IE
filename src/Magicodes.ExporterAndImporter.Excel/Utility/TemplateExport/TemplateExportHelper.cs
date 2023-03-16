@@ -24,6 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Magicodes.IE.Excel.Images;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -674,7 +676,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             //获取图片地址
                             var imageUrl = cellFunc.Invoke(invokeParams)?.ToString();
                             var cell = sheet.Cells[cellAddress];
-                            if (imageUrl == null || (!File.Exists(imageUrl) && !imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)))
+                            if (imageUrl == null || (!File.Exists(imageUrl) && !imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase) && !imageUrl.IsBase64StringValid()))
                             {
                                 cell.Value = alt;
                             }
@@ -682,7 +684,21 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                             {
                                 try
                                 {
-                                    var image = imageUrl.GetImageByUrl(out var format);
+                                    Image image = null;
+                                    IImageFormat format = default;
+                                    if (imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        image = imageUrl.GetImageByUrl(out format);
+                                    }
+                                    else if (imageUrl.IsBase64StringValid())
+                                    {
+                                        image = imageUrl.Base64StringToImage(out format);
+                                    }
+                                    else if (File.Exists(imageUrl))
+                                    {
+                                        image = Image.Load(imageUrl, out format);
+                                    }
+
                                     if (image == null)
                                     {
                                         cell.Value = alt;
