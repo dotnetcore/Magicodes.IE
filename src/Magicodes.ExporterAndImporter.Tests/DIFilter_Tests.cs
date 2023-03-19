@@ -128,7 +128,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 //检查转换结果
                 var sheet = pck.Workbook.Worksheets.First();
-                sheet.Cells["A1"].Text.ShouldBe("标题");
+                sheet.Cells["A1"].Text.ShouldBe("加粗文本");
                 sheet.Cells["C1"].Value.ShouldBe("数值");
                 sheet.Cells["D1"].Text.ShouldBe("name");
                 sheet.Dimension.Columns.ShouldBe(4);

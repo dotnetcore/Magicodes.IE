@@ -43,7 +43,7 @@ using OfficeOpenXml.Utils.CompundDocument;
 using OfficeOpenXml.Compatibility;
 using System.Text;
 using System.Threading.Tasks;
-#if (Core)
+#if (Core||NET6_0_OR_GREATER)
 using Microsoft.Extensions.Configuration;
 #endif
 namespace OfficeOpenXml
@@ -523,7 +523,7 @@ namespace OfficeOpenXml
         private void Init()
         {
             DoAdjustDrawings = true;
-#if (Core)
+#if (Core||NET6_0_OR_GREATER)
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);  //Add Support for codepage 1252
 
             var build = new ConfigurationBuilder()

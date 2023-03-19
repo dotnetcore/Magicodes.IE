@@ -18,7 +18,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-#if NETSTANDARD
+#if NETSTANDARD || NET5_0_OR_GREATER
 using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyModel;
 #endif
@@ -312,7 +312,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         /// <returns></returns>
         public static IList<Assembly> GetAllAssemblies()
         {
-#if NETSTANDARD
+#if NET
             var list = new List<Assembly>();
             var deps = DependencyContext.Default;
             //var libs = deps.CompileLibraries.Where(lib => !lib.Serviceable && lib.Type != "package");

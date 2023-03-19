@@ -265,7 +265,7 @@ namespace OfficeOpenXml.Encryption
         {
             switch (ei.HashAlgorithm)
             {
-#if (!Core)
+#if (!Core&&!NET6_0_OR_GREATER)
                 case eHashAlogorithm.RIPEMD160:
                     return new HMACRIPEMD160(salt);
 #endif                
@@ -620,7 +620,7 @@ namespace OfficeOpenXml.Encryption
             }
             return null;
         }
-#if Core
+#if Core||NET6_0_OR_GREATER
         private HashAlgorithm GetHashProvider(EncryptionInfoAgile.EncryptionKeyData encr)
         {
             switch (encr.HashAlgorithm)
@@ -647,19 +647,19 @@ namespace OfficeOpenXml.Encryption
             switch (encr.HashAlgorithm)
             {
                 case eHashAlogorithm.MD5:
-                        return new MD5CryptoServiceProvider();
+                    return new MD5CryptoServiceProvider();
                 case eHashAlogorithm.RIPEMD160:
-                        return new RIPEMD160Managed();
+                    return new RIPEMD160Managed();
                 case eHashAlogorithm.SHA1:
-                        return new SHA1CryptoServiceProvider();
+                    return new SHA1CryptoServiceProvider();
                 case eHashAlogorithm.SHA256:
-                        return  new SHA256CryptoServiceProvider();
+                    return new SHA256CryptoServiceProvider();
                 case eHashAlogorithm.SHA384:
-                        return new SHA384CryptoServiceProvider();
+                    return new SHA384CryptoServiceProvider();
                 case eHashAlogorithm.SHA512:
-                        return new SHA512CryptoServiceProvider();
+                    return new SHA512CryptoServiceProvider();
                 default:
-                        throw new NotSupportedException(string.Format("Hash provider is unsupported. {0}", encr.HashAlgorithm));
+                    throw new NotSupportedException(string.Format("Hash provider is unsupported. {0}", encr.HashAlgorithm));
             }
         }
 #endif
@@ -718,7 +718,7 @@ namespace OfficeOpenXml.Encryption
 #if (Core)
             var decryptKey = Aes.Create();
 #else
-                RijndaelManaged decryptKey = new RijndaelManaged();
+            RijndaelManaged decryptKey = new RijndaelManaged();
 #endif
             decryptKey.KeySize = encryptionInfo.Header.KeySize;
             decryptKey.Mode = CipherMode.ECB;
@@ -848,7 +848,7 @@ namespace OfficeOpenXml.Encryption
                 case eCipherAlgorithm.RC2:
                     return new RC2CryptoServiceProvider();
                 default:
-                    throw(new NotSupportedException(string.Format("Unsupported Cipher Algorithm: {0}", encr.CipherAlgorithm.ToString())));
+                    throw (new NotSupportedException(string.Format("Unsupported Cipher Algorithm: {0}", encr.CipherAlgorithm.ToString())));
             }
         }
 #endif
@@ -860,7 +860,7 @@ namespace OfficeOpenXml.Encryption
 #if (Core)
             encryptKey.Mode = CipherMode.CBC;
 #else
-            encryptKey.Mode = encr.CipherChaining==eChainingMode.ChainingModeCBC ? CipherMode.CBC : CipherMode.CFB;
+            encryptKey.Mode = encr.CipherChaining == eChainingMode.ChainingModeCBC ? CipherMode.CBC : CipherMode.CFB;
 #endif
             encryptKey.Padding = PaddingMode.Zeros;
 

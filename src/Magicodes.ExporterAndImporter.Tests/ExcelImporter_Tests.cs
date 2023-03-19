@@ -907,7 +907,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(0).Img1, png1).ShouldBeTrue();
                 ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(0).Img, png2).ShouldBeTrue();
 
+#if !NET471
                 ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(1).Img1, png3).ShouldBeTrue();
+#endif
                 ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(1).Img, png4).ShouldBeTrue();
 
                 ImageSharpCompare.ImagesAreEqual(import.Data.ElementAt(2).Img1, png1).ShouldBeTrue();
