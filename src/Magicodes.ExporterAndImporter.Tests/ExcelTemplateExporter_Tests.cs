@@ -19,6 +19,17 @@ namespace Magicodes.ExporterAndImporter.Tests
 {
     public class ExcelTemplateExporter_Tests : TestBase
     {
+        private string ReadLocalImageBase64(string imgpath)
+        {
+            if (!File.Exists(imgpath))
+            {
+                return string.Empty;
+            }
+
+            var bytes = File.ReadAllBytes(imgpath);
+            return Convert.ToBase64String(bytes);
+        }
+
         [Fact(DisplayName = "Excel模板导出教材订购明细样表（含图片）")]
         public async Task ExportByTemplate_Test()
         {
@@ -47,7 +58,7 @@ namespace Magicodes.ExporterAndImporter.Tests
                         new BookInfo(3, "0000000002", "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, null),
                         new BookInfo(4, null, "《XX从入门到放弃》", "张三", "机械工业出版社", "3.14", 100, "备注")
                         {
-                            Cover = Path.Combine("TestFiles", "issue131.png")
+                            Cover = ReadLocalImageBase64(Path.Combine("TestFiles", "issue131.png"))
                         }
                     }),
                 tplPath);
