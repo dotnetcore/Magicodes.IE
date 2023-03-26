@@ -147,7 +147,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="TestFiles\Images\4.Jpeg">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestFiles\Images\zero-DPI.Jpeg">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
