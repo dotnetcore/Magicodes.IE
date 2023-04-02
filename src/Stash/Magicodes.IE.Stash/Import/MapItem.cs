@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Magicodes.JustCode.Import
+namespace Magicodes.IE.Stash.Import
 {
     /// <summary>
     /// 映射项

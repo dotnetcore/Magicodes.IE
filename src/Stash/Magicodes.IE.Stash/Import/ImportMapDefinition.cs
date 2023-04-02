@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using System.Reflection;
 using System;
 
-namespace Magicodes.JustCode.Import
+namespace Magicodes.IE.Stash.Import
 {
     /// <summary>
     /// 导入映射定义

@@ -1,4 +1,4 @@
-﻿namespace Magicodes.JustCode.Import
+﻿namespace Magicodes.IE.Stash.Import
 {
     public class Pipe
     {

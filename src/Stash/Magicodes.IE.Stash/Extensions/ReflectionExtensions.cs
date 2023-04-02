@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magicodes.JustCode.Extensions
+namespace Magicodes.IE.Stash.Extensions
 {
     /// <summary>
     /// 反向扩展

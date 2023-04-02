@@ -1,13 +1,10 @@
 ﻿using CSScriptLib;
-using JustWei;
-using Magicodes.JustCode;
-using Magicodes.JustCode.Import;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JustWei.Models
+namespace Magicodes.IE.Stash.Import
 {
     public partial class ExcelImporter
     {

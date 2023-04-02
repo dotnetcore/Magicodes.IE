@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Magicodes.IE.JustCode\Magicodes.IE.JustCode.csproj" />
+    <ProjectReference Include="..\Magicodes.IE.Stash\Magicodes.IE.Stash.csproj" />
   </ItemGroup>
 
 </Project>

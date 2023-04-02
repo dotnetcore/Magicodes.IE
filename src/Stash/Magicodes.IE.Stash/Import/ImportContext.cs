@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magicodes.JustCode.Import
+namespace Magicodes.IE.Stash.Import
 {
     /// <summary>
     /// 动态计算上下文

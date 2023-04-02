@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace Magicodes.JustCode.Extensions
+namespace Magicodes.IE.Stash.Extensions
 {
     /// <summary>
     /// EPPlus扩展

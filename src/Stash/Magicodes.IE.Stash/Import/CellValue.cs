@@ -1,6 +1,6 @@
 ﻿using OfficeOpenXml;
 
-namespace Magicodes.JustCode.Import
+namespace Magicodes.IE.Stash.Import
 {
     /// <summary>
     /// 单元格

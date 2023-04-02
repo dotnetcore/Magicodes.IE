@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\..\common.props"></Import>
+	<PropertyGroup>
+		<!--<Version>2.7.4.7</Version>-->
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>10</LangVersion>
+		<RootNamespace>Magicodes.IE.Stash</RootNamespace>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<Folder Include="Export\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CS-Script" Version="4.6.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
+	</ItemGroup>
+
+</Project>

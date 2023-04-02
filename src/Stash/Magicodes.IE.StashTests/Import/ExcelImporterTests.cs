@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using JustWei.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Magicodes.IE.JustCodeTests.Extensions;
+using Magicodes.IE.Stash.Import;
+using Magicodes.IE.StashTests.Extensions;
 
-namespace JustWei.Models.Tests
+namespace Magicodes.IE.StashTests.Import
 {
     [TestClass()]
     public class ExcelImporterTests

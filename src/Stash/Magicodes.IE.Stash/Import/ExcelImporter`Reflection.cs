@@ -1,22 +1,17 @@
 ﻿using CSScriptLib;
-using JustWei;
-using JustWei.Models;
-using Magicodes.JustCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JustWei.Models
+namespace Magicodes.IE.Stash.Import
 {
     public partial class ExcelImporter
     {
         /// <summary>
         /// 查询类型名字对应的ClrType
         /// </summary>
-        /// <param name="typeName">类型名称</param>
         /// <returns></returns>
-        /// 
         public static Func<string, Type> FindType = (typeName) =>
         {
 

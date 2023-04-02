@@ -8,10 +8,9 @@ using CSScriptLib;
 using System.Text;
 using CSScripting;
 using System.Dynamic;
-using Magicodes.JustCode.Extensions;
-using Magicodes.JustCode.Import;
+using Magicodes.IE.Stash.Extensions;
 
-namespace JustWei.Models
+namespace Magicodes.IE.Stash.Import
 {
     public partial class ExcelImporter
     {

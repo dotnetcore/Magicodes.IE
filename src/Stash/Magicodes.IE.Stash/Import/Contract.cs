@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magicodes.JustCode
+namespace Magicodes.IE.Stash.Import
 {
     internal class Contract
     {

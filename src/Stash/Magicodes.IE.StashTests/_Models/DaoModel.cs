@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magicodes.IE.JustCodeTests._res
+namespace Magicodes.IE.StashTests._Models
 {
     public class DaoModel
     {
