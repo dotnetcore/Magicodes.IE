@@ -2,7 +2,10 @@
 
 namespace Magicodes.JustCode.Import
 {
-    public class ColValue
+    /// <summary>
+    /// 单元格
+    /// </summary>
+    public class CellValue
     {
         public int Index { get; set; }
         public string Title { get; set; }

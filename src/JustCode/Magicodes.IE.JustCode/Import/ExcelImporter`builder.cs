@@ -88,7 +88,7 @@ namespace JustWei.Models
 
             if (_repeatedNames.Any())
             {
-                throw new Exception($"变量名重复:{string.Join(',', _repeatedNames)}");
+                throw new Exception($"变量名重复:{string.Join(",", _repeatedNames)}");
             }
 
             MapDefinition.Variables.ForEach(p =>

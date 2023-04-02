@@ -5,7 +5,7 @@ namespace Magicodes.JustCode.Import
     /// <summary>
     /// 动态计算上下文
     /// </summary>
-    
+
     //TODO: 这个上下文,感觉没啥意义,味道不太对
     public class ImportContext
     {
@@ -42,5 +42,9 @@ namespace Magicodes.JustCode.Import
         /// 转换Dto实例
         /// </summary>
         public object DtoObj { get; set; }
+        /// <summary>
+        /// 当前转换过程中单元格数据
+        /// </summary>
+        public List<CellValue> Cells { get; set; }
     }
 }

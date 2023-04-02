@@ -16,8 +16,10 @@ namespace JustWei.Models
         /// </summary>
         /// <param name="typeName">类型名称</param>
         /// <returns></returns>
-        private Type findType(string typeName)
+        /// 
+        public static Func<string, Type> FindType = (typeName) =>
         {
+
             //先尝试直接获取类型
             var type = Type.GetType(typeName);
 
@@ -26,11 +28,35 @@ namespace JustWei.Models
             {
                 var ass = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
-                var types = ass.SelectMany(p => p.DefinedTypes).ToList();
+                List<Type> types = new();
+                foreach (var item in ass)
+                {
+                    try
+                    {
+                        var ts = item.DefinedTypes.ToList();
+
+                        foreach (var v in item.DefinedTypes)
+                        {
+                            try
+                            {
+                                types.Add(v.AsType());
+                            }
+                            catch (Exception ex)
+                            {
+                                //Console.WriteLine(ex);
+                            }
+                        }
+                    }
+                    catch (Exception aex)
+                    {
+                        //Console.WriteLine(aex);
+                    }
+                }
+
                 type = types.Find(p => p.Name == typeName || p.FullName == typeName);
             }
 
             return type;
-        }
+        };
     }
 }

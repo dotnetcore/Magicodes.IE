@@ -167,8 +167,8 @@ namespace JustWei.Models
         public List<object> Resolve(string filePath)
         {
             var _def = MapDefinition;
-            var type = findType(_def.DtoTypeName);
-            if (type==null)
+            var type = FindType(_def.DtoTypeName);
+            if (type == null)
             {
                 throw new Exception($"未找到指定的Dto类型:{_def.DtoTypeName} , 请尝试提供带命名空间的完整类型名");
             }
@@ -190,6 +190,7 @@ namespace JustWei.Models
 
             var ret = new List<object>();
 
+            /// 目标类型的属性定义
             //TODO: 还没搞子属性
             var _propertieInfos = type.GetProperties()
                 .Where(p => p.IsPublic() && p.CanRead && p.CanBeSet())
@@ -204,17 +205,20 @@ namespace JustWei.Models
                 var rowsCount = sheet.Dimension.Rows;
                 var colsCount = sheet.Dimension.Columns;
 
-                var _titles = new List<string>() { null };
+                var _titles = new List<string>() { null };//加一个null,是因为epplus的索引是从1开始的,为了方便而已
+
+                //TODO: 标题行所在的行号,这里应该搞成可配置的,因为有些场景,用户excel文件的标题可能不在第一行.
+                var titleRowIdx = 1;
 
                 for (int colIdx = 1; colIdx <= colsCount; colIdx++)
                 {
-                    var _col = sheet.Cells[1, colIdx];
+                    var _col = sheet.Cells[titleRowIdx, colIdx];
                     _titles.Add(_col.Text);
                 }
 
-                for (int rowIdx = 2; rowIdx <= rowsCount; rowIdx++)
+                for (int rowIdx = titleRowIdx + 1; rowIdx <= rowsCount; rowIdx++)
                 {
-                    List<ColValue> colValues = new();
+                    List<CellValue> colValues = new();
                     for (int colIdx = 1; colIdx <= colsCount; colIdx++)
                     {
                         var cell = sheet.Cells[rowIdx, colIdx];
@@ -235,6 +239,9 @@ namespace JustWei.Models
                     {
                         if (string.IsNullOrWhiteSpace(_map.Property))
                         {
+                            //TODO: 如果属性为空,是否应该处理后续的转换器?,思考有二:
+                            // 如果转换器仅仅只是计算返回值,那没必要
+                            // 但转换器里注入的对象,是允许修改的,导致转换器可以直接修改对象(dto实例其它属性)的值,会产生影响,同时,也提供了灵活性.
                             continue;
                         }
 
@@ -290,6 +297,7 @@ namespace JustWei.Models
                                 Code = pipe.Code,
                                 Def = _def,
                                 Value = value,
+                                Cells = colValues,
                                 Variables = _变量计算期context.Variables,
                             };
 
