@@ -102,7 +102,7 @@ namespace Magicodes.IE.Stash.Import
                 {
                     var posCol = sheet.Cells[rowIdx, 1];
                     var posText = posCol.Text;
-                    if (posText == "^定义完^")
+                    if (posText == Contract.TokenForMapEnd)
                     {
                         break;
                     }
@@ -115,79 +115,84 @@ namespace Magicodes.IE.Stash.Import
                         for (int i = 1; i < titles.Count; i++)
                         {
                             var value = sheet.Cells[rowIdx, i].Text;
-                            switch (titles[i])
+                            var _title = titles[i];
+                            if (_title == Contract.TokenForMapStart)
                             {
-                                case "序号":
-                                    mapItem.Index = value;
-                                    break;
-                                case "数据源列":
-                                    mapItem.Column = value;
-                                    break;
-                                case "模型属性名":
-                                    //TODO: 还没搞子属性
-                                    mapItem.Property = value;
-                                    break;
-                                case "数据类型":
-                                    mapItem.Type = value;
-                                    break;
-                                case "默认值":
-                                    mapItem.Default = value;
-                                    break;
-                                case "异常处理方式":
-                                    mapItem.Fail = value;
-                                    break;
-                                case "转换器":
-                                    if (!string.IsNullOrWhiteSpace(value))
-                                    {
-                                        mapItem.Pipes.Add(new() { Code = value });
-                                    }
-                                    break;
+                                mapItem.Index = value;
+                            }
+                            else if (_title == Contract.TokenForMapColumn)
+                            {
+                                mapItem.Column = value;
+                            }
+                            else if (_title == Contract.TokenForMapDtoProperty)
+                            {
+                                //TODO: 还没搞子属性
+                                mapItem.Property = value;
+                            }
+                            else if (_title == Contract.TokenForDtoType)
+                            {
+                                mapItem.Type = value;
+                            }
+                            else if (_title == Contract.TokenForMapDefaultValue)
+                            {
+                                mapItem.Default = value;
+                            }
+                            else if (_title == Contract.TokenForMapFail)
+                            {
+                                mapItem.Fail = value;
+                            }
+                            else if (_title == Contract.TokenForMapPipe)
+                            {
+                                if (!string.IsNullOrWhiteSpace(value))
+                                {
+                                    mapItem.Pipes.Add(new() { Code = value });
+                                }
                             }
                         }
 
                     }
                     else
                     {
-                        switch (posText)
+                        if (posText == Contract.TokenForDtoType)
                         {
                             //读取Dto类型
-                            case "模型类型:":
-                                ret.DtoTypeName = sheet.Cells[rowIdx, posCol.Columns + 1].Text;
-                                break;
-                            case "命名空间:":
-                                var txt = sheet.Cells[rowIdx, posCol.Columns + 1].Text;
-                                var sp = txt.Split(new char[] { ';' });
-                                foreach (var item in sp)
+                            ret.DtoTypeName = sheet.Cells[rowIdx, posCol.Columns + 1].Text;
+                        }
+                        else if (posText == Contract.TokenForNamespaces)
+                        {
+                            var txt = sheet.Cells[rowIdx, posCol.Columns + 1].Text;
+                            var sp = txt.Split(new char[] { ';' });
+                            foreach (var item in sp)
+                            {
+                                var v = item.Trim();
+                                if (!item.Equals("using", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    var v = item.Trim();
-                                    if (!item.Equals("using", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        ret.Namespaces.Add(v);
-                                    }
+                                    ret.Namespaces.Add(v);
                                 }
-                                break;
+                            }
+                        }
+                        else if (posText == Contract.TokenForVariable)
+                        {
                             //读取变量定义
-                            case "变量:":
-                                ret.Variables.Add(new()
-                                {
-                                    Name = sheet.Cells[rowIdx, posCol.Columns + 1].Text,
-                                    Code = sheet.Cells[rowIdx, posCol.Columns + 2].Text
-                                });
-
-                                break;
+                            ret.Variables.Add(new()
+                            {
+                                Name = sheet.Cells[rowIdx, posCol.Columns + 1].Text,
+                                Code = sheet.Cells[rowIdx, posCol.Columns + 2].Text
+                            });
+                        }
+                        else if (posText == Contract.TokenForMapStart)
+                        {
                             //读取映射定义
-                            case "序号":
-                                if (titleRowIdx == -1)
+                            if (titleRowIdx == -1)
+                            {
+                                //发现 "序号"二字,记下它的行号,这行以后的所有行,都看作是映射项,只到发现映射结束字符,或所有行都搞完
+                                titleRowIdx = rowIdx;
+                                for (int colIdx = 1; colIdx <= colsCount; colIdx++)
                                 {
-                                    //发现 "序号"二字,记下它的行号,这行以后的所有行,都看作是映射项,只到发现映射结束字符,或所有行都搞完
-                                    titleRowIdx = rowIdx;
-                                    for (int colIdx = 1; colIdx <= colsCount; colIdx++)
-                                    {
-                                        var title = sheet.Cells[rowIdx, colIdx].Text;
-                                        titles.Add(title);
-                                    }
+                                    var title = sheet.Cells[rowIdx, colIdx].Text;
+                                    titles.Add(title);
                                 }
-                                break;
+                            }
                         }
                     }
                 }
