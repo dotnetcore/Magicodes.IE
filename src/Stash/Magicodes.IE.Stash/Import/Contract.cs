@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Magicodes.IE.Stash.Import
 {
-    internal class Contract
+    public class Contract
     {
         /// <summary>
         /// 默认注入的命名空间
@@ -21,5 +21,10 @@ namespace Magicodes.IE.Stash.Import
         };
 
         //TODO:将模板表中的定界符号提到到这里,以便用户自定义
+
+        /// <summary>
+        /// 数据文件内联定义的SheetName
+        /// </summary>
+        public static string InlineDefinitionSheetName { get; set; } = "$definition$";
     }
 }

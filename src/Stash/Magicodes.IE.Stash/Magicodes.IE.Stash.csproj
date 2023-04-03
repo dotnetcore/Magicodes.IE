@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\..\..\common.props"></Import>
+	<!--<Import Project="..\..\..\common.props"></Import>-->
 	<PropertyGroup>
-		<!--<Version>2.7.4.7</Version>-->
+		<Version>2.7.3.0</Version>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>10</LangVersion>

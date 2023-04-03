@@ -32,11 +32,36 @@ namespace Magicodes.IE.Stash.Import
         }
 
         /// <summary>
+        /// 从excel文件中指定的工作表中加载映射规则
+        /// </summary>
+        /// <param name="excelFilePath"></param>
+        /// <param name="sheetName">包含定义的工作表名称</param>
+        /// <returns></returns>
+        public ImportMapDefinition LoadDefinitionFromExcelFile(string excelFilePath, string sheetName)
+        {
+            return LoadDefinitionFromExcelFile(excelFilePath, sheetName, true);
+        }
+
+        /// <summary>
         /// 从excel文件中加载映射规则
+        /// <para>如果文件中有多个工作表,将优先从 <see cref="Contract.InlineDefinitionSheetName"/> 工作表中获取定义,如果文件中不包含这个工作表,则使用第1个工作表</para>
+        /// <para>如果要明确从某个命名工作表中取定义,请使用 <see cref="LoadDefinitionFromExcelFile(string, string)" /> 方法</para>
         /// </summary>
         /// <param name="excelFilePath"></param>
         /// <returns></returns>
         public ImportMapDefinition LoadDefinitionFromExcelFile(string excelFilePath)
+        {
+            return LoadDefinitionFromExcelFile(excelFilePath, Contract.InlineDefinitionSheetName, false);
+        }
+        /// <summary>
+        /// 从excel文件中加载映射规则
+        /// </summary>
+        /// <param name="excelFilePath"></param>
+        /// <param name="sheetName">工作表名称</param>
+        /// <param name="precise">指示是否要精确匹配工作表名称,如果为false,匹配不到时将使用第1个工作表</param>
+        /// <returns></returns>
+        /// <exception cref="FileNotFoundException"></exception>
+        private ImportMapDefinition LoadDefinitionFromExcelFile(string excelFilePath, string sheetName, bool precise)
         {
             var ret = new ImportMapDefinition();
 
@@ -49,7 +74,24 @@ namespace Magicodes.IE.Stash.Import
             {
                 var workBook = package.Workbook;
                 var workSheets = workBook.Worksheets;
-                var sheet = workSheets[0];
+                if (!workSheets.Any())
+                {
+                    throw new Exception("文件没有工作表.");
+                }
+
+                ExcelWorksheet sheet = workSheets.FirstOrDefault(p => p.Name == sheetName);
+                if (sheet == null)
+                {
+                    if (precise)
+                    {
+                        throw new Exception($"文件中不存在工作表[{sheetName}].");
+                    }
+                    else
+                    {
+                        sheet = workSheets[0];
+                    }
+                }
+
                 var rowsCount = sheet.Dimension.Rows;
                 var colsCount = sheet.Dimension.Columns;
 
