@@ -1,12 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!--<Import Project="..\..\..\common.props"></Import>-->
 	<PropertyGroup>
-		<Version>2.7.3.0</Version>
+		<Version>0.0.0.1</Version>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>10</LangVersion>
 		<RootNamespace>Magicodes.IE.Stash</RootNamespace>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<RepositoryUrl>https://github.com/dotnetcore/Magicodes.IE</RepositoryUrl>
+		<PackageTags>Magicodes.IE;excel;xlsx</PackageTags>
+		<Description>
+			Magicodes.IE的扩展库，希望基于规则引擎（脚本）的提供灵活的数据转换服务。目前仅支持动态数据导入。
+
+			开源库地址:https://github.com/xin-lai
+			博客地址：http://www.cnblogs.com/codelove/
+			更新记录：https://github.com/dotnetcore/Magicodes.IE/blob/master/RELEASE.md
+			公众号：麦扣聊技术
+			交流QQ群：85318032
+
+		</Description>
 	</PropertyGroup>
 	<ItemGroup>
 		<Folder Include="Export\" />
