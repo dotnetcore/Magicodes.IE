@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<!--<Import Project="..\..\..\common.props"></Import>-->
 	<PropertyGroup>
-		<Version>0.0.0.1</Version>
+		<Version>2.7.4.3</Version>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>

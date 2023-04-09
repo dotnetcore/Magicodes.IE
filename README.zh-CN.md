@@ -35,12 +35,68 @@
 
 **![总体说明](./docs/Magicodes.IE.png)**
 
+## 功能清单
+
+- [ ] Excel
+  - [ ] 导入
+    - [x] Dto导入
+      - [x] 导入配置
+        - [x] 指定Sheet名称(获取指定Sheet名称)，为空则自动获取第一个
+        - [x] 指定Sheet下标
+        - [x] 截止读取的列数（从1开始，如果已设置，则将支持空行以及特殊列）
+        - [x] 是否标注错误（默认为true）
+        - [x] Sheet顶部导入描述
+        - [x] Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)
+        - [x] 是否仅导出错误数据
+      - [x] 列配置
+        - [x] 列名
+        - [x] 批注
+        - [x] 作者
+        - [x] 自动过滤空格，默认启用
+        - [x] 处理所有的空格，包括中间空格
+        - [x] 格式化（仅用于模板生成）
+        - [x] 列索引，如果为0则自动计算
+        - [x] 是否忽略
+      - [x] 导入验证
+        - [x] DataAnnotations（MaxLength、Required...）
+        - [x] 是否允许重复
+      - [x] 值映射
+        - [x] bool
+        - [x] 枚举
+      - [x] 筛选器
+        - [x] 结果筛选器
+        - [x] 列头筛选器
+      - [x] 特殊数据列导入
+        - [x] 图片导入
+          - [x] 导入为Base64
+          - [x] 导入到临时目录
+          - [x] 导入到指定目录
+      - [x] 合并行导入
+      - [x] 错误处理
+        - [x] 模板校验错误
+        - [x] 数据验证错误
+        - [x] 异常
+        - [x] 导入Excel文件的错误标注
+      - [x] 生成导入模板
+        - [x] 数据验证提示
+        - [x] 必填项标注
+        - [x] 数据下拉项生成（仅枚举）
+        - [x] 生成批注
+        - [x] Excel内置数据验证，并支持自定义提示（默认未开启）
+          - [x] MaxLengthAttribute
+          - [x] MinLengthAttribute
+          - [x] StringLengthAttribute
+          - [x] RangeAttribute
+      - [x] 乱序导入（无需按列顺序导入）
+      - [x] **多Sheet导入**
+    - [ ] 动态导入（**Magicodes.IE.Stash**）
+  - [ ] 导出
+
 ## 自动构建
+
 - Build Status：[![Build Status](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master)](https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&branchName=master)
 - Azure DevOps coverage (master):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
-- Azure DevOps coverage (develop):  ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop)
 - Azure DevOps tests (master):  ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
-- Azure DevOps tests (develop):  ![Azure DevOps tests (develop)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop)
 
 具体见：<https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&_a=summary>
 
@@ -65,6 +121,7 @@
 | **Magicodes.IE.Html.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Html.Abp)](https://www.nuget.org/packages/Magicodes.IE.Html.Abp)**   |
 | **Magicodes.IE.Pdf.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Pdf.Abp)](https://www.nuget.org/packages/Magicodes.IE.Pdf.Abp)**   |
 | **Magicodes.IE.Word.Abp** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Word.Abp)](https://www.nuget.org/packages/Magicodes.IE.Word.Abp)**   |
+| **Magicodes.IE.Stash** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Stash)](https://www.nuget.org/packages/Magicodes.IE.Stash)**   |
 
 ## **注意事项**
 
@@ -322,21 +379,6 @@ public DateTime Time3 { get; set; }
 
 - **<https://github.com/xin-lai>**
 - **<https://gitee.com/magicodes>**
-
-## 友情赞助
-
-### 服务内容
-
-<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">点此打开小店</a></p>
-
-服务内容如下：
-- 技术支持
-- 使用培训
-- 二次开发支持
-- 需求定制
-- 赞助（Github展示）
-
-**具体收费根据需求评估，所有收入的30%~60%（视具体工作量评估）捐赠给Magicodes.IE项目开源管理委员会以促进项目长期维护和迭代发展。所有收支均全部公开。**
 
 ### Code Contributors
 
