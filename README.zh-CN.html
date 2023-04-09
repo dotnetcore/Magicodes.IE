@@ -92,13 +92,107 @@
 <li>码云（手动同步，不维护）：<a href="https://gitee.com/magicodes/Magicodes.IE">https://gitee.com/magicodes/Magicodes.IE</a></li>
 </ul>
 <p><strong><img src="./docs/Magicodes.IE.png" alt="总体说明"></strong></p>
+<h2 id="功能清单">功能清单</h2>
+<ul>
+<li>[ ] Excel
+<ul>
+<li>[ ] 导入
+<ul>
+<li>[x] Dto导入
+<ul>
+<li>[x] 导入配置
+<ul>
+<li>[x] 指定Sheet名称(获取指定Sheet名称)，为空则自动获取第一个</li>
+<li>[x] 指定Sheet下标</li>
+<li>[x] 截止读取的列数（从1开始，如果已设置，则将支持空行以及特殊列）</li>
+<li>[x] 是否标注错误（默认为true）</li>
+<li>[x] Sheet顶部导入描述</li>
+<li>[x] Sheet顶部导入描述高度(换行可能无法自动设定高度,默认为Excel的默认行高)</li>
+<li>[x] 是否仅导出错误数据</li>
+</ul>
+</li>
+<li>[x] 列配置
+<ul>
+<li>[x] 列名</li>
+<li>[x] 批注</li>
+<li>[x] 作者</li>
+<li>[x] 自动过滤空格，默认启用</li>
+<li>[x] 处理所有的空格，包括中间空格</li>
+<li>[x] 格式化（仅用于模板生成）</li>
+<li>[x] 列索引，如果为0则自动计算</li>
+<li>[x] 是否忽略</li>
+</ul>
+</li>
+<li>[x] 导入验证
+<ul>
+<li>[x] DataAnnotations（MaxLength、Required...）</li>
+<li>[x] 是否允许重复</li>
+</ul>
+</li>
+<li>[x] 值映射
+<ul>
+<li>[x] bool</li>
+<li>[x] 枚举</li>
+</ul>
+</li>
+<li>[x] 筛选器
+<ul>
+<li>[x] 结果筛选器</li>
+<li>[x] 列头筛选器</li>
+</ul>
+</li>
+<li>[x] 特殊数据列导入
+<ul>
+<li>[x] 图片导入
+<ul>
+<li>[x] 导入为Base64</li>
+<li>[x] 导入到临时目录</li>
+<li>[x] 导入到指定目录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[x] 合并行导入</li>
+<li>[x] 错误处理
+<ul>
+<li>[x] 模板校验错误</li>
+<li>[x] 数据验证错误</li>
+<li>[x] 异常</li>
+<li>[x] 导入Excel文件的错误标注</li>
+</ul>
+</li>
+<li>[x] 生成导入模板
+<ul>
+<li>[x] 数据验证提示</li>
+<li>[x] 必填项标注</li>
+<li>[x] 数据下拉项生成（仅枚举）</li>
+<li>[x] 生成批注</li>
+<li>[x] Excel内置数据验证，并支持自定义提示（默认未开启）
+<ul>
+<li>[x] MaxLengthAttribute</li>
+<li>[x] MinLengthAttribute</li>
+<li>[x] StringLengthAttribute</li>
+<li>[x] RangeAttribute</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[x] 乱序导入（无需按列顺序导入）</li>
+<li>[x] <strong>多Sheet导入</strong></li>
+</ul>
+</li>
+<li>[ ] 动态导入（<strong>Magicodes.IE.Stash</strong>）</li>
+</ul>
+</li>
+<li>[ ] 导出</li>
+</ul>
+</li>
+</ul>
 <h2 id="自动构建">自动构建</h2>
 <ul>
 <li>Build Status：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build/latest?definitionId=4&amp;branchName=master"><img src="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_apis/build/status/dotnetcore.Magicodes.IE?branchName=master" alt="Build Status"></a></li>
 <li>Azure DevOps coverage (master):  <img src="https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master" alt="Azure DevOps coverage (branch)"></li>
-<li>Azure DevOps coverage (develop):  <img src="https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/develop" alt="Azure DevOps coverage (branch)"></li>
 <li>Azure DevOps tests (master):  <img src="https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master" alt="Azure DevOps tests (master)"></li>
-<li>Azure DevOps tests (develop):  <img src="https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/develop" alt="Azure DevOps tests (develop)"></li>
 </ul>
 <p>具体见：<a href="https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&amp;_a=summary">https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?definitionId=4&amp;_a=summary</a></p>
 <h2 id="nuget包">NuGet包</h2>
@@ -170,6 +264,10 @@
 <tr>
 <td><strong>Magicodes.IE.Word.Abp</strong></td>
 <td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.Word.Abp"><img src="https://buildstats.info/nuget/Magicodes.IE.Word.Abp" alt="NuGet"></a></strong></td>
+</tr>
+<tr>
+<td><strong>Magicodes.IE.Stash</strong></td>
+<td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.Stash"><img src="https://buildstats.info/nuget/Magicodes.IE.Stash" alt="NuGet"></a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -445,18 +543,6 @@ public DateTime Time3 { get; set; }
 <li><strong><a href="https://github.com/xin-lai">https://github.com/xin-lai</a></strong></li>
 <li><strong><a href="https://gitee.com/magicodes">https://gitee.com/magicodes</a></strong></li>
 </ul>
-<h2 id="友情赞助">友情赞助</h2>
-<h3 id="服务内容">服务内容</h3>
-<p><a href="https://item.taobao.com/item.htm?spm=a2oq0.12575281.0.0.50111deb3qGSAw&ft=t&id=648720741666" target="_blank">点此打开小店</a></p>
-<p>服务内容如下：</p>
-<ul>
-<li>技术支持</li>
-<li>使用培训</li>
-<li>二次开发支持</li>
-<li>需求定制</li>
-<li>赞助（Github展示）</li>
-</ul>
-<p><strong>具体收费根据需求评估，所有收入的30%~60%（视具体工作量评估）捐赠给Magicodes.IE项目开源管理委员会以促进项目长期维护和迭代发展。所有收支均全部公开。</strong></p>
 <h3 id="code-contributors">Code Contributors</h3>
 <p><a href="https://github.com/dotnetcore/Magicodes.IE/graphs/contributors"><img src="https://opencollective.com/magicodes/contributors.svg?width=890&button=false"></a></p>
 <h3 id="financial-contributors">Financial Contributors</h3>
