@@ -27,7 +27,7 @@ namespace Magicodes.ExporterAndImporter.Core
         public int HeaderRowIndex { get; set; } = 1;
 
         /// <summary>
-        /// 最大允许导入的函数
+        /// 最大允许导入的行数
         /// </summary>
         public int MaxCount = 0;
 
