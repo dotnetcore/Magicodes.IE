@@ -57,7 +57,7 @@ namespace Magicodes.ExporterAndImporter.Core
         public bool IsBold { set; get; }
 
         /// <summary>
-        ///     格式化
+        ///     格式化（身份证'@'，日期'yyyy-MM-dd'、'yyyy-MM-dd HH:mm:ss'，数字'#,##0'）
         /// </summary>
         public string Format { get; set; }
 
