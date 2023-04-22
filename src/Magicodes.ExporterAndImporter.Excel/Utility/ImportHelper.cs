@@ -363,7 +363,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
                 //TODO:标注模板错误
                 //标注数据错误
-                var excelRangeList = new List<ExcelRange> { worksheet.Cells[1, 1, 1, worksheet.Dimension.Columns] };
+                var excelRangeList = new List<ExcelRange> { worksheet.Cells[FromRow: ExcelImporterSettings.HeaderRowIndex, FromCol: 1, ToRow: ExcelImporterSettings.HeaderRowIndex, ToCol: worksheet.Dimension.Columns] };
                 foreach (var item in ImportResult.RowErrors)
                 {
                     var gtRows = EmptyRows.Where(r => r > item.RowIndex);
@@ -406,6 +406,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     excelPackage.Workbook.Worksheets.Add($"{worksheet.Name}-{Resource.WrongData}");
                     var newWorksheet = GetImportSheet(excelPackage);
 
+                    //var startRowIndex = ExcelImporterSettings.HeaderRowIndex - 1;
                     for (int i = 0; i < excelRangeList.Count; i++)
                     {
                         excelRangeList[i].Copy(newWorksheet.Cells[i + 1, 1, i + 1, worksheet.Dimension.Columns]);
