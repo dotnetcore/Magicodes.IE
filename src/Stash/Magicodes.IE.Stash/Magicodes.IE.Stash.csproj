@@ -27,6 +27,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="CS-Script" Version="4.6.5" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
