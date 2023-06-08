@@ -1095,7 +1095,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
 
                                     var value = col.MappingValues[cellValue];
-                                    
+
                                     if (isEnum && isNullable && (value is int || value is short)
                                         // && Enum.IsDefined(type, value)
                                         )
@@ -1155,6 +1155,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 AddRowDataError(rowIndex, col, $"{Resource.Value} {cellValue} {Resource.ThereAreNoTemplateDropDownOptions}");
                                 continue;
                             }
+
+                            #region 删除千分位符 ","
+                            var types = new string[] { "Int64", "Nullable<Int64>", "Int32", "Nullable<Int32>", "Int16", "Nullable<Int16>", "Decimal", "Nullable<Decimal>", "Double", "Nullable<Double>" };
+                            var csType = propertyInfo.PropertyType.GetCSharpTypeName();
+                            if (types.Contains(csType))
+                            {
+                                cellValue = cellValue?.Replace(",", "");
+                            }
+                            #endregion
 
                             switch (propertyInfo.PropertyType.GetCSharpTypeName())
                             {
