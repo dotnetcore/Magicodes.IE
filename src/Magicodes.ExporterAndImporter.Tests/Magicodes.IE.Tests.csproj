@@ -24,7 +24,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<!--修复Ubuntu下dotnet test的问题，参考：https://github.com/microsoft/vstest/issues/2469 -->
-		<!--<PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="16.8.3" />-->
+		<PackageReference Include="Microsoft.TestPlatform.ObjectModel"/>
 		<DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
 		<PackageReference Include="Shouldly" Version="4.0.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
