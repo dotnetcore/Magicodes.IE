@@ -206,7 +206,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             using (var fileStream = new FileStream(filePath1, FileMode.Create))
             {
                 errorStream.Seek(0, SeekOrigin.Begin);
-                errorStream.CopyTo(fileStream);
+                await errorStream.CopyToAsync(fileStream);
             };
 
             using (var pck = new ExcelPackage(new FileInfo(filePath1)))
