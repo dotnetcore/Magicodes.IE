@@ -38,6 +38,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
                         memoryStream.Seek(0, SeekOrigin.Begin);
                         await memoryStream.CopyToAsync(originalResponseBodyStream);
                     }
+                    return;
                 }
                 await _next(context);
             }
@@ -45,6 +46,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
             {
                 memoryStream.Seek(0, SeekOrigin.Begin);
                 await memoryStream.CopyToAsync(originalResponseBodyStream);
+                throw;
             }
             finally
             {
