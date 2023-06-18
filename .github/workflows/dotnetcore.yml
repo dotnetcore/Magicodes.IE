@@ -30,8 +30,10 @@ jobs:
         run: dotnet restore
       - name: Build with dotnet
         run: dotnet build -c Release --no-restore
-      - name: Test with dotnet
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
+      - name: Test with .NET 6.0.x
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net6.0
+      - name: Test with .NET 7.0.x
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net7.0
   windows-latest:
     name: windows-latest
     runs-on: windows-latest
@@ -72,5 +74,7 @@ jobs:
         run: dotnet restore
       - name: Build with dotnet
         run: dotnet build -c Release --no-restore
-      - name: Test with dotnet
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
+      - name: Test with .NET 6.0.x
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net6.0
+      - name: Test with .NET 7.0.x
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net7.0
