@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0</TargetFrameworks>
     <PackageId>Magicodes.IE.Excel</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.3" />
-    <!--<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />-->
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.6" />
   </ItemGroup>
   <ItemGroup>

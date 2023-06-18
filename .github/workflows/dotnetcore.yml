@@ -1,6 +1,10 @@
 name: .NET Core
 
-on: [push]
+on: 
+  push:
+    branches: [ "develop", "release/*", "master" ]
+  pull_request:
+    branches: [ "develop", "release/*", "master" ]
 
 jobs:
   ubuntu-latest:
