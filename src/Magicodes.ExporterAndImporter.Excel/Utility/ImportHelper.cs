@@ -1156,12 +1156,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 continue;
                             }
 
-                            #region 删除千分位符 ","
+                            #region 删除千分位符 "," 及单引号 "'"
                             var types = new string[] { "Int64", "Nullable<Int64>", "Int32", "Nullable<Int32>", "Int16", "Nullable<Int16>", "Decimal", "Nullable<Decimal>", "Double", "Nullable<Double>" };
                             var csType = propertyInfo.PropertyType.GetCSharpTypeName();
                             if (types.Contains(csType))
                             {
-                                cellValue = cellValue?.Replace(",", "");
+                                cellValue = cellValue?.Replace(",", "").Replace("'", "");
                             }
                             #endregion
 
