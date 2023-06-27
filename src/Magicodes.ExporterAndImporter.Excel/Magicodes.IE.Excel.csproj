@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="DynamicExpresso.Core" Version="2.3.3" />
     <!--<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />-->
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.6" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />
