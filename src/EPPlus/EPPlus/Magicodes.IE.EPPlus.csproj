@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\..\common.props"></Import>
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.1;netstandard2.0;net6.0;net7.0</TargetFrameworks>
@@ -64,7 +64,7 @@
 	<ItemGroup>
 		<PackageReference Include="Collections.Pooled" Version="2.0.0-preview.27" />
 		<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.1.1" />
-		<PackageReference Include="SkiaSharp" Version="2.88.3" />
+		<PackageReference Include="SkiaSharp" Version="2.88.6" />
 		<PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.3" />
 	</ItemGroup>
 
