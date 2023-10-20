@@ -8,6 +8,7 @@ using System.IO;
 using Magicodes.Benchmarks.Models;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Excel.Utility;
+using System.Dynamic;
 
 namespace Magicodes.IE.Tools
 {
@@ -16,45 +17,44 @@ namespace Magicodes.IE.Tools
         private readonly static List<ExportTestDataWithAttrs> _exportTestData = new List<ExportTestDataWithAttrs>();
         private static async Task Main(string[] args)
         {
-            args = new string[] { "TEST" };
-            //if (args.Length == 0)
-            //{
-            //    var versionString = Assembly.GetEntryAssembly()
-            //                            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            //                            .InformationalVersion
-            //                            .ToString();
+            if (args.Length == 0)
+            {
+                var versionString = Assembly.GetEntryAssembly()
+                                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                        .InformationalVersion
+                                        .ToString();
 
-            //    Console.WriteLine($"mie v{versionString}");
-            //    Console.WriteLine("-------------");
-            //    Console.WriteLine("\nGithub:");
-            //    Console.WriteLine("  https://github.com/dotnetcore/Magicodes.IE");
-            //    return;
-            //}
-            //else if (args.Any(p => "TEST".Equals(p, StringComparison.CurrentCultureIgnoreCase)))
-            //{
-            IExporter exporter = new ExcelExporter();
-            var data = new List<ExportTestDataWithPicture>
+                Console.WriteLine($"mie v{versionString}");
+                Console.WriteLine("-------------");
+                Console.WriteLine("\nGithub:");
+                Console.WriteLine("  https://github.com/dotnetcore/Magicodes.IE");
+                return;
+            }
+            else if (args.Any(p => "TEST".Equals(p, StringComparison.CurrentCultureIgnoreCase)))
+            {
+                ExcelExporter exporter = new ExcelExporter();
+                var data = new List<ExportTestDataWithPicture>
                 {
                     new ExportTestDataWithPicture
                     {
-                        Img = "C:\\Users\\hueifeng\\Pictures\\avatar.png",
-                        Text="张三"
+                        Img = Path.Combine(Directory.GetCurrentDirectory(), "zero-DPI.Jpeg"),
+                        Text ="张三"
                     }
                 };
 
-            Parallel.For(0, 100000, (i) =>
-            {
-                data.Add(new ExportTestDataWithPicture
+                Parallel.For(0, 10, (i) =>
                 {
-                    Img = "C:\\Users\\hueifeng\\Pictures\\avatar.png",
-                    Text = "张三"
+                    data.Add(new ExportTestDataWithPicture
+                    {
+                        Img = Path.Combine(Directory.GetCurrentDirectory(), "zero-DPI.Jpeg"),
+                        Text = "张三"
+                    });
                 });
-            });
 
-            var filePath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "test.xlsx");
-            var result = await exporter.Export("test.xlsx", data);
-            Console.WriteLine($"导出成功：{filePath}！");
-            //   }
+                var filePath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "test.xlsx");
+                var result = await exporter.Export("test.xlsx", data);
+                Console.WriteLine($"导出成功：{filePath}！");
+            }
             Console.WriteLine("完成");
             Console.ReadLine();
         }
