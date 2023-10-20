@@ -263,7 +263,7 @@ namespace OfficeOpenXml
         internal ExcelHeaderFooterText _evenFooter;
         internal ExcelHeaderFooterText _firstHeader;
         internal ExcelHeaderFooterText _firstFooter;
-        private ExcelWorksheet _ws;
+        private readonly ExcelWorksheet _ws;
         #endregion
 
         #region ExcelHeaderFooter Constructor

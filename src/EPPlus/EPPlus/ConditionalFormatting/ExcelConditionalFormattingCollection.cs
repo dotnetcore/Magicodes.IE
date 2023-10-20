@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using System.Xml;
 
+
 namespace OfficeOpenXml.ConditionalFormatting
 {
     /// <summary>

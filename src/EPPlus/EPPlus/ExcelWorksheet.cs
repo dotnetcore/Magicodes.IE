@@ -55,7 +55,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
-using Collections.Pooled;
+
 
 namespace OfficeOpenXml
 {
@@ -3155,7 +3155,7 @@ namespace OfficeOpenXml
                 if (tbl.ShowHeader || tbl.ShowTotal)
                 {
                     int colNum = tbl.Address._fromCol;
-                    using (var colVal = new PooledSet<string>())
+                    var colVal = new HashSet<string>();
                     {
                         foreach (var col in tbl.Columns)
                         {
@@ -3364,26 +3364,26 @@ namespace OfficeOpenXml
                     int ix = 0;
                     if (fields != null)
                     {
-                        using (var flds = new PooledSet<string>())
+                        HashSet<string> flds = new HashSet<string>();
+
+                        foreach (XmlElement node in fields)
                         {
-                            foreach (XmlElement node in fields)
+                            if (ix >= pt.CacheDefinition.SourceRange.Columns) break;
+                            var fldName = node.GetAttribute("name");                        //Fixes issue 15295 dup name error
+                            if (string.IsNullOrEmpty(fldName))
                             {
-                                if (ix >= pt.CacheDefinition.SourceRange.Columns) break;
-                                var fldName = node.GetAttribute("name");                        //Fixes issue 15295 dup name error
-                                if (string.IsNullOrEmpty(fldName))
-                                {
-                                    fldName = (t == null
-                                        ? pt.CacheDefinition.SourceRange.Offset(0, ix++, 1, 1).Value.ToString()
-                                        : t.Columns[ix++].Name);
-                                }
-                                if (flds.Contains(fldName))
-                                {
-                                    fldName = GetNewName(flds, fldName);
-                                }
-                                flds.Add(fldName);
-                                node.SetAttribute("name", fldName);
+                                fldName = (t == null
+                                    ? pt.CacheDefinition.SourceRange.Offset(0, ix++, 1, 1).Value.ToString()
+                                    : t.Columns[ix++].Name);
                             }
+                            if (flds.Contains(fldName))
+                            {
+                                fldName = GetNewName(flds, fldName);
+                            }
+                            flds.Add(fldName);
+                            node.SetAttribute("name", fldName);
                         }
+
                         foreach (var df in pt.DataFields)
                         {
                             if (string.IsNullOrEmpty(df.Name))
@@ -3414,7 +3414,7 @@ namespace OfficeOpenXml
             }
         }
 
-        private string GetNewName(PooledSet<string> flds, string fldName)
+        private string GetNewName(HashSet<string> flds, string fldName)
         {
             int ix = 2;
             while (flds.Contains(fldName + ix.ToString(CultureInfo.InvariantCulture)))
@@ -4521,7 +4521,7 @@ namespace OfficeOpenXml
             _values.SetValueSpecial(row, col, _setValueInnerUpdateDelegate, value);
         }
         private static CellStore<ExcelCoreValue>.SetValueDelegate _setValueInnerUpdateDelegate = SetValueInnerUpdate;
-        private static void SetValueInnerUpdate(PooledList<ExcelCoreValue> list, int index, object value)
+        private static void SetValueInnerUpdate(List<ExcelCoreValue> list, int index, object value)
         {
             list[index] = new ExcelCoreValue { _value = value, _styleId = list[index]._styleId };
         }
@@ -4535,7 +4535,7 @@ namespace OfficeOpenXml
         {
             _values.SetValueSpecial(row, col, (CellStore<ExcelCoreValue>.SetValueDelegate)SetStyleInnerUpdate, styleId);
         }
-        void SetStyleInnerUpdate(PooledList<ExcelCoreValue> list, int index, object styleId)
+        void SetStyleInnerUpdate(List<ExcelCoreValue> list, int index, object styleId)
         {
             list[index] = new ExcelCoreValue { _value = list[index]._value, _styleId = (int)styleId };
         }
@@ -4553,7 +4553,7 @@ namespace OfficeOpenXml
             var rowBound = values.GetUpperBound(0);
             var colBound = values.GetUpperBound(1);
             _values.SetRangeValueSpecial(fromRow, fromColumn, toRow, toColumn,
-                (PooledList<ExcelCoreValue> list, int index, int row, int column, object value) =>
+                (List<ExcelCoreValue> list, int index, int row, int column, object value) =>
                 {
                     object val = null;
                     if (rowBound >= row - fromRow && colBound >= column - fromColumn)

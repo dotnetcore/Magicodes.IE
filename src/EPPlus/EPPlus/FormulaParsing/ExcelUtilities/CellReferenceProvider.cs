@@ -32,6 +32,7 @@ using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.ExcelUtilities
 {
     public class CellReferenceProvider

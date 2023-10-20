@@ -22,6 +22,7 @@
  *******************************************************************************
  * Mats Alm   		                Added		                2015-04-19
  *******************************************************************************/
+
 using OfficeOpenXml.Utils;
 using System.Collections.Generic;
 using System.Globalization;

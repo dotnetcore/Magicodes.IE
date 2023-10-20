@@ -28,7 +28,7 @@
  * ******************************************************************************
  * Jan Källman		    Added       		        2012-11-25
  *******************************************************************************/
-using Collections.Pooled;
+
 using OfficeOpenXml;
 using System;
 using System.Collections;
@@ -335,7 +335,7 @@ internal class CellStore<T> : IDisposable// : IEnumerable<ulong>, IEnumerator<ul
     internal const int ColSizeMin = 32;
     internal const int PagesPerColumnMin = 32;
 
-    PooledList<T> _values = new PooledList<T>();
+    List<T> _values = new List<T>();
     internal ColumnIndex[] _columnIndex;
     internal IndexBase _searchIx = new IndexBase();
     internal IndexItem _searchItem = new IndexItem();
@@ -675,7 +675,7 @@ internal class CellStore<T> : IDisposable// : IEnumerable<ulong>, IEnumerator<ul
         }
     }
 
-    internal delegate void SetRangeValueDelegate(PooledList<T> list, int index, int row, int column, object value);
+    internal delegate void SetRangeValueDelegate(List<T> list, int index, int row, int column, object value);
     /// <summary>
     /// Set Value for Range
     /// </summary>
@@ -769,7 +769,7 @@ internal class CellStore<T> : IDisposable// : IEnumerable<ulong>, IEnumerator<ul
         }
     }
 
-    internal delegate void SetValueDelegate(PooledList<T> list, int index, object value);
+    internal delegate void SetValueDelegate(List<T> list, int index, object value);
     // Set object's property atomically
     internal void SetValueSpecial(int Row, int Column, SetValueDelegate Updater, object Value)
     {
@@ -1605,7 +1605,6 @@ internal class CellStore<T> : IDisposable// : IEnumerable<ulong>, IEnumerator<ul
 
     public void Dispose()
     {
-        _values.Dispose();
         if (_values != null) _values.Clear();
         for (var c = 0; c < ColumnCount; c++)
         {

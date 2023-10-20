@@ -26,8 +26,10 @@
 // ------------------------------------------------------------------
 
 
+
 using OfficeOpenXml.Packaging.Ionic.Zlib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zip
@@ -304,7 +306,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
 
         private byte[] ConstructExtraField(bool forCentralDirectory)
         {
-            var listOfBlocks = new System.Collections.Generic.List<byte[]>();
+            var listOfBlocks = new List<byte[]>();
             byte[] block;
 
             // Conditionally emit an extra field with Zip64 information.  If the

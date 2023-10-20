@@ -36,6 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
 {
     /// <summary>

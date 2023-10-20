@@ -3,6 +3,7 @@ using OfficeOpenXml.FormulaParsing.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers
 {
     public class IfNaFunctionCompiler : FunctionCompiler

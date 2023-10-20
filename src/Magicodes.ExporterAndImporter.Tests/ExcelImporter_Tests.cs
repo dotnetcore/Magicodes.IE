@@ -250,8 +250,8 @@ namespace Magicodes.ExporterAndImporter.Tests
         public async Task Importer_Test()
         {
             //第一列乱序
-
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "产品导入模板.xlsx");
+
             var result = await Importer.Import<ImportProductDto>(filePath);
             result.ShouldNotBeNull();
 

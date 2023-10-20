@@ -28,10 +28,12 @@
  *******************************************************************************
  * Jan Källman		Added		25-Oct-2012
  *******************************************************************************/
+
 using Ionic.Zip;
 using OfficeOpenXml.Packaging.Ionic.Zip;
 using OfficeOpenXml.Utils;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -71,8 +73,10 @@ namespace OfficeOpenXml.Packaging
                 Match = match;
             }
         }
+
         Dictionary<string, ZipPackagePart> Parts = new Dictionary<string, ZipPackagePart>(StringComparer.OrdinalIgnoreCase);
         internal Dictionary<string, ContentType> _contentTypes = new Dictionary<string, ContentType>(StringComparer.OrdinalIgnoreCase);
+        
         internal char _dirSeparator = '/';
         internal ZipPackage()
         {
@@ -84,6 +88,7 @@ namespace OfficeOpenXml.Packaging
             _contentTypes.Add("xml", new ContentType(ExcelPackage.schemaXmlExtension, true, "xml"));
             _contentTypes.Add("rels", new ContentType(ExcelPackage.schemaRelsExtension, true, "rels"));
         }
+
 
         internal ZipPackage(Stream stream)
         {
@@ -98,84 +103,98 @@ namespace OfficeOpenXml.Packaging
                 stream.Seek(0, SeekOrigin.Begin);
                 using (ZipInputStream zip = new ZipInputStream(stream))
                 {
-                    var e = zip.GetNextEntry();
-                    if (e == null)
-                    {
-                        throw (new InvalidDataException("The file is not an valid Package file. If the file is encrypted, please supply the password in the constructor."));
-                    }
-                    if (e.FileName.Contains("\\"))
-                    {
-                        _dirSeparator = '\\';
-                    }
-                    else
-                    {
-                        _dirSeparator = '/';
-                    }
-                    while (e != null)
+                    foreach (var e in GetEntries(zip))
                     {
                         if (e.UncompressedSize > 0)
                         {
-                            var b = new byte[e.UncompressedSize];
-                            var size = zip.Read(b, 0, (int)e.UncompressedSize);
                             if (e.FileName.Equals("[content_types].xml", StringComparison.OrdinalIgnoreCase))
                             {
-                                AddContentTypes(Encoding.UTF8.GetString(b));
+                                var content = ReadStreamToString(zip, e.UncompressedSize);
+                                AddContentTypes(content);
                                 hasContentTypeXml = true;
                             }
                             else if (e.FileName.Equals($"_rels{_dirSeparator}.rels", StringComparison.OrdinalIgnoreCase))
                             {
-                                ReadRelation(Encoding.UTF8.GetString(b), "");
+                                var content = ReadStreamToString(zip, e.UncompressedSize);
+                                ReadRelation(content, "");
                             }
                             else
                             {
-                                if (e.FileName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    rels.Add(GetUriKey(e.FileName), Encoding.UTF8.GetString(b));
-                                }
-                                else
-                                {
-                                    var part = new ZipPackagePart(this, e);
-                                    part.Stream = RecyclableMemoryStream.GetStream();
-                                    part.Stream.Write(b, 0, b.Length);
-                                    Parts.Add(GetUriKey(e.FileName), part);
-                                }
+                                ProcessEntry(e, rels, zip, e.UncompressedSize);
                             }
                         }
-                        else
-                        {
-                        }
-                        e = zip.GetNextEntry();
                     }
 
-                    foreach (var p in Parts)
-                    {
-                        string name = Path.GetFileName(p.Key);
-                        string extension = Path.GetExtension(p.Key);
-                        string relFile = string.Format("{0}_rels/{1}.rels", p.Key.Substring(0, p.Key.Length - name.Length), name);
-                        if (rels.ContainsKey(relFile))
-                        {
-                            p.Value.ReadRelation(rels[relFile], p.Value.Uri.OriginalString);
-                        }
-                        if (_contentTypes.ContainsKey(p.Key))
-                        {
-                            p.Value.ContentType = _contentTypes[p.Key].Name;
-                        }
-                        else if (extension.Length > 1 && _contentTypes.ContainsKey(extension.Substring(1)))
-                        {
-                            p.Value.ContentType = _contentTypes[extension.Substring(1)].Name;
-                        }
-                    }
-                    if (!hasContentTypeXml)
-                    {
-                        throw (new InvalidDataException("The file is not an valid Package file. If the file is encrypted, please supply the password in the constructor."));
-                    }
-                    if (!hasContentTypeXml)
-                    {
-                        throw (new InvalidDataException("The file is not an valid Package file. If the file is encrypted, please supply the password in the constructor."));
-                    }
-                    zip.Close();
-                    zip.Dispose();
+                    ValidateEntries(rels, hasContentTypeXml);
                 }
+            }
+        }
+
+        private void ProcessEntry(ZipEntry e, Dictionary<string, string> rels, Stream zip, long size)
+        {
+            if (e.FileName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase))
+            {
+                var content = ReadStreamToString(zip, size);
+                rels.Add(GetUriKey(e.FileName), content);
+            }
+            else
+            {
+                var part = new ZipPackagePart(this, e);
+                part.Stream = RecyclableMemoryStream.GetStream();
+                zip.CopyTo(part.Stream);
+                Parts.Add(GetUriKey(e.FileName), part);
+            }
+        }
+
+        private string ReadStreamToString(Stream zip, long size)
+        {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            var builder = new StringBuilder();
+            while ((bytesRead = zip.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+            }
+            return builder.ToString();
+        }
+
+        private IEnumerable<ZipEntry> GetEntries(ZipInputStream zip)
+        {
+            ZipEntry e;
+            while ((e = zip.GetNextEntry()) != null)
+            {
+                yield return e;
+            }
+        }
+
+        private void ValidateEntries(Dictionary<string, string> rels, bool hasContentTypeXml)
+        {
+            foreach (var p in Parts)
+            {
+                UpdatePartContentType(rels, p);
+            }
+            if (!hasContentTypeXml)
+            {
+                throw new InvalidDataException("The file is not a valid Package file. If the file is encrypted, please supply the password in the constructor.");
+            }
+        }
+
+        private void UpdatePartContentType(Dictionary<string, string> rels, KeyValuePair<string, ZipPackagePart> p)
+        {
+            string name = Path.GetFileName(p.Key);
+            string extension = Path.GetExtension(p.Key);
+            string relFile = $"{p.Key.Substring(0, p.Key.Length - name.Length)}_rels/{name}.rels";
+            if (rels.ContainsKey(relFile))
+            {
+                p.Value.ReadRelation(rels[relFile], p.Value.Uri.OriginalString);
+            }
+            if (_contentTypes.ContainsKey(p.Key))
+            {
+                p.Value.ContentType = _contentTypes[p.Key].Name;
+            }
+            else if (extension.Length > 1 && _contentTypes.ContainsKey(extension.Substring(1)))
+            {
+                p.Value.ContentType = _contentTypes[extension.Substring(1)].Name;
             }
         }
 

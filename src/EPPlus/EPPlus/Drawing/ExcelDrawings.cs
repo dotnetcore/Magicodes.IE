@@ -29,17 +29,17 @@
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
 
+
 using OfficeOpenXml.Drawing.Chart;
 using OfficeOpenXml.Table.PivotTable;
 using OfficeOpenXml.Utils;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SixLabors.ImageSharp;
 using System.IO;
 using System.Xml;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
 
 namespace OfficeOpenXml.Drawing
 {

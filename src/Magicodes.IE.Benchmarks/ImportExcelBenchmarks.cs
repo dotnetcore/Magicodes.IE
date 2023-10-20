@@ -9,14 +9,16 @@ using System.Threading.Tasks;
 
 namespace Magicodes.Benchmarks
 {
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.Net461)]
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
+    [SimpleJob(launchCount: 2, warmupCount: 2, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp50)]
+    [MemoryDiagnoser]
+    [ThreadingDiagnoser]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
     public class ImportExcelBenchmarks
     {
         private readonly List<ImportStudentDto> _studentDtos = new List<ImportStudentDto>();
 
-        [Params(10000, 120000, 240000, 500000, 1000000)]
+        [Params(240000,10,1000,10000,500000,1000000)]
         public int RowsCount;
 
         private Stream _stream;
@@ -38,7 +40,11 @@ namespace Magicodes.Benchmarks
                     Name = "Mr.A",
                     IdCard = "1111111111111111111",
                     SerialNumber = i,
-                    StudentCode = "A"
+                    StudentCode = "A",
+                    A = "1",
+                    A1 = "2",
+                    A2 = "3",
+                    A3 = "4",
                 });
             }
             IExporter exporter = new ExcelExporter();
@@ -54,6 +60,16 @@ namespace Magicodes.Benchmarks
 
         [Benchmark]
         public async Task ImportByStreamTest()
+        {
+            // await _importer.Import<ImportStudentDto>(_stream);
+            using (var importer = new Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<ImportStudentDto>(_stream, null))
+            {
+                var data = await importer.Import();
+            }
+        }
+
+        [Benchmark]
+        public async Task ImportByStreamTest1()
         {
             await _importer.Import<ImportStudentDto>(_stream);
         }

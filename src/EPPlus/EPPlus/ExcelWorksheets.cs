@@ -57,7 +57,7 @@ namespace OfficeOpenXml
         #endregion
         #region ExcelWorksheets Constructor
         internal ExcelWorksheets(ExcelPackage pck, XmlNamespaceManager nsm, XmlNode topNode) :
-            base(nsm, topNode)
+    base(nsm, topNode)
         {
             _pck = pck;
             _namespaceManager = nsm;
@@ -68,29 +68,33 @@ namespace OfficeOpenXml
             {
                 if (sheetNode.NodeType == XmlNodeType.Element)
                 {
-                    string name = sheetNode.Attributes["name"].Value;
-                    //Get the relationship id
-                    string relId = sheetNode.Attributes.GetNamedItem("id", ExcelPackage.schemaRelationships).Value;
-                    int sheetID = Convert.ToInt32(sheetNode.Attributes["sheetId"].Value);
+                    XmlAttributeCollection attributes = sheetNode.Attributes;
 
-                    //Hidden property
+                    if (attributes["name"] == null || attributes["sheetId"] == null ||
+                        attributes.GetNamedItem("id", ExcelPackage.schemaRelationships) == null)
+                    {
+                        continue;
+                    }
+
+                    string name = attributes["name"].Value;
+                    string relId = attributes.GetNamedItem("id", ExcelPackage.schemaRelationships).Value;
+                    int sheetID = Convert.ToInt32(attributes["sheetId"].Value);
+
                     eWorkSheetHidden hidden = eWorkSheetHidden.Visible;
-                    XmlNode attr = sheetNode.Attributes["state"];
+                    XmlNode attr = attributes["state"];
                     if (attr != null)
+                    {
                         hidden = TranslateHidden(attr.Value);
+                    }
 
                     var sheetRelation = pck.Workbook.Part.GetRelationship(relId);
                     Uri uriWorksheet = UriHelper.ResolvePartUri(pck.Workbook.WorkbookUri, sheetRelation.TargetUri);
 
-                    //add the worksheet
-                    if (sheetRelation.RelationshipType.EndsWith("chartsheet"))
-                    {
-                        _worksheets.Add(positionID, new ExcelChartsheet(_namespaceManager, _pck, relId, uriWorksheet, name, sheetID, positionID, hidden));
-                    }
-                    else
-                    {
-                        _worksheets.Add(positionID, new ExcelWorksheet(_namespaceManager, _pck, relId, uriWorksheet, name, sheetID, positionID, hidden));
-                    }
+                    ExcelWorksheet worksheet = sheetRelation.RelationshipType.EndsWith("chartsheet") ?
+                        new ExcelChartsheet(_namespaceManager, _pck, relId, uriWorksheet, name, sheetID, positionID, hidden) :
+                        new ExcelWorksheet(_namespaceManager, _pck, relId, uriWorksheet, name, sheetID, positionID, hidden);
+
+                    _worksheets.Add(positionID, worksheet);
                     positionID++;
                 }
             }

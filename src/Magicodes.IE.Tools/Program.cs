@@ -16,6 +16,7 @@ namespace Magicodes.IE.Tools
         private readonly static List<ExportTestDataWithAttrs> _exportTestData = new List<ExportTestDataWithAttrs>();
         private static async Task Main(string[] args)
         {
+            args = new string[] { "TEST" };
             //if (args.Length == 0)
             //{
             //    var versionString = Assembly.GetEntryAssembly()
@@ -31,31 +32,34 @@ namespace Magicodes.IE.Tools
             //}
             //else if (args.Any(p => "TEST".Equals(p, StringComparison.CurrentCultureIgnoreCase)))
             //{
-            //    IExporter exporter = new ExcelExporter();
-            //    var data = new List<ExportTestDataWithPicture>
-            //    {
-            //        new ExportTestDataWithPicture
-            //        {
-            //            Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/docs/Magicodes.IE.png",
-            //            Text="张三"
-            //        },
-            //        new ExportTestDataWithPicture
-            //        {
-            //            Img = "https://gitee.com/magicodes/Magicodes.IE/raw/master/res/wechat.jpg",
-            //            Text="李四"
-            //        }
-            //    };
+            IExporter exporter = new ExcelExporter();
+            var data = new List<ExportTestDataWithPicture>
+                {
+                    new ExportTestDataWithPicture
+                    {
+                        Img = "C:\\Users\\hueifeng\\Pictures\\avatar.png",
+                        Text="张三"
+                    }
+                };
 
-            //    var filePath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "test.xlsx");
-            //    var result = exporter.Export("test.xlsx", data).Result;
-            //    Console.WriteLine($"导出成功：{filePath}！");
-            //}
-            await Test();
+            Parallel.For(0, 100000, (i) =>
+            {
+                data.Add(new ExportTestDataWithPicture
+                {
+                    Img = "C:\\Users\\hueifeng\\Pictures\\avatar.png",
+                    Text = "张三"
+                });
+            });
+
+            var filePath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "test.xlsx");
+            var result = await exporter.Export("test.xlsx", data);
+            Console.WriteLine($"导出成功：{filePath}！");
+            //   }
             Console.WriteLine("完成");
             Console.ReadLine();
         }
 
-        static async Task Test() 
+        static async Task Test()
         {
             for (var i = 1; i <= 10000000; i++)
             {

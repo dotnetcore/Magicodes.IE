@@ -24,9 +24,11 @@
 //
 // ------------------------------------------------------------------
 
+
 using OfficeOpenXml.Packaging.Ionic.Crc;
 using OfficeOpenXml.Utils;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace OfficeOpenXml.Packaging.Ionic.Zlib
@@ -350,7 +352,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
 
         private string ReadZeroTerminatedString()
         {
-            var list = new System.Collections.Generic.List<byte>();
+            var list = new List<byte>();
             bool done = false;
             do
             {

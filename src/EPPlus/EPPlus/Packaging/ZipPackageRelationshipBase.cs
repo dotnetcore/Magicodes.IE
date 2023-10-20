@@ -29,6 +29,7 @@
  * Jan Källman		Added		25-Oct-2012
  *******************************************************************************/
 using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 namespace OfficeOpenXml.Packaging
@@ -83,6 +84,7 @@ namespace OfficeOpenXml.Packaging
         {
             return _rels[id];
         }
+
         internal void ReadRelation(string xml, string source)
         {
             var doc = new XmlDocument();

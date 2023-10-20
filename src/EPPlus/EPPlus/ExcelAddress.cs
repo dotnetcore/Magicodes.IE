@@ -29,6 +29,7 @@
  * Jan Källman		Added		18-MAR-2010
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;

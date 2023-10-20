@@ -31,6 +31,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.Exceptions
 {
     public class ExcelErrorCodes

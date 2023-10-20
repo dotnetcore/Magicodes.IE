@@ -156,7 +156,6 @@ namespace OfficeOpenXml.Packaging
                 var name = Path.GetFileName(f);
                 _rels.WriteZip(os, (string.Format("{0}_rels/{1}.rels", f.Substring(0, f.Length - name.Length), name)));
             }
-            b = null;
         }
 
         internal ValueTask WriteZipAsync(ZipOutputStream os)

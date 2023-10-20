@@ -38,6 +38,7 @@
 //
 
 
+
 using OfficeOpenXml.Packaging.Ionic.Zlib;
 using System;
 using System.Collections.Generic;
@@ -3201,7 +3202,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         {
             get
             {
-                var coll = new System.Collections.Generic.List<ZipEntry>();
+                var coll = new List<ZipEntry>();
                 foreach (var e in this.Entries)
                 {
                     coll.Add(e);

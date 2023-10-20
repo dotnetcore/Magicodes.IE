@@ -37,6 +37,7 @@ using System.Xml;
 using Magicodes.IE.EPPlus.SixLabors;
 using SixLabors.ImageSharp.PixelFormats;
 
+
 namespace OfficeOpenXml.Drawing.Chart
 {
     /// <summary>

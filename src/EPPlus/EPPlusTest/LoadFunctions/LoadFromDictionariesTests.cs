@@ -105,7 +105,7 @@ namespace EPPlusTest.LoadFunctions
             {
                 var sheet = package.Workbook.Worksheets.Add("test");
                 var r = sheet.Cells["A1"].LoadFromDictionaries(_items, true, TableStyles.Dark1, null);
-
+                package.Save();
                 Assert.AreEqual(1, sheet.Tables.Count);
                 Assert.AreEqual(TableStyles.Dark1, sheet.Tables.First().TableStyle);
             }

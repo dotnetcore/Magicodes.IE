@@ -29,6 +29,7 @@
  * Jan Källman		Added this class		        2010-01-28
  * Jan Källman		License changed GPL-->LGPL 2011-12-27
  *******************************************************************************/
+
 using OfficeOpenXml.FormulaParsing.ExcelUtilities;
 using System;
 using System.Collections;

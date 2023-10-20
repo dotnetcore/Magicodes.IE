@@ -26,6 +26,7 @@ using OfficeOpenXml.FormulaParsing.ExpressionGraph;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.Excel.Functions.Math
 {
     public class SumIfs : MultipleRangeCriteriasFunction

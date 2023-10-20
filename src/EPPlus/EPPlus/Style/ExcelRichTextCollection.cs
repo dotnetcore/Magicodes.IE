@@ -38,6 +38,7 @@ using System.Text;
 using System.Xml;
 using SixLabors.ImageSharp.PixelFormats;
 
+
 namespace OfficeOpenXml.Style
 {
     /// <summary>

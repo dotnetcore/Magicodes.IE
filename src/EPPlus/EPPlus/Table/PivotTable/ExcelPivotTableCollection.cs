@@ -29,6 +29,7 @@
  * Jan Källman		Added		21-MAR-2011
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using System;
 using System.Collections.Generic;
 
@@ -41,10 +42,10 @@ namespace OfficeOpenXml.Table.PivotTable
     {
         List<ExcelPivotTable> _pivotTables = new List<ExcelPivotTable>();
         internal Dictionary<string, int> _pivotTableNames = new Dictionary<string, int>();
-        ExcelWorksheet _ws;
+        readonly ExcelWorksheet _ws;
         internal ExcelPivotTableCollection(ExcelWorksheet ws)
         {
-            var pck = ws._package.Package;
+            _ = ws._package.Package;
             _ws = ws;
             foreach (var rel in ws.Part.GetRelationships())
             {

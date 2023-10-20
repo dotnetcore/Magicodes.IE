@@ -29,6 +29,7 @@
  * Jan Källman		Added		2009-10-01
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
+
 using OfficeOpenXml.Packaging;
 using OfficeOpenXml.Table.PivotTable;
 using OfficeOpenXml.Utils;

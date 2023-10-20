@@ -16,6 +16,7 @@
  *******************************************************************************
  * Mats Alm Added		                2016-12-27
  *******************************************************************************/
+
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System;
 using System.Collections.Generic;

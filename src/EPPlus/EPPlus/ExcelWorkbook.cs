@@ -36,6 +36,7 @@
  * Richard Tallent		Fix escaping of quotes					2012-10-31
 >>>>>>> 21c1f80b2e27bc423e3de7f9f2e2b8c9d63934f2
  *******************************************************************************/
+
 using OfficeOpenXml.Compatibility;
 using OfficeOpenXml.FormulaParsing;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;

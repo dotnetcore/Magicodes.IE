@@ -28,6 +28,7 @@
  * ******************************************************************************
  * Mats Alm   		                Added       		        2013-03-01 (Prior file history on https://github.com/swmal/ExcelFormulaParser)
  *******************************************************************************/
+
 using System.Collections.Generic;
 
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph

@@ -45,5 +45,14 @@ namespace Magicodes.Benchmarks.Models
         [ExporterHeader("学生联系电话")]
         public string Phone { get; set; }
 
+        public string A { get; set; }
+
+        public string A1 { get; set; }
+
+
+        public string A2 { get; set; }
+
+        public string A3 { get; set; }
+
     }
 }

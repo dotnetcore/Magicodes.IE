@@ -32,6 +32,7 @@ using OfficeOpenXml.FormulaParsing.ExpressionGraph.CompileStrategy;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace OfficeOpenXml.FormulaParsing.ExpressionGraph
 {
     public class ExpressionCompiler : IExpressionCompiler

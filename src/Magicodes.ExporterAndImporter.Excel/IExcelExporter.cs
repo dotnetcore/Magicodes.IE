@@ -14,7 +14,6 @@ namespace Magicodes.ExporterAndImporter.Excel
     /// </summary>
     public interface IExcelExporter : IExporter, IExportFileByTemplate
     { 
-
         /// <summary>
         ///     导出excel表头
         /// </summary>
@@ -22,8 +21,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="sheetName">工作簿名称</param>
         /// <returns></returns>
         Task<byte[]> ExportWithXSSFWorkbookHeaderAsByteArray(string[] items, string sheetName = "导出结果");
-
-         
 
         /// <summary>
         ///     导出表头
@@ -55,7 +52,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         Task<ExportFileInfo> ExportWithXSSFWorkbook(string fileName, DataTable dataItems,
             IExporterHeaderFilter exporterHeaderFilter = null, int maxRowNumberOnASheet = 1000000);        
         
-
         /// <summary>
         ///     导出
         /// </summary>
@@ -65,7 +61,6 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <returns>文件二进制数组</returns>
         Task<byte[]> ExportAsByteArray(DataTable dataItems, IExporterHeaderFilter exporterHeaderFilter = null,
             int maxRowNumberOnASheet = 1000000);
-
 
         /// <summary>
         ///     追加集合到当前导出程序

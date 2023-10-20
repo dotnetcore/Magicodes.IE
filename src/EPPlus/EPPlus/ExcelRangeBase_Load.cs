@@ -11,10 +11,6 @@ namespace OfficeOpenXml
     public partial class ExcelRangeBase
     {
 
-
-
-
-
         #region LoadFromDictionaries
         /// <summary>
         /// Load a collection of dictionaries (or dynamic/ExpandoObjects) into the worksheet starting from the top left row of the range.

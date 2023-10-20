@@ -28,6 +28,7 @@
  *******************************************************************************
  * Jan Källman		Added		12-APR-2012
  *******************************************************************************/
+
 using OfficeOpenXml.Compatibility;
 using System;
 using System.Collections.Generic;

@@ -28,6 +28,7 @@
  * ******************************************************************************
  * Jan Källman                      Added                       2012-03-04  
  *******************************************************************************/
+
 using OfficeOpenXml.FormulaParsing.Exceptions;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System.Collections.Generic;

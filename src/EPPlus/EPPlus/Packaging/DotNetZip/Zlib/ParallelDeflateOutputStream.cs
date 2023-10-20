@@ -24,6 +24,7 @@
 //
 // ------------------------------------------------------------------
 
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -103,7 +104,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         private static readonly int IO_BUFFER_SIZE_DEFAULT = 64 * 1024;  // 128k
         private static readonly int BufferPairsPerCore = 4;
 
-        private System.Collections.Generic.List<WorkItem> _pool;
+        private List<WorkItem> _pool;
         private bool _leaveOpen;
         private bool emitting;
         private System.IO.Stream _outStream;
@@ -477,7 +478,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         {
             _toWrite = new Queue<int>();
             _toFill = new Queue<int>();
-            _pool = new System.Collections.Generic.List<WorkItem>();
+            _pool = new List<WorkItem>();
             int nTasks = BufferPairsPerCore * Environment.ProcessorCount;
             nTasks = Math.Min(nTasks, _maxBufferPairs);
             for (int i = 0; i < nTasks; i++)

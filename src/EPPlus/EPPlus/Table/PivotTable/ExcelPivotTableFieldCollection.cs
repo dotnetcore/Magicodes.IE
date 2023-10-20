@@ -29,7 +29,7 @@
  * Jan Källman		Added		21-MAR-2011
  * Jan Källman		License changed GPL-->LGPL 2011-12-16
  *******************************************************************************/
-using Collections.Pooled;
+
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -43,7 +43,7 @@ namespace OfficeOpenXml.Table.PivotTable
     public class ExcelPivotTableFieldCollectionBase<T> : IEnumerable<T>
     {
         protected ExcelPivotTable _table;
-        internal PooledList<T> _list = new PooledList<T>();
+        internal List<T> _list = new List<T>();
         internal ExcelPivotTableFieldCollectionBase(ExcelPivotTable table)
         {
             _table = table;
@@ -58,8 +58,8 @@ namespace OfficeOpenXml.Table.PivotTable
             return _list.GetEnumerator();
         }
         ~ExcelPivotTableFieldCollectionBase() 
-        { 
-            _list.Dispose();
+        {
+            _list = null;
         }
         public int Count
         {
