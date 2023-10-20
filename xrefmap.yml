@@ -2253,6 +2253,23 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ParseData
   nameWithType: ImportHelper<T>.ParseData
   nameWithType.vb: ImportHelper(Of T).ParseData
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseDataEnumer(ExcelPackage)
+  name: ParseDataEnumer(ExcelPackage)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_ParseDataEnumer_ExcelPackage_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseDataEnumer(ExcelPackage)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.ParseDataEnumer(ExcelPackage)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ParseDataEnumer(ExcelPackage)
+  nameWithType: ImportHelper<T>.ParseDataEnumer(ExcelPackage)
+  nameWithType.vb: ImportHelper(Of T).ParseDataEnumer(ExcelPackage)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseDataEnumer*
+  name: ParseDataEnumer
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_ParseDataEnumer_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseDataEnumer
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.ParseDataEnumer
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ParseDataEnumer
+  nameWithType: ImportHelper<T>.ParseDataEnumer
+  nameWithType.vb: ImportHelper(Of T).ParseDataEnumer
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseHeader
   name: ParseHeader()
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_ParseHeader
@@ -2278,6 +2295,15 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ParseTemplate(ExcelPackage)
   nameWithType: ImportHelper<T>.ParseTemplate(ExcelPackage)
   nameWithType.vb: ImportHelper(Of T).ParseTemplate(ExcelPackage)
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseTemplate(ExcelPackage,ImportResultEnumer{`0})
+  name: ParseTemplate(ExcelPackage, ImportResultEnumer<T>)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_ParseTemplate_ExcelPackage_ImportResultEnumer__0__
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseTemplate(ExcelPackage,ImportResultEnumer{`0})
+  name.vb: ParseTemplate(ExcelPackage, ImportResultEnumer(Of T))
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper<T>.ParseTemplate(ExcelPackage, ImportResultEnumer<T>)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper(Of T).ParseTemplate(ExcelPackage, ImportResultEnumer(Of T))
+  nameWithType: ImportHelper<T>.ParseTemplate(ExcelPackage, ImportResultEnumer<T>)
+  nameWithType.vb: ImportHelper(Of T).ParseTemplate(ExcelPackage, ImportResultEnumer(Of T))
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper`1.ParseTemplate*
   name: ParseTemplate
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.ImportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_ImportHelper_1_ParseTemplate_
