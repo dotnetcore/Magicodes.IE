@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="Magicodes.IE.Excel" Version="2.7.4.2" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.3" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
