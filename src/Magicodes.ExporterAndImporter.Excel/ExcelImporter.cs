@@ -169,11 +169,11 @@ namespace Magicodes.ExporterAndImporter.Excel
         /// <param name="stream"></param>
         /// <param name="labelingFileStream"></param>
         /// <returns></returns>
-        public Task<ImportResult<T>> Import<T>(Stream stream, Stream labelingFileStream) where T : class, new()
+        public Task<ImportResult<T>> Import<T>(Stream stream, Stream labelingFileStream, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new()
         {
             using (var importer = new ImportHelper<T>(stream, labelingFileStream))
             {
-                return importer.Import();
+                return importer.Import(importResultCallback: importResultCallback);
             }
         }
 

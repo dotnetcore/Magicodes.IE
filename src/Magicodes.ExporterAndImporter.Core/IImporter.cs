@@ -74,6 +74,6 @@ namespace Magicodes.ExporterAndImporter.Core
         /// <param name="stream"></param>
         /// <param name="labelingFileStream"></param>
         /// <returns></returns>
-        Task<ImportResult<T>> Import<T>(Stream stream,Stream labelingFileStream) where T : class, new();
+        Task<ImportResult<T>> Import<T>(Stream stream, Stream labelingFileStream, Func<ImportResult<T>, ImportResult<T>> importResultCallback = null) where T : class, new();
     }
 }
