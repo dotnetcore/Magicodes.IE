@@ -16,6 +16,6 @@ namespace Magicodes.IE.Core
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <returns></returns>
-        public abstract Dictionary<string, dynamic> GetMappings(PropertyInfo propertyInfo);
+        public abstract Dictionary<string, object> GetMappings(PropertyInfo propertyInfo);
     }
 }
