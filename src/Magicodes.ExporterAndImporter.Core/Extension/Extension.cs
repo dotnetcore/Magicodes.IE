@@ -324,11 +324,14 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
             #region 处理值映射
             //ValueMappingsBaseAttribute
             var valueMappings = propertyInfo.GetAttributes<ValueMappingsBaseAttribute>(true).FirstOrDefault()?.GetMappings(propertyInfo);
-            foreach (var valueMapping in valueMappings)
+            if(valueMappings != null )
             {
-                if (!directory.ContainsKey(valueMapping.Key)) directory.Add(valueMapping.Key, valueMapping.Value);
+                foreach (var valueMapping in valueMappings)
+                {
+                    if (!directory.ContainsKey(valueMapping.Key)) directory.Add(valueMapping.Key, valueMapping.Value);
+                }
+                if (valueMappings.Count > 0) return;
             }
-            if (valueMappings != null && valueMappings.Count > 0) return;
 
             //ValueMappingAttribute
             var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
