@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Magicodes.IE.Core
@@ -13,8 +14,8 @@ namespace Magicodes.IE.Core
         /// <summary>
         /// 根据字段类型获取映射
         /// </summary>
-        /// <param name="fieldType"></param>
+        /// <param name="propertyInfo"></param>
         /// <returns></returns>
-        public abstract Dictionary<string, dynamic> GetMappings(Type fieldType);
+        public abstract Dictionary<string, dynamic> GetMappings(PropertyInfo propertyInfo);
     }
 }

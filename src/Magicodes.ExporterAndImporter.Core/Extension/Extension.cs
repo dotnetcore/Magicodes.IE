@@ -323,7 +323,7 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         {
             #region 处理值映射
             //ValueMappingsBaseAttribute
-            var valueMappings = propertyInfo.GetAttributes<ValueMappingsBaseAttribute>(true).FirstOrDefault()?.GetMappings(propertyInfo.PropertyType);
+            var valueMappings = propertyInfo.GetAttributes<ValueMappingsBaseAttribute>(true).FirstOrDefault()?.GetMappings(propertyInfo);
             foreach (var valueMapping in valueMappings)
             {
                 if (!directory.ContainsKey(valueMapping.Key)) directory.Add(valueMapping.Key, valueMapping.Value);
