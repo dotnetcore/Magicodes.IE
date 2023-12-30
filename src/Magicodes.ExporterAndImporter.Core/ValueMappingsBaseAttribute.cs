@@ -12,7 +12,7 @@ namespace Magicodes.IE.Core
     public abstract class ValueMappingsBaseAttribute : Attribute
     {
         /// <summary>
-        /// 根据字段类型获取映射
+        /// 根据字段信息获取映射
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <returns></returns>
