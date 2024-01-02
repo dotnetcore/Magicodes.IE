@@ -8,7 +8,6 @@ namespace Magicodes.IE.Core
     /// <summary>
     /// 值映射
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public abstract class ValueMappingsBaseAttribute : Attribute
     {
         /// <summary>
