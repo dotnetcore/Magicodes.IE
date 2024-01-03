@@ -382,6 +382,30 @@
         public Genders Gender { get; set; }
 </code></pre>
 <ul>
+<li><strong>也可以继承“ValueMappingsBaseAttribute”特性基类实现值映射关系，目前仅可用于枚举和Bool类型，支持导入导出。</strong></li>
+</ul>
+<pre><code class="lang-csharp">        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class GenderLocalAttribute : ValueMappingsBaseAttribute
+        {
+            public override Dictionary&lt;string, object&gt; GetMappings(PropertyInfo propertyInfo)
+            {
+                var res= new Dictionary&lt;string, object&gt;();
+                res.Add(&quot;男&quot;,0);
+                res.Add(&quot;女&quot;,1);
+                return res;
+            }
+        }
+
+
+        /// &lt;summary&gt;
+        ///     性别
+        /// &lt;/summary&gt;
+        [ImporterHeader(Name = &quot;性别&quot;)]
+        [Required(ErrorMessage = &quot;性别不能为空&quot;)]
+        [GenderLocal]
+        public Genders Gender { get; set; }
+</code></pre>
+<ul>
 <li><p><strong>支持枚举和Bool类型的导入数据验证项的生成，以及相关数据转换</strong></p>
 <ul>
 <li><p><strong>枚举默认情况下会自动获取枚举的描述、显示名、名称和值生成数据项</strong></p>

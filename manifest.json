@@ -12,7 +12,7 @@
       "output": {
         ".html": {
           "relative_path": "README.zh-CN.html",
-          "hash": "GvRWRwy4bQEHiK6yCC9JJa/c8d3lyx/CE3Hje+LEu0A="
+          "hash": "my9NUCwjg8bKFPwA2Byxkv96hD3qUks9hMa4/nVsJmw="
         }
       },
       "is_incremental": false,
@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "XTKwj5fNMpA25Ddp6xVTCo17HwNxro2n0LswUVKRYxM="
+          "hash": "zu/U9na8R8o6nB/pR68AwIBO35Poi6SmnHFOLCfuVns="
         }
       },
       "is_incremental": false,
@@ -72,7 +72,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Csv.CsvImporter.html",
-          "hash": "cPDl3wAefoJ038AAcZth9z3TjBPJ8yz8R9kOZQokPdk="
+          "hash": "R0qCfxtb+Ki9tc6PN8DjRrnFdHalnU25Vc9D1kRjY1c="
         }
       },
       "is_incremental": false,

@@ -281,13 +281,13 @@
   
   
   <a id="Magicodes_ExporterAndImporter_Csv_CsvImporter_Import_" data-uid="Magicodes.ExporterAndImporter.Csv.CsvImporter.Import*"></a>
-  <h4 id="Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_Stream_Stream_" data-uid="Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(Stream,Stream)">Import&lt;T&gt;(Stream, Stream)</h4>
+  <h4 id="Magicodes_ExporterAndImporter_Csv_CsvImporter_Import__1_Stream_Stream_Func_ImportResult___0__ImportResult___0___" data-uid="Magicodes.ExporterAndImporter.Csv.CsvImporter.Import``1(Stream,Stream,Func{ImportResult{``0},ImportResult{``0}})">Import&lt;T&gt;(Stream, Stream, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>貌似无用</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import&lt;T&gt;(Stream stream, Stream labelingFileStream)
+    <pre><code class="lang-csharp hljs">public Task&lt;ImportResult&lt;T&gt;&gt; Import&lt;T&gt;(Stream stream, Stream labelingFileStream, Func&lt;ImportResult&lt;T&gt;, ImportResult&lt;T&gt;&gt; importResultCallback = null)
     where T : class, new()</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -308,6 +308,11 @@
       <tr>
         <td><span class="xref">Stream</span></td>
         <td><span class="parametername">labelingFileStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<span class="xref">ImportResult</span>&lt;T&gt;, <span class="xref">ImportResult</span>&lt;T&gt;&gt;</td>
+        <td><span class="parametername">importResultCallback</span></td>
         <td></td>
       </tr>
     </tbody>
