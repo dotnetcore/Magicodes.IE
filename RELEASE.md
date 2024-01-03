@@ -1,5 +1,12 @@
 # Release Log
 
+## 2.7.5.0
+**2024.01.03**
+
+- 发布Magicodes.IE.Stash，具体见<https://github.com/dotnetcore/Magicodes.IE/pull/498>及<https://github.com/dotnetcore/Magicodes.IE/tree/master/src/Stash/Magicodes.IE.Stash>
+- 增加导入Stream时的回调委托参数<https://github.com/dotnetcore/Magicodes.IE/commit/e9a2a1b3b493fea90379b0ee519b7bbb42011122>
+- 增加ValueMappingsBase值映射特性基类，方便从外部(如：Abp框架)继承实现枚举、bool类型的多语言显示<https://github.com/dotnetcore/Magicodes.IE/pull/544>
+
 ## 2.7.4.4
 **2023.04.22**
 
