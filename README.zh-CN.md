@@ -236,8 +236,8 @@
             public override Dictionary<string, object> GetMappings(PropertyInfo propertyInfo)
             {
                 var res= new Dictionary<string, object>();
-                res.Add("男",Genders.Male);
-                res.Add("女",Genders.Female);
+                res.Add("男",0);
+                res.Add("女",1);
                 return res;
             }
         }
