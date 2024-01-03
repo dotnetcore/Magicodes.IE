@@ -958,8 +958,55 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
 
-        
-        
+        [Fact(DisplayName = "ValueMappingsBase测试#544")]
+        public async Task ValueMappingsBase_Test()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ValueMappingsBase_Test)}.xlsx");
+            DeleteFile(filePath);
+            var list = new List<Issue544>()
+            {
+                new Issue544()
+                {
+                    Gender ="男",
+                    IsAlumni = true,
+                    Name ="张三",
+                    IsAlumni2 = true,
+                },
+                new Issue544()
+                {
+                    Gender ="男",
+                    IsAlumni = false,
+                    Name ="张三",
+                    IsAlumni2 = true,
+                },
+                new Issue544()
+                {
+                    Gender ="男",
+                    IsAlumni = null,
+                    Name ="张三",
+                    IsAlumni2 = false,
+                },
+            };
+            var result = await exporter.ExportWithXSSFWorkbook(filePath, list);
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["D2"].Text.ShouldBe("是");
+                sheet.Cells["D3"].Text.ShouldBe("是");
+                sheet.Cells["D4"].Text.ShouldBe("否");
+
+                sheet.Cells["C2"].Text.ShouldBe("是");
+                sheet.Cells["C3"].Text.ShouldBe("否");
+                sheet.Cells["C4"].Text.ShouldBe("");
+            }
+        }
+
+
+
         [Fact(DisplayName = "导出日期格式化#331")]
         public async Task DateTimeExport_Test()
         {

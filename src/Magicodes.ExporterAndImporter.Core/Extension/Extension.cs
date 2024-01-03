@@ -322,7 +322,18 @@ namespace Magicodes.ExporterAndImporter.Core.Extension
         public static void ValueMapping(this PropertyInfo propertyInfo, ref Dictionary<string, dynamic> directory)
         {
             #region 处理值映射
+            //ValueMappingsBaseAttribute
+            var valueMappings = propertyInfo.GetAttributes<ValueMappingsBaseAttribute>(true).FirstOrDefault()?.GetMappings(propertyInfo);
+            if(valueMappings != null )
+            {
+                foreach (var valueMapping in valueMappings)
+                {
+                    if (!directory.ContainsKey(valueMapping.Key)) directory.Add(valueMapping.Key, valueMapping.Value);
+                }
+                if (valueMappings.Count > 0) return;
+            }
 
+            //ValueMappingAttribute
             var mappings = propertyInfo.GetAttributes<ValueMappingAttribute>().ToList();
             var objects = directory;
             foreach (var mappingAttribute in mappings.Where(mappingAttribute =>
