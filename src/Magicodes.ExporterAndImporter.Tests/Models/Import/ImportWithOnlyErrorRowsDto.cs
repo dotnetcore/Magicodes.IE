@@ -39,7 +39,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Import
         /// </summary>
         [ImporterHeader(Name = "身份证号", IsAllowRepeat = false)]
         [Required(ErrorMessage = "身份证号不能为空")]
-        [MaxLength(18, ErrorMessage = "身份证字数超出最大限制,请修改!")]
+        [MaxLength(18, ErrorMessage = "身份证号字数超出最大限制,请修改!")]
         public string IdCard { get; set; }
 
         /// <summary>
