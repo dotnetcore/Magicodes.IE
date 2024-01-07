@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0 || NET6_0_OR_GREATER
+﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0 || NET6_0_OR_GREATER || NET7_0_OR_GREATER || NET8_0_OR_GREATER
 using Magicodes.ExporterAndImporter.Builder;
 using MagicodesWebSite;
 using Microsoft.AspNetCore.Builder;

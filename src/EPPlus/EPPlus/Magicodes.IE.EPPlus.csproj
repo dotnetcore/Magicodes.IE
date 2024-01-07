@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\..\common.props"></Import>
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;netstandard2.0;net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<NeutralLanguage />
 	</PropertyGroup>
@@ -10,7 +10,7 @@
 		<DefineConstants>Core;STANDARD20</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'net6.0'  or '$(TargetFramework)' == 'net7.0'">
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'net6.0'  or '$(TargetFramework)' == 'net7.0' or '$(TargetFramework)' == 'net8.0'">
 		<DefineConstants>Core</DefineConstants>
 	</PropertyGroup>
 
@@ -60,13 +60,19 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="6.0.1" />
-	    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.1" />
-	    <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Properties\" />
