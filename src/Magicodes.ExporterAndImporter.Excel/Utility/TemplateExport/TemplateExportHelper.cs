@@ -26,6 +26,9 @@ using System.Text.RegularExpressions;
 using Magicodes.IE.Excel.Images;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SkiaSharp;
+using Magicodes.IE.EPPlus;
+using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -696,7 +699,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                     }
                                     else if (File.Exists(imageUrl))
                                     {
-                                        image = Image.Load(imageUrl, out format);
+                                        using (Stream imageStream = File.OpenRead(imageUrl))
+                                        {
+                                            image = Image.Load(imageStream);
+                                            format = image.GetImageFormat(imageStream);
+                                        }
+
+                                        // image = Image.Load(imageUrl, out format);
                                     }
 
                                     if (image == null)
@@ -719,7 +728,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                                         excelImage.SetSize(width, height);
                                     }
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
                                     cell.Value = alt;
                                 }

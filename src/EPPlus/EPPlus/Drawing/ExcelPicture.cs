@@ -39,6 +39,7 @@ using System.Xml;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
+using Magicodes.IE.EPPlus;
 
 namespace OfficeOpenXml.Drawing
 {
@@ -59,7 +60,9 @@ namespace OfficeOpenXml.Drawing
                 UriPic = UriHelper.ResolvePartUri(drawings.UriDrawing, RelPic.TargetUri);
 
                 Part = drawings.Part.Package.GetPart(UriPic);
-                Image = Image.Load(Part.GetStream(), out var format);
+                // Image = Image.Load(Part.GetStream(), out var format);
+                Image = Image.Load(Part.GetStream());
+                var format = Image.GetImageFormat(Part.GetStream());
                 ImageFormat = format;
                 byte[] iby = ImageCompat.GetImageAsByteArray(Image, format);
                 var ii = _drawings._package.LoadImage(iby, UriPic, Part);
@@ -119,7 +122,9 @@ namespace OfficeOpenXml.Drawing
             var package = drawings.Worksheet._package.Package;
             using (var imageStream = new FileStream(imageFile.FullName, FileMode.Open, FileAccess.Read))
             {
-                Image = Image.Load(imageStream, out var format);
+                // Image = Image.Load(imageStream, out var format);
+                Image = Image.Load(imageStream);
+                var format = Image.GetImageFormat(imageStream);
                 ImageFormat = format;
 
                 var img = ImageCompat.GetImageAsByteArray(Image, format);

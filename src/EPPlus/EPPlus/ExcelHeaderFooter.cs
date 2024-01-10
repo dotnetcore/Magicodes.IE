@@ -40,6 +40,8 @@ using System.IO;
 using System.Xml;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using System.Reflection;
+using Magicodes.IE.EPPlus;
 
 namespace OfficeOpenXml
 {
@@ -150,15 +152,22 @@ namespace OfficeOpenXml
                 {
                     throw (new FileNotFoundException(string.Format("{0} is missing", pictureFile.FullName)));
                 }
-                Picture = Image.Load(pictureFile.FullName, out var format);
-                string contentType = format.DefaultMimeType;
-                var uriPic = XmlHelper.GetNewUri(_ws._package.Package, "/xl/media/" + pictureFile.Name.Substring(0, pictureFile.Name.Length - pictureFile.Extension.Length) + "{0}" + pictureFile.Extension);
-                var imgBytes = ImageCompat.GetImageAsByteArray(Picture, format);
+                
+                // Picture = Image.Load(pictureFile.FullName, out var format);
+                Picture = Image.Load(pictureFile.FullName);
+                using (Stream imageStream = pictureFile.OpenRead())
+                {
+                    var format = Picture.GetImageFormat(imageStream);
+                    string contentType = format.DefaultMimeType;
+                    var uriPic = XmlHelper.GetNewUri(_ws._package.Package, "/xl/media/" + pictureFile.Name.Substring(0, pictureFile.Name.Length - pictureFile.Extension.Length) + "{0}" + pictureFile.Extension);
+                    var imgBytes = ImageCompat.GetImageAsByteArray(Picture, format);
 
 
-                var ii = _ws.Workbook._package.AddImage(imgBytes, uriPic, contentType);
+                    var ii = _ws.Workbook._package.AddImage(imgBytes, uriPic, contentType);
 
-                return AddImage(Picture, format, id, ii);
+                    return AddImage(Picture, format, id, ii);
+                }
+                
             }
             catch (Exception ex)
             {

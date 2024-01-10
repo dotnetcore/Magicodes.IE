@@ -4,10 +4,17 @@ using System.Net;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Metadata;
+using SkiaSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp.Metadata.Profiles.Exif;
+using Magicodes.IE.EPPlus;
+using SixLabors.ImageSharp.Memory;
+using System.Text.RegularExpressions;
 
 namespace Magicodes.IE.Excel.Images
 {
-    internal static class ImageExtensions
+    internal static partial class ImageExtensions
     {
         public static string SaveTo(this Image image, string path)
         {
@@ -39,34 +46,52 @@ namespace Magicodes.IE.Excel.Images
             using (var wc = new WebClient())
             {
                 wc.Proxy = null;
-                var image = Image.Load(wc.OpenRead(url), out format);
-                if (image.Metadata.HorizontalResolution == 0 && image.Metadata.VerticalResolution == 0)
+                using (Stream webStream = wc.OpenRead(url))
                 {
-                    image.Metadata.HorizontalResolution = ImageMetadata.DefaultHorizontalResolution;
-                    image.Metadata.VerticalResolution = ImageMetadata.DefaultVerticalResolution;
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        webStream.CopyTo(memoryStream);
+                        memoryStream.Position = 0;
+
+                        var image = Image.Load(memoryStream);
+                        format = image.GetImageFormat(memoryStream);
+
+                        if (image.Metadata.HorizontalResolution == 0 && image.Metadata.VerticalResolution == 0)
+                        {
+                            image.Metadata.HorizontalResolution = ImageMetadata.DefaultHorizontalResolution;
+                            image.Metadata.VerticalResolution = ImageMetadata.DefaultVerticalResolution;
+                        }
+                        return image;
+                    }
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Converts a base64 string to an Image
+        /// </summary>
+        /// <param name="base64String">The base64 string representing the image</param>
+        /// <param name="format">The image format</param>
+        /// <returns>An Image object representing the base64 string</returns>
+        public static Image Base64StringToImage(this string base64String, out IImageFormat format)
+        {
+            byte[] bytes = Convert.FromBase64String(CleanupBase64String(base64String));
+            using (MemoryStream stream = new MemoryStream(bytes))
+            {
+                Image image = Image.Load(stream);
+                format = image.GetImageFormat(stream);
                 return image;
             }
         }
 
         /// <summary>
-        ///     base64转Bitmap
+        ///     Cleans up the base64 string by removing unnecessary characters
         /// </summary>
-        /// <param name="base64String"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static Image Base64StringToImage(this string base64String, out IImageFormat format)
+        /// <param name="base64String">The base64 string to clean up</param>
+        /// <returns>A cleaned-up base64 string</returns>
+        private static string CleanupBase64String(string base64String)
         {
-            var bytes = Convert.FromBase64String(FixBase64ForImage(base64String));
-            return Image.Load(bytes, out format);
-        }
-
-        private static string FixBase64ForImage(string image)
-        {
-            var sbText = new System.Text.StringBuilder(image, image.Length);
-            sbText.Replace("\r\n", string.Empty);
-            sbText.Replace(" ", string.Empty);
-            return sbText.ToString();
+            return Regex.Replace(base64String, @"\s+", string.Empty);
         }
     }
 }

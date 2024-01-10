@@ -37,6 +37,7 @@ using System.IO;
 using System.Xml;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using Magicodes.IE.EPPlus;
 
 namespace OfficeOpenXml
 {
@@ -77,9 +78,14 @@ namespace OfficeOpenXml
                 DeleteAllNode(BACKGROUNDPIC_PATH);
                 return;
             }
+            Image = Image.Load(imageBytes);
+            //Image = Image.Load(imageBytes, out var imageFormat);
+            using (MemoryStream imageStream = new MemoryStream(imageBytes))
+            {
+                var imageFormat = Image.GetImageFormat(imageStream);
+                ImageFormat = imageFormat;
+            }
 
-            Image = Image.Load(imageBytes, out var imageFormat);
-            ImageFormat = imageFormat;
             var imageInfo = _workSheet.Workbook._package.AddImage(imageBytes);
             var rel = _workSheet.Part.CreateRelationship(imageInfo.Uri, Packaging.TargetMode.Internal,
                 ExcelPackage.schemaRelationships + "/image");
@@ -98,7 +104,9 @@ namespace OfficeOpenXml
             try
             {
                 var fileBytes = File.ReadAllBytes(pictureFile.FullName);
-                Image.Load(fileBytes, out var format);
+                //Image.Load(fileBytes, out var format);
+                var format = Image.DetectFormat(fileBytes);
+
                 string contentType = format.DefaultMimeType;
                 var imageUri = XmlHelper.GetNewUri(_workSheet._package.Package,
                     "/xl/media/" +

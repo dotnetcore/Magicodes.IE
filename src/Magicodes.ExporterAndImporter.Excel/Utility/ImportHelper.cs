@@ -778,7 +778,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         ///     解析头部
         /// </summary>
         /// <returns></returns>
-        /// <exception cref = "ArgumentException" > 导入实体没有定义ImporterHeader属性 </ exception >
+        /// <exception cref = "ArgumentException" > 导入实体没有定义ImporterHeader属性 
+        /// </exception>
         protected virtual bool ParseHeader()
         {
             ImporterHeaderInfos = new List<ImporterHeaderInfo>();
