@@ -23,6 +23,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// </summary>
         public ImportResultEnumer()
         {
+            Data = new List<T>();
             RowErrors = new List<DataRowErrorInfo>();
         }
 
@@ -70,6 +71,7 @@ namespace Magicodes.ExporterAndImporter.Core.Models
         /// </summary>
         public ImportResult()
         {
+            Data = new List<T>();
             RowErrors = new List<DataRowErrorInfo>();
         }
 
