@@ -1210,5 +1210,15 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.HasError.ShouldBeFalse();
             import.Data.Count.ShouldBe(3);
         }
+
+        [Fact(DisplayName = "#549-Excel中缺少列时，应返回空和错误，不应该空指针异常")]
+        public async Task MissingField_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "Issue549.xlsx");
+            var import = await Importer.Import<Issue549>(filePath);
+
+            import.HasError.ShouldBeTrue();
+            import.Data.Count.ShouldBe(0);
+        }
     }
 }

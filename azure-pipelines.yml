@@ -47,6 +47,11 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '7.x'  
+    
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'  
 
 #  不再进行多框架全面测试
 #- task: UseDotNet@2
