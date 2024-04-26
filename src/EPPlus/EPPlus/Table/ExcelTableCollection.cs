@@ -103,9 +103,10 @@ namespace OfficeOpenXml.Table
             }
             return Add(new ExcelTable(_ws, Range, Name, _ws.Workbook._nextTableID));
         }
-
+        public static bool IsValidateTableName { get; set; } = true; 
         private void ValidateTableName(string Name)
         {
+            if (!IsValidateTableName) return;
             if (string.IsNullOrEmpty(Name))
             {
                 throw new ArgumentException("Tablename is null or empty");
