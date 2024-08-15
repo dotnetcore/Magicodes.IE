@@ -6,18 +6,21 @@ namespace OfficeOpenXml.Utils
 {
     public static class RecyclableMemoryStream
     {
-        private static readonly Lazy<RecyclableMemoryStreamManager> recyclableMemoryStreamManager = new Lazy<RecyclableMemoryStreamManager>();
-        private static RecyclableMemoryStreamManager RecyclableMemoryStreamManager
-        {
-            get
-            {
-                var recyclableMemoryStream = recyclableMemoryStreamManager.Value;
-                recyclableMemoryStream.MaximumFreeSmallPoolBytes = 64 * 1024 * 1024;
-                recyclableMemoryStream.MaximumFreeLargePoolBytes = 64 * 1024 * 32;
-                recyclableMemoryStream.AggressiveBufferReturn = true;
-                return recyclableMemoryStream;
-            }
-        }
+       private static readonly Lazy<RecyclableMemoryStreamManager> recyclableMemoryStreamManager = new Lazy<RecyclableMemoryStreamManager>(() =>
+       {
+           var option = new RecyclableMemoryStreamManager.Options();
+		   option.MaximumSmallPoolFreeBytes = 64 * 1024 * 1024;
+           option.MaximumLargePoolFreeBytes = 64 * 1024 * 32;
+           option.AggressiveBufferReturn = true;
+		   return new RecyclableMemoryStreamManager(option);
+       });
+       private static RecyclableMemoryStreamManager RecyclableMemoryStreamManager
+       {
+           get
+           {
+               return recyclableMemoryStreamManager.Value;
+           }
+       }
         private const string TagSource = "Magicodes.EPPlus";
 
         internal static MemoryStream GetStream()
