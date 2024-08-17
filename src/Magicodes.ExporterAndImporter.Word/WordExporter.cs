@@ -89,7 +89,7 @@ namespace Magicodes.ExporterAndImporter.Word
                     }
 
                     var converter = new HtmlConverter(mainPart);
-                    converter.ParseHtml(htmlString);
+                    await converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
                 }
@@ -147,7 +147,7 @@ namespace Magicodes.ExporterAndImporter.Word
                     }
 
                     var converter = new HtmlConverter(mainPart);
-                    converter.ParseHtml(htmlString);
+                    await converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
 
@@ -185,7 +185,7 @@ namespace Magicodes.ExporterAndImporter.Word
                     }
 
                     var converter = new HtmlConverter(mainPart);
-                    converter.ParseHtml(htmlString);
+                    await converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
 
@@ -232,7 +232,7 @@ namespace Magicodes.ExporterAndImporter.Word
                     }
 
                     var converter = new HtmlConverter(mainPart);
-                    converter.ParseHtml(htmlString);
+                    await converter.ParseHtml(htmlString);
 
                     mainPart.Document.Save();
 
