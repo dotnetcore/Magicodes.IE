@@ -342,7 +342,7 @@ namespace OfficeOpenXml.VBA
             byte[] seed = new byte[1];
             var rn = RandomNumberGenerator.Create();
             rn.GetBytes(seed);
-            BinaryWriter br = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter br = new BinaryWriter(new MemoryStream());
             byte[] enc = new byte[value.Length + 10];
             enc[0] = seed[0];
             enc[1] = (byte)(2 ^ seed[0]);
@@ -401,7 +401,7 @@ namespace OfficeOpenXml.VBA
         private void ReadDirStream()
         {
             byte[] dir = VBACompression.DecompressPart(Document.Storage.SubStorage["VBA"].DataStreams["dir"]);
-            using (MemoryStream ms = RecyclableMemoryStream.GetStream(dir))
+            using (MemoryStream ms = new MemoryStream(dir))
             {
 
                 BinaryReader br = new BinaryReader(ms);
@@ -623,7 +623,7 @@ namespace OfficeOpenXml.VBA
         /// <returns></returns>
         private byte[] CreateVBAProjectStream()
         {
-            BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter bw = new BinaryWriter(new MemoryStream());
             bw.Write((ushort)0x61CC); //Reserved1
             bw.Write((ushort)0xFFFF); //Version
             bw.Write((byte)0x0); //Reserved3
@@ -636,7 +636,7 @@ namespace OfficeOpenXml.VBA
         /// <returns></returns>
         private byte[] CreateDirStream()
         {
-            BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter bw = new BinaryWriter(new MemoryStream());
 
             /****** PROJECTINFORMATION Record ******/
             bw.Write((ushort)1);        //ID
@@ -861,7 +861,7 @@ namespace OfficeOpenXml.VBA
 
         private byte[] CreateProjectwmStream()
         {
-            BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter bw = new BinaryWriter(new MemoryStream());
 
             foreach (var module in Modules)
             {
@@ -977,7 +977,7 @@ namespace OfficeOpenXml.VBA
                     }
                 }
                 //Write the Password Hash Data Structure (2.4.4.1)
-                BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+                BinaryWriter bw = new BinaryWriter(new MemoryStream());
                 bw.Write((byte)0xFF);
                 bw.Write(nullBits);
                 bw.Write(nullKey);

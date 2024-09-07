@@ -528,7 +528,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zlib
         /// 
         ///     Console.WriteLine("\n============================================");
         ///     Console.WriteLine("Size of Buffer to Deflate: {0} bytes.", UncompressedBytes.Length);
-        ///     MemoryStream ms = RecyclableMemoryStream.GetStream();
+        ///     MemoryStream ms = new MemoryStream();
         /// 
         ///     int rc = compressor.InitializeDeflate(level);
         /// 

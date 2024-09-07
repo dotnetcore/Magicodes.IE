@@ -140,7 +140,7 @@ namespace OfficeOpenXml.Packaging
             else
             {
                 var part = new ZipPackagePart(this, e);
-                part.Stream = RecyclableMemoryStream.GetStream();
+                part.Stream = new MemoryStream();
                 zip.CopyTo(part.Stream);
                 Parts.Add(GetUriKey(e.FileName), part);
             }

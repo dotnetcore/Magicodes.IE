@@ -899,7 +899,7 @@ namespace OfficeOpenXml
 
             // now release stream buffer (already converted whole Xml into XmlDocument Object and String)
             stream.Dispose();
-            packPart.Stream = RecyclableMemoryStream.GetStream();
+            packPart.Stream = new MemoryStream();
 
             //first char is invalid sometimes?? 
             if (xml[0] != '<')

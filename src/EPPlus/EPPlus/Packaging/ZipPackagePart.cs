@@ -90,7 +90,7 @@ namespace OfficeOpenXml.Packaging
         {
             if (_stream == null || fileMode == FileMode.CreateNew || fileMode == FileMode.Create)
             {
-                _stream = RecyclableMemoryStream.GetStream();
+                _stream = new MemoryStream();
             }
             else
             {
@@ -122,7 +122,7 @@ namespace OfficeOpenXml.Packaging
         public Uri Uri { get; private set; }
         public Stream GetZipStream()
         {
-            MemoryStream ms = RecyclableMemoryStream.GetStream();
+            MemoryStream ms = new MemoryStream();
             ZipOutputStream os = new ZipOutputStream(ms);
             return os;
         }

@@ -45,7 +45,7 @@ namespace OfficeOpenXml.Utils
         /// <returns></returns>
         internal static byte[] CompressPart(byte[] part)
         {
-            using (var ms = RecyclableMemoryStream.GetStream(4096))
+            using (var ms = new MemoryStream(4096))
             {
                 BinaryWriter br = new BinaryWriter(ms);
                 br.Write((byte)1);
@@ -172,7 +172,7 @@ namespace OfficeOpenXml.Utils
                 return null;
             }
 
-            using (var ms = RecyclableMemoryStream.GetStream(4096))
+            using (var ms = new MemoryStream(4096))
             {
                 int compressPos = startPos + 1;
                 while (compressPos < part.Length - 1)

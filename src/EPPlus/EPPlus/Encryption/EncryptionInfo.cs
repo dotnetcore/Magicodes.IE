@@ -566,7 +566,7 @@ namespace OfficeOpenXml.Encryption
         }
         internal byte[] WriteBinary()
         {
-            MemoryStream ms = RecyclableMemoryStream.GetStream();
+            MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
 
             bw.Write(MajorVersion);
