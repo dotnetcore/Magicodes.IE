@@ -1171,6 +1171,7 @@ namespace OfficeOpenXml
         private void LoadHyperLinks(XmlReader xr)
         {
             if (!ReadUntil(xr, "hyperlinks", "rowBreaks", "colBreaks")) return;
+            var rIdCache = new Dictionary<string, Uri>();
             while (xr.Read())
             {
                 if (xr.LocalName == "hyperlink")
@@ -1181,7 +1182,10 @@ namespace OfficeOpenXml
                     if (xr.GetAttribute("id", ExcelPackage.schemaRelationships) != null)
                     {
                         var rId = xr.GetAttribute("id", ExcelPackage.schemaRelationships);
-                        var uri = Part.GetRelationship(rId).TargetUri;
+                        if (!rIdCache.TryGetValue(rId,out var uri))
+                        {
+                            uri = Part.GetRelationship(rId).TargetUri;
+                        }
                         if (uri.IsAbsoluteUri)
                         {
                             try
@@ -1199,6 +1203,7 @@ namespace OfficeOpenXml
                         }
                         hl.RId = rId;
                         Part.DeleteRelationship(rId); //Delete the relationship, it is recreated when we save the package.
+                        rIdCache[rId] = uri;
                     }
                     else if (xr.GetAttribute("location") != null)
                     {
