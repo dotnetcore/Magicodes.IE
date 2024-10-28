@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlToOpenXml.dll" Version="2.0.3" />
+    <PackageReference Include="HtmlToOpenXml.dll" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
