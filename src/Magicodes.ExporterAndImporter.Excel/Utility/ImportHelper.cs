@@ -567,8 +567,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     ExcelImporterSettings.HeaderRowIndex++;
                 }
-
-                for (var columnIndex = 1; columnIndex <= endColumnCount; columnIndex++)
+                var firstColumnOffset = ExcelImporterSettings.FirstColumnOffset;
+                for (var columnIndex = firstColumnOffset + 1; columnIndex <= endColumnCount; columnIndex++)
                 {
                     var header = worksheet.Cells[ExcelImporterSettings.HeaderRowIndex, columnIndex].Text;
 
@@ -659,7 +659,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 });
                 throw new Exception($"{Resource.AnUnknownErrorOccurredInTheTemplate}{ex.Message}", ex);
             }
- 
+
         }
 
 
@@ -1149,13 +1149,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
             ImportResult.Data = new List<T>();
             var propertyInfos = new List<PropertyInfo>(typeof(T).GetProperties());
-
+            var firstColumnOffset = ExcelImporterSettings.FirstColumnOffset;
             for (var rowIndex = ExcelImporterSettings.HeaderRowIndex + 1;
                 rowIndex <= worksheet.Dimension.End.Row;
                 rowIndex++)
             {
                 //跳过空行
-                if (worksheet.Cells[rowIndex, 1, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
+                if (worksheet.Cells[rowIndex, 1 + firstColumnOffset, rowIndex, worksheet.Dimension.End.Column].All(p => p.Text == string.Empty))
                 {
                     EmptyRows.Add(rowIndex);
                     continue;
