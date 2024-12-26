@@ -64,5 +64,11 @@ namespace Magicodes.ExporterAndImporter.Excel
         ///     是否仅导出错误数据
         /// </summary>
         public bool IsOnlyErrorRows { get; set; }
+
+
+        /// <summary>
+        /// 首列偏移量(默认为0，数据从第2列开始则偏移量为1)
+        /// </summary>
+        public int FirstColumnOffset { get; set; } = 0;
     }
 }
