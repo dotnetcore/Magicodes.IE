@@ -1210,5 +1210,12 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.HasError.ShouldBeFalse();
             import.Data.Count.ShouldBe(3);
         }
+        [Fact(DisplayName = "可空枚举类型导入测试")]
+        public async Task NullableEnum_Test()
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "Import", "NullableEnum.xlsx");
+            var import = await Importer.Import<NullableEnumTestImportDto>(filePath);
+            import.HasError.ShouldBeFalse();
+        }
     }
 }
