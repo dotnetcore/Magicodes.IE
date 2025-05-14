@@ -10,6 +10,7 @@
 [![Stargazers over time](https://starchart.cc/dotnetcore/Magicodes.IE.svg)](https://starchart.cc/dotnetcore/Magicodes.IE)
 
 **最近主要精力都在CodeSpirit，由于业余精力极其有限，Magicodes.IE仅作间歇性维护。**
+
 **地址（优先更新Gitee）：**[CodeSpirit（码灵）](https://gitee.com/magicodes/code-spirit)
 
 **简介：**CodeSpirit（码灵）是一款革命性的全栈低代码开发框架，通过智能代码生成引擎与AI深度协同，实现**后端驱动式全栈开发范式**。基于.NET 9技术栈构建，将具备企业级技术深度与云原生扩展能力，提供从界面生成、业务逻辑编排到系统运维的全生命周期支持。
