@@ -9,7 +9,7 @@
     <PackageReference Include="TuesPechkin.Wkhtmltox.AnyCPU" Version="0.12.4.1" />
   </ItemGroup>-->
   <ItemGroup>
-	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.86" />
+	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.95" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
