@@ -9,6 +9,15 @@
 
 [![Stargazers over time](https://starchart.cc/dotnetcore/Magicodes.IE.svg)](https://starchart.cc/dotnetcore/Magicodes.IE)
 
+**最近主要精力都在CodeSpirit，由于业余精力极其有限，Magicodes.IE仅作间歇性维护。**
+**地址（优先更新Gitee）：**[CodeSpirit（码灵）](https://gitee.com/magicodes/code-spirit)
+
+**简介：**CodeSpirit（码灵）是一款革命性的全栈低代码开发框架，通过智能代码生成引擎与AI深度协同，实现**后端驱动式全栈开发范式**。基于.NET 9技术栈构建，将具备企业级技术深度与云原生扩展能力，提供从界面生成、业务逻辑编排到系统运维的全生命周期支持。
+
+**让全栈开发回归工程本质**
+
+- **后端驱动式开发范式 · 企业级开放架构 · AI增强工程闭环**
+
 ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/xinlaiopencode/Magicodes.IE/4/master)
 ![Azure DevOps coverage (branch)](https://img.shields.io/azure-devops/coverage/xinlaiopencode/Magicodes.IE/4/master)
 [![Financial Contributors on Open Collective](https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors)](https://opencollective.com/magicodes) 
@@ -395,21 +404,10 @@ public DateTime Time3 { get; set; }
 </td>
 </tr>
 </table>
-
-> ##### **QQ群**
-
-- **编程交流群<85318032>**（由于不经常在线，为了避免骚扰，设置了一定门槛）
-
 > ##### **文档官网&官方博客**
 
 - **文档官网：<https://docs.xin-lai.com/>**
 - **博客：<http://www.cnblogs.com/codelove/>**
-
-
-> ##### **其他开源库**
-
-- **<https://github.com/xin-lai>**
-- **<https://gitee.com/magicodes>**
 
 ### Code Contributors
 
