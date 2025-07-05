@@ -53,74 +53,6 @@ steps:
     packageType: 'sdk'
     version: '8.x'  
 
-#  不再进行多框架全面测试
-#- task: UseDotNet@2
-#  inputs:
-#    packageType: 'sdk'
-#    version: '5.x'
-#- task: UseDotNet@2
-#  inputs:
-#    packageType: 'sdk'
-#    version: '3.1.x'
-
-#- task: UseDotNet@2
-#  inputs:
-#    packageType: 'sdk'
-#    version: '2.2.x'
-
-
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'build'
-#     configuration: $(BuildConfiguration)
-#     vstsFeed: xinlaiopencode/xinlaiopencode
-#     includeNuGetOrg: true
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'test'
-#     configuration: $(BuildConfiguration)
-#     arguments: '--logger trx --collect "XPlat Code Coverage"'
-
-- task: PowerShell@2
-  displayName: Run Tests and ReportGenerator
-  inputs:
-    targetType: 'inline'
-    script: |
-      #执行单元测试
-      dotnet test --logger:trx --collect:"XPlat Code Coverage" --configuration $(BuildConfiguration)
-      dotnet tool install -g dotnet-reportgenerator-globaltool
-      reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-Magicodes.IE.EPPlus*;-MagicodesWebSite*"
-
-      ls coveragereport
-      ls TestResults
-    failOnStderr: true
-  continueOnError: true
-
-# - task: PowerShell@2
-#   displayName: Run Tests and ReportGenerator
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       ls TestResults
-#       dotnet tool install -g dotnet-reportgenerator-globaltool
-#       reportgenerator "-reports:**\TestResults\*\coverage.cobertura.xml;**\TestResults\cobertura-coverage.xml" "-targetdir:$(System.DefaultWorkingDirectory)\coveragereport" "-reporttypes:HtmlInline_AzurePipelines_Dark;Cobertura;Badges" "-assemblyfilters:-Dapper*;-Dommel*;-Magicodes.ExporterAndImporter.AspNetCore*;-MagicodesWebSite*"
-#     failOnStderr: true
-#   continueOnError: false
-
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results'
-  inputs:
-    testResultsFormat: 'VSTest' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-    testResultsFiles: '**/TestResults/*.trx' 
-    testRunTitle: API.Tests
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
-  inputs:
-    codeCoverageTool: 'cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)\coveragereport\Cobertura.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)\coveragereport'
-
 - task: PowerShell@2
   displayName: 'Package Push'
   condition: eq(variables['Build.SourceBranchName'], 'master')
@@ -141,10 +73,6 @@ steps:
 
       #推包
       dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
-
-      #使用gpr工具推送到GitHub
-      dotnet tool install -g gpr --no-cache -v q
-      gpr push --api-key $env:GITHUB_API_KEY $(Build.ArtifactStagingDirectory)\*.nupkg
     failOnStderr: true
     showWarnings: true
     ignoreLASTEXITCODE: true
