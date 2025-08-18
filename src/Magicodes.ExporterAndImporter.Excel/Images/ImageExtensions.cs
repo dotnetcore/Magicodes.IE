@@ -56,7 +56,8 @@ namespace Magicodes.IE.Excel.Images
                         var image = Image.Load(memoryStream);
                         format = image.GetImageFormat(memoryStream);
 
-                        if (image.Metadata.HorizontalResolution == 0 && image.Metadata.VerticalResolution == 0)
+                        // 2025-08-03 SixLabors.ImageSharp在加载某些格式的图片（尤其是 JPEG/PNG）时，如果图片元数据中没有明确指定 DPI 信息，或者元数据格式不符合预期，可能会将 DPI 默认设置为 1
+                        if (image.Metadata.HorizontalResolution <= 1 && image.Metadata.VerticalResolution <= 1)
                         {
                             image.Metadata.HorizontalResolution = ImageMetadata.DefaultHorizontalResolution;
                             image.Metadata.VerticalResolution = ImageMetadata.DefaultVerticalResolution;
