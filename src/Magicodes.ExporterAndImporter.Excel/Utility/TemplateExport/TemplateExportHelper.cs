@@ -12,23 +12,20 @@
 // ======================================================================
 
 using DynamicExpresso;
-using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.IE.Core;
+using Magicodes.IE.EPPlus;
+using Magicodes.IE.Excel.Images;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Magicodes.IE.Excel.Images;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SkiaSharp;
-using Magicodes.IE.EPPlus;
-using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -319,6 +316,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                     foreach (var itemTable in item)
                     {
                         itemTable.NewRowStart += insertRows;
+                        // 如果一行有多表格则记录最大行数，用于后续清理多余的行
+                        itemTable.SameRowMaxRowCount = table.RowCount;
                     }
                 }
                 else
@@ -371,7 +370,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         continue;
                     }
 
-                    RenderTableCells(target, tbParameters, sheet, table.NewRowStart - table.RawRowStart, tableKey, table.RowCount, col, address);
+                    RenderTableCells(target, tbParameters, sheet, table.NewRowStart - table.RawRowStart, tableKey, table.RowCount, col, address, table.SameRowMaxRowCount);
                 }
             }
         }
@@ -438,7 +437,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="writer"></param>
         /// <param name="address"></param>
-        private void RenderTableCells(Interpreter target, Parameter[] tbParameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, IWriter writer, ExcelAddressBase address)
+        /// <param name="sameRowMaxRowCount"></param>
+        private void RenderTableCells(Interpreter target, Parameter[] tbParameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, IWriter writer, ExcelAddressBase address, int? sameRowMaxRowCount = null)
         {
             var cellString = writer.CellString;
             if (cellString.Contains("{{Table>>"))
@@ -448,7 +448,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 //{{Remark|>>Table}}
                 cellString = cellString.Split('|')[0].Trim() + "}}";
 
-            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
+            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address, sameRowMaxRowCount);
         }
 
         /// <summary>
@@ -529,7 +529,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="cellString"></param>
         /// <param name="address"></param>
-        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
+        /// <param name="sameRowMaxRowCount"></param>
+        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address, int? sameRowMaxRowCount = null)
         {
             //var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
             string dataVar;
@@ -554,6 +555,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 //https://github.com/dotnetcore/Magicodes.IE/issues/155
                 sheet.Row(rowIndex).Height = sheet.Row(address.Start.Row).Height;
                 RenderCell(target, sheet, cellString, targetAddress.Address, dataVar, null, parameters, i);
+            }
+
+            if (sameRowMaxRowCount.HasValue && sameRowMaxRowCount.Value > rowCount)
+            {
+                // 清理多余的行
+                for (var i = rowCount; i < sameRowMaxRowCount.Value; i++)
+                {
+                    var rowIndex = address.Start.Row + i + insertRows;
+                    var targetAddress = new ExcelAddress(rowIndex, address.Start.Column, rowIndex, address.Start.Column);
+                    sheet.Cells[targetAddress.Address].Clear();
+                }
             }
         }
 

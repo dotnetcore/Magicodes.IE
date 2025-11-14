@@ -16,17 +16,13 @@ using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Tests.Extensions;
 using Magicodes.ExporterAndImporter.Tests.Models.Export;
-using Magicodes.ExporterAndImporter.Tests.Models.Export.ExportByTemplate_Test1;
 using Magicodes.IE.Core;
-using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
 using OfficeOpenXml.Style;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Dynamic;
 using System.IO;
@@ -1093,6 +1089,58 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 await exporter.ExportByTemplate(filePath, data, tplPath);
             });
+        }
+
+        [Fact(DisplayName = "一行不同表行数测试")]
+        public async Task ExportWithSameRowMultiTable_Test()
+        {
+            //模板路径
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates", "ExportWithSameRowMultiTable.xlsx");
+            //创建Excel导出对象
+            IExportFileByTemplate exporter = new ExcelExporter();
+            //导出路径
+            var filePath = GetTestFilePath($"{nameof(ExportWithSameRowMultiTable_Test)}.xlsx");
+            if (File.Exists(filePath)) File.Delete(filePath);
+            //根据模板导出
+            var result =
+                  await exporter.ExportByTemplate(filePath, new
+                  {
+                      ListA = new List<ExportTestDataWithSingleCol>()
+                      {
+                        new(){
+                            Name = "A1"
+                        },
+                        new(){
+                            Name = "A2"
+                        },
+                        new(){
+                            Name = "A3"
+                        }
+                      },
+                      ListB = new List<ExportTestDataWithSingleCol>(){
+                        new(){
+                            Name = "B1"
+                        },
+                        new(){
+                            Name = "B2"
+                        }
+                      }
+                  }, tplPath);
+
+            result.ShouldNotBeNull();
+            File.Exists(filePath).ShouldBeTrue();
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                pck.Workbook.Worksheets.Count.ShouldBe(1);
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Cells["A2"].Text.ShouldBe("A1");
+                sheet.Cells["A3"].Text.ShouldBe("A2");
+                sheet.Cells["A4"].Text.ShouldBe("A3");
+                sheet.Cells["B2"].Text.ShouldBe("B1");
+                sheet.Cells["B3"].Text.ShouldBe("B2");
+                sheet.Cells["B4"].Text.ShouldBe("");
+            }
         }
     }
 }
