@@ -2957,6 +2957,19 @@ references:
   isSpec: "True"
   fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.RowCount
   nameWithType: TemplateTableInfo.RowCount
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount
+  name: SameRowMaxRowCount
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateTableInfo_SameRowMaxRowCount
+  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount
+  nameWithType: TemplateTableInfo.SameRowMaxRowCount
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount*
+  name: SameRowMaxRowCount
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateTableInfo_SameRowMaxRowCount_
+  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount
+  isSpec: "True"
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.SameRowMaxRowCount
+  nameWithType: TemplateTableInfo.SameRowMaxRowCount
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.TableKey
   name: TableKey
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateTableInfo_TableKey
