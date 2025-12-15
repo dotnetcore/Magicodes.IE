@@ -172,13 +172,16 @@
 <li><a href="docs/4.Use in Docker.md">Use in Docker</a></li>
 <li><a href="docs/5.Dynamic Export.md">Dynamic Export</a></li>
 <li><a href="docs/6.Import Multi-Sheet Tutorial.md">Import Multi-Sheet Tutorial</a></li>
+<li><a href="docs/7.Csv Import and Export.md">Csv Import and Export</a></li>
 <li><a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a></li>
 <li><a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a></li>
-<li><a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a></li>
+<li><a href="https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/">Import and Export Filters</a></li>
+<li><a href="https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/">Magicodes.IE Fancy Export</a></li>
 <li><a href="docs/12.Exporting multiple formats in NETCore via request headers.md">Exporting multiple formats in NETCore via request headers</a></li>
 <li><a href="docs/13.Performance Measurement.md">Performance Measurement</a></li>
 <li><a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a></li>
-<li><a href="docs/Excel template  export - dynamic export.md">Excel template  export - dynamic export</a></li>
+<li><a href="docs/Excel template  export - dynamic export.md">Excel template export - dynamic export</a></li>
+<li><a href="docs/Magicodes.IE.Excel.AspNetCore Quick Export Excel.md">Magicodes.IE.Excel.AspNetCore Quick Export Excel (new)</a></li>
 </ol>
 <p><strong>See below for other tutorials or unit tests</strong></p>
 <p><strong>See below for update history.</strong></p>
@@ -189,8 +192,8 @@
 <li><strong>Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:</strong>
 <ul>
 <li><strong>Import column header filter <iimportheaderfilter>(you can dynamically specify the imported column and imported value mapping relationship)</iimportheaderfilter></strong></li>
-<li><strong>Export column header filter <iimportheaderfilter>(can dynamically control the export column, support dynamic export (DataTable))</iimportheaderfilter></strong></li>
-<li><strong>Export column headers filter <iimportheadersfilter>(can dynamically control the export column, support dynamic export (DataTable))</iimportheadersfilter></strong></li>
+<li><strong>Export column header filter <iexportheaderfilter>(can dynamically control the export column, support dynamic export (DataTable))</iexportheaderfilter></strong></li>
+<li><strong>Export column headers filter <iexportheadersfilter>(can dynamically control the export column, support dynamic export (DataTable))</iexportheadersfilter></strong></li>
 <li><strong>Import result filter <iimportresultfilter>(can modify annotation file)</iimportresultfilter></strong></li>
 </ul>
 </li>
@@ -222,7 +225,7 @@
 <li><strong>Import supports repeated verification;</strong>
 <img src="res/%E9%87%8D%E5%A4%8D%E9%94%99%E8%AF%AF.png" alt="" title="Repeated verification"></li>
 <li><strong>Support single data template export, often used to export receipts, credentials and other businesses</strong></li>
-<li>*<em>Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou (<a href="https://github.com/xin-lai/Magicodes.IE/pull/8">https://github.com/xin-lai/Magicodes.IE/pull/8</a> ))</em> *</li>
+<li><strong>Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou (<a href="https://github.com/xin-lai/Magicodes.IE/pull/8">https://github.com/xin-lai/Magicodes.IE/pull/8</a>))</strong></li>
 <li><strong>Support dynamic/ExpandoObject dynamic column export</strong></li>
 </ul>
 <pre><code class="lang-csharp">        [Fact(DisplayName = &quot;DTO export supports dynamic types&quot;)]
@@ -246,7 +249,7 @@
         }
 </code></pre>
 <ul>
-<li>**Support value mapping, support setting value mapping relationship through &quot;ValueMappingAttribute&quot; feature. It is used to generate data validation constraints for import templates and perform data conversion. **</li>
+<li><strong>Support value mapping, support setting value mapping relationship through &quot;ValueMappingAttribute&quot; feature. It is used to generate data validation constraints for import templates and perform data conversion.</strong></li>
 </ul>
 <pre><code class="lang-csharp">        /// &lt;summary&gt;
         /// Gender
@@ -255,6 +258,30 @@
         [Required(ErrorMessage = &quot;Gender cannot be empty.&quot;)]
         [ValueMapping(text: &quot;Male&quot;, 0)]
         [ValueMapping(text: &quot;Female&quot;, 1)]
+        public Genders Gender { get; set; }
+</code></pre>
+<ul>
+<li><strong>You can also inherit the &quot;ValueMappingsBaseAttribute&quot; attribute base class to implement value mapping relationships, currently only available for enumeration and Bool types, supports import and export.</strong></li>
+</ul>
+<pre><code class="lang-csharp">        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class GenderLocalAttribute : ValueMappingsBaseAttribute
+        {
+            public override Dictionary&lt;string, object&gt; GetMappings(PropertyInfo propertyInfo)
+            {
+                var res= new Dictionary&lt;string, object&gt;();
+                res.Add(&quot;Male&quot;,0);
+                res.Add(&quot;Female&quot;,1);
+                return res;
+            }
+        }
+
+
+        /// &lt;summary&gt;
+        /// Gender
+        /// &lt;/summary&gt;
+        [ImporterHeader(Name = &quot;Gender&quot;)]
+        [Required(ErrorMessage = &quot;Gender cannot be empty.&quot;)]
+        [GenderLocal]
         public Genders Gender { get; set; }
 </code></pre>
 <ul>
@@ -320,7 +347,7 @@
 <li><p><strong>Support excel multi-sheet import</strong>
 <strong><img src="res/multipleSheet.png" alt="" title="Enumeration to data mapping"></strong></p>
 </li>
-<li><p><strong>Support Excel template export, and support image rendering</strong>
+<li><p><strong>Support Excel template export, JSON dynamic export, and support image rendering</strong>
 <strong><img src="res/ExcelTplExport.png" alt="" title="Excel template export"></strong></p>
 <p>The rendering syntax is as follows:</p>
 <pre><code>  {{Company}}  //Cell rendering
@@ -329,6 +356,8 @@
   {{Image::ImageUrl?Width=50&amp;Height=120&amp;Alt=404}} //Picture rendering
   {{Image::ImageUrl?w=50&amp;h=120&amp;Alt=404}} //Picture rendering
   {{Image::ImageUrl?Alt=404}} //Picture rendering
+  {{Formula::AVERAGE?params=G4:G6}}  //Formula rendering
+  {{Formula::SUM?params=G4:G6&amp;G4}}   //Formula rendering
 </code></pre>
 <p>Custom pipelines will be supported in the future.</p>
 </li>
@@ -384,7 +413,7 @@ public DateTime Time3 { get; set; }
 <ul>
 <li><strong>Excel import supports merging row data</strong> <a href="https://github.com/dotnetcore/Magicodes.IE/issues/239">#239</a></li>
 </ul>
-<p><img src="res/image-20210306105147319.png" alt="合并行导入文件"></p>
+<p><img src="res/image-20210306105147319.png" alt="Excel Merge Row Cells Import"></p>
 <ul>
 <li>Add packaging for Abp module, see <a href="https://github.com/dotnetcore/Magicodes.IE/issues/318">#318</a> for details.</li>
 </ul>
