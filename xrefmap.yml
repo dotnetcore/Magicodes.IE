@@ -2706,6 +2706,14 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).Dispose()
   nameWithType: TemplateExportHelper<T>.Dispose()
   nameWithType.vb: TemplateExportHelper(Of T).Dispose()
+- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Dispose(System.Boolean)
+  name: Dispose(Boolean)
+  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_Dispose_System_Boolean_
+  commentId: M:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Dispose(System.Boolean)
+  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.Dispose(System.Boolean)
+  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).Dispose(System.Boolean)
+  nameWithType: TemplateExportHelper<T>.Dispose(Boolean)
+  nameWithType.vb: TemplateExportHelper(Of T).Dispose(Boolean)
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.Dispose*
   name: Dispose
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_Dispose_
@@ -2861,23 +2869,6 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).SheetWriters
   nameWithType: TemplateExportHelper<T>.SheetWriters
   nameWithType.vb: TemplateExportHelper(Of T).SheetWriters
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.TableValuesDictionary
-  name: TableValuesDictionary
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_TableValuesDictionary
-  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.TableValuesDictionary
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.TableValuesDictionary
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).TableValuesDictionary
-  nameWithType: TemplateExportHelper<T>.TableValuesDictionary
-  nameWithType.vb: TemplateExportHelper(Of T).TableValuesDictionary
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.TableValuesDictionary*
-  name: TableValuesDictionary
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_TableValuesDictionary_
-  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.TableValuesDictionary
-  isSpec: "True"
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.TableValuesDictionary
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).TableValuesDictionary
-  nameWithType: TemplateExportHelper<T>.TableValuesDictionary
-  nameWithType.vb: TemplateExportHelper(Of T).TableValuesDictionary
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.TemplateFilePath
   name: TemplateFilePath
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_TemplateFilePath
@@ -2895,23 +2886,6 @@ references:
   fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).TemplateFilePath
   nameWithType: TemplateExportHelper<T>.TemplateFilePath
   nameWithType.vb: TemplateExportHelper(Of T).TemplateFilePath
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.ValuesDictionary
-  name: ValuesDictionary
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_ValuesDictionary
-  commentId: P:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.ValuesDictionary
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.ValuesDictionary
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).ValuesDictionary
-  nameWithType: TemplateExportHelper<T>.ValuesDictionary
-  nameWithType.vb: TemplateExportHelper(Of T).ValuesDictionary
-- uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.ValuesDictionary*
-  name: ValuesDictionary
-  href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper-1.html#Magicodes_ExporterAndImporter_Excel_Utility_TemplateExport_TemplateExportHelper_1_ValuesDictionary_
-  commentId: Overload:Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper`1.ValuesDictionary
-  isSpec: "True"
-  fullName: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper<T>.ValuesDictionary
-  fullName.vb: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateExportHelper(Of T).ValuesDictionary
-  nameWithType: TemplateExportHelper<T>.ValuesDictionary
-  nameWithType.vb: TemplateExportHelper(Of T).ValuesDictionary
 - uid: Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo
   name: TemplateTableInfo
   href: api/Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport.TemplateTableInfo.html
