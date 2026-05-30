@@ -397,57 +397,48 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="maxColumnNum">最大列数</param>
         private void RowCopy(ExcelWorksheet sheet, int startRow, int endRow, int totalRows, int maxColumnNum)
         {
-            //rows表示现有的sheet行数
-            int currentStartRow = startRow;
-            int currentEndRow = endRow;
-            int rows = currentEndRow - currentStartRow + 1;
-            int remainingRows = totalRows;
-
-            // 确保不超过Excel的最大行数限制
             const int maxExcelRows = 1048576; // Excel 2007+ 最大行数
-            if (startRow + totalRows - 1 > maxExcelRows)
+
+            if (totalRows <= 1)
             {
-                totalRows = maxExcelRows - startRow + 1;
-                remainingRows = totalRows;
+                return;
             }
 
-            // 使用迭代替代递归，防止栈溢出
-            while (remainingRows > rows && currentEndRow < maxExcelRows)
+            var currentStartRow = startRow;
+            var currentEndRow = endRow;
+
+            var desiredEndRow = Math.Min(startRow + totalRows - 1, maxExcelRows);
+            if (currentEndRow >= desiredEndRow)
             {
-                int targetStartRow = currentEndRow + 1;
-                
-                // 确保目标行不超过最大行数
-                if (targetStartRow > maxExcelRows)
+                return;
+            }
+
+            while (currentEndRow < desiredEndRow)
+            {
+                var copiedRows = currentEndRow - currentStartRow + 1;
+                if (copiedRows <= 0)
                 {
                     break;
                 }
 
-                if (remainingRows > rows * 2)
+                var targetStartRow = currentEndRow + 1;
+                var targetEndRow = Math.Min(currentEndRow + copiedRows, desiredEndRow);
+                var targetRows = targetEndRow - targetStartRow + 1;
+                if (targetRows <= 0)
                 {
-                    //行数复制一倍
-                    int copyEndRow = Math.Min(currentEndRow * 2 - currentStartRow + 1, maxExcelRows);
-                    // 确保源行和目标行都在有效范围内
-                    if (copyEndRow > maxExcelRows || currentEndRow > maxExcelRows)
-                    {
-                        break;
-                    }
-                    sheet.Cells[currentStartRow, 1, currentEndRow, maxColumnNum].Copy(sheet.Cells[targetStartRow, 1, copyEndRow, maxColumnNum]);
-                    currentEndRow = copyEndRow;
-                    remainingRows -= rows;
-                }
-                else
-                {
-                    //行数复制需要(需要复制 remainingRows - rows)
-                    int copyEndRow = Math.Min(currentStartRow + remainingRows - 1, maxExcelRows);
-                    int sourceEndRow = Math.Min(currentStartRow + (remainingRows - rows) - 1, currentEndRow);
-                    // 确保所有行号都在有效范围内
-                    if (copyEndRow > maxExcelRows || sourceEndRow > maxExcelRows || targetStartRow > maxExcelRows)
-                    {
-                        break;
-                    }
-                    sheet.Cells[currentStartRow, 1, sourceEndRow, maxColumnNum].Copy(sheet.Cells[targetStartRow, 1, copyEndRow, maxColumnNum]);
                     break;
                 }
+
+                var sourceEndRow = currentStartRow + targetRows - 1;
+                if (sourceEndRow > currentEndRow)
+                {
+                    sourceEndRow = currentEndRow;
+                }
+
+                sheet.Cells[currentStartRow, 1, sourceEndRow, maxColumnNum]
+                    .Copy(sheet.Cells[targetStartRow, 1, targetStartRow + (sourceEndRow - currentStartRow), maxColumnNum]);
+
+                currentEndRow = targetEndRow;
             }
         }
 

@@ -1185,6 +1185,51 @@ namespace Magicodes.ExporterAndImporter.Tests
             File.Exists(filePath).ShouldBeTrue();
         }
 
+        [Fact(DisplayName = "RowCopy方法-回归#610：不应过度复制模板行")]
+        public async Task RowCopy_ShouldNotOverCopyTemplateRows_Regression610_Test()
+        {
+            var tplPath = Path.Combine(Directory.GetCurrentDirectory(), "TestFiles", "ExportTemplates",
+                "Export10000ByTemplate_Test.xlsx");
+            if (!File.Exists(tplPath))
+            {
+                _testOutputHelper.WriteLine($"模板文件不存在: {tplPath}");
+                return;
+            }
+
+            var exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(RowCopy_ShouldNotOverCopyTemplateRows_Regression610_Test)}.xlsx");
+            DeleteFile(filePath);
+
+            var books = Enumerable.Range(1, 20)
+                .Select(i => new BookInfo(i, $"NO-{i:000}", $"Book {i}", $"Editor {i}", $"Publisher {i}", "10.00", i * 10, $"Remark {i}"))
+                .ToList();
+            var testData = new TextbookOrderInfo("测试公司", "测试地址", "测试联系人", "123456", null,
+                DateTime.Now.ToLongDateString(), "https://docs.microsoft.com/en-us/media/microsoft-logo-dark.png",
+                books);
+
+            await exporter.ExportByTemplate(filePath, testData, tplPath);
+
+            File.Exists(filePath).ShouldBeTrue();
+
+            var exportedFileInfo = new FileInfo(filePath);
+            exportedFileInfo.Length.ShouldBeLessThan(512 * 1024);
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                if (sheet.Dimension != null)
+                {
+                    var unprocessedMarkers = sheet.Cells[sheet.Dimension.Address]
+                        .Where(p => !string.IsNullOrWhiteSpace(p.Text)
+                                    && p.Text.Contains("{{")
+                                    && !p.Text.Contains("{{{"))
+                        .ToList();
+
+                    unprocessedMarkers.Count.ShouldBeLessThanOrEqualTo(1);
+                }
+            }
+        }
+
         #endregion
 
         #region 图片参数解析测试
@@ -1552,4 +1597,3 @@ namespace Magicodes.ExporterAndImporter.Tests
         #endregion
     }
 }
-
