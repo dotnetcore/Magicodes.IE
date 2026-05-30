@@ -27,55 +27,56 @@ pr:
 - master
 - develop
 
-pool:
-  # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml
-  vmImage: 'windows-latest'
-
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   disable.coverage.autogenerate: 'true'
 
-steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '6.x'
+jobs:
+  - job: MagicodesIENugetPush
+    displayName: Magicodes.IE NuGet Push
+    pool:
+      vmImage: 'windows-2022'
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '7.x'  
-    
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '8.x'  
+    steps:
+      - task: UseDotNet@2
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
 
-- task: PowerShell@2
-  displayName: 'Package Push'
-  condition: eq(variables['Build.SourceBranchName'], 'master')
-  env:
-    NUGET_API_KEY: ${nugetapikey}
-    GITHUB_API_KEY: ${githubapikey}
-  inputs:
-    targetType: 'inline'
-    script: |
-      # 打包
-      Get-ChildItem -Path ./ -Recurse |
-        Where-Object { $_.Name.EndsWith(".csproj") -and !$_.Name.Contains("Test") } |
-        ForEach-Object -Process { 
-              Write-Host $_.Name
-              dotnet pack $_.FullName -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --include-source --output $(Build.ArtifactStagingDirectory) -c $(BuildConfiguration)
-         }
-      ls $(Build.ArtifactStagingDirectory)
+      - task: UseDotNet@2
+        inputs:
+          packageType: 'sdk'
+          version: '7.x'
 
-      #推包
-      dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
-    failOnStderr: true
-    showWarnings: true
-    ignoreLASTEXITCODE: true
+      - task: UseDotNet@2
+        inputs:
+          packageType: 'sdk'
+          version: '8.x'
 
+      - task: PowerShell@2
+        displayName: 'Package Push'
+        condition: eq(variables['Build.SourceBranchName'], 'master')
+        env:
+          NUGET_API_KEY: ${nugetapikey}
+          GITHUB_API_KEY: ${githubapikey}
+        inputs:
+          targetType: 'inline'
+          script: |
+            # 打包
+            Get-ChildItem -Path ./ -Recurse |
+              Where-Object { $_.Name.EndsWith(".csproj") -and !$_.Name.Contains("Test") } |
+              ForEach-Object -Process { 
+                    Write-Host $_.Name
+                    dotnet pack $_.FullName -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --include-source --output $(Build.ArtifactStagingDirectory) -c $(BuildConfiguration)
+               }
+            ls $(Build.ArtifactStagingDirectory)
+
+            #推包
+            dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
+        failOnStderr: true
+        showWarnings: true
+        ignoreLASTEXITCODE: true
 
     
