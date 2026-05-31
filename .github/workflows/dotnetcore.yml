@@ -1,84 +1,50 @@
 name: .NET Core
 
-on: 
+on:
   push:
     branches: [ "develop", "release/*", "master" ]
   pull_request:
     branches: [ "develop", "release/*", "master" ]
 
 jobs:
-  ubuntu-latest:
-    name: ubuntu-latest
-    runs-on: ubuntu-latest
+  build-and-test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
     steps:
-      - uses: actions/setup-dotnet@v2.1.0
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '5.0.x'
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-      - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 7.X SDK
-        uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '7.x'
-      - name: Install libgdiplus
-        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev
-#       - name: t
-#         run: sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll
-#       - name: t1
-#         run: sudo apt-get update && sudo apt-get install -y fontconfig
-      - name: Install libjpeg62
-        run: sudo apt-get install libjpeg62
-      - name: Restore with dotnet
-        run: dotnet restore
-      - name: Build with dotnet
-        run: dotnet build -c Release --no-restore
-      - name: Test with .NET 6.0.x
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net6.0
-      - name: Test with .NET 7.0.x
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net7.0
-  windows-latest:
-    name: windows-latest
-    runs-on: windows-latest
-    steps:
-      - uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '5.0.x'
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-      - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 7.X SDK
-        uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '7.x'
-      - name: Restore with dotnet
-        run: dotnet restore
-      - name: Build with dotnet
-        run: dotnet build -c Release --no-restore
-      - name: Test with dotnet
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests
-  macOS-latest:
-    name: macOS-latest
-    runs-on: macos-latest
-    steps:
-      - uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '5.0.x'
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-      - uses: actions/checkout@v2
-      - name: 🔨 Use .NET 7.X SDK
-        uses: actions/setup-dotnet@v2.1.0
-        with:
-          dotnet-version: '7.x'
-      - name: Restore with dotnet
-        run: dotnet restore
-      - name: Build with dotnet
-        run: dotnet build -c Release --no-restore
-      - name: Test with .NET 6.0.x
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net6.0
-      - name: Test with .NET 7.0.x
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests -f net7.0
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: |
+            Magicodes.IE.sln
+            src/**/*.csproj
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62
+
+      - name: Restore
+        run: dotnet restore Magicodes.IE.sln
+
+      - name: Build
+        run: dotnet build Magicodes.IE.sln -c Release --no-restore
+
+      - name: Test on Windows
+        if: runner.os == 'Windows'
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build
+
+      - name: Test on Linux and macOS - net8.0
+        if: runner.os != 'Windows'
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net8.0
+
+      - name: Test on Linux and macOS - net10.0
+        if: runner.os != 'Windows'
+        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net10.0

@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 /src/Magicodes.ExporterAndImporter.Excel/Properties/PublishProfiles/FolderProfile.pubxml
 /global.json
+!/global.json
+/.omo/
