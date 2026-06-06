@@ -29,7 +29,11 @@ jobs:
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62
+        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62 wkhtmltopdf fontconfig libxrender1 xfonts-75dpi
+
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install wkhtmltopdf
 
       - name: Restore
         run: dotnet restore Magicodes.IE.sln
