@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-22.04, ubuntu-latest, windows-latest, macos-13, macos-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -29,7 +29,11 @@ jobs:
 
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62 wkhtmltopdf fontconfig libxrender1 xfonts-75dpi
+        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62 libxrender1 fontconfig xfonts-75dpi
+
+      - name: Install wkhtmltopdf on Linux
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y wkhtmltopdf || true
 
       - name: Restore
         run: dotnet restore Magicodes.IE.sln
