@@ -313,9 +313,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             var result = await exporter.ExportListBytesByTemplate(
                 GenFu.GenFu.ListOf<ExportTestData>(), new PdfExporterAttribute()
                 {
-                    PaperKind = PaperKind.A4,
+                    PageSizeName = "A4",
                     IsEnablePagesCount = true,
-                    HeaderSettings = new HeaderSettings() { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
+                    Header = new PdfHeaderOptions { FontSize = 9, Right = "Page [page] of [toPage]", Line = true, Spacing = 2.812 }
                 }, tpl);
             result.ShouldNotBeNull();
             using (var file = File.OpenWrite(filePath))
@@ -360,5 +360,121 @@ namespace Magicodes.ExporterAndImporter.Tests
 
             File.Exists(filePath).ShouldBeTrue();
         }
+
+#pragma warning disable CS0618
+        [Fact(DisplayName = "新PDF选项映射到旧wkhtml兼容属性")]
+        public void PdfExporterAttribute_MapsOwnedOptionsToLegacyCompatibilityProperties()
+        {
+            var attribute = new PdfExporterAttribute
+            {
+                DocumentTitle = "Owned title",
+                PageOrientation = PdfOrientation.Portrait,
+                CustomPageWidth = 80,
+                CustomPageHeight = 120,
+                PageSizeUnit = PdfMeasurementUnit.Millimeters,
+                Header = new PdfHeaderOptions
+                {
+                    FontSize = 9,
+                    Right = "Page [page] of [toPage]",
+                    Line = true,
+                    Spacing = 2.812
+                },
+                Footer = new PdfFooterOptions
+                {
+                    Left = "footer"
+                },
+                Margins = new PdfMarginOptions
+                {
+                    Top = 10,
+                    Bottom = 12,
+                    Left = 8,
+                    Right = 6,
+                    Unit = PdfMeasurementUnit.Centimeters
+                }
+            };
+
+            attribute.Orientation.ShouldBe(Orientation.Portrait);
+            attribute.PaperKind.ShouldBe(PaperKind.Custom);
+            attribute.PaperSize.ShouldNotBeNull();
+            attribute.PaperSize.Width.ShouldBe("80mm");
+            attribute.PaperSize.Height.ShouldBe("120mm");
+            attribute.HeaderSettings.ShouldNotBeNull();
+            attribute.HeaderSettings.FontSize.ShouldBe(9);
+            attribute.HeaderSettings.Right.ShouldBe("Page [page] of [toPage]");
+            attribute.FooterSettings.ShouldNotBeNull();
+            attribute.FooterSettings.Left.ShouldBe("footer");
+            attribute.MarginSettings.ShouldNotBeNull();
+            attribute.MarginSettings.Top.ShouldBe(10);
+            attribute.MarginSettings.Unit.ShouldBe(Unit.Centimeters);
+        }
+
+        [Fact(DisplayName = "旧wkhtml兼容属性映射到新PDF选项")]
+        public void PdfExporterAttribute_MapsLegacyCompatibilityPropertiesToOwnedOptions()
+        {
+            var attribute = new PdfExporterAttribute
+            {
+                Orientation = Orientation.Portrait,
+                PaperKind = PaperKind.A4,
+                HeaderSettings = new HeaderSettings
+                {
+                    FontSize = 9,
+                    Right = "Page [page] of [toPage]",
+                    Line = true,
+                    Spacing = 2.812
+                },
+                FooterSettings = new FooterSettings
+                {
+                    Left = "footer"
+                },
+                MarginSettings = new MarginSettings
+                {
+                    Top = 10,
+                    Bottom = 12,
+                    Left = 8,
+                    Right = 6,
+                    Unit = Unit.Centimeters
+                }
+            };
+
+            attribute.PageOrientation.ShouldBe(PdfOrientation.Portrait);
+            attribute.PageSize.ShouldNotBeNull();
+            attribute.PageSize.IsCustom.ShouldBeFalse();
+            attribute.PageSize.StandardName.ShouldBe("A4");
+            attribute.Header.ShouldNotBeNull();
+            attribute.Header.FontSize.ShouldBe(9);
+            attribute.Header.Right.ShouldBe("Page [page] of [toPage]");
+            attribute.Footer.ShouldNotBeNull();
+            attribute.Footer.Left.ShouldBe("footer");
+            attribute.Margins.ShouldNotBeNull();
+            attribute.Margins.Top.ShouldBe(10);
+            attribute.Margins.Unit.ShouldBe(PdfMeasurementUnit.Centimeters);
+
+            var options = attribute.ToPdfExportOptions();
+            options.Orientation.ShouldBe(PdfOrientation.Portrait);
+            options.PageSize.StandardName.ShouldBe("A4");
+        }
+
+        [Fact(DisplayName = "属性友好的新PDF配置映射到导出选项")]
+        public void PdfExporterAttribute_MapsAttributeFriendlyOwnedPropertiesToPdfExportOptions()
+        {
+            var attribute = new PdfExporterAttribute
+            {
+                Name = "Receipt",
+                PageOrientation = PdfOrientation.Portrait,
+                PageSizeName = "A5",
+                IsEnablePagesCount = true,
+                IsWriteHtml = true
+            };
+
+            var options = attribute.ToPdfExportOptions();
+
+            options.DocumentTitle.ShouldBe("Receipt");
+            options.Orientation.ShouldBe(PdfOrientation.Portrait);
+            options.PageSize.IsCustom.ShouldBeFalse();
+            options.PageSize.StandardName.ShouldBe("A5");
+            options.EnablePagesCount.ShouldBeTrue();
+            options.WriteHtml.ShouldBeTrue();
+        }
+        #pragma warning restore CS0618
     }
 }

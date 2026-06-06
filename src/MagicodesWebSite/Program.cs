@@ -1,5 +1,6 @@
 using Magicodes.ExporterAndImporter.Builder;
 using Magicodes.ExporterAndImporter.Filters;
+using Magicodes.ExporterAndImporter.Pdf;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,6 +69,7 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers();
+                services.AddMagicodesPdfExporter();
                 services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Magicodes WebSite API", Version = "v1" });
@@ -93,6 +95,7 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers(options => options.Filters.Add(typeof(MagicodesFilter)));
+                services.AddMagicodesPdfExporter();
                 services.AddRazorPages();
                 services.AddSwaggerGen(c =>
                 {

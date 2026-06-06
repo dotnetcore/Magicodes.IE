@@ -9,6 +9,12 @@ namespace Magicodes.ExporterAndImporter.Pdf
     /// </summary>
     public interface IPdfExporter : IExportListFileByTemplate, IExportFileByTemplate
     {
+        Task<byte[]> ExportListBytesByTemplate<T>(ICollection<T> data, PdfExportOptions pdfExportOptions,
+            string template) where T : class;
+
+        Task<byte[]> ExportBytesByTemplate<T>(T data, PdfExportOptions pdfExportOptions, string template)
+            where T : class;
+
         /// <summary>
         /// 导出Pdf 
         /// </summary>

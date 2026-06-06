@@ -11,15 +11,12 @@
   <ItemGroup>
 	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.95" />
   </ItemGroup>
+  <!-- macOS arm64 native library (Haukcode.WkHtmlToPdfDotNet provides other platforms) -->
+  <ItemGroup>
+    <None Include="runtimes/**" Pack="true" PackagePath="runtimes/" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
   </ItemGroup>
-  <!--<ItemGroup>
-    <None Include="runtimes/linux-x64/native/wkhtmltox.so">
-      <Pack>true</Pack>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes/linux-x64/native/wkhtmltox.so</PackagePath>
-    </None>
-  </ItemGroup>-->
 
 </Project>
