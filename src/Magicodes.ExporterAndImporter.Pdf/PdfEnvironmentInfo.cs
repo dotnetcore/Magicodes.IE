@@ -23,41 +23,41 @@ namespace Magicodes.ExporterAndImporter.Pdf
         /// <summary>
         /// 当前平台标识（如 "osx-arm64", "linux-x64", "win-x64"）。
         /// </summary>
-        public string Platform { get; init; }
+        public string Platform { get; set; }
 
         /// <summary>
         /// wkhtmltopdf native 库是否可用。
         /// 为 true 表示 PDF 导出功能可以正常工作。
         /// </summary>
-        public bool IsAvailable { get; init; }
+        public bool IsAvailable { get; set; }
 
         /// <summary>
         /// 找到的 native 库文件路径。
         /// 可能来自 runtimes/ 目录或系统路径。
         /// </summary>
-        public string NativeLibraryPath { get; init; }
+        public string NativeLibraryPath { get; set; }
 
         /// <summary>
         /// native 库文件是否存在（不论是否能加载）。
         /// 文件存在但加载失败通常意味着缺少系统依赖（Qt、fontconfig 等）。
         /// </summary>
-        public bool NativeLibraryFileExists { get; init; }
+        public bool NativeLibraryFileExists { get; set; }
 
         /// <summary>
         /// native 库是否能成功加载（通过 NativeLibrary.TryLoad 探测）。
         /// </summary>
-        public bool NativeLibraryLoadable { get; init; }
+        public bool NativeLibraryLoadable { get; set; }
 
         /// <summary>
         /// 加载失败时的详细错误信息。
         /// </summary>
-        public string ErrorDetail { get; init; }
+        public string ErrorDetail { get; set; }
 
         /// <summary>
         /// 针对当前平台的安装建议。
         /// 包含具体的安装命令。
         /// </summary>
-        public string InstallSuggestion { get; init; }
+        public string InstallSuggestion { get; set; }
 
         /// <summary>
         /// 检查当前环境并返回诊断信息。不会抛出异常。

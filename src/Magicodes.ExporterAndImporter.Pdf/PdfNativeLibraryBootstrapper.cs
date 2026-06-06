@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -24,7 +25,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
         private static PdfEnvironmentInfo CheckEnvironmentCore()
         {
-            var rid = RuntimeInformation.RuntimeIdentifier;
+            var rid = GetCurrentRuntimeIdentifier();
             var nativePath = FindNativeLibraryPath(rid);
             var loadable = TryProbeNativeLibrary(nativePath, out var error);
 
@@ -41,25 +42,57 @@ namespace Magicodes.ExporterAndImporter.Pdf
         }
 
         /// <summary>
+        /// 获取当前运行时标识符（跨框架兼容）。
+        /// </summary>
+        private static string GetCurrentRuntimeIdentifier()
+        {
+#if NET5_0_OR_GREATER
+            return RuntimeInformation.RuntimeIdentifier;
+#else
+            var arch = RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return "win-" + arch;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return "osx-" + arch;
+            return "linux-" + arch;
+#endif
+        }
+
+        /// <summary>
         /// 查找 native 库文件路径。
         /// 搜索 runtimes/{rid}/native/ 和应用根目录。
+        /// 在 arm64 平台上如果找不到，会自动 fallback 到 x64 版本（通过 Rosetta 2 运行）。
         /// </summary>
         private static string FindNativeLibraryPath(string rid)
         {
-            var dirs = new[]
-            {
-                Path.Combine(AppContext.BaseDirectory, "runtimes", rid, "native"),
-                AppContext.BaseDirectory
-            };
+            var baseDir = AppContext.BaseDirectory;
+            var candidateRids = new List<string> { rid };
 
-            var names = GetNativeLibraryNames(rid);
-            foreach (var dir in dirs)
+            // arm64 平台 fallback：wkhtmltopdf 等 native 库通常没有 arm64 版本，
+            // x64 版本可通过 Rosetta 2 (macOS) 或兼容层 (Linux) 运行。
+            if (rid.EndsWith("-arm64", StringComparison.OrdinalIgnoreCase))
             {
-                if (!Directory.Exists(dir)) continue;
-                foreach (var name in names)
+                var x64Rid = rid.Substring(0, rid.Length - "arm64".Length) + "x64";
+                candidateRids.Add(x64Rid);
+            }
+
+            foreach (var candidateRid in candidateRids)
+            {
+                var dirs = new[]
                 {
-                    var path = Path.Combine(dir, name);
-                    if (File.Exists(path)) return path;
+                    Path.Combine(baseDir, "runtimes", candidateRid, "native"),
+                    baseDir
+                };
+
+                var names = GetNativeLibraryNames(candidateRid);
+                foreach (var dir in dirs)
+                {
+                    if (!Directory.Exists(dir)) continue;
+                    foreach (var name in names)
+                    {
+                        var path = Path.Combine(dir, name);
+                        if (File.Exists(path)) return path;
+                    }
                 }
             }
             return null;
@@ -70,7 +103,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
             if (rid.StartsWith("win", StringComparison.OrdinalIgnoreCase))
                 return new[] { "wkhtmltox.dll" };
             if (rid.StartsWith("osx", StringComparison.OrdinalIgnoreCase))
-                return new[] { "libwkhtmltox-next.0.dylib", "libwkhtmltox.dylib", "libwkhtmltox-next.dylib" };
+                return new[] { "libwkhtmltox.dylib" };
             return new[] { "libwkhtmltox.so" };
         }
 
@@ -108,7 +141,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
                 return "brew install wkhtmltopdf  # macOS";
 
             // Alpine Linux (musl libc) - Docker 最常用的基础镜像之一
-            if (rid.Contains("musl", StringComparison.OrdinalIgnoreCase))
+            if (rid.IndexOf("musl", StringComparison.OrdinalIgnoreCase) >= 0)
                 return "apk add --no-cache wkhtmltopdf fontconfig ttf-freefont ttf-dejavu  # Alpine\n" +
                        "Note: Alpine uses musl libc. If using pre-built glibc binaries, also run: apk add --no-cache libc6-compat";
 

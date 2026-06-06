@@ -49,7 +49,11 @@ namespace Magicodes.ExporterAndImporter.Tests
         public void CheckEnvironment_Platform_MatchesRuntimeIdentifier()
         {
             var info = PdfEnvironmentInfo.Check();
+#if NET5_0_OR_GREATER
             info.Platform.ShouldBe(RuntimeInformation.RuntimeIdentifier);
+#else
+            info.Platform.ShouldNotBeNullOrWhiteSpace();
+#endif
         }
     }
 }
