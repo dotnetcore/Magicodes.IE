@@ -444,7 +444,55 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.IPdfExporter.html",
-          "hash": "TVXE6ad522PAbpCfW2nhll5ltuQlKcTIV1Vf0EC53X0="
+          "hash": "1EG8AM/AY2jwMG3+KCbXPLeXn4Ez0aoxK3IbayvpMNc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.IPdfNativeLibraryService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.IPdfNativeLibraryService.html",
+          "hash": "lv4WoojYmG8DKzg1uGD+JKJiCIEE2Ky2Zh6mVxdIayo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfCustomPaperSize.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfCustomPaperSize.html",
+          "hash": "C1GtV8rImv6iKWsMJnZxrJGiH911Y/0AHNWeoM3+I1Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.html",
+          "hash": "xPa0AqRnWd8ehTHuG6aHOSM2rX92fscSDDNOGzgeRP8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExportOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExportOptions.html",
+          "hash": "gYH97Ixmd8WMuoX8NnvRM7ZUBriddcCxJr3gbILIg5Y="
         }
       },
       "is_incremental": false,
@@ -456,7 +504,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporter.html",
-          "hash": "bZf+kkRq7tNfehyDRuHE3/wY6VQuy5VB6pYr8OnQCkU="
+          "hash": "20B0h/aDBKgl5IpTizhsjP47xMOiy1IeGqSAe/DFoHw="
         }
       },
       "is_incremental": false,
@@ -468,7 +516,103 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfExporterAttribute.html",
-          "hash": "Ou2bQlLY7DxigNqtOXlvrgtLvCAnTQRjjAhCcRLk798="
+          "hash": "Ysj7tL4oDJJY9vK2iiY4YBVKufTblocRC8yNdNNnol8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfFooterOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfFooterOptions.html",
+          "hash": "lbT+FGyWRezQDDez4g8gKgkrJ2Eit626PVe/aLa6zgo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfHeaderOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfHeaderOptions.html",
+          "hash": "c0X3xZQBlLQmpByxC+qEdYHC9lMzPQsNWVeBOCNZpyA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfMarginOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfMarginOptions.html",
+          "hash": "PABVhsCMQh9nLNSfSi7w0BPlsPzawx8McJbfMAME5lo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfMeasurementUnit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfMeasurementUnit.html",
+          "hash": "6KcznZWyiZKJOg/r5u82JVVUUtGTeefNGjSg4nt5v3I="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfNativeLibraryService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfNativeLibraryService.html",
+          "hash": "lc8svx3mGtaoCMcdSG44UBQbWnMXNim+ZnxRUKiS54k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfOrientation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfOrientation.html",
+          "hash": "uMuIzgxiPdSUFRe0aOYzfe3u19w4qW0pQQ+6fFFonHg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfPageSize.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.PdfPageSize.html",
+          "hash": "nOK0DVY8HBqipJHgW7SRKtXTpzpWOofBclrWgA+IIPA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.ExporterAndImporter.Pdf.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.ServiceCollectionExtensions.html",
+          "hash": "Ml/oT8s9x9TrLeiWayVZPmSwryUHjqeysc+Y8+rD7Jw="
         }
       },
       "is_incremental": false,
@@ -480,7 +624,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Pdf.html",
-          "hash": "Kzi+V/hLZG3medP2csGieqoyfJX99bf7/x9F28O+x9g="
+          "hash": "nYcKwWtnB5QK1gnvdwU6EEQq+im3ghAqzgck1Kv12hk="
         }
       },
       "is_incremental": false,
@@ -576,7 +720,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "rX3K56qbNtUOrVq/33uDn/y2cIWDs3LCo59wjFxZ2qk="
+          "hash": "1e7cKd1VZIv81EuFHaIRl4s8rktWRmMIfEPrB1Us6ho="
         }
       },
       "is_incremental": false,
@@ -1323,7 +1467,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 45,
+          "total_file_count": 57,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

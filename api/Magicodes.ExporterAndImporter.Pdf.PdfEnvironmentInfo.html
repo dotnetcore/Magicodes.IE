@@ -1,0 +1,402 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PdfEnvironmentInfo
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PdfEnvironmentInfo
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo">
+  
+  
+  <h1 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo" class="text-break">Class PdfEnvironmentInfo
+  </h1>
+  <div class="markdown level0 summary"><p>PDF 导出环境诊断信息。
+参考 SkiaSharp.SKImageInfo 和 PuppeteerSharp.BrowserFetcher 设计模式。
+使用 <a class="xref" href="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.html#Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_Check">Check()</a> 获取当前环境的完整诊断。</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">PdfEnvironmentInfo</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Magicodes.ExporterAndImporter.Pdf.html">Magicodes.ExporterAndImporter.Pdf</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PdfEnvironmentInfo</code></pre>
+  </div>
+  <h5 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_examples"><strong>Examples</strong></h5>
+  <pre><code>var info = PdfEnvironmentInfo.Check();
+if (!info.IsAvailable)
+{
+    Console.WriteLine(info); // 输出：[FAIL] osx-arm64: wkhtmltopdf native library is NOT available
+                              //   Fix: brew install wkhtmltopdf
+}</code></pre>
+
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_ErrorDetail_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.ErrorDetail*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_ErrorDetail" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.ErrorDetail">ErrorDetail</h4>
+  <div class="markdown level1 summary"><p>加载失败时的详细错误信息。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ErrorDetail { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_InstallSuggestion_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.InstallSuggestion*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_InstallSuggestion" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.InstallSuggestion">InstallSuggestion</h4>
+  <div class="markdown level1 summary"><p>针对当前平台的安装建议。
+包含具体的安装命令。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string InstallSuggestion { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_IsAvailable_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.IsAvailable*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_IsAvailable" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.IsAvailable">IsAvailable</h4>
+  <div class="markdown level1 summary"><p>wkhtmltopdf native 库是否可用。
+为 true 表示 PDF 导出功能可以正常工作。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsAvailable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryFileExists_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryFileExists*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryFileExists" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryFileExists">NativeLibraryFileExists</h4>
+  <div class="markdown level1 summary"><p>native 库文件是否存在（不论是否能加载）。
+文件存在但加载失败通常意味着缺少系统依赖（Qt、fontconfig 等）。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NativeLibraryFileExists { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryLoadable_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryLoadable*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryLoadable" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryLoadable">NativeLibraryLoadable</h4>
+  <div class="markdown level1 summary"><p>native 库是否能成功加载（通过 NativeLibrary.TryLoad 探测）。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NativeLibraryLoadable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryPath_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryPath*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_NativeLibraryPath" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.NativeLibraryPath">NativeLibraryPath</h4>
+  <div class="markdown level1 summary"><p>找到的 native 库文件路径。
+可能来自 runtimes/ 目录或系统路径。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string NativeLibraryPath { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_Platform_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.Platform*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_Platform" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.Platform">Platform</h4>
+  <div class="markdown level1 summary"><p>当前平台标识（如 &quot;osx-arm64&quot;, &quot;linux-x64&quot;, &quot;win-x64&quot;）。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Platform { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_Check_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.Check*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_Check" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.Check">Check()</h4>
+  <div class="markdown level1 summary"><p>检查当前环境并返回诊断信息。不会抛出异常。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PdfEnvironmentInfo Check()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.html">PdfEnvironmentInfo</a></td>
+        <td><p>包含完整诊断信息的 <a class="xref" href="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.html">PdfEnvironmentInfo</a> 实例。</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_ToString_" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.ToString*"></a>
+  <h4 id="Magicodes_ExporterAndImporter_Pdf_PdfEnvironmentInfo_ToString" data-uid="Magicodes.ExporterAndImporter.Pdf.PdfEnvironmentInfo.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>返回格式化的诊断报告。</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
