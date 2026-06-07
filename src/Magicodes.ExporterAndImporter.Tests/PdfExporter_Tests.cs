@@ -23,6 +23,7 @@ using Xunit;
 
 namespace Magicodes.ExporterAndImporter.Tests
 {
+    [Trait("Category", "PdfExport")]
     public class PdfExporter_Tests : TestBase
     {
         [Fact(DisplayName = "导出竖向排版收据")]

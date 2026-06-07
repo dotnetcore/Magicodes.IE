@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Reflection;
 using WkHtmlToPdfDotNet;
@@ -21,6 +22,13 @@ namespace Magicodes.ExporterAndImporter.Pdf
         private readonly IPdfNativeLibraryService _nativeLibraryService;
         private static readonly Lazy<SynchronizedConverter> PdfConverter = new Lazy<SynchronizedConverter>(() => new SynchronizedConverter(new PdfTools()));
         private HtmlExporter HtmlExporter => _htmlExporter.Value;
+
+        /// <summary>
+        /// 触发 PdfNativeLibraryBootstrapper 的静态构造函数，注册 DllImportResolver。
+        /// 必须在 PdfConverter（使用 Haukcode P/Invoke）之前完成。
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void EnsureBootstrap() { _ = PdfNativeLibraryBootstrapper.CheckEnvironment(); }
 
         public PdfExporter() : this(new PdfNativeLibraryService())
         {
@@ -111,6 +119,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
         {
             try
             {
+                EnsureBootstrap();
                 var htmlToPdfDocument = PdfWkHtmlCompatibilityMapper.ToHtmlToPdfDocument(pdfExportOptions, htmlString);
                 var result = PdfConverter.Value.Convert(htmlToPdfDocument);
                 return Task.FromResult(result);

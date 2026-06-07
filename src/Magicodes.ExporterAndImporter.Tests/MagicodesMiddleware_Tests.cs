@@ -161,6 +161,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             }
         }
         [Fact]
+        [Trait("Category", "PdfExport")]
         public async Task PdfHttpContentMediaType_BathExportPortraitReceipt_Test()
         {
             // Arrange
