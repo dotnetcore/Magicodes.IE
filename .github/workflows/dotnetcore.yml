@@ -2,9 +2,10 @@ name: .NET Core
 
 on:
   push:
-    branches: [ "develop", "release/*", "master" ]
+    branches: [ "develop", "release/*", "master", "ci-test" ]
   pull_request:
-    branches: [ "develop", "release/*", "master" ]
+    branches: [ "develop", "release/*", "master", "ci-test" ]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
