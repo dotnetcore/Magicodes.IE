@@ -246,8 +246,7 @@ jobs:
             --blame-hang-dump-type full \
             --logger "trx;LogFileName=results-${{ matrix.framework }}.trx" \
             --logger GitHubActions \
-            --results-directory TestResults \
-            -- -parallel none -noshadow
+            --results-directory TestResults
           TEST_EXIT=$?
           set -e
           if [ $TEST_EXIT -ne 0 ]; then
