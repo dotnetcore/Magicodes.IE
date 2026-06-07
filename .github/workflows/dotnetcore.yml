@@ -80,6 +80,7 @@ jobs:
           list-files: json
 
       - name: Set skip flag
+        id: skip
         run: |
           if [ "${{ steps.filter.outputs.code }}" == "false" ]; then
             echo "should_skip=true" >> "$GITHUB_OUTPUT"
