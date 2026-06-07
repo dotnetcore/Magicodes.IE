@@ -40,22 +40,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExportFileByTemplate exporter = new ExcelExporter();
             //导出路径
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), nameof(ExportByTemplate_Test) + ".xlsx");
-            // 确保文件不存在且未被占用
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    File.Delete(filePath);
-                    // 等待文件系统释放文件句柄
-                    await Task.Delay(100);
-                }
-                catch (IOException)
-                {
-                    // 如果文件被占用，等待后重试
-                    await Task.Delay(500);
-                    if (File.Exists(filePath)) File.Delete(filePath);
-                }
-            }
+            if (File.Exists(filePath)) File.Delete(filePath);
             //根据模板导出
             await exporter.ExportByTemplate(filePath,
                 new TextbookOrderInfo("湖南心莱信息科技有限公司", "湖南长沙岳麓区", "雪雁", "1367197xxxx", null,
@@ -532,22 +517,7 @@ namespace Magicodes.ExporterAndImporter.Tests
             IExportFileByTemplate exporter = new ExcelExporter();
             //导出路径
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"{nameof(Issue296_Test)}.xlsx");
-            // 确保文件不存在且未被占用
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    File.Delete(filePath);
-                    // 等待文件系统释放文件句柄
-                    await Task.Delay(100);
-                }
-                catch (IOException)
-                {
-                    // 如果文件被占用，等待后重试
-                    await Task.Delay(500);
-                    if (File.Exists(filePath)) File.Delete(filePath);
-                }
-            }
+            if (File.Exists(filePath)) File.Delete(filePath);
 
             //根据模板导出
             await exporter.ExportByTemplate(filePath, jobj, tplPath);
