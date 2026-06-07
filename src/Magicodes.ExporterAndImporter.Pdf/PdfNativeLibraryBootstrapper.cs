@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Magicodes.ExporterAndImporter.Pdf
@@ -17,6 +18,17 @@ namespace Magicodes.ExporterAndImporter.Pdf
     {
         private static readonly Lazy<PdfEnvironmentInfo> CachedResult =
             new Lazy<PdfEnvironmentInfo>(CheckEnvironmentCore);
+
+        /// <summary>
+        /// 静态构造函数：首次访问类型时注册 DllImportResolver（不加载 native 库）。
+        /// 确保 Haukcode 的 P/Invoke 能找到我们提供的 arm64 dylib。
+        /// </summary>
+        static PdfNativeLibraryBootstrapper()
+        {
+#if NET5_0_OR_GREATER
+            RegisterDllImportResolver();
+#endif
+        }
 
         /// <summary>
         /// 诊断当前环境，返回完整的 native 库状态。结果会被缓存，不会重复扫描文件系统。
@@ -109,6 +121,9 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
         /// <summary>
         /// 用 NativeLibrary.TryLoad 探测 native 库是否可加载。不抛异常。
+        /// 如果加载成功，注册 DllImportResolver 以便 Haukcode.WkHtmlToPdfDotNet
+        /// 的 P/Invoke 能找到同一个已加载的库句柄（特别是 macOS arm64 场景，
+        /// Haukcode 包不包含 osx-arm64 的 native 路径）。
         /// </summary>
         private static bool TryProbeNativeLibrary(string knownPath, out string error)
         {
@@ -135,10 +150,50 @@ namespace Magicodes.ExporterAndImporter.Pdf
 #endif
         }
 
+#if NET5_0_OR_GREATER
+        private static bool _resolverRegistered;
+
+        /// <summary>
+        /// 注册 DllImportResolver，将 "wkhtmltox" 延迟加载到 Haukcode 程序集。
+        /// 不预加载库（避免 cocoa 插件在模块初始化时崩溃），
+        /// 而是在 P/Invoke 首次调用时按需加载。
+        /// </summary>
+        private static void RegisterDllImportResolver()
+        {
+            if (_resolverRegistered) return;
+            _resolverRegistered = true;
+
+            try
+            {
+                NativeLibrary.SetDllImportResolver(
+                    typeof(WkHtmlToPdfDotNet.BasicConverter).Assembly,
+                    (libraryName, assembly, searchPath) =>
+                    {
+                        if (libraryName != "wkhtmltox")
+                            return IntPtr.Zero;
+
+                        // 延迟加载：首次 P/Invoke 调用时才加载 native 库
+                        var rid = GetCurrentRuntimeIdentifier();
+                        var path = FindNativeLibraryPath(rid);
+                        if (path != null && NativeLibrary.TryLoad(path, out var handle))
+                            return handle;
+                        if (NativeLibrary.TryLoad("wkhtmltox", out handle))
+                            return handle;
+                        return IntPtr.Zero;
+                    });
+            }
+            catch
+            {
+                // Already registered or not supported; ignore.
+            }
+        }
+#endif
+
         private static string GetInstallSuggestion(string rid)
         {
             if (rid.StartsWith("osx", StringComparison.OrdinalIgnoreCase))
-                return "brew install wkhtmltopdf  # macOS";
+                return "The native library (libwkhtmltox.dylib) is bundled with Magicodes.IE.Pdf.\n" +
+                       "No additional installation is required on macOS.";
 
             // Alpine Linux (musl libc) - Docker 最常用的基础镜像之一
             if (rid.IndexOf("musl", StringComparison.OrdinalIgnoreCase) >= 0)

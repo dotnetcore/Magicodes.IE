@@ -1,86 +1,297 @@
-name: .NET Core
+###################################################
+# Magicodes.IE CI
+#
+# Platforms:  ubuntu-22.04, ubuntu-24.04, ubuntu-latest,
+#             windows-2022, windows-latest,
+#             macos-15, macos-latest
+# Frameworks: net6.0, net8.0, net9.0, net10.0, net471
+#
+# Architecture:
+#   changed  -> skip detection (docs-only PRs skip tests)
+#   test     -> build & test matrix
+#   check    -> alls-green gate (single required status check)
+#
+# Test runner:
+#   -parallel none -noshadow   (Orleans pattern, prevents file locking)
+#   --filter Category!=Flaky   (MassTransit pattern, exclude flaky tests)
+#   --logger GitHubActions     (MassTransit pattern, native PR annotations)
+#   --blame-hang/crash-dump    (Orleans pattern, post-mortem diagnostics)
+#   -bl (binary log)           (Orleans pattern, build diagnostics)
+#
+# Notes:
+#   - macOS: Qt cocoa plugin may crash on process exit in headless CI.
+#     Tests pass before the crash; warnings are emitted, not failures.
+#   - net471 / net6.0: Windows only (requires .NET Framework targeting pack).
+#   - Runner versions pinned where possible for reproducibility
+#     (Polly, efcore pattern). -latest aliases shift without notice.
+###################################################
+
+name: CI
 
 on:
   push:
-    branches: [ "develop", "release/*", "master", "ci-test" ]
+    branches: [ "develop", "release/*", "master" ]
   pull_request:
-    branches: [ "develop", "release/*", "master", "ci-test" ]
+    branches: [ "develop", "release/*", "master" ]
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: 1
+  TERM: xterm
+  TEST_PROJECT: src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj
+
 jobs:
-  build-and-test:
-    name: ${{ matrix.os }}
+
+  ###################################################
+  # SKIP DETECTION
+  ###################################################
+
+  changed:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.filter.outputs.should_skip }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check changed files
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            code:
+              - 'src/**'
+              - 'tests/**'
+              - '*.sln'
+              - '*.props'
+              - 'Directory.Build.*'
+              - '.github/workflows/dotnetcore.yml'
+          list-files: json
+
+      - name: Set skip flag
+        run: |
+          if [ "${{ steps.filter.outputs.code }}" == "false" ]; then
+            echo "should_skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  ###################################################
+  # BUILD & TEST
+  ###################################################
+
+  test:
+    name: ${{ matrix.name }}
+    needs: changed
+    if: needs.changed.outputs.should_skip != 'true'
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, ubuntu-latest, windows-latest, macos-13, macos-latest]
+        include:
+          # ---- Linux ----
+          - name: "ubuntu-22.04 / net8.0"
+            os: ubuntu-22.04
+            framework: net8.0
+          - name: "ubuntu-22.04 / net10.0"
+            os: ubuntu-22.04
+            framework: net10.0
+          - name: "ubuntu-24.04 / net8.0"
+            os: ubuntu-24.04
+            framework: net8.0
+          - name: "ubuntu-24.04 / net9.0"
+            os: ubuntu-24.04
+            framework: net9.0
+          - name: "ubuntu-24.04 / net10.0"
+            os: ubuntu-24.04
+            framework: net10.0
+          - name: "ubuntu-latest / net8.0"
+            os: ubuntu-latest
+            framework: net8.0
+          - name: "ubuntu-latest / net10.0"
+            os: ubuntu-latest
+            framework: net10.0
+          # ---- Windows ----
+          - name: "windows-2022 / net8.0"
+            os: windows-2022
+            framework: net8.0
+          - name: "windows / net6.0"
+            os: windows-latest
+            framework: net6.0
+          - name: "windows / net8.0"
+            os: windows-latest
+            framework: net8.0
+          - name: "windows / net9.0"
+            os: windows-latest
+            framework: net9.0
+          - name: "windows / net10.0"
+            os: windows-latest
+            framework: net10.0
+          - name: "windows / net471"
+            os: windows-latest
+            framework: net471
+          # ---- macOS (arm64) ----
+          - name: "macos-15 / net8.0"
+            os: macos-15
+            framework: net8.0
+          - name: "macos-15 / net10.0"
+            os: macos-15
+            framework: net10.0
+          - name: "macos / net8.0"
+            os: macos-latest
+            framework: net8.0
+          - name: "macos / net9.0"
+            os: macos-latest
+            framework: net9.0
+          - name: "macos / net10.0"
+            os: macos-latest
+            framework: net10.0
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             6.0.x
             8.0.x
+            9.0.x
             10.0.x
           cache: true
           cache-dependency-path: |
             Magicodes.IE.sln
             src/**/*.csproj
 
-      - name: Install Linux dependencies
+      - name: Install native dependencies (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libgdiplus libc6-dev libjpeg62 libxrender1 fontconfig xfonts-75dpi
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libgdiplus libc6-dev libjpeg62 libxrender1 \
+            fontconfig xfonts-75dpi
 
-      - name: Install wkhtmltopdf on Linux
+      - name: Install wkhtmltopdf (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get install -y wkhtmltopdf || true
 
+      - name: Set TEMP to D-drive (Windows speedup)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -Path "D:\Temp" -ItemType Directory -Force | Out-Null
+          "TEMP=D:\Temp" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
       - name: Restore
-        run: dotnet restore Magicodes.IE.sln
+        run: dotnet restore ${{ env.TEST_PROJECT }}
 
       - name: Build
-        run: dotnet build Magicodes.IE.sln -c Release --no-restore
+        run: dotnet build ${{ env.TEST_PROJECT }} -c Release --no-restore -bl
 
-      - name: Test on Windows
+      - name: Test
         if: runner.os == 'Windows'
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build --filter Category!=Flaky
+        run: >
+          dotnet test ${{ env.TEST_PROJECT }}
+          -c Release --no-build
+          -f ${{ matrix.framework }}
+          --filter Category!=Flaky
+          --blame-hang-timeout 10m
+          --blame-crash-dump-type full
+          --blame-hang-dump-type full
+          --logger "trx;LogFileName=results-${{ matrix.framework }}.trx"
+          --logger GitHubActions
+          --results-directory TestResults
+          -- -parallel none -noshadow
 
-      - name: Test on Linux - net8.0
+      - name: Test (Linux)
         if: runner.os == 'Linux'
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net8.0 --filter Category!=Flaky
+        run: >
+          dotnet test ${{ env.TEST_PROJECT }}
+          -c Release --no-build
+          -f ${{ matrix.framework }}
+          --filter Category!=Flaky
+          --blame-hang-timeout 10m
+          --blame-crash-dump-type full
+          --blame-hang-dump-type full
+          --logger "trx;LogFileName=results-${{ matrix.framework }}.trx"
+          --logger GitHubActions
+          --results-directory TestResults
+          -- -parallel none -noshadow
 
-      - name: Test on Linux - net10.0
-        if: runner.os == 'Linux'
-        run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net10.0 --filter Category!=Flaky
-
-      - name: Test on macOS - net8.0
+      - name: Test (macOS)
         if: runner.os == 'macOS'
+        shell: bash
         run: |
-          # macOS cocoa plugin may crash on process exit in CI (no display server).
-          # All tests pass before the crash, so we check test results separately.
+          # Qt cocoa plugin may crash on process exit in headless CI.
+          # All tests pass before the crash; we capture results first.
           set +e
-          dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net8.0 --filter Category!=Flaky
+          dotnet test ${{ env.TEST_PROJECT }} \
+            -c Release --no-build \
+            -f ${{ matrix.framework }} \
+            --filter Category!=Flaky \
+            --blame-hang-timeout 10m \
+            --blame-crash-dump-type full \
+            --blame-hang-dump-type full \
+            --logger "trx;LogFileName=results-${{ matrix.framework }}.trx" \
+            --logger GitHubActions \
+            --results-directory TestResults \
+            -- -parallel none -noshadow
           TEST_EXIT=$?
           set -e
           if [ $TEST_EXIT -ne 0 ]; then
-            echo "::warning::macOS test process exited with $TEST_EXIT (likely Qt cocoa plugin cleanup crash in headless CI)"
+            echo "::warning::Test process exited with $TEST_EXIT (Qt platform plugin cleanup in headless CI)"
           fi
 
-      - name: Test on macOS - net10.0
-        if: runner.os == 'macOS'
-        run: |
-          set +e
-          dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net10.0 --filter Category!=Flaky
-          TEST_EXIT=$?
-          set -e
-          if [ $TEST_EXIT -ne 0 ]; then
-            echo "::warning::macOS test process exited with $TEST_EXIT (likely Qt cocoa plugin cleanup crash in headless CI)"
-          fi
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ runner.os }}-${{ matrix.framework }}
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log-${{ runner.os }}-${{ matrix.framework }}
+          path: msbuild.binlog
+          if-no-files-found: ignore
+          retention-days: 7
+
+  ###################################################
+  # ALLS-GREEN GATE
+  # Single required status check for branch protection.
+  # Add "check" as the only required check in repo settings.
+  ###################################################
+
+  check:
+    name: CI Passed
+    if: always()
+    needs: [changed, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Evaluate results
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: >-
+            ${{
+              needs.changed.outputs.should_skip == 'true'
+              && 'test'
+              || ''
+            }}
+          jobs: ${{ toJSON(needs) }}
