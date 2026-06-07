@@ -48,7 +48,11 @@ jobs:
       - name: Test on Linux and macOS - net8.0
         if: runner.os != 'Windows'
         run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net8.0
+        env:
+          QT_QPA_PLATFORM: ${{ runner.os == 'macOS' && 'cocoa' || 'offscreen' }}
 
       - name: Test on Linux and macOS - net10.0
         if: runner.os != 'Windows'
         run: dotnet test src/Magicodes.ExporterAndImporter.Tests/Magicodes.IE.Tests.csproj -c Release --no-build -f net10.0
+        env:
+          QT_QPA_PLATFORM: ${{ runner.os == 'macOS' && 'cocoa' || 'offscreen' }}
