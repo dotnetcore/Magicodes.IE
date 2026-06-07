@@ -229,7 +229,6 @@ jobs:
           --logger "trx;LogFileName=results-${{ matrix.framework }}.trx"
           --logger GitHubActions
           --results-directory TestResults
-          -- -parallel none -noshadow
 
       - name: Test (macOS)
         if: runner.os == 'macOS'
