@@ -60,7 +60,7 @@ jobs:
     name: Detect changes
     runs-on: ubuntu-latest
     outputs:
-      should_skip: ${{ steps.filter.outputs.should_skip }}
+      should_skip: ${{ steps.skip.outputs.should_skip }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
