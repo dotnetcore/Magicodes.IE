@@ -121,9 +121,7 @@ namespace Magicodes.ExporterAndImporter.Pdf
 
         /// <summary>
         /// 用 NativeLibrary.TryLoad 探测 native 库是否可加载。不抛异常。
-        /// 如果加载成功，注册 DllImportResolver 以便 Haukcode.WkHtmlToPdfDotNet
-        /// 的 P/Invoke 能找到同一个已加载的库句柄（特别是 macOS arm64 场景，
-        /// Haukcode 包不包含 osx-arm64 的 native 路径）。
+        /// 注：DllImportResolver 的注册由本类型的静态构造函数负责；本方法仅用于探测可加载性。
         /// </summary>
         private static bool TryProbeNativeLibrary(string knownPath, out string error)
         {
