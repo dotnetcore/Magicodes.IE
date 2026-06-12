@@ -555,8 +555,8 @@ namespace OfficeOpenXml
             if (template != null) template.Refresh();
             if (template.Exists)
             {
-                if (_stream == null) _stream = RecyclableMemoryStream.GetStream();
-                var ms = RecyclableMemoryStream.GetStream();
+                if (_stream == null) _stream = new MemoryStream();
+                var ms = new MemoryStream();
                 if (password != null)
                 {
                     Encryption.IsEncrypted = true;
@@ -592,8 +592,8 @@ namespace OfficeOpenXml
         }
         private void ConstructNewFile(string password)
         {
-            var ms = RecyclableMemoryStream.GetStream();
-            if (_stream == null) _stream = RecyclableMemoryStream.GetStream();
+            var ms = new MemoryStream();
+            if (_stream == null) _stream = new MemoryStream();
             if (File != null) File.Refresh();
             if (File != null && File.Exists)
             {
@@ -842,7 +842,7 @@ namespace OfficeOpenXml
                 {
                     if (Encryption.IsEncrypted)
                     {
-                        var ms = RecyclableMemoryStream.GetStream();
+                        var ms = new MemoryStream();
                         _package.Save(ms);
                         byte[] file = ms.ToArray();
                         EncryptedPackageHandler eph = new EncryptedPackageHandler();
@@ -999,7 +999,7 @@ namespace OfficeOpenXml
                 _stream.Dispose();
             }
 
-            _stream = RecyclableMemoryStream.GetStream();
+            _stream = new MemoryStream();
         }
         /// <summary>
         /// The output stream. This stream is the not the encrypted package.
@@ -1166,7 +1166,7 @@ namespace OfficeOpenXml
         /// <param name="input">The input.</param>
         public void Load(Stream input)
         {
-            Load(input, RecyclableMemoryStream.GetStream(), null);
+            Load(input, new MemoryStream(), null);
         }
         /// <summary>
         /// Loads the specified package data from a stream.
@@ -1175,7 +1175,7 @@ namespace OfficeOpenXml
         /// <param name="Password">The password to decrypt the document</param>
         public void Load(Stream input, string Password)
         {
-            Load(input, RecyclableMemoryStream.GetStream(), Password);
+            Load(input, new MemoryStream(), Password);
         }
         /// <summary>
         /// 
@@ -1205,7 +1205,7 @@ namespace OfficeOpenXml
             }
             else
             {
-                Stream ms = RecyclableMemoryStream.GetStream();
+                Stream ms = new MemoryStream();
                 this._stream = output;
                 if (Password != null)
                 {

@@ -12,23 +12,21 @@
 // ======================================================================
 
 using DynamicExpresso;
-using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Core.Extension;
 using Magicodes.IE.Core;
+using Magicodes.IE.EPPlus;
+using Magicodes.IE.Excel.Images;
 using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using Magicodes.IE.Excel.Images;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SkiaSharp;
-using Magicodes.IE.EPPlus;
-using System.Reflection;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -51,9 +49,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <summary>
         ///     变量正则
         /// </summary>
-        private readonly Regex _variableRegex = new Regex(VariableRegexString, RegexOptions.IgnoreCase);
+        private readonly Regex _variableRegex = new Regex(VariableRegexString, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private readonly Regex _pipeLineVariableRegex = new Regex(PipelineVariableRegexString, RegexOptions.IgnoreCase);
+        private readonly Regex _pipeLineVariableRegex = new Regex(PipelineVariableRegexString, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
         /// 用于缓存表达式
@@ -76,19 +74,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         protected Dictionary<string, List<IWriter>> SheetWriters { get; set; }
 
         /// <summary>
-        ///     值字典
-        /// </summary>
-        protected Dictionary<string, string> ValuesDictionary { get; set; }
-
-        /// <summary>
         ///     数据
         /// </summary>
         protected T Data { get; set; }
-
-        /// <summary>
-        ///     表值字典
-        /// </summary>
-        protected Dictionary<string, List<Dictionary<string, string>>> TableValuesDictionary { get; set; }
 
         /// <summary>
         /// 是否是支持的动态类型（JObject、Dictionary（仅支持key为string类型））
@@ -111,17 +99,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             {
                 if (isJObjectType.HasValue) return isJObjectType.Value;
 
-                var name = typeof(T).Name;
-                switch (name)
-                {
-                    case "JObject":
-                        isJObjectType = true;
-                        break;
-
-                    default:
-                        isJObjectType = false;
-                        break;
-                }
+                // 使用类型比较替代字符串名称比较，更准确
+                var type = typeof(T);
+                isJObjectType = type.Name == "JObject" && type.Namespace == "Newtonsoft.Json.Linq";
                 return isJObjectType.Value;
             }
         }
@@ -135,17 +115,15 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             {
                 if (isDictionaryType.HasValue) return isDictionaryType.Value;
 
-                var name = typeof(T).Name;
-                switch (name)
+                // 使用类型比较替代字符串名称比较
+                var type = typeof(T);
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
                 {
-                    case "Dictionary`2":
-                        {
-                            isDictionaryType = typeof(T).GetGenericArguments()[0].Equals(typeof(string));
-                            break;
-                        }
-                    default:
-                        isDictionaryType = false;
-                        break;
+                    isDictionaryType = type.GetGenericArguments()[0] == typeof(string);
+                }
+                else
+                {
+                    isDictionaryType = false;
                 }
                 return isDictionaryType.Value;
             }
@@ -156,7 +134,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             get
             {
                 if (isExpandoObjectType.HasValue) return isExpandoObjectType.Value;
-                isExpandoObjectType = typeof(T).Name == "ExpandoObject";
+                // 使用类型比较替代字符串名称比较
+                isExpandoObjectType = typeof(T) == typeof(System.Dynamic.ExpandoObject);
                 return isExpandoObjectType.Value;
             }
         }
@@ -166,6 +145,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         private bool? isDictionaryType;
 
         private bool? isExpandoObjectType;
+
+        /// <summary>
+        /// 像素到MTU的转换系数（1像素 = 9525 MTU）
+        /// </summary>
+        private const int PIXEL_TO_MTU_FACTOR = 9525;
+
+        /// <summary>
+        /// 是否已释放资源
+        /// </summary>
+        private bool _disposed = false;
 
         /// <summary>
         ///     根据模板导出Excel
@@ -278,15 +267,35 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 if (IsDictionaryType || IsExpandoObjectType)
                 {
                     IEnumerable<IDictionary<string, object>> tableData = null;
-                    tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
-                    rowCount = tableData.Count();
-                    target.SetVariable(tableKey, tableData, typeof(IEnumerable<IDictionary<string, object>>));
+                    try
+                    {
+                        tableData = target.Eval<IEnumerable<IDictionary<string, object>>>($"data[\"{tableKey}\"]");
+                        rowCount = tableData?.Count() ?? 0;
+                        if (tableData != null)
+                        {
+                            target.SetVariable(tableKey, tableData, typeof(IEnumerable<IDictionary<string, object>>));
+                        }
+                    }
+                    catch
+                    {
+                        rowCount = 0;
+                    }
                 }
                 else
                 {
-                    rowCount = target.Eval<int>($"data.{tableKey}.Count");
-                    var tableData = target.Eval<IEnumerable<dynamic>>($"data.{tableKey}");
-                    target.SetVariable(tableKey, tableData);
+                    try
+                    {
+                        rowCount = target.Eval<int>($"data.{tableKey}.Count");
+                        var tableData = target.Eval<IEnumerable<dynamic>>($"data.{tableKey}");
+                        if (tableData != null)
+                        {
+                            target.SetVariable(tableKey, tableData);
+                        }
+                    }
+                    catch
+                    {
+                        rowCount = 0;
+                    }
                 }
                 var startCol = tableGroup.OrderBy(p => p.ColIndex).First();
                 var rowStart = startCol.RowIndex;
@@ -319,6 +328,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                     foreach (var itemTable in item)
                     {
                         itemTable.NewRowStart += insertRows;
+                        // 如果一行有多表格则记录最大行数，用于后续清理多余的行
+                        itemTable.SameRowMaxRowCount = table.RowCount;
                     }
                 }
                 else
@@ -371,13 +382,13 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                         continue;
                     }
 
-                    RenderTableCells(target, tbParameters, sheet, table.NewRowStart - table.RawRowStart, tableKey, table.RowCount, col, address);
+                    RenderTableCells(target, tbParameters, sheet, table.NewRowStart - table.RawRowStart, tableKey, table.RowCount, col, address, table.SameRowMaxRowCount);
                 }
             }
         }
 
         /// <summary>
-        /// 多行复制
+        /// 多行复制（迭代实现，避免递归导致的栈溢出）
         /// </summary>
         /// <param name="sheet"></param>
         /// <param name="startRow">复制前的开始行</param>
@@ -386,19 +397,48 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="maxColumnNum">最大列数</param>
         private void RowCopy(ExcelWorksheet sheet, int startRow, int endRow, int totalRows, int maxColumnNum)
         {
-            //rows表示现有的sheet行数
-            int rows = endRow - startRow + 1;
-            if (totalRows > rows * 2)
+            const int maxExcelRows = 1048576; // Excel 2007+ 最大行数
+
+            if (totalRows <= 1)
             {
-                //行数复制一倍
-                sheet.Cells[startRow, 1, endRow, maxColumnNum].Copy(sheet.Cells[endRow + 1, 1, endRow * 2 - startRow + 1, maxColumnNum]);
-                //再次循环
-                RowCopy(sheet, startRow, endRow * 2 - startRow + 1, totalRows, maxColumnNum);
+                return;
             }
-            else
+
+            var currentStartRow = startRow;
+            var currentEndRow = endRow;
+
+            var desiredEndRow = Math.Min(startRow + totalRows - 1, maxExcelRows);
+            if (currentEndRow >= desiredEndRow)
             {
-                //行数复制需要(需要复制 totalRows - rows)
-                sheet.Cells[startRow, 1, startRow + (totalRows - rows) - 1, maxColumnNum].Copy(sheet.Cells[endRow + 1, 1, startRow + totalRows, maxColumnNum]);
+                return;
+            }
+
+            while (currentEndRow < desiredEndRow)
+            {
+                var copiedRows = currentEndRow - currentStartRow + 1;
+                if (copiedRows <= 0)
+                {
+                    break;
+                }
+
+                var targetStartRow = currentEndRow + 1;
+                var targetEndRow = Math.Min(currentEndRow + copiedRows, desiredEndRow);
+                var targetRows = targetEndRow - targetStartRow + 1;
+                if (targetRows <= 0)
+                {
+                    break;
+                }
+
+                var sourceEndRow = currentStartRow + targetRows - 1;
+                if (sourceEndRow > currentEndRow)
+                {
+                    sourceEndRow = currentEndRow;
+                }
+
+                sheet.Cells[currentStartRow, 1, sourceEndRow, maxColumnNum]
+                    .Copy(sheet.Cells[targetStartRow, 1, targetStartRow + (sourceEndRow - currentStartRow), maxColumnNum]);
+
+                currentEndRow = targetEndRow;
             }
         }
 
@@ -438,17 +478,30 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="writer"></param>
         /// <param name="address"></param>
-        private void RenderTableCells(Interpreter target, Parameter[] tbParameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, IWriter writer, ExcelAddressBase address)
+        /// <param name="sameRowMaxRowCount"></param>
+        private void RenderTableCells(Interpreter target, Parameter[] tbParameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, IWriter writer, ExcelAddressBase address, int? sameRowMaxRowCount = null)
         {
             var cellString = writer.CellString;
             if (cellString.Contains("{{Table>>"))
+            {
                 //{{ Table >> BookInfo | RowNo}}
-                cellString = "{{" + cellString.Split('|')[1].Trim();
+                var parts = cellString.Split('|');
+                if (parts.Length > 1)
+                {
+                    cellString = "{{" + parts[1].Trim();
+                }
+            }
             else if (cellString.Contains(">>Table}}"))
+            {
                 //{{Remark|>>Table}}
-                cellString = cellString.Split('|')[0].Trim() + "}}";
+                var parts = cellString.Split('|');
+                if (parts.Length > 0)
+                {
+                    cellString = parts[0].Trim() + "}}";
+                }
+            }
 
-            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address);
+            RenderTableCells(target, tbParameters, sheet, insertRows, tableKey, rowCount, cellString, address, sameRowMaxRowCount);
         }
 
         /// <summary>
@@ -463,8 +516,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="invokeParams"></param>
         private void RenderCell(Interpreter target, ExcelWorksheet sheet, IWriter writer, string dataVar = "\" + data.", Lambda cellFunc = null, Parameter[] parameters = null, params object[] invokeParams)
         {
-            var expresson = writer.CellString;
-            RenderCell(target, sheet, expresson, new ExcelAddress(writer.RowIndex, writer.ColIndex, writer.RowIndex, writer.ColIndex).ToString(), dataVar, cellFunc, parameters, invokeParams);
+            var expression = writer.CellString;
+            RenderCell(target, sheet, expression, new ExcelAddress(writer.RowIndex, writer.ColIndex, writer.RowIndex, writer.ColIndex).ToString(), dataVar, cellFunc, parameters, invokeParams);
         }
 
         /// <summary>
@@ -472,49 +525,60 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// </summary>
         /// <param name="target"></param>
         /// <param name="sheet"></param>
-        /// <param name="expresson"></param>
+        /// <param name="expression"></param>
         /// <param name="cellAddress"></param>
         /// <param name="dataVar"></param>
         /// <param name="cellFunc"></param>
         /// <param name="parameters"></param>
         /// <param name="invokeParams"></param>
-        private void RenderCell(Interpreter target, ExcelWorksheet sheet, string expresson, string cellAddress, string dataVar = "\" + data.", Lambda cellFunc = null, Parameter[] parameters = null, params object[] invokeParams)
+        private void RenderCell(Interpreter target, ExcelWorksheet sheet, string expression, string cellAddress, string dataVar = "\" + data.", Lambda cellFunc = null, Parameter[] parameters = null, params object[] invokeParams)
         {
             //处理单元格渲染管道
-            RenderCellPipeline(target, sheet, ref expresson, cellAddress, cellFunc, parameters, dataVar, invokeParams);
+            RenderCellPipeline(target, sheet, ref expression, cellAddress, cellFunc, parameters, dataVar, invokeParams);
             //如果表达式没有处理，则进行处理
-            if (expresson.Contains("{{"))
+            if (expression.Contains("{{"))
             {
+                // 使用StringBuilder优化字符串操作
+                var sb = new StringBuilder(expression);
                 if (IsDynamicSupportTypes)
                 {
                     dataVar = dataVar.TrimEnd('.');
-                    expresson = expresson
-                                .Replace("{{", dataVar + "[\"")
-                                .Replace("}}", "\"] + \"");
+                    sb.Replace("{{", dataVar + "[\"");
+                    sb.Replace("}}", "\"] + \"");
                 }
                 else
                 {
-                    expresson = expresson
-                                .Replace("{{", dataVar)
-                                .Replace("}}", " + \"");
+                    sb.Replace("{{", dataVar);
+                    sb.Replace("}}", " + \"");
                 }
 
-                expresson = expresson.StartsWith("\"")
-                        ? expresson.TrimStart('\"').TrimStart().TrimStart('+')
-                        : "\"" + expresson;
+                expression = sb.ToString();
 
-                expresson = expresson.EndsWith("\"")
-                    ? expresson.TrimEnd('\"').TrimEnd().TrimEnd('+')
-                    : expresson + "\"";
+                expression = expression.StartsWith("\"")
+                        ? expression.TrimStart('\"').TrimStart().TrimStart('+')
+                        : "\"" + expression;
 
-                cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
+                expression = expression.EndsWith("\"")
+                    ? expression.TrimEnd('\"').TrimEnd().TrimEnd('+')
+                    : expression + "\"";
 
-                var result = cellFunc.Invoke(invokeParams);
-                sheet.Cells[cellAddress].Value = result;
+                cellFunc = CreateOrGetCellFunc(target, cellFunc, expression, parameters);
+
+                try
+                {
+                    var result = cellFunc.Invoke(invokeParams);
+                    sheet.Cells[cellAddress].Value = result;
+                }
+                catch (Exception ex)
+                {
+                    // 处理表达式执行异常，记录并设置默认值
+                    System.Diagnostics.Debug.WriteLine($"表达式执行失败: {expression}, 错误: {ex.Message}");
+                    sheet.Cells[cellAddress].Value = string.Empty;
+                }
             }
-            else if (!string.IsNullOrWhiteSpace(expresson))
+            else if (!string.IsNullOrWhiteSpace(expression))
             {
-                sheet.Cells[cellAddress].Value = expresson;
+                sheet.Cells[cellAddress].Value = expression;
             }
         }
 
@@ -529,7 +593,8 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <param name="rowCount"></param>
         /// <param name="cellString"></param>
         /// <param name="address"></param>
-        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address)
+        /// <param name="sameRowMaxRowCount"></param>
+        private void RenderTableCells(Interpreter target, Parameter[] parameters, ExcelWorksheet sheet, int insertRows, string tableKey, int rowCount, string cellString, ExcelAddressBase address, int? sameRowMaxRowCount = null)
         {
             //var dataVar = !IsDynamicSupportTypes ? ("\" + data." + tableKey + "[index].") : ("\" + data[\"" + tableKey + "\"][index]");
             string dataVar;
@@ -555,6 +620,17 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
                 sheet.Row(rowIndex).Height = sheet.Row(address.Start.Row).Height;
                 RenderCell(target, sheet, cellString, targetAddress.Address, dataVar, null, parameters, i);
             }
+
+            if (sameRowMaxRowCount.HasValue && sameRowMaxRowCount.Value > rowCount)
+            {
+                // 清理多余的行
+                for (var i = rowCount; i < sameRowMaxRowCount.Value; i++)
+                {
+                    var rowIndex = address.Start.Row + i + insertRows;
+                    var targetAddress = new ExcelAddress(rowIndex, address.Start.Column, rowIndex, address.Start.Column);
+                    sheet.Cells[targetAddress.Address].Clear();
+                }
+            }
         }
 
         /// <summary>
@@ -562,27 +638,29 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// </summary>
         /// <param name="target"></param>
         /// <param name="cellFunc"></param>
-        /// <param name="expresson"></param>
+        /// <param name="expression"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private Lambda CreateOrGetCellFunc(Interpreter target, Lambda cellFunc, string expresson, params Parameter[] parameters)
+        private Lambda CreateOrGetCellFunc(Interpreter target, Lambda cellFunc, string expression, params Parameter[] parameters)
         {
             if (cellFunc == null)
             {
-                if (cellWriteFuncs.ContainsKey(expresson))
+                // 缓存键应包含参数信息，避免不同参数的相同表达式冲突
+                var cacheKey = GetCacheKey(expression, parameters);
+                if (cellWriteFuncs.ContainsKey(cacheKey))
                 {
-                    cellFunc = cellWriteFuncs[expresson];
+                    cellFunc = cellWriteFuncs[cacheKey];
                 }
                 else
                 {
                     try
                     {
-                        cellFunc = parameters == null ? target.Parse(expresson) : target.Parse(expresson, parameters);
-                        cellWriteFuncs.Add(expresson, cellFunc);
+                        cellFunc = parameters == null || parameters.Length == 0 ? target.Parse(expression) : target.Parse(expression, parameters);
+                        cellWriteFuncs.Add(cacheKey, cellFunc);
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception($"{Resource.ErrorBuildingExpression}{expresson}。", ex);
+                        throw new Exception($"{Resource.ErrorBuildingExpression}{expression}。", ex);
                     }
                 }
             }
@@ -590,163 +668,68 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         }
 
         /// <summary>
+        /// 生成缓存键，包含表达式和参数信息
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private string GetCacheKey(string expression, Parameter[] parameters)
+        {
+            if (parameters == null || parameters.Length == 0)
+            {
+                return expression;
+            }
+            var paramTypes = string.Join(",", parameters.Select(p => p.Type?.FullName ?? p.Name));
+            return $"{expression}|Params:{paramTypes}";
+        }
+
+        /// <summary>
         /// 渲染单元格管道
         /// </summary>
         /// <param name="target"></param>
         /// <param name="sheet"></param>
-        /// <param name="expressonStr"></param>
+        /// <param name="expressionStr"></param>
         /// <param name="cellAddress"></param>
         /// <param name="cellFunc"></param>
         /// <param name="parameters"></param>
         /// <param name="dataVar"></param>
         /// <param name="invokeParams"></param>
-        private bool RenderCellPipeline(Interpreter target, ExcelWorksheet sheet, ref string expressonStr, string cellAddress, Lambda cellFunc, Parameter[] parameters, string dataVar, object[] invokeParams)
+        private bool RenderCellPipeline(Interpreter target, ExcelWorksheet sheet, ref string expressionStr, string cellAddress, Lambda cellFunc, Parameter[] parameters, string dataVar, object[] invokeParams)
         {
-            if (!expressonStr.Contains("::"))
+            if (!expressionStr.Contains("::"))
             {
                 return false;
             }
             //匹配所有的管道变量
-            var matches = _pipeLineVariableRegex.Matches(expressonStr);
+            var matches = _pipeLineVariableRegex.Matches(expressionStr);
             foreach (Match item in matches)
             {
-                var typeKey = Regex.Split(item.Value, "::").First().TrimStart('{').ToLower();
+                // 使用 string.Split 替代 Regex.Split 处理简单分隔符
+                var parts = item.Value.Split(new[] { "::" }, StringSplitOptions.None);
+                if (parts.Length < 2) continue;
+                
+                var typeKey = parts[0].TrimStart('{').ToLower();
                 //参数使用Url参数语法，不支持编码
                 //Demo：
                 //{{Image::ImageUrl?Width=50&Height=120&Alt=404}}
                 //处理特殊字段
-                //自定义渲染，以“::”作为切割。
+                //自定义渲染，以"::"作为切割。
                 //TODO:允许注入自定义管道逻辑
                 //支持：
                 //图：{{Image::ImageUrl?Width=250&Height=70&Alt=404}}
 
-                string body, expresson;
                 switch (typeKey)
                 {
                     case "image":
                     case "img":
                         {
-                            body = Regex.Split(item.Value, "::").Last().TrimEnd('}');
-                            var alt = string.Empty;
-                            var height = 0;
-                            var width = 0;
-                            var xOffset = 0;
-                            var yOffset = 0;
-                            if (body.Contains("?") && body.Contains("="))
-                            {
-                                var arr = body.Split('?');
-                                expresson = arr[0];
-                                //从表达式提取Url参数语法内容
-                                var values = GetNameVaulesFromQueryStringExpresson(arr[1]);
-
-                                //获取高度
-                                var heightStr = values["h"] ?? values["height"];
-                                if (!string.IsNullOrWhiteSpace(heightStr))
-                                {
-                                    height = int.Parse(heightStr);
-                                }
-
-                                //获取宽度
-                                var widthStr = values["w"] ?? values["width"];
-                                if (!string.IsNullOrWhiteSpace(widthStr))
-                                {
-                                    width = int.Parse(widthStr);
-                                }
-
-                                //获取XOffset
-                                var xOffsetStr = values["XOffset"] ?? values["x"];
-                                if (!string.IsNullOrWhiteSpace(xOffsetStr))
-                                {
-                                    xOffset = int.Parse(xOffsetStr);
-                                }
-
-                                //获取YOffset
-                                var yOffsetStr = values["YOffset"] ?? values["y"];
-                                if (!string.IsNullOrWhiteSpace(yOffsetStr))
-                                {
-                                    yOffset = int.Parse(yOffsetStr);
-                                }
-
-                                //获取alt文本
-                                alt = values["alt"];
-                            }
-                            else
-                            {
-                                expresson = body;
-                            }
-                            expresson = (dataVar + (IsDynamicSupportTypes ? ("[\"" + expresson + "\"]") : (expresson))).Trim('\"').Trim().Trim('+');
-                            cellFunc = CreateOrGetCellFunc(target, cellFunc, expresson, parameters);
-                            //获取图片地址
-                            var imageUrl = cellFunc.Invoke(invokeParams)?.ToString();
-                            var cell = sheet.Cells[cellAddress];
-                            if (imageUrl == null || (!File.Exists(imageUrl) && !imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase) && !imageUrl.IsBase64StringValid()))
-                            {
-                                cell.Value = alt;
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    Image image = null;
-                                    IImageFormat format = default;
-                                    if (imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                                    {
-                                        image = imageUrl.GetImageByUrl(out format);
-                                    }
-                                    else if (imageUrl.IsBase64StringValid())
-                                    {
-                                        image = imageUrl.Base64StringToImage(out format);
-                                    }
-                                    else if (File.Exists(imageUrl))
-                                    {
-                                        using (Stream imageStream = File.OpenRead(imageUrl))
-                                        {
-                                            image = Image.Load(imageStream);
-                                            format = image.GetImageFormat(imageStream);
-                                        }
-
-                                        // image = Image.Load(imageUrl, out format);
-                                    }
-
-                                    if (image == null)
-                                    {
-                                        cell.Value = alt;
-                                    }
-                                    else
-                                    {
-                                        if (height == default) height = image.Height;
-                                        if (width == default) width = image.Width;
-                                        cell.Value = string.Empty;
-                                        var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), image, format);
-                                        var address = new ExcelAddress(cell.Address);
-                                        ////调整对齐
-                                        excelImage.From.ColumnOff = Pixel2MTU(xOffset);
-                                        excelImage.From.RowOff = Pixel2MTU(yOffset);
-                                        excelImage.From.Column = address.Start.Column - 1;
-                                        excelImage.From.Row = address.Start.Row - 1;
-                                        //excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
-                                        excelImage.SetSize(width, height);
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    cell.Value = alt;
-                                }
-                            }
-                            expressonStr = expressonStr.Replace(item.Value, string.Empty);
+                            ProcessImagePipeline(target, sheet, ref expressionStr, cellAddress, cellFunc, parameters, dataVar, invokeParams, item.Value, parts);
                         }
                         break;
 
                     case "formula":
-                        body = Regex.Split(item.Value, "::").Last().TrimEnd('}');
-                        if (body.Contains("?") && body.Contains("="))
                         {
-                            var arr = body.Split('?');
-                            var @function = arr[0];
-                            var @params = arr[1].Replace("params=", "").Replace("&", ",");
-                            var cell = sheet.Cells[cellAddress];
-                            cell.Formula = $"={@function}({@params})";
-                            expressonStr = expressonStr.Replace(item.Value, string.Empty);
+                            ProcessFormulaPipeline(sheet, ref expressionStr, cellAddress, item.Value, parts);
                         }
                         break;
 
@@ -758,10 +741,188 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
             return true;
         }
 
+        /// <summary>
+        /// 处理图片管道
+        /// </summary>
+        private void ProcessImagePipeline(Interpreter target, ExcelWorksheet sheet, ref string expressionStr, string cellAddress, Lambda cellFunc, Parameter[] parameters, string dataVar, object[] invokeParams, string matchValue, string[] parts)
+        {
+            var body = parts.Length > 1 ? parts[1].TrimEnd('}') : string.Empty;
+            var (expression, alt, height, width, xOffset, yOffset) = ParseImageParameters(body);
+
+            var finalExpression = (dataVar + (IsDynamicSupportTypes ? ("[\"" + expression + "\"]") : (expression))).Trim('\"').Trim().Trim('+');
+            cellFunc = CreateOrGetCellFunc(target, cellFunc, finalExpression, parameters);
+            //获取图片地址
+            string imageUrl = null;
+            try
+            {
+                imageUrl = cellFunc.Invoke(invokeParams)?.ToString();
+            }
+            catch (KeyNotFoundException)
+            {
+                // 字典或ExpandoObject中缺少字段，使用默认值
+                imageUrl = null;
+            }
+            catch (Exception ex)
+            {
+                // 其他异常也记录并继续
+                System.Diagnostics.Debug.WriteLine($"获取图片URL失败: {expression}, 错误: {ex.Message}");
+                imageUrl = null;
+            }
+            var cell = sheet.Cells[cellAddress];
+            
+            // 修正空引用检查逻辑
+            if (string.IsNullOrEmpty(imageUrl) || (!File.Exists(imageUrl) && !imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase) && !imageUrl.IsBase64StringValid()))
+            {
+                cell.Value = alt;
+            }
+            else
+            {
+                try
+                {
+                    Image image = null;
+                    IImageFormat format = default;
+                    
+                    if (imageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    {
+                        image = imageUrl.GetImageByUrl(out format);
+                    }
+                    else if (imageUrl.IsBase64StringValid())
+                    {
+                        image = imageUrl.Base64StringToImage(out format);
+                    }
+                    else if (File.Exists(imageUrl))
+                    {
+                        using (Stream imageStream = File.OpenRead(imageUrl))
+                        {
+                            image = Image.Load(imageStream);
+                            format = image.GetImageFormat(imageStream);
+                        }
+                    }
+
+                    if (image == null)
+                    {
+                        cell.Value = alt;
+                    }
+                    else
+                    {
+                        // 使用 using 确保 Image 资源正确释放
+                        using (image)
+                        {
+                            if (height == default) height = image.Height;
+                            if (width == default) width = image.Width;
+                            cell.Value = string.Empty;
+                            var excelImage = sheet.Drawings.AddPicture(Guid.NewGuid().ToString(), image, format);
+                            var address = new ExcelAddress(cell.Address);
+                            ////调整对齐
+                            excelImage.From.ColumnOff = Pixel2MTU(xOffset);
+                            excelImage.From.RowOff = Pixel2MTU(yOffset);
+                            excelImage.From.Column = address.Start.Column - 1;
+                            excelImage.From.Row = address.Start.Row - 1;
+                            //excelImage.SetPosition(address.Start.Row - 1, 0, address.Start.Column - 1, 0);
+                            excelImage.SetSize(width, height);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 记录异常信息而不是吞掉异常
+                    // 注意：这里可能需要日志框架，暂时保留原有行为但添加异常信息
+                    System.Diagnostics.Debug.WriteLine($"图片处理失败: {ex.Message}");
+                    cell.Value = alt;
+                }
+            }
+            expressionStr = expressionStr.Replace(matchValue, string.Empty);
+        }
+
+        /// <summary>
+        /// 解析图片参数
+        /// </summary>
+        private (string expression, string alt, int height, int width, int xOffset, int yOffset) ParseImageParameters(string body)
+        {
+            var alt = string.Empty;
+            var height = 0;
+            var width = 0;
+            var xOffset = 0;
+            var yOffset = 0;
+            string expression;
+
+            if (body.Contains("?") && body.Contains("="))
+            {
+                var arr = body.Split('?');
+                expression = arr.Length > 0 ? arr[0] : body;
+                //从表达式提取Url参数语法内容
+                if (arr.Length > 1)
+                {
+                    var values = GetNameVaulesFromQueryStringExpresson(arr[1]);
+
+                    //获取高度 - 使用 TryParse 替代 Parse
+                    var heightStr = values["h"] ?? values["height"];
+                    if (!string.IsNullOrWhiteSpace(heightStr))
+                    {
+                        int.TryParse(heightStr, out height);
+                    }
+
+                    //获取宽度 - 使用 TryParse 替代 Parse
+                    var widthStr = values["w"] ?? values["width"];
+                    if (!string.IsNullOrWhiteSpace(widthStr))
+                    {
+                        int.TryParse(widthStr, out width);
+                    }
+
+                    //获取XOffset - 使用 TryParse 替代 Parse
+                    var xOffsetStr = values["XOffset"] ?? values["x"];
+                    if (!string.IsNullOrWhiteSpace(xOffsetStr))
+                    {
+                        int.TryParse(xOffsetStr, out xOffset);
+                    }
+
+                    //获取YOffset - 使用 TryParse 替代 Parse
+                    var yOffsetStr = values["YOffset"] ?? values["y"];
+                    if (!string.IsNullOrWhiteSpace(yOffsetStr))
+                    {
+                        int.TryParse(yOffsetStr, out yOffset);
+                    }
+
+                    //获取alt文本
+                    alt = values["alt"] ?? string.Empty;
+                }
+            }
+            else
+            {
+                expression = body;
+            }
+
+            return (expression, alt, height, width, xOffset, yOffset);
+        }
+
+        /// <summary>
+        /// 处理公式管道
+        /// </summary>
+        private void ProcessFormulaPipeline(ExcelWorksheet sheet, ref string expressionStr, string cellAddress, string matchValue, string[] parts)
+        {
+            var body = parts.Length > 1 ? parts[1].TrimEnd('}') : string.Empty;
+            if (body.Contains("?") && body.Contains("="))
+            {
+                var arr = body.Split('?');
+                if (arr.Length > 1)
+                {
+                    var function = arr[0];
+                    var @params = arr[1].Replace("params=", "").Replace("&", ",");
+                    var cell = sheet.Cells[cellAddress];
+                    cell.Formula = $"={function}({@params})";
+                    expressionStr = expressionStr.Replace(matchValue, string.Empty);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 将像素转换为MTU（Measurement Unit）
+        /// </summary>
+        /// <param name="pixels">像素值</param>
+        /// <returns>MTU值</returns>
         internal static int Pixel2MTU(int pixels)
         {
-            int mtus = pixels * 9525;
-            return mtus;
+            return pixels * PIXEL_TO_MTU_FACTOR;
         }
 
         /// <summary>
@@ -879,11 +1040,33 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// <summary>执行与释放或重置非托管资源关联的应用程序定义的任务。</summary>
         public void Dispose()
         {
-            FilePath = null;
-            SheetWriters = null;
-            ValuesDictionary = null;
-            TableValuesDictionary = null;
-            cellWriteFuncs.Clear();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        /// <param name="disposing">是否释放托管资源</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // 释放托管资源
+                    FilePath = null;
+                    TemplateFilePath = null;
+                    SheetWriters = null;
+                    Data = null;
+                    cellWriteFuncs?.Clear();
+                }
+
+                // 释放非托管资源（如果有）
+                // 正则表达式对象会在类销毁时自动释放
+
+                _disposed = true;
+            }
         }
     }
 }

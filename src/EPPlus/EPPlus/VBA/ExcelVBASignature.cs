@@ -172,7 +172,7 @@ namespace OfficeOpenXml.VBA
                     return;
                 }
             }
-            var ms = RecyclableMemoryStream.GetStream();
+            var ms = new MemoryStream();
             var bw = new BinaryWriter(ms);
 
             byte[] certStore = GetCertStore();
@@ -248,7 +248,7 @@ namespace OfficeOpenXml.VBA
 
         private byte[] GetCertStore()
         {
-            var ms = RecyclableMemoryStream.GetStream();
+            var ms = new MemoryStream();
             var bw = new BinaryWriter(ms);
 
             bw.Write((uint)0); //Version
@@ -286,7 +286,7 @@ namespace OfficeOpenXml.VBA
             }
             var hash = GetContentHash(proj);
 
-            BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter bw = new BinaryWriter(new MemoryStream());
             bw.Write((byte)0x30); //Constructed Type 
             bw.Write((byte)0x32); //Total length
             bw.Write((byte)0x30); //Constructed Type 
@@ -329,7 +329,7 @@ namespace OfficeOpenXml.VBA
         {
             //MS-OVBA 2.4.2
             var enc = System.Text.Encoding.GetEncoding(proj.CodePage);
-            BinaryWriter bw = new BinaryWriter(RecyclableMemoryStream.GetStream());
+            BinaryWriter bw = new BinaryWriter(new MemoryStream());
             bw.Write(enc.GetBytes(proj.Name));
             bw.Write(enc.GetBytes(proj.Constants));
             foreach (var reference in proj.References)
@@ -341,7 +341,7 @@ namespace OfficeOpenXml.VBA
                 if (reference.ReferenceRecordID == 0x0E)
                 {
                     //var r = (ExcelVbaReferenceProject)reference;
-                    //BinaryWriter bwTemp = new BinaryWriter(RecyclableMemoryStream.GetStream());
+                    //BinaryWriter bwTemp = new BinaryWriter(new MemoryStream());
                     //bwTemp.Write((uint)r.Libid.Length);
                     //bwTemp.Write(enc.GetBytes(r.Libid));              
                     //bwTemp.Write((uint)r.LibIdRelative.Length);

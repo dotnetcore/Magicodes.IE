@@ -1,5 +1,37 @@
 # Release Log
 
+## 2.8.3
+**2025.12.24**
+
+- 全面支持 .NET 10.0（LTS 版本）
+- 更新所有核心库项目以支持 .NET 10.0 目标框架
+- 更新 EPPlus 项目添加 .NET 10.0 依赖包配置
+- 更新测试项目以支持 .NET 10.0 测试
+- 优化项目依赖包版本管理，统一 .NET 6.0+ 框架的包版本
+
+## 2.8.2
+**2025.12.16**
+
+- 升级 SkiaSharp 包从 2.88.6 到 3.119.1
+- 修复 SkiaSharp 3.x 中废弃的 API 使用问题，将 SKPaint.MeasureText 替换为 SKFont.MeasureText
+- 优化单元测试断言，提高对网络图片加载和复杂模板的容错性
+- 修复文件访问异常问题，添加适当的延迟处理
+
+## 2.8.1
+**2025.12.15**
+
+- 重构TemplateExportHelper，优化正则表达式使用和异常处理
+- 简化异常处理和响应头赋值逻辑
+- 修复同一行多表格导出时出现错误模板的问题（见PR [#605](https://github.com/dotnetcore/Magicodes.IE/pull/605)）
+- 修复Excel导出图片慢的问题（见PR [#602](https://github.com/dotnetcore/Magicodes.IE/pull/602)）
+- 文档修复拼写错误（见PR [#603](https://github.com/dotnetcore/Magicodes.IE/pull/603)）
+
+## 2.7.6
+**2025.05.14**
+
+- 修复若干问题，具体见PR及Commit记录
+
+
 ## 2.7.5.0
 **2024.01.03**
 

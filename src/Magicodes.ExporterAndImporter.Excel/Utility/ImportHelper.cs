@@ -1251,6 +1251,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     SetValue(cell, dataItem, propertyInfo, value);
                                     continue;
                                 }
+                                // 如果是可空枚举,选中空白项传入"",处理成null,不然会出现SetValue会报错
+                                else if (propertyInfo.PropertyType.IsNullable() && propertyInfo.PropertyType.GetNullableUnderlyingType().IsEnum)
+                                {
+                                    SetValue(cell,dataItem,propertyInfo,null);
+                                    continue;
+                                }
                             }
 
                             if (propertyInfo.PropertyType.IsEnum

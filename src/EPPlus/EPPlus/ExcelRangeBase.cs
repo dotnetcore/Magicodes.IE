@@ -942,39 +942,34 @@ namespace OfficeOpenXml
                 {
                     var normalSize =
                         Convert.ToSingle(ExcelWorkbook.GetWidthPixels(font.Typeface.FamilyName, font.Size));
-                    using (var paint = new SKPaint(font))
+                    var measureWidthInPoints = font.MeasureText(t, out SKRect rect);
+                    double widthInPixels = measureWidthInPoints * 4 / 3;
+                    double r = styles.CellXfs[cell.StyleID].TextRotation;
+                    if (r <= 0)
                     {
-                        paint.TextSize = font.Size;
-                        SKRect rect = SKRect.Empty;
-                        var measureWidthInPoints = paint.MeasureText(t, ref rect);
-                        double widthInPixels = measureWidthInPoints * 4 / 3;
-                        double r = styles.CellXfs[cell.StyleID].TextRotation;
-                        if (r <= 0)
-                        {
-                            widthInPixels = (widthInPixels + 5) / normalSize;
-                        }
-                        else
-                        {
-                            r = r <= 90 ? r : r - 90;
-                            widthInPixels = ((widthInPixels - rect.Size.Height) *
-                                             Math.Abs(Math.Cos(Math.PI * r / 180.0)) +
-                                             rect.Size.Height + 5) / normalSize;
-                        }
+                        widthInPixels = (widthInPixels + 5) / normalSize;
+                    }
+                    else
+                    {
+                        r = r <= 90 ? r : r - 90;
+                        widthInPixels = ((widthInPixels - rect.Height) *
+                                         Math.Abs(Math.Cos(Math.PI * r / 180.0)) +
+                                         rect.Height + 5) / normalSize;
+                    }
 
-                        foreach (var a in afAddr)
+                    foreach (var a in afAddr)
+                    {
+                        if (a.Collide(cell) != eAddressCollition.No)
                         {
-                            if (a.Collide(cell) != eAddressCollition.No)
-                            {
-                                widthInPixels += 2.25;
-                                break;
-                            }
+                            widthInPixels += 2.25;
+                            break;
                         }
+                    }
 
-                        if (widthInPixels > _worksheet.Column(cell._fromCol).Width)
-                        {
-                            _worksheet.Column(cell._fromCol).Width =
-                                widthInPixels > maximumWidth ? maximumWidth : widthInPixels;
-                        }
+                    if (widthInPixels > _worksheet.Column(cell._fromCol).Width)
+                    {
+                        _worksheet.Column(cell._fromCol).Width =
+                            widthInPixels > maximumWidth ? maximumWidth : widthInPixels;
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Magicodes.ExporterAndImporter.Attributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,12 +11,10 @@ namespace Magicodes.ExporterAndImporter.Extensions
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<MagicodesMiddleware> _logger;
-        private readonly MagicodesBase _extensions;
         public MagicodesMiddleware(RequestDelegate next, ILogger<MagicodesMiddleware> logger)
         {
             _next = next;
             _logger = logger;
-            _extensions = new MagicodesBase();
         }
         public async Task InvokeAsync(HttpContext context)
         {
@@ -30,8 +29,9 @@ namespace Magicodes.ExporterAndImporter.Extensions
                     context.Response.Body = memoryStream;
                     await _next.Invoke(context);
                     context.Response.Body = originalResponseBodyStream;
-                    var bodyAsText = await _extensions.ReadResponseBodyStreamAsync(memoryStream);
-                    var isSuccessful = await _extensions.HandleSuccessfulReqeustAsync(context: context, body: bodyAsText, tplPath: endpointMagicodesData.TemplatePath,
+                    var extensions = context.RequestServices.GetService<MagicodesBase>() ?? new MagicodesBase(context.RequestServices);
+                    var bodyAsText = await extensions.ReadResponseBodyStreamAsync(memoryStream);
+                    var isSuccessful = await extensions.HandleSuccessfulReqeustAsync(context: context, body: bodyAsText, tplPath: endpointMagicodesData.TemplatePath,
                         type: endpointMagicodesData.Type);
                     if (!isSuccessful)
                     {

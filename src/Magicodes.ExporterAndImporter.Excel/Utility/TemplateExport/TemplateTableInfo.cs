@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 {
@@ -35,5 +31,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
         /// 写入器
         /// </summary>
         public IGrouping<string, IWriter> Writers { get; set; }
+
+        /// <summary>
+        /// 同行最大行数
+        /// </summary>
+        public int? SameRowMaxRowCount { get; set; } = null;
     }
 }

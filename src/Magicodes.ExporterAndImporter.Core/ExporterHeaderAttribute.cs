@@ -13,7 +13,6 @@
 
 using System;
 using Magicodes.IE.Core;
-using SixLabors.ImageSharp;
 
 namespace Magicodes.ExporterAndImporter.Core
 {
@@ -37,7 +36,7 @@ namespace Magicodes.ExporterAndImporter.Core
             Width = width;
             if (fontColor != KnownColor.Empty)
             {
-                FontColor = Color.Parse(fontColor.ToString("G"));
+                FontColor = fontColor;
             }
         }
 
@@ -97,8 +96,8 @@ namespace Magicodes.ExporterAndImporter.Core
         public bool Hidden { get; set; }
 
         /// <summary>
-        /// 字体颜色
-        /// </summary>
-        public Color? FontColor { get; set; }
+         /// 字体颜色
+         /// </summary>
+        public KnownColor FontColor { get; set; } = KnownColor.Empty;
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0;net10.0</TargetFrameworks>
     <PackageId>Magicodes.IE.Pdf</PackageId>
   </PropertyGroup>
   <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
@@ -9,17 +9,14 @@
     <PackageReference Include="TuesPechkin.Wkhtmltox.AnyCPU" Version="0.12.4.1" />
   </ItemGroup>-->
   <ItemGroup>
-	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.86" />
+	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.95" />
+  </ItemGroup>
+  <!-- macOS arm64 native library (Haukcode.WkHtmlToPdfDotNet provides other platforms) -->
+  <ItemGroup>
+    <None Include="runtimes/**" Pack="true" PackagePath="runtimes/" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Html\Magicodes.IE.Html.csproj" />
   </ItemGroup>
-  <!--<ItemGroup>
-    <None Include="runtimes/linux-x64/native/wkhtmltox.so">
-      <Pack>true</Pack>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes/linux-x64/native/wkhtmltox.so</PackagePath>
-    </None>
-  </ItemGroup>-->
 
 </Project>

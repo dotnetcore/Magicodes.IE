@@ -63,13 +63,16 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 4. <a href="docs/4.Use in Docker.md">Use in Docker</a>
 5. <a href="docs/5.Dynamic Export.md">Dynamic Export</a>
 6. <a href="docs/6.Import Multi-Sheet Tutorial.md">Import Multi-Sheet Tutorial</a>
-7. <a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a>
-8. <a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a>
-9. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
+7. <a href="docs/7.Csv Import and Export.md">Csv Import and Export</a>
+8. <a href="docs/8. Import and export Excel as pictures.md">Import and export Excel as pictures</a>
+9. <a href="docs/9.Excel template export-Export textbook order form .md">Excel template export-Export textbook order form</a>
+10. <a href="https://docs.xin-lai.com/2020/09/21/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%AD%9B%E9%80%89%E5%99%A8/">Import and Export Filters</a>
+11. <a href="https://docs.xin-lai.com/2020/09/28/%E7%BB%84%E4%BB%B6/Magicodes.IE/Magicodes.IE%E4%B9%8B%E8%8A%B1%E5%BC%8F%E5%AF%BC%E5%87%BA/">Magicodes.IE Fancy Export</a>
 12. <a href="docs/12.Exporting multiple formats in NETCore via request headers.md">Exporting multiple formats in NETCore via request headers</a>
 13. <a href="docs/13.Performance Measurement.md">Performance Measurement</a>
 14. <a href="docs/Excel Merge Row Cells Import.md">Excel Merge Row Cells Import</a>
-15. <a href="docs/Excel template  export - dynamic export.md">Excel template  export - dynamic export</a>
+15. <a href="docs/Excel template  export - dynamic export.md">Excel template export - dynamic export</a>
+16. <a href="docs/Magicodes.IE.Excel.AspNetCore Quick Export Excel.md">Magicodes.IE.Excel.AspNetCore Quick Export Excel (new)</a>
 
 **See below for other tutorials or unit tests**
 
@@ -81,8 +84,8 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 **![](./res/导入Dto.png "Import DTO")**
 - **Support various filters to support scenarios such as multi-language, dynamic control column display, etc. For specific usage, see unit test:**
   - **Import column header filter <IImportHeaderFilter>(you can dynamically specify the imported column and imported value mapping relationship)**
-  - **Export column header filter <IImportHeaderFilter>(can dynamically control the export column, support dynamic export (DataTable))**
-  - **Export column headers filter <IImportHeadersFilter>(can dynamically control the export column, support dynamic export (DataTable))**
+  - **Export column header filter <IExportHeaderFilter>(can dynamically control the export column, support dynamic export (DataTable))**
+  - **Export column headers filter <IExportHeadersFilter>(can dynamically control the export column, support dynamic export (DataTable))**
   - **Import result filter <IImportResultFilter>(can modify annotation file)**
 - **Export supports text custom filtering or processing;**
 - **Import supports automatic skipping of blank lines in the middle;**
@@ -112,7 +115,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 - **Import supports repeated verification;**
 ![](./res/重复错误.png "Repeated verification")
 - **Support single data template export, often used to export receipts, credentials and other businesses**
-- **Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou ([https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8) ))* *
+- **Support dynamic column export (based on DataTable), and the Sheet will be split automatically if it exceeds 100W. (Thanks to teacher Zhang Shanyou ([https://github.com/xin-lai/Magicodes.IE/pull/8](https://github.com/xin-lai/Magicodes.IE/pull/8)))**
 - **Support dynamic/ExpandoObject dynamic column export**
 ```csharp
         [Fact(DisplayName = "DTO export supports dynamic types")]
@@ -135,7 +138,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
             File.Exists(filePath).ShouldBeTrue();
         }
 ```
-- **Support value mapping, support setting value mapping relationship through "ValueMappingAttribute" feature. It is used to generate data validation constraints for import templates and perform data conversion. **
+- **Support value mapping, support setting value mapping relationship through "ValueMappingAttribute" feature. It is used to generate data validation constraints for import templates and perform data conversion.**
 ```csharp
         /// <summary>
         /// Gender
@@ -144,6 +147,30 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
         [Required(ErrorMessage = "Gender cannot be empty.")]
         [ValueMapping(text: "Male", 0)]
         [ValueMapping(text: "Female", 1)]
+        public Genders Gender { get; set; }
+```
+
+- **You can also inherit the "ValueMappingsBaseAttribute" attribute base class to implement value mapping relationships, currently only available for enumeration and Bool types, supports import and export.**
+```csharp
+        [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+        public class GenderLocalAttribute : ValueMappingsBaseAttribute
+        {
+            public override Dictionary<string, object> GetMappings(PropertyInfo propertyInfo)
+            {
+                var res= new Dictionary<string, object>();
+                res.Add("Male",0);
+                res.Add("Female",1);
+                return res;
+            }
+        }
+
+
+        /// <summary>
+        /// Gender
+        /// </summary>
+        [ImporterHeader(Name = "Gender")]
+        [Required(ErrorMessage = "Gender cannot be empty.")]
+        [GenderLocal]
         public Genders Gender { get; set; }
 ```
 
@@ -208,7 +235,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 - **Support excel multi-sheet import**
   **![](./res/multipleSheet.png "Enumeration to data mapping")**
 
-- **Support Excel template export, and support image rendering**
+- **Support Excel template export, JSON dynamic export, and support image rendering**
   **![](./res/ExcelTplExport.png "Excel template export")**
 
   The rendering syntax is as follows:
@@ -220,6 +247,8 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
     {{Image::ImageUrl?Width=50&Height=120&Alt=404}} //Picture rendering
     {{Image::ImageUrl?w=50&h=120&Alt=404}} //Picture rendering
     {{Image::ImageUrl?Alt=404}} //Picture rendering
+    {{Formula::AVERAGE?params=G4:G6}}  //Formula rendering
+    {{Formula::SUM?params=G4:G6&G4}}   //Formula rendering
   ```
 
   Custom pipelines will be supported in the future.
@@ -271,7 +300,7 @@ Support display operations for input prompts:
 
 - **Excel import supports merging row data** [#239](https://github.com/dotnetcore/Magicodes.IE/issues/239)
 
- ![合并行导入文件](res/image-20210306105147319.png)
+ ![Excel Merge Row Cells Import](res/image-20210306105147319.png)
 
 - Add packaging for Abp module, see [#318](https://github.com/dotnetcore/Magicodes.IE/issues/318) for details.
 

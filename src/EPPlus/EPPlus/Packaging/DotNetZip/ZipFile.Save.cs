@@ -522,7 +522,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
         ///     zip.Password = "VerySecret.";
         ///     zip.Encryption = EncryptionAlgorithm.WinZipAes128;
         ///     zip.AddFile(sourceFileName);
-        ///     MemoryStream output = RecyclableMemoryStream.GetStream();
+        ///     MemoryStream output = new MemoryStream();
         ///     zip.Save(output);
         ///
         ///     byte[] zipbytes = output.ToArray();
@@ -606,7 +606,7 @@ namespace OfficeOpenXml.Packaging.Ionic.Zip
             // write to a memory stream in order to keep the
             // CDR contiguous
             Int64 aLength = 0;
-            using (var ms = RecyclableMemoryStream.GetStream())
+            using (var ms = new MemoryStream())
             {
                 foreach (ZipEntry e in entries)
                 {

@@ -35,9 +35,8 @@ namespace Magicodes.ExporterAndImporter.Excel.AspNetCore
                 downloadFileName += ".xlsx";
             }
 
-            context.HttpContext.Response.Headers.Add("Content-Disposition", new[] {
-                "attachment; filename=" +HttpUtility.UrlEncode(downloadFileName)
-            });
+            context.HttpContext.Response.Headers["Content-Disposition"] = 
+                "attachment; filename=" + HttpUtility.UrlEncode(downloadFileName);
             await stream.CopyToAsync(context.HttpContext.Response.Body);
         }
     }

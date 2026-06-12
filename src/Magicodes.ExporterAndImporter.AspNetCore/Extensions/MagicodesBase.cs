@@ -4,6 +4,7 @@ using Magicodes.ExporterAndImporter.Html;
 using Magicodes.ExporterAndImporter.Pdf;
 using Magicodes.ExporterAndImporter.Word;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -14,6 +15,17 @@ namespace Magicodes.ExporterAndImporter.Extensions
 {
     public class MagicodesBase
     {
+        private readonly IServiceProvider _serviceProvider;
+
+        public MagicodesBase() : this(null)
+        {
+        }
+
+        public MagicodesBase(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         public async Task<string> ReadResponseBodyStreamAsync(Stream bodyStream)
         {
             bodyStream.Seek(0, SeekOrigin.Begin);
@@ -30,6 +42,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
             var contentType = "";
             string filename = DateTime.Now.ToString("yyyyMMddHHmmss");
             byte[] result = null;
+            var serviceProvider = context?.RequestServices ?? _serviceProvider;
             switch (context.Request.Headers["Magicodes-Type"])
             {
                 case HttpContentMediaType.XLSXHttpContentMediaType:
@@ -42,10 +55,11 @@ namespace Magicodes.ExporterAndImporter.Extensions
                 case HttpContentMediaType.PDFHttpContentMediaType:
                     filename += ".pdf";
                     contentType = HttpContentMediaType.PDFHttpContentMediaType;
-                    IExportFileByTemplate pdfexporter = new PdfExporter();
+                    var pdfExporter = serviceProvider?.GetService<IPdfExporter>()
+                        ?? new PdfExporter(serviceProvider?.GetService<IPdfNativeLibraryService>() ?? new PdfNativeLibraryService());
                     var tpl = await File.ReadAllTextAsync(tplPath);
                     var obj = JsonConvert.DeserializeObject(body.ToString(), type);
-                    result = await pdfexporter.ExportBytesByTemplate(obj, tpl, type);
+                    result = await pdfExporter.ExportBytesByTemplate(obj, tpl, type);
                     break;
                 case HttpContentMediaType.HTMLHttpContentMediaType:
                     filename += ".html";
@@ -62,7 +76,7 @@ namespace Magicodes.ExporterAndImporter.Extensions
             }
             if (contentType != "")
             {
-                context.Response.Headers.Add("Content-Disposition", $"attachment;filename={filename}");
+                context.Response.Headers["Content-Disposition"] = $"attachment;filename={filename}";
                 context.Response.ContentType = contentType;
                 if (result != null)
                 {
