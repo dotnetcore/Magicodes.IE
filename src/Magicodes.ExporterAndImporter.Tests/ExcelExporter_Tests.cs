@@ -87,13 +87,13 @@ namespace Magicodes.ExporterAndImporter.Tests
                 sheet.Cells["A2"].Text.ShouldBe(data[0].Text2);
 
                 //[ExporterHeader(DisplayName = "日期1", Format = "yyyy-MM-dd")]
-                sheet.Cells["E2"].Text.Equals(DateTime.Parse(sheet.Cells["E2"].Text).ToString("yyyy-MM-dd"));
+                sheet.Cells["D2"].Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
 
                 //[ExporterHeader(DisplayName = "日期2", Format = "yyyy-MM-dd HH:mm:ss")]
-                sheet.Cells["F2"].Text.Equals(DateTime.Parse(sheet.Cells["F2"].Text).ToString("yyyy-MM-dd HH:mm:ss"));
+                sheet.Cells["E2"].Style.Numberformat.Format.ShouldBe("yyyy-MM-dd HH:mm:ss");
 
                 //默认DateTime
-                sheet.Cells["G2"].Text.Equals(DateTime.Parse(sheet.Cells["G2"].Text).ToString("yyyy-MM-dd"));
+                sheet.Cells["G2"].Style.Numberformat.Format.ShouldNotBeNullOrEmpty();
 
                 //单元格宽度测试
                 sheet.Column(sheet.Cells.First(p => p.Text == "Time3").End.Column).Width.ShouldBe(100);
@@ -188,7 +188,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         {
             IExporter exporter = new ExcelExporter();
 
-            var filePath = GetTestFilePath($"{nameof(AttrExportWithAutoCenterData_Test)}.xlsx");
+            var filePath = GetTestFilePath($"{nameof(AttrExportWithColAutoCenterData_Test)}.xlsx");
 
             DeleteFile(filePath);
 
@@ -767,9 +767,9 @@ namespace Magicodes.ExporterAndImporter.Tests
                 pck.Workbook.Worksheets.Count.ShouldBe(1);
                 var sheet = pck.Workbook.Worksheets.First();
 
-                sheet.Cells["C2"].Text.Equals(DateTime.Parse(sheet.Cells["C2"].Text).ToString("yyyy-MM-dd"));
+                sheet.Cells["C2"].Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
 
-                sheet.Cells["D2"].Text.Equals(DateTime.Parse(sheet.Cells["D2"].Text).ToString("yyyy-MM-dd"));
+                sheet.Cells["D2"].Style.Numberformat.Format.ShouldBe("yyyy-MM-dd");
                 new List<string> { "是", "否" }.ShouldContain(sheet.Cells["G2"].Text);
                 sheet.Tables.Count.ShouldBe(1);
                 var tb = sheet.Tables.First();
@@ -1092,6 +1092,16 @@ namespace Magicodes.ExporterAndImporter.Tests
             {
                 await exporter.ExportByTemplate(filePath, data, tplPath);
             });
+
+            // 验证导出成功
+            File.Exists(filePath).ShouldBeTrue();
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.ShouldNotBeNull();
+                // 验证图片已正确嵌入（ZeroDPI 模板有 1 张图片）
+                sheet.Drawings.Count.ShouldBeGreaterThanOrEqualTo(1);
+            }
         }
 
         [Fact(DisplayName = "一行不同表行数测试")]

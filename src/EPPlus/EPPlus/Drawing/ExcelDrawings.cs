@@ -353,6 +353,27 @@ namespace OfficeOpenXml.Drawing
         }
 
         /// <summary>
+        /// 从原始字节添加图片，配合 SKCodec 读取的元数据使用
+        /// </summary>
+        public ExcelPicture AddPictureFromBytes(string name, byte[] imageBytes,
+            string contentType, int width, int height)
+        {
+            if (imageBytes == null || imageBytes.Length == 0)
+                throw new ArgumentException("imageBytes 不能为空");
+
+            if (_drawingNames.ContainsKey(name))
+                throw new Exception("Name already exists in the drawings collection");
+
+            XmlElement drawNode = CreateDrawingXml();
+            drawNode.SetAttribute("editAs", "oneCell");
+            ExcelPicture pic = new ExcelPicture(this, drawNode, imageBytes, contentType, width, height);
+            pic.Name = name;
+            _drawings.Add(pic);
+            _drawingNames.Add(name, _drawings.Count - 1);
+            return pic;
+        }
+
+        /// <summary>
         /// Add a picure to the worksheet
         /// </summary>
         /// <param name="Name"></param>

@@ -440,8 +440,10 @@ namespace OfficeOpenXml
                     Packaging.ZipPackagePart imagePart;
                     if (uri == null)
                     {
-                        uri = GetNewUri(Package, "/xl/media/image{0}.jpg");
-                        imagePart = Package.CreatePart(uri, "image/jpeg", CompressionLevel.None);
+                        var effectiveContentType = string.IsNullOrEmpty(contentType) ? "image/jpeg" : contentType;
+                        var extension = GetExtensionFromContentType(effectiveContentType);
+                        uri = GetNewUri(Package, "/xl/media/image{0}" + extension);
+                        imagePart = Package.CreatePart(uri, effectiveContentType, CompressionLevel.None);
                     }
                     else
                     {
@@ -455,6 +457,23 @@ namespace OfficeOpenXml
             }
             return _images[hash];
         }
+
+        /// <summary>
+        /// 根据 content type 返回对应的文件扩展名
+        /// </summary>
+        private static string GetExtensionFromContentType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/png": return ".png";
+                case "image/gif": return ".gif";
+                case "image/bmp": return ".bmp";
+                case "image/webp": return ".webp";
+                case "image/tiff": return ".tiff";
+                default: return ".jpg";
+            }
+        }
+
         internal ImageInfo LoadImage(byte[] image, Uri uri, Packaging.ZipPackagePart imagePart)
         {
 #if (Core)

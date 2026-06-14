@@ -1,44 +1,76 @@
-﻿using System.IO;
+using System.IO;
 using System;
 using System.Net;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Metadata;
 using SkiaSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Advanced;
-using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using Magicodes.IE.EPPlus;
-using SixLabors.ImageSharp.Memory;
-using System.Text.RegularExpressions;
 
 namespace Magicodes.IE.Excel.Images
 {
-    internal static partial class ImageExtensions
+    public static partial class ImageExtensions
     {
-        public static string SaveTo(this Image image, string path)
+        public struct ImageInfo
         {
-            image.Save(path);
-            return path;
-        }
-
-        public static string ToBase64String(this Image image, IImageFormat format)
-        {
-            using (var ms = new MemoryStream())
-            {
-                image.Save(ms, format);
-                ms.Position = 0;
-                var bytes = ms.ToArray();
-                return Convert.ToBase64String(bytes);
-            }
+            public int Width;
+            public int Height;
+            public string ContentType;
         }
 
         /// <summary>
+        /// 通过 SKCodec 读取图片宽高和格式，不解码像素
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="format"></param>
-        /// <returns></returns>
-        public static Image GetImageByUrl(this string url, out IImageFormat format)
+        public static ImageInfo IdentifyImage(byte[] imageBytes)
+        {
+            using var ms = new MemoryStream(imageBytes);
+            using var codec = SKCodec.Create(ms);
+            if (codec == null)
+                throw new InvalidOperationException("无法识别图片格式");
+
+            return new ImageInfo
+            {
+                Width = codec.Info.Width,
+                Height = codec.Info.Height,
+                ContentType = GetContentType(codec.EncodedFormat)
+            };
+        }
+
+        public static byte[] DownloadImageBytes(this string url)
+        {
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            using (var wc = new WebClient())
+            {
+                wc.Proxy = null;
+                return wc.DownloadData(url);
+            }
+        }
+
+        public static byte[] ReadImageBytes(this string filePath)
+        {
+            return File.ReadAllBytes(filePath);
+        }
+
+        public static byte[] DecodeBase64ToBytes(this string base64String)
+        {
+            return Convert.FromBase64String(
+                base64String.Replace("\r", "").Replace("\n", "").Replace(" ", ""));
+        }
+
+        private static string GetContentType(SKEncodedImageFormat format)
+        {
+            switch (format)
+            {
+                case SKEncodedImageFormat.Jpeg: return "image/jpeg";
+                case SKEncodedImageFormat.Png: return "image/png";
+                case SKEncodedImageFormat.Gif: return "image/gif";
+                case SKEncodedImageFormat.Bmp: return "image/bmp";
+                case SKEncodedImageFormat.Webp: return "image/webp";
+                default: return "image/jpeg";
+            }
+        }
+
+        #region 模板导出和图片导入仍在使用，后续统一迁移到 SKCodec
+
+        public static SixLabors.ImageSharp.Image GetImageByUrl(this string url, out SixLabors.ImageSharp.Formats.IImageFormat format)
         {
             if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -53,14 +85,13 @@ namespace Magicodes.IE.Excel.Images
                         webStream.CopyTo(memoryStream);
                         memoryStream.Position = 0;
 
-                        var image = Image.Load(memoryStream);
+                        var image = SixLabors.ImageSharp.Image.Load(memoryStream);
                         format = image.GetImageFormat(memoryStream);
 
-                        // 2025-08-03 SixLabors.ImageSharp在加载某些格式的图片（尤其是 JPEG/PNG）时，如果图片元数据中没有明确指定 DPI 信息，或者元数据格式不符合预期，可能会将 DPI 默认设置为 1
                         if (image.Metadata.HorizontalResolution <= 1 && image.Metadata.VerticalResolution <= 1)
                         {
-                            image.Metadata.HorizontalResolution = ImageMetadata.DefaultHorizontalResolution;
-                            image.Metadata.VerticalResolution = ImageMetadata.DefaultVerticalResolution;
+                            image.Metadata.HorizontalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultHorizontalResolution;
+                            image.Metadata.VerticalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultVerticalResolution;
                         }
                         return image;
                     }
@@ -68,31 +99,42 @@ namespace Magicodes.IE.Excel.Images
             }
         }
 
-        /// <summary>
-        ///     Converts a base64 string to an Image
-        /// </summary>
-        /// <param name="base64String">The base64 string representing the image</param>
-        /// <param name="format">The image format</param>
-        /// <returns>An Image object representing the base64 string</returns>
-        public static Image Base64StringToImage(this string base64String, out IImageFormat format)
+        public static SixLabors.ImageSharp.Image Base64StringToImage(this string base64String, out SixLabors.ImageSharp.Formats.IImageFormat format)
         {
-            byte[] bytes = Convert.FromBase64String(CleanupBase64String(base64String));
+            byte[] bytes = Convert.FromBase64String(
+                base64String.Replace("\r", "").Replace("\n", "").Replace(" ", ""));
             using (MemoryStream stream = new MemoryStream(bytes))
             {
-                Image image = Image.Load(stream);
+                SixLabors.ImageSharp.Image image = SixLabors.ImageSharp.Image.Load(stream);
                 format = image.GetImageFormat(stream);
                 return image;
             }
         }
 
-        /// <summary>
-        ///     Cleans up the base64 string by removing unnecessary characters
-        /// </summary>
-        /// <param name="base64String">The base64 string to clean up</param>
-        /// <returns>A cleaned-up base64 string</returns>
-        private static string CleanupBase64String(string base64String)
+        public static string SaveTo(this SixLabors.ImageSharp.Image image, string path)
         {
-            return Regex.Replace(base64String, @"\s+", string.Empty);
+            using (var ms = new MemoryStream())
+            {
+                var pngFormat = SixLabors.ImageSharp.Formats.Png.PngFormat.Instance;
+                var encoder = image.Configuration.ImageFormatsManager.GetEncoder(pngFormat);
+                image.Save(ms, encoder);
+                ms.Position = 0;
+                File.WriteAllBytes(path, ms.ToArray());
+            }
+            return path;
         }
+
+        public static string ToBase64String(this SixLabors.ImageSharp.Image image, SixLabors.ImageSharp.Formats.IImageFormat format)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var encoder = image.Configuration.ImageFormatsManager.GetEncoder(format);
+                image.Save(ms, encoder);
+                ms.Position = 0;
+                return Convert.ToBase64String(ms.ToArray());
+            }
+        }
+
+        #endregion
     }
 }
