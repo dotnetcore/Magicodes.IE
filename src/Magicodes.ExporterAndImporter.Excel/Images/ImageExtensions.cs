@@ -2,6 +2,7 @@ using System.IO;
 using System;
 using System.Net;
 using SkiaSharp;
+using SixLabors.ImageSharp;
 using Magicodes.IE.EPPlus;
 
 namespace Magicodes.IE.Excel.Images
@@ -15,22 +16,23 @@ namespace Magicodes.IE.Excel.Images
             public string ContentType;
         }
 
-        /// <summary>
-        /// 通过 SKCodec 读取图片宽高和格式，不解码像素
-        /// </summary>
         public static ImageInfo IdentifyImage(byte[] imageBytes)
         {
-            using var ms = new MemoryStream(imageBytes);
-            using var codec = SKCodec.Create(ms);
-            if (codec == null)
-                throw new InvalidOperationException("无法识别图片格式");
-
-            return new ImageInfo
+            using (var ms = new MemoryStream(imageBytes))
             {
-                Width = codec.Info.Width,
-                Height = codec.Info.Height,
-                ContentType = GetContentType(codec.EncodedFormat)
-            };
+                using (var codec = SKCodec.Create(ms))
+                {
+                    if (codec == null)
+                        throw new InvalidOperationException("无法识别图片格式");
+
+                    return new ImageInfo
+                    {
+                        Width = codec.Info.Width,
+                        Height = codec.Info.Height,
+                        ContentType = GetContentType(codec.EncodedFormat)
+                    };
+                }
+            }
         }
 
         public static byte[] DownloadImageBytes(this string url)
@@ -68,7 +70,7 @@ namespace Magicodes.IE.Excel.Images
             }
         }
 
-        #region 模板导出和图片导入仍在使用，后续统一迁移到 SKCodec
+        #region 模板导出和图片导入仍在使用
 
         public static SixLabors.ImageSharp.Image GetImageByUrl(this string url, out SixLabors.ImageSharp.Formats.IImageFormat format)
         {
@@ -113,14 +115,7 @@ namespace Magicodes.IE.Excel.Images
 
         public static string SaveTo(this SixLabors.ImageSharp.Image image, string path)
         {
-            using (var ms = new MemoryStream())
-            {
-                var pngFormat = SixLabors.ImageSharp.Formats.Png.PngFormat.Instance;
-                var encoder = image.Configuration.ImageFormatsManager.GetEncoder(pngFormat);
-                image.Save(ms, encoder);
-                ms.Position = 0;
-                File.WriteAllBytes(path, ms.ToArray());
-            }
+            image.Save(path);
             return path;
         }
 
@@ -128,8 +123,7 @@ namespace Magicodes.IE.Excel.Images
         {
             using (var ms = new MemoryStream())
             {
-                var encoder = image.Configuration.ImageFormatsManager.GetEncoder(format);
-                image.Save(ms, encoder);
+                image.Save(ms, format);
                 ms.Position = 0;
                 return Convert.ToBase64String(ms.ToArray());
             }
