@@ -1050,8 +1050,10 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
 
             import.RowErrors.Count.ShouldBe(2);
-            import.RowErrors[0].FieldErrors.Any(p => p.Value.Contains("不存在模板下拉选项中")).ShouldBeTrue();
-            // RowErrors[1] 的错误消息可能不同，只验证存在错误
+            // Linux 下错误消息为英文，Windows 下为中文
+            import.RowErrors[0].FieldErrors.Any(p =>
+                p.Value.Contains("不存在模板下拉选项中") ||
+                p.Value.Contains("There is no template drop-down option")).ShouldBeTrue();
             import.RowErrors[1].FieldErrors.Count.ShouldBeGreaterThan(0);
 
             import.HasError.ShouldBeTrue();
