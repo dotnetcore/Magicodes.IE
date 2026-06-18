@@ -1,6 +1,6 @@
 using System.IO;
 using System;
-using System.Net;
+using System.Net.Http;
 using SkiaSharp;
 using SixLabors.ImageSharp;
 using Magicodes.IE.EPPlus;
@@ -9,6 +9,11 @@ namespace Magicodes.IE.Excel.Images
 {
     public static partial class ImageExtensions
     {
+        private static readonly HttpClient _httpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(30)
+        };
+
         public struct ImageInfo
         {
             public int Width;
@@ -37,13 +42,7 @@ namespace Magicodes.IE.Excel.Images
 
         public static byte[] DownloadImageBytes(this string url)
         {
-            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            using (var wc = new WebClient())
-            {
-                wc.Proxy = null;
-                return wc.DownloadData(url);
-            }
+            return _httpClient.GetByteArrayAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public static byte[] ReadImageBytes(this string filePath)
@@ -74,29 +73,22 @@ namespace Magicodes.IE.Excel.Images
 
         public static SixLabors.ImageSharp.Image GetImageByUrl(this string url, out SixLabors.ImageSharp.Formats.IImageFormat format)
         {
-            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            using (var wc = new WebClient())
+            using (Stream webStream = _httpClient.GetStreamAsync(url).ConfigureAwait(false).GetAwaiter().GetResult())
             {
-                wc.Proxy = null;
-                using (Stream webStream = wc.OpenRead(url))
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    webStream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+
+                    var image = SixLabors.ImageSharp.Image.Load(memoryStream);
+                    format = image.GetImageFormat(memoryStream);
+
+                    if (image.Metadata.HorizontalResolution <= 1 && image.Metadata.VerticalResolution <= 1)
                     {
-                        webStream.CopyTo(memoryStream);
-                        memoryStream.Position = 0;
-
-                        var image = SixLabors.ImageSharp.Image.Load(memoryStream);
-                        format = image.GetImageFormat(memoryStream);
-
-                        if (image.Metadata.HorizontalResolution <= 1 && image.Metadata.VerticalResolution <= 1)
-                        {
-                            image.Metadata.HorizontalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultHorizontalResolution;
-                            image.Metadata.VerticalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultVerticalResolution;
-                        }
-                        return image;
+                        image.Metadata.HorizontalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultHorizontalResolution;
+                        image.Metadata.VerticalResolution = SixLabors.ImageSharp.Metadata.ImageMetadata.DefaultVerticalResolution;
                     }
+                    return image;
                 }
             }
         }

@@ -999,5 +999,336 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         #endregion
+
+        #region 12. 三个及以上表格
+
+        public class ThreeTableItem
+        {
+            public string Name { get; set; }
+            public int Value { get; set; }
+        }
+
+        public class ThreeTableDto
+        {
+            public string Title { get; set; }
+            public List<OrderItem> TableA { get; set; }
+            public List<OrderLog> TableB { get; set; }
+            public List<ThreeTableItem> TableC { get; set; }
+            public string Footer { get; set; }
+        }
+
+        private string CreateThreeTableMultiTemplate()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_3Tbl_{Guid.NewGuid():N}.xlsx");
+            using (var package = new ExcelPackage())
+            {
+                var sheet = package.Workbook.Worksheets.Add("Sheet1");
+                sheet.Cells[1, 1].Value = "{{Title}}";
+                sheet.Cells[2, 1].Value = "{{Table>>TableA|ProductName}}";
+                sheet.Cells[2, 2].Value = "{{Quantity}}";
+                sheet.Cells[2, 3].Value = "{{Price|>>Table}}";
+                sheet.Cells[3, 1].Value = "{{Table>>TableB|Action}}";
+                sheet.Cells[3, 2].Value = "{{Operator}}";
+                sheet.Cells[3, 3].Value = "{{Time|>>Table}}";
+                sheet.Cells[4, 1].Value = "{{Table>>TableC|Name}}";
+                sheet.Cells[4, 2].Value = "{{Value|>>Table}}";
+                sheet.Cells[5, 1].Value = "{{Footer}}";
+                package.SaveAs(new FileInfo(path));
+            }
+            return path;
+        }
+
+        private static List<ThreeTableItem> CreateThreeTableItems(int count)
+        {
+            var items = new List<ThreeTableItem>();
+            for (int i = 1; i <= count; i++)
+                items.Add(new ThreeTableItem { Name = $"Item{i}", Value = i * 100 });
+            return items;
+        }
+
+        [Theory(DisplayName = "#617 三个表格不同行-各种数据量导出正确")]
+        [InlineData(1, 1, 1)]
+        [InlineData(2, 3, 1)]
+        [InlineData(5, 2, 4)]
+        [InlineData(3, 5, 2)]
+        public async Task ThreeTables_DifferentRows_VariousCounts_ShouldExportCorrectly(int a, int b, int c)
+        {
+            var tplPath = CreateThreeTableMultiTemplate();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_3Tbl_{a}_{b}_{c}.xlsx");
+            try
+            {
+                IExportFileByTemplate exporter = new ExcelExporter();
+                var data = new ThreeTableDto
+                {
+                    Title = "3-Table Report",
+                    TableA = CreateOrderItems(a),
+                    TableB = CreateOrderLogs(b),
+                    TableC = CreateThreeTableItems(c),
+                    Footer = "EOF"
+                };
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+
+                using (var pck = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    var sheet = pck.Workbook.Worksheets.First();
+                    sheet.Cells[1, 1].Text.ShouldBe("3-Table Report");
+
+                    // TableA starts Row 2
+                    sheet.Cells[2, 1].Text.ShouldBe("Product1");
+                    if (a > 1) sheet.Cells[a + 1, 1].Text.ShouldBe($"Product{a}");
+
+                    // TableB after TableA
+                    var bStart = a + 2;
+                    sheet.Cells[bStart, 1].Text.ShouldBe("Action1");
+                    if (b > 1) sheet.Cells[bStart + b - 1, 1].Text.ShouldBe($"Action{b}");
+
+                    // TableC after TableB
+                    var cStart = bStart + b;
+                    sheet.Cells[cStart, 1].Text.ShouldBe("Item1");
+                    sheet.Cells[cStart, 2].Text.ShouldBe("100");
+                    if (c > 1) sheet.Cells[cStart + c - 1, 1].Text.ShouldBe($"Item{c}");
+
+                    // Footer
+                    sheet.Cells[cStart + c, 1].Text.ShouldBe("EOF");
+                }
+            }
+            finally
+            {
+                CleanupFile(tplPath);
+                CleanupFile(filePath);
+            }
+        }
+
+        [Fact(DisplayName = "#617 三个表格-中间为空不崩溃")]
+        public async Task ThreeTables_MiddleEmpty_ShouldNotCrash()
+        {
+            var tplPath = CreateThreeTableMultiTemplate();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Issue617_3Tbl_MidEmpty.xlsx");
+            try
+            {
+                IExportFileByTemplate exporter = new ExcelExporter();
+                var data = new ThreeTableDto
+                {
+                    Title = "Middle Empty",
+                    TableA = CreateOrderItems(3),
+                    TableB = new List<OrderLog>(),
+                    TableC = CreateThreeTableItems(2),
+                    Footer = "EOF"
+                };
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+
+                using (var pck = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    var sheet = pck.Workbook.Worksheets.First();
+                    sheet.Cells[1, 1].Text.ShouldBe("Middle Empty");
+                    // TableA: Row 2-4
+                    sheet.Cells[2, 1].Text.ShouldBe("Product1");
+                    sheet.Cells[4, 1].Text.ShouldBe("Product3");
+                    // TableB empty → TableC follows at Row 6
+                    sheet.Cells[6, 1].Text.ShouldBe("Item1");
+                    sheet.Cells[7, 1].Text.ShouldBe("Item2");
+                    sheet.Cells[8, 1].Text.ShouldBe("EOF");
+                }
+            }
+            finally
+            {
+                CleanupFile(tplPath);
+                CleanupFile(filePath);
+            }
+        }
+
+        #endregion
+
+        #region 13. 不同列数表格混合
+
+        public class MixedColDto
+        {
+            public string Title { get; set; }
+            public List<OrderItem> WideTable { get; set; }   // 3 columns
+            public List<ThreeTableItem> NarrowTable { get; set; } // 2 columns
+            public string Summary { get; set; }
+        }
+
+        private string CreateMixedColTemplate()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_MixCol_{Guid.NewGuid():N}.xlsx");
+            using (var package = new ExcelPackage())
+            {
+                var sheet = package.Workbook.Worksheets.Add("Sheet1");
+                sheet.Cells[1, 1].Value = "{{Title}}";
+                // 3-column table
+                sheet.Cells[2, 1].Value = "{{Table>>WideTable|ProductName}}";
+                sheet.Cells[2, 2].Value = "{{Quantity}}";
+                sheet.Cells[2, 3].Value = "{{Price|>>Table}}";
+                // 2-column table starting at col D (offset)
+                sheet.Cells[3, 1].Value = "{{Table>>NarrowTable|Name}}";
+                sheet.Cells[3, 2].Value = "{{Value|>>Table}}";
+                sheet.Cells[4, 1].Value = "{{Summary}}";
+                package.SaveAs(new FileInfo(path));
+            }
+            return path;
+        }
+
+        [Theory(DisplayName = "#617 不同列数表格混合-导出正确")]
+        [InlineData(3, 2)]
+        [InlineData(5, 5)]
+        [InlineData(1, 5)]
+        [InlineData(5, 1)]
+        public async Task MixedColumnCounts_DifferentSizes_ShouldExportCorrectly(int wideCount, int narrowCount)
+        {
+            var tplPath = CreateMixedColTemplate();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_MixCol_{wideCount}_{narrowCount}.xlsx");
+            try
+            {
+                IExportFileByTemplate exporter = new ExcelExporter();
+                var data = new MixedColDto
+                {
+                    Title = "Mixed Columns",
+                    WideTable = CreateOrderItems(wideCount),
+                    NarrowTable = CreateThreeTableItems(narrowCount),
+                    Summary = "Done"
+                };
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+
+                using (var pck = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    var sheet = pck.Workbook.Worksheets.First();
+                    sheet.Cells[1, 1].Text.ShouldBe("Mixed Columns");
+
+                    // WideTable (3 cols): Row 2+
+                    sheet.Cells[2, 1].Text.ShouldBe("Product1");
+                    sheet.Cells[2, 2].Text.ShouldBe("10");
+                    sheet.Cells[2, 3].Text.ShouldBe("99.5");
+                    if (wideCount > 1)
+                        sheet.Cells[wideCount + 1, 3].Text.ShouldBe($"{wideCount * 99.5m}");
+
+                    // NarrowTable (2 cols): after WideTable
+                    var nStart = wideCount + 2;
+                    sheet.Cells[nStart, 1].Text.ShouldBe("Item1");
+                    sheet.Cells[nStart, 2].Text.ShouldBe("100");
+                    if (narrowCount > 1)
+                        sheet.Cells[nStart + narrowCount - 1, 1].Text.ShouldBe($"Item{narrowCount}");
+
+                    // Summary
+                    sheet.Cells[nStart + narrowCount, 1].Text.ShouldBe("Done");
+                }
+            }
+            finally
+            {
+                CleanupFile(tplPath);
+                CleanupFile(filePath);
+            }
+        }
+
+        #endregion
+
+        #region 14. 多 Sheet 表格导出
+
+        public class MultiSheetDto
+        {
+            public string Title { get; set; }
+            public List<OrderItem> Sheet1Items { get; set; }
+            public List<OrderLog> Sheet2Items { get; set; }
+        }
+
+        private string CreateMultiSheetTemplate()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_MultiSht_{Guid.NewGuid():N}.xlsx");
+            using (var package = new ExcelPackage())
+            {
+                var sheet1 = package.Workbook.Worksheets.Add("Orders");
+                sheet1.Cells[1, 1].Value = "{{Title}}";
+                sheet1.Cells[2, 1].Value = "{{Table>>Sheet1Items|ProductName}}";
+                sheet1.Cells[2, 2].Value = "{{Quantity}}";
+                sheet1.Cells[2, 3].Value = "{{Price|>>Table}}";
+
+                var sheet2 = package.Workbook.Worksheets.Add("Logs");
+                sheet2.Cells[1, 1].Value = "{{Table>>Sheet2Items|Action}}";
+                sheet2.Cells[1, 2].Value = "{{Operator}}";
+                sheet2.Cells[1, 3].Value = "{{Time|>>Table}}";
+
+                package.SaveAs(new FileInfo(path));
+            }
+            return path;
+        }
+
+        [Theory(DisplayName = "#617 多Sheet表格-各Sheet独立导出正确")]
+        [InlineData(3, 2)]
+        [InlineData(5, 5)]
+        [InlineData(1, 5)]
+        public async Task MultiSheet_DifferentData_ShouldExportCorrectly(int sheet1Count, int sheet2Count)
+        {
+            var tplPath = CreateMultiSheetTemplate();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), $"Issue617_MultiSht_{sheet1Count}_{sheet2Count}.xlsx");
+            try
+            {
+                IExportFileByTemplate exporter = new ExcelExporter();
+                var data = new MultiSheetDto
+                {
+                    Title = "Multi-Sheet",
+                    Sheet1Items = CreateOrderItems(sheet1Count),
+                    Sheet2Items = CreateOrderLogs(sheet2Count)
+                };
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+
+                using (var pck = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    // Sheet 1
+                    var s1 = pck.Workbook.Worksheets["Orders"];
+                    s1.ShouldNotBeNull();
+                    s1.Cells[1, 1].Text.ShouldBe("Multi-Sheet");
+                    s1.Cells[2, 1].Text.ShouldBe("Product1");
+                    if (sheet1Count > 1)
+                        s1.Cells[sheet1Count + 1, 1].Text.ShouldBe($"Product{sheet1Count}");
+
+                    // Sheet 2
+                    var s2 = pck.Workbook.Worksheets["Logs"];
+                    s2.ShouldNotBeNull();
+                    s2.Cells[1, 1].Text.ShouldBe("Action1");
+                    if (sheet2Count > 1)
+                        s2.Cells[sheet2Count, 1].Text.ShouldBe($"Action{sheet2Count}");
+                }
+            }
+            finally
+            {
+                CleanupFile(tplPath);
+                CleanupFile(filePath);
+            }
+        }
+
+        [Fact(DisplayName = "#617 多Sheet-一个Sheet为空不崩溃")]
+        public async Task MultiSheet_OneSheetEmpty_ShouldNotCrash()
+        {
+            var tplPath = CreateMultiSheetTemplate();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Issue617_MultiSht_Empty.xlsx");
+            try
+            {
+                IExportFileByTemplate exporter = new ExcelExporter();
+                var data = new MultiSheetDto
+                {
+                    Title = "One Empty",
+                    Sheet1Items = new List<OrderItem>(),
+                    Sheet2Items = CreateOrderLogs(3)
+                };
+                await exporter.ExportByTemplate(filePath, data, tplPath);
+
+                using (var pck = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    var s1 = pck.Workbook.Worksheets["Orders"];
+                    s1.Cells[1, 1].Text.ShouldBe("One Empty");
+
+                    var s2 = pck.Workbook.Worksheets["Logs"];
+                    s2.Cells[1, 1].Text.ShouldBe("Action1");
+                    s2.Cells[3, 1].Text.ShouldBe("Action3");
+                }
+            }
+            finally
+            {
+                CleanupFile(tplPath);
+                CleanupFile(filePath);
+            }
+        }
+
+        #endregion
     }
 }

@@ -15,7 +15,6 @@ using System.ComponentModel.DataAnnotations;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Pdf;
-using WkHtmlToPdfDotNet;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
@@ -25,7 +24,7 @@ namespace Magicodes.ExporterAndImporter.Tests.Models.Export
     /// </summary>
     [ExcelExporter(Name = "通用导出测试", Author = "雪雁", AutoFitMaxRows = 5000)]
     [ExcelImporter(MaxCount = 50000)]
-    [PdfExporter(Orientation = Orientation.Landscape, PaperKind = PaperKind.A4, IsWriteHtml = true, IsEnablePagesCount = false)]
+    [PdfExporter(PageOrientation = PdfOrientation.Landscape, PageSizeName = "A4", IsWriteHtml = true, IsEnablePagesCount = false)]
     public class ExportTestData
     {
         /// <summary>

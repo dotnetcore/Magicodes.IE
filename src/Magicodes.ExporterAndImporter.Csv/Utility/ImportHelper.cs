@@ -71,6 +71,8 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Context.RegisterClassMap<AutoMap<T>>();
+                    // Map empty CSV cells to null for all types (not empty string)
+                    csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
                     var result = csv.GetRecords<T>();
                     ImportResult.Data = result.ToList();
                     return Task.FromResult(ImportResult);

@@ -132,6 +132,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         private List<int> EmptyRows { get; } = new List<int>();
 
         /// <summary>
+        ///     Data 索引 → 实际 Excel 行号映射（用于验证阶段正确报告行号）
+        /// </summary>
+        private List<int> DataRowIndices { get; } = new List<int>();
+
+        /// <summary>
         /// </summary>
         public void Dispose()
         {
@@ -141,6 +146,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImportResult = null;
             Stream = null;
             dicMergePreValues = null;
+            DataRowIndices.Clear();
             GC.Collect();
         }
 
@@ -152,6 +158,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
         {
             if (!string.IsNullOrWhiteSpace(filePath)) FilePath = filePath;
             ImportResult = new ImportResult<T>();
+            DataRowIndices.Clear();
             try
             {
                 if (Stream == null)
@@ -188,7 +195,9 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                 out var validationResults);
                             if (!isValid)
                             {
-                                var rowIndex = ExcelImporterSettings.HeaderRowIndex + i + 1;
+                                var rowIndex = i < DataRowIndices.Count
+                                    ? DataRowIndices[i]
+                                    : ExcelImporterSettings.HeaderRowIndex + i + 1;
                                 var dataRowError = GetDataRowErrorInfo(rowIndex);
                                 foreach (var validationResult in validationResults)
                                 {
@@ -1491,6 +1500,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     break;
 
+                                case "DateOnly":
+                                case "Nullable<DateOnly>":
+                                    HandleDateOnlyType(cell, dataItem, propertyInfo, rowIndex, col, cellValue,
+                                        propertyInfo.PropertyType.GetCSharpTypeName());
+                                    break;
+
                                 case "TimeSpan":
                                     {
                                         if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
@@ -1628,6 +1643,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
 
                     ImportResult.Data.Add(dataItem);
+                    DataRowIndices.Add(rowIndex);
                 }
             }
         }
@@ -1986,6 +2002,12 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                                     }
                                     break;
 
+                                case "DateOnly":
+                                case "Nullable<DateOnly>":
+                                    HandleDateOnlyType(cell, dataItem, propertyInfo, rowIndex, col, cellValue,
+                                        propertyInfo.PropertyType.GetCSharpTypeName());
+                                    break;
+
                                 case "TimeSpan":
                                     {
                                         if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
@@ -2246,5 +2268,52 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 return false;
             }
         }
+
+#if NET6_0_OR_GREATER
+        private void HandleDateOnlyType(ExcelRange cell, T dataItem, PropertyInfo propertyInfo,
+            int rowIndex, ImporterHeaderInfo col, string cellValue, string typeName)
+        {
+            if (typeName == "DateOnly")
+            {
+                if (cell.Value == null || cell.Text.IsNullOrWhiteSpace())
+                {
+                    AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
+                    return;
+                }
+                try
+                {
+                    var date = cell.GetValue<DateTime>();
+                    SetValue(cell, dataItem, propertyInfo, DateOnly.FromDateTime(date));
+                }
+                catch (Exception)
+                {
+                    AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
+                }
+            }
+            else // Nullable<DateOnly>
+            {
+                if (string.IsNullOrWhiteSpace(cell.Text))
+                {
+                    SetValue(cell, dataItem, propertyInfo, null);
+                    return;
+                }
+                try
+                {
+                    var date = cell.GetValue<DateTime>();
+                    SetValue(cell, dataItem, propertyInfo, (DateOnly?)DateOnly.FromDateTime(date));
+                }
+                catch (Exception)
+                {
+                    AddRowDataError(rowIndex, col, $"{Resource.Value} {cell.Value} {Resource.PleaseFillInTheCorrectDateAndTimeFormat}");
+                }
+            }
+        }
+#else
+        private void HandleDateOnlyType(ExcelRange cell, T dataItem, PropertyInfo propertyInfo,
+            int rowIndex, ImporterHeaderInfo col, string cellValue, string typeName)
+        {
+            AddRowDataError(rowIndex, col, "DateOnly is not supported on this target framework.");
+        }
+#endif
     }
 }

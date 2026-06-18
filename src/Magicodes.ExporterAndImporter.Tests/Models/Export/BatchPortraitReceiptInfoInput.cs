@@ -13,14 +13,13 @@
 
 using System.Collections.Generic;
 using Magicodes.ExporterAndImporter.Pdf;
-using WkHtmlToPdfDotNet;
 
 namespace Magicodes.ExporterAndImporter.Tests.Models.Export
 {
     /// <summary>
     ///     批量
     /// </summary>
-    [PdfExporter(Orientation = Orientation.Portrait, PaperKind = PaperKind.A4)]
+    [PdfExporter(PageOrientation = PdfOrientation.Portrait, PageSizeName = "A4")]
     public class BatchPortraitReceiptInfoInput
     {
         /// <summary>

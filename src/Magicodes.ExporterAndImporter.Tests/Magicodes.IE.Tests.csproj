@@ -16,6 +16,8 @@
 		</PackageReference>
 		<PackageReference Include="GenFu" Version="1.6.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+		<!-- 覆盖 Microsoft.Extensions.DependencyModel 传递依赖的易受攻击版本 (9.0.1) -->
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="xunit" Version="2.4.2" />
 		<PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -29,11 +31,6 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup Condition=" $(TargetFramework.Contains('netcoreapp3.')) ">
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Moq" Version="4.16.1" />
-		<ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
-	</ItemGroup>
 	<ItemGroup Condition=" $(TargetFramework.Contains('net6.')) or $(TargetFramework.Contains('net8.')) or $(TargetFramework.Contains('net9.')) or $(TargetFramework.Contains('net10.'))">
 		<ProjectReference Include="..\MagicodesWebSite\MagicodesWebSite.csproj" />
 		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.3" />
