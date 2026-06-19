@@ -423,12 +423,15 @@ namespace OfficeOpenXml
         }
         internal ImageInfo AddImage(byte[] image, Uri uri, string contentType)
         {
-#if (Core)
-            var hashProvider = SHA1.Create();
+#if NET5_0_OR_GREATER
+            var hash = Convert.ToHexString(SHA1.HashData(image));
 #else
-            var hashProvider = new SHA1CryptoServiceProvider();
+            string hash;
+            using (var hashProvider = SHA1.Create())
+            {
+                hash = BitConverter.ToString(hashProvider.ComputeHash(image)).Replace("-", string.Empty);
+            }
 #endif
-            var hash = BitConverter.ToString(hashProvider.ComputeHash(image)).Replace("-", "");
             lock (_images)
             {
                 if (_images.ContainsKey(hash))
