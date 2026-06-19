@@ -425,5 +425,225 @@ namespace Magicodes.ExporterAndImporter.Tests
         }
 
         #endregion
+
+        #region 图片导出性能基准测试
+
+        /// <summary>
+        ///     测试使用的图片资源（绝对路径）。
+        ///     覆盖多种格式、不同尺寸、不同文件大小，用于模拟真实场景。
+        /// </summary>
+        private static readonly string[] TestImagePaths = new[]
+        {
+            Path.Combine("TestFiles", "ExporterTest.png"),
+            Path.Combine("TestFiles", "Images", "1.Jpeg"),
+            Path.Combine("TestFiles", "Images", "2.Jpeg"),
+            Path.Combine("TestFiles", "Images", "3.Jpeg"),
+            Path.Combine("TestFiles", "Images", "4.Jpeg"),
+            Path.Combine("TestFiles", "Images", "zero-DPI.Jpeg"),
+        };
+
+        /// <summary>
+        ///     为每行数据分配图片：奇数行 Img1 / Img 使用不同图片，偶数行使用同一图片，
+        ///     用于同时测试去重缓存命中与多源图片加载。
+        /// </summary>
+        private static void SeedImages(System.Collections.Generic.IList<ExportTestDataWithPicture> data, string[] imagePool)
+        {
+            for (int i = 0; i < data.Count; i++)
+            {
+                var img1 = imagePool[i % imagePool.Length];
+                var img = imagePool[(i / 2) % imagePool.Length];
+                data[i].Img1 = img1;
+                data[i].Img = img;
+            }
+        }
+
+        [Fact(DisplayName = "图片导出性能-500行双图片导出耗时测量")]
+        public async Task ExportPicture_Performance_500Rows_DoubleImages()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Performance_500Rows_DoubleImages)}.xlsx");
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(500);
+            var imagePath = Path.Combine("TestFiles", "ExporterTest.png");
+            foreach (var item in data)
+            {
+                item.Img1 = imagePath;
+                item.Img = imagePath;
+            }
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var result = await exporter.Export(filePath, data);
+            sw.Stop();
+
+            result.ShouldNotBeNull();
+            new FileInfo(filePath).Exists.ShouldBeTrue();
+
+            var fileSizeKB = new FileInfo(filePath).Length / 1024.0;
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                // 500 行 × 2 列 = 1000 个 drawing
+                sheet.Drawings.Count.ShouldBe(1000);
+                sheet.Dimension.Rows.ShouldBe(501); // 1 header + 500 data
+
+                _output.WriteLine($"✅ 导出完成");
+                _output.WriteLine($"   行数: 500 × 2 列图片 = 1000 个 Drawing");
+                _output.WriteLine($"   耗时: {sw.ElapsedMilliseconds} ms ({sw.Elapsed.TotalSeconds:F1} s)");
+                _output.WriteLine($"   文件大小: {fileSizeKB:F1} KB");
+                _output.WriteLine($"   平均每行: {sw.ElapsedMilliseconds / 500.0:F1} ms/行");
+                _output.WriteLine($"   图片去重: 500 行共用同一图片文件（测试去重逻辑）");
+            }
+        }
+
+        [Fact(DisplayName = "图片导出性能-2000行双图片导出耗时测量")]
+        public async Task ExportPicture_Performance_2000Rows_DoubleImages()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Performance_2000Rows_DoubleImages)}.xlsx");
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(2000);
+            var imagePath = Path.Combine("TestFiles", "ExporterTest.png");
+            foreach (var item in data)
+            {
+                item.Img1 = imagePath;
+                item.Img = imagePath;
+            }
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var result = await exporter.Export(filePath, data);
+            sw.Stop();
+
+            result.ShouldNotBeNull();
+
+            var fileSizeKB = new FileInfo(filePath).Length / 1024.0;
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Drawings.Count.ShouldBe(4000);
+                sheet.Dimension.Rows.ShouldBe(2001); // 1 header + 2000 data
+
+                _output.WriteLine($"✅ 导出完成");
+                _output.WriteLine($"   行数: 2000 × 2 列图片 = 4000 个 Drawing");
+                _output.WriteLine($"   耗时: {sw.ElapsedMilliseconds} ms ({sw.Elapsed.TotalSeconds:F1} s)");
+                _output.WriteLine($"   文件大小: {fileSizeKB:F1} KB");
+                _output.WriteLine($"   平均每行: {sw.ElapsedMilliseconds / 2000.0:F1} ms/行");
+                _output.WriteLine($"   图片去重: 2000 行共用同一图片文件（测试去重逻辑）");
+            }
+        }
+
+        [Fact(DisplayName = "图片导出压力测试-1000行双图片")]
+        public async Task ExportPicture_Stress_1000Rows_DoubleImages()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Stress_1000Rows_DoubleImages)}.xlsx");
+            DeleteFile(filePath);
+
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(1000);
+            var imagePath = Path.Combine("TestFiles", "ExporterTest.png");
+            foreach (var item in data)
+            {
+                item.Img1 = imagePath;
+                item.Img = imagePath;
+            }
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var result = await exporter.Export(filePath, data);
+            sw.Stop();
+
+            result.ShouldNotBeNull();
+
+            var fileSizeKB = new FileInfo(filePath).Length / 1024.0;
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+                sheet.Drawings.Count.ShouldBe(2000);
+                sheet.Dimension.Rows.ShouldBe(1001); // 1 header + 1000 data
+
+                _output.WriteLine($"✅ 1000 行压力测试完成");
+                _output.WriteLine($"   行数: 1000 × 2 列图片 = 2000 个 Drawing");
+                _output.WriteLine($"   耗时: {sw.ElapsedMilliseconds} ms ({sw.Elapsed.TotalSeconds:F1} s)");
+                _output.WriteLine($"   文件大小: {fileSizeKB:F1} KB");
+                _output.WriteLine($"   平均每行: {sw.ElapsedMilliseconds / 1000.0:F2} ms/行");
+            }
+        }
+
+        [Fact(DisplayName = "图片导出压力测试-1000行多图混排（PNG/JPEG混排 + 部分无效URL）")]
+        public async Task ExportPicture_Stress_1000Rows_MultiImageMix()
+        {
+            IExporter exporter = new ExcelExporter();
+            var filePath = GetTestFilePath($"{nameof(ExportPicture_Stress_1000Rows_MultiImageMix)}.xlsx");
+            DeleteFile(filePath);
+
+            // 1000 行数据，列 Img1/Img 使用 6 张图片轮询，模拟多图混排
+            var data = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(1000);
+            SeedImages(data, TestImagePaths);
+
+            // 在末尾追加 50 行混合有效/无效/Base64/空值的情况，覆盖所有图片加载分支
+            var boundary = GenFu.GenFu.ListOf<ExportTestDataWithPicture>(50);
+            var pngBytes = File.ReadAllBytes(Path.Combine("TestFiles", "ExporterTest.png"));
+            var pngBase64 = Convert.ToBase64String(pngBytes);
+            for (int i = 0; i < boundary.Count; i++)
+            {
+                switch (i % 5)
+                {
+                    case 0: // 有效本地图片
+                        boundary[i].Img1 = TestImagePaths[i % TestImagePaths.Length];
+                        boundary[i].Img = TestImagePaths[(i + 1) % TestImagePaths.Length];
+                        break;
+                    case 1: // 无效 URL（Alt 文本兜底）
+                        boundary[i].Img1 = $"missing-{i}.jpg";
+                        boundary[i].Img = TestImagePaths[i % TestImagePaths.Length];
+                        break;
+                    case 2: // Base64
+                        boundary[i].Img1 = pngBase64;
+                        boundary[i].Img = null;
+                        break;
+                    case 3: // null（占位行）
+                        boundary[i].Img1 = null;
+                        boundary[i].Img = null;
+                        break;
+                    case 4: // 只填 Img
+                        boundary[i].Img1 = null;
+                        boundary[i].Img = TestImagePaths[i % TestImagePaths.Length];
+                        break;
+                }
+            }
+            foreach (var item in boundary) data.Add(item);
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var result = await exporter.Export(filePath, data);
+            sw.Stop();
+
+            result.ShouldNotBeNull();
+            new FileInfo(filePath).Exists.ShouldBeTrue();
+
+            var fileSizeKB = new FileInfo(filePath).Length / 1024.0;
+
+            using (var pck = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var sheet = pck.Workbook.Worksheets.First();
+
+                // 1000 行每行 2 列 + 边界 50 行每行 1~2 列 = 2000 + 60 = 2060 个 drawing
+                // 边界中 60% 行有 Img1、80% 行有 Img
+                var expectedMin = 1000 * 2 + 50; // 最坏情况：边界行每行至少 1 张图
+                sheet.Drawings.Count.ShouldBeGreaterThanOrEqualTo(expectedMin);
+                sheet.Dimension.Rows.ShouldBe(1051); // 1 header + 1050 data
+
+                _output.WriteLine($"✅ 多图混排压力测试完成");
+                _output.WriteLine($"   数据行: 1050（1000 多图轮询 + 50 边界混合）");
+                _output.WriteLine($"   Drawing 数量: {sheet.Drawings.Count}");
+                _output.WriteLine($"   耗时: {sw.ElapsedMilliseconds} ms ({sw.Elapsed.TotalSeconds:F1} s)");
+                _output.WriteLine($"   文件大小: {fileSizeKB:F1} KB");
+                _output.WriteLine($"   平均每行: {sw.ElapsedMilliseconds / 1050.0:F2} ms/行");
+                _output.WriteLine($"   图片源: {TestImagePaths.Length} 个本地图片循环 + Base64 + 失效 URL 兜底");
+            }
+        }
+
+        #endregion
     }
 }
