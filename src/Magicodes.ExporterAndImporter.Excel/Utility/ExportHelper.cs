@@ -919,6 +919,20 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             if (imageUrls.Count == 0)
                 return;
 
+            // 预分配 EPPlus 内部 drawings 容器容量
+            var imageColCount = 0;
+            for (var c = 0; c < ExporterHeaderList.Count; c++)
+            {
+                if (ExporterHeaderList[c].ExportImageFieldAttribute != null)
+                    imageColCount++;
+            }
+            CurrentExcelWorksheet.Drawings.Preallocate(imageUrls.Count * rowCount * Math.Max(imageColCount, 1));
+
+            // 关闭 Row.Height 触发的 drawings 重算(EditAs=OneCell 不依赖 row height 重定位)
+            var package = CurrentExcelPackage;
+            var prevDoAdjust = package.DoAdjustDrawings;
+            package.DoAdjustDrawings = false;
+
             // 并行加载图片
             var imageCache = new System.Collections.Concurrent.ConcurrentDictionary<string, (byte[] bytes, Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo meta)>();
             System.Threading.Tasks.Parallel.ForEach(imageUrls, url =>
@@ -993,6 +1007,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                 }
             }
+            package.DoAdjustDrawings = prevDoAdjust;
         }
 
         internal static void AddImage(int rowIndex, int colIndex, ExcelPicture picture, int yOffset, int xOffset)
