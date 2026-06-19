@@ -183,7 +183,8 @@ namespace OfficeOpenXml.Drawing
         const float STANDARD_DPI = 96;
         public const int EMU_PER_PIXEL = 9525;
         protected internal int _width = int.MinValue, _height = int.MinValue, _top = int.MinValue, _left = int.MinValue;
-        bool _doNotAdjust = false;
+        // Subclasses (e.g. ExcelPicture ctor) set this to skip GetPositionSize side effects.
+        protected internal bool _doNotAdjust = false;
         internal ExcelDrawing(ExcelDrawings drawings, XmlNode node, string nameXPath) :
             base(drawings.NameSpaceManager, node)
         {
@@ -204,7 +205,13 @@ namespace OfficeOpenXml.Drawing
             {
                 To = null;
             }
-            GetPositionSize();
+            // Skip the initial GetPositionSize for newly-created nodes — they have no
+            // xdr:from/xdr:to yet, so it would compute zeroed-out values. Reload path
+            // (nodes from existing xml) still calls it to populate position fields.
+            if (_topNode != null && _topNode.SelectSingleNode("xdr:from", drawings.NameSpaceManager) != null)
+            {
+                GetPositionSize();
+            }
             _nameXPath = nameXPath;
             SchemaNodeOrder = new string[] { "from", "to", "graphicFrame", "sp", "clientData" };
         }

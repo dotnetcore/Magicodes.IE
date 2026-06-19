@@ -173,6 +173,8 @@ namespace OfficeOpenXml.Drawing
             byte[] imageBytes, string contentType, int width, int height)
             : base(drawings, node, "xdr:pic/xdr:nvPicPr/xdr:cNvPr/@name")
         {
+            // Caller already knows width/height — defer GetPositionSize until From/To are set.
+            _doNotAdjust = true;
             XmlElement picNode = node.OwnerDocument.CreateElement("xdr", "pic", ExcelPackage.schemaSheetDrawings);
             node.InsertAfter(picNode, node.SelectSingleNode("xdr:to", NameSpaceManager));
             _hyperlink = null;

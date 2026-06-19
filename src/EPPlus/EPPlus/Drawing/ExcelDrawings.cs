@@ -51,6 +51,8 @@ namespace OfficeOpenXml.Drawing
         private XmlDocument _drawingsXml = new XmlDocument();
         private Dictionary<string, int> _drawingNames;
         private List<ExcelDrawing> _drawings;
+        // Cached //xdr:wsDr lookup; see WsDrNode getter for invalidation rules.
+        private XmlNode _wsDrNode;
 
         internal class ImageCompare
         {
@@ -104,6 +106,29 @@ namespace OfficeOpenXml.Drawing
         }
 
         internal ExcelWorksheet Worksheet { get; set; }
+
+        /// <summary>
+        /// Pre-allocate capacity for the drawings collections. Call before adding many drawings
+        /// to skip repeated dictionary/list resizing.
+        /// </summary>
+        /// <param name="estimatedCount">Expected total number of drawings to be added.</param>
+        public void Preallocate(int estimatedCount)
+        {
+            if (estimatedCount <= 0) return;
+            if (_drawingNames == null)
+            {
+                _drawingNames = new Dictionary<string, int>(estimatedCount, StringComparer.OrdinalIgnoreCase);
+                _drawings = new List<ExcelDrawing>(estimatedCount);
+            }
+            else
+            {
+#if NETSTANDARD2_1_OR_GREATER || NET6_0_OR_GREATER
+                _drawingNames.EnsureCapacity(_drawingNames.Count + estimatedCount);
+#endif
+                if (_drawings != null && _drawings.Capacity < _drawings.Count + estimatedCount)
+                    _drawings.Capacity = _drawings.Count + estimatedCount;
+            }
+        }
 
         /// <summary>
         /// A reference to the drawing xml document
@@ -474,6 +499,20 @@ namespace OfficeOpenXml.Drawing
             return shape;
         }
 
+        // Cached lookup of the drawing root node. Re-resolved if the
+        // underlying XmlDocument is replaced (Dispose nulls it out).
+        private XmlNode WsDrNode
+        {
+            get
+            {
+                if (_wsDrNode == null || _wsDrNode.OwnerDocument != _drawingsXml)
+                {
+                    _wsDrNode = _drawingsXml.SelectSingleNode("//xdr:wsDr", NameSpaceManager);
+                }
+                return _wsDrNode;
+            }
+        }
+
         private XmlElement CreateDrawingXml()
         {
             if (DrawingXml.DocumentElement == null)
@@ -509,7 +548,7 @@ namespace OfficeOpenXml.Drawing
                 package.Flush();
             }
 
-            XmlNode colNode = _drawingsXml.SelectSingleNode("//xdr:wsDr", NameSpaceManager);
+            XmlNode colNode = WsDrNode;
             XmlElement drawNode;
             if (this.Worksheet is ExcelChartsheet)
             {
@@ -687,6 +726,7 @@ namespace OfficeOpenXml.Drawing
         public void Dispose()
         {
             _drawingsXml = null;
+            _wsDrNode = null;
             _hashes.Clear();
             _hashes = null;
             _part = null;
