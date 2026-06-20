@@ -144,10 +144,10 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             FilePath = null;
             ImporterHeaderInfos = null;
             ImportResult = null;
+            Stream?.Dispose();
             Stream = null;
             dicMergePreValues = null;
             DataRowIndices.Clear();
-            GC.Collect();
         }
 
         /// <summary>

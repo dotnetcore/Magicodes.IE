@@ -67,7 +67,7 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
                     Stream = new FileStream(FilePath, FileMode.Open);
                 }
 
-                using (var reader = new StreamReader(Stream))
+                using (var reader = new StreamReader(Stream, Encoding.UTF8, true, 1024, leaveOpen: true))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Context.RegisterClassMap<AutoMap<T>>();
@@ -146,8 +146,8 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         {
             FilePath = null;
             ImportResult = null;
+            Stream?.Dispose();
             Stream = null;
-            GC.Collect();
         }
 
 
