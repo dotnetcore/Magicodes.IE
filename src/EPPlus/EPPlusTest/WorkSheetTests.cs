@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeOpenXml;
 using System.IO;
@@ -149,6 +150,9 @@ namespace EPPlusTest
         //[TestMethod]
         public void ReadWorkSheet()
         {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return;
+
             FileStream instream = new FileStream(_worksheetPath + @"Worksheet.xlsx", FileMode.Open, FileAccess.ReadWrite);
             using (ExcelPackage pck = new ExcelPackage(instream))
             {
@@ -458,7 +462,10 @@ namespace EPPlusTest
             // add autofilter
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             ws.Cells["U19:X24"].AutoFilter = true;
             ExcelPicture pic = ws.Drawings.AddPicture("Pic1", image, format);
             pic.SetPosition(150, 140);
@@ -1135,7 +1142,10 @@ namespace EPPlusTest
             hl.ToolTip = "Screen Tip";
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             ws.Drawings.AddPicture("Pic URI", image, format, hl);
         }
         [TestMethod]
@@ -2259,6 +2269,7 @@ namespace EPPlusTest
             var ws = _pck.Workbook.Worksheets.Add("backimg");
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
+            if (stream == null) return;
             using (var ms = new MemoryStream())
             {
                 stream.CopyTo(ms);
@@ -2277,7 +2288,10 @@ namespace EPPlusTest
             ws.HeaderFooter.OddHeader.CenteredText = "Before ";
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             var img = ws.HeaderFooter.OddHeader.InsertPicture(image, format, PictureAlignment.Centered);
             img.Title = "Renamed Image";
             //img.GrayScale = true;
