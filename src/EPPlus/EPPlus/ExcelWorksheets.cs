@@ -526,6 +526,8 @@ namespace OfficeOpenXml
 
             bool doAdjust = _pck.DoAdjustDrawings;
             _pck.DoAdjustDrawings = false;
+            try
+            {
             //Merged cells
             foreach (var r in Copy.MergedCells)     //Issue #94
             {
@@ -586,7 +588,11 @@ namespace OfficeOpenXml
                     }
                 }
             }
-            added._package.DoAdjustDrawings = doAdjust;
+            }
+            finally
+            {
+                added._package.DoAdjustDrawings = doAdjust;
+            }
         }
 
         private int CopyValues(ExcelWorksheet Copy, ExcelWorksheet added, int row, int col)

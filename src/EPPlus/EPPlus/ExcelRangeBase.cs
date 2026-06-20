@@ -868,6 +868,8 @@ namespace OfficeOpenXml
 
             bool doAdjust = _worksheet._package.DoAdjustDrawings;
             _worksheet._package.DoAdjustDrawings = false;
+            try
+            {
             var drawWidths = _worksheet.Drawings.GetDrawingWidths();
 
             var fromCol = _fromCol > _worksheet.Dimension._fromCol ? _fromCol : _worksheet.Dimension._fromCol;
@@ -1003,7 +1005,6 @@ namespace OfficeOpenXml
                 }
 
                 _worksheet.Drawings.AdjustWidth(drawWidths);
-                _worksheet._package.DoAdjustDrawings = doAdjust;
             }
             finally
             {
@@ -1013,6 +1014,11 @@ namespace OfficeOpenXml
                 foreach (var tf in typefaces)
                     tf?.Dispose();
                 fallbackFont?.Dispose();
+            }
+            }
+            finally
+            {
+                _worksheet._package.DoAdjustDrawings = doAdjust;
             }
         }
 
