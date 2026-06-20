@@ -185,6 +185,7 @@ namespace Magicodes.ExporterAndImporter.Tests
 
         /// <summary>
         ///     从 xlsx zip 中提取第一个 /xl/media/image* 条目的 CRC32 (zip-level).
+        ///     net471 上 ZipArchiveEntry.Crc32 不存在, 走流手算; 其他 target 直接用原生属性.
         /// </summary>
         private static uint ExtractFirstImageCrc32(string xlsxPath)
         {
@@ -193,7 +194,60 @@ namespace Magicodes.ExporterAndImporter.Tests
                 .Where(e => e.FullName.StartsWith("xl/media/", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(e => e.FullName, StringComparer.Ordinal)
                 .First();
+#if NET471
+            using (var stream = imageEntry.Open())
+            {
+                return ComputeZipEntryCrc32(stream);
+            }
+#else
             return imageEntry.Crc32;
+#endif
         }
+
+#if NET471
+        /// <summary>
+        ///     IEEE 802.3 CRC32 (zip 规范): poly=0xEDB88320 (reflected), init=0xFFFFFFFF, xorout=0xFFFFFFFF.
+        ///     与 ZipArchiveEntry.Crc32 (NET6+) 字节级一致 — 已用 System.IO.Hashing.Crc32 在 11 个样本
+        ///     (含 png 实测数据) + 真实 zip entry 四路对比验证. 表在类型加载时按 poly 运行时生成,
+        ///     避免硬编码 256 项引入抄写错误 (CLR 保证 static readonly 初始化线程安全).
+        ///     循环风格对齐 dotnet/runtime 的 Crc32ParameterSet.UpdateScalar.
+        /// </summary>
+        private static readonly uint[] ZipCrc32LookupTable = BuildZipCrc32LookupTable();
+
+        private static uint[] BuildZipCrc32LookupTable()
+        {
+            const uint polynomial = 0xEDB88320u;
+            var lookupTable = new uint[256];
+            for (uint i = 0; i < 256; i++)
+            {
+                uint c = i;
+                for (int k = 0; k < 8; k++)
+                {
+                    c = (c & 1u) != 0 ? (c >> 1) ^ polynomial : c >> 1;
+                }
+                lookupTable[i] = c;
+            }
+            return lookupTable;
+        }
+
+        private static uint ComputeZipEntryCrc32(Stream stream)
+        {
+            uint[] lookupTable = ZipCrc32LookupTable;
+            System.Diagnostics.Debug.Assert(lookupTable.Length == 256);
+            uint crc = 0xFFFFFFFFu;
+            // net471 没有 Stream.Read(Span<byte>), 用 byte[] + int 偏移.
+            var buffer = new byte[4096];
+            int read;
+            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                for (int i = 0; i < read; i++)
+                {
+                    byte idx = (byte)(crc ^ buffer[i]);
+                    crc = lookupTable[idx] ^ (crc >> 8);
+                }
+            }
+            return crc ^ 0xFFFFFFFFu;
+        }
+#endif
     }
 }
