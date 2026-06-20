@@ -4,7 +4,7 @@
     <PackageId>Magicodes.IE.Csv</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="27.2.1" />
+    <PackageReference Include="CsvHelper" />
   </ItemGroup>
 
   <ItemGroup>

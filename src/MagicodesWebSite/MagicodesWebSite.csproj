@@ -7,8 +7,8 @@
 
   
   <ItemGroup>
-    <PackageReference Include="GenFu" Version="1.6.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
+    <PackageReference Include="GenFu" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>

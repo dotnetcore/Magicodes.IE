@@ -4,11 +4,11 @@
     <PackageId>Magicodes.IE.Pdf</PackageId>
   </PropertyGroup>
   <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="TuesPechkin" Version="2.1.1" />
-    <PackageReference Include="TuesPechkin.Wkhtmltox.AnyCPU" Version="0.12.4.1" />
+    <PackageReference Include="TuesPechkin" />
+    <PackageReference Include="TuesPechkin.Wkhtmltox.AnyCPU" />
   </ItemGroup>-->
   <ItemGroup>
-	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" Version="1.5.95" />
+	  <PackageReference Include="Haukcode.WkHtmlToPdfDotNet" />
   </ItemGroup>
   <!-- macOS arm64 native library (Haukcode.WkHtmlToPdfDotNet provides other platforms) -->
   <ItemGroup>
