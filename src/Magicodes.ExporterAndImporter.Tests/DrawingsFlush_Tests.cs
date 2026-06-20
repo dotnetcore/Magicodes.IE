@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
@@ -139,9 +140,8 @@ namespace Magicodes.ExporterAndImporter.Tests
     }
 
     /// <summary>
-    ///     验证 SHA1 改动后图片字节内容完全一致:
-    ///     1 张图 vs 100 张同图的 xlsx (两个文件都走 IExporter.Export 生成),
-    ///     提取 /xl/media/image1.* 的 zip-level CRC32, 应完全一致.
+    ///     验证 SHA1 改动后图片字节内容一致:
+    ///     1 张图 vs 100 张同图的 xlsx, /xl/media/image1.* 原始字节 SHA1 应完全一致.
     /// </summary>
     public class ImageByteConsistency_Tests : TestBase
     {
@@ -158,11 +158,7 @@ namespace Magicodes.ExporterAndImporter.Tests
         [Fact(DisplayName = "ImageByteConsistency_SingleVsRepeatedDrawings_ImageBytesIdentical")]
         public async Task SingleVsRepeatedDrawings_ImageBytesIdentical()
         {
-            // baseline: 1 行 1 列 = 1 张图
-            // repeat: 100 行 1 列 = 100 张同图 (走 IE 同图去重路径)
-            // 两个 xlsx 都走 IExporter.Export 生成 (与生产路径一致),
-            // 用 ZipArchive 提取 /xl/media/image1.*, 对比 zip-level CRC32,
-            // 应完全一致 → 确认 SHA1 改动未改变图片字节内容.
+            // baseline: 1 张图, repeat: 100 张同图 (走 IE 同图去重路径)
             var singlePath = GetTestFilePath($"{nameof(SingleVsRepeatedDrawings_ImageBytesIdentical)}_single.xlsx");
             var repeatPath = GetTestFilePath($"{nameof(SingleVsRepeatedDrawings_ImageBytesIdentical)}_repeat.xlsx");
             DeleteFile(singlePath);
@@ -176,78 +172,26 @@ namespace Magicodes.ExporterAndImporter.Tests
             var repeatData = DrawingsFlush_Tests.BuildOnePicRowDto(100, GetSamplePngPath());
             await exporter.Export(repeatPath, repeatData);
 
-            var singleCrc = ExtractFirstImageCrc32(singlePath);
-            var repeatCrc = ExtractFirstImageCrc32(repeatPath);
+            var singleHash = ComputeFirstImageHash(singlePath);
+            var repeatHash = ComputeFirstImageHash(repeatPath);
 
-            singleCrc.ShouldBe(repeatCrc);
-            _output.WriteLine($"single (1 行) image1 CRC32 = 0x{singleCrc:X8}, repeat (100 行) image1 CRC32 = 0x{repeatCrc:X8}");
+            singleHash.ShouldBe(repeatHash);
+            _output.WriteLine($"single (1 行) image1 SHA1 = {singleHash}, repeat (100 行) image1 SHA1 = {repeatHash}");
         }
 
         /// <summary>
-        ///     从 xlsx zip 中提取第一个 /xl/media/image* 条目的 CRC32 (zip-level).
-        ///     net471 上 ZipArchiveEntry.Crc32 不存在, 走流手算; 其他 target 直接用原生属性.
+        ///     从 xlsx zip 读取第一个 /xl/media/image* 条目的全部字节, 返回 SHA1 十六进制.
         /// </summary>
-        private static uint ExtractFirstImageCrc32(string xlsxPath)
+        private static string ComputeFirstImageHash(string xlsxPath)
         {
             using var archive = ZipFile.OpenRead(xlsxPath);
             var imageEntry = archive.Entries
                 .Where(e => e.FullName.StartsWith("xl/media/", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(e => e.FullName, StringComparer.Ordinal)
                 .First();
-#if NET471
-            using (var stream = imageEntry.Open())
-            {
-                return ComputeZipEntryCrc32(stream);
-            }
-#else
-            return imageEntry.Crc32;
-#endif
+            using var stream = imageEntry.Open();
+            using var sha1 = SHA1.Create();
+            return BitConverter.ToString(sha1.ComputeHash(stream)).Replace("-", string.Empty);
         }
-
-#if NET471
-        /// <summary>
-        ///     IEEE 802.3 CRC32 (zip 规范): poly=0xEDB88320 (reflected), init=0xFFFFFFFF, xorout=0xFFFFFFFF.
-        ///     与 ZipArchiveEntry.Crc32 (NET6+) 字节级一致 — 已用 System.IO.Hashing.Crc32 在 11 个样本
-        ///     (含 png 实测数据) + 真实 zip entry 四路对比验证. 表在类型加载时按 poly 运行时生成,
-        ///     避免硬编码 256 项引入抄写错误 (CLR 保证 static readonly 初始化线程安全).
-        ///     循环风格对齐 dotnet/runtime 的 Crc32ParameterSet.UpdateScalar.
-        /// </summary>
-        private static readonly uint[] ZipCrc32LookupTable = BuildZipCrc32LookupTable();
-
-        private static uint[] BuildZipCrc32LookupTable()
-        {
-            const uint polynomial = 0xEDB88320u;
-            var lookupTable = new uint[256];
-            for (uint i = 0; i < 256; i++)
-            {
-                uint c = i;
-                for (int k = 0; k < 8; k++)
-                {
-                    c = (c & 1u) != 0 ? (c >> 1) ^ polynomial : c >> 1;
-                }
-                lookupTable[i] = c;
-            }
-            return lookupTable;
-        }
-
-        private static uint ComputeZipEntryCrc32(Stream stream)
-        {
-            uint[] lookupTable = ZipCrc32LookupTable;
-            System.Diagnostics.Debug.Assert(lookupTable.Length == 256);
-            uint crc = 0xFFFFFFFFu;
-            // net471 没有 Stream.Read(Span<byte>), 用 byte[] + int 偏移.
-            var buffer = new byte[4096];
-            int read;
-            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                for (int i = 0; i < read; i++)
-                {
-                    byte idx = (byte)(crc ^ buffer[i]);
-                    crc = lookupTable[idx] ^ (crc >> 8);
-                }
-            }
-            return crc ^ 0xFFFFFFFFu;
-        }
-#endif
     }
 }
