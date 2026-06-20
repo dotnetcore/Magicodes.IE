@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Jobs;
 using Magicodes.Benchmarks.Models;
 using Magicodes.ExporterAndImporter.Core;
@@ -13,9 +12,7 @@ using Magicodes.ExporterAndImporter.Pdf;
 
 namespace Magicodes.Benchmarks
 {
-    //[TailCallDiagnoser]
-    //[EtwProfiler]
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
     [MemoryDiagnoser]
     public class ExportPdfBenchmarks
     {

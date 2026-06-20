@@ -5,17 +5,14 @@ using Magicodes.ExporterAndImporter.Core;
 using Magicodes.ExporterAndImporter.Excel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 
 namespace Magicodes.Benchmarks
 {
 
-    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.Net461)]
-    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
-    [ThreadingDiagnoser]
-    [TailCallDiagnoser]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.Net461)]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
     [MemoryDiagnoser]
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
     public class ExportExcelBenchmarks
     {
         [Params(10000, 120000, 240000, 500000, 1000000)]

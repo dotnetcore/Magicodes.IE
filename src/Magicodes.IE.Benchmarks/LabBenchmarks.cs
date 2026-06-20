@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Exporters;
 using BenchmarkDotNet.Jobs;
 using Magicodes.Benchmarks.Models;
@@ -15,10 +14,8 @@ using System.Threading.Tasks;
 
 namespace Magicodes.Benchmarks
 {
-    [ThreadingDiagnoser]
-    [TailCallDiagnoser]
     [MemoryDiagnoser]
-    [SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.Net80)]
     public class LabBenchmarks
     {
         [Params(100, 500, 1000, 2000, 3000, 5000, 10000, 100000)]
