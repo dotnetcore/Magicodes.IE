@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<IsPackable>false</IsPackable>
 		<ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
 		<RootNamespace>EPPlusTest</RootNamespace>
@@ -12,11 +12,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DefineConstants>TRACE;DEBUG;Core;NETCOREAPP1_1</DefineConstants>
+		<DefineConstants>TRACE;DEBUG;Core</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DefineConstants>TRACE;RELEASE;NETCOREAPP2_0;Core</DefineConstants>
+		<DefineConstants>TRACE;RELEASE;Core</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
