@@ -184,7 +184,7 @@ namespace OfficeOpenXml.Drawing
         public const int EMU_PER_PIXEL = 9525;
         protected internal int _width = int.MinValue, _height = int.MinValue, _top = int.MinValue, _left = int.MinValue;
         // Subclasses (e.g. ExcelPicture ctor) set this to skip GetPositionSize side effects.
-        protected internal bool _doNotAdjust = false;
+        internal bool _doNotAdjust = false;
         internal ExcelDrawing(ExcelDrawings drawings, XmlNode node, string nameXPath) :
             base(drawings.NameSpaceManager, node)
         {

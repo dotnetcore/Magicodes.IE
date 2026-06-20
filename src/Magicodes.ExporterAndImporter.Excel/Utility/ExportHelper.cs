@@ -926,12 +926,16 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 if (ExporterHeaderList[c].ExportImageFieldAttribute != null)
                     imageColCount++;
             }
-            CurrentExcelWorksheet.Drawings.Preallocate(imageUrls.Count * rowCount * Math.Max(imageColCount, 1));
+            CurrentExcelWorksheet.Drawings.Preallocate(rowCount * Math.Max(imageColCount, 1));
 
             // 关闭 Row.Height 触发的 drawings 重算(EditAs=OneCell 不依赖 row height 重定位)
+            // 必须用 try/finally 保证 flag 恢复,否则任一处抛未捕获异常都会让 flag 卡在 false,
+            // 后续用户对 Row.Height / Column.Width / Column.Hidden 的 setter 静默失效.
             var package = CurrentExcelPackage;
             var prevDoAdjust = package.DoAdjustDrawings;
             package.DoAdjustDrawings = false;
+            try
+            {
 
             // 并行加载图片
             var imageCache = new System.Collections.Concurrent.ConcurrentDictionary<string, (byte[] bytes, Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo meta)>();
@@ -1007,7 +1011,11 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                     }
                 }
             }
-            package.DoAdjustDrawings = prevDoAdjust;
+            }
+            finally
+            {
+                package.DoAdjustDrawings = prevDoAdjust;
+            }
         }
 
         internal static void AddImage(int rowIndex, int colIndex, ExcelPicture picture, int yOffset, int xOffset)
