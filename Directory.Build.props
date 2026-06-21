@@ -1,3 +1,32 @@
+<!--
+  ============================================================================
+  Magicodes.IE 依赖治理规则 (Dependency Governance Contract)
+  ============================================================================
+
+  1. 版本走 props (Directory.Packages.props)
+     - 禁止在任何 csproj 中显式写 PackageReference Version="x.y.z"
+     - 所有版本信息只在 Directory.Packages.props 的 PackageVersion 里声明
+
+  2. csproj 只表达"哪些包"和"是否引入"
+     - 不写 Version,版本由 CPM 决定
+     - 按"是否引入"维度做 TFM 条件 ItemGroup (e.g. ns2.x vs net6+)
+     - 禁止按"版本"维度做 TFM 条件 (那是 props 的工作)
+
+  3. CPM 默认启用 (ManagePackageVersionsCentrally=true)
+     - 项目如需 opt-out,必须在 csproj 加注释说明原因
+     - 当前合法的 opt-out: EPPlus (vendored 图像库,需按 TFM 多版本)
+
+  4. 传递依赖漏洞 pin 模式
+     - props 里的 PackageVersion 不能强制提升传递版本
+     - 在引入该传递依赖的 csproj 加顶层 PackageReference + 注释说明
+     - 参考: Magicodes.IE.Excel.NPOI.csproj 的 System.Text.Encodings.Web pin
+
+  5. 公共属性集中在此文件
+     - Version / Authors / Description / PackageTags 等打包元数据
+     - NoWarn / 编译参数
+     - 打包相关属性用 Condition="'$(IsPackable)' != 'false'" 包裹,避免影响测试项目
+  ============================================================================
+-->
 <Project>
 
   <PropertyGroup>
