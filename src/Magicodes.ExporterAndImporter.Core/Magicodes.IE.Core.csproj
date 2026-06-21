@@ -6,42 +6,20 @@
 	<ItemGroup>
 		<PackageReference Include="System.ComponentModel.Annotations" />
 	</ItemGroup>
-	<!-- netstandard2.0 依赖 -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+
+	<!-- netstandard 2.x 依赖 (System.Runtime.Loader 仅 ns2.0+ 需要) -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1' ">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
 		<PackageReference Include="System.Runtime.Loader" />
 	</ItemGroup>
 
-	<!-- netstandard2.1 依赖 -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
-		<PackageReference Include="System.Runtime.Loader" />
-	</ItemGroup>
-
-
-	<!-- .NET 6.0+ 依赖 -->
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+	<!-- .NET 6+ 依赖 -->
+	<ItemGroup Condition=" '$(TargetFramework)' != 'netstandard2.0' AND '$(TargetFramework)' != 'netstandard2.1' ">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-		<PackageReference Include="Microsoft.Extensions.DependencyModel" />
-	</ItemGroup>
-	
 	<ItemGroup>
 		<Compile Update="Resource.Designer.cs">
 			<DesignTime>True</DesignTime>
