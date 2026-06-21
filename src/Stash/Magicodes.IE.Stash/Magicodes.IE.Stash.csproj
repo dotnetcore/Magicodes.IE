@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<!--<Import Project="..\..\..\common.props"></Import>-->
 	<PropertyGroup>
 		<Version>2.7.4.3</Version>
 		<IncludeSymbols>true</IncludeSymbols>
-		<ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -27,12 +25,8 @@
 		<Folder Include="Export\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="CS-Script" Version="4.6.5" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="CS-Script" />
+		<PackageReference Include="Newtonsoft.Json" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />

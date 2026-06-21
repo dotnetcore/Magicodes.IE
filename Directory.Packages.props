@@ -28,6 +28,14 @@
     <PackageVersion Include="NPOI" Version="2.8.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
+    <PackageVersion Include="MiniExcel" Version="1.29.0" />
+    <PackageVersion Include="FakeItEasy" Version="7.2.0" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="2.2.7" />
+    <PackageVersion Include="MSTest.TestFramework" Version="2.2.7" />
+    <PackageVersion Include="System.Resources.Extensions" Version="5.0.0" />
+    <PackageVersion Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
+    <PackageVersion Include="CS-Script" Version="4.6.5" />
   </ItemGroup>
 
   <ItemGroup>
