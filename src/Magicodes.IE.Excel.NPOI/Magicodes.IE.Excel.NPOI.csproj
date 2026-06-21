@@ -9,4 +9,15 @@
 		<ProjectReference Include="..\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj" />
 		<!--TODO::peel off Epplus-->
 	</ItemGroup>
+
+	<!-- Override transitive CVEs brought in by NPOI 2.8.0:
+	     System.Text.Encodings.Web 4.7.1 (Critical, GHSA-ghhp-997w-qr28)
+	     System.Security.Cryptography.Xml 8.0.2 (High, GHSA-37gx-xxp4-5rgx / GHSA-w3x6-4m5h-cxqf)
+	     Top-level PackageReference forces NuGet to resolve to a non-vulnerable version
+	     (versions declared in Directory.Packages.props).
+	     Reference: https://github.com/dotnetcore/Magicodes.IE/issues/554 -->
+	<ItemGroup>
+		<PackageReference Include="System.Text.Encodings.Web" />
+		<PackageReference Include="System.Security.Cryptography.Xml" />
+	</ItemGroup>
 </Project>

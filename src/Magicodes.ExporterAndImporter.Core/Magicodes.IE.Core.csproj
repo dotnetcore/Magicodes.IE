@@ -7,6 +7,13 @@
 		<PackageReference Include="System.ComponentModel.Annotations" />
 	</ItemGroup>
 
+	<!-- Override transitive CVE: System.Text.Encodings.Web 4.7.1 (Critical, GHSA-ghhp-997w-qr28)
+	     brought in by RazorEngine/Magicodes.RazorEngine.NetCore on netstandard2.0/2.1.
+	     Reference: https://github.com/dotnetcore/Magicodes.IE/issues/554 -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1' ">
+		<PackageReference Include="System.Text.Encodings.Web" />
+	</ItemGroup>
+
 	<!-- netstandard 2.x 依赖 (System.Runtime.Loader 仅 ns2.0+ 需要) -->
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' OR '$(TargetFramework)' == 'netstandard2.1' ">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
