@@ -1,7 +1,47 @@
 # Release Log
 
-## 2.8.3
-**2025.12.24**
+## 2.8.5
+**2026.06.21**
+
+### 性能
+- **图片导出大幅提速**：1000 张图片约 40s → 3s（约 13 倍）。从底层 EPPlus（SHA1 静态化、`wsDr` XPath 缓存、`Drawings.Preallocate`）到导出入口（按实际 drawing 数预分配、临时关闭 `DoAdjustDrawings`、`SKCodec` 跳过解码直接写入、同 URL 去重 + 并行下载）整条链路优化。
+- Linux 下 AutoFit 字体测量加速：预加载 `SKTypeface` 到缓存，避免每个单元格都调用 fontconfig。
+
+### 修复
+- #549 Excel 缺少列时抛空指针异常，改为返回空值并生成错误信息
+- #617 多列表模板导出数据错乱（`updateCellWriters` 过滤条件 `RawRowStart` → `NewRowStart`）
+- #585 CSV 导入空单元格映射为 null
+- #582 模板导入空行导致错误行号偏移
+- #588 新增 `DateOnly` / `DateOnly?` 类型导入支持
+- 图片下载无限挂起：`WebClient` → `HttpClient` + 30s 超时
+- 图片下载并发回归：上一条改动把 `WebClient`（per-call 新建）换成共享 `static HttpClient`，xUnit 跨 class 并行测试时并发下载偶发失败、图片静默丢失；改为 per-call `using new HttpClient` 隔离并发，超时保留
+- 导入 Stream 泄漏：改由 helper 托管生命周期，移除冗余 `GC.Collect`
+- `DoAdjustDrawings` 状态泄漏：EPPlus 内四处临时置 `false` 未用 try/finally 恢复，异常后 flag 永久卡死，导致后续 `Row.Height` / `Column.Width` setter 静默失效
+- macOS ARM64 PDF 导出崩溃（JSC JIT 的 W^X 冲突）：加载原生库前设 `JSC_useJIT=0`
+- netstandard2.0/2.1 编译失败
+
+### 新增
+- PDF 原生库抽象层：`PdfEnvironmentInfo` / `PdfExportOptions` / `IPdfNativeLibraryService.CheckEnvironment()` / `AddMagicodesPdfExporter()` DI 扩展，加载失败统一包装为 `InvalidOperationException`
+- macOS arm64 静态 wkhtmltopdf dylib（Qt 5.15 + QtWebKit 静态链接，arm64→x64 fallback）
+
+### 依赖
+- NPOI 2.5.5 → 2.8.0，移除 `System.Drawing.Common`，SharpZipLib 1.4.2；消除 #554 / #557 / #561 传递依赖冲突与 #577 漏洞
+- `System.Linq.Dynamic.Core` 1.7.2、`Newtonsoft.Json` 统一 13.0.3
+- 引入 CPM（`Directory.Packages.props`）集中管理包版本，修掉历史版本漂移
+- 修复 NPOI 传递依赖 CVE：pin `System.Text.Encodings.Web` / `System.Security.Cryptography.Xml`
+
+### 目标框架
+- 移除 net5.0 / netcoreapp3.1
+- EPPlusTest / Benchmarks 升至 net8.0
+
+### CI
+- CI 改造为多平台矩阵（ubuntu/windows/macos）+ 新增 net9.0；新增兼容性策略文档与 `global.json`
+
+### 测试
+- 新增图片导出性能基准（500/1000/2000 行）与 `DrawingsFlush` / `ImageOptimization` 回归测试
+
+## 2.8.4
+**2026.05.30**
 
 - 全面支持 .NET 10.0（LTS 版本）
 - 更新所有核心库项目以支持 .NET 10.0 目标框架
@@ -10,7 +50,7 @@
 - 优化项目依赖包版本管理，统一 .NET 6.0+ 框架的包版本
 
 ## 2.8.2
-**2025.12.16**
+**2025.12.24**
 
 - 升级 SkiaSharp 包从 2.88.6 到 3.119.1
 - 修复 SkiaSharp 3.x 中废弃的 API 使用问题，将 SKPaint.MeasureText 替换为 SKFont.MeasureText
