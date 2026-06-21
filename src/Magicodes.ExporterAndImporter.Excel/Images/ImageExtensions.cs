@@ -9,11 +9,6 @@ namespace Magicodes.IE.Excel.Images
 {
     public static partial class ImageExtensions
     {
-        private static readonly HttpClient _httpClient = new HttpClient
-        {
-            Timeout = TimeSpan.FromSeconds(30)
-        };
-
         public struct ImageInfo
         {
             public int Width;
@@ -42,7 +37,11 @@ namespace Magicodes.IE.Excel.Images
 
         public static byte[] DownloadImageBytes(this string url)
         {
-            return _httpClient.GetByteArrayAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+            // per-call 实例：避免共享 static HttpClient 在并发下载下偶发失败导致图片静默丢失
+            using (var http = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
+            {
+                return http.GetByteArrayAsync(url).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
         }
 
         public static byte[] ReadImageBytes(this string filePath)
@@ -73,7 +72,8 @@ namespace Magicodes.IE.Excel.Images
 
         public static SixLabors.ImageSharp.Image GetImageByUrl(this string url, out SixLabors.ImageSharp.Formats.IImageFormat format)
         {
-            using (Stream webStream = _httpClient.GetStreamAsync(url).ConfigureAwait(false).GetAwaiter().GetResult())
+            using (var http = new HttpClient { Timeout = TimeSpan.FromSeconds(30) })
+            using (Stream webStream = http.GetStreamAsync(url).ConfigureAwait(false).GetAwaiter().GetResult())
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
