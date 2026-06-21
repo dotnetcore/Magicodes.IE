@@ -24,7 +24,7 @@
       "output": {
         ".html": {
           "relative_path": "RELEASE.html",
-          "hash": "bNKurLKG+I3+vGXYF4J8GzU3GQvKcN9ThNcvp+6kqZU="
+          "hash": "+fLw+s0OITvRi/iq8AszTzPflARkmQWnUVpCcrDFSDk="
         }
       },
       "is_incremental": false,
@@ -264,7 +264,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Magicodes.ExporterAndImporter.Excel.Utility.ExportHelper-1.html",
-          "hash": "cluDYIMS2eb07OiDTwsZ0s3elU8QJ+5BCidqHh5tVQs="
+          "hash": "6zVAMKRlQZYqav6RZ371Xlz247t0IxYCRkwSa9Tyjuw="
         }
       },
       "is_incremental": false,
@@ -692,6 +692,42 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.html",
+          "hash": "5SAppESDm4CleQ0N5s6Mlp/Xqfefb96S79oVV1o8G04="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.IE.Excel.Images.ImageExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.IE.Excel.Images.ImageExtensions.html",
+          "hash": "/SLS2hjIkP1w4zBbI6dZd1Ri1Fit2R//+VmkRmfj534="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Magicodes.IE.Excel.Images.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Magicodes.IE.Excel.Images.html",
+          "hash": "PL3DRE8REqAWMFl9u4i0IszjAaY7QdywbAQohEdRwig="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.yml",
       "output": {
         ".html": {
@@ -720,7 +756,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "1e7cKd1VZIv81EuFHaIRl4s8rktWRmMIfEPrB1Us6ho="
+          "hash": "L8T5AR1E6SZGpdrt60/CMkdFy7t0tG97Ff6SwOOg8kM="
         }
       },
       "is_incremental": false,
@@ -1467,7 +1503,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 57,
+          "total_file_count": 60,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

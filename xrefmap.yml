@@ -4542,6 +4542,155 @@ references:
   commentId: N:Magicodes.IE.Excel
   fullName: Magicodes.IE.Excel
   nameWithType: Magicodes.IE.Excel
+- uid: Magicodes.IE.Excel.Images
+  name: Magicodes.IE.Excel.Images
+  href: api/Magicodes.IE.Excel.Images.html
+  commentId: N:Magicodes.IE.Excel.Images
+  fullName: Magicodes.IE.Excel.Images
+  nameWithType: Magicodes.IE.Excel.Images
+- uid: Magicodes.IE.Excel.Images.ImageExtensions
+  name: ImageExtensions
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html
+  commentId: T:Magicodes.IE.Excel.Images.ImageExtensions
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions
+  nameWithType: ImageExtensions
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage(System.String,SixLabors.ImageSharp.Formats.IImageFormat@)
+  name: Base64StringToImage(String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_Base64StringToImage_System_String_SixLabors_ImageSharp_Formats_IImageFormat__
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage(System.String,SixLabors.ImageSharp.Formats.IImageFormat@)
+  name.vb: Base64StringToImage(String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage(System.String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  fullName.vb: Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage(System.String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+  nameWithType: ImageExtensions.Base64StringToImage(String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  nameWithType.vb: ImageExtensions.Base64StringToImage(String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage*
+  name: Base64StringToImage
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_Base64StringToImage_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.Base64StringToImage
+  nameWithType: ImageExtensions.Base64StringToImage
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes(System.String)
+  name: DecodeBase64ToBytes(String)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_DecodeBase64ToBytes_System_String_
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes(System.String)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes(System.String)
+  nameWithType: ImageExtensions.DecodeBase64ToBytes(String)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes*
+  name: DecodeBase64ToBytes
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_DecodeBase64ToBytes_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.DecodeBase64ToBytes
+  nameWithType: ImageExtensions.DecodeBase64ToBytes
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes(System.String)
+  name: DownloadImageBytes(String)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_DownloadImageBytes_System_String_
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes(System.String)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes(System.String)
+  nameWithType: ImageExtensions.DownloadImageBytes(String)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes*
+  name: DownloadImageBytes
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_DownloadImageBytes_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.DownloadImageBytes
+  nameWithType: ImageExtensions.DownloadImageBytes
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl(System.String,SixLabors.ImageSharp.Formats.IImageFormat@)
+  name: GetImageByUrl(String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_GetImageByUrl_System_String_SixLabors_ImageSharp_Formats_IImageFormat__
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl(System.String,SixLabors.ImageSharp.Formats.IImageFormat@)
+  name.vb: GetImageByUrl(String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl(System.String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  fullName.vb: Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl(System.String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+  nameWithType: ImageExtensions.GetImageByUrl(String, out SixLabors.ImageSharp.Formats.IImageFormat)
+  nameWithType.vb: ImageExtensions.GetImageByUrl(String, ByRef SixLabors.ImageSharp.Formats.IImageFormat)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl*
+  name: GetImageByUrl
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_GetImageByUrl_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.GetImageByUrl
+  nameWithType: ImageExtensions.GetImageByUrl
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage(System.Byte[])
+  name: IdentifyImage(Byte[])
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_IdentifyImage_System_Byte___
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage(System.Byte[])
+  name.vb: IdentifyImage(Byte())
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage(System.Byte[])
+  fullName.vb: Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage(System.Byte())
+  nameWithType: ImageExtensions.IdentifyImage(Byte[])
+  nameWithType.vb: ImageExtensions.IdentifyImage(Byte())
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage*
+  name: IdentifyImage
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_IdentifyImage_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage
+  nameWithType: ImageExtensions.IdentifyImage
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo
+  name: ImageExtensions.ImageInfo
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.html
+  commentId: T:Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo
+  nameWithType: ImageExtensions.ImageInfo
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.ContentType
+  name: ContentType
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.html#Magicodes_IE_Excel_Images_ImageExtensions_ImageInfo_ContentType
+  commentId: F:Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.ContentType
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.ContentType
+  nameWithType: ImageExtensions.ImageInfo.ContentType
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Height
+  name: Height
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.html#Magicodes_IE_Excel_Images_ImageExtensions_ImageInfo_Height
+  commentId: F:Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Height
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Height
+  nameWithType: ImageExtensions.ImageInfo.Height
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Width
+  name: Width
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.html#Magicodes_IE_Excel_Images_ImageExtensions_ImageInfo_Width
+  commentId: F:Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Width
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo.Width
+  nameWithType: ImageExtensions.ImageInfo.Width
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes(System.String)
+  name: ReadImageBytes(String)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_ReadImageBytes_System_String_
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes(System.String)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes(System.String)
+  nameWithType: ImageExtensions.ReadImageBytes(String)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes*
+  name: ReadImageBytes
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_ReadImageBytes_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ReadImageBytes
+  nameWithType: ImageExtensions.ReadImageBytes
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.SaveTo(SixLabors.ImageSharp.Image,System.String)
+  name: SaveTo(SixLabors.ImageSharp.Image, String)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_SaveTo_SixLabors_ImageSharp_Image_System_String_
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.SaveTo(SixLabors.ImageSharp.Image,System.String)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.SaveTo(SixLabors.ImageSharp.Image, System.String)
+  nameWithType: ImageExtensions.SaveTo(SixLabors.ImageSharp.Image, String)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.SaveTo*
+  name: SaveTo
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_SaveTo_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.SaveTo
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.SaveTo
+  nameWithType: ImageExtensions.SaveTo
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String(SixLabors.ImageSharp.Image,SixLabors.ImageSharp.Formats.IImageFormat)
+  name: ToBase64String(SixLabors.ImageSharp.Image, SixLabors.ImageSharp.Formats.IImageFormat)
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_ToBase64String_SixLabors_ImageSharp_Image_SixLabors_ImageSharp_Formats_IImageFormat_
+  commentId: M:Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String(SixLabors.ImageSharp.Image,SixLabors.ImageSharp.Formats.IImageFormat)
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String(SixLabors.ImageSharp.Image, SixLabors.ImageSharp.Formats.IImageFormat)
+  nameWithType: ImageExtensions.ToBase64String(SixLabors.ImageSharp.Image, SixLabors.ImageSharp.Formats.IImageFormat)
+- uid: Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String*
+  name: ToBase64String
+  href: api/Magicodes.IE.Excel.Images.ImageExtensions.html#Magicodes_IE_Excel_Images_ImageExtensions_ToBase64String_
+  commentId: Overload:Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String
+  isSpec: "True"
+  fullName: Magicodes.IE.Excel.Images.ImageExtensions.ToBase64String
+  nameWithType: ImageExtensions.ToBase64String
 - uid: Magicodes.IE.Excel.ValueConditionalFormattingAttribute
   name: ValueConditionalFormattingAttribute
   href: api/Magicodes.IE.Excel.ValueConditionalFormattingAttribute.html

@@ -62,8 +62,54 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
-<h2 id="283">2.8.3</h2>
-<p><strong>2025.12.24</strong></p>
+<h2 id="285">2.8.5</h2>
+<p><strong>2026.06.21</strong></p>
+<h3 id="性能">性能</h3>
+<ul>
+<li><strong>图片导出大幅提速</strong>：1000 张图片约 40s → 3s（约 13 倍）。从底层 EPPlus（SHA1 静态化、<code>wsDr</code> XPath 缓存、<code>Drawings.Preallocate</code>）到导出入口（按实际 drawing 数预分配、临时关闭 <code>DoAdjustDrawings</code>、<code>SKCodec</code> 跳过解码直接写入、同 URL 去重 + 并行下载）整条链路优化。</li>
+<li>Linux 下 AutoFit 字体测量加速：预加载 <code>SKTypeface</code> 到缓存，避免每个单元格都调用 fontconfig。</li>
+</ul>
+<h3 id="修复">修复</h3>
+<ul>
+<li>#549 Excel 缺少列时抛空指针异常，改为返回空值并生成错误信息</li>
+<li>#617 多列表模板导出数据错乱（<code>updateCellWriters</code> 过滤条件 <code>RawRowStart</code> → <code>NewRowStart</code>）</li>
+<li>#585 CSV 导入空单元格映射为 null</li>
+<li>#582 模板导入空行导致错误行号偏移</li>
+<li>#588 新增 <code>DateOnly</code> / <code>DateOnly?</code> 类型导入支持</li>
+<li>图片下载无限挂起：<code>WebClient</code> → <code>HttpClient</code> + 30s 超时</li>
+<li>图片下载并发回归：上一条改动把 <code>WebClient</code>（per-call 新建）换成共享 <code>static HttpClient</code>，xUnit 跨 class 并行测试时并发下载偶发失败、图片静默丢失；改为 per-call <code>using new HttpClient</code> 隔离并发，超时保留</li>
+<li>导入 Stream 泄漏：改由 helper 托管生命周期，移除冗余 <code>GC.Collect</code></li>
+<li><code>DoAdjustDrawings</code> 状态泄漏：EPPlus 内四处临时置 <code>false</code> 未用 try/finally 恢复，异常后 flag 永久卡死，导致后续 <code>Row.Height</code> / <code>Column.Width</code> setter 静默失效</li>
+<li>macOS ARM64 PDF 导出崩溃（JSC JIT 的 W^X 冲突）：加载原生库前设 <code>JSC_useJIT=0</code></li>
+<li>netstandard2.0/2.1 编译失败</li>
+</ul>
+<h3 id="新增">新增</h3>
+<ul>
+<li>PDF 原生库抽象层：<code>PdfEnvironmentInfo</code> / <code>PdfExportOptions</code> / <code>IPdfNativeLibraryService.CheckEnvironment()</code> / <code>AddMagicodesPdfExporter()</code> DI 扩展，加载失败统一包装为 <code>InvalidOperationException</code></li>
+<li>macOS arm64 静态 wkhtmltopdf dylib（Qt 5.15 + QtWebKit 静态链接，arm64→x64 fallback）</li>
+</ul>
+<h3 id="依赖">依赖</h3>
+<ul>
+<li>NPOI 2.5.5 → 2.8.0，移除 <code>System.Drawing.Common</code>，SharpZipLib 1.4.2；消除 #554 / #557 / #561 传递依赖冲突与 #577 漏洞</li>
+<li><code>System.Linq.Dynamic.Core</code> 1.7.2、<code>Newtonsoft.Json</code> 统一 13.0.3</li>
+<li>引入 CPM（<code>Directory.Packages.props</code>）集中管理包版本，修掉历史版本漂移</li>
+<li>修复 NPOI 传递依赖 CVE：pin <code>System.Text.Encodings.Web</code> / <code>System.Security.Cryptography.Xml</code></li>
+</ul>
+<h3 id="目标框架">目标框架</h3>
+<ul>
+<li>移除 net5.0 / netcoreapp3.1</li>
+<li>EPPlusTest / Benchmarks 升至 net8.0</li>
+</ul>
+<h3 id="ci">CI</h3>
+<ul>
+<li>CI 改造为多平台矩阵（ubuntu/windows/macos）+ 新增 net9.0；新增兼容性策略文档与 <code>global.json</code></li>
+</ul>
+<h3 id="测试">测试</h3>
+<ul>
+<li>新增图片导出性能基准（500/1000/2000 行）与 <code>DrawingsFlush</code> / <code>ImageOptimization</code> 回归测试</li>
+</ul>
+<h2 id="284">2.8.4</h2>
+<p><strong>2026.05.30</strong></p>
 <ul>
 <li>全面支持 .NET 10.0（LTS 版本）</li>
 <li>更新所有核心库项目以支持 .NET 10.0 目标框架</li>
@@ -72,7 +118,7 @@
 <li>优化项目依赖包版本管理，统一 .NET 6.0+ 框架的包版本</li>
 </ul>
 <h2 id="282">2.8.2</h2>
-<p><strong>2025.12.16</strong></p>
+<p><strong>2025.12.24</strong></p>
 <ul>
 <li>升级 SkiaSharp 包从 2.88.6 到 3.119.1</li>
 <li>修复 SkiaSharp 3.x 中废弃的 API 使用问题，将 SKPaint.MeasureText 替换为 SKFont.MeasureText</li>
