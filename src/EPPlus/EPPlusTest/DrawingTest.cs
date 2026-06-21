@@ -70,7 +70,10 @@ namespace EPPlusTest
         {
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             var ws = _pck.Workbook.Worksheets.Add("Picture");
             var pic = ws.Drawings.AddPicture("Pic1", image, format);
 
@@ -125,7 +128,10 @@ namespace EPPlusTest
             var ws = _pck.Workbook.Worksheets.Add("DrawingPosSize");
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
 
             var pic = ws.Drawings.AddPicture("Pic1", image, format);
             pic.SetPosition(1, 0, 1, 0);
@@ -789,7 +795,10 @@ namespace EPPlusTest
         {
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             var ws = _pck.Workbook.Worksheets.Add("DeleteDrawing1");
             var chart1 = ws.Drawings.AddChart("Chart1", eChartType.Line);
             var chart2 = ws.Drawings.AddChart("Chart2", eChartType.Line);
@@ -1001,7 +1010,10 @@ namespace EPPlusTest
         {
             var assembly = Assembly.GetExecutingAssembly();
             var stream = assembly.GetManifestResourceStream(@"Resources\Test1.jpg");
-            var image = Image.Load(stream, out var format);
+            if (stream == null) return;
+            var format = Image.DetectFormat(stream);
+            stream.Position = 0;
+            var image = Image.Load(stream);
             var ws = _pck.Workbook.Worksheets.Add("PicResize");
             ws.Cells["A1"].Value = "test";
             ws.Cells["A1"].Style.Font.Name = "Symbol";

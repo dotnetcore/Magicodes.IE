@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0;net10.0</TargetFrameworks>
     <PackageId>Magicodes.IE.Excel</PackageId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DynamicExpresso.Core" Version="2.3.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.10" />
+    <PackageReference Include="DynamicExpresso.Core" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" />
+    <PackageReference Include="System.Linq.Dynamic.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />

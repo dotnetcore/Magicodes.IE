@@ -7,6 +7,10 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- Opt-out: StashTests uses pinned test framework versions (MSTest 2.2.10, SDK 17.3.2)
+         that don't match the bulk-test baseline (MSTest 2.2.7, SDK 17.1.0).
+         Revisit when MSTest 2.2.10 is added to Directory.Packages.props. -->
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <ItemGroup>

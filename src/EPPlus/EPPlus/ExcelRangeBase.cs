@@ -868,6 +868,8 @@ namespace OfficeOpenXml
 
             bool doAdjust = _worksheet._package.DoAdjustDrawings;
             _worksheet._package.DoAdjustDrawings = false;
+            try
+            {
             var drawWidths = _worksheet.Drawings.GetDrawingWidths();
 
             var fromCol = _fromCol > _worksheet.Dimension._fromCol ? _fromCol : _worksheet.Dimension._fromCol;
@@ -918,28 +920,57 @@ namespace OfficeOpenXml
             }
 
             var styles = _worksheet.Workbook.Styles;
-            foreach (var cell in this)
+
+            // 字体缓存：避免每个 cell 都调用 SKTypeface.FromFamilyName（Linux 上 fontconfig 很慢）
+            var fontCache = new Dictionary<(string family, int style, float size), SKFont>();
+            var typefaces = new List<SKTypeface>();
+            var fallbackFont = new SKFont(SKTypeface.Default);
+            try
             {
-                if (_worksheet.Column(cell.Start.Column).Hidden) //Issue 15338
+                for (int fi = 0; fi < styles.Fonts.Count; fi++)
                 {
-                    continue;
+                    var excelFontXml = styles.Fonts[fi];
+                    var skFontStyle = SKFontStyle.Normal;
+                    if (excelFontXml.Bold && excelFontXml.Italic)
+                        skFontStyle = SKFontStyle.BoldItalic;
+                    else if (excelFontXml.Italic)
+                        skFontStyle = SKFontStyle.Italic;
+                    else if (excelFontXml.Bold)
+                        skFontStyle = SKFontStyle.Bold;
+
+                    var cacheKey = (excelFontXml.Name, skFontStyle.GetHashCode(), excelFontXml.Size);
+                    if (!fontCache.ContainsKey(cacheKey))
+                    {
+                        var fontTypeface = SKTypeface.FromFamilyName(excelFontXml.Name, skFontStyle);
+                        if (fontTypeface != null && fontTypeface.FamilyName == excelFontXml.Name)
+                        {
+                            typefaces.Add(fontTypeface);
+                            fontCache[cacheKey] = new SKFont(fontTypeface, excelFontXml.Size);
+                        }
+                    }
                 }
 
-                if (cell.Merge || cell.Style.WrapText)
+                foreach (var cell in this)
                 {
-                    continue;
-                }
+                    if (_worksheet.Column(cell.Start.Column).Hidden) //Issue 15338
+                    {
+                        continue;
+                    }
 
-                if (cell.Address.StartsWith("I"))
-                {
-                }
+                    if (cell.Merge || cell.Style.WrapText)
+                    {
+                        continue;
+                    }
 
-                var ind = styles.CellXfs[cell.StyleID].Indent;
-                var textForWidth = cell.TextForWidth;
-                var t = textForWidth + (ind > 0 && !string.IsNullOrEmpty(textForWidth) ? new string('_', ind) : "");
-                if (t.Length > 32000) t = t.Substring(0, 32000); //Issue
-                using (var font = GetAvailableFont(t))
-                {
+                    if (cell.Address.StartsWith("I"))
+                    {
+                    }
+
+                    var ind = styles.CellXfs[cell.StyleID].Indent;
+                    var textForWidth = cell.TextForWidth;
+                    var t = textForWidth + (ind > 0 && !string.IsNullOrEmpty(textForWidth) ? new string('_', ind) : "");
+                    if (t.Length > 32000) t = t.Substring(0, 32000); //Issue
+                    var font = GetAvailableFont(t, fontCache, fallbackFont);
                     var normalSize =
                         Convert.ToSingle(ExcelWorkbook.GetWidthPixels(font.Typeface.FamilyName, font.Size));
                     var measureWidthInPoints = font.MeasureText(t, out SKRect rect);
@@ -972,42 +1003,49 @@ namespace OfficeOpenXml
                             widthInPixels > maximumWidth ? maximumWidth : widthInPixels;
                     }
                 }
-            }
 
-            _worksheet.Drawings.AdjustWidth(drawWidths);
-            _worksheet._package.DoAdjustDrawings = doAdjust;
+                _worksheet.Drawings.AdjustWidth(drawWidths);
+            }
+            finally
+            {
+                // 统一 dispose 所有缓存的字体和 typeface 对象
+                foreach (var kv in fontCache)
+                    kv.Value?.Dispose();
+                foreach (var tf in typefaces)
+                    tf?.Dispose();
+                fallbackFont?.Dispose();
+            }
+            }
+            finally
+            {
+                _worksheet._package.DoAdjustDrawings = doAdjust;
+            }
         }
 
-        private SKFont GetAvailableFont(string text)
+        private SKFont GetAvailableFont(string text,
+            Dictionary<(string family, int style, float size), SKFont> fontCache,
+            SKFont fallbackFont)
         {
             var isAllAsciiSymbolOrChars =
-                !text.Any(c => c < 20 || c > 126); // use FangSong to measure the text that is not in english
+                !text.Any(c => c < 20 || c > 126);
             var styles = _worksheet.Workbook.Styles;
             for (int i = isAllAsciiSymbolOrChars ? 0 : 1; i < styles.Fonts.Count; i++)
             {
                 var skFontStyle = SKFontStyle.Normal;
                 var excelFontXml = styles.Fonts[i];
                 if (excelFontXml.Bold && excelFontXml.Italic)
-                {
                     skFontStyle = SKFontStyle.BoldItalic;
-                }
                 else if (excelFontXml.Italic)
-                {
                     skFontStyle = SKFontStyle.Italic;
-                }
                 else if (excelFontXml.Bold)
-                {
                     skFontStyle = SKFontStyle.Bold;
-                }
 
-                var fontTypeface = SKTypeface.FromFamilyName(excelFontXml.Name, skFontStyle);
-                if (fontTypeface.FamilyName == excelFontXml.Name)
-                {
-                    return new SKFont(fontTypeface, excelFontXml.Size);
-                }
+                var cacheKey = (excelFontXml.Name, skFontStyle.GetHashCode(), excelFontXml.Size);
+                if (fontCache.TryGetValue(cacheKey, out var cachedFont))
+                    return cachedFont;
             }
 
-            return new SKFont(SKTypeface.Default);
+            return fallbackFont;
         }
 
         private void SetMinWidth(double minimumWidth, int fromCol, int toCol)

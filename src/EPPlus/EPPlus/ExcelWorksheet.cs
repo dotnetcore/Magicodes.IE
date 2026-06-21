@@ -874,6 +874,8 @@ namespace OfficeOpenXml
             // First Columns, rows, cells, mergecells, hyperlinks and pagebreakes are loaded from a xmlstream to optimize speed...
             bool doAdjust = _package.DoAdjustDrawings;
             _package.DoAdjustDrawings = false;
+            try
+            {
             Stream stream = packPart.GetStream();
 
 #if Core
@@ -907,7 +909,11 @@ namespace OfficeOpenXml
             else
                 LoadXmlSafe(_worksheetXml, xml, encoding);
 
-            _package.DoAdjustDrawings = doAdjust;
+            }
+            finally
+            {
+                _package.DoAdjustDrawings = doAdjust;
+            }
             ClearNodes();
         }
         /// <summary>

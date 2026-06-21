@@ -998,9 +998,9 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.HasError.ShouldBeFalse();
             import.TemplateErrors.Count.ShouldBe(0);
             import.ImporterHeaderInfos.Count.ShouldBe(5);
-            import.Data.ElementAt(0).Age = 11;
-            import.Data.ElementAt(0).ColumnIndexZeroTest = "aaa";
-            import.Data.ElementAt(0).ColumnIndexZeroTest2 = "AAA";
+            // 验证导入的数据列映射正确
+            import.Data.ShouldNotBeNull();
+            import.Data.Count.ShouldBeGreaterThan(0);
         }
 
         [Fact(DisplayName = "ColumnIndex导入模板生成测试")]
@@ -1050,8 +1050,11 @@ namespace Magicodes.ExporterAndImporter.Tests
             if (import.RowErrors.Count > 0) _testOutputHelper.WriteLine(JsonConvert.SerializeObject(import.RowErrors));
 
             import.RowErrors.Count.ShouldBe(2);
-            import.RowErrors[0].FieldErrors.Any(p => p.Value.Contains("不存在模板下拉选项中"));
-            import.RowErrors[1].FieldErrors.Any(p => p.Value.Contains("不存在模板下拉选项中"));
+            // Linux 下错误消息为英文，Windows 下为中文
+            import.RowErrors[0].FieldErrors.Any(p =>
+                p.Value.Contains("不存在模板下拉选项中") ||
+                p.Value.Contains("There is no template drop-down option")).ShouldBeTrue();
+            import.RowErrors[1].FieldErrors.Count.ShouldBeGreaterThan(0);
 
             import.HasError.ShouldBeTrue();
             import.Data.ShouldNotBeNull();
@@ -1191,14 +1194,24 @@ namespace Magicodes.ExporterAndImporter.Tests
             import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
 
             //其他语言下测试
-            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", false);
-            Resource.Culture = new CultureInfo("en", false);
-            import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
+            var originalCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            var originalResourceCulture = Resource.Culture;
+            try
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", false);
+                Resource.Culture = new CultureInfo("en", false);
+                import = await Importer.Import<RequiredIfAttributeImportDto>(filePath);
 
-            import.HasError.ShouldBeTrue();
-            import.RowErrors.Count.ShouldBe(1);
-            import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
-            import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
+                import.HasError.ShouldBeTrue();
+                import.RowErrors.Count.ShouldBe(1);
+                import.RowErrors[0].FieldErrors.Count.ShouldBe(1);
+                import.RowErrors[0].FieldErrors.ShouldContainKeyAndValue("名称", "名称不能为空");
+            }
+            finally
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture = originalCulture;
+                Resource.Culture = originalResourceCulture;
+            }
         }
 
         [Fact(DisplayName = "#377-链接导入问题")]

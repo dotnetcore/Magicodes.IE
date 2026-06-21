@@ -353,7 +353,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility.TemplateExport
 
                 #region 更新单元格
 
-                var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > table.RawRowStart);
+                var updateCellWriters = SheetWriters[sheetName].Where(p => p.WriterType == WriterTypes.Cell).Where(p => p.RowIndex > table.NewRowStart);
                 foreach (var writer in updateCellWriters)
                 {
                     writer.RowIndex += table.RowCount - 1;

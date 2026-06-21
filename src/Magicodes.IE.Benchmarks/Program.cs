@@ -8,7 +8,6 @@ namespace Magicodes.Benchmarks
         public static void Main(string[] args)
         {
             BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
-            Console.ReadKey();
         }
     }
 }

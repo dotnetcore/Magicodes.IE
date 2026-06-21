@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props"></Import>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Core" Version="4.4.0" />
+    <PackageReference Include="Volo.Abp.Core" />
   </ItemGroup>
 
   <ItemGroup>

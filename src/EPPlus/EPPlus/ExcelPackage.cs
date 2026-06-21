@@ -423,12 +423,15 @@ namespace OfficeOpenXml
         }
         internal ImageInfo AddImage(byte[] image, Uri uri, string contentType)
         {
-#if (Core)
-            var hashProvider = SHA1.Create();
+#if NET5_0_OR_GREATER
+            var hash = Convert.ToHexString(SHA1.HashData(image));
 #else
-            var hashProvider = new SHA1CryptoServiceProvider();
+            string hash;
+            using (var hashProvider = SHA1.Create())
+            {
+                hash = BitConverter.ToString(hashProvider.ComputeHash(image)).Replace("-", string.Empty);
+            }
 #endif
-            var hash = BitConverter.ToString(hashProvider.ComputeHash(image)).Replace("-", "");
             lock (_images)
             {
                 if (_images.ContainsKey(hash))
@@ -440,8 +443,10 @@ namespace OfficeOpenXml
                     Packaging.ZipPackagePart imagePart;
                     if (uri == null)
                     {
-                        uri = GetNewUri(Package, "/xl/media/image{0}.jpg");
-                        imagePart = Package.CreatePart(uri, "image/jpeg", CompressionLevel.None);
+                        var effectiveContentType = string.IsNullOrEmpty(contentType) ? "image/jpeg" : contentType;
+                        var extension = GetExtensionFromContentType(effectiveContentType);
+                        uri = GetNewUri(Package, "/xl/media/image{0}" + extension);
+                        imagePart = Package.CreatePart(uri, effectiveContentType, CompressionLevel.None);
                     }
                     else
                     {
@@ -455,6 +460,23 @@ namespace OfficeOpenXml
             }
             return _images[hash];
         }
+
+        /// <summary>
+        /// 根据 content type 返回对应的文件扩展名
+        /// </summary>
+        private static string GetExtensionFromContentType(string contentType)
+        {
+            switch (contentType)
+            {
+                case "image/png": return ".png";
+                case "image/gif": return ".gif";
+                case "image/bmp": return ".bmp";
+                case "image/webp": return ".webp";
+                case "image/tiff": return ".tiff";
+                default: return ".jpg";
+            }
+        }
+
         internal ImageInfo LoadImage(byte[] image, Uri uri, Packaging.ZipPackagePart imagePart)
         {
 #if (Core)

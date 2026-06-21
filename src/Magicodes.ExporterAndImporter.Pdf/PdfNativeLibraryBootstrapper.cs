@@ -20,11 +20,49 @@ namespace Magicodes.ExporterAndImporter.Pdf
             new Lazy<PdfEnvironmentInfo>(CheckEnvironmentCore);
 
         /// <summary>
+        /// macOS ARM64: Qt WebKit 的 JSC JIT 使用 W^X 内存映射，
+        /// 与 macOS ARM64 的 W^X 策略冲突导致 SIGBUS。
+        /// 在 native 库加载前通过 libc.setenv 禁用 JSC JIT。
+        /// 此方法仅在 macOS ARM64 上执行，对用户完全透明。
+        /// </summary>
+        [DllImport("libc", EntryPoint = "setenv", SetLastError = true)]
+        private static extern int setenv(string name, string value, int overwrite);
+
+        private static void DisableJscJitIfNeeded()
+        {
+            try
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+                    RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                {
+                    setenv("JSC_useJIT", "0", 1);
+                }
+            }
+            catch
+            {
+                // setenv 在某些平台上不可用，忽略
+            }
+        }
+
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// 程序集模块初始化器：在 Pdf 程序集加载时第一时间执行。
+        /// </summary>
+        [System.Runtime.CompilerServices.ModuleInitializer]
+        internal static void InitializeJscJitWorkaround()
+        {
+            DisableJscJitIfNeeded();
+        }
+#endif
+
+        /// <summary>
         /// 静态构造函数：首次访问类型时注册 DllImportResolver（不加载 native 库）。
         /// 确保 Haukcode 的 P/Invoke 能找到我们提供的 arm64 dylib。
+        /// 同时作为 netstandard2.0 的 fallback（无 ModuleInitializer 时）。
         /// </summary>
         static PdfNativeLibraryBootstrapper()
         {
+            DisableJscJitIfNeeded();
 #if NET5_0_OR_GREATER
             RegisterDllImportResolver();
 #endif

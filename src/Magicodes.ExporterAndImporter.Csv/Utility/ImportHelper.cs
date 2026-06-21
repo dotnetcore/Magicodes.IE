@@ -67,10 +67,12 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
                     Stream = new FileStream(FilePath, FileMode.Open);
                 }
 
-                using (var reader = new StreamReader(Stream))
+                using (var reader = new StreamReader(Stream, Encoding.UTF8, true, 1024, leaveOpen: true))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Context.RegisterClassMap<AutoMap<T>>();
+                    // Map empty CSV cells to null for all types (not empty string)
+                    csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
                     var result = csv.GetRecords<T>();
                     ImportResult.Data = result.ToList();
                     return Task.FromResult(ImportResult);
@@ -144,8 +146,8 @@ namespace Magicodes.ExporterAndImporter.Csv.Utility
         {
             FilePath = null;
             ImportResult = null;
+            Stream?.Dispose();
             Stream = null;
-            GC.Collect();
         }
 
 

@@ -167,9 +167,9 @@ namespace EPPlusTest.Excel
 			operatorResult = Operator.Plus.Apply(result1, result2);
 			Assert.AreEqual(number1 + number2, operatorResult.Result);
 			// Comparison operators always compare string-wise and don't parse out the actual numbers.
-			operatorResult = Operator.NotEqualsTo.Apply(result1, new CompileResult(number1.ToString("n0"), DataType.String));
+			operatorResult = Operator.NotEqualsTo.Apply(result1, new CompileResult(number1.ToString("n0", System.Globalization.CultureInfo.InvariantCulture), DataType.String));
 			Assert.IsTrue((bool)operatorResult.Result);
-			operatorResult = Operator.Eq.Apply(result1, new CompileResult(number1.ToString("n0"), DataType.String));
+			operatorResult = Operator.Eq.Apply(result1, new CompileResult(number1.ToString("n0", System.Globalization.CultureInfo.InvariantCulture), DataType.String));
 			Assert.IsFalse((bool)operatorResult.Result);
 			operatorResult = Operator.GreaterThan.Apply(result1, result2);
 			Assert.IsTrue((bool)operatorResult.Result);

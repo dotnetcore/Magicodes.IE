@@ -122,9 +122,7 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
             ImporterHeaderInfos = null;
             ImportResult = null;
             _excelPackage?.Dispose();
-            _excelStream?.Close();
             _excelStream?.Dispose();
-            GC.Collect();
         }
 
         /// <summary>

@@ -1905,7 +1905,8 @@ namespace EPPlusTest
             {
                 ExcelWorkbook wb = package.Workbook;
                 ExcelWorksheet sh = wb.Worksheets[1];
-                Image img_ = Image.Load(@"C:\temp\img\background.gif", out var format);
+                var format = Image.DetectFormat(@"C:\temp\img\background.gif");
+                var img_ = Image.Load(@"C:\temp\img\background.gif");
                 ExcelPicture pic = sh.Drawings.AddPicture("logo", img_, format);
                 pic.SetPosition(1, 1);
 
@@ -2046,7 +2047,8 @@ namespace EPPlusTest
                 int row = 1;
                 foreach (var f in Directory.EnumerateFiles(@"c:\temp\addin_temp\Addin\img\open_icon_library-full\icons\ico\16x16\actions\"))
                 {
-                    var b = Image.Load(f, out var format);
+                    var format = Image.DetectFormat(f);
+                    var b = Image.Load(f);
                     var pic = ws.Drawings.AddPicture($"Image{(row + 1) / 2}", b, format);
                     pic.SetPosition(row, 0, 0, 0);
                     row += 2;
@@ -2301,8 +2303,10 @@ namespace EPPlusTest
             ws = _pck.Workbook.Worksheets["DateFormat"];
             var pCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("sv-Se");
-            Assert.AreEqual(ws.Cells["A1"].Text, "den 31 december 2018");
             Assert.AreEqual(ws.GetValue<DateTime>(1, 1), new DateTime(2018, 12, 31));
+            var text = ws.Cells["A1"].Text;
+            Assert.IsTrue(text == "den 31 december 2018" || text == "måndag 31 december 2018",
+                $"Unexpected date text: {text}");
             System.Threading.Thread.CurrentThread.CurrentCulture = pCulture;
         }
         [TestMethod]

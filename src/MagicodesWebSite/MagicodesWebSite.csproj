@@ -1,18 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net7.0;net6.0;net5.0;netcoreapp3.1;</TargetFrameworks>
+    <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
-    <NoWarn>1701;1702;CS1591</NoWarn>
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="GenFu" Version="1.6.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.1" />
+    <PackageReference Include="GenFu" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>

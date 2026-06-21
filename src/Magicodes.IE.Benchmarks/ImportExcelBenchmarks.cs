@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace Magicodes.Benchmarks
 {
-    [SimpleJob(launchCount: 2, warmupCount: 2, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp50)]
+    [SimpleJob(launchCount: 2, warmupCount: 2, invocationCount: 5, runtimeMoniker: RuntimeMoniker.Net80)]
     [MemoryDiagnoser]
-    [ThreadingDiagnoser]
-    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
-    //[SimpleJob(launchCount: 1, warmupCount: 1, targetCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp22)]
+    //[SimpleJob(launchCount: 1, warmupCount: 1, invocationCount: 5, runtimeMoniker: RuntimeMoniker.NetCoreApp31)]
     public class ImportExcelBenchmarks
     {
         private readonly List<ImportStudentDto> _studentDtos = new List<ImportStudentDto>();

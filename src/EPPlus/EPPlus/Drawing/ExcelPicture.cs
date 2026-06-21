@@ -166,6 +166,60 @@ namespace OfficeOpenXml.Drawing
             //_drawings._pics.Add(newPic);
         }
 
+        /// <summary>
+        /// 从原始字节构造，跳过 Image.Load 和 GetImageAsByteArray
+        /// </summary>
+        internal ExcelPicture(ExcelDrawings drawings, XmlNode node,
+            byte[] imageBytes, string contentType, int width, int height)
+            : base(drawings, node, "xdr:pic/xdr:nvPicPr/xdr:cNvPr/@name")
+        {
+            // Caller already knows width/height — defer GetPositionSize until From/To are set.
+            _doNotAdjust = true;
+            XmlElement picNode = node.OwnerDocument.CreateElement("xdr", "pic", ExcelPackage.schemaSheetDrawings);
+            node.InsertAfter(picNode, node.SelectSingleNode("xdr:to", NameSpaceManager));
+            _hyperlink = null;
+            picNode.InnerXml = PicStartXml();
+
+            node.InsertAfter(node.OwnerDocument.CreateElement("xdr", "clientData", ExcelPackage.schemaSheetDrawings),
+                picNode);
+
+            var package = drawings.Worksheet._package.Package;
+            Image = null;
+            _contentType = contentType;
+            string relID = SavePictureDirectly(imageBytes, contentType);
+
+            node.SelectSingleNode("xdr:pic/xdr:blipFill/a:blip/@r:embed", NameSpaceManager).Value = relID;
+            _height = height;
+            _width = width;
+            EditAs = eEditAs.OneCell;
+            SetPixelWidth(width, 96f);
+            SetPixelHeight(height, 96f);
+            package.Flush();
+        }
+
+        private string SavePictureDirectly(byte[] imageBytes, string contentType)
+        {
+            var ii = _drawings._package.AddImage(imageBytes, null, contentType);
+
+            ImageHash = ii.Hash;
+            if (_drawings._hashes.ContainsKey(ii.Hash))
+            {
+                var relID = _drawings._hashes[ii.Hash];
+                var rel = _drawings.Part.GetRelationship(relID);
+                UriPic = UriHelper.ResolvePartUri(rel.SourceUri, rel.TargetUri);
+                return relID;
+            }
+
+            UriPic = ii.Uri;
+            ImageHash = ii.Hash;
+
+            RelPic = _drawings.Part.CreateRelationship(UriHelper.GetRelativeUri(_drawings.UriDrawing, UriPic),
+                Packaging.TargetMode.Internal, ExcelPackage.schemaRelationships + "/image");
+
+            _drawings._hashes.Add(ii.Hash, RelPic.Id);
+            return RelPic.Id;
+        }
+
         #endregion
 
         private string SavePicture(Image image, IImageFormat format)
@@ -246,7 +300,7 @@ namespace OfficeOpenXml.Drawing
         internal string ImageHash { get; set; }
 
         /// <summary>
-        /// The Image
+        /// The Image (may be null when constructed from raw bytes via AddPictureFromBytes)
         /// </summary>
         public Image Image { get; private set; }
 
@@ -256,7 +310,12 @@ namespace OfficeOpenXml.Drawing
         /// </summary>
         public IImageFormat ImageFormat { get; private set; }
 
-        internal string ContentType => ImageFormat?.DefaultMimeType;
+        /// <summary>
+        /// 从原始字节构造时，直接存储 content type 字符串
+        /// </summary>
+        private string _contentType;
+
+        internal string ContentType => _contentType ?? ImageFormat?.DefaultMimeType;
 
         /// <summary>
         /// Set the size of the image in percent from the orginal size
@@ -267,6 +326,7 @@ namespace OfficeOpenXml.Drawing
         {
             if (Image == null)
             {
+                // 原始字节构造的图片，使用已存储的 _width/_height 和标准 DPI
                 base.SetSize(Percent);
             }
             else
@@ -348,9 +408,9 @@ namespace OfficeOpenXml.Drawing
         {
             base.Dispose();
             _hyperlink = null;
-            Image.Dispose();
+            Image?.Dispose();
             Image = null;
-            ImageFormat = JpegFormat.Instance;
+            _contentType = null;
         }
     }
 }

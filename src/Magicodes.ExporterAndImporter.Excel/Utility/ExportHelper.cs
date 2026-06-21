@@ -898,10 +898,71 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
 
         #region 图片处理
         /// <summary>
-        ///     添加图片
+        ///     添加图片：并行下载 + SKCodec 读元数据 + 串行写入
         /// </summary>
         protected void AddPictures(int rowCount)
         {
+            // 收集唯一 URL
+            var imageUrls = new HashSet<string>();
+            for (var colIndex = 0; colIndex < ExporterHeaderList.Count; colIndex++)
+            {
+                if (ExporterHeaderList[colIndex].ExportImageFieldAttribute == null)
+                    continue;
+                for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
+                {
+                    var url = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1].Text;
+                    if (!string.IsNullOrWhiteSpace(url))
+                        imageUrls.Add(url);
+                }
+            }
+
+            if (imageUrls.Count == 0)
+                return;
+
+            // 预分配 EPPlus 内部 drawings 容器容量
+            var imageColCount = 0;
+            for (var c = 0; c < ExporterHeaderList.Count; c++)
+            {
+                if (ExporterHeaderList[c].ExportImageFieldAttribute != null)
+                    imageColCount++;
+            }
+            CurrentExcelWorksheet.Drawings.Preallocate(rowCount * Math.Max(imageColCount, 1));
+
+            // 关闭 Row.Height 触发的 drawings 重算(EditAs=OneCell 不依赖 row height 重定位)
+            // 必须用 try/finally 保证 flag 恢复,否则任一处抛未捕获异常都会让 flag 卡在 false,
+            // 后续用户对 Row.Height / Column.Width / Column.Hidden 的 setter 静默失效.
+            var package = CurrentExcelPackage;
+            var prevDoAdjust = package.DoAdjustDrawings;
+            package.DoAdjustDrawings = false;
+            try
+            {
+
+            // 并行加载图片
+            var imageCache = new System.Collections.Concurrent.ConcurrentDictionary<string, (byte[] bytes, Magicodes.IE.Excel.Images.ImageExtensions.ImageInfo meta)>();
+            System.Threading.Tasks.Parallel.ForEach(imageUrls, url =>
+            {
+                try
+                {
+                    byte[] imageBytes = null;
+                    if (url.IsBase64StringValid())
+                        imageBytes = url.DecodeBase64ToBytes();
+                    else if (File.Exists(url))
+                        imageBytes = url.ReadImageBytes();
+                    else if (url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                        imageBytes = url.DownloadImageBytes();
+
+                    if (imageBytes != null && imageBytes.Length > 0)
+                    {
+                        var meta = Magicodes.IE.Excel.Images.ImageExtensions.IdentifyImage(imageBytes);
+                        imageCache[url] = (imageBytes, meta);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            });
+
+            // 串行写入 Excel（EPPlus 非线程安全）
             int ignoreCount = 0;
             for (var colIndex = 0; colIndex < ExporterHeaderList.Count; colIndex++)
             {
@@ -909,69 +970,51 @@ namespace Magicodes.ExporterAndImporter.Excel.Utility
                 {
                     ignoreCount++;
                 }
-                if (ExporterHeaderList[colIndex].ExportImageFieldAttribute != null)
+                if (ExporterHeaderList[colIndex].ExportImageFieldAttribute == null)
+                    continue;
+
+                for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
                 {
-                    for (var rowIndex = 1; rowIndex <= rowCount; rowIndex++)
+                    var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
+                    var url = cell.Text;
+                    if (string.IsNullOrWhiteSpace(url))
                     {
-                        var cell = CurrentExcelWorksheet.Cells[rowIndex + 1, colIndex + 1];
-                        var url = cell.Text;
-                        if (File.Exists(url) || url.StartsWith("http", StringComparison.OrdinalIgnoreCase) || url.IsBase64StringValid())
+                        cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
+                        continue;
+                    }
+
+                    try
+                    {
+                        if (!imageCache.TryGetValue(url, out var cached))
                         {
-                            try
-                            {
-                                cell.Value = string.Empty;
-                                Image image;
-                                IImageFormat format;
-                                if (url.IsBase64StringValid())
-                                {
-                                    image = url.Base64StringToImage(out format);
-                                }
-                                else
-                                {
-                                    image = url.GetImageByUrl(out format);
-                                }
-
-                                if (image == null)
-                                {
-                                    cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
-                                }
-                                else
-                                {
-                                    using (ExcelPicture pic = CurrentExcelWorksheet.Drawings.AddPicture(Guid.NewGuid().ToString(), image, format))
-                                    {
-                                        AddImage((rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0)),
-                                            colIndex - ignoreCount, pic, ExporterHeaderList[colIndex].ExportImageFieldAttribute.YOffset, ExporterHeaderList[colIndex].ExportImageFieldAttribute.XOffset);
-
-                                        //pic.SetPosition
-                                        //    (rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0),
-                                        //    ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height / 5, colIndex - ignoreCount, 0);
-
-                                        CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
-                                        //pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
-                                        pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
-                                    }
-                                }
-
-                            }
-                            catch (Exception)
-                            {
-                                cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
-                            }
-                        }
-                        else
-                        {
+                            cell.Value = string.Empty;
                             cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
+                            continue;
+                        }
+
+                        cell.Value = string.Empty;
+
+                        using (var pic = CurrentExcelWorksheet.Drawings.AddPictureFromBytes(
+                            Guid.NewGuid().ToString(), cached.bytes, cached.meta.ContentType,
+                            cached.meta.Width, cached.meta.Height))
+                        {
+                            AddImage((rowIndex + (ExcelExporterSettings.HeaderRowIndex > 1 ? ExcelExporterSettings.HeaderRowIndex : 0)),
+                                colIndex - ignoreCount, pic, ExporterHeaderList[colIndex].ExportImageFieldAttribute.YOffset, ExporterHeaderList[colIndex].ExportImageFieldAttribute.XOffset);
+
+                            CurrentExcelWorksheet.Row(rowIndex + 1).Height = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height;
+                            pic.SetSize(ExporterHeaderList[colIndex].ExportImageFieldAttribute.Width * 7, ExporterHeaderList[colIndex].ExportImageFieldAttribute.Height);
                         }
                     }
+                    catch (Exception)
+                    {
+                        cell.Value = ExporterHeaderList[colIndex].ExportImageFieldAttribute.Alt;
+                    }
                 }
-                //else
-                //{
-                //    for (var j = 1; j <= rowCount; j++)
-                //    {
-                //        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;//水平居中
-                //        CurrentExcelWorksheet.Cells[j + 1, i + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;//垂直居中
-                //    }
-                //}
+            }
+            }
+            finally
+            {
+                package.DoAdjustDrawings = prevDoAdjust;
             }
         }
 
