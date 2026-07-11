@@ -10,8 +10,8 @@
 #
 # Matrix coverage:
 #   test:  7 OS × [net8.0, net10.0] + net9.0 × 3 + net471/net6.0 (Win)
-#   io:    3 OS × [net8.0, net10.0] + macOS Debug CRC trap
-#   Total: ~22 parallel jobs (fail-fast: false)
+#   io:    3 OS × [net8.0, net10.0] + net6.0 × 3 + net471 (Win) + macOS Debug CRC trap
+#   Total: ~30 parallel jobs (fail-fast: false)
 #
 # Test runner conventions:
 #   --filter Category!=Flaky     exclude flaky tests (MassTransit pattern)
@@ -219,6 +219,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         framework: [net8.0, net10.0]
+        include:
+          - { os: ubuntu-latest,  framework: net6.0 }
+          - { os: windows-latest, framework: net6.0 }
+          - { os: macos-latest,   framework: net6.0 }
+          - { os: windows-latest, framework: net471 }
     env:
       IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
     steps:
@@ -228,6 +233,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
+            6.0.x
             8.0.x
             10.0.x
           cache: true
