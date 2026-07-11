@@ -25,7 +25,11 @@ namespace Magicodes.IE.IO.Tests
             {
                 Xlsx.Write(path, new[] { new OrderDto { OrderNo = "A1", Amount = 10m, CreatedAt = new DateTime(2024, 1, 1) } });
                 File.Exists(path).ShouldBeTrue();
+#if NET6_0_OR_GREATER
                 var bytes = await File.ReadAllBytesAsync(path);
+#else
+                var bytes = File.ReadAllBytes(path);
+#endif
                 var rows = XlsxIO_TestSupport.ReadSheet(bytes);
                 rows.Count.ShouldBe(2);
                 rows[1][0].ShouldBe("A1");
@@ -415,7 +419,7 @@ namespace Magicodes.IE.IO.Tests
             var bytes = Xlsx.WriteWorkbookToBytes(
                 new Sheet("First", new[] { new OrderDto { OrderNo = "A" } }),
                 new Sheet("Second", new[] { new OrderDto { OrderNo = "B" } }));
-            ms.Write(bytes);
+            ms.Write(bytes, 0, bytes.Length);
             var xml = XlsxIO_TestSupport.ReadEntry(ms.ToArray(), "xl/workbook.xml");
             xml.ShouldContain("First");
             xml.ShouldContain("Second");
@@ -430,7 +434,11 @@ namespace Magicodes.IE.IO.Tests
                 var bytes = Xlsx.WriteWorkbookToBytes(
                     new Sheet("First", new[] { new OrderDto { OrderNo = "A" } }),
                     new Sheet("Second", new[] { new OrderDto { OrderNo = "B" } }));
+#if NET6_0_OR_GREATER
                 await File.WriteAllBytesAsync(path, bytes);
+#else
+                File.WriteAllBytes(path, bytes);
+#endif
                 var xml = XlsxIO_TestSupport.ReadEntry(bytes, "xl/workbook.xml");
                 xml.ShouldContain("First");
                 xml.ShouldContain("Second");
@@ -621,7 +629,7 @@ namespace Magicodes.IE.IO.Tests
             var bytes = Xlsx.WriteWorkbookToBytes(
                 new Sheet<OrderDto>("S1", new[] { new OrderDto { OrderNo = "A" } }),
                 new Sheet<OrderDto>("S2", Array.Empty<OrderDto>()));
-            ms.Write(bytes);
+            ms.Write(bytes, 0, bytes.Length);
             var workbookXml = XlsxIO_TestSupport.ReadEntry(ms.ToArray(), "xl/workbook.xml");
             workbookXml.ShouldContain("S1");
             workbookXml.ShouldContain("S2");
@@ -654,7 +662,7 @@ namespace Magicodes.IE.IO.Tests
             await Xlsx.WriteAsync(ms, Data(), p => p.Sheet("Orders"));
             var bytes = ms.ToArray();
             var workbookXml = XlsxIO_TestSupport.ReadEntry(bytes, "xl/workbook.xml");
-            var sheetTagCount = (workbookXml.Length - workbookXml.Replace("<sheet ", string.Empty, StringComparison.Ordinal).Length) / "<sheet ".Length;
+            var sheetTagCount = (workbookXml.Length - workbookXml.Replace("<sheet ", "").Length) / "<sheet ".Length;
 
             sheetTagCount.ShouldBe(1);
             workbookXml.ShouldContain("Orders");

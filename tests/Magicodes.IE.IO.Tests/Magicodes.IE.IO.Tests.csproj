@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Memory" Condition="'$(TargetFramework)' == 'net471'" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net471" Condition="'$(TargetFramework)' == 'net471'" PrivateAssets="all" />
   </ItemGroup>
 

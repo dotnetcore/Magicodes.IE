@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Magicodes.IE.IO;
 using Xunit;
 
+#if NET
 namespace Magicodes.IE.IO.Tests;
 
 public sealed class NuGetConsumerIntegrationTests
@@ -46,7 +46,7 @@ public sealed class NuGetConsumerIntegrationTests
             var publishProperties = publishAot ? "<PublishAot>true</PublishAot><PublishTrimmed>true</PublishTrimmed>" : string.Empty;
             File.WriteAllText(Path.Combine(consumer, "Consumer.csproj"), $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net8.0</TargetFramework><Nullable>enable</Nullable>{publishProperties}</PropertyGroup><ItemGroup><PackageReference Include=\"Magicodes.IE.IO\" Version=\"{packageVersion}\" /></ItemGroup></Project>");
             File.WriteAllText(Path.Combine(consumer, "Program.cs"), "using System.IO; using System.Linq; using Magicodes.IE.IO; namespace Consumer; public sealed class MoneyConverter : CellConverter<decimal> { public override bool Read(string cell, out decimal value) => decimal.TryParse(cell, out value); } [XlsxExportable] public sealed class ConsumerRow { public string Name { get; set; } = \"\"; public decimal Amount { get; set; } } public static class Program { public static void Main() { var metadata = XlsxGeneratedTypeMetadataRegistry.TryGet<ConsumerRow>(); if (metadata is null) throw new System.Exception(\"metadata:null\"); using var ms = new MemoryStream(); Xlsx.Write(ms, new[] { new ConsumerRow { Name = \"ok\", Amount = 12.5m } }); ms.Position = 0; var options = new XlsxReadOptions<ConsumerRow>().WithConverter(new MoneyConverter()); var row = Xlsx.Read<ConsumerRow>(ms, options).Single(); if (row.Name != \"ok\" || row.Amount != 12.5m) throw new System.Exception($\"{row.Name}|{row.Amount}\"); } }");
-            var rid = RuntimeInformation.RuntimeIdentifier;
+            var rid = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
             Run(dotnet, consumer, $"restore --no-cache --configfile NuGet.config{(publishAot ? $" -r {rid}" : string.Empty)} -v:minimal");
             if (!publishAot)
             {
@@ -58,7 +58,7 @@ public sealed class NuGetConsumerIntegrationTests
             var publishRoot = Path.Combine(consumer, "bin", "Release", "net8.0", rid, "publish");
             var executable = Directory.GetFiles(publishRoot, "*", SearchOption.TopDirectoryOnly)
                 .SingleOrDefault(path =>
-                    string.Equals(Path.GetFileName(path), OperatingSystem.IsWindows() ? "Consumer.exe" : "Consumer", StringComparison.Ordinal));
+                    string.Equals(Path.GetFileName(path), System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows) ? "Consumer.exe" : "Consumer", StringComparison.Ordinal));
             if (executable is null)
                 throw new FileNotFoundException($"NativeAOT executable was not found under {publishRoot}. Files: {string.Join(", ", Directory.Exists(publishRoot) ? Directory.GetFiles(publishRoot, "*", SearchOption.AllDirectories) : Array.Empty<string>())}");
             Run(executable, consumer, string.Empty);
@@ -94,3 +94,4 @@ public sealed class NuGetConsumerIntegrationTests
         return directory?.FullName ?? throw new DirectoryNotFoundException("Magicodes.IE repository root not found.");
     }
 }
+#endif
