@@ -7,12 +7,11 @@
 # Frameworks: net6.0, net8.0, net9.0, net10.0, net471
 #
 # Architecture:
-#   changed  -> skip detection (docs-only PRs skip tests)
-#   test     -> build & test matrix (legacy core test project)
-#   io-test-macos -> Magicodes.IE.IO dedicated regression suite on Apple-Silicon
-#                    (-c Debug activates the CRC32 self-check; guards #1-class
-#                     arm64 platform traps that x86-only CI would miss)
-#   check    -> alls-green gate (single required status check)
+#   changed             -> skip detection (docs-only PRs skip tests)
+#   test                -> build & test matrix (legacy core test project)
+#   io-test             -> Magicodes.IE.IO test matrix (Linux/Windows/macOS, net8.0/net10.0)
+#   io-test-macos-debug -> macOS arm64 Debug CRC32 self-check (catches arm64-specific bugs)
+#   check               -> alls-green gate (single required status check)
 #
 # Test runner:
 #   -parallel none -noshadow   (Orleans pattern, prevents file locking)
@@ -275,29 +274,94 @@ jobs:
           retention-days: 7
 
   ###################################################
-  # IO PERF-REGRESSION GUARD (Apple Silicon / arm64)
+  # IO TESTS (all platforms)
   #
-  # Runs the *dedicated* Magicodes.IE.IO test project
-  # (tests/Magicodes.IE.IO.Tests) on Apple-Silicon. This is the project that
-  # holds XlsxIoPerfRegressionTests — the round-trip + ZipArchive-reopen guard
-  # for the ForwardOnlyZipWriter CRC32 path. The main matrix above targets the
-  # legacy core test project only, so without this job the IO regression suite
-  # never ran in CI and an arm64 CRC bug (#1 class) could slip through on
-  # x86-only runners.
-  #
-  # Built/tested in -c Debug on purpose: ForwardOnlyZipWriter contains a
-  # #if DEBUG CRC32 self-check ("123456789" => 0xCBF43926). A wrong arm64 CRC
-  # throws at assembly load, failing the whole run immediately — the cheapest,
-  # strongest platform trap. (Release runtime CRC is still exercised by the
-  # ZipArchive reopen assertions inside the tests.)
+  # Runs the *dedicated* Magicodes.IE.IO test project across
+  # Linux / Windows / macOS to guard the ForwardOnlyZipWriter
+  # CRC32 path + XlsxIoPerfRegressionTests on all architectures.
   ###################################################
 
-  io-test-macos:
-    name: IO Tests (macOS arm64 / Debug)
+  io-test:
+    name: IO ${{ matrix.os }} / ${{ matrix.framework }}
     needs: changed
     if: needs.changed.outputs.should_skip != 'true'
-    runs-on: macos-15
-    timeout-minutes: 20
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        framework: [net8.0, net10.0]
+    env:
+      IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+          cache: true
+          cache-dependency-path: |
+            Magicodes.IE.sln
+            src/**/*.csproj
+
+      - name: Restore
+        run: dotnet restore ${{ env.IO_TEST_PROJECT }}
+
+      - name: Build
+        run: dotnet build ${{ env.IO_TEST_PROJECT }} -c Release --no-restore -bl
+
+      - name: Test
+        run: >
+          dotnet test ${{ env.IO_TEST_PROJECT }}
+          -c Release --no-build
+          -f ${{ matrix.framework }}
+          --blame-hang-timeout 10m
+          --blame-crash-dump-type full
+          --blame-hang-dump-type full
+          --logger "trx;LogFileName=results-io-${{ matrix.framework }}.trx"
+          --logger GitHubActions
+          --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-test-results-${{ matrix.os }}-${{ matrix.framework }}
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-build-log-${{ matrix.os }}-${{ matrix.framework }}
+          path: msbuild.binlog
+          if-no-files-found: ignore
+          retention-days: 7
+
+  ###################################################
+  # IO CRC32 SELF-CHECK (macOS arm64 / Debug)
+  #
+  # Built/tested in -c Debug on purpose: ForwardOnlyZipWriter
+  # contains a #if DEBUG CRC32 self-check ("123456789" =>
+  # 0xCBF43926). A wrong arm64 CRC throws at assembly load,
+  # failing the whole run immediately — the cheapest, strongest
+  # platform trap. (Release runtime CRC is still exercised by the
+  # ZipArchive reopen assertions inside the io-test matrix above.)
+  ###################################################
+
+  io-test-macos-debug:
+    name: IO Debug (macOS arm64 CRC check)
+    needs: changed
+    if: needs.changed.outputs.should_skip != 'true'
+    runs-on: macos-latest
+    timeout-minutes: 15
     env:
       IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
     steps:
@@ -367,7 +431,7 @@ jobs:
   check:
     name: CI Passed
     if: always()
-    needs: [changed, test, io-test-macos]
+    needs: [changed, test, io-test, io-test-macos-debug]
     runs-on: ubuntu-latest
     steps:
       - name: Evaluate results
@@ -376,7 +440,7 @@ jobs:
           allowed-skips: >-
             ${{
               needs.changed.outputs.should_skip == 'true'
-              && 'test'
+              && 'test,io-test,io-test-macos-debug'
               || ''
             }}
           jobs: ${{ toJSON(needs) }}
