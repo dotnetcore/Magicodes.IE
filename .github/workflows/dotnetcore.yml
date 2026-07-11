@@ -8,7 +8,10 @@
 #
 # Architecture:
 #   changed  -> skip detection (docs-only PRs skip tests)
-#   test     -> build & test matrix
+#   test     -> build & test matrix (legacy core test project)
+#   io-test-macos -> Magicodes.IE.IO dedicated regression suite on Apple-Silicon
+#                    (-c Debug activates the CRC32 self-check; guards #1-class
+#                     arm64 platform traps that x86-only CI would miss)
 #   check    -> alls-green gate (single required status check)
 #
 # Test runner:
@@ -272,6 +275,90 @@ jobs:
           retention-days: 7
 
   ###################################################
+  # IO PERF-REGRESSION GUARD (Apple Silicon / arm64)
+  #
+  # Runs the *dedicated* Magicodes.IE.IO test project
+  # (tests/Magicodes.IE.IO.Tests) on Apple-Silicon. This is the project that
+  # holds XlsxIoPerfRegressionTests — the round-trip + ZipArchive-reopen guard
+  # for the ForwardOnlyZipWriter CRC32 path. The main matrix above targets the
+  # legacy core test project only, so without this job the IO regression suite
+  # never ran in CI and an arm64 CRC bug (#1 class) could slip through on
+  # x86-only runners.
+  #
+  # Built/tested in -c Debug on purpose: ForwardOnlyZipWriter contains a
+  # #if DEBUG CRC32 self-check ("123456789" => 0xCBF43926). A wrong arm64 CRC
+  # throws at assembly load, failing the whole run immediately — the cheapest,
+  # strongest platform trap. (Release runtime CRC is still exercised by the
+  # ZipArchive reopen assertions inside the tests.)
+  ###################################################
+
+  io-test-macos:
+    name: IO Tests (macOS arm64 / Debug)
+    needs: changed
+    if: needs.changed.outputs.should_skip != 'true'
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+          cache: true
+          cache-dependency-path: |
+            Magicodes.IE.sln
+            src/**/*.csproj
+
+      - name: Restore
+        run: dotnet restore ${{ env.IO_TEST_PROJECT }}
+
+      - name: Build
+        run: dotnet build ${{ env.IO_TEST_PROJECT }} -c Debug --no-restore -bl
+
+      - name: Test
+        shell: bash
+        run: |
+          set +e
+          dotnet test ${{ env.IO_TEST_PROJECT }} \
+            -c Debug --no-build \
+            -f net8.0 \
+            --blame-hang-timeout 10m \
+            --blame-crash-dump-type full \
+            --blame-hang-dump-type full \
+            --logger "trx;LogFileName=results-io-macos-debug.trx" \
+            --logger GitHubActions \
+            --results-directory TestResults
+          TEST_EXIT=$?
+          set -e
+          if [ $TEST_EXIT -ne 0 ]; then
+            echo "::error::IO tests failed on macOS arm64 (Debug CRC self-check active)"
+            exit 1
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-test-results-macos-debug
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-build-log-macos-debug
+          path: msbuild.binlog
+          if-no-files-found: ignore
+          retention-days: 7
+
+  ###################################################
   # ALLS-GREEN GATE
   # Single required status check for branch protection.
   # Add "check" as the only required check in repo settings.
@@ -280,7 +367,7 @@ jobs:
   check:
     name: CI Passed
     if: always()
-    needs: [changed, test]
+    needs: [changed, test, io-test-macos]
     runs-on: ubuntu-latest
     steps:
       - name: Evaluate results

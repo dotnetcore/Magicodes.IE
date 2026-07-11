@@ -1,56 +1,34 @@
-﻿@page 
-@model MagicodesWebSite.IndexModel 
-@{ } 
+﻿@page
+@model MagicodesWebSite.IndexModel
+@{
+    Layout = null;
+}
 <html>
- <head></head>
- <body>
-  <button id="downloadexcel">下载</button> 
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script> 
+<head>
+  <meta charset="utf-8" />
+  <title>Magicodes WebSite</title>
+</head>
+<body>
+  <button id="downloadexcel">下载</button>
   <script>
-$("#downloadexcel").click(function() {
-    $.ajax({
-        url: "https://localhost:5001/api/Magicodes/excel",
-        type: 'GET',
+document.querySelector("#downloadexcel").addEventListener("click", async function () {
+    const response = await fetch("/api/Magicodes/excel", {
         headers: {
-            'Magicodes-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        },
-        xhrFields: {
-            responseType: 'blob'
-        },
-        success: function(data, status, xhr) {
-            var name = xhr.getResponseHeader("Content-disposition");
-            var filename = name.substring(20, name.length);
-            var blob = new Blob([data], {
-                type: 'text/xlsx'
-            });
-            var Url = URL.createObjectURL(blob);
-            var link = document.createElement('a');
-            link.href = Url;
-            link.download = filename;
-            link.click();
+            "Magicodes-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         }
     });
-})
-    @* document.querySelector("#downloadexcel").onclick= function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET", "https://localhost:5001/api/Magicodes/excel", true); //也可以使用Post
-        xmlhttp.responseType = 'blob'
-        xmlhttp.setRequestHeader("Magicodes-Type","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        xmlhttp.send();
-        // readyState == 4 为请求完成，status == 200为请求成功返回的状态
-        xmlhttp.onreadystatechange = function(){
-        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-        var name = xmlhttp.getResponseHeader("Content-disposition");
-        var filename = name.substring(20,name.length);
-        var blob = new Blob([xmlhttp.response], {type: 'text/xlsx'});
-        var Url = URL.createObjectURL(blob);
-        var link = document.createElement('a');
-        link.href = Url;
-        link.download = filename;
-        link.click();
-        }
-        }
-        }*@
-</script>
- </body>
+
+    const blob = await response.blob();
+    const contentDisposition = response.headers.get("Content-Disposition") || "";
+    const match = contentDisposition.match(/filename\*?=(?:UTF-8''|\"?)([^\";]+)\"?/i);
+    const filename = match ? decodeURIComponent(match[1]) : "export.xlsx";
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+});
+  </script>
+</body>
 </html>

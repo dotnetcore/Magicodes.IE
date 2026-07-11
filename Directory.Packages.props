@@ -2,9 +2,10 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
-
   <ItemGroup>
+    <PackageVersion Include="DocumentFormat.OpenXml" Version="3.5.1" />
     <PackageVersion Include="DynamicExpresso.Core" Version="2.3.3" />
+    <PackageVersion Include="LightExcel" Version="2026.6.4.1" />
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.2" />
     <PackageVersion Include="CsvHelper" Version="27.2.1" />
     <PackageVersion Include="HtmlToOpenXml.dll" Version="3.1.0" />
@@ -21,10 +22,15 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
     <PackageVersion Include="Shouldly" Version="4.0.3" />
     <PackageVersion Include="Codeuctivity.ImageSharpCompare" Version="2.0.76" />
+    <PackageVersion Include="Microsoft.NETFramework.ReferenceAssemblies.net471" Version="1.0.3" />
     <PackageVersion Include="coverlet.collector" Version="3.1.2" />
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.4.1" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.Loader" Version="4.3.0" />
+    <!-- netstandard2.0 polyfills for Magicodes.IE.IO -->
+    <PackageVersion Include="System.Memory" Version="4.5.5" />
+    <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+    <PackageVersion Include="PolySharp" Version="1.15.0" />
     <!-- Transitive CVE overrides (Stage 2 Step 6): see Excel.NPOI.csproj for context.
          Top-level PackageReference in the consumer csproj forces NuGet to honor these. -->
     <PackageVersion Include="System.Text.Encodings.Web" Version="8.0.0" />
@@ -32,8 +38,10 @@
     <PackageVersion Include="NPOI" Version="2.8.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.0" />
     <PackageVersion Include="MiniExcel" Version="1.29.0" />
+
+    <PackageVersion Include="ClosedXML" Version="0.102.3" />
     <PackageVersion Include="FakeItEasy" Version="7.2.0" />
     <PackageVersion Include="MSTest.TestAdapter" Version="2.2.7" />
     <PackageVersion Include="MSTest.TestFramework" Version="2.2.7" />
@@ -41,7 +49,6 @@
     <PackageVersion Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
     <PackageVersion Include="CS-Script" Version="4.6.5" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="3.1.6" />

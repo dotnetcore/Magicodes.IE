@@ -22,20 +22,7 @@ namespace MagicodesWebSite
 
         public static IWebHostBuilder CreateHostBuilder(string[] args)
         {
-            string scenario;
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Choose a sample to run:");
-                Console.WriteLine($"1. MiddlewareScenario");
-                Console.WriteLine($"2. FilterScenario");
-                Console.WriteLine();
-
-                scenario = Console.ReadLine();
-            }
-            else
-            {
-                scenario = args[0];
-            }
+            var scenario = args.Length > 0 ? args[0] : FilterScenario;
 
             Type startupType;
             switch (scenario)
@@ -69,6 +56,7 @@ namespace MagicodesWebSite
             public void ConfigureServices(IServiceCollection services)
             {
                 services.AddControllers();
+                services.AddRazorPages();
                 services.AddMagicodesPdfExporter();
                 services.AddSwaggerGen(c =>
                 {
@@ -85,6 +73,7 @@ namespace MagicodesWebSite
                 app.UseSwaggerUI();
                 app.UseEndpoints(endpoints =>
                 {
+                    endpoints.MapRazorPages();
                     endpoints.MapControllers();
                 });
             }
