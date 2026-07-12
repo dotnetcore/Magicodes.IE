@@ -74,6 +74,21 @@
 <a href="https://opencollective.com/magicodes"><img src="https://opencollective.com/magicodes/all/badge.svg?label=financial+contributors" alt="Financial Contributors on Open Collective"></a></p>
 <h2 id="overview">Overview</h2>
 <p>Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.</p>
+<h3 id="magicodesieio-new">Magicodes.IE.IO <sub>NEW</sub></h3>
+<p><strong>A zero-dependency, streaming, low-allocation Excel I/O engine</strong> — built from scratch without EPPlus, ClosedXML, or any third-party Excel library. Supports <code>netstandard2.0</code> / <code>net6.0</code> / <code>net8.0</code> / <code>net10.0</code>. Native <code>IAsyncEnumerable</code>, AOT-friendly.</p>
+<pre><code>dotnet add package Magicodes.IE.IO
+</code></pre>
+<pre><code class="lang-csharp">// Zero-config export
+Xlsx.Write(&quot;/tmp/orders.xlsx&quot;, orders);
+Xlsx.Write(Response.Body, orders);
+var bytes = Xlsx.ToBytes(orders);
+
+// Async streaming write — DB query straight to file
+await Xlsx.WriteAsync(stream, dbContext.Orders.AsAsyncEnumerable());
+</code></pre>
+<blockquote>
+<p><a href="./docs/blog-magicodes-ie-io.md">Learn more</a></p>
+</blockquote>
 <p><strong><img src="./docs/Magicodes.IE.en.png" alt="General description"></strong></p>
 <h3 id="azure-devops">Azure DevOps</h3>
 <ul>
@@ -92,6 +107,10 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><strong>Magicodes.IE.IO</strong></td>
+<td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.IO"><img src="https://buildstats.info/nuget/Magicodes.IE.IO" alt="NuGet"></a></strong></td>
+</tr>
 <tr>
 <td><strong>Magicodes.IE.Core</strong></td>
 <td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.Core"><img src="https://buildstats.info/nuget/Magicodes.IE.Core" alt="NuGet"></a></strong></td>

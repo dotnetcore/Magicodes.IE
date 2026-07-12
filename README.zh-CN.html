@@ -98,6 +98,21 @@
 <li>Github：<a href="https://github.com/dotnetcore/Magicodes.IE">https://github.com/dotnetcore/Magicodes.IE</a></li>
 <li>码云（手动同步，不维护）：<a href="https://gitee.com/magicodes/Magicodes.IE">https://gitee.com/magicodes/Magicodes.IE</a></li>
 </ul>
+<h3 id="magicodesieio-new">Magicodes.IE.IO <sub>NEW</sub></h3>
+<p><strong>零运行时依赖、流式低分配的 Excel 读写引擎</strong>——从 ZIP 到 OOXML 全部自研，不依赖 EPPlus、ClosedXML 或任何第三方 Excel 库。支持 <code>netstandard2.0</code> / <code>net6.0</code> / <code>net8.0</code> / <code>net10.0</code>，<code>IAsyncEnumerable</code> 原生支持，AOT 友好。</p>
+<pre><code>dotnet add package Magicodes.IE.IO
+</code></pre>
+<pre><code class="lang-csharp">// 零配置导出
+Xlsx.Write(&quot;/tmp/orders.xlsx&quot;, orders);
+Xlsx.Write(Response.Body, orders);
+var bytes = Xlsx.ToBytes(orders);
+
+// 异步流式写入（配合 EF Core 边查边写）
+await Xlsx.WriteAsync(stream, dbContext.Orders.AsAsyncEnumerable());
+</code></pre>
+<blockquote>
+<p><a href="./docs/blog-cnblogs-magicodes-ie-io.md">了解更多</a></p>
+</blockquote>
 <p><strong><img src="./docs/Magicodes.IE.png" alt="总体说明"></strong></p>
 <h2 id="功能清单">功能清单</h2>
 <ul>
@@ -218,6 +233,10 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><strong>Magicodes.IE.IO</strong></td>
+<td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.IO"><img src="https://buildstats.info/nuget/Magicodes.IE.IO" alt="NuGet"></a></strong></td>
+</tr>
 <tr>
 <td><strong>Magicodes.IE.Core</strong></td>
 <td style="text-align: left;"><strong><a href="https://www.nuget.org/packages/Magicodes.IE.Core"><img src="https://buildstats.info/nuget/Magicodes.IE.Core" alt="NuGet"></a></strong></td>
