@@ -357,21 +357,49 @@ namespace Magicodes.IE.IO.Tests
         [Fact]
         public async Task Read_XlsxWrittenByMiniExcel_RoundTrips()
         {
+            // On Windows, Defender / the Indexing Service may briefly lock a freshly written .xlsx
+            // temp file; retry the file-touching operations to stay resilient against that flakiness.
             var path = Path.Combine(Path.GetTempPath(), $"miniexcel_{Guid.NewGuid():N}.xlsx");
             try
             {
-                MiniExcel.SaveAs(path, new[]
+                const int maxAttempts = 3;
+                bool verified = false;
+                for (int attempt = 1; attempt <= maxAttempts && !verified; attempt++)
                 {
-                    new { OrderNo = "M1", Amount = 10 },
-                    new { OrderNo = "M2", Amount = 20 },
-                });
-                var items = Xlsx.Read<OrderDto>(File.OpenRead(path)).ToList();
-                items.Count.ShouldBe(2);
-                items[0].OrderNo.ShouldBe("M1");
+                    try
+                    {
+                        MiniExcel.SaveAs(path, new[]
+                        {
+                            new { OrderNo = "M1", Amount = 10 },
+                            new { OrderNo = "M2", Amount = 20 },
+                        });
+                        using var fs = File.OpenRead(path);
+                        var items = Xlsx.Read<OrderDto>(fs).ToList();
+                        items.Count.ShouldBe(2);
+                        items[0].OrderNo.ShouldBe("M1");
+                        verified = true;
+                    }
+                    catch (IOException) when (attempt < maxAttempts)
+                    {
+                        await Task.Delay(150);
+                    }
+                }
+                verified.ShouldBeTrue("MiniExcel round-trip could not be verified (file locked by an external process)");
             }
             finally
             {
-                if (File.Exists(path)) File.Delete(path);
+                for (int i = 0; i < 3; i++)
+                {
+                    try
+                    {
+                        if (File.Exists(path)) File.Delete(path);
+                        break;
+                    }
+                    catch (IOException) when (i < 2)
+                    {
+                        await Task.Delay(150);
+                    }
+                }
             }
         }
 

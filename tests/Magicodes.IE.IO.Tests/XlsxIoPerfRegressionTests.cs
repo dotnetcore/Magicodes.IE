@@ -52,7 +52,9 @@ namespace Magicodes.IE.IO.Tests
             var read = Xlsx.Read<OrderDto>(ms).ToList();
             read.Count.ShouldBe(2);
             read[0].OrderNo.ShouldBe("RT-1");
-            read[0].Amount.ShouldBe(9.99m);
+            // Decimal is stored as an OOXML double; net471 round-trips with a tiny representation
+            // error (9.9900000000000002m) while net6+ returns 9.99m. Compare numerically.
+            ((double)read[0].Amount).ShouldBe(9.99, 1e-9);
             read[1].OrderNo.ShouldBe("RT-2");
             read[1].Amount.ShouldBe(0m);
         }

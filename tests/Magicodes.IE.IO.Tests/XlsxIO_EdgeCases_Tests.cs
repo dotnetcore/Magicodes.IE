@@ -198,7 +198,11 @@ namespace Magicodes.IE.IO.Tests
             list[99].Name.ShouldBe("Row99");
         }
 
+#if NETFRAMEWORK
+        [Fact(Skip = "net471 的 ZipArchive/DeflateStream 异步写实现不经由覆盖的 Stream.WriteAsync，无法注入异步写失败；该失败路径在 net6+ 已验证")]
+#else
         [Fact]
+#endif
         public async Task CompleteAsync_FailureIsFaultedAndCannotResume()
         {
             using var output = new XlsxIO_TestSupport.ThrowOnAsyncWriteStream();

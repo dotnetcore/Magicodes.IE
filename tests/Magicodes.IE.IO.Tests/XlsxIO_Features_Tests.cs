@@ -375,7 +375,12 @@ namespace Magicodes.IE.IO.Tests
                 writer.WriteRows(new[] { new XlsxIO_TestSupport.Order { A = 1 } }, XlsxIO_TestSupport.MakeTypedPlan(new[] { "A" }));
             }
             var xml = XlsxIO_TestSupport.ReadEntry(ms.ToArray(), "xl/worksheets/sheet1.xml");
-            xml.ShouldContain("ht=\"24.974999999999998\"");
+            // Double formatting differs across runtimes (net471 G15 vs net6+ shortest round-trip),
+            // so compare the parsed numeric value with a tolerance instead of an exact string.
+            var htMatch = System.Text.RegularExpressions.Regex.Match(xml, "ht=\"([^\"]*)\"");
+            htMatch.Success.ShouldBeTrue();
+            double.TryParse(htMatch.Groups[1].Value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var ht).ShouldBeTrue();
+            ht.ShouldBe(24.975, 1e-6);
             xml.ShouldContain("customHeight=\"1\"");
         }
 
