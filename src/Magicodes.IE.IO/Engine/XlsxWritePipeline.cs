@@ -77,7 +77,8 @@ namespace Magicodes.IE.IO
             bool autoSst = false;
             if (profile.AutoSst && writer.SupportsAutoSharedStrings)
             {
-                var prepared = await AutoSstBufferAndDetectAsync(data, plan, cancellationToken).ConfigureAwait(false);
+                // Probe the already-filtered sequence so RowFilter is honored on this path.
+                var prepared = await AutoSstBufferAndDetectAsync(preparedData, plan, cancellationToken).ConfigureAwait(false);
                 preparedData = prepared.Data;
                 autoSst = prepared.Enable;
             }

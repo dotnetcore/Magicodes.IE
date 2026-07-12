@@ -102,7 +102,7 @@ namespace Magicodes.IE.IO
         }
 
         /// <summary>
-        /// Streams rows from an <see cref="IAsyncEnumerable{T}"/> to a stream, enumerating and writing concurrently so the data is never fully materialized.
+        /// Streams rows from an <see cref="IAsyncEnumerable{T}"/> to a stream, writing each row as it is enumerated so the sequence is never fully materialized.
         /// </summary>
         /// <remarks>The caller owns and disposes <paramref name="output"/>. Use this overload for large or paged data sources (for example, a database query). Unlike the <see cref="IEnumerable{T}"/> async overloads, the data source itself is asynchronous.</remarks>
         /// <exception cref="ArgumentNullException"><paramref name="output"/> or <paramref name="data"/> is <see langword="null"/>.</exception>

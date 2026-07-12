@@ -602,6 +602,38 @@ namespace Magicodes.IE.IO.Tests
         }
 
         [Fact]
+        public async Task WriteAsync_AsyncEnumerable_AppliesRowFilter_WhenAutoSstEnabled()
+        {
+            // Regression: on the async path the AutoSst probe must run over the *filtered*
+            // sequence, otherwise RowFilter is silently dropped and every row is exported.
+            // Enough repeated strings so AutoSst turns on (distinct/total < 0.7).
+            async IAsyncEnumerable<OrderDto> Data()
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    yield return new OrderDto { OrderNo = i % 5 == 0 ? "drop" : "keep" };
+                    if (i % 17 == 0) await Task.Yield();
+                }
+            }
+
+            using var ms = new MemoryStream();
+            await Xlsx.WriteAsync(ms, Data(), new ExportProfile<OrderDto>()
+                .Where(x => x.OrderNo != "drop")
+                .WithAutoSst());
+
+            var bytes = ms.ToArray();
+            // AutoSst path must actually be taken (shared strings emitted).
+            using (var za = new ZipArchive(new MemoryStream(bytes), ZipArchiveMode.Read))
+                za.GetEntry("xl/sharedStrings.xml").ShouldNotBeNull();
+
+            // Read back typed rows so shared-string indices are resolved.
+            var list = Xlsx.Read<OrderDto>(new MemoryStream(bytes)).ToList();
+            // 100 rows, 20 "drop" (i % 5 == 0) filtered out => 80 kept rows.
+            list.Count.ShouldBe(80);
+            list.ShouldAllBe(x => x.OrderNo == "keep");
+        }
+
+        [Fact]
         public async Task WriteAsync_Iterator_AppliesRowFilter()
         {
             IEnumerable<OrderDto> Data()
