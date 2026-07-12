@@ -50,6 +50,56 @@ namespace Magicodes.IE.IO.Tests
         }
 
         [Fact]
+        public void XlsxRead_PathOverload_OwnsAndDisposesFileStream()
+        {
+            var path = Path.Combine(Path.GetTempPath(), $"io_read_path_{Guid.NewGuid():N}.xlsx");
+            try
+            {
+                Xlsx.Write(path, new[]
+                {
+                    new OrderDto { OrderNo = "P1", Amount = 11m },
+                    new OrderDto { OrderNo = "P2", Amount = 22m },
+                });
+
+                var list = Xlsx.Read<OrderDto>(path).ToList();
+                list.Count.ShouldBe(2);
+                list[0].OrderNo.ShouldBe("P1");
+                list[0].Amount.ShouldBe(11m);
+                list[1].OrderNo.ShouldBe("P2");
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Fact]
+        public async Task XlsxReadAsync_PathOverload_OwnsAndDisposesFileStream()
+        {
+            var path = Path.Combine(Path.GetTempPath(), $"io_read_path_async_{Guid.NewGuid():N}.xlsx");
+            try
+            {
+                Xlsx.Write(path, new[]
+                {
+                    new OrderDto { OrderNo = "PA1", Amount = 33m },
+                    new OrderDto { OrderNo = "PA2", Amount = 44m },
+                });
+
+                var list = new List<OrderDto>();
+                await foreach (var o in Xlsx.ReadAsync<OrderDto>(path))
+                    list.Add(o);
+                list.Count.ShouldBe(2);
+                list[0].OrderNo.ShouldBe("PA1");
+                list[0].Amount.ShouldBe(33m);
+                list[1].OrderNo.ShouldBe("PA2");
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Fact]
         public async Task XlsxRead_AsyncStreaming()
         {
             var bytes = Xlsx.ToBytes(Enumerable.Range(0, 20).Select(i => new OrderDto { OrderNo = $"R{i}" }));

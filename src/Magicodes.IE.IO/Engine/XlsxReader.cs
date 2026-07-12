@@ -28,6 +28,8 @@ namespace Magicodes.IE.IO
         private readonly ZipArchive _zip;
         private readonly Stream _sheetStream;
         private readonly XmlReader _xml;
+        private readonly Stream? _xlsxStream;
+        private readonly bool _leaveOpen;
         private readonly List<string?> _currentRow = new(16);
         private readonly bool _date1904;
         private bool _headerRead;
@@ -37,9 +39,11 @@ namespace Magicodes.IE.IO
         /// <summary>
         /// Opens a .xlsx workbook positioned at the first readable worksheet.
         /// </summary>
-        public XlsxReader(Stream xlsxStream)
+        public XlsxReader(Stream xlsxStream, bool leaveOpen = true)
         {
             if (xlsxStream is null) throw new ArgumentNullException(nameof(xlsxStream));
+            _leaveOpen = leaveOpen;
+            _xlsxStream = xlsxStream;
             var zip = new ZipArchive(xlsxStream, ZipArchiveMode.Read, leaveOpen: true);
             Stream? sheetStream = null;
             XmlReader? xml = null;
@@ -68,6 +72,7 @@ namespace Magicodes.IE.IO
                 xml?.Dispose();
                 sheetStream?.Dispose();
                 zip.Dispose();
+                if (!_leaveOpen) _xlsxStream?.Dispose();
                 throw;
             }
         }
@@ -525,7 +530,7 @@ namespace Magicodes.IE.IO
 
         public void Dispose()
         {
-            try { _xml.Dispose(); } finally { try { _sheetStream.Dispose(); } finally { _zip.Dispose(); } }
+            try { _xml.Dispose(); } finally { try { _sheetStream.Dispose(); } finally { try { _zip.Dispose(); } finally { if (!_leaveOpen) _xlsxStream?.Dispose(); } } }
         }
 
     }

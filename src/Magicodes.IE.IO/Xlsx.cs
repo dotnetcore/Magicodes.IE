@@ -16,7 +16,7 @@ namespace Magicodes.IE.IO
     /// <para><b>Import:</b> use the <see cref="Read{T}(Stream, XlsxReadOptions{T}, Action{XlsxReadErrorInfo})"/> overloads to stream deserialized rows from a workbook.</para>
     /// <para><b>Multi-sheet:</b> <see cref="WriteWorkbook(Stream, IReadOnlyList{SheetBase})"/>. <b>Template export:</b> <see cref="ExportByTemplateAsync{T}(System.String, System.String, T, CancellationToken)"/>.</para>
     /// <para>When no <see cref="ExportProfile{T}"/> is supplied, headers and formats are inferred from property names and from <c>[Display]</c>, <c>[Description]</c>, and <c>[DisplayFormat]</c> attributes. The underlying writer/reader is a dependency-free, streaming, low-allocation OOXML implementation and does not depend on EPPlus.</para>
-    /// <para><b>Lifetime:</b> overloads that take a <c>path</c> own and dispose the underlying <see cref="FileStream"/>; overloads that take a <see cref="Stream"/> or <see cref="IBufferWriter{T}"/> do not, and the caller is responsible for disposal.</para>
+    /// <para><b>Lifetime:</b> overloads that take a <c>path</c> own and dispose the underlying <see cref="FileStream"/>; overloads that take a <see cref="Stream"/> or <see cref="IBufferWriter{T}"/> do not, and the caller is responsible for disposal. Note: the Read/ReadAsync stream overloads DO own and dispose the supplied stream when enumeration completes.</para>
     /// </remarks>
     public static class Xlsx
     {
@@ -207,7 +207,7 @@ namespace Magicodes.IE.IO
         /// <remarks>When a source-generated reader is available for <typeparamref name="T"/>, it is used for reflection-free reading; otherwise reflection is used.</remarks>
         public static IEnumerable<T> Read<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null) where T : new()
         {
-            using var reader = new XlsxReader(stream);
+            using var reader = new XlsxReader(stream, leaveOpen: false);
             var headers = reader.ReadHeader();
             var converters = profile?.GetConverters();
             int rowIndex = 0;
@@ -254,6 +254,18 @@ namespace Magicodes.IE.IO
         }
 
         /// <summary>
+        /// Reads the first worksheet of the .xlsx file at <paramref name="path"/> and lazily returns the deserialized rows as <typeparamref name="T"/>.
+        /// </summary>
+        /// <remarks>This overload owns and disposes the underlying <see cref="FileStream"/>; the file is read only while the returned sequence is enumerated.</remarks>
+        public static IEnumerable<T> Read<T>(string path, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null) where T : new()
+        {
+            ValidatePath(path);
+            using var fs = File.OpenRead(path);
+            foreach (var item in Read<T>(fs, profile, onParseError))
+                yield return item;
+        }
+
+        /// <summary>
         /// Reads the first worksheet of a .xlsx workbook asynchronously and returns the deserialized rows as <typeparamref name="T"/>.
         /// </summary>
         /// <remarks>Supports cancellation via <paramref name="cancellationToken"/>. Otherwise the behavior matches <see cref="Read{T}(Stream, XlsxReadOptions{T}, Action{XlsxReadErrorInfo})"/>.</remarks>
@@ -261,7 +273,7 @@ namespace Magicodes.IE.IO
         public static async IAsyncEnumerable<T> ReadAsync<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null, [EnumeratorCancellation] CancellationToken cancellationToken = default) where T : new()
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using var reader = new XlsxReader(stream);
+            using var reader = new XlsxReader(stream, leaveOpen: false);
             var headers = await reader.ReadHeaderAsync(cancellationToken).ConfigureAwait(false);
             var converters = profile?.GetConverters();
             int rowIndex = 0;
@@ -308,6 +320,18 @@ namespace Magicodes.IE.IO
                 yield return (T)item;
             }
             cancellationToken.ThrowIfCancellationRequested();
+        }
+
+        /// <summary>
+        /// Asynchronously reads the first worksheet of the .xlsx file at <paramref name="path"/> and lazily returns the deserialized rows as <typeparamref name="T"/>.
+        /// </summary>
+        /// <remarks>This overload owns and disposes the underlying <see cref="FileStream"/>; the file is read only while the returned sequence is enumerated.</remarks>
+        public static async IAsyncEnumerable<T> ReadAsync<T>(string path, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null, [EnumeratorCancellation] CancellationToken cancellationToken = default) where T : new()
+        {
+            ValidatePath(path);
+            using var fs = File.OpenRead(path);
+            await foreach (var item in ReadAsync<T>(fs, profile, onParseError, cancellationToken).ConfigureAwait(false))
+                yield return item;
         }
 
         /// <summary>
