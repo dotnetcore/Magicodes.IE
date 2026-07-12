@@ -17,6 +17,26 @@
 
 Import and export general library, support Dto import and export, template export, fancy export and dynamic export, support Excel, Csv, Word, Pdf and Html.
 
+### Magicodes.IE.IO <sub>NEW</sub>
+
+**A zero-dependency, streaming, low-allocation Excel I/O engine** — built from scratch without EPPlus, ClosedXML, or any third-party Excel library. Supports `netstandard2.0` / `net6.0` / `net8.0` / `net10.0`. Native `IAsyncEnumerable`, AOT-friendly.
+
+```
+dotnet add package Magicodes.IE.IO
+```
+
+```csharp
+// Zero-config export
+Xlsx.Write("/tmp/orders.xlsx", orders);
+Xlsx.Write(Response.Body, orders);
+var bytes = Xlsx.ToBytes(orders);
+
+// Async streaming write — DB query straight to file
+await Xlsx.WriteAsync(stream, dbContext.Orders.AsAsyncEnumerable());
+```
+
+> [Learn more](./docs/blog-magicodes-ie-io.md)
+
 **![General description](./docs/Magicodes.IE.en.png)**
 
 ### Azure DevOps
@@ -32,6 +52,7 @@ For details, see: <https://dev.azure.com/xinlaiopencode/Magicodes.IE/_build?defi
 
 | **Name** | **NuGet** |
 |----------|:-------------|
+| **Magicodes.IE.IO** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.IO)](https://www.nuget.org/packages/Magicodes.IE.IO)** |
 | **Magicodes.IE.Core** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Core)](https://www.nuget.org/packages/Magicodes.IE.Core)** |
 | **Magicodes.IE.Excel** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel)](https://www.nuget.org/packages/Magicodes.IE.Excel)**   |
 | **Magicodes.IE.Excel.NPOI** | **[![NuGet](https://buildstats.info/nuget/Magicodes.IE.Excel.NPOI)](https://www.nuget.org/packages/Magicodes.IE.Excel.NPOI)**   |
