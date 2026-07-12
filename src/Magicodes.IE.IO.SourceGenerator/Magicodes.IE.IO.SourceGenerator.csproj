@@ -10,6 +10,7 @@
     <DevelopmentDependency>true</DevelopmentDependency>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+    <IsPackable>false</IsPackable>
     <PackageId>Magicodes.IE.IO.SourceGenerator</PackageId>
     <Description>Source generator for Magicodes.IE.IO — generates typed property getters at compile time, eliminating Expression.Compile runtime reflection.</Description>
   </PropertyGroup>

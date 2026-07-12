@@ -25,11 +25,15 @@
                       ReferenceOutputAssembly="false" />
   </ItemGroup>
 
-  <Target Name="PackSourceGenerator"
-          BeforeTargets="_GetPackageFiles"
-          DependsOnTargets="Build">
+  <!--
+    Pack the source generator as a NuGet analyzer.
+    SG is already a ProjectReference — dotnet pack builds it during the Build phase,
+    so we do NOT add DependsOnTargets="Build" here (it would double-build and leak
+    the SG's PDB into the .snupkg, failing NuGet symbol validation).
+  -->
+  <Target Name="PackSourceGenerator" BeforeTargets="_GetPackageFiles">
     <ItemGroup>
-      <None Include="../Magicodes.IE.IO.SourceGenerator/bin/$(Configuration)/netstandard2.0/Magicodes.IE.IO.SourceGenerator.dll"
+      <None Include="$(MSBuildThisFileDirectory)../Magicodes.IE.IO.SourceGenerator/bin/$(Configuration)/netstandard2.0/Magicodes.IE.IO.SourceGenerator.dll"
             Pack="true"
             PackagePath="analyzers/dotnet/cs/"
             Visible="false" />

@@ -64,17 +64,20 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-            # 打包
-            Get-ChildItem -Path ./ -Recurse |
+            # 清理 bin/obj 残留(避免 BenchmarkDotNet/IISExpress 等自动生成的 csproj 被误打包)
+            Get-ChildItem -Path ./bin, ./obj -Recurse -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
+            # 打包(仅 src/ 下的非 Test 项目)
+            Get-ChildItem -Path ./src -Recurse |
               Where-Object { $_.Name.EndsWith(".csproj") -and !$_.Name.Contains("Test") } |
               ForEach-Object -Process { 
                     Write-Host $_.Name
-                    dotnet pack $_.FullName -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --include-source --output $(Build.ArtifactStagingDirectory) -c $(BuildConfiguration)
+                    dotnet pack $_.FullName --output $(Build.ArtifactStagingDirectory) -c $(BuildConfiguration)
                }
             ls $(Build.ArtifactStagingDirectory)
 
-            #推包
-            dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate  -s https://api.nuget.org/v3/index.json
+            #推包(nupkg + snupkg 原子推送)
+            dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -k $env:NUGET_API_KEY --skip-duplicate -s https://api.nuget.org/v3/index.json
         failOnStderr: true
         showWarnings: true
         ignoreLASTEXITCODE: true
