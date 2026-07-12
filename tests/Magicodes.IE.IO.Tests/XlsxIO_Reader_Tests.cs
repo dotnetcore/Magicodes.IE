@@ -792,5 +792,62 @@ namespace Magicodes.IE.IO.Tests
                 await Task.Yield();
             }
         }
+
+        [Fact]
+        public async Task WriteAsync_PathOverload_WritesReadableFile()
+        {
+            var path = Path.Combine(Path.GetTempPath(), $"io_writeasync_{Guid.NewGuid():N}.xlsx");
+            try
+            {
+                var data = new[]
+                {
+                    new OrderDto { OrderNo = "WA1", Amount = 7m, CreatedAt = new DateTime(2024, 7, 7) },
+                    new OrderDto { OrderNo = "WA2", Amount = 8m, CreatedAt = new DateTime(2024, 7, 8) },
+                };
+                await Xlsx.WriteAsync(path, data);
+
+                var list = Xlsx.Read<OrderDto>(path).ToList();
+                list.Count.ShouldBe(2);
+                list[0].OrderNo.ShouldBe("WA1");
+                list[0].Amount.ShouldBe(7m);
+                list[1].OrderNo.ShouldBe("WA2");
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Fact]
+        public void Read_Stream_LeaveOpen_KeepsStreamUsable()
+        {
+            var bytes = Xlsx.ToBytes(new[] { new OrderDto { OrderNo = "LO", Amount = 1m } });
+            using var ms = new MemoryStream(bytes);
+            var list = Xlsx.Read<OrderDto>(ms, leaveOpen: true).ToList();
+            list.Count.ShouldBe(1);
+            // Stream must still be readable because we asked the reader to leave it open.
+            ms.Position = 0;
+            ms.Length.ShouldBe(bytes.Length);
+            ms.Dispose();
+        }
+
+        [Fact]
+        public void Read_Stream_DefaultDisposesStream()
+        {
+            var path = Path.Combine(Path.GetTempPath(), $"io_read_dispose_{Guid.NewGuid():N}.xlsx");
+            try
+            {
+                Xlsx.Write(path, new[] { new OrderDto { OrderNo = "DX" } });
+                var fs = File.OpenRead(path);
+                var list = Xlsx.Read<OrderDto>(fs).ToList();
+                list.Count.ShouldBe(1);
+                // Default behavior disposes the stream; touching it afterwards must fail.
+                Should.Throw<ObjectDisposedException>(() => fs.ReadByte());
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
     }
 }

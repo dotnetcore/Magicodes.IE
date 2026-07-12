@@ -13,7 +13,7 @@ namespace Magicodes.IE.IO
     /// </summary>
     /// <remarks>
     /// <para><b>Export:</b> use the <see cref="Write{T}(System.String, IEnumerable{T}, System.Action{ExportProfile{T}}, XlsxWriteOptions)"/> overloads to write rows to a file, stream, <see cref="IBufferWriter{T}"/>, or <see cref="byte"/> array.</para>
-    /// <para><b>Import:</b> use the <see cref="Read{T}(Stream, XlsxReadOptions{T}, Action{XlsxReadErrorInfo})"/> overloads to stream deserialized rows from a workbook.</para>
+    /// <para><b>Import:</b> use the <see cref="Read{T}(Stream, XlsxReadOptions{T}?, Action{XlsxReadErrorInfo}?, bool)"/> overloads to stream deserialized rows from a workbook.</para>
     /// <para><b>Multi-sheet:</b> <see cref="WriteWorkbook(Stream, IReadOnlyList{SheetBase})"/>. <b>Template export:</b> <see cref="ExportByTemplateAsync{T}(System.String, System.String, T, CancellationToken)"/>.</para>
     /// <para>When no <see cref="ExportProfile{T}"/> is supplied, headers and formats are inferred from property names and from <c>[Display]</c>, <c>[Description]</c>, and <c>[DisplayFormat]</c> attributes. The underlying writer/reader is a dependency-free, streaming, low-allocation OOXML implementation and does not depend on EPPlus.</para>
     /// <para><b>Lifetime:</b> overloads that take a <c>path</c> own and dispose the underlying <see cref="FileStream"/>; overloads that take a <see cref="Stream"/> or <see cref="IBufferWriter{T}"/> do not, and the caller is responsible for disposal. Note: the Read/ReadAsync stream overloads DO own and dispose the supplied stream when enumeration completes.</para>
@@ -162,6 +162,65 @@ namespace Magicodes.IE.IO
         }
 
         /// <summary>
+        /// Asynchronously writes the specified rows to the .xlsx file at <paramref name="path"/>.
+        /// </summary>
+        /// <remarks>Equivalent to opening a <see cref="FileStream"/> and calling the stream overload; the file stream is owned and disposed by this method.</remarks>
+        public static async Task WriteAsync<T>(string path, IEnumerable<T> data, Action<ExportProfile<T>>? configure = null, XlsxWriteOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            ValidatePath(path);
+            if (data is null) throw new ArgumentNullException(nameof(data));
+            var compression = options?.Compression ?? System.IO.Compression.CompressionLevel.Fastest;
+            var strictCellReferences = options?.StrictCellReferences ?? true;
+            using var fs = File.Create(path);
+            await using var writer = new XlsxWriter(fs, sheetName: null, compression, defaultRowHeight: 0, strictCellReferences);
+            await XlsxWritePipeline.RunAsync(writer, data, configure, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Asynchronously writes the specified rows to the .xlsx file at <paramref name="path"/> using a pre-built profile.
+        /// </summary>
+        public static async Task WriteAsync<T>(string path, IEnumerable<T> data, ExportProfile<T> profile, XlsxWriteOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            ValidatePath(path);
+            if (data is null) throw new ArgumentNullException(nameof(data));
+            if (profile is null) throw new ArgumentNullException(nameof(profile));
+            var compression = options?.Compression ?? System.IO.Compression.CompressionLevel.Fastest;
+            var strictCellReferences = options?.StrictCellReferences ?? true;
+            using var fs = File.Create(path);
+            await using var writer = new XlsxWriter(fs, sheetName: null, compression, defaultRowHeight: 0, strictCellReferences);
+            await XlsxWritePipeline.RunAsync(writer, data, profile, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Asynchronously streams rows from an <see cref="IAsyncEnumerable{T}"/> to the .xlsx file at <paramref name="path"/>.
+        /// </summary>
+        public static async Task WriteAsync<T>(string path, IAsyncEnumerable<T> data, Action<ExportProfile<T>>? configure = null, XlsxWriteOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            ValidatePath(path);
+            if (data is null) throw new ArgumentNullException(nameof(data));
+            var compression = options?.Compression ?? System.IO.Compression.CompressionLevel.Fastest;
+            var strictCellReferences = options?.StrictCellReferences ?? true;
+            using var fs = File.Create(path);
+            await using var writer = new XlsxWriter(fs, sheetName: null, compression, defaultRowHeight: 0, strictCellReferences);
+            await XlsxWritePipeline.RunAsync(writer, data, configure, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Asynchronously streams rows from an <see cref="IAsyncEnumerable{T}"/> to the .xlsx file at <paramref name="path"/> using a pre-built profile.
+        /// </summary>
+        public static async Task WriteAsync<T>(string path, IAsyncEnumerable<T> data, ExportProfile<T> profile, XlsxWriteOptions? options = null, CancellationToken cancellationToken = default)
+        {
+            ValidatePath(path);
+            if (data is null) throw new ArgumentNullException(nameof(data));
+            if (profile is null) throw new ArgumentNullException(nameof(profile));
+            var compression = options?.Compression ?? System.IO.Compression.CompressionLevel.Fastest;
+            var strictCellReferences = options?.StrictCellReferences ?? true;
+            using var fs = File.Create(path);
+            await using var writer = new XlsxWriter(fs, sheetName: null, compression, defaultRowHeight: 0, strictCellReferences);
+            await XlsxWritePipeline.RunAsync(writer, data, profile, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Exports the specified rows to a <see cref="byte"/> array.
         /// </summary>
         /// <remarks>For very large datasets, prefer the stream overloads to avoid holding the entire workbook in memory. The initial <see cref="MemoryStream"/> capacity is estimated from the collection size to reduce reallocations.</remarks>
@@ -205,9 +264,9 @@ namespace Magicodes.IE.IO
         /// <param name="onParseError">Optional callback invoked when a cell cannot be parsed. When omitted, a <see cref="XlsxException"/> is thrown on the first parse error.</param>
         /// <returns>A lazy <see cref="IEnumerable{T}"/>. Each row is parsed on demand as you iterate; do not enumerate the result more than once.</returns>
         /// <remarks>When a source-generated reader is available for <typeparamref name="T"/>, it is used for reflection-free reading; otherwise reflection is used.</remarks>
-        public static IEnumerable<T> Read<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null) where T : new()
+        public static IEnumerable<T> Read<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null, bool leaveOpen = false) where T : new()
         {
-            using var reader = new XlsxReader(stream, leaveOpen: false);
+            using var reader = new XlsxReader(stream, leaveOpen);
             var headers = reader.ReadHeader();
             var converters = profile?.GetConverters();
             int rowIndex = 0;
@@ -268,12 +327,12 @@ namespace Magicodes.IE.IO
         /// <summary>
         /// Reads the first worksheet of a .xlsx workbook asynchronously and returns the deserialized rows as <typeparamref name="T"/>.
         /// </summary>
-        /// <remarks>Supports cancellation via <paramref name="cancellationToken"/>. Otherwise the behavior matches <see cref="Read{T}(Stream, XlsxReadOptions{T}, Action{XlsxReadErrorInfo})"/>.</remarks>
+        /// <remarks>Supports cancellation via <paramref name="cancellationToken"/>. Otherwise the behavior matches <see cref="Read{T}(Stream, XlsxReadOptions{T}?, Action{XlsxReadErrorInfo}?, bool)"/>.</remarks>
         /// <returns>A lazy <see cref="IAsyncEnumerable{T}"/>. Do not enumerate the result more than once.</returns>
-        public static async IAsyncEnumerable<T> ReadAsync<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null, [EnumeratorCancellation] CancellationToken cancellationToken = default) where T : new()
+        public static async IAsyncEnumerable<T> ReadAsync<T>(Stream stream, XlsxReadOptions<T>? profile = null, Action<XlsxReadErrorInfo>? onParseError = null, [EnumeratorCancellation] CancellationToken cancellationToken = default, bool leaveOpen = false) where T : new()
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using var reader = new XlsxReader(stream, leaveOpen: false);
+            using var reader = new XlsxReader(stream, leaveOpen);
             var headers = await reader.ReadHeaderAsync(cancellationToken).ConfigureAwait(false);
             var converters = profile?.GetConverters();
             int rowIndex = 0;
@@ -330,7 +389,7 @@ namespace Magicodes.IE.IO
         {
             ValidatePath(path);
             using var fs = File.OpenRead(path);
-            await foreach (var item in ReadAsync<T>(fs, profile, onParseError, cancellationToken).ConfigureAwait(false))
+            await foreach (var item in ReadAsync<T>(fs, profile, onParseError, cancellationToken: cancellationToken).ConfigureAwait(false))
                 yield return item;
         }
 

@@ -119,6 +119,7 @@ namespace Magicodes.IE.IO
         internal void WriteRaw(byte[] buffer, int offset, int count)
         {
             if (count == 0) return;
+            if (_position + count > uint.MaxValue) ThrowZip32LimitExceeded();
 #if NETSTANDARD2_0
             _output.Write(buffer, offset, count);
 #else
@@ -130,6 +131,7 @@ namespace Magicodes.IE.IO
         internal async Task WriteRawAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
             if (count == 0) return;
+            if (_position + count > uint.MaxValue) ThrowZip32LimitExceeded();
 #if NETSTANDARD2_0
             await _output.WriteAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
             _position += count;
@@ -143,6 +145,7 @@ namespace Magicodes.IE.IO
         internal ValueTask WriteRawAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken)
         {
             if (buffer.Length == 0) return default;
+            if (_position + buffer.Length > uint.MaxValue) ThrowZip32LimitExceeded();
             var vt = _output.WriteAsync(buffer, cancellationToken);
             if (vt.IsCompletedSuccessfully)
             {
@@ -461,8 +464,16 @@ namespace Magicodes.IE.IO
 
         internal static uint CheckedToUInt32(long value)
         {
-            if ((ulong)value > uint.MaxValue) throw new NotSupportedException("ZIP64 is not supported by this forward-only zip writer.");
+            if ((ulong)value > uint.MaxValue) ThrowZip32LimitExceeded();
             return (uint)value;
+        }
+
+        private static void ThrowZip32LimitExceeded()
+        {
+            throw new NotSupportedException(
+                "The output exceeds the 4 GB (ZIP32) size limit supported by this forward-only zip writer. " +
+                "Magicodes.IE.IO does not emit ZIP64 archives. To write workbooks larger than 4 GB, " +
+                "split the data across multiple files or sheets, or write to a consumer that supports ZIP64.");
         }
 
         private void EnsureNotDisposed()
@@ -1004,7 +1015,8 @@ namespace Magicodes.IE.IO
 
         private static readonly uint[] Crc32Table = BuildCrc32Table();
 
-#if DEBUG
+        // Self-check the CRC-32 implementation at type load. This guards the SIMD/intrinsic path
+        // (active on ARM64 in Release builds) so a wrong CRC never silently corrupts every xlsx.
         static ForwardOnlyZipWriter()
         {
             var data = System.Text.Encoding.ASCII.GetBytes("123456789");
@@ -1020,7 +1032,6 @@ namespace Magicodes.IE.IO
             if (sliced.Result != expected)
                 throw new InvalidOperationException($"SlicingBy8Crc32 self-test failed: {sliced.Result:X8}");
         }
-#endif
 
         internal interface ICrc32
         {

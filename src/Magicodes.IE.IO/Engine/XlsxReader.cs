@@ -20,7 +20,7 @@ namespace Magicodes.IE.IO
 
     /// <summary>
     /// Advanced streaming reader for xlsx workbooks.
-    /// For ordinary reads, use <see cref="Xlsx.Read{T}(Stream, XlsxReadOptions{T}?, Action{XlsxReadErrorInfo}?)"/>.
+    /// For ordinary reads, use <see cref="Xlsx.Read{T}(Stream, XlsxReadOptions{T}?, Action{XlsxReadErrorInfo}?, bool)"/>.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class XlsxReader : IDisposable
