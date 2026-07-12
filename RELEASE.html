@@ -62,6 +62,252 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="release-log">Release Log</h1>
 
+<h2 id="290">2.9.0</h2>
+<p><strong>Magicodes.IE.IO 首发</strong> — 零 EPPlus 依赖、自写流式 xlsx writer/reader、模板导出、表格/样式、低分配异步性能工作。详见下方「新增」段。</p>
+<h3 id="新增--magicodesieio-独立新包零-epplus">新增 — Magicodes.IE.IO (独立新包,零 EPPlus)</h3>
+<p>阶段二全套交付:自写 xlsx writer,零外部依赖。</p>
+<h4 id="stage-25--span--向量化-xml-转义--utf8formatter">Stage 2.5 — Span / 向量化 XML 转义 / Utf8Formatter</h4>
+<ul>
+<li>弃 char[] + UTF8Encoding 二次编码 → 直接 pooled byte[] + UTF-8 直写</li>
+<li>XML 转义手写 ASCII escape byte 表(<code>&amp;</code> / <code>&lt;</code> / <code>&gt;</code> / <code>&quot;</code> / <code>'</code> 5 字符)</li>
+<li>数字直写 <code>Utf8Formatter.TryFormat(double/long)</code>,culture-invariant</li>
+<li>性能(100k × 4 string):79ms → 32ms(60% ↑)</li>
+</ul>
+<h4 id="stage-21--易用性属性驱动--值类型--多-sheet--列宽--冻结">Stage 2.1 — 易用性(属性驱动 + 值类型 + 多 sheet + 列宽 + 冻结)</h4>
+<ul>
+<li>自动识别 <code>[Display(Name)]</code> / <code>[Description]</code> / <code>[DisplayFormat]</code> 做表头与格式</li>
+<li>fluent 覆盖 attribute,3 层披露:fluent &gt; attribute &gt; 默认</li>
+<li>值类型(struct / record struct)支持,取消 <code>where T : class</code> 约束</li>
+<li>多 sheet:<code>Xlsx.SaveMultiSheetAsBytes(sheet1, sheet2, ...)</code></li>
+<li>列宽:<code>WithWidth(30.5)</code>,支持连续相同宽度合并 <code>&lt;col&gt;</code></li>
+<li>冻结首行:<code>WithFreezeHeader(true)</code>,注入 <code>&lt;sheetViews&gt;&lt;pane ySplit=&quot;1&quot; state=&quot;frozen&quot;/&gt;&lt;/sheetViews&gt;</code></li>
+</ul>
+<h4 id="stage-22--typedrowplanclass-路径零-object-装箱">Stage 2.2 — TypedRowPlan<t>(class 路径零 object 装箱)</t></h4>
+<ul>
+<li>派生 <code>TypedRowPlan&lt;T&gt; : RowPlan</code> 暴露 <code>Func&lt;T, CellValue&gt;[]</code> typed getters</li>
+<li><code>XlsxWriter.WriteRows&lt;T&gt;(data, TypedRowPlan&lt;T&gt;)</code> 走 typed path</li>
+<li>属性类型分发(string/int/long/double/decimal/datetime/bool/enum 强类型编译 lambda)</li>
+</ul>
+<h4 id="stage-23--压缩档位可选">Stage 2.3 — 压缩档位可选</h4>
+<ul>
+<li><code>XlsxWriter(..., CompressionLevel compression)</code> 参数</li>
+<li><code>Xlsx.SaveAsBytes(data, compression: CompressionLevel.NoCompression)</code> facade</li>
+<li>NoCompression 路径 100k string 38ms → 18ms(2x 加速,产物从 1MB → 14MB)</li>
+</ul>
+<h4 id="stage-24--iasyncenumerable--真异步流">Stage 2.4 — IAsyncEnumerable + 真异步流</h4>
+<ul>
+<li><code>Xlsx.SaveAsAsync(path, IAsyncEnumerable&lt;T&gt; data, CancellationToken)</code></li>
+<li><code>Xlsx.SaveAsBytesAsync(IAsyncEnumerable&lt;T&gt; data, CancellationToken)</code></li>
+<li><code>XlsxWriter.WriteRowsAsync&lt;T&gt;</code> 内部 <code>await foreach + ThrowIfCancellationRequested</code></li>
+<li>大表 + 数据库查询场景:不一次性装内存,边查边写</li>
+</ul>
+<h4 id="stage-26--csv--json-共用-profile">Stage 2.6 — CSV / JSON 共用 profile</h4>
+<blockquote>
+<p>注：当前 2.9.0 构建已移除 CSV/JSON 实现（<code>Csv.cs</code>/<code>Json.cs</code> 不在产物中），集中做 Excel。此 stage 保留为历史记录。</p>
+</blockquote>
+<ul>
+<li><code>Csv</code> / <code>Json</code> 静态门面,同一份 <code>ExportProfile&lt;T&gt;</code> 可输出 xlsx/csv/json</li>
+<li>CSV RFC 4180:含 <code>,</code> / <code>&quot;</code> / <code>\r</code> / <code>\n</code> 自动双引号包裹 + 内部 <code>&quot;</code> 转 <code>&quot;&quot;</code></li>
+<li>JSON 用 STJ(<code>System.Text.Json</code>,BCL 内置)</li>
+</ul>
+<h4 id="stage-27--benchmarkdotnet-横向对比正式报告">Stage 2.7 — BenchmarkDotNet 横向对比(正式报告)</h4>
+<ul>
+<li>BenchmarkDotNet v0.14.0,macOS Sequoia 15.6.1,Apple M4,ShortRun,Release/net8.0</li>
+<li>数据来源:<code>src/Magicodes.IE.Benchmarks/XlsxIO_Benchmarks.cs</code> (<code>--filter &quot;*XlsxIO*&quot;</code>)</li>
+<li>结果(Mean 毫秒):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库</th>
+<th>1k string</th>
+<th>10k string</th>
+<th>10k number</th>
+<th>100k string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Magicodes.IE.IO(自写)</strong></td>
+<td>0.70ms</td>
+<td>3.95ms</td>
+<td>5.79ms</td>
+<td>58.70ms</td>
+</tr>
+<tr>
+<td>MiniExcel</td>
+<td>3.84ms</td>
+<td>18.29ms</td>
+<td>13.65ms</td>
+<td>163.34ms</td>
+</tr>
+<tr>
+<td>ClosedXML</td>
+<td>11.93ms</td>
+<td>71.13ms</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论</strong>：Magicodes.IE.IO 在该组数据中明显快于 MiniExcel 和 ClosedXML。</p>
+<h4 id="stage-28--iexporter-抽象">Stage 2.8 — IExporter<t> 抽象</t></h4>
+<blockquote>
+<p>注：<code>IExporter&lt;T&gt;</code> / <code>XlsxExporter&lt;T&gt;</code> 已在当前重构中移除（<code>IExporter.cs</code>、<code>Engine/Exporters.cs</code> 删除），API 统一到 <code>Xlsx</code> 静态门面（见 P2-1）。</p>
+</blockquote>
+<ul>
+<li><code>IExporter&lt;T&gt;</code> 接口 + <code>XlsxExporter&lt;T&gt;</code>(已实现) + <code>CsvExporter&lt;T&gt;</code> / <code>JsonExporter&lt;T&gt;</code>(stage 三 暂未实现,集中做 Excel)</li>
+</ul>
+<h4 id="stage-33--exporterheader-attribute">Stage 3.3 — <code>[ExporterHeader]</code> attribute</h4>
+<ul>
+<li>IE 老用户熟悉的 <code>[ExporterHeader(Name = ..., IsIgnore = ..., Format = ..., Width = ..., Index = ...)]</code></li>
+<li>优先级:fluent cfg &gt; <code>[ExporterHeader]</code> &gt; <code>[Display]</code> &gt; <code>[Description]</code> &gt; 属性名</li>
+<li>不再需要切到 BCL <code>[Display]</code></li>
+</ul>
+<h4 id="stage-31--aot-警告抑制">Stage 3.1 — AOT 警告抑制</h4>
+<ul>
+<li><code>[UnconditionalSuppressMessage(&quot;Trimming&quot;, &quot;IL2026&quot;)]</code> + <code>(&quot;AOT&quot;, &quot;IL3050&quot;)</code></li>
+<li><code>Expression.Compile</code> 在 Native AOT 下回退到 <code>PropertyInfo.GetValue</code> 路径</li>
+<li>跨 TFM(net6/8/10)统一,不引入 <code>RequiresDynamicCode</code> (net7+) 以保持兼容性</li>
+</ul>
+<h4 id="p2-1--api-统一到-xlsx-静态门面对齐-miniexcel-风格">P2-1 — API 统一到 <code>Xlsx</code> 静态门面(对齐 MiniExcel 风格)</h4>
+<ul>
+<li><code>XlsxQuery</code> / <code>TemplateExporter</code> 静态类合并到 <code>Xlsx</code> 静态类下</li>
+<li><code>Xlsx.SheetExport</code> 嵌套类提升为顶层 <code>SheetExport</code></li>
+<li>用户 API 现在统一是 <code>Xlsx.{SaveAs, SaveAsBytes, SaveAsAsync, SaveMultiSheetAsBytes, Query, QueryAsync, ExportByTemplateAsync}</code> 一行 IDE 提示</li>
+<li>删除 <code>TemplateExporter.cs</code> 文件,功能内置到 <code>Xlsx.cs</code></li>
+<li><code>XlsxReader.cs</code> 只剩 <code>XlsxReader</code> 和 <code>XlsxImporterProfile&lt;T&gt;</code>(底层 API)</li>
+<li>测试 46/46 全过(三档 TFM)</li>
+</ul>
+<h3 id="阶段-3-p3--性能--内存--gc-完整对比">阶段 3 P3 — 性能 / 内存 / GC 完整对比</h3>
+<p>BenchmarkDotNet v0.14.0,Apple M4,.NET 8.0.19,MediumJob(15 迭代 × 2 启动)。</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>库</th>
+<th>Mean</th>
+<th>Allocated</th>
+<th>Gen2</th>
+<th>ThreadPool Items</th>
+<th>Lock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>Magicodes.IE.IO</strong></td>
+<td>4.73 ms</td>
+<td>2.80 MB</td>
+<td><strong>8</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MiniExcel</td>
+<td>18.65 ms</td>
+<td>38.76 MB</td>
+<td>3312</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>ClosedXML</td>
+<td>66.13 ms</td>
+<td>86.71 MB</td>
+<td>1666</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>100k × 4 string</td>
+<td><strong>Magicodes.IE.IO</strong></td>
+<td><strong>54.01 ms</strong></td>
+<td>30.5 MB</td>
+<td><strong>1222</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MiniExcel</td>
+<td>161.00 ms</td>
+<td>245.01 MB</td>
+<td>2666</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10k × 4 number</td>
+<td><strong>Magicodes.IE.IO</strong></td>
+<td><strong>5.90 ms</strong></td>
+<td><strong>1.43 MB</strong></td>
+<td>109</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MiniExcel</td>
+<td>14.29 ms</td>
+<td>34.18 MB</td>
+<td>3437</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>亮点</strong>:</p>
+<ul>
+<li>完全无锁,纯同步写</li>
+</ul>
+<h4 id="p3-1-rowplan-缓存同-t--profile-复用">P3-1 RowPlan 缓存(同 T + profile 复用)</h4>
+<ul>
+<li><code>ConcurrentDictionary&lt;(Type, profile hash), TypedRowPlan&lt;T&gt;&gt;</code></li>
+<li>同一 profile 多次 <code>SaveAsBytes</code> 反射只走一次</li>
+<li>测试:<code>RowPlanCache_Same/DifferentProfile_ReusedAcrossCalls</code></li>
+</ul>
+<h4 id="p3-2-样式系统真生效resolvecolumnstyles">P3-2 样式系统真生效(ResolveColumnStyles)</h4>
+<ul>
+<li>拆 <code>WriteStyles</code> 为 <code>BuildStylePool</code>(算 xfId 回写 ColumnMeta.StyleId)+ <code>EmitStylePoolXml</code>(Dispose 时写)</li>
+<li>facade 在 <code>WriteHeader</code> 之前调 <code>ResolveColumnStyles</code>,让表头 cell 真带 <code>s=&quot;N&quot;</code></li>
+<li>测试 verify:<code>Style_BoldHeader_RealXfIdOnCell</code> / <code>Style_FontColor_WritesColor</code> / <code>Style_Wrap_WritesWrapText</code> / <code>Style_FontName_WritesCustomName</code></li>
+</ul>
+<h4 id="p3-3-sharedstrings-reader-兼容">P3-3 sharedStrings reader 兼容</h4>
+<ul>
+<li><code>XlsxReader</code> 构造时加载 <code>xl/sharedStrings.xml</code></li>
+<li><code>t=&quot;s&quot;</code> cell 解析时按 <code>&lt;v&gt;</code> 下标查 sharedStrings 数组</li>
+<li>真 Office 写的 xlsx 现在可读</li>
+<li>测试:<code>Read_SharedStrings_RealXlsxFormat</code>(手工拼 t=&quot;s&quot; 风格 xlsx)</li>
+</ul>
+<h4 id="p3-4-字体名--字体颜色真生效">P3-4 字体名 + 字体颜色真生效</h4>
+<ul>
+<li><code>ColumnConfig.WithFontName(&quot;微软雅黑&quot;)</code> 写进 styles.xml <code>&lt;font&gt;&lt;name val=&quot;...&quot;/&gt;&lt;/font&gt;</code></li>
+<li><code>fontSet</code> 元组增 <code>Name</code> 字段,去重时按 Bold/Size/Color/Name</li>
+<li>测试:<code>Style_FontName_WritesCustomName</code></li>
+</ul>
+<h4 id="threadpool-调度优化性能">ThreadPool 调度优化(性能)</h4>
+<ul>
+<li><code>Xlsx.WriteAsync&lt;T&gt;</code> 去掉 <code>await Task.Yield()</code></li>
+<li>实测 <code>Completed Work Items</code> 从 1 → 0,Gen2 31 → 7.8(4 倍下)</li>
+<li>同步路径不再让出 ThreadPool</li>
+</ul>
+<h3 id="新增文件">新增文件</h3>
+<ul>
+<li><code>src/Magicodes.IE.IO/Magicodes.IE.IO.csproj</code></li>
+<li><code>src/Magicodes.IE.IO/XlsxWriter.cs</code>(自写 writer 核心)</li>
+<li><code>src/Magicodes.IE.IO/Xlsx.cs</code>(静态门面)</li>
+<li><code>src/Magicodes.IE.IO/ExportProfile.cs</code>(frozen fluent profile)</li>
+<li><code>src/Magicodes.IE.IO/ExporterHeaderAttribute.cs</code></li>
+<li><code>tests/Magicodes.IE.IO.Tests/</code> 34 个测试(三档 TFM 全过)</li>
+<li><code>src/Magicodes.IE.Benchmarks/XlsxIO_Benchmarks.cs</code></li>
+</ul>
+<h3 id="依赖">依赖</h3>
+<ul>
+<li>新增:<code>ClosedXML</code> 0.102.3(仅 Benchmarks 用,生产包零依赖)</li>
+</ul>
 <h2 id="285">2.8.5</h2>
 <p><strong>2026.06.21</strong></p>
 <h3 id="性能">性能</h3>
@@ -88,7 +334,7 @@
 <li>PDF 原生库抽象层：<code>PdfEnvironmentInfo</code> / <code>PdfExportOptions</code> / <code>IPdfNativeLibraryService.CheckEnvironment()</code> / <code>AddMagicodesPdfExporter()</code> DI 扩展，加载失败统一包装为 <code>InvalidOperationException</code></li>
 <li>macOS arm64 静态 wkhtmltopdf dylib（Qt 5.15 + QtWebKit 静态链接，arm64→x64 fallback）</li>
 </ul>
-<h3 id="依赖">依赖</h3>
+<h3 id="依赖-1">依赖</h3>
 <ul>
 <li>NPOI 2.5.5 → 2.8.0，移除 <code>System.Drawing.Common</code>，SharpZipLib 1.4.2；消除 #554 / #557 / #561 传递依赖冲突与 #577 漏洞</li>
 <li><code>System.Linq.Dynamic.Core</code> 1.7.2、<code>Newtonsoft.Json</code> 统一 13.0.3</li>
