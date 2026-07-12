@@ -4,6 +4,7 @@ using BenchmarkDotNet.Jobs;
 using Magicodes.Benchmarks.Models;
 using Magicodes.ExporterAndImporter.Excel;
 using Magicodes.ExporterAndImporter.Excel.Utility;
+using Magicodes.IE.IO;
 using MiniExcelLibs;
 using System;
 using System.Collections.Generic;
@@ -63,10 +64,10 @@ namespace Magicodes.Benchmarks
         }
 
         [Benchmark]
-        public async Task ExportMiniExcelAsyncTest()
+        public async Task ExportMioAsyncTest()
         {
             var memoryStream = new MemoryStream();
-            await memoryStream.SaveAsAsync(_exportTestData);
+            Xlsx.Write(memoryStream, _exportTestData);
             memoryStream.Seek(0, SeekOrigin.Begin);
         }
     }

@@ -1,14 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="LightExcel" />
     <PackageReference Include="MiniExcel" />
+
+    <PackageReference Include="ClosedXML" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
@@ -17,6 +20,13 @@
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Csv\Magicodes.IE.Csv.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Excel\Magicodes.IE.Excel.csproj" />
     <ProjectReference Include="..\Magicodes.ExporterAndImporter.Pdf\Magicodes.IE.Pdf.csproj" />
+    <ProjectReference Include="..\Magicodes.IE.IO\Magicodes.IE.IO.csproj" />
+    <ProjectReference Include="..\EPPlus\EPPlus\Magicodes.IE.EPPlus.csproj" />
+    <!-- 让 [XlsxExportable] 在 benchmarks 项目里真正触发源生成器。
+         IO 项目的 XlsxGeneratedGettersRegistry 已用 InternalsVisibleTo("Magicodes.Benchmarks") 授权访问。 -->
+    <ProjectReference Include="..\Magicodes.IE.IO.SourceGenerator\Magicodes.IE.IO.SourceGenerator.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

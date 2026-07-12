@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageId>Magicodes.IE.IO</PackageId>
+    <Description>
+      High-performance, low-allocation Excel (.xlsx) I/O library for .NET, with streaming write APIs and a simple high-level API for import and export.
+      面向 .NET 的高性能、低分配 Excel (.xlsx) 导入导出库,提供流式写入 API 与简洁的高层导入导出接口。
+    </Description>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="PolySharp" />
+    <PackageReference Include="System.ComponentModel.Annotations" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Magicodes.IE.IO.SourceGenerator/Magicodes.IE.IO.SourceGenerator.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <Target Name="PackSourceGenerator"
+          BeforeTargets="_GetPackageFiles"
+          DependsOnTargets="Build">
+    <ItemGroup>
+      <None Include="../Magicodes.IE.IO.SourceGenerator/bin/$(Configuration)/netstandard2.0/Magicodes.IE.IO.SourceGenerator.dll"
+            Pack="true"
+            PackagePath="analyzers/dotnet/cs/"
+            Visible="false" />
+    </ItemGroup>
+  </Target>
+
+</Project>

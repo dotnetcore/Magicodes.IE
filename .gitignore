@@ -265,3 +265,7 @@ __pycache__/
 /global.json
 !/global.json
 /.omo/
+
+# 前端构建产物 (typescript/ 演示的 Vite 打包输出, 勿入库)
+index-*.js
+index-*.js.map

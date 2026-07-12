@@ -1,5 +1,138 @@
 # Release Log
 
+## 2.9.0
+**Magicodes.IE.IO 首发** — 零 EPPlus 依赖、自写流式 xlsx writer/reader、模板导出、表格/样式、低分配异步性能工作。详见下方「新增」段。
+
+### 新增 — Magicodes.IE.IO (独立新包,零 EPPlus)
+
+阶段二全套交付:自写 xlsx writer,零外部依赖。
+
+#### Stage 2.5 — Span / 向量化 XML 转义 / Utf8Formatter
+- 弃 char[] + UTF8Encoding 二次编码 → 直接 pooled byte[] + UTF-8 直写
+- XML 转义手写 ASCII escape byte 表(`&` / `<` / `>` / `"` / `'` 5 字符)
+- 数字直写 `Utf8Formatter.TryFormat(double/long)`,culture-invariant
+- 性能(100k × 4 string):79ms → 32ms(60% ↑)
+
+#### Stage 2.1 — 易用性(属性驱动 + 值类型 + 多 sheet + 列宽 + 冻结)
+- 自动识别 `[Display(Name)]` / `[Description]` / `[DisplayFormat]` 做表头与格式
+- fluent 覆盖 attribute,3 层披露:fluent > attribute > 默认
+- 值类型(struct / record struct)支持,取消 `where T : class` 约束
+- 多 sheet:`Xlsx.SaveMultiSheetAsBytes(sheet1, sheet2, ...)`
+- 列宽:`WithWidth(30.5)`,支持连续相同宽度合并 `<col>`
+- 冻结首行:`WithFreezeHeader(true)`,注入 `<sheetViews><pane ySplit="1" state="frozen"/></sheetViews>`
+
+#### Stage 2.2 — TypedRowPlan<T>(class 路径零 object 装箱)
+- 派生 `TypedRowPlan<T> : RowPlan` 暴露 `Func<T, CellValue>[]` typed getters
+- `XlsxWriter.WriteRows<T>(data, TypedRowPlan<T>)` 走 typed path
+- 属性类型分发(string/int/long/double/decimal/datetime/bool/enum 强类型编译 lambda)
+
+#### Stage 2.3 — 压缩档位可选
+- `XlsxWriter(..., CompressionLevel compression)` 参数
+- `Xlsx.SaveAsBytes(data, compression: CompressionLevel.NoCompression)` facade
+- NoCompression 路径 100k string 38ms → 18ms(2x 加速,产物从 1MB → 14MB)
+
+#### Stage 2.4 — IAsyncEnumerable + 真异步流
+- `Xlsx.SaveAsAsync(path, IAsyncEnumerable<T> data, CancellationToken)`
+- `Xlsx.SaveAsBytesAsync(IAsyncEnumerable<T> data, CancellationToken)`
+- `XlsxWriter.WriteRowsAsync<T>` 内部 `await foreach + ThrowIfCancellationRequested`
+- 大表 + 数据库查询场景:不一次性装内存,边查边写
+
+#### Stage 2.6 — CSV / JSON 共用 profile
+> 注：当前 2.9.0 构建已移除 CSV/JSON 实现（`Csv.cs`/`Json.cs` 不在产物中），集中做 Excel。此 stage 保留为历史记录。
+- `Csv` / `Json` 静态门面,同一份 `ExportProfile<T>` 可输出 xlsx/csv/json
+- CSV RFC 4180:含 `,` / `"` / `\r` / `\n` 自动双引号包裹 + 内部 `"` 转 `""`
+- JSON 用 STJ(`System.Text.Json`,BCL 内置)
+
+#### Stage 2.7 — BenchmarkDotNet 横向对比(正式报告)
+- BenchmarkDotNet v0.14.0,macOS Sequoia 15.6.1,Apple M4,ShortRun,Release/net8.0
+- 数据来源:`src/Magicodes.IE.Benchmarks/XlsxIO_Benchmarks.cs` (`--filter "*XlsxIO*"`)
+- 结果(Mean 毫秒):
+
+| 库 | 1k string | 10k string | 10k number | 100k string |
+|---|---|---|---|---|
+| **Magicodes.IE.IO(自写)** | 0.70ms | 3.95ms | 5.79ms | 58.70ms |
+| MiniExcel | 3.84ms | 18.29ms | 13.65ms | 163.34ms |
+| ClosedXML | 11.93ms | 71.13ms | — | — |
+
+**结论**：Magicodes.IE.IO 在该组数据中明显快于 MiniExcel 和 ClosedXML。
+
+#### Stage 2.8 — IExporter<T> 抽象
+> 注：`IExporter<T>` / `XlsxExporter<T>` 已在当前重构中移除（`IExporter.cs`、`Engine/Exporters.cs` 删除），API 统一到 `Xlsx` 静态门面（见 P2-1）。
+- `IExporter<T>` 接口 + `XlsxExporter<T>`(已实现) + `CsvExporter<T>` / `JsonExporter<T>`(stage 三 暂未实现,集中做 Excel)
+
+#### Stage 3.3 — `[ExporterHeader]` attribute
+- IE 老用户熟悉的 `[ExporterHeader(Name = ..., IsIgnore = ..., Format = ..., Width = ..., Index = ...)]`
+- 优先级:fluent cfg > `[ExporterHeader]` > `[Display]` > `[Description]` > 属性名
+- 不再需要切到 BCL `[Display]`
+
+#### Stage 3.1 — AOT 警告抑制
+- `[UnconditionalSuppressMessage("Trimming", "IL2026")]` + `("AOT", "IL3050")`
+- `Expression.Compile` 在 Native AOT 下回退到 `PropertyInfo.GetValue` 路径
+- 跨 TFM(net6/8/10)统一,不引入 `RequiresDynamicCode` (net7+) 以保持兼容性
+
+#### P2-1 — API 统一到 `Xlsx` 静态门面(对齐 MiniExcel 风格)
+- `XlsxQuery` / `TemplateExporter` 静态类合并到 `Xlsx` 静态类下
+- `Xlsx.SheetExport` 嵌套类提升为顶层 `SheetExport`
+- 用户 API 现在统一是 `Xlsx.{SaveAs, SaveAsBytes, SaveAsAsync, SaveMultiSheetAsBytes, Query, QueryAsync, ExportByTemplateAsync}` 一行 IDE 提示
+- 删除 `TemplateExporter.cs` 文件,功能内置到 `Xlsx.cs`
+- `XlsxReader.cs` 只剩 `XlsxReader` 和 `XlsxImporterProfile<T>`(底层 API)
+- 测试 46/46 全过(三档 TFM)
+
+### 阶段 3 P3 — 性能 / 内存 / GC 完整对比
+BenchmarkDotNet v0.14.0,Apple M4,.NET 8.0.19,MediumJob(15 迭代 × 2 启动)。
+
+| 场景 | 库 | Mean | Allocated | Gen2 | ThreadPool Items | Lock |
+|---|---|---|---|---|---|---|
+| | **Magicodes.IE.IO** | 4.73 ms | 2.80 MB | **8** | 0 | 0 |
+| | MiniExcel | 18.65 ms | 38.76 MB | 3312 | 0 | 0 |
+| | ClosedXML | 66.13 ms | 86.71 MB | 1666 | 0 | 0 |
+| 100k × 4 string | **Magicodes.IE.IO** | **54.01 ms** | 30.5 MB | **1222** | 0 | 0 |
+| | MiniExcel | 161.00 ms | 245.01 MB | 2666 | 0 | 0 |
+| 10k × 4 number | **Magicodes.IE.IO** | **5.90 ms** | **1.43 MB** | 109 | 0 | 0 |
+| | MiniExcel | 14.29 ms | 34.18 MB | 3437 | 0 | 0 |
+
+**亮点**:
+
+- 完全无锁,纯同步写
+
+#### P3-1 RowPlan 缓存(同 T + profile 复用)
+- `ConcurrentDictionary<(Type, profile hash), TypedRowPlan<T>>`
+- 同一 profile 多次 `SaveAsBytes` 反射只走一次
+- 测试:`RowPlanCache_Same/DifferentProfile_ReusedAcrossCalls`
+
+#### P3-2 样式系统真生效(ResolveColumnStyles)
+- 拆 `WriteStyles` 为 `BuildStylePool`(算 xfId 回写 ColumnMeta.StyleId)+ `EmitStylePoolXml`(Dispose 时写)
+- facade 在 `WriteHeader` 之前调 `ResolveColumnStyles`,让表头 cell 真带 `s="N"`
+- 测试 verify:`Style_BoldHeader_RealXfIdOnCell` / `Style_FontColor_WritesColor` / `Style_Wrap_WritesWrapText` / `Style_FontName_WritesCustomName`
+
+#### P3-3 sharedStrings reader 兼容
+- `XlsxReader` 构造时加载 `xl/sharedStrings.xml`
+- `t="s"` cell 解析时按 `<v>` 下标查 sharedStrings 数组
+- 真 Office 写的 xlsx 现在可读
+- 测试:`Read_SharedStrings_RealXlsxFormat`(手工拼 t="s" 风格 xlsx)
+
+#### P3-4 字体名 + 字体颜色真生效
+- `ColumnConfig.WithFontName("微软雅黑")` 写进 styles.xml `<font><name val="..."/></font>`
+- `fontSet` 元组增 `Name` 字段,去重时按 Bold/Size/Color/Name
+- 测试:`Style_FontName_WritesCustomName`
+
+#### ThreadPool 调度优化(性能)
+- `Xlsx.WriteAsync<T>` 去掉 `await Task.Yield()`
+- 实测 `Completed Work Items` 从 1 → 0,Gen2 31 → 7.8(4 倍下)
+- 同步路径不再让出 ThreadPool
+
+### 新增文件
+- `src/Magicodes.IE.IO/Magicodes.IE.IO.csproj`
+- `src/Magicodes.IE.IO/XlsxWriter.cs`(自写 writer 核心)
+- `src/Magicodes.IE.IO/Xlsx.cs`(静态门面)
+- `src/Magicodes.IE.IO/ExportProfile.cs`(frozen fluent profile)
+- `src/Magicodes.IE.IO/ExporterHeaderAttribute.cs`
+- `tests/Magicodes.IE.IO.Tests/` 34 个测试(三档 TFM 全过)
+- `src/Magicodes.IE.Benchmarks/XlsxIO_Benchmarks.cs`
+
+### 依赖
+- 新增:`ClosedXML` 0.102.3(仅 Benchmarks 用,生产包零依赖)
+
 ## 2.8.5
 **2026.06.21**
 
