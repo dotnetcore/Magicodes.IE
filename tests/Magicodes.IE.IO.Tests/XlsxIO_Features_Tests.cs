@@ -440,7 +440,8 @@ namespace Magicodes.IE.IO.Tests
             var xml = XlsxIO_TestSupport.ReadEntry(ms.ToArray(), "xl/worksheets/sheet1.xml");
             xml.ShouldContain("summaryBelow=\"0\"");
             xml.ShouldContain("summaryRight=\"0\"");
-            xml.IndexOf("<sheetPr", StringComparison.Ordinal).ShouldBeLessThan(xml.IndexOf("<sheetViews", StringComparison.Ordinal));
+            System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(xml, "<sheetPr", System.Globalization.CompareOptions.Ordinal)
+                .ShouldBeLessThan(System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(xml, "<sheetViews", System.Globalization.CompareOptions.Ordinal));
         }
 
         [Fact]
@@ -680,8 +681,9 @@ namespace Magicodes.IE.IO.Tests
             }
 
             var xml = XlsxIO_TestSupport.ReadEntry(ms.ToArray(), "xl/worksheets/sheet1.xml");
-            xml.IndexOf("<sheetProtection", StringComparison.Ordinal).ShouldBeLessThan(
-                xml.IndexOf("<autoFilter", StringComparison.Ordinal));
+            System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(xml, "<sheetProtection", System.Globalization.CompareOptions.Ordinal)
+                .ShouldBeLessThan(
+                    System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(xml, "<autoFilter", System.Globalization.CompareOptions.Ordinal));
         }
 
         [Fact]

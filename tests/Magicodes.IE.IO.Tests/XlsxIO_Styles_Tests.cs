@@ -206,7 +206,7 @@ namespace Magicodes.IE.IO.Tests
                 new OrderDto { OrderNo = "A2", Amount = 2m, CreatedAt = new DateTime(2024, 1, 2) },
             });
             var xml = XlsxIO_TestSupport.ReadEntry(bytes, "xl/worksheets/sheet1.xml");
-            int cellCount = xml.Split("<c ", StringSplitOptions.RemoveEmptyEntries).Length - 1;
+            int cellCount = xml.Split(new[] { "<c " }, StringSplitOptions.RemoveEmptyEntries).Length - 1;
             int cellsWithR = System.Text.RegularExpressions.Regex.Matches(xml, "<c r=\"[A-Z]+\\d+\"").Count;
             cellCount.ShouldBe(cellsWithR, $"每个 <c> 都需要 r=\"A1\" — 缺 {cellCount - cellsWithR} 个");
         }

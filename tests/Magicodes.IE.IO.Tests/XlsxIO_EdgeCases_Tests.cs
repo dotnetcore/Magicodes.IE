@@ -201,8 +201,8 @@ namespace Magicodes.IE.IO.Tests
         [Fact]
         public async Task CompleteAsync_FailureIsFaultedAndCannotResume()
         {
-            await using var output = new XlsxIO_TestSupport.ThrowOnAsyncWriteStream();
-            await using var writer = new XlsxWriter(output, "Sheet1");
+            using var output = new XlsxIO_TestSupport.ThrowOnAsyncWriteStream();
+            using var writer = new XlsxWriter(output, "Sheet1");
             writer.WriteHeader(XlsxIO_TestSupport.MakeCols());
             var first = await Should.ThrowAsync<IOException>(() => writer.CompleteAsync());
             var second = await Should.ThrowAsync<IOException>(() => writer.CompleteAsync());

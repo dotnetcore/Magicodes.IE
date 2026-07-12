@@ -274,8 +274,8 @@ namespace Magicodes.IE.IO.Tests
             }
             foreach (var entry in zip.Entries)
             {
-                if (!entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
-                    && !entry.FullName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)) continue;
+                if (!entry.FullName.EndsWith(".xml")
+                    && !entry.FullName.EndsWith(".rels")) continue;
                 using var es = entry.Open();
                 using var sr = new StreamReader(es);
                 var xml = sr.ReadToEnd();
@@ -287,11 +287,11 @@ namespace Magicodes.IE.IO.Tests
 
         public static void AssertPackageGraph(ZipArchive zip)
         {
-            foreach (var relsEntry in zip.Entries.Where(e => e.FullName.EndsWith(".rels", StringComparison.OrdinalIgnoreCase)))
+            foreach (var relsEntry in zip.Entries.Where(e => e.FullName.EndsWith(".rels")))
             {
                 string sourcePart = relsEntry.FullName == "_rels/.rels"
                     ? ""
-                    : relsEntry.FullName.Substring(0, relsEntry.FullName.Length - ".rels".Length).Replace("/_rels/", "/", StringComparison.Ordinal);
+                    : relsEntry.FullName.Substring(0, relsEntry.FullName.Length - ".rels".Length).Replace("/_rels/", "/");
                 var doc = new XmlDocument { XmlResolver = null };
                 using (var stream = relsEntry.Open()) doc.Load(stream);
                 var ns = new XmlNamespaceManager(doc.NameTable);
