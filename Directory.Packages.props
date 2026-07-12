@@ -29,6 +29,7 @@
     <PackageVersion Include="System.Runtime.Loader" Version="4.3.0" />
     <!-- netstandard2.0 polyfills for Magicodes.IE.IO -->
     <PackageVersion Include="System.Memory" Version="4.5.5" />
+    <PackageVersion Include="System.Buffers" Version="4.5.1" />
     <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageVersion Include="PolySharp" Version="1.15.0" />

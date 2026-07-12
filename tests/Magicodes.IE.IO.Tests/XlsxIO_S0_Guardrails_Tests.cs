@@ -32,9 +32,9 @@ namespace Magicodes.IE.IO.Tests
         [MemberData(nameof(ColumnLetterCases))]
         public void ColumnLetter_KnownColumns_MatchExpected(int col0, string expected)
         {
-            Span<byte> dest = stackalloc byte[4];
+            byte[] dest = new byte[4];
             int n = XlsxWriter.ColumnLetter(col0, dest);
-            var actual = System.Text.Encoding.ASCII.GetString(dest.Slice(0, n));
+            var actual = System.Text.Encoding.ASCII.GetString(dest, 0, n);
             actual.ShouldBe(expected, $"col0={col0}");
         }
 
@@ -53,13 +53,13 @@ namespace Magicodes.IE.IO.Tests
                 }
                 return s;
             }
-            Span<byte> dest = stackalloc byte[4];
+            byte[] dest = new byte[4];
             var rnd = new Random(20240707);
             for (int i = 0; i < 200; i++)
             {
                 int col0 = rnd.Next(0, 16384);
                 int n = XlsxWriter.ColumnLetter(col0, dest);
-                var actual = System.Text.Encoding.ASCII.GetString(dest.Slice(0, n));
+                var actual = System.Text.Encoding.ASCII.GetString(dest, 0, n);
                 actual.ShouldBe(Ref(col0), $"col0={col0}");
             }
         }
