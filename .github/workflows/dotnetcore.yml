@@ -1,29 +1,29 @@
 ###################################################
 # Magicodes.IE CI
 #
-# Platforms:  ubuntu-22.04, ubuntu-24.04, ubuntu-latest,
-#             windows-2022, windows-latest,
-#             macos-15, macos-latest
-# Frameworks: net6.0, net8.0, net9.0, net10.0, net471
-#
 # Architecture:
-#   changed  -> skip detection (docs-only PRs skip tests)
-#   test     -> build & test matrix
-#   check    -> alls-green gate (single required status check)
+#   changed             -> skip detection (docs-only PRs skip tests)
+#   test                -> legacy core test matrix
+#   io-test             -> IO test matrix (all platforms, net8.0+net10.0)
+#   io-test-macos-debug -> macOS arm64 Debug CRC32 self-check
+#   check               -> alls-green gate (single required status check)
 #
-# Test runner:
-#   -parallel none -noshadow   (Orleans pattern, prevents file locking)
-#   --filter Category!=Flaky   (MassTransit pattern, exclude flaky tests)
-#   --logger GitHubActions     (MassTransit pattern, native PR annotations)
-#   --blame-hang/crash-dump    (Orleans pattern, post-mortem diagnostics)
-#   -bl (binary log)           (Orleans pattern, build diagnostics)
+# Matrix coverage:
+#   test:  7 OS × [net8.0, net10.0] + net9.0 × 3 + net471/net6.0 (Win)
+#   io:    3 OS × [net8.0, net10.0] + net6.0 × 3 + net471 (Win) + macOS Debug CRC trap
+#   Total: ~30 parallel jobs (fail-fast: false)
+#
+# Test runner conventions:
+#   --filter Category!=Flaky     exclude flaky tests (MassTransit pattern)
+#   --logger GitHubActions       native PR annotations (MassTransit pattern)
+#   --blame-hang/crash-dump      post-mortem diagnostics (Orleans pattern)
+#   -bl                          binary log (Orleans pattern)
 #
 # Notes:
 #   - macOS: Qt cocoa plugin may crash on process exit in headless CI.
-#     Tests pass before the crash; warnings are emitted, not failures.
-#   - net471 / net6.0: Windows only (requires .NET Framework targeting pack).
-#   - Runner versions pinned where possible for reproducibility
-#     (Polly, efcore pattern). -latest aliases shift without notice.
+#     We parse "Test Run Successful"/"Test Run Failed" to distinguish.
+#   - net471 / net6.0: Windows only.
+#   - Runner versions pinned where possible (Polly/efcore pattern).
 ###################################################
 
 name: CI
@@ -52,9 +52,7 @@ env:
 
 jobs:
 
-  ###################################################
-  # SKIP DETECTION
-  ###################################################
+  # ── SKIP DETECTION ──────────────────────────────
 
   changed:
     name: Detect changes
@@ -62,8 +60,7 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip.outputs.should_skip }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Check changed files
         id: filter
@@ -88,12 +85,10 @@ jobs:
             echo "should_skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-  ###################################################
-  # BUILD & TEST
-  ###################################################
+  # ── LEGACY CORE TEST MATRIX ─────────────────────
 
   test:
-    name: ${{ matrix.name }}
+    name: ${{ matrix.os }} / ${{ matrix.framework }}
     needs: changed
     if: needs.changed.outputs.should_skip != 'true'
     runs-on: ${{ matrix.os }}
@@ -101,68 +96,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - ubuntu-22.04
+          - ubuntu-24.04
+          - ubuntu-latest
+          - windows-2022
+          - windows-latest
+          - macos-15
+          - macos-latest
+        framework:
+          - net8.0
+          - net10.0
         include:
-          # ---- Linux ----
-          - name: "ubuntu-22.04 / net8.0"
-            os: ubuntu-22.04
-            framework: net8.0
-          - name: "ubuntu-22.04 / net10.0"
-            os: ubuntu-22.04
-            framework: net10.0
-          - name: "ubuntu-24.04 / net8.0"
-            os: ubuntu-24.04
-            framework: net8.0
-          - name: "ubuntu-24.04 / net9.0"
-            os: ubuntu-24.04
-            framework: net9.0
-          - name: "ubuntu-24.04 / net10.0"
-            os: ubuntu-24.04
-            framework: net10.0
-          - name: "ubuntu-latest / net8.0"
-            os: ubuntu-latest
-            framework: net8.0
-          - name: "ubuntu-latest / net10.0"
-            os: ubuntu-latest
-            framework: net10.0
-          # ---- Windows ----
-          - name: "windows-2022 / net8.0"
-            os: windows-2022
-            framework: net8.0
-          - name: "windows / net6.0"
-            os: windows-latest
-            framework: net6.0
-          - name: "windows / net8.0"
-            os: windows-latest
-            framework: net8.0
-          - name: "windows / net9.0"
-            os: windows-latest
-            framework: net9.0
-          - name: "windows / net10.0"
-            os: windows-latest
-            framework: net10.0
-          - name: "windows / net471"
-            os: windows-latest
-            framework: net471
-          # ---- macOS (arm64) ----
-          - name: "macos-15 / net8.0"
-            os: macos-15
-            framework: net8.0
-          - name: "macos-15 / net10.0"
-            os: macos-15
-            framework: net10.0
-          - name: "macos / net8.0"
-            os: macos-latest
-            framework: net8.0
-          - name: "macos / net9.0"
-            os: macos-latest
-            framework: net9.0
-          - name: "macos / net10.0"
-            os: macos-latest
-            framework: net10.0
+          # net9.0 STS: one per OS family
+          - { os: ubuntu-latest,  framework: net9.0 }
+          - { os: windows-latest, framework: net9.0 }
+          - { os: macos-latest,   framework: net9.0 }
+          # Windows-only legacy frameworks
+          - { os: windows-latest, framework: net471  }
+          - { os: windows-latest, framework: net6.0  }
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
@@ -176,6 +131,8 @@ jobs:
           cache-dependency-path: |
             Magicodes.IE.sln
             src/**/*.csproj
+
+      # ── OS-specific pre-flight ──
 
       - name: Install native dependencies (Linux)
         if: runner.os == 'Linux'
@@ -196,6 +153,8 @@ jobs:
           New-Item -Path "D:\Temp" -ItemType Directory -Force | Out-Null
           "TEMP=D:\Temp" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
+      # ── Build & Test ──
+
       - name: Restore
         run: dotnet restore ${{ env.TEST_PROJECT }}
 
@@ -203,40 +162,11 @@ jobs:
         run: dotnet build ${{ env.TEST_PROJECT }} -c Release --no-restore -bl
 
       - name: Test
-        if: runner.os == 'Windows'
-        run: >
-          dotnet test ${{ env.TEST_PROJECT }}
-          -c Release --no-build
-          -f ${{ matrix.framework }}
-          --filter Category!=Flaky
-          --blame-hang-timeout 10m
-          --blame-crash-dump-type full
-          --blame-hang-dump-type full
-          --logger "trx;LogFileName=results-${{ matrix.framework }}.trx"
-          --logger GitHubActions
-          --results-directory TestResults
-
-      - name: Test (Linux)
-        if: runner.os == 'Linux'
-        run: >
-          dotnet test ${{ env.TEST_PROJECT }}
-          -c Release --no-build
-          -f ${{ matrix.framework }}
-          --filter Category!=Flaky
-          --blame-hang-timeout 10m
-          --blame-crash-dump-type full
-          --blame-hang-dump-type full
-          --logger "trx;LogFileName=results-${{ matrix.framework }}.trx"
-          --logger GitHubActions
-          --results-directory TestResults
-
-      - name: Test (macOS)
-        if: runner.os == 'macOS'
         shell: bash
         run: |
-          # Qt cocoa plugin may crash on process exit in headless CI.
-          # All tests pass before the crash; we capture results first.
-          set +e
+          # macOS: Qt cocoa plugin may crash on process exit in headless CI.
+          # We tee the output and check for "Test Run Successful"/"Test Run Failed"
+          # to distinguish real test failures from Qt cleanup crashes.
           dotnet test ${{ env.TEST_PROJECT }} \
             -c Release --no-build \
             -f ${{ matrix.framework }} \
@@ -246,11 +176,16 @@ jobs:
             --blame-hang-dump-type full \
             --logger "trx;LogFileName=results-${{ matrix.framework }}.trx" \
             --logger GitHubActions \
-            --results-directory TestResults
-          TEST_EXIT=$?
-          set -e
-          if [ $TEST_EXIT -ne 0 ]; then
-            echo "::warning::Test process exited with $TEST_EXIT (Qt platform plugin cleanup in headless CI)"
+            --results-directory TestResults \
+            2>&1 | tee /tmp/test-output.log
+          EXIT=${PIPESTATUS[0]}
+          if [ $EXIT -ne 0 ]; then
+            if [ "$RUNNER_OS" = "macOS" ] && grep -q "Test Run Successful\." /tmp/test-output.log; then
+              echo "::warning::Test process exit $EXIT (Qt cocoa plugin cleanup); all tests passed"
+            else
+              echo "::error::Test run failed (exit $EXIT)"
+              exit 1
+            fi
           fi
 
       - name: Upload test results
@@ -271,25 +206,164 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-  ###################################################
-  # ALLS-GREEN GATE
-  # Single required status check for branch protection.
-  # Add "check" as the only required check in repo settings.
-  ###################################################
+  # ── IO TEST MATRIX ──────────────────────────────
+
+  io-test:
+    name: IO ${{ matrix.os }} / ${{ matrix.framework }}
+    needs: changed
+    if: needs.changed.outputs.should_skip != 'true'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        framework: [net8.0, net10.0]
+        include:
+          - { os: ubuntu-latest,  framework: net6.0 }
+          - { os: windows-latest, framework: net6.0 }
+          - { os: macos-latest,   framework: net6.0 }
+          - { os: windows-latest, framework: net471 }
+    env:
+      IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+            8.0.x
+            10.0.x
+          cache: true
+          cache-dependency-path: |
+            Magicodes.IE.sln
+            src/**/*.csproj
+
+      - name: Restore
+        run: dotnet restore ${{ env.IO_TEST_PROJECT }}
+
+      - name: Build
+        run: dotnet build ${{ env.IO_TEST_PROJECT }} -c Release --no-restore -bl
+
+      - name: Test
+        run: >
+          dotnet test ${{ env.IO_TEST_PROJECT }}
+          -c Release --no-build
+          -f ${{ matrix.framework }}
+          --filter Category!=Flaky
+          --blame-hang-timeout 10m
+          --blame-crash-dump-type full
+          --blame-hang-dump-type full
+          --logger "trx;LogFileName=results-io-${{ matrix.framework }}.trx"
+          --logger GitHubActions
+          --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-test-results-${{ matrix.os }}-${{ matrix.framework }}
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-build-log-${{ matrix.os }}-${{ matrix.framework }}
+          path: msbuild.binlog
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # ── IO CRC32 SELF-CHECK (macOS arm64 / Debug) ──
+  #
+  # ForwardOnlyZipWriter has an #if DEBUG CRC32 self-check
+  # ("123456789" => 0xCBF43926). A wrong arm64 CRC throws at
+  # assembly load. Release CRC is still exercised by ZipArchive
+  # reopen assertions in the io-test matrix above.
+
+  io-test-macos-debug:
+    name: IO Debug (macOS arm64 CRC check)
+    needs: changed
+    if: needs.changed.outputs.should_skip != 'true'
+    runs-on: macos-latest
+    timeout-minutes: 15
+    env:
+      IO_TEST_PROJECT: tests/Magicodes.IE.IO.Tests/Magicodes.IE.IO.Tests.csproj
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          cache: true
+          cache-dependency-path: |
+            Magicodes.IE.sln
+            src/**/*.csproj
+
+      - name: Restore
+        run: dotnet restore ${{ env.IO_TEST_PROJECT }}
+
+      - name: Build
+        run: dotnet build ${{ env.IO_TEST_PROJECT }} -c Debug --no-restore -bl
+
+      - name: Test
+        shell: bash
+        run: |
+          set +e
+          dotnet test ${{ env.IO_TEST_PROJECT }} \
+            -c Debug --no-build \
+            -f net8.0 \
+            --filter Category!=Flaky \
+            --blame-hang-timeout 10m \
+            --blame-crash-dump-type full \
+            --blame-hang-dump-type full \
+            --logger "trx;LogFileName=results-io-macos-debug.trx" \
+            --logger GitHubActions \
+            --results-directory TestResults
+          EXIT=$?
+          set -e
+          if [ $EXIT -ne 0 ]; then
+            echo "::error::IO tests failed on macOS arm64 (Debug CRC self-check active)"
+            exit 1
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-test-results-macos-debug
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: io-build-log-macos-debug
+          path: msbuild.binlog
+          if-no-files-found: ignore
+          retention-days: 7
+
+  # ── ALLS-GREEN GATE ─────────────────────────────
 
   check:
     name: CI Passed
     if: always()
-    needs: [changed, test]
+    needs: [changed, test, io-test, io-test-macos-debug]
     runs-on: ubuntu-latest
     steps:
-      - name: Evaluate results
-        uses: re-actors/alls-green@release/v1
+      - uses: re-actors/alls-green@release/v1
         with:
           allowed-skips: >-
             ${{
               needs.changed.outputs.should_skip == 'true'
-              && 'test'
+              && 'test,io-test,io-test-macos-debug'
               || ''
             }}
           jobs: ${{ toJSON(needs) }}
