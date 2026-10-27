@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12217.157 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magicodes.IE.Core", "src\Magicodes.ExporterAndImporter.Core\Magicodes.IE.Core.csproj", "{ECF7AB74-BE8D-4E61-968E-6DB1E182154F}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7164789B-598A-46A6-BCBE-24CE10F93D53}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
 		.github\workflows\docfx.yml = .github\workflows\docfx.yml
 		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
 		README.md = README.md
@@ -179,7 +181,7 @@ Global
 		{C50261E6-D543-4B60-BEC7-9E16E2287AA4} = {151F53D1-0E7B-4397-8E5E-1DAC6F2078D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
 		SolutionGuid = {6C8A9654-6F23-451B-AE83-8C7D534A7A3C}
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal

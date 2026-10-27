@@ -30,7 +30,7 @@
 <Project>
 
   <PropertyGroup>
-    <Version>2.9.0</Version>
+    <Version>2.9.0.1</Version>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1701;1702;CS1591;CS1573;1591;NU1507;NU5119</NoWarn>
@@ -56,6 +56,24 @@
 
 		</Description>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <!--
+    Six Labors / ImageSharp 许可证接入
+
+    ImageSharp 3.2.0 起在编译前执行许可证校验（SixLabors_ValidateLicense），
+    Release 构建必须提供 key，Debug 配置下仅告警不阻断。
+
+    把 Six Labors 下发的 sixlabors.lic 放到仓库根目录即可自动生效；
+    也可改用环境变量 SixLaborsLicenseKey 注入（CI 场景）。
+
+    OSS 项目可申请 assembly-scoped community key，官方明确允许直接提交到
+    公开仓库，因此该文件无需加入 .gitignore。
+
+    文件不存在时本属性不生效，不影响 Debug 构建。
+  -->
+  <PropertyGroup Condition="Exists('$(MSBuildThisFileDirectory)sixlabors.lic')">
+    <SixLaborsLicenseFile>$(MSBuildThisFileDirectory)sixlabors.lic</SixLaborsLicenseFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsPackable)' != 'false' AND '$(ManagePackageVersionsCentrally)' != 'false'">
